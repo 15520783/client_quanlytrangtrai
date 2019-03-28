@@ -1,0 +1,7 @@
+{
+  "name": "client_quanlytrangtrai",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
