@@ -8,7 +8,7 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-content>
+  <ion-content >
     <ion-list *ngFor="let p of pages" no-lines no-margin>
       <button ion-item (click)="openPage(p);p.expand=!p.expand" [attr.active]="p.active?'':null" no-lines>
         <ion-icon item-start [name]="p.icon"></ion-icon>{{p.title}}
@@ -22,7 +22,7 @@
   </ion-content>
 
   <ion-footer padding no-border>
-    <button ion-button no-margin block color="dark">LOG OUT</button>
+    <button mode='ios' ion-button no-margin block color="dark">Đăng xuất</button>
   </ion-footer>
 
 </ion-menu>

@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, Nav } from 'ionic-angular';
 import { FarmsPage } from '../farms/farms';
 import { SectionsPage } from '../sections/sections';
+import { PigsPage } from '../pigs/pigs';
 
 @Component({
   selector: 'page-home',
@@ -19,6 +20,7 @@ export class HomePage {
     this.pages = [
       { title: 'Quản lý trang trại', component: FarmsPage , icon: 'app-farm' ,active : true},
       { title: 'Quản lý khu', component: SectionsPage , icon: 'app-section' ,active : false},
+      { title: 'Quản lý heo', component: PigsPage , icon: 'app-pig-outline' ,active : false},
     ];
   }
 

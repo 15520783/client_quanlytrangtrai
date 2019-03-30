@@ -3,13 +3,7 @@ import { IonicPage, NavController, NavParams, Content, ToastController, MenuCont
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MyApp } from '../../app/app.component';
 import { HomePage } from '../home/home';
-
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import {Utils} from '../../common/utils';
 
 @IonicPage()
 @Component({
@@ -26,7 +20,8 @@ export class LoginPage {
     public navParams: NavParams,
     private formBuilder: FormBuilder,
     public menuCtrl: MenuController,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    public util: Utils
   ) {
     this.menuCtrl.enable(false);
     this.credentialsForm = this.formBuilder.group({
@@ -55,22 +50,9 @@ export class LoginPage {
     console.log(this.credentialsForm.controls.username);
     console.log(this.credentialsForm.controls.password);
     this.wait = true;
-    // setTimeout(()=>{
-    //   this.navCtrl.setRoot(HomePage);
-    //   this.menuCtrl.enable(true);
-    //   this.wait = false;
-    // },2000);
-    const toast = this.toastCtrl.create(
-      {
-        message: 'Username/Password is wrong. Try again.',
-        showCloseButton: true,
-        position: 'bottom',
-        duration: 5000,
-        closeButtonText: 'Close',
-        cssClass:'ion-toast'
-      }
-    )
-    toast.present().then((res)=>{
+
+    this.util.showToast('Username/Password is wrong. Try again.')
+    .then((res)=>{
       this.wait=false;
       this.navCtrl.setRoot(HomePage);
     })

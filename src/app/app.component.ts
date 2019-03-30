@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
+import { HeaderColor } from '@ionic-native/header-color';
 
 @Component({
   templateUrl: 'app.html'
@@ -14,12 +15,12 @@ export class MyApp {
 
   rootPage: any = LoginPage;
 
-  pages: Array<{ title: string, component: any }>;
 
   constructor(
     public platform: Platform,
     public statusBar: StatusBar,
-    public splashScreen: SplashScreen) {
+    public splashScreen: SplashScreen,
+    public headerColor: HeaderColor) {
     this.initializeApp();
   }
 
@@ -31,7 +32,9 @@ export class MyApp {
 
       if (this.platform.is('cordova')) {
         this.statusBar.styleDefault();
+        this.statusBar.styleBlackTranslucent();
         this.splashScreen.hide();
+        this.headerColor.tint('#01C2FA');
       }
 
     });
