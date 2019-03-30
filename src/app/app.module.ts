@@ -5,22 +5,25 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
-import { ComponentsModule } from '../components/components.module';
 import { ExpandableComponent } from '../components/expandable/expandable';
+import { FarmsPage } from '../pages/farms/farms';
+import { HeaderComponent } from '../components/header/header';
+import { SectionsPage } from '../pages/sections/sections';
 
 const Pages = [
   LoginPage,
   HomePage,
-  ListPage
+  FarmsPage,
+  SectionsPage
 ]
 
 const Components = [
-  ExpandableComponent
+  ExpandableComponent,
+  HeaderComponent
 ]
 
 @NgModule({

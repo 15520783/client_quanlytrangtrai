@@ -15,6 +15,32 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
+ion-icon {
+    &[class*="app-"] {
+        // Instead of using the font-based icons
+        // We're applying SVG masks
+        mask-size: contain;
+        mask-position: 50% 50%;
+        mask-repeat: no-repeat;
+        background: currentColor;
+        width: 1em;
+        height: 1em;
+    }
+    // custom icons
+    &[class*="warehouse"] {
+        mask-image: url(../assets/imgs/warehouse-solid.svg);
+    }
+    &[class*="pig-outline"] {
+        mask-image: url(../assets/imgs/pig-outline.svg);
+    }
+    &[class*="farm"] {
+        mask-image: url(../assets/imgs/farm.svg);
+    }
+    &[class*="section"] {
+        mask-image: url(../assets/imgs/section.svg);
+    }
+}
+
 .toolbar-title{
     color:#f4f4f4;
 }

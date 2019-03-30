@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Content, ToastController, MenuController } from 'ionic-angular';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MyApp } from '../../app/app.component';
+import { HomePage } from '../home/home';
 
 /**
  * Generated class for the LoginPage page.
@@ -71,6 +72,7 @@ export class LoginPage {
     )
     toast.present().then((res)=>{
       this.wait=false;
+      this.navCtrl.setRoot(HomePage);
     })
   }
 }

@@ -1,18 +1,32 @@
-<ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Home</ion-title>
-  </ion-navbar>
-</ion-header>
 
-<ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+<ion-menu [content]="content">
+  <ion-header>
+    <ion-toolbar text-center>
+      <ion-card-content>
+        <ion-icon name="ios-ionic" style="font-size: 100px;color:white"></ion-icon>
+      </ion-card-content>
+    </ion-toolbar>
+  </ion-header>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+  <ion-content>
+    <ion-list *ngFor="let p of pages" no-lines no-margin>
+      <button ion-item (click)="openPage(p);p.expand=!p.expand" [attr.active]="p.active?'':null" no-lines>
+        <ion-icon item-start [name]="p.icon"></ion-icon>{{p.title}}
+        <ion-icon item-end name="ios-arrow-forward" *ngIf="!p.expand"></ion-icon>
+        <ion-icon item-end name="ios-arrow-down" *ngIf="p.expand"></ion-icon>
+      </button>
+      <expandable [expandedHeight]="200" [expanded]="p.expand">
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
-</ion-content>
+      </expandable>
+    </ion-list>
+  </ion-content>
+
+  <ion-footer padding no-border>
+    <button ion-button no-margin block color="dark">LOG OUT</button>
+  </ion-footer>
+
+</ion-menu>
+
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
