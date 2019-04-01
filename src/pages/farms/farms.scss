@@ -1,3 +1,9 @@
 page-farms {
+    .card-header{
+        background:linear-gradient(to right,$themeColor2,$light-tint)
+    }
 
+    .card{
+        background: $light-tint;
+    }
 }

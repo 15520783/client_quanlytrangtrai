@@ -4,6 +4,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MyApp } from '../../app/app.component';
 import { HomePage } from '../home/home';
 import {Utils} from '../../common/utils';
+import { FarmsProvider } from '../../providers/farms/farms';
 
 @IonicPage()
 @Component({
@@ -21,7 +22,8 @@ export class LoginPage {
     private formBuilder: FormBuilder,
     public menuCtrl: MenuController,
     public toastCtrl: ToastController,
-    public util: Utils
+    public util: Utils,
+    public farmProvider: FarmsProvider
   ) {
     this.menuCtrl.enable(false);
     this.credentialsForm = this.formBuilder.group({
@@ -54,7 +56,10 @@ export class LoginPage {
     this.util.showToast('Username/Password is wrong. Try again.')
     .then((res)=>{
       this.wait=false;
-      this.navCtrl.setRoot(HomePage);
+      // this.farmProvider.sync();
+      setTimeout(() => {
+        this.navCtrl.setRoot(HomePage);        
+      }, 1000);
     })
   }
 }

@@ -18,6 +18,12 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HeaderColor } from '@ionic-native/header-color';
 
 import {Utils} from '../common/utils';
+import { PigsProvider } from '../providers/pigs/pigs';
+import { FarmsProvider } from '../providers/farms/farms';
+import { IonicStorageModule } from '@ionic/storage';
+import { SectionsProvider } from '../providers/sections/sections';
+import { HousesProvider } from '../providers/houses/houses';
+
 
 const Pages = [
   LoginPage,
@@ -32,6 +38,13 @@ const Components = [
   HeaderComponent
 ]
 
+const Providers = [
+  PigsProvider,
+  FarmsProvider,
+  SectionsProvider,
+  HousesProvider,
+]
+
 @NgModule({
   declarations: [
     MyApp,
@@ -39,6 +52,7 @@ const Components = [
     ...Components
   ],
   imports: [
+    IonicStorageModule.forRoot(),
     HttpClientModule,
     BrowserModule,
     IonicModule.forRoot(MyApp,{
@@ -58,7 +72,8 @@ const Components = [
     SplashScreen,
     HeaderColor ,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    Utils
+    Utils,
+    ...Providers,
   ]
 })
 export class AppModule {}

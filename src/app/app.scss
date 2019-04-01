@@ -36,7 +36,10 @@ ion-icon {
     &[class*="farm"] {
         mask-image: url(../assets/imgs/farm.svg);
     }
-    &[class*="section"] {
+    &[class*="sections"] {
+        mask-image: url(../assets/imgs/sections.svg);
+    }
+    &[class*="section-single"] {
         mask-image: url(../assets/imgs/section.svg);
     }
 }

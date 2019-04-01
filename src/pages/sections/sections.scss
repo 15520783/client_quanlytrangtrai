@@ -1,3 +1,12 @@
 page-sections {
+            
+    ion-item{
+        [active]{
+            background: rgba(235,235,235,0.7);
+        }
 
+        [active_header]{
+            background:#01C2FA!important;
+        }
+    }
 }
