@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Utils } from '../../common/utils';
 import { KEY, API, CONFIG } from '../../common/const';
 import { farm } from '../../common/entity';
-
+import 'rxjs/add/operator/debounceTime';
 
 @Injectable()
 export class FarmsProvider {
@@ -19,7 +19,7 @@ export class FarmsProvider {
 
 
   public getFarms() {
-    return this.http.get(API.GET_ALL_FARMS).toPromise();
+    return this.http.get(CONFIG.SERVER_API.concat(API.GET_ALL_FARMS)).debounceTime(CONFIG.DEFAULT_TIMEOUT).toPromise();
   }
 
   public sync() {

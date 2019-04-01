@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ToastController, AlertController, LoadingController } from 'ionic-angular';
+import { ToastController, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 
 @Injectable()
 export class Utils {
+  protected loading: Loading;
 
   constructor(
     public http: HttpClient,
@@ -36,8 +37,12 @@ export class Utils {
   }
 
   showLoading(options: any) {
-    let loading = this.loadingCtrl.create(options);
-    return loading.present();
+    this.loading = this.loadingCtrl.create(options);
+    return this.loading.present();
+  }
+
+  closeLoading() {
+    return this.loading.dismiss();
   }
 
   convertDate(date) {

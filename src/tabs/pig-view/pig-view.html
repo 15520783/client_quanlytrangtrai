@@ -1,0 +1,18 @@
+<ion-header>
+    <ion-navbar no-padding>
+        <ion-toolbar>
+            <ion-buttons left>
+                <button navPop ion-button icon-only>
+                    <ion-icon name="arrow-back"></ion-icon>
+                </button>
+            </ion-buttons>
+            <ion-title>Thông tin về heo</ion-title>
+        </ion-toolbar>
+    </ion-navbar>
+</ion-header>
+
+<ion-tabs>
+    <ion-tab [root]="PigInfomationPage" tabTitle="Thông tin heo" [rootParams]="pig"></ion-tab>
+    <!-- <ion-tab [root]="PigInfomationPage" tabTitle="Chỉ số" showWhen="ios,android" [rootParams]="pig"></ion-tab> -->
+    <!-- <ion-tab [root]="PigInfomationPage" tabTitle="Hoạt động chi tiết" [rootParams]="pig"></ion-tab> -->
+</ion-tabs>

@@ -9,6 +9,7 @@ import { LoginPage } from '../pages/login/login';
 import { SectionsPage } from '../pages/sections/sections';
 import { PigsPage } from '../pages/pigs/pigs';
 import { FarmsPage } from '../pages/farms/farms';
+import { PigViewPage } from '../tabs/pig-view/pig-view';
 
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
@@ -23,6 +24,7 @@ import { FarmsProvider } from '../providers/farms/farms';
 import { IonicStorageModule } from '@ionic/storage';
 import { SectionsProvider } from '../providers/sections/sections';
 import { HousesProvider } from '../providers/houses/houses';
+import { PigInfomationPage } from '../pages/pig-infomation/pig-infomation';
 
 
 const Pages = [
@@ -30,7 +32,9 @@ const Pages = [
   HomePage,
   FarmsPage,
   SectionsPage,
-  PigsPage
+  PigsPage,
+  PigViewPage,
+  PigInfomationPage
 ]
 
 const Components = [

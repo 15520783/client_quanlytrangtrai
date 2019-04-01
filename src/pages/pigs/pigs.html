@@ -32,7 +32,7 @@
   
   
   <ion-content #content>
-    <ion-list>
+    <ion-list >
       <button ion-item *ngFor="let item of visible_items" (tap)="viewDeltail(item)">
         <ion-avatar item-start>
           <ion-icon name="app-pig-outline" font28></ion-icon>
@@ -87,8 +87,8 @@
           <ion-select [(ngModel)]="genderFilter" multiple="true" interface="alert" title="Giới tính" mode="ios"
             okText="Chọn" cancelText="Hủy" [selectOptions]="customAlertOptions" (ionChange)="setFilteredItems()"
             placeholder="Tất cả">
-            <ion-option value="1">Đực</ion-option>
-            <ion-option value="2">Cái</ion-option>
+            <ion-option value="1">Cái</ion-option>
+            <ion-option value="2">Đực</ion-option>
             <ion-option value="3">Đực hiến</ion-option>
           </ion-select>
         </ion-item>

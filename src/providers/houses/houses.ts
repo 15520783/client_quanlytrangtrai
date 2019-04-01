@@ -10,6 +10,6 @@ export class HousesProvider {
   }
 
   getAllHouses(){
-    return this.http.get(CONFIG.SERVER_API.concat(API.GET_ALL_HOUSES)).toPromise();
+    return this.http.get(CONFIG.SERVER_API.concat(API.GET_ALL_HOUSES)).debounceTime(CONFIG.DEFAULT_TIMEOUT).toPromise();
   }
 }

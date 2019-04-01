@@ -1,22 +1,23 @@
 import { Component, Input } from '@angular/core';
+import { NavController } from 'ionic-angular';
+import { PigsPage } from '../../pages/pigs/pigs';
 
-/**
- * Generated class for the HeaderComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
+
 @Component({
   selector: 'header',
   templateUrl: 'header.html'
 })
 export class HeaderComponent {
 
-  @Input() protected title : String = '';
+  @Input() protected title: String = '';
 
-  constructor() {
+  constructor(
+    public navCtrl: NavController
+  ) {
     console.log('Hello HeaderComponent Component');
   }
 
-  openSeacrhModal(){}
+  openSeacrhModal() {
+    this.navCtrl.push(PigsPage);
+  }
 }

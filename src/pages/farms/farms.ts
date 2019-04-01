@@ -5,12 +5,6 @@ import { Utils } from '../../common/utils';
 import { farm } from '../../common/entity';
 import { KEY } from '../../common/const';
 
-/**
- * Generated class for the FarmsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -20,7 +14,6 @@ import { KEY } from '../../common/const';
 export class FarmsPage {
 
   public farms = [];
-  protected loading: Loading;
 
   constructor(
     public platform: Platform,
@@ -28,13 +21,8 @@ export class FarmsPage {
     public navParams: NavParams,
     public farmProvider: FarmsProvider,
     public util: Utils,
-    public loadingCtrl : LoadingController
+    public loadingCtrl: LoadingController
   ) {
-    this.loading = this.loadingCtrl.create({
-      content: 'Đang tải dữ liệu',
-      spinner: 'bubbles',
-      cssClass: 'ion-loading'
-    });
   }
 
   ionViewDidLoad() {
@@ -47,22 +35,41 @@ export class FarmsPage {
   }
 
   getAllFarms() {
-    
-    this.loading.present();
+    this.util.showLoading({
+      content: 'Đang tải dữ liệu',
+      spinner: 'bubbles',
+      cssClass: 'ion-loading'
+    });
     this.farmProvider.getFarms()
       .then((data: Array<farm>) => {
         if (data.length) {
-          this.util.setKey(KEY.FARMS, data);
-          this.farms = data;
-          this.loading.dismiss();
+          this.util.setKey(KEY.FARMS, data)
+            .then(() => {
+              this.farms = this.farmProvider.farms = data;
+              this.util.closeLoading();
+            })
+            .catch((err) => {
+              console.log('err_storage_farm', err);
+              this.util.closeLoading();
+            })
         }
       })
       .catch((err) => {
+        this.util.showAlert({
+          header: 'Thông báo',
+          message: 'Dữ liệu chưa được cập nhật. Vui lòng kiểm tra kết nối.',
+          buttons: ['OK']
+        });
         console.log('err_farm_provider', err);
         this.util.getKey(KEY.FARMS)
           .then((data: Array<farm>) => {
-            this.farms = data;
-            this.loading.dismiss();
+            this.farms = this.farmProvider.farms = data;
+            this.util.closeLoading();
+          })
+          .catch((err) => {
+            this.util.closeLoading();
+            this.farms = this.farmProvider.farms = [];
+            console.log('err_get_storage_farm', err);
           })
       })
   }

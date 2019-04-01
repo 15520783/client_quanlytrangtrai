@@ -1,0 +1,255 @@
+<ion-header>
+  <ion-navbar>
+    <ion-toolbar>
+      <ion-buttons left>
+        <button ion-button icon-only (tap)="dismiss()"> 
+          <ion-icon name="arrow-back"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-title>
+        Thông tin chi tiết
+      </ion-title>
+    </ion-toolbar>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding showWhen="core">
+  <ion-list>
+    <ion-item-group>
+      <expandable [expanded]="!infoPig">
+        <ion-list>
+          <ion-row>
+            <ion-col col-3>
+              <ion-list padding>
+                <ion-row>
+                  <ion-col>
+                    <ion-icon name="checkmark"></ion-icon>
+                    <b>Mã heo : </b><span info>{{pig.id}}</span>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-icon name="checkmark"></ion-icon>
+                    <b>Giống : </b> <span info>{{pig.breed_id}}</span>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-icon name="checkmark"></ion-icon>
+                    <b>Cấp giống : </b> <span info>{{pig.breed_type}}</span>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-icon name="checkmark"></ion-icon>
+                    <b>Giới tính : </b> <span info>{{pig.gender}}</span>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-icon name="checkmark"></ion-icon>
+                    <b>Ngày sinh : </b> <span info>{{pig.birthday}}</span>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-icon name="checkmark"></ion-icon>
+                    <b>Tuần tuổi : </b> <span info>{{pig.week_age}}</span>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-icon name="checkmark"></ion-icon>
+                    <b>Trang trại : </b> <span info>{{pig.farm}}</span>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-icon name="checkmark"></ion-icon>
+                    <b>Khu : </b> <span info>{{pig.section}}</span>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-icon name="checkmark"></ion-icon>
+                    <b>Nhà : </b> <span info>{{pig.house_id}}</span>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-icon name="checkmark"></ion-icon>
+                    <b>Số tai : </b> <span info>{{pig.pig_code}}</span>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-icon name="checkmark"></ion-icon>
+                    <b>Mã heo mẹ : </b> <span info>{{pig.mother_id}}</span>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-icon name="checkmark"></ion-icon>
+                    <b>Mã heo cha : </b> <span info>{{pig.father_id}}</span>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-icon name="checkmark"></ion-icon>
+                    <b>Trọng lượng : </b> <span info>{{pig.origin_weight}}</span>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-icon name="checkmark"></ion-icon>
+                    <b>Hiện trạng : </b> <span info>{{pig.status}}</span>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-icon name="checkmark"></ion-icon>
+                    <b>Điểm TT : </b> <span info>{{pig.index}}</span>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-icon name="checkmark"></ion-icon>
+                    <b>Sức khỏe : </b> <span info>{{pig.heath_status}}</span>
+                  </ion-col>
+                </ion-row>
+              </ion-list>
+            </ion-col>
+            <ion-col col-6 padding>
+              <div #chart></div>
+            </ion-col>
+            <ion-col col-3 padding>
+              <ion-list>
+                <ion-row>
+                  <ion-col>
+                    <ion-icon name="checkmark"></ion-icon>
+                    <b>Index : </b><span info>{{pig.index}}</span>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-icon name="checkmark"></ion-icon>
+                    <b>Trọng lượng : </b><span info>{{pig.origin_weight}}</span>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-icon name="checkmark"></ion-icon>
+                    <b>Chân : </b><span info>{{pig.foot}}</span>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-icon name="checkmark"></ion-icon>
+                    <b>Số vú : </b><span info>{{pig.total_udder}}</span>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-icon name="checkmark"></ion-icon>
+                    <b>BPSD : </b><span info>{{pig.bf}}</span>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-icon name="checkmark"></ion-icon>
+                    <b>ADG : </b><span info>{{pig.adg}}</span>
+                  </ion-col>
+                </ion-row>
+              </ion-list>
+            </ion-col>
+          </ion-row>
+        </ion-list>
+      </expandable>
+
+    </ion-item-group>
+  </ion-list>
+</ion-content>
+
+<ion-content showWhen="ios,android">
+  <!-- <ion-item-group>
+    <ion-item-divider color="light" (tap)="epxandable=!epxandable">
+      <h2>Thông tin chi tiết</h2>
+    </ion-item-divider>
+    <expandable [expanded]="!epxandable"> -->
+      <ion-list>
+        <ion-item>
+          <ion-icon name="checkmark" vetical-align-bottom></ion-icon> Mã heo
+          <h2 item-end>
+            {{pig.id}}
+          </h2>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="checkmark" vetical-align-bottom></ion-icon> Giống
+          <h2 item-end>
+            {{pig.breed_id}}
+          </h2>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="checkmark" vetical-align-bottom></ion-icon> Cấp giống
+          <h2 item-end>
+            {{pig.breed_type}}
+          </h2>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="checkmark" vetical-align-bottom></ion-icon> Giới tính
+          <h2 item-end>
+            {{pig.gender}}
+          </h2>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="checkmark" vetical-align-bottom></ion-icon> Ngày sinh
+          <h2 item-end>
+            {{pig.birthday}}
+          </h2>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="checkmark" vetical-align-bottom></ion-icon> Tuần tuổi
+          <h2 item-end>
+            {{pig.week_age}}
+          </h2>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="checkmark" vetical-align-bottom></ion-icon> Trang trại
+          <h2 item-end>
+            {{pig.farm}}
+          </h2>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="checkmark" vetical-align-bottom></ion-icon> Khu
+          <h2 item-end>
+            {{pig.section}}
+          </h2>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="checkmark" vetical-align-bottom></ion-icon> Nhà
+          <h2 item-end>
+            {{pig.house_id}}
+          </h2>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="checkmark" vetical-align-bottom></ion-icon> Mã heo mẹ
+          <h2 item-end>
+            {{pig.mother_id}}
+          </h2>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="checkmark" vetical-align-bottom></ion-icon> Mã heo cha
+          <h2 item-end>
+            {{pig.father_id}}
+          </h2>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="checkmark" vetical-align-bottom></ion-icon> Trọng lượng
+          <h2 item-end>
+            {{pig.origin_weight}}
+          </h2>
+        </ion-item>
+      </ion-list>
+    <!-- </expandable>
+  </ion-item-group> -->
+</ion-content>

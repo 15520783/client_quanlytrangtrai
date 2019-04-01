@@ -56,7 +56,6 @@ export class LoginPage {
     this.util.showToast('Username/Password is wrong. Try again.')
     .then((res)=>{
       this.wait=false;
-      // this.farmProvider.sync();
       setTimeout(() => {
         this.navCtrl.setRoot(HomePage);        
       }, 1000);

@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-an
 import { section } from '../../common/entity';
 import { SectionsProvider } from '../../providers/sections/sections';
 import { Utils } from '../../common/utils';
+import { KEY } from '../../common/const';
 
 /**
  * Generated class for the SectionsPage page.
@@ -39,18 +40,7 @@ export class SectionsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SectionsPage');
-    let loading = this.loadingCtrl.create({
-      content: 'Đang tải dữ liệu',
-      spinner: 'bubbles',
-      cssClass: 'ion-loading'
-    });
-    loading.present();
-    this.sectionProvider.getSections().then((data:Array<section>)=>{
-      if(data.length){
-        this.sections = data;
-        loading.dismiss();
-      }
-    })
+    this.getAllSections();
   }
 
   activeItem(section){
@@ -68,5 +58,41 @@ export class SectionsPage {
 
   convertDate(date: any) {
     return this.util.convertDate(date);
+  }
+
+
+  getAllSections(){
+    this.util.showLoading({
+      content: 'Đang tải dữ liệu',
+      spinner: 'bubbles',
+      cssClass: 'ion-loading'
+    });
+    this.sectionProvider.getSections()
+    .then((data:Array<section>)=>{
+      if(data.length){
+        this.util.setKey(KEY.SECTIONS,data)
+        .then(()=>{
+          this.sections = this.sectionProvider.sections = data;
+          this.util.closeLoading();
+        })
+        .catch((err)=>{
+          console.log('err_storage_section',err);
+          this.util.closeLoading();
+        })
+      }
+    })
+    .catch((err)=>{
+      console.log('err_section_provider',err);
+      this.util.getKey(KEY.SECTIONS)
+      .then((data:Array<section>)=>{
+        this.util.closeLoading();
+        this.sections = this.sectionProvider.sections = data;
+      })
+      .catch((err)=>{
+        this.util.closeLoading();
+        this.sections = this.sectionProvider.sections = [];
+        console.log('err_get_storage_section',err);
+      })
+    })
   }
 }

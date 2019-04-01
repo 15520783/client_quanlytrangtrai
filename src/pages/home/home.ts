@@ -1,11 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, Nav } from 'ionic-angular';
+import { NavController, Nav, LoadingController } from 'ionic-angular';
 import { FarmsPage } from '../farms/farms';
 import { SectionsPage } from '../sections/sections';
 import { PigsPage } from '../pigs/pigs';
 import { Utils } from '../../common/utils';
 import { farm } from '../../common/entity';
 import { FarmsProvider } from '../../providers/farms/farms';
+import { SectionsProvider } from '../../providers/sections/sections';
 
 @Component({
   selector: 'page-home',
@@ -22,9 +23,13 @@ export class HomePage {
 
   constructor(
     public navCtrl: NavController,
+    public loadingCtrl: LoadingController,
     public util: Utils,
-    public farmProvider: FarmsProvider
+    public farmProvider: FarmsProvider,
+    public sectionProvider: SectionsProvider
   ) {
+    
+
     this.pages = [
       { title: 'Quản lý trang trại', component: FarmsPage, icon: 'app-farm', active: true },
       {
@@ -78,7 +83,6 @@ export class HomePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
-    this.farmProvider.sync();
   }
 
   openPage(page) {
@@ -97,5 +101,5 @@ export class HomePage {
     }
   }
 
-
+  
 }
