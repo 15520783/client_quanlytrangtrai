@@ -19,7 +19,7 @@ export class SectionsProvider {
   }
 
   getSections(){
-    return this.http.get(CONFIG.SERVER_API.concat(API.GET_ALL_SECTIONS)).debounceTime(CONFIG.DEFAULT_TIMEOUT).toPromise();
+    return this.http.get(CONFIG.SERVER_API.concat(API.GET_ALL_SECTIONS)).timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
   }
 
 }

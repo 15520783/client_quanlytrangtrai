@@ -1,34 +1,48 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ToastController, AlertController, LoadingController, Loading } from 'ionic-angular';
+import { ToastController, AlertController, LoadingController, Loading, Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-
+import { Toast } from '@ionic-native/toast';
 
 @Injectable()
 export class Utils {
   protected loading: Loading;
+  protected toast: any;
+  protected toastOptions: any;
 
   constructor(
     public http: HttpClient,
     public toastCtrl: ToastController,
     public alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
-    public storage: Storage
+    public storage: Storage,
+    public platform: Platform,
+    private toastNative: Toast
   ) {
+
   }
 
   showToast(message) {
-    let toast = this.toastCtrl.create(
-      {
-        message: message,
-        showCloseButton: true,
-        position: 'bottom',
-        duration: 5000,
-        closeButtonText: 'Close',
-        cssClass: 'ion-toast'
-      }
-    )
-    return toast.present();
+    this.toastOptions = {
+      message: message,
+      duration: 5000,
+      position: 'bottom',
+      styling: {
+        opacity: 0.75, // 0.0 (transparent) to 1.0 (opaque). Default 0.8
+        backgroundColor: '#FF0000', // make sure you use #RRGGBB. Default #333333
+        textColor: '#FFFFFF', // Ditto. Default #FFFFFF
+        cornerRadius: 16, // minimum is 0 (square). iOS default 20, Android default 100
+      },
+      closeButtonText: 'Close',
+      cssClass: 'ion-toast',
+      showCloseButton: true,
+    }
+    if (this.platform.is('cordova')) {
+      return this.toastNative.showWithOptions(this.toastOptions).toPromise();
+    } else {
+      this.toast = this.toastCtrl.create(this.toastOptions)
+      return this.toast.present();
+    }
   }
 
   showAlert(options: any) {

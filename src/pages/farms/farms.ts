@@ -13,7 +13,7 @@ import { KEY } from '../../common/const';
 })
 export class FarmsPage {
 
-  public farms = [];
+  public farms = this.farmProvider.farms;
 
   constructor(
     public platform: Platform,
@@ -23,6 +23,10 @@ export class FarmsPage {
     public util: Utils,
     public loadingCtrl: LoadingController
   ) {
+  }
+
+  ionViewDidEnter() {
+    console.log('ionViewDidEnter FarmsPage');
   }
 
   ionViewDidLoad() {
@@ -35,42 +39,40 @@ export class FarmsPage {
   }
 
   getAllFarms() {
-    this.util.showLoading({
-      content: 'Đang tải dữ liệu',
-      spinner: 'bubbles',
-      cssClass: 'ion-loading'
-    });
-    this.farmProvider.getFarms()
-      .then((data: Array<farm>) => {
-        if (data.length) {
-          this.util.setKey(KEY.FARMS, data)
-            .then(() => {
-              this.farms = this.farmProvider.farms = data;
-              this.util.closeLoading();
-            })
-            .catch((err) => {
-              console.log('err_storage_farm', err);
-              this.util.closeLoading();
-            })
-        }
-      })
-      .catch((err) => {
-        this.util.showAlert({
-          header: 'Thông báo',
-          message: 'Dữ liệu chưa được cập nhật. Vui lòng kiểm tra kết nối.',
-          buttons: ['OK']
-        });
-        console.log('err_farm_provider', err);
-        this.util.getKey(KEY.FARMS)
-          .then((data: Array<farm>) => {
-            this.farms = this.farmProvider.farms = data;
-            this.util.closeLoading();
-          })
-          .catch((err) => {
-            this.util.closeLoading();
-            this.farms = this.farmProvider.farms = [];
-            console.log('err_get_storage_farm', err);
-          })
-      })
+    if (!this.farmProvider.farms.length) {
+      this.util.showLoading({
+        content: 'Đang tải dữ liệu',
+        spinner: 'bubbles',
+        cssClass: 'ion-loading'
+      });
+      this.farmProvider.getFarms()
+        .then((data: Array<farm>) => {
+          if (data.length) {
+            this.util.setKey(KEY.FARMS, data)
+              .then(() => {
+                this.farms = this.farmProvider.farms = data;
+                this.util.closeLoading();
+              })
+              .catch((err) => {
+                console.log('err_storage_farm', err);
+                this.util.closeLoading();
+              })
+          }
+        })
+        .catch((err) => {
+          this.util.closeLoading().then(() => {
+            this.util.showToast('Dữ liệu chưa được cập nhật. Vui lòng kiểm tra kết nối.');
+            console.log('err_farm_provider', err);
+            this.util.getKey(KEY.FARMS)
+              .then((data: Array<farm>) => {
+                this.farms = this.farmProvider.farms = data;
+              })
+              .catch((err) => {
+                this.farms = this.farmProvider.farms = [];
+                console.log('err_get_storage_farm', err);
+              })
+          });
+        })
+    }
   }
 }

@@ -19,7 +19,7 @@ import { KEY } from '../../common/const';
 })
 export class SectionsPage {
 
-  public sections: Array<section> = [];
+  public sections: Array<section> = this.sectionProvider.sections;
 
   items = [
     { idx: 1, expand: false },
@@ -38,18 +38,22 @@ export class SectionsPage {
     console.log(this.navParams.data);
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SectionsPage');
+  ionViewWillEnter() {
+    console.log('ionViewWillEnter SectionsPage');
     this.getAllSections();
   }
 
-  activeItem(section){
-    if(section.active){
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad SectionsPage');
+  }
+
+  activeItem(section) {
+    if (section.active) {
       section.expand = !section.expand;
-    }else{
-      this.sections.forEach((e:any)=>{
-        e.active=false;
-        e.expand=false;
+    } else {
+      this.sections.forEach((e: any) => {
+        e.active = false;
+        e.expand = false;
       })
       section.active = true;
       section.expand = true;
@@ -61,38 +65,41 @@ export class SectionsPage {
   }
 
 
-  getAllSections(){
-    this.util.showLoading({
-      content: 'Đang tải dữ liệu',
-      spinner: 'bubbles',
-      cssClass: 'ion-loading'
-    });
-    this.sectionProvider.getSections()
-    .then((data:Array<section>)=>{
-      if(data.length){
-        this.util.setKey(KEY.SECTIONS,data)
-        .then(()=>{
-          this.sections = this.sectionProvider.sections = data;
-          this.util.closeLoading();
+  getAllSections() {
+    if (!this.sectionProvider.sections.length) {
+      this.util.showLoading({
+        content: 'Đang tải dữ liệu',
+        spinner: 'bubbles',
+        cssClass: 'ion-loading'
+      });
+      this.sectionProvider.getSections()
+        .then((data: Array<section>) => {
+          if (data.length) {
+            this.util.setKey(KEY.SECTIONS, data)
+              .then(() => {
+                this.sections = this.sectionProvider.sections = data;
+                this.util.closeLoading();
+              })
+              .catch((err) => {
+                console.log('err_storage_section', err);
+                this.util.closeLoading();
+              })
+          }
         })
-        .catch((err)=>{
-          console.log('err_storage_section',err);
-          this.util.closeLoading();
+        .catch((err) => {
+          this.util.closeLoading().then(() => {
+            this.util.showToast('Dữ liệu chưa được cập nhật. Vui lòng kiểm tra kết nối.');
+            console.log('err_section_provider', err);
+            this.util.getKey(KEY.SECTIONS)
+              .then((data: Array<section>) => {
+                this.sections = this.sectionProvider.sections = data;
+              })
+              .catch((err) => {
+                this.sections = this.sectionProvider.sections = [];
+                console.log('err_get_storage_section', err);
+              })
+          })
         })
-      }
-    })
-    .catch((err)=>{
-      console.log('err_section_provider',err);
-      this.util.getKey(KEY.SECTIONS)
-      .then((data:Array<section>)=>{
-        this.util.closeLoading();
-        this.sections = this.sectionProvider.sections = data;
-      })
-      .catch((err)=>{
-        this.util.closeLoading();
-        this.sections = this.sectionProvider.sections = [];
-        console.log('err_get_storage_section',err);
-      })
-    })
+    }
   }
 }

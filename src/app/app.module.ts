@@ -14,9 +14,11 @@ import { PigViewPage } from '../tabs/pig-view/pig-view';
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
 
+//Native implement
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HeaderColor } from '@ionic-native/header-color';
+import { Toast } from '@ionic-native/toast';
 
 import {Utils} from '../common/utils';
 import { PigsProvider } from '../providers/pigs/pigs';
@@ -72,6 +74,7 @@ const Providers = [
     MyApp
   ],
   providers: [
+    Toast,
     StatusBar,
     SplashScreen,
     HeaderColor ,

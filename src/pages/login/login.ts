@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, Content, ToastController, MenuCont
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MyApp } from '../../app/app.component';
 import { HomePage } from '../home/home';
-import {Utils} from '../../common/utils';
+import { Utils } from '../../common/utils';
 import { FarmsProvider } from '../../providers/farms/farms';
 
 @IonicPage()
@@ -54,11 +54,11 @@ export class LoginPage {
     this.wait = true;
 
     this.util.showToast('Username/Password is wrong. Try again.')
-    .then((res)=>{
-      this.wait=false;
-      setTimeout(() => {
-        this.navCtrl.setRoot(HomePage);        
-      }, 1000);
-    })
+    // .then((res)=>{
+    this.wait = false;
+    setTimeout(() => {
+      this.navCtrl.setRoot(HomePage);
+    }, 1000);
+    // })
   }
 }

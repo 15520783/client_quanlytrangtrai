@@ -30,10 +30,6 @@ export class PigsPage {
   public genderFilter = [];
   public houseFilter = [];
 
-  filterChange() {
-    console.log(this.genderFilter);
-  }
-
   // protected pigs: Array<pig> = [];
   protected searchControl: FormControl = new FormControl();
   protected searchTerm: string = '';
@@ -56,13 +52,17 @@ export class PigsPage {
     // })
   }
 
-  getRender(idx){
+  getRender(idx) {
     return VARIABLE.gender[idx].name;
+  }
+
+  ionViewWillEnter() {
+    console.log('ionViewWillEnter PigsPage');
+    this.getAllPigs();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PigsPage');
-    this.getAllPigs();
   }
 
   init() {
@@ -88,39 +88,43 @@ export class PigsPage {
   }
 
   public getAllPigs() {
-    this.util.showLoading({
-      content: 'Đang tải dữ liệu',
-      spinner: 'bubbles',
-      cssClass: 'ion-loading'
-    });
-    this.pigProvider.getPigs()
-      .then((data: Array<pig>) => {
-        if (data.length) {
-          this.util.setKey(KEY.PIGS, data)
-            .then(() => {
+    if (!this.pigProvider.pigs.length) {
+      this.util.showLoading({
+        content: 'Đang tải dữ liệu',
+        spinner: 'bubbles',
+        cssClass: 'ion-loading'
+      });
+      this.pigProvider.getPigs()
+        .then((data: Array<pig>) => {
+          if (data.length) {
+            this.util.setKey(KEY.PIGS, data)
+              .then(() => {
+                this.pigProvider.pigs = data;
+                this.init();
+              })
+              .catch((err) => {
+                this.pigProvider.pigs = data;
+                console.log('err_storage_pigs', err);
+                this.init();
+              })
+          }
+        })
+        .catch((err) => {
+          console.log('err_pig_provider', err);
+          this.util.getKey(KEY.PIGS)
+            .then((data: Array<pig>) => {
               this.pigProvider.pigs = data;
               this.init();
             })
             .catch((err) => {
-              this.pigProvider.pigs = data;
-              console.log('err_storage_pigs', err);
-              this.init();
+              console.log('err_get_storage_pig', err);
+              this.pigProvider.pigs = [];
             })
-        }
-      })
-      .catch((err) => {
-        console.log('err_pig_provider', err);
-        this.util.getKey(KEY.PIGS)
-          .then((data: Array<pig>) => {
-            this.pigProvider.pigs = data;
-            this.init();
-          })
-          .catch((err) => {
-            console.log('err_get_storage_pig', err);
-            this.pigProvider.pigs = [];
-            this.init();
-          })
-      })
+          this.util.showToast('Dữ liệu chưa được cập nhật. Vui lòng kiểm tra kết nối.');
+        })
+    }else{
+      this.init();
+    }
   }
 
   public setFilteredItems() {

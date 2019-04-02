@@ -17,7 +17,7 @@ export class PigsProvider {
   }
 
   getPigs() {
-    return this.http.get(CONFIG.SERVER_API.concat(API.GET_ALL_PIGS)).debounceTime(CONFIG.DEFAULT_TIMEOUT).toPromise();
+    return this.http.get(CONFIG.SERVER_API.concat(API.GET_ALL_PIGS)).timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
   }
 
 
