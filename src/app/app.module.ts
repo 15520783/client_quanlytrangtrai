@@ -27,6 +27,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { SectionsProvider } from '../providers/sections/sections';
 import { HousesProvider } from '../providers/houses/houses';
 import { PigInfomationPage } from '../pages/pig-infomation/pig-infomation';
+import { FarmComponent } from '../components/farm/farm';
 
 
 const Pages = [
@@ -41,7 +42,8 @@ const Pages = [
 
 const Components = [
   ExpandableComponent,
-  HeaderComponent
+  HeaderComponent,
+  FarmComponent
 ]
 
 const Providers = [

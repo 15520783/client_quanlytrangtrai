@@ -1,16 +1,16 @@
 class pig {
-	id:String;
-	pig_code:String;
-	house_id:String;
-	round_id:String;
-	breed_id:String;
+	id:string;
+	pig_code:string;
+	house_id:string;
+	round_id:string;
+	breed_id:string;
 	gender:number;
 	birthday:Date;
 	born_weight:number;
 	born_status:number;
-	origin_id:String;
-	origin_father:String;
-	origin_mother:String;
+	origin_id:string;
+	origin_father:string;
+	origin_mother:string;
 	origin_weight:number;
 	receive_weight:number;
 	health_point:number;
@@ -18,7 +18,7 @@ class pig {
 	function_udder:number;
 	total_udder:number;
 	gential:number;
-	description:String;
+	description:string;
 	fcr:number;
 	adg:number;
 	bf:number;
@@ -27,7 +27,7 @@ class pig {
 	long_body:number;
 	index:number;
 	parities:number;
-	images:String;
+	images:string;
 	health_status:number;
 	breeding_type:number;
 	breed_status:number;
@@ -40,36 +40,36 @@ class pig {
 
 
 class farm {
-    id: String;
-    name:String;
+    id: string;
+    name:string;
     type_id: number;
-    address: String;
+    address: string;
     area: number;
     total_pig: number;
     founding: Date;
-    manager: String;
-    description: String;
+    manager: string;
+    description: string;
 }
 
 class section {
-	id:String;
-	type_id:String;
-	department_id:String;
-	name:String;
-	description:String;
-	manager:String;
+	id:string;
+	type_id:string;
+	department_id:string;
+	name:string;
+	description:string;
+	manager:string;
 	founding:Date;
 }
 
 class house {
-	id:String;
-	section_id:String;
-	type_id:String;
-	house_code:String;
-	name:String;
-	description:String;
-	position:String;
-	manager:String;
+	id:string;
+	section_id:string;
+	type_id:string;
+	house_code:string;
+	name:string;
+	description:string;
+	position:string;
+	manager:string;
 	founding:Date;
 }
 

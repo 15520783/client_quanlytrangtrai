@@ -1,11 +1,10 @@
-
 <ion-header>
   <header [title]="'Quản lý trang trại'"></header>
 </ion-header>
 
 <ion-content center no-padding>
-  <ion-row>
-    <ion-col [attr.col-4]="platform.is('core')?'':null" [attr.col-12]="platform.is('core')?null:''"
+  <ion-row *ngIf="farms.length>0">
+    <!-- <ion-col [attr.col-4]="platform.is('core')?'':null" [attr.col-12]="platform.is('core')?null:''"
       *ngFor="let farm of farms" mode='ios'>
       <ion-card>
         <ion-card-header>
@@ -28,11 +27,12 @@
               <h2>Ngày thành lập: {{convertDate(farm.founding)}}</h2>
             </ion-row>
           </ion-list>
-          <!-- <div padding>
-              {{farm.infor}}
-          </div> -->
+
         </ion-card-content>
       </ion-card>
+    </ion-col> -->
+    <ion-col col-6 *ngFor="let farm of farms" >
+        <farm [farm]="farm"></farm>
     </ion-col>
   </ion-row>
 </ion-content>

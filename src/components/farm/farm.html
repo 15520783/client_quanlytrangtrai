@@ -1,0 +1,32 @@
+<ion-card style="background: white">
+  <ion-card-header>
+    <ion-row>
+      <ion-col><h2 ion-text>{{farm.name}}</h2></ion-col>
+      <ion-col text-right>
+        <button ion-button item-end>Xem thông tin</button>
+      </ion-col>
+    </ion-row>
+  </ion-card-header>
+  <ion-card-content>
+    <div>
+      <div [attr.id]="farm.id"></div>
+    </div>
+    <ion-row>
+      <ion-item-divider>Thông tin chung</ion-item-divider>
+      <ion-row>
+        <ion-col class="pd-5">
+          <h2>Số lượng: {{farm.total_pig}} <ion-icon name="app-pig-outline" style="vertical-align: bottom">
+            </ion-icon>
+          </h2>
+        </ion-col>
+        <ion-col class="pd-5">
+          <h2>Địa chỉ: {{farm.address}}</h2>
+        </ion-col>
+        <ion-col class="pd-5">
+          <h2>Ngày thành lập: {{farm.founding}}</h2>
+        </ion-col>
+      </ion-row>
+    </ion-row>
+
+  </ion-card-content>
+</ion-card>
