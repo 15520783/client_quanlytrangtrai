@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { PigInfomationPage } from '../../pages/pig-infomation/pig-infomation';
 import { pig } from '../../common/entity';
+import { PigReviewIndexPage } from '../../pages/pig-review-index/pig-review-index';
 
 @IonicPage()
 @Component({
@@ -9,9 +10,10 @@ import { pig } from '../../common/entity';
   templateUrl: 'pig-view.html'
 })
 export class PigViewPage {
-  private pig: pig = null;
+  public pig: pig = null;
 
   PigInfomationPage = PigInfomationPage;
+  PigReviewPage = PigReviewIndexPage;
 
   constructor(
     public navCtrl: NavController,

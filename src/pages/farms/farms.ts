@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, LoadingController, Loading } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, LoadingController } from 'ionic-angular';
 import { FarmsProvider } from '../../providers/farms/farms';
 import { Utils } from '../../common/utils';
 import { farm } from '../../common/entity';

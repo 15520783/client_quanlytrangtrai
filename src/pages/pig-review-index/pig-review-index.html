@@ -1,0 +1,44 @@
+<ion-header>
+  <header [title]="'Review'"></header>
+</ion-header>
+<ion-content>
+  <div id='chartReview'></div>
+  <ion-list>
+    <ion-item>
+      <ion-icon name="checkmark" vetical-align-bottom></ion-icon> Index
+      <h2 item-end>
+        {{pig.index}}
+      </h2>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="checkmark" vetical-align-bottom></ion-icon> Trọng lượng
+      <h2 item-end>
+        {{pig.origin_weight}} kg
+      </h2>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="checkmark" vetical-align-bottom></ion-icon> Chân
+      <h2 item-end>
+        4
+      </h2>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="checkmark" vetical-align-bottom></ion-icon> Số vú
+      <h2 item-end>
+        {{pig.total_udder}}
+      </h2>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="checkmark" vetical-align-bottom></ion-icon> BPSD
+      <h2 item-end>
+        {{pig.bf}}
+      </h2>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="checkmark" vetical-align-bottom></ion-icon> ADG
+      <h2 item-end>
+        {{pig.adg}} g/ngày
+      </h2>
+    </ion-item>
+  </ion-list>
+</ion-content>

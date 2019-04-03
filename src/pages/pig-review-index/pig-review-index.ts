@@ -1,10 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { pig } from '../../common/entity';
 import { PigsProvider } from '../../providers/pigs/pigs';
 
 /**
- * Generated class for the PigInfomationPage page.
+ * Generated class for the PigReviewIndexPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -12,11 +12,11 @@ import { PigsProvider } from '../../providers/pigs/pigs';
 
 @IonicPage()
 @Component({
-  selector: 'page-pig-infomation',
-  templateUrl: 'pig-infomation.html',
+  selector: 'page-pig-review-index',
+  templateUrl: 'pig-review-index.html',
 })
-export class PigInfomationPage {
-  @ViewChild('chart') chart;
+export class PigReviewIndexPage {
+
   public pig: pig;
 
   constructor(
@@ -28,8 +28,8 @@ export class PigInfomationPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PigInfomationPage');
-    this.pigProvider.ViewIndexChart(this.pig, this.chart.nativeElement);
+    console.log('ionViewDidLoad PigReviewIndexPage');
+    this.pigProvider.ViewIndexChart(this.pig,document.getElementById('chartReview'));
   }
 
 }

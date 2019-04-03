@@ -3,36 +3,39 @@
 </ion-header>
 
 <ion-content center no-padding>
-  <ion-row *ngIf="farms.length>0">
-    <!-- <ion-col [attr.col-4]="platform.is('core')?'':null" [attr.col-12]="platform.is('core')?null:''"
-      *ngFor="let farm of farms" mode='ios'>
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title text-wrap>
-            <ion-icon name="app-farm" style="vertical-align: bottom"></ion-icon>
-            {{farm.name}}
-          </ion-card-title>
-        </ion-card-header>
-        <ion-card-content padding>
-          <ion-list>
-            <ion-row class="pd-5">
-              <h2>Số lượng: {{farm.total_pig}} <ion-icon name="app-pig-outline" style="vertical-align: bottom">
-                </ion-icon>
-              </h2>
-            </ion-row>
-            <ion-row class="pd-5">
-              <h2>Địa chỉ: {{farm.address}}</h2>
-            </ion-row>
-            <ion-row class="pd-5">
-              <h2>Ngày thành lập: {{convertDate(farm.founding)}}</h2>
-            </ion-row>
-          </ion-list>
-
-        </ion-card-content>
-      </ion-card>
-    </ion-col> -->
-    <ion-col col-6 *ngFor="let farm of farms" >
-        <farm [farm]="farm"></farm>
+  <ion-row *ngIf="farms">
+    <ion-col [attr.col-4]="platform.is('core')?'':null" [attr.col-12]="platform.is('core')?null:''" *ngFor="let farm of farms">
+      <farm [farm]="farm"></farm>
     </ion-col>
   </ion-row>
 </ion-content>
+
+<!-- <ion-content showWhen="ios,android">
+  <ion-col [attr.col-4]="platform.is('core')?'':null" [attr.col-12]="platform.is('core')?null:''"
+    *ngFor="let farm of farms" mode='ios'>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title text-wrap>
+          <ion-icon name="app-farm" style="vertical-align: bottom"></ion-icon>
+          {{farm.name}}
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content padding>
+        <ion-list>
+          <ion-row class="pd-5">
+            <h2>Số lượng: {{farm.total_pig}} <ion-icon name="app-pig-outline" style="vertical-align: bottom">
+              </ion-icon>
+            </h2>
+          </ion-row>
+          <ion-row class="pd-5">
+            <h2>Địa chỉ: {{farm.address}}</h2>
+          </ion-row>
+          <ion-row class="pd-5">
+            <h2>Ngày thành lập: {{convertDate(farm.founding)}}</h2>
+          </ion-row>
+        </ion-list>
+
+      </ion-card-content>
+    </ion-card>
+  </ion-col>
+</ion-content> -->

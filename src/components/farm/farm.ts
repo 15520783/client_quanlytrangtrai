@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { farm } from '../../common/entity';
 import { FarmsProvider } from '../../providers/farms/farms';
 import { Utils } from '../../common/utils';
+import { Platform, ModalController } from 'ionic-angular';
+import { FarmInfomationPage } from '../../pages/farm-infomation/farm-infomation';
 
 /**
  * Generated class for the FarmComponent component.
@@ -18,17 +20,19 @@ export class FarmComponent {
   @Input() farm: farm;
 
   constructor(
+    public platform: Platform,
     public farmProvider: FarmsProvider,
-    public util :Utils
+    public modalCtrl: ModalController,
+    public util: Utils
   ) {
     console.log('Hello FarmComponent Component');
-    
+
   }
 
   convertDate(date: any) {
     return this.util.convertDate(date);
   }
-  
+
   ngAfterViewInit(): void {
 
     let data = [
@@ -53,6 +57,15 @@ export class FarmComponent {
       },
     ]
     console.log(document.getElementById(this.farm.id));
-    this.farmProvider.createChartQuantity(document.getElementById(this.farm.id), data);
+    this.farmProvider.createPieChart(document.getElementById(this.farm.id), data, '', '');
+  }
+
+  viewDetail(farm: farm) {
+    const modal = this.modalCtrl.create(
+      FarmInfomationPage, farm, {
+        cssClass: 'ion-modal'
+      }
+    )
+    modal.present();
   }
 }

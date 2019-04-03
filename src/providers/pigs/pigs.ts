@@ -74,7 +74,7 @@ export class PigsProvider {
 
 
   ViewIndexChart(pig: pig, element: any) {
-    Highcharts.chart(element.nativeElement, {
+    Highcharts.chart(element, {
 
       chart: {
         polar: true,

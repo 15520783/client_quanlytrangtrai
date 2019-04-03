@@ -10,9 +10,14 @@ import { SectionsPage } from '../pages/sections/sections';
 import { PigsPage } from '../pages/pigs/pigs';
 import { FarmsPage } from '../pages/farms/farms';
 import { PigViewPage } from '../tabs/pig-view/pig-view';
+import { FarmInfomationPage } from '../pages/farm-infomation/farm-infomation';
+import { PigInfomationPage } from '../pages/pig-infomation/pig-infomation';
+import { PigReviewIndexPage } from '../pages/pig-review-index/pig-review-index';
+
 
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
+import { FarmComponent } from '../components/farm/farm';
 
 //Native implement
 import { StatusBar } from '@ionic-native/status-bar';
@@ -26,8 +31,6 @@ import { FarmsProvider } from '../providers/farms/farms';
 import { IonicStorageModule } from '@ionic/storage';
 import { SectionsProvider } from '../providers/sections/sections';
 import { HousesProvider } from '../providers/houses/houses';
-import { PigInfomationPage } from '../pages/pig-infomation/pig-infomation';
-import { FarmComponent } from '../components/farm/farm';
 
 
 const Pages = [
@@ -37,7 +40,9 @@ const Pages = [
   SectionsPage,
   PigsPage,
   PigViewPage,
-  PigInfomationPage
+  PigInfomationPage,
+  FarmInfomationPage,
+  PigReviewIndexPage
 ]
 
 const Components = [
