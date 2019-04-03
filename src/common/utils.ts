@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ToastController, AlertController, LoadingController, Loading, Platform } from 'ionic-angular';
+import { ToastController, AlertController, LoadingController, Loading, Platform, ModalController, Modal } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { Toast } from '@ionic-native/toast';
 
@@ -9,6 +9,7 @@ export class Utils {
   protected loading: Loading;
   protected toast: any;
   protected toastOptions: any;
+  protected modal: Modal;
 
   constructor(
     public http: HttpClient,
@@ -17,7 +18,8 @@ export class Utils {
     public loadingCtrl: LoadingController,
     public storage: Storage,
     public platform: Platform,
-    private toastNative: Toast
+    private toastNative: Toast,
+    public modalCtrl: ModalController
   ) {
 
   }
@@ -76,6 +78,11 @@ export class Utils {
 
   setKey(key: string, data: any) {
     return this.storage.set(key, data);
+  }
+
+  openModal(page, data) {
+    this.modal = this.modalCtrl.create(page, data,{cssClass:'ion-modal'});
+    return this.modal.present();
   }
 
 }

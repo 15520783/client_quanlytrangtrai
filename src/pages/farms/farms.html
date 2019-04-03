@@ -4,7 +4,11 @@
 
 <ion-content center no-padding>
   <ion-row *ngIf="farms">
-    <ion-col [attr.col-4]="platform.is('core')?'':null" [attr.col-12]="platform.is('core')?null:''" *ngFor="let farm of farms">
+    <ion-col 
+      [attr.col-md-4]="platform.is('core')?'':null"
+      [attr.col-sm-6]="platform.is('core')?'':null" 
+      [attr.col-12]="platform.is('core')?null:''" 
+      *ngFor="let farm of farms">
       <farm [farm]="farm"></farm>
     </ion-col>
   </ion-row>

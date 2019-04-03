@@ -30,7 +30,6 @@ export class PigsPage {
   public genderFilter = [];
   public houseFilter = [];
 
-  // protected pigs: Array<pig> = [];
   protected searchControl: FormControl = new FormControl();
   protected searchTerm: string = '';
   protected visible_items: Array<pig> = [];
@@ -70,7 +69,7 @@ export class PigsPage {
     this.page_Total = this.rows.length % 50 === 0 ? parseInt(this.rows.length / 50 + '') : parseInt(this.rows.length / 50 + 1 + '');
     this.visible_items = this.rows.slice(0, 50);
 
-    this.filter_default = ["pig_code", "birthday", "gender", "heath_point"];
+    this.filter_default = ["pig_code", "birthday", "gender", "heath_point","origin_weight"];
     this.filter_default.forEach(e => {
       this.cols.push({
         field: e.toString(),

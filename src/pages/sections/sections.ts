@@ -4,6 +4,7 @@ import { section } from '../../common/entity';
 import { SectionsProvider } from '../../providers/sections/sections';
 import { Utils } from '../../common/utils';
 import { KEY } from '../../common/const';
+import { SectionInfomationPage } from '../section-infomation/section-infomation';
 
 /**
  * Generated class for the SectionsPage page.
@@ -33,7 +34,7 @@ export class SectionsPage {
     public navParams: NavParams,
     public sectionProvider: SectionsProvider,
     public loadingCtrl: LoadingController,
-    public util: Utils
+    public util : Utils
   ) {
     console.log(this.navParams.data);
   }
@@ -101,5 +102,10 @@ export class SectionsPage {
           })
         })
     }
+  }
+
+
+  viewDetail(section: section) {
+    this.util.openModal(SectionInfomationPage,section);
   }
 }

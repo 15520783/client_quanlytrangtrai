@@ -7,11 +7,11 @@ page-farm-infomation {
         background: white;
     }
 
-    .card-content-custom{
-        max-height: 70.5vH;
-        min-height: 70vH;
-        overflow: auto;
-    }
+    // .card-content-custom{
+    //     max-height: 70.5vH;
+    //     min-height: 70vH;
+    //     overflow: auto;
+    // }
 
     .card{
         background: $light-tint;
@@ -25,5 +25,9 @@ page-farm-infomation {
     ion-item-divider{
         background:#01C2FA!important;
         opacity: 0.8;
+    }
+
+    ion-label{
+        font-size:15px!important;
     }
 }

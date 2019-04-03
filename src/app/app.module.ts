@@ -13,7 +13,7 @@ import { PigViewPage } from '../tabs/pig-view/pig-view';
 import { FarmInfomationPage } from '../pages/farm-infomation/farm-infomation';
 import { PigInfomationPage } from '../pages/pig-infomation/pig-infomation';
 import { PigReviewIndexPage } from '../pages/pig-review-index/pig-review-index';
-
+import { SectionInfomationPage } from '../pages/section-infomation/section-infomation';
 
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
@@ -31,6 +31,7 @@ import { FarmsProvider } from '../providers/farms/farms';
 import { IonicStorageModule } from '@ionic/storage';
 import { SectionsProvider } from '../providers/sections/sections';
 import { HousesProvider } from '../providers/houses/houses';
+import { HighChartProvider } from '../providers/high-chart/high-chart';
 
 
 const Pages = [
@@ -42,7 +43,8 @@ const Pages = [
   PigViewPage,
   PigInfomationPage,
   FarmInfomationPage,
-  PigReviewIndexPage
+  SectionInfomationPage,
+  PigReviewIndexPage,
 ]
 
 const Components = [
@@ -56,6 +58,7 @@ const Providers = [
   FarmsProvider,
   SectionsProvider,
   HousesProvider,
+  HighChartProvider
 ]
 
 @NgModule({

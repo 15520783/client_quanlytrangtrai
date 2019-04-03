@@ -1,15 +1,133 @@
-<!--
-  Generated template for the SectionInfomationPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-  <ion-navbar>
-    <ion-title>section-infomation</ion-title>
+  <ion-navbar no-padding>
+    <ion-toolbar>
+      <ion-buttons left>
+        <button navPop ion-button icon-only>
+          <ion-icon name="arrow-back"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-title>Thông tin khu</ion-title>
+    </ion-toolbar>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content no-padding>
+  <ion-item-divider sticky="true">
+    <ion-row>
+      <ion-col col-4>
+        <h2 font28 white>{{section.name}}</h2>
+      </ion-col>
+      <ion-col col-8 text-right>
+        <ion-segment mode='md'>
+          <ion-segment-button black text-weight font15>
+            <ion-icon vertical-alight-bottom name="ios-information-circle"></ion-icon>
+            Thông tin chung
+          </ion-segment-button>
+          <ion-segment-button black text-weight font15>
+            <ion-icon vertical-alight-bottom name="md-calendar"></ion-icon>
+            Lịch
+          </ion-segment-button>
+          <ion-segment-button black text-weight font15>
+            <ion-icon vertical-alight-bottom name="md-clipboard"></ion-icon>
+            Hoạt động
+          </ion-segment-button>
+        </ion-segment>
+      </ion-col>
+    </ion-row>
+  </ion-item-divider>
+  <ion-list no-padding>
+    <ion-row>
+      <ion-col [attr.col-12]="platform.is('core')?null:''">
+        <ion-card mode='ios' style="background: white" style="margin-right:0px">
+          <ion-card-header mode='ios'>
+            <ion-card-title text-wrap>Thông tin chi tiết</ion-card-title>
+          </ion-card-header>
+          <ion-card-content mode='ios' class="card-content-custom" padding>
+            <ion-list no-lines>
+              <ion-row>
+                <ion-col >
+                  <ion-item>
+                    <ion-label stacked>Số lượng</ion-label>
+                    <ion-input text-wrap type="text" readonly [(ngModel)]="section.total_pig"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label text-wrap stacked>Địa chỉ</ion-label>
+                    <ion-textarea rows="1" cols="20" type="text" readonly [(ngModel)]="section.address"></ion-textarea>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label stacked>Ngày thành lập</ion-label>
+                    <ion-input type="text" readonly [(ngModel)]="section.fouding"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label stacked>Diện tích</ion-label>
+                    <ion-input type="text" readonly [(ngModel)]="section.fouding"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label stacked>Loại trại</ion-label>
+                    <ion-input type="text" readonly [(ngModel)]="section.type_id"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label stacked>Người quản lý</ion-label>
+                    <ion-input type="text" readonly [(ngModel)]="section.manager"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label stacked>Chờ bán</ion-label>
+                    <ion-input type="text" readonly [(ngModel)]="section.fouding"></ion-input>
+                  </ion-item>
+                </ion-col>
 
+                <ion-col>
+                  <ion-item>
+                    <ion-label stacked>Tổng đàn</ion-label>
+                    <ion-input type="text" readonly [(ngModel)]="section.fouding"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label stacked>Khu cách ly</ion-label>
+                    <ion-input type="text" readonly [(ngModel)]="section.fouding"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label stacked>Khu nọc</ion-label>
+                    <ion-input type="text" readonly [(ngModel)]="section.fouding"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label stacked>Khu phối</ion-label>
+                    <ion-input type="text" readonly [(ngModel)]="section.fouding"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label stacked>Khu mang thai</ion-label>
+                    <ion-input type="text" readonly [(ngModel)]="section.fouding"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label stacked>Khu đẻ</ion-label>
+                    <ion-input type="text" readonly [(ngModel)]="section.fouding"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label stacked>Khu cai sữa</ion-label>
+                    <ion-input type="text" readonly [(ngModel)]="section.fouding"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                    <div id="chartSummary"></div>
+                </ion-col>
+              </ion-row>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <!-- <ion-col [attr.col-12]="platform.is('core')?null:''">
+        <ion-card mode='ios' style="background: white">
+          <ion-card-header mode='ios'>
+            <ion-card-title text-wrap>Quy mô khu</ion-card-title>
+          </ion-card-header>
+          <ion-card-content mode='ios' class="card-content-custom">
+            <ion-row>
+              <ion-col [attr.col-12]="platform.is('core')?null:''">
+                <div id="chartSummary"></div>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </ion-col> -->
+    </ion-row>
+  </ion-list>
 </ion-content>

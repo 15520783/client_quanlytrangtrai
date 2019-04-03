@@ -1,3 +1,33 @@
 page-section-infomation {
 
+    .card-header{
+        background:linear-gradient(to right,$themeColor2,$light-tint)
+    }
+
+    .card-content{
+        background: white;
+    }
+
+    // .card-content-custom{
+    //     max-height: 70.5vH;
+    //     min-height: 70vH;
+    //     overflow: auto;
+    // }
+
+    .card{
+        background: $light-tint;
+    }
+
+    ion-col{
+        padding:0px!important;
+    }
+
+    ion-item-divider{
+        background:#01C2FA!important;
+        opacity: 0.8;
+    }
+
+    ion-label{
+        font-size: 15px!important;
+    }
 }
