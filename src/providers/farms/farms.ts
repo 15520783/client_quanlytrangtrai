@@ -19,7 +19,14 @@ export class FarmsProvider {
 
 
   public getFarms() {
-    return this.http.get(CONFIG.SERVER_API.concat(API.GET_ALL_FARMS)).timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
+    return this.http.get(CONFIG.SERVER_API.concat(API.GET_ALL_FARMS)).timeout(CONFIG.DEFAULT_TIMEOUT).toPromise()
+    .then((data:Array<farm>)=>{
+      if(data && data.length)
+      data.forEach(e=>{
+        e.founding = this.util.convertDate(e.founding);
+      })
+      return data;
+    });
   }
 
   createPieChart(elementChart: any, data: Array<{ name: String, y: number, unit: String, sliced: boolean, selected: boolean }>, title: string, subtitle: string) {
@@ -46,6 +53,7 @@ export class FarmsProvider {
       },
       plotOptions: {
         pie: {
+          size: '80%',
           allowPointSelect: true,
           cursor: 'pointer',
           dataLabels: {

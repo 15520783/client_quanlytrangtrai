@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Platform, Content } from 'ionic-angular';
 import { farm } from '../../common/entity';
+import { HighChartProvider } from '../../providers/high-chart/high-chart';
 import { FarmsProvider } from '../../providers/farms/farms';
 
 /**
@@ -33,6 +34,7 @@ export class FarmInfomationPage {
     public navCtrl: NavController, 
     public navParams: NavParams,
     public platform: Platform,
+    public chartProvider: HighChartProvider,
     public farmProvider: FarmsProvider
     ) {
   }
@@ -156,11 +158,11 @@ export class FarmInfomationPage {
         selected:false
       },
     ]
-    this.farmProvider.createPieChart(document.getElementById(this.farm.id),data,'','');
+    this.chartProvider.createPieChart(document.getElementById(this.farm.id),data,'','');
     this.farmProvider.createBarchart(document.getElementById('barChart'));
-    this.farmProvider.createPieChart(document.getElementById('chart1'),data1,'Cơ cấu đàn nái','');
-    this.farmProvider.createPieChart(document.getElementById('chart2'),data2,'Cơ cấu đàn nộc','');
-    this.farmProvider.createPieChart(document.getElementById('chart3'),data3,'Cơ cấu đàn heo con','');
+    this.chartProvider.createPieChart(document.getElementById('chart1'),data1,'Cơ cấu đàn nái','');
+    this.chartProvider.createPieChart(document.getElementById('chart2'),data2,'Cơ cấu đàn nộc','');
+    this.chartProvider.createPieChart(document.getElementById('chart3'),data3,'Cơ cấu đàn heo con','');
   }
 
 

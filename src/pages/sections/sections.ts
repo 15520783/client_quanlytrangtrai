@@ -68,11 +68,7 @@ export class SectionsPage {
 
   getAllSections() {
     if (!this.sectionProvider.sections.length) {
-      this.util.showLoading({
-        content: 'Đang tải dữ liệu',
-        spinner: 'bubbles',
-        cssClass: 'ion-loading'
-      });
+      this.util.showLoading('Đang tải dữ liệu');
       this.sectionProvider.getSections()
         .then((data: Array<section>) => {
           if (data.length) {

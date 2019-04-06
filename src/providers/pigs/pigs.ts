@@ -4,6 +4,7 @@ import { API, CONFIG } from '../../common/const';
 import { pig } from '../../common/entity';
 import Highcharts from 'highcharts';
 import HightchartMore from 'highcharts-more';
+import { Utils } from '../../common/utils';
 HightchartMore(Highcharts);
 
 @Injectable()
@@ -11,9 +12,11 @@ export class PigsProvider {
 
   public pigs: Array<pig> = [];
 
-  constructor(public http: HttpClient) {
+  constructor(
+    public http: HttpClient,
+    public util: Utils
+  ) {
     console.log('Hello PigsProvider Provider');
-
   }
 
   getPigs() {
@@ -82,12 +85,12 @@ export class PigsProvider {
       },
 
       title: {
-        text: 'Biểu đồ chỉ số heo',
+        text: '',
         // x: -80
       },
 
       pane: {
-        size: '90%'
+        size: '80%'
       },
 
       xAxis: {

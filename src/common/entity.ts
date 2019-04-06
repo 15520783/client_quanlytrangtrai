@@ -5,7 +5,7 @@ class pig {
 	round_id:string;
 	breed_id:string;
 	gender:number;
-	birthday:Date;
+	birthday:any;
 	born_weight:number;
 	born_status:number;
 	origin_id:string;
@@ -46,7 +46,7 @@ class farm {
     address: string;
     area: number;
     total_pig: number;
-    founding: Date;
+    founding: any;
     manager: string;
     description: string;
 }
@@ -58,7 +58,7 @@ class section {
 	name:string;
 	description:string;
 	manager:string;
-	founding:Date;
+	founding:any;
 }
 
 class house {
@@ -70,7 +70,7 @@ class house {
 	description:string;
 	position:string;
 	manager:string;
-	founding:Date;
+	founding:any;
 }
 
 

@@ -56,7 +56,6 @@ export class FarmComponent {
         selected: false
       },
     ]
-    console.log(document.getElementById(this.farm.id));
     this.farmProvider.createPieChart(document.getElementById(this.farm.id), data, '', '');
   }
 

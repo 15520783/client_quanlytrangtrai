@@ -12,8 +12,8 @@
     <ion-list *ngFor="let p of pages" no-lines no-margin>
       <button ion-item (click)="openPage(p);p.expand=!p.expand" [attr.active]="p.active?'':null" no-lines>
         <ion-icon item-start [name]="p.icon"></ion-icon>{{p.title}}
-        <ion-icon item-end name="ios-arrow-forward" *ngIf="!p.expand"></ion-icon>
-        <ion-icon item-end name="ios-arrow-down" *ngIf="p.expand"></ion-icon>
+        <!-- <ion-icon item-end name="ios-arrow-forward" *ngIf="!p.expand"></ion-icon> -->
+        <!-- <ion-icon item-end name="ios-arrow-down" *ngIf="p.expand"></ion-icon> -->
       </button>
       <expandable [expandedHeight]="200" [expanded]="p.expand">
 

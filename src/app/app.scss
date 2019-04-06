@@ -49,7 +49,11 @@ ion-icon {
 }
 
 .toolbar-background{
-    background:linear-gradient(to right,$themeColor2);
+    background:linear-gradient(to right,$themeColor2,$light-tint);
+}
+
+.tabbar{
+    background:linear-gradient(to right,$themeColor2,$light-tint)!important;
 }
 
 ion-content{
@@ -59,30 +63,12 @@ ion-content{
         overflow: -moz-scrollbars-none;  // Firefox   
     }
 
+    
     // .scroll-content::-webkit-scrollbar{
     //     display: none;// Safari and Chrome
     // }
 
-    .scroll-content::-webkit-scrollbar-track
-    {
-        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-        background-color: #F5F5F5;
-    }
-
-    .scroll-content::-webkit-scrollbar
-    {
-        width: 10px;
-        background-color: #F5F5F5;
-    }
-
-    .scroll-content::-webkit-scrollbar-thumb
-    {
-        background-color: #01C2FA;
-        
-        background-image: -webkit-gradient(linear, 0 0, 0 100%,
-                        color-stop(.5, rgba(255, 255, 255, .2)),
-                        color-stop(.5, transparent), to(transparent));
-    }
+    
 
 }
 

@@ -2,43 +2,34 @@
   <header [title]="'Review'"></header>
 </ion-header>
 <ion-content>
-  <div id='chartReview'></div>
-  <ion-list>
+  <ion-list padding style="padding-top:0px!important">
+    <div id='chartReview'></div>
+  </ion-list>
+
+  <ion-list padding>
     <ion-item>
-      <ion-icon name="checkmark" vetical-align-bottom></ion-icon> Index
-      <h2 item-end>
-        {{pig.index}}
-      </h2>
+      <ion-label stacked>Index :</ion-label>
+      <ion-input text-wrap type="text" readonly [(ngModel)]="pig.index"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-icon name="checkmark" vetical-align-bottom></ion-icon> Trọng lượng
-      <h2 item-end>
-        {{pig.origin_weight}} kg
-      </h2>
+      <ion-label stacked>Trọng lượng :</ion-label>
+      <ion-input text-wrap type="text" readonly [(ngModel)]="pig.origin_weight"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-icon name="checkmark" vetical-align-bottom></ion-icon> Chân
-      <h2 item-end>
-        4
-      </h2>
+      <ion-label stacked>Chân :</ion-label>
+      <ion-input text-wrap type="text" readonly [(ngModel)]="pig.foot"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-icon name="checkmark" vetical-align-bottom></ion-icon> Số vú
-      <h2 item-end>
-        {{pig.total_udder}}
-      </h2>
+      <ion-label stacked>Số vú :</ion-label>
+      <ion-input text-wrap type="text" readonly [(ngModel)]="pig.total_udder"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-icon name="checkmark" vetical-align-bottom></ion-icon> BPSD
-      <h2 item-end>
-        {{pig.bf}}
-      </h2>
+      <ion-label stacked>BPSD :</ion-label>
+      <ion-input text-wrap type="text" readonly [(ngModel)]="pig.bf"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-icon name="checkmark" vetical-align-bottom></ion-icon> ADG
-      <h2 item-end>
-        {{pig.adg}} g/ngày
-      </h2>
+      <ion-label stacked>ADG :</ion-label>
+      <ion-input text-wrap type="text" readonly [(ngModel)]="pig.adg"></ion-input>
     </ion-item>
   </ion-list>
 </ion-content>

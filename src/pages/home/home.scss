@@ -1,5 +1,7 @@
 page-home {
-
+    .scroll-content::-webkit-scrollbar{
+        display: none;// Safari and Chrome
+    }
     ion-content {
         [active]{
             color:#005bea!important;

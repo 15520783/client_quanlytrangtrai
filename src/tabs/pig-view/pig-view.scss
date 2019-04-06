@@ -1,11 +1,5 @@
 page-pig-view {
-    .toolbar-background{
-        background:linear-gradient(to right,$themeColor2,$light-tint);
-    }
     
-    .tabbar{
-        background:linear-gradient(to right,$themeColor2,$light-tint)!important;
-    }
 
     .tab-button[aria-selected=true] .tab-button-icon {
         color:white!important;

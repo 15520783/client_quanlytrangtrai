@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, LoadingController, ModalController } from 'ionic-angular';
 import { FarmsProvider } from '../../providers/farms/farms';
 import { Utils } from '../../common/utils';
 import { farm } from '../../common/entity';
 import { KEY } from '../../common/const';
+import { FarmInfomationPage } from '../farm-infomation/farm-infomation';
 
 
 @IonicPage()
@@ -21,7 +22,8 @@ export class FarmsPage {
     public navParams: NavParams,
     public farmProvider: FarmsProvider,
     public util: Utils,
-    public loadingCtrl: LoadingController
+    public loadingCtrl: LoadingController,
+    public modalCtrl : ModalController
   ) {
   }
 
@@ -40,11 +42,7 @@ export class FarmsPage {
 
   getAllFarms() {
     if (!this.farmProvider.farms.length) {
-      this.util.showLoading({
-        content: 'Đang tải dữ liệu',
-        spinner: 'bubbles',
-        cssClass: 'ion-loading'
-      });
+      this.util.showLoading('Đang tải dữ liệu');
       this.farmProvider.getFarms()
         .then((data: Array<farm>) => {
           if (data.length) {
@@ -74,5 +72,14 @@ export class FarmsPage {
           });
         })
     }
+  }
+
+  viewDetail(farm: farm) {
+    const modal = this.modalCtrl.create(
+      FarmInfomationPage, farm, {
+        cssClass: 'ion-modal'
+      }
+    )
+    modal.present();
   }
 }

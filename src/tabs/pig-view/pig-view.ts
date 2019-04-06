@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { PigInfomationPage } from '../../pages/pig-infomation/pig-infomation';
 import { pig } from '../../common/entity';
 import { PigReviewIndexPage } from '../../pages/pig-review-index/pig-review-index';
@@ -17,7 +17,8 @@ export class PigViewPage {
 
   constructor(
     public navCtrl: NavController,
-    public navParams : NavParams
+    public navParams : NavParams,
+    public platform: Platform
   ) {
     this.pig = this.navParams.data;
   }

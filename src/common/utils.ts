@@ -29,22 +29,12 @@ export class Utils {
       message: message,
       duration: 5000,
       position: 'bottom',
-      styling: {
-        opacity: 0.75, // 0.0 (transparent) to 1.0 (opaque). Default 0.8
-        backgroundColor: '#FF0000', // make sure you use #RRGGBB. Default #333333
-        textColor: '#FFFFFF', // Ditto. Default #FFFFFF
-        cornerRadius: 16, // minimum is 0 (square). iOS default 20, Android default 100
-      },
       closeButtonText: 'Close',
       cssClass: 'ion-toast',
       showCloseButton: true,
     }
-    if (this.platform.is('cordova')) {
-      return this.toastNative.showWithOptions(this.toastOptions).toPromise();
-    } else {
-      this.toast = this.toastCtrl.create(this.toastOptions)
-      return this.toast.present();
-    }
+    this.toast = this.toastCtrl.create(this.toastOptions)
+    return this.toast.present();
   }
 
   showAlert(options: any) {
@@ -52,7 +42,12 @@ export class Utils {
     return alert.present();
   }
 
-  showLoading(options: any) {
+  showLoading(message: string) {
+    let options = {
+      content: message,
+      spinner: 'circles',
+      cssClass: 'ion-loading'
+    }
     this.loading = this.loadingCtrl.create(options);
     return this.loading.present();
   }
@@ -81,7 +76,7 @@ export class Utils {
   }
 
   openModal(page, data) {
-    this.modal = this.modalCtrl.create(page, data,{cssClass:'ion-modal'});
+    this.modal = this.modalCtrl.create(page, data, { cssClass: 'ion-modal' });
     return this.modal.present();
   }
 

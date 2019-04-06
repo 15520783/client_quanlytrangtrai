@@ -1,4 +1,22 @@
 page-section-infomation {
+    ion-item-divider{
+        color:white!important;
+        text-align: left!important;
+    }
+
+    ion-label{
+        font-size:15px!important;
+        color:black!important;
+        font-weight: bold;    
+    }
+
+    .swiper-container { 
+        height: initial;
+    }
+
+    .swiper-slide:not(.swiper-slide-active) > div {
+        display:none;
+    }
 
     .card-header{
         background:linear-gradient(to right,$themeColor2,$light-tint)

@@ -4,12 +4,6 @@ import Highcharts from 'highcharts';
 import Drilldown from 'highcharts/modules/drilldown';
 Drilldown(Highcharts);
 
-/*
-  Generated class for the HighChartProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class HighChartProvider {
 
@@ -38,15 +32,16 @@ export class HighChartProvider {
         text: subtitle
       },
       tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b> ({point.y} {point.unit})'
       },
       plotOptions: {
         pie: {
+          size: '80%',
           allowPointSelect: true,
           cursor: 'pointer',
           dataLabels: {
             enabled: true,
-            format: '<b>{point.name}</b>: {point.percentage:.1f} %  ({point.y} {point.unit})',
+            format: '<b>{point.name}</b>: {point.percentage:.1f} % ',
             style: {
               color: 'black'
             }
@@ -55,7 +50,7 @@ export class HighChartProvider {
       },
       series: <any>[
         {
-          name: 'Brands',
+          name: '',
           colorByPoint: true,
           data: data
         }
