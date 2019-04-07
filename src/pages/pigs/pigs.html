@@ -1,116 +1,115 @@
 <ion-header>
-    <ion-navbar>
-      <ion-toolbar>
-        <ion-buttons left>
-  
-          <button ion-button menuToggle>
-            <ion-icon name="menu"></ion-icon>
-          </button>
-        </ion-buttons>
-        <div>
-          <ion-row>
-              <ion-searchbar col-md-7 mode="ios" animated="true" debounce="500" placeholder="Tìm kiếm heo"
-                [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="setFilteredItems()">
-              </ion-searchbar>
-          </ion-row>
-          
-        </div>
-        <ion-buttons right>
-          <button ion-button font20 (tap)="openFilter()">
-            <ion-icon name="funnel"></ion-icon>
-          </button>
-          <button ion-button font20>
-            <ion-icon name="md-qr-scanner" showWhen="ios,android"></ion-icon>
-          </button>
-          <button item-end ion-button font20>
-            <ion-icon name="sync"></ion-icon>
-          </button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-navbar>
-  </ion-header>
-  
-  
-  <ion-content #content>
-    <ion-list >
-      <button ion-item *ngFor="let item of visible_items" (tap)="viewDeltail(item)">
-        <ion-avatar item-start>
-          <ion-icon name="app-pig-outline" font28></ion-icon>
-        </ion-avatar>
-        <h2>{{item.pig_code}}</h2>
+  <ion-navbar>
+    <ion-toolbar>
+      <ion-buttons left>
+        <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+      </ion-buttons>
+      <div>
         <ion-row>
-          <ion-col>
-            <p>House_ID: {{item.house_id}}</p>
-          </ion-col>
-          <ion-col>
-            <p>Weight: {{item.origin_weight}}</p>
-          </ion-col>
-          <ion-col>
-            <p>Birth: {{item.birthday}}</p>
-          </ion-col>
-          <ion-col>
-            <p>Gender: {{item.gender}}</p>
-          </ion-col>
-          <ion-col>
-            <p>Healpoint: {{item.heath_point}}</p>
-          </ion-col>
+          <ion-searchbar col-md-7 mode="ios" animated="true" debounce="500" placeholder="Tìm kiếm heo"
+            [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="setFilteredItems()">
+          </ion-searchbar>
         </ion-row>
-      </button>
+      </div>
+      <ion-buttons right>
+        <button ion-button font20 (tap)="openFilter()">
+          <ion-icon name="funnel"></ion-icon>
+        </button>
+        <button ion-button font20>
+          <ion-icon name="md-qr-scanner" showWhen="ios,android"></ion-icon>
+        </button>
+        <button item-end ion-button font20>
+          <ion-icon name="sync"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content #content>
+  <ion-item-divider sticky="true">Danh sách heo</ion-item-divider>
+  <ion-list>
+    <button ion-item *ngFor="let item of visible_items" (tap)="viewDeltail(item)">
+      <ion-avatar item-start>
+        <ion-icon name="app-pig-outline" font28></ion-icon>
+      </ion-avatar>
+      <h2>{{item.pig_code}}</h2>
+      <ion-row>
+        <ion-col>
+          <p>House_ID: {{item.house_id}}</p>
+        </ion-col>
+        <ion-col>
+          <p>Weight: {{item.origin_weight}}</p>
+        </ion-col>
+        <ion-col>
+          <p>Birth: {{item.birthday}}</p>
+        </ion-col>
+        <ion-col>
+          <p>Gender: {{item.gender}}</p>
+        </ion-col>
+        <ion-col>
+          <p>Healpoint: {{item.heath_point}}</p>
+        </ion-col>
+      </ion-row>
+    </button>
+  </ion-list>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Đang tải dữ liệu...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <ion-fab bottom right *ngIf="platform.is('cordova')">
+    <button ion-fab (tap)="scan()" margin-bottom="10px" showWhen="android,windows,ios">
+      <ion-icon name="barcode"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>
+
+<ion-menu [content]="mycontent" side="right" #menuFilter sticky="true" type="overlay" width="500">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons start>
+        <button ion-button font20 (tap)="closeFilter()">
+          <ion-icon name="ios-arrow-forward"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-title>Lọc theo tùy chọn</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>
+        <ion-label stacked>Giới tính</ion-label>
+        <ion-select [(ngModel)]="genderFilter" multiple="true" interface="alert" title="Giới tính" mode="ios"
+          okText="Chọn" cancelText="Hủy" [selectOptions]="customAlertOptions" (ionChange)="setFilteredItems()"
+          placeholder="Tất cả">
+          <ion-option value="1">Cái</ion-option>
+          <ion-option value="2">Đực</ion-option>
+          <ion-option value="3">Đực hiến</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Nhà</ion-label>
+        <ion-select [(ngModel)]="houseFilter" multiple="true" interface="alert" title="Giới tính" mode="ios"
+          okText="Duyệt" cancelText="Hủy" [selectOptions]="customAlertOptions" placeholder="Tất cả"
+          (ionChange)="setFilteredItems()">
+          <ion-option *ngFor="let house of houses" [value]="house.id">{{house.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>
+          Khối lượng gốc
+          <ion-badge color="danger">{{dualValue2.lower}}</ion-badge>
+          <ion-badge color="danger">{{dualValue2.upper}}</ion-badge>
+        </ion-label>
+        <ion-range mode="ios" pin="true" dualKnobs="true" [(ngModel)]="dualValue2" min="0" max="500" snaps="true"
+          debounce="500" (ionChange)="setFilteredItems()">
+        </ion-range>
+      </ion-item>
     </ion-list>
-    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
-      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Đang tải dữ liệu...">
-      </ion-infinite-scroll-content>
-    </ion-infinite-scroll>
-  
-    <ion-fab bottom right *ngIf="platform.is('cordova')">
-      <button ion-fab (tap)="scan()" margin-bottom="10px" showWhen="android,windows,ios">
-        <ion-icon name="barcode"></ion-icon>
-      </button>
-    </ion-fab>
   </ion-content>
-  
-  <ion-menu [content]="mycontent" side="right" #menuFilter sticky="true" type="overlay" width="500">
-    <ion-header>
-      <ion-toolbar>
-        <ion-buttons start>
-          <button ion-button font20 (tap)="closeFilter()">
-            <ion-icon name="ios-arrow-forward"></ion-icon>
-          </button>
-        </ion-buttons>
-        <ion-title>Lọc theo tùy chọn</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content>
-      <ion-list>
-        <ion-item>
-          <ion-label stacked>Giới tính</ion-label>
-          <ion-select [(ngModel)]="genderFilter" multiple="true" interface="alert" title="Giới tính" mode="ios"
-            okText="Chọn" cancelText="Hủy" [selectOptions]="customAlertOptions" (ionChange)="setFilteredItems()"
-            placeholder="Tất cả">
-            <ion-option value="1">Cái</ion-option>
-            <ion-option value="2">Đực</ion-option>
-            <ion-option value="3">Đực hiến</ion-option>
-          </ion-select>
-        </ion-item>
-        <ion-item>
-          <ion-label stacked>Nhà</ion-label>
-          <ion-select [(ngModel)]="houseFilter" multiple="true" interface="alert" title="Giới tính" mode="ios"
-            okText="Duyệt" cancelText="Hủy" [selectOptions]="customAlertOptions" placeholder="Tất cả"
-            (ionChange)="setFilteredItems()">
-            <ion-option *ngFor="let house of houses" [value]="house.id">{{house.name}}</ion-option>
-          </ion-select>
-        </ion-item>
-        <ion-item>
-          <ion-label stacked>
-            Khối lượng gốc
-            <ion-badge color="danger">{{dualValue2.lower}}</ion-badge>
-            <ion-badge color="danger">{{dualValue2.upper}}</ion-badge>
-          </ion-label>
-          <ion-range mode="ios" pin="true" dualKnobs="true" [(ngModel)]="dualValue2" min="0" max="500" snaps="true"
-            debounce="500" (ionChange)="setFilteredItems()">
-          </ion-range>
-        </ion-item>
-      </ion-list>
-    </ion-content>
-  </ion-menu>
-  <ion-nav #mycontent></ion-nav>
+</ion-menu>
+<ion-nav #mycontent></ion-nav>

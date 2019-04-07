@@ -2,7 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import Highcharts from 'highcharts';
 import Drilldown from 'highcharts/modules/drilldown';
+import HighchartsExporting from 'highcharts/modules/exporting';
+import HighchartsExportData from 'highcharts/modules/export-data'
 Drilldown(Highcharts);
+HighchartsExporting(Highcharts);
+HighchartsExportData(Highcharts);
 
 @Injectable()
 export class HighChartProvider {
@@ -10,7 +14,7 @@ export class HighChartProvider {
   constructor(public http: HttpClient) {
     console.log('Hello HighChartProvider Provider');
   }
-
+  
 
   createPieChart(elementChart: any, data: Array<{ name: String, y: number, unit: String, sliced: boolean, selected: boolean }>, title: string, subtitle: string) {
     Highcharts.chart(elementChart, {
@@ -34,18 +38,21 @@ export class HighChartProvider {
       tooltip: {
         pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b> ({point.y} {point.unit})'
       },
+      
       plotOptions: {
         pie: {
-          size: '80%',
+          size: '60%',
           allowPointSelect: true,
           cursor: 'pointer',
           dataLabels: {
+            distance: 20,
             enabled: true,
             format: '<b>{point.name}</b>: {point.percentage:.1f} % ',
             style: {
               color: 'black'
-            }
-          }
+            },
+          },
+          showInLegend: true
         }
       },
       series: <any>[
@@ -59,6 +66,7 @@ export class HighChartProvider {
   }
 
   createPieDrilldownChart(elementChart: any, data: Array<{ name: String, y: number, unit: String, sliced: boolean, selected: boolean }>, drilldownData, title: string, subtitle: string) {
+    // let options = Highcharts.getOptions().exporting.buttons.contextButton.menuItems;
     Highcharts.chart(elementChart, {
       chart: {
         plotBackgroundColor: null,
@@ -80,18 +88,21 @@ export class HighChartProvider {
       tooltip: {
         pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
       },
+      
       plotOptions: {
         pie: {
-          size: '80%',
+          size: '60%',
           allowPointSelect: true,
           cursor: 'pointer',
           dataLabels: {
+            distance: 20,
             enabled: true,
             format: '<b>{point.name}</b>: {point.percentage:.1f} %  ({point.y} {point.unit})',
             style: {
               color: 'black'
             }
-          }
+          },
+          showInLegend: true
         }
       },
       series: <any>[

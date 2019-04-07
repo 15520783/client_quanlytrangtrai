@@ -32,6 +32,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { SectionsProvider } from '../providers/sections/sections';
 import { HousesProvider } from '../providers/houses/houses';
 import { HighChartProvider } from '../providers/high-chart/high-chart';
+import { HouseInfomationPage } from '../pages/house-infomation/house-infomation';
 
 
 const Pages = [
@@ -45,6 +46,7 @@ const Pages = [
   FarmInfomationPage,
   SectionInfomationPage,
   PigReviewIndexPage,
+  HouseInfomationPage
 ]
 
 const Components = [

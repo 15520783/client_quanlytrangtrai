@@ -42,6 +42,9 @@ ion-icon {
     &[class*="section-single"] {
         mask-image: url(../assets/imgs/section.svg);
     }
+    &[class*="function"] {
+        mask-image: url(../assets/imgs/function.svg);
+    }
 }
 
 .toolbar-title{
@@ -173,3 +176,30 @@ ion-menu {
        background: rgb(245, 61, 61)!important;
     }
 }
+
+.ion-actionsheet{
+    .action-sheet-group {
+        background: linear-gradient(to right, #01C2FA, #d7d8da)!important;
+        padding-bottom:0px!important;
+    }
+
+    .action-sheet-group:first-child{
+        margin: 5px!important;
+        border-radius: 10px!important;
+    }
+
+    .action-sheet-group:last-child{
+        margin: 5px!important;
+        border-radius: 10px!important;
+    }
+
+    .action-sheet-title {
+        font-weight: bold;
+        color:black;
+    }
+}
+
+.cancel-button-actionsheet{
+    background:#f53d3d!important;
+}
+

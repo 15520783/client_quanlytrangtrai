@@ -4,6 +4,7 @@ import { FarmsProvider } from '../../providers/farms/farms';
 import { Utils } from '../../common/utils';
 import { Platform, ModalController } from 'ionic-angular';
 import { FarmInfomationPage } from '../../pages/farm-infomation/farm-infomation';
+import { HighChartProvider } from '../../providers/high-chart/high-chart';
 
 /**
  * Generated class for the FarmComponent component.
@@ -23,6 +24,7 @@ export class FarmComponent {
     public platform: Platform,
     public farmProvider: FarmsProvider,
     public modalCtrl: ModalController,
+    public chartProvider: HighChartProvider,
     public util: Utils
   ) {
     console.log('Hello FarmComponent Component');
@@ -56,7 +58,7 @@ export class FarmComponent {
         selected: false
       },
     ]
-    this.farmProvider.createPieChart(document.getElementById(this.farm.id), data, '', '');
+    this.chartProvider.createPieChart(document.getElementById(this.farm.id), data, '', '');
   }
 
   viewDetail(farm: farm) {

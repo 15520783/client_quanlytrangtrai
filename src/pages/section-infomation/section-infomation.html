@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar no-padding>
-    <ion-toolbar>
+    <ion-toolbar no-border>
       <ion-buttons left>
         <button navPop ion-button icon-only>
           <ion-icon name="arrow-back"></ion-icon>
@@ -8,33 +8,41 @@
       </ion-buttons>
       <ion-title>Thông tin khu</ion-title>
     </ion-toolbar>
+    <ion-row showWhen='ios,android'>
+      <ion-col>
+        <h2 ion-text ion-item style="background: transparent!important">{{section.name}}</h2>
+      </ion-col>
+    </ion-row>
+    <ion-row showWhen='core'>
+      <ion-item-divider sticky="true">
+        <ion-row>
+          <ion-col col-4>
+            <h2 font28 white>{{section.name}}</h2>
+          </ion-col>
+          <ion-col col-8 text-right>
+            <ion-segment mode='md'>
+              <ion-segment-button black text-weight font15>
+                <ion-icon vertical-alight-bottom name="ios-information-circle"></ion-icon>
+                Thông tin chung
+              </ion-segment-button>
+              <ion-segment-button black text-weight font15>
+                <ion-icon vertical-alight-bottom name="md-calendar"></ion-icon>
+                Lịch
+              </ion-segment-button>
+              <ion-segment-button black text-weight font15>
+                <ion-icon vertical-alight-bottom name="md-clipboard"></ion-icon>
+                Hoạt động
+              </ion-segment-button>
+            </ion-segment>
+          </ion-col>
+        </ion-row>
+      </ion-item-divider>
+    </ion-row>
   </ion-navbar>
 </ion-header>
 
-<!-- <ion-content no-padding>
-  <ion-item-divider sticky="true">
-    <ion-row>
-      <ion-col col-4>
-        <h2 font28 white>{{section.name}}</h2>
-      </ion-col>
-      <ion-col col-8 text-right>
-        <ion-segment mode='md'>
-          <ion-segment-button black text-weight font15>
-            <ion-icon vertical-alight-bottom name="ios-information-circle"></ion-icon>
-            Thông tin chung
-          </ion-segment-button>
-          <ion-segment-button black text-weight font15>
-            <ion-icon vertical-alight-bottom name="md-calendar"></ion-icon>
-            Lịch
-          </ion-segment-button>
-          <ion-segment-button black text-weight font15>
-            <ion-icon vertical-alight-bottom name="md-clipboard"></ion-icon>
-            Hoạt động
-          </ion-segment-button>
-        </ion-segment>
-      </ion-col>
-    </ion-row>
-  </ion-item-divider>
+<ion-content no-padding *ngIf="platform.is('core')">
+
   <ion-list no-padding>
     <ion-row>
       <ion-col [attr.col-12]="platform.is('core')?null:''">
@@ -116,9 +124,9 @@
       </ion-col>
     </ion-row>
   </ion-list>
-</ion-content> -->
+</ion-content>
 
-<ion-content showWhen="ios,android">
+<ion-content *ngIf="!platform.is('core')">
   <ion-slides loop="true" scrollbar="true" [attr.options]="slideOpts">
     <ion-slide>
       <ion-infinite-scroll>

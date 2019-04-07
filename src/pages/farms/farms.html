@@ -11,6 +11,7 @@
 </ion-content>
 
 <ion-content #content showWhen="ios,android">
+  <ion-item-divider sticky="true">Danh sách trang trại</ion-item-divider>
   <ion-list>
     <button ion-item *ngFor="let farm of farms" (tap)="viewDetail(farm)">
       <ion-avatar item-start>

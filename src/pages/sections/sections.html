@@ -18,7 +18,7 @@
 <ion-content no-padding>
   <ion-item-group>
     <ion-item-divider sticky="true">Danh sách khu</ion-item-divider>
-    <ion-list>
+    <ion-list no-lines>
       <ion-item-sliding *ngFor="let section of sections" (click)="activeItem(section)">
         <ion-item [attr.active]="section.active?'':null">
           <ion-icon fixed item-start name="app-section-single" color="danger"></ion-icon>
@@ -30,13 +30,13 @@
               <!-- <p>{{convertDate(section.founding)}}</p> -->
               <p>{{section.description}}</p>
             </div>
-            <ion-list>
+            <ion-list no-lines>
               <button item-end ion-item (tap)="viewDetail(section)">
                 <ion-icon name="ios-information-circle" style="vertical-align: sub" font28></ion-icon>
                 Xem thông tin khu
               </button>
               <ion-list-header [attr.active_header]="section.active?'':null">Danh sách chức năng</ion-list-header>
-              <button item-end ion-item *ngFor="let item of items">
+              <button item-end ion-item *ngFor="let item of items" (tap)="viewHouse(item)">
                 <ion-icon name="ios-home" style="vertical-align: bottom" font28></ion-icon>
                 Nhà {{item.idx}}
               </button>

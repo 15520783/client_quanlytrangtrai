@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
-import { section } from '../../common/entity';
+import { section, house } from '../../common/entity';
 import { SectionsProvider } from '../../providers/sections/sections';
 import { Utils } from '../../common/utils';
 import { KEY } from '../../common/const';
 import { SectionInfomationPage } from '../section-infomation/section-infomation';
+import { HouseInfomationPage } from '../house-infomation/house-infomation';
 
 /**
  * Generated class for the SectionsPage page.
@@ -103,5 +104,9 @@ export class SectionsPage {
 
   viewDetail(section: section) {
     this.util.openModal(SectionInfomationPage,section);
+  }
+
+  viewHouse(house:house){
+    this.util.openModal(HouseInfomationPage,house);
   }
 }
