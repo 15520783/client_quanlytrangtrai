@@ -1,91 +1,85 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Menu, Content, LoadingController, MenuController, Platform, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Content, Menu, Platform, MenuController, InfiniteScroll } from 'ionic-angular';
 import { FormControl } from '@angular/forms';
-import { PigsProvider } from '../../providers/pigs/pigs';
-import { HousesProvider } from '../../providers/houses/houses';
-import { pig, house } from '../../common/entity';
+import { PigGroupsProvider } from '../../providers/pig-groups/pig-groups';
 import { Utils } from '../../common/utils';
+import { group, house } from '../../common/entity';
 import { KEY } from '../../common/const';
-import { VARIABLE } from '../../common/const'
-import { PigViewPage } from '../../tabs/pig-view/pig-view';
 import { FilterProvider } from '../../providers/filter/filter';
-
+import { HousesProvider } from '../../providers/houses/houses';
 
 @IonicPage()
 @Component({
-  selector: 'page-pigs',
-  templateUrl: 'pigs.html',
+  selector: 'page-pig-groups',
+  templateUrl: 'pig-groups.html',
 })
-export class PigsPage {
-
+export class PigGroupsPage {
   @ViewChild('menuFilter') menuFilter: Menu;
   @ViewChild('content') content: Content;
 
+  customAlertOptions: any = {
+    translucent: true,
+    cssClass: 'ion-alert'
+  };
+
   public page_Idx: number = 1;
   public page_Total: number = 0;
-  public rows: Array<pig> = [];
+  public rows: Array<group> = [];
   public cols: any = [];
-  public filter_default: any = ["pig_code", "birthday", "gender", "heath_point", "origin_weight"];
-  public dualValue2 = { lower: 0, upper: 500 };
+  public filter_default: any = ["group_code", "avg_birthday", "quantity", "health_status", "origin_avg_weight", "origin_sum_weight"];
+  protected visible_items: Array<group> = [];
+  protected houses: Array<house> = [];
+
+  public origin_sum_weight = { lower: 0, upper: 1000 };
+  public origin_avg_weight = { lower: 0, upper: 7 };
 
   public genderFilter = [];
   public houseFilter = [];
 
   protected searchControl: FormControl = new FormControl();
   protected searchTerm: string = '';
-  protected visible_items: Array<pig> = [];
-  protected houses: Array<house> = [];
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public loadingCtrl: LoadingController,
-    public pigProvider: PigsProvider,
+    public pigGroupProvider: PigGroupsProvider,
     public filterProvider: FilterProvider,
     public houseProvider: HousesProvider,
-    public menuCtrl: MenuController,
-    public modalCtrl: ModalController,
+    public util: Utils,
     public platform: Platform,
-    public util: Utils
+    public menuCtrl: MenuController
   ) {
-    this.houseProvider.getAllHouses().then((data: any) => {
+    this.houseProvider.getAllHouses().then((data: Array<house>) => {
       this.houses = data;
     })
   }
 
-  getRender(idx) {
-    return VARIABLE.gender[idx].name;
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad PigGroupsPage');
   }
+
 
   ionViewWillEnter() {
-    console.log('ionViewWillEnter PigsPage');
-    this.getAllPigs();
+    console.log('ionViewWillEnter PigGroupsPage');
+    this.getAllGroups();
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad PigsPage');
-  }
-
-
-  convertDate(date: any) {
-    return this.util.convertDate(date);
-  }
-
-  public getAllPigs() {
-    if (!this.pigProvider.pigs.length) {
+  public getAllGroups() {
+    if (!this.pigGroupProvider.groups.length) {
       this.util.showLoading('Đang tải dữ liệu');
-      this.pigProvider.getPigs()
-        .then((data: Array<pig>) => {
+      this.pigGroupProvider.getAllGroups()
+        .then((data: Array<group>) => {
           if (data.length) {
-            this.util.setKey(KEY.PIGS, data)
+            this.util.setKey(KEY.GROUPS, data)
               .then(() => {
-                this.pigProvider.pigs = data;
+                this.pigGroupProvider.groups = data;
+                console.log(data);
                 this.util.closeLoading().then(() => {
                   this.setFilteredItems();
                 });
               })
               .catch((err) => {
-                this.pigProvider.pigs = data;
+                this.pigGroupProvider.groups = data;
                 console.log('err_storage_pigs', err);
                 this.util.closeLoading().then(() => {
                   this.setFilteredItems();
@@ -95,16 +89,16 @@ export class PigsPage {
         })
         .catch((err) => {
           console.log('err_pig_provider', err);
-          this.util.getKey(KEY.PIGS)
-            .then((data: Array<pig>) => {
-              this.pigProvider.pigs = data;
+          this.util.getKey(KEY.GROUPS)
+            .then((data: Array<group>) => {
+              this.pigGroupProvider.groups = data;
               this.util.closeLoading().then(() => {
                 this.setFilteredItems();
               });
             })
             .catch((err) => {
               console.log('err_get_storage_pig', err);
-              this.pigProvider.pigs = [];
+              this.pigGroupProvider.groups = [];
             })
           this.util.showToast('Dữ liệu chưa được cập nhật. Vui lòng kiểm tra kết nối.');
         })
@@ -117,7 +111,7 @@ export class PigsPage {
   }
 
   public setFilteredItems() {
-    this.content.scrollToTop().then(() => {
+    this.content.scrollToTop().then(()=>{
       this.rows = this.filterItems(this.searchTerm);
       this.page_Total = this.rows.length % 50 === 0 ? parseInt(this.rows.length / 50 + '') : parseInt(this.rows.length / 50 + 1 + '');
       this.page_Idx = 1;
@@ -126,15 +120,28 @@ export class PigsPage {
   }
 
   public filterItems(searchItem) {
-    this.filterProvider.input = this.pigProvider.pigs;
+    this.filterProvider.input = this.pigGroupProvider.groups;
     this.filterProvider.searchWithInclude.gender = this.genderFilter;
     this.filterProvider.searchWithInclude.house_id = this.houseFilter;
     this.filterProvider.searchText = searchItem;
     this.filterProvider.searchWithText = this.filter_default;
-    this.filterProvider.searchWithRange.origin_weight = { min: this.dualValue2.lower, max: this.dualValue2.upper };
+    this.filterProvider.searchWithRange.origin_sum_weight = { min: this.origin_sum_weight.lower, max: this.origin_sum_weight.upper };
+    this.filterProvider.searchWithRange.origin_avg_weight = { min: this.origin_avg_weight.lower, max: this.origin_avg_weight.upper };
     return this.filterProvider.filter();
   }
 
+
+  loadData(infiniteScroll) {
+    setTimeout(() => {
+      let start = 50 * this.page_Idx + 1;
+      let end = start + 50;
+      this.page_Idx++;
+
+      this.visible_items.push.apply(this.visible_items, this.rows.slice(start, end));
+      infiniteScroll.complete();
+    }, 800);
+
+  }
 
   openFilter() {
     this.menuFilter.enable(true);
@@ -144,47 +151,4 @@ export class PigsPage {
   closeFilter() {
     this.menuCtrl.close();
   }
-
-  customAlertOptions: any = {
-    translucent: true,
-    cssClass: 'ion-alert'
-  };
-
-  loadData(infiniteScroll) {
-    setTimeout(() => {
-      let start = 50 * this.page_Idx + 1;
-      let end = start + 50;
-      this.page_Idx++;
-      this.visible_items.push.apply(this.visible_items, this.rows.slice(start, end));
-      infiniteScroll.complete();
-    }, 500);
-  }
-
-
-  viewDeltail(pig) {
-    // this.navCtrl.push(PigViewPage,{data:pig});
-    const modal = this.modalCtrl.create(
-      PigViewPage, pig, {
-        cssClass: 'ion-modal'
-      }
-    )
-    modal.present();
-  }
-
-
-  // scan() {
-  //   this.scanner.scan()
-  //     .then((result: any) => {
-  //       console.log(result);
-  //       if (result) {
-  //         console.log('result', result);
-  //         let idx = this.pigs.findIndex(object => object.pig_code === result.text);
-  //         if (idx > -1)
-  //           this.viewDeltail(this.pigs[idx]);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log('err scan', err)
-  //     })
-  // }
 }

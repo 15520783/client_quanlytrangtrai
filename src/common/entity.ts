@@ -38,6 +38,23 @@ class pig {
 	price_code:number;
 }
 
+class group {
+	id:string;
+	group_code:string;
+	parent_id:string;
+	round_id:string;
+	avg_birthday:any;
+	quantity:number;
+	heal_status:string;
+	overview_status:string;
+	origin_sum_weight:number;
+	origin_avg_weight:number;
+	status:string;
+	mark:string;
+	health_status:string;
+	description:string;
+}
+
 
 class farm {
     id: string;
@@ -78,3 +95,4 @@ export {farm}
 export {section}
 export {house}
 export {pig}
+export {group}

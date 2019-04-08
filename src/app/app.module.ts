@@ -14,6 +14,8 @@ import { FarmInfomationPage } from '../pages/farm-infomation/farm-infomation';
 import { PigInfomationPage } from '../pages/pig-infomation/pig-infomation';
 import { PigReviewIndexPage } from '../pages/pig-review-index/pig-review-index';
 import { SectionInfomationPage } from '../pages/section-infomation/section-infomation';
+import { HouseInfomationPage } from '../pages/house-infomation/house-infomation';
+import { PigGroupsPage } from '../pages/pig-groups/pig-groups';
 
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
@@ -32,7 +34,8 @@ import { IonicStorageModule } from '@ionic/storage';
 import { SectionsProvider } from '../providers/sections/sections';
 import { HousesProvider } from '../providers/houses/houses';
 import { HighChartProvider } from '../providers/high-chart/high-chart';
-import { HouseInfomationPage } from '../pages/house-infomation/house-infomation';
+import { PigGroupsProvider } from '../providers/pig-groups/pig-groups';
+import { FilterProvider } from '../providers/filter/filter';
 
 
 const Pages = [
@@ -46,7 +49,8 @@ const Pages = [
   FarmInfomationPage,
   SectionInfomationPage,
   PigReviewIndexPage,
-  HouseInfomationPage
+  HouseInfomationPage,
+  PigGroupsPage
 ]
 
 const Components = [
@@ -60,7 +64,9 @@ const Providers = [
   FarmsProvider,
   SectionsProvider,
   HousesProvider,
-  HighChartProvider
+  HighChartProvider,
+  PigGroupsProvider,
+  FilterProvider
 ]
 
 @NgModule({
@@ -93,6 +99,8 @@ const Providers = [
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Utils,
     ...Providers,
+    PigGroupsProvider,
+    FilterProvider,
   ]
 })
 export class AppModule {}

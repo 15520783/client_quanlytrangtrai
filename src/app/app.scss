@@ -45,6 +45,9 @@ ion-icon {
     &[class*="function"] {
         mask-image: url(../assets/imgs/function.svg);
     }
+    &[class*="pig-foot"] {
+        mask-image: url(../assets/imgs/pig-foot.svg);
+    }
 }
 
 .toolbar-title{

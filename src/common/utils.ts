@@ -24,6 +24,14 @@ export class Utils {
 
   }
 
+  isEmpty(obj) {
+    for(var prop in obj) {
+      if(obj.hasOwnProperty(prop))
+        return false;
+    }
+    return true;
+  }
+
   showToast(message) {
     this.toastOptions = {
       message: message,
