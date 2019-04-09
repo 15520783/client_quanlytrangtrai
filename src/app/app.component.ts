@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, Slides } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -14,7 +14,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = LoginPage;
-
+  splash:boolean = true;
 
   constructor(
     public platform: Platform,
@@ -22,7 +22,7 @@ export class MyApp {
     public splashScreen: SplashScreen,
     public headerColor: HeaderColor,
     public farmProvider: FarmsProvider
-    ) {
+  ) {
     this.initializeApp();
   }
 
@@ -37,8 +37,11 @@ export class MyApp {
         this.headerColor.tint('#01C2FA');
       }
 
-    }).then(()=>{
-
+    }).then(() => {
+      setTimeout(() => {
+        this.splash = false;  
+        // this.rootPage = LoginPage;
+      }, 4000);
     });
   }
 

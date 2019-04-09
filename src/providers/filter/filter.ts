@@ -29,10 +29,10 @@ export class FilterProvider {
     round_id: [],
   }
 
-  public searchWithRange = {
-    origin_weight: { min: undefined, max: undefined },
-    origin_sum_weight:{min: undefined, max: undefined},
-    origin_avg_weight:{min: undefined, max: undefined}
+  public searchWithRange: any = {
+    // origin_weight: { min: null, max: null },
+    // origin_sum_weight: { min: null, max: null },
+    // origin_avg_weight: { min: null, max: null }
   }
 
 
@@ -55,12 +55,12 @@ export class FilterProvider {
       })
     })
 
-
+    console.log(this.searchWithRange);
     Object.keys(this.searchWithRange).forEach((e) => {
       result = result.filter((value) => {
-        if (this.searchWithRange[e].min != undefined &&  this.searchWithRange[e].max != undefined)
+        // if (value[e] !== undefined)
           return (this.searchWithRange[e].min <= value[e] && this.searchWithRange[e].max >= value[e]) ? true : false;
-        else return true;
+        // else return true;
       })
     })
 

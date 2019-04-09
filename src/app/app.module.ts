@@ -56,7 +56,7 @@ const Pages = [
 const Components = [
   ExpandableComponent,
   HeaderComponent,
-  FarmComponent
+  FarmComponent,
 ]
 
 const Providers = [
@@ -66,7 +66,7 @@ const Providers = [
   HousesProvider,
   HighChartProvider,
   PigGroupsProvider,
-  FilterProvider
+  FilterProvider,
 ]
 
 @NgModule({
@@ -100,7 +100,7 @@ const Providers = [
     Utils,
     ...Providers,
     PigGroupsProvider,
-    FilterProvider,
+    FilterProvider
   ]
 })
 export class AppModule {}

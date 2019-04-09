@@ -1,4 +1,5 @@
 page-farm-infomation {
+        
     ion-item-divider{
         color:white!important;
         text-align: left!important;
@@ -17,13 +18,13 @@ page-farm-infomation {
         }
     }
 
-    .swiper-container { 
-        height: initial;
-    }
+    // .swiper-container { 
+    //     height: initial;
+    // }
 
-    .swiper-slide:not(.swiper-slide-active) > div {
-        display:none;
-    }
+    // .swiper-slide:not(.swiper-slide-active) > div {
+    //     display:none;
+    // }
       
     .card-header{
         background:linear-gradient(to right,$themeColor2,$light-tint)

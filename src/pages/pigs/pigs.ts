@@ -59,11 +59,11 @@ export class PigsPage {
 
   ionViewWillEnter() {
     console.log('ionViewWillEnter PigsPage');
-    this.getAllPigs();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PigsPage');
+    this.getAllPigs();
   }
 
 
@@ -131,7 +131,9 @@ export class PigsPage {
     this.filterProvider.searchWithInclude.house_id = this.houseFilter;
     this.filterProvider.searchText = searchItem;
     this.filterProvider.searchWithText = this.filter_default;
-    this.filterProvider.searchWithRange.origin_weight = { min: this.dualValue2.lower, max: this.dualValue2.upper };
+    this.filterProvider.searchWithRange = {
+       origin_weight : { min: this.dualValue2.lower, max: this.dualValue2.upper }
+    }
     return this.filterProvider.filter();
   }
 

@@ -79,11 +79,11 @@
 </ion-content>
 
 <ion-content no-padding *ngIf="!platform.is('core')">
-  <ion-slides loop="true" scrollbar="true">
+  <ion-slides loop="true" scrollbar="true" #slider>
     <ion-slide>
       <ion-card no-margin mode='ios' style="background: white" style="margin-right:0px">
         <ion-card-header mode='ios' no-padding>
-          <ion-card-title text-wrap>Thông tin chi tiết</ion-card-title>
+          <ion-card-title text-wrap sticky="true">Thông tin chi tiết</ion-card-title>
         </ion-card-header>
         <ion-card-content mode='ios' class="card-content-custom" padding>
           <ion-list no-lines>

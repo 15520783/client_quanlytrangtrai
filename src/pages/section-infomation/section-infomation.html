@@ -127,10 +127,10 @@
 </ion-content>
 
 <ion-content *ngIf="!platform.is('core')">
-  <ion-slides loop="true" scrollbar="true" [attr.options]="slideOpts">
+  <ion-slides loop="true" paper="true" #slider>
     <ion-slide>
       <ion-infinite-scroll>
-        <ion-item-divider sticky="true">Thông tin chi tiết</ion-item-divider>
+        <ion-item-divider text-wrap sticky="true">Thông tin chi tiết</ion-item-divider>
         <ion-list no-padding no-lines>
           <ion-item>
             <ion-label stacked>Số lượng</ion-label>
@@ -193,7 +193,7 @@
     </ion-slide>
     <ion-slide>
       <ion-infinite-scroll>
-        <ion-item-divider text-wrap>Cơ cấu đàn nái</ion-item-divider>
+        <ion-item-divider text-wrap sticky="true">Cơ cấu đàn nái</ion-item-divider>
         <ion-row padding>
           <ion-col>
             <div id="chartSummary"></div>

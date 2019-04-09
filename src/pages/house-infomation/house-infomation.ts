@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, ActionSheetController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Platform, ActionSheetController, Slides } from 'ionic-angular';
 import { house } from '../../common/entity';
 import { HousesProvider } from '../../providers/houses/houses';
 import { HighChartProvider } from '../../providers/high-chart/high-chart';
@@ -17,7 +17,8 @@ import { HighChartProvider } from '../../providers/high-chart/high-chart';
   templateUrl: 'house-infomation.html',
 })
 export class HouseInfomationPage {
-
+  @ViewChild('slider') slider: Slides;
+  
   public house: house = {
     description: "",
     founding: "2015-04-01T00:00:00.000Z",
@@ -41,7 +42,11 @@ export class HouseInfomationPage {
   ) {
 
   }
-
+  ngAfterViewInit() {
+    if(this.slider)
+    this.slider.autoHeight = true;
+    console.log('ngAfterViewInit FarmInfomationPage');
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HouseInfomationPage');

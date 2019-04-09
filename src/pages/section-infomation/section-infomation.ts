@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { section } from '../../common/entity';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Platform, Slides } from 'ionic-angular';
 import { SectionsProvider } from '../../providers/sections/sections';
 import { Utils } from '../../common/utils';
 import { HighChartProvider } from '../../providers/high-chart/high-chart';
+import { section } from '../../common/entity';
 
 @IonicPage()
 @Component({
@@ -11,15 +11,16 @@ import { HighChartProvider } from '../../providers/high-chart/high-chart';
   templateUrl: 'section-infomation.html',
 })
 export class SectionInfomationPage {
+  @ViewChild('slider') slider: Slides;
 
   public section: section = {
-    department_id: "1",
     description: "",
     founding: new Date("2015-04-01T00:00:00.000Z"),
     id: "1",
     manager: "15",
     name: "Khu cách ly",
     type_id: "1",
+    department_id:""
   }
 
   constructor(
@@ -33,6 +34,12 @@ export class SectionInfomationPage {
     this.section = this.navParams.data;
   }
 
+  ngAfterViewInit() {
+    if(this.slider)
+    this.slider.autoHeight = true;
+    console.log('ngAfterViewInit FarmInfomationPage');
+  }
+  
   ionViewDidLoad() {
     console.log('ionViewDidLoad SectionInfomationPage');
     let data = [

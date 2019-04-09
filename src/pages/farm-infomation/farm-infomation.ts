@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, Content } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, Content, Slides } from 'ionic-angular';
 import { farm } from '../../common/entity';
 import { HighChartProvider } from '../../providers/high-chart/high-chart';
 import { FarmsProvider } from '../../providers/farms/farms';
@@ -18,6 +18,8 @@ import { FarmsProvider } from '../../providers/farms/farms';
 })
 export class FarmInfomationPage {
 
+  @ViewChild('slider') slider: Slides;
+
   public farm: farm = {
     id: '1',
     name: 'Vĩnh Tân 1',
@@ -29,14 +31,21 @@ export class FarmInfomationPage {
     total_pig: 5000,
     type_id: 2
   };
+  slideElements: any;
 
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
     public chartProvider: HighChartProvider,
-    public farmProvider: FarmsProvider
-    ) {
+    public farmProvider: FarmsProvider,
+  ) {
+  }
+
+  ngAfterViewInit() {
+    if(this.slider)
+    this.slider.autoHeight = true;
+    console.log('ngAfterViewInit FarmInfomationPage');
   }
 
   ionViewDidLoad() {
@@ -65,104 +74,104 @@ export class FarmInfomationPage {
 
     let data1 = [
       {
-        name:'Chờ bán',
-        y:0,
-        unit:'con',
-        sliced:false,
-        selected:false
-      },{
-        name:'Hậu bị',
-        y:300,
-        unit:'con',
-        sliced:false,
-        selected:false
-      },{
-        name:'Mang thai',
-        y:500,
-        unit:'con',
-        sliced:false,
-        selected:false
-      },{
-        name:'Lốc',
-        y:0,
-        unit:'con',
-        sliced:false,
-        selected:false
-      },{
-        name:'Sẩy thai',
-        y:1,
-        unit:'con',
-        sliced:false,
-        selected:false
-      },{
-        name:'Đẻ',
-        y:700,
-        unit:'con',
-        sliced:false,
-        selected:false
-      },{
-        name:'Cai sữa',
-        y:0,
-        unit:'con',
-        sliced:false,
-        selected:false
+        name: 'Chờ bán',
+        y: 0,
+        unit: 'con',
+        sliced: false,
+        selected: false
+      }, {
+        name: 'Hậu bị',
+        y: 300,
+        unit: 'con',
+        sliced: false,
+        selected: false
+      }, {
+        name: 'Mang thai',
+        y: 500,
+        unit: 'con',
+        sliced: false,
+        selected: false
+      }, {
+        name: 'Lốc',
+        y: 0,
+        unit: 'con',
+        sliced: false,
+        selected: false
+      }, {
+        name: 'Sẩy thai',
+        y: 1,
+        unit: 'con',
+        sliced: false,
+        selected: false
+      }, {
+        name: 'Đẻ',
+        y: 700,
+        unit: 'con',
+        sliced: false,
+        selected: false
+      }, {
+        name: 'Cai sữa',
+        y: 0,
+        unit: 'con',
+        sliced: false,
+        selected: false
       },
     ]
 
     let data2 = [
       {
-        name:'Hậu bị',
-        y:300,
-        unit:'con',
-        sliced:false,
-        selected:false
-      },{
-        name:'Khai thác tinh',
-        y:800,
-        unit:'conlol',
-        sliced:false,
-        selected:false
-      },{
-        name:'Chờ bán',
-        y:0,
-        unit:'con',
-        sliced:false,
-        selected:false
-      },{
-        name:'Thí tình',
-        y:0,
-        unit:'con',
-        sliced:false,
-        selected:false
+        name: 'Hậu bị',
+        y: 300,
+        unit: 'con',
+        sliced: false,
+        selected: false
+      }, {
+        name: 'Khai thác tinh',
+        y: 800,
+        unit: 'conlol',
+        sliced: false,
+        selected: false
+      }, {
+        name: 'Chờ bán',
+        y: 0,
+        unit: 'con',
+        sliced: false,
+        selected: false
+      }, {
+        name: 'Thí tình',
+        y: 0,
+        unit: 'con',
+        sliced: false,
+        selected: false
       },
     ]
 
     let data3 = [
       {
-        name:'Đực',
-        y:2,
-        unit:'con',
-        sliced:false,
-        selected:false
-      },{
-        name:'Cái',
-        y:500,
-        unit:'con',
-        sliced:false,
-        selected:false
-      },{
-        name:'Đực thiến',
-        y:510,
-        unit:'con',
-        sliced:false,
-        selected:false
+        name: 'Đực',
+        y: 2,
+        unit: 'con',
+        sliced: false,
+        selected: false
+      }, {
+        name: 'Cái',
+        y: 500,
+        unit: 'con',
+        sliced: false,
+        selected: false
+      }, {
+        name: 'Đực thiến',
+        y: 510,
+        unit: 'con',
+        sliced: false,
+        selected: false
       },
     ]
-    this.chartProvider.createPieChart(document.getElementById(this.farm.id),data,'','');
-    this.farmProvider.createBarchart(document.getElementById('barChart'));
-    this.chartProvider.createPieChart(document.getElementById('chart1'),data1,'Cơ cấu đàn nái','');
-    this.chartProvider.createPieChart(document.getElementById('chart2'),data2,'Cơ cấu đàn nộc','');
-    this.chartProvider.createPieChart(document.getElementById('chart3'),data3,'Cơ cấu đàn heo con','');
+    this.chartProvider.createPieChart(document.getElementById(this.farm.id), data, '', '');
+    this.chartProvider.createBarchart(document.getElementById('barChart'));
+    this.chartProvider.createPieChart(document.getElementById('chart1'), data1, 'Cơ cấu đàn nái', '');
+    this.chartProvider.createPieChart(document.getElementById('chart2'), data2, 'Cơ cấu đàn nộc', '');
+    this.chartProvider.createPieChart(document.getElementById('chart3'), data3, 'Cơ cấu đàn heo con', '');
   }
 
 

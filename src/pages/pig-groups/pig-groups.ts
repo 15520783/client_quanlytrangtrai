@@ -56,12 +56,12 @@ export class PigGroupsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PigGroupsPage');
+    this.getAllGroups();
   }
 
 
   ionViewWillEnter() {
     console.log('ionViewWillEnter PigGroupsPage');
-    this.getAllGroups();
   }
 
   public getAllGroups() {
@@ -73,7 +73,6 @@ export class PigGroupsPage {
             this.util.setKey(KEY.GROUPS, data)
               .then(() => {
                 this.pigGroupProvider.groups = data;
-                console.log(data);
                 this.util.closeLoading().then(() => {
                   this.setFilteredItems();
                 });
@@ -103,10 +102,7 @@ export class PigGroupsPage {
           this.util.showToast('Dữ liệu chưa được cập nhật. Vui lòng kiểm tra kết nối.');
         })
     } else {
-      this.rows = this.filterItems(this.searchTerm);
-      this.page_Total = this.rows.length % 50 === 0 ? parseInt(this.rows.length / 50 + '') : parseInt(this.rows.length / 50 + 1 + '');
-      this.page_Idx = 1;
-      this.visible_items = this.rows.slice(0, 50);
+      this.setFilteredItems();
     }
   }
 
@@ -125,8 +121,11 @@ export class PigGroupsPage {
     this.filterProvider.searchWithInclude.house_id = this.houseFilter;
     this.filterProvider.searchText = searchItem;
     this.filterProvider.searchWithText = this.filter_default;
-    this.filterProvider.searchWithRange.origin_sum_weight = { min: this.origin_sum_weight.lower, max: this.origin_sum_weight.upper };
-    this.filterProvider.searchWithRange.origin_avg_weight = { min: this.origin_avg_weight.lower, max: this.origin_avg_weight.upper };
+
+    this.filterProvider.searchWithRange = {
+      origin_sum_weight : { min: this.origin_sum_weight.lower, max: this.origin_sum_weight.upper },
+      origin_avg_weight : { min: this.origin_avg_weight.lower, max: this.origin_avg_weight.upper }
+    }
     return this.filterProvider.filter();
   }
 
