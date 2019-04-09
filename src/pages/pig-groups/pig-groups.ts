@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Content, Menu, Platform, MenuController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Content, Menu, Platform, MenuController, ModalController } from 'ionic-angular';
 import { FormControl } from '@angular/forms';
 import { PigGroupsProvider } from '../../providers/pig-groups/pig-groups';
 import { Utils } from '../../common/utils';
@@ -7,6 +7,7 @@ import { group, house } from '../../common/entity';
 import { KEY } from '../../common/const';
 import { FilterProvider } from '../../providers/filter/filter';
 import { HousesProvider } from '../../providers/houses/houses';
+import { PigGroupInformationPage } from '../pig-group-information/pig-group-information';
 
 @IonicPage()
 @Component({
@@ -47,7 +48,8 @@ export class PigGroupsPage {
     public houseProvider: HousesProvider,
     public util: Utils,
     public platform: Platform,
-    public menuCtrl: MenuController
+    public menuCtrl: MenuController,
+    public modalCtrl: ModalController
   ) {
     this.houseProvider.getAllHouses().then((data: Array<house>) => {
       this.houses = data;
@@ -149,5 +151,15 @@ export class PigGroupsPage {
 
   closeFilter() {
     this.menuCtrl.close();
+  }
+
+  viewDeltail(group) {
+    // this.navCtrl.push(PigViewPage,{data:pig});
+    const modal = this.modalCtrl.create(
+      PigGroupInformationPage, group, {
+        cssClass: 'ion-modal'
+      }
+    )
+    modal.present();
   }
 }

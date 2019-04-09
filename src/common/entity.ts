@@ -5,6 +5,8 @@ class pig {
 	round_id:string;
 	breed_id:string;
 	gender:number;
+	father_id:string;
+	mother_id:string;
 	birthday:any;
 	born_weight:number;
 	born_status:number;
@@ -43,6 +45,8 @@ class group {
 	group_code:string;
 	parent_id:string;
 	round_id:string;
+	father_id:string;
+	mother_id:string;
 	avg_birthday:any;
 	quantity:number;
 	heal_status:string;

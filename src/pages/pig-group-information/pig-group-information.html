@@ -1,0 +1,324 @@
+<ion-header>
+  <ion-navbar no-padding>
+    <ion-toolbar>
+      <ion-buttons left>
+        <button navPop ion-button icon-only>
+          <ion-icon name="arrow-back"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-title>Thông tin nhóm heo</ion-title>
+    </ion-toolbar>
+    <!-- <ion-row showWhen='ios,android' *ngIf="showSearchbar">
+      <ion-col>
+        <ion-searchbar style="background: transparent" mode="ios" animated="true" debounce="500"
+          placeholder="Tìm kiếm heo" [(ngModel)]="searchTerm">
+        </ion-searchbar>
+      </ion-col>
+    </ion-row> -->
+  </ion-navbar>
+</ion-header>
+
+<ion-content no-padding showWhen="core">
+  <ion-row>
+    <ion-col>
+      <ion-card mode='ios' style="background: white" style="margin-right:0px">
+        <ion-card-header>
+          <ion-card-title text-wrap>Thông tin chi tiết</ion-card-title>
+        </ion-card-header>
+        <ion-card-content mode='ios' no-padding class="pb-10">
+          <ion-row>
+            <ion-col>
+              <ion-list no-lines>
+                <ion-item>
+                  <ion-label stacked>Quantity</ion-label>
+                  <ion-input text-wrap type="text" readonly [(ngModel)]="group.quantity"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label stacked>House</ion-label>
+                  <ion-input text-wrap type="text" readonly [(ngModel)]="group.house_id"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label text-wrap stacked>Father</ion-label>
+                  <ion-input text-wrap type="text" readonly [(ngModel)]="group.father_id"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label stacked>Mother</ion-label>
+                  <ion-input type="text" readonly [(ngModel)]="group.mother_id"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label stacked>AVG Birth</ion-label>
+                  <ion-input type="text" readonly [(ngModel)]="group.avg_birthday"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label stacked>Round</ion-label>
+                  <ion-input type="text" readonly [(ngModel)]="group.round_id"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label stacked>Breed</ion-label>
+                  <ion-input type="text" readonly [(ngModel)]="group.breed_id"></ion-input>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+            <ion-col>
+              <ion-list no-lines>
+                <ion-item>
+                  <ion-label stacked>Males</ion-label>
+                  <ion-input type="text" readonly [(ngModel)]="group.males"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label stacked>Females</ion-label>
+                  <ion-input type="text" readonly [(ngModel)]="group.females"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label stacked>Health status</ion-label>
+                  <ion-input type="text" readonly [(ngModel)]="group.health_status"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label stacked>Origin Sum Weight</ion-label>
+                  <ion-input type="text" readonly [(ngModel)]="group.origin_sum_weight"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label stacked>Origin Avg Weight</ion-label>
+                  <ion-input type="text" readonly [(ngModel)]="group.origin_avg_weight"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label stacked>Receive Sum Weight</ion-label>
+                  <ion-input type="text" readonly [(ngModel)]="group.receive_sum_weight"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label stacked>Receive Avg Weight</ion-label>
+                  <ion-input type="text" readonly [(ngModel)]="group.receive_avg_weight"></ion-input>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+            <ion-col>
+              <ion-list no-lines>
+                <ion-item>
+                  <ion-label stacked>fcr</ion-label>
+                  <ion-input type="text" readonly [(ngModel)]="group.fcr"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label stacked>adg</ion-label>
+                  <ion-input type="text" readonly [(ngModel)]="group.adg"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label stacked>bf</ion-label>
+                  <ion-input type="text" readonly [(ngModel)]="group.bf"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label stacked>index</ion-label>
+                  <ion-input type="text" readonly [(ngModel)]="group.index"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label stacked>s1</ion-label>
+                  <ion-input type="text" readonly [(ngModel)]="group.s1"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label stacked>s2</ion-label>
+                  <ion-input type="text" readonly [(ngModel)]="group.s2"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label stacked>c</ion-label>
+                  <ion-input type="text" readonly [(ngModel)]="group.c"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label stacked>d</ion-label>
+                  <ion-input type="text" readonly [(ngModel)]="group.d"></ion-input>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+          </ion-row>
+
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+    <ion-col col-md-6 col-sm-12>
+      <ion-card mode='ios' style="background: white" style="margin-right:0px">
+        <ion-card-header>
+          <ion-card-title text-wrap>Danh sách thuộc nhóm</ion-card-title>
+        </ion-card-header>
+        <ion-card-content mode='ios' class="card-content-custom" no-padding>
+          <ion-item-divider sticky="true">
+            <ion-searchbar style="background: transparent" mode="ios" animated="true" debounce="500"
+              placeholder="Tìm kiếm heo" [(ngModel)]="searchTerm">
+            </ion-searchbar>
+          </ion-item-divider>
+          <ion-list no-padding>
+            <button ion-item *ngFor="let item of pigs" (tap)="viewDeltail(item)">
+              <ion-avatar item-start>
+                <ion-icon name="app-pig-outline" font28></ion-icon>
+              </ion-avatar>
+              <h2>{{item.pig_code}}</h2>
+              <ion-row>
+                <ion-col>
+                  <p>House_ID: {{item.house_id}}</p>
+                </ion-col>
+                <ion-col>
+                  <p>Weight: {{item.origin_weight}}</p>
+                </ion-col>
+                <ion-col>
+                  <p>Birth: {{item.birthday}}</p>
+                </ion-col>
+                <ion-col>
+                  <p>Gender: {{item.gender}}</p>
+                </ion-col>
+                <ion-col>
+                  <p>Healpoint: {{item.heath_point}}</p>
+                </ion-col>
+              </ion-row>
+            </button>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-content>
+
+<ion-content no-padding showWhen="ios,android" #content>
+  <!-- <ion-slides pager="true" loop="true" #slider (ionSlideDidChange)="slideChange()">
+    <ion-slide> -->
+  <ion-card no-margin mode='ios' style="background: white" style="margin-right:0px!important">
+    <ion-card-header mode='ios' padding>
+      <ion-card-title text-wrap sticky="true">{{title}}</ion-card-title>
+      <ion-toolbar *ngIf="showSearchbar" no-border>
+        <ion-searchbar style="background: transparent" mode="ios" animated="true" debounce="500"
+          placeholder="Tìm kiếm heo" [(ngModel)]="searchTerm">
+        </ion-searchbar>
+      </ion-toolbar>
+    </ion-card-header>
+    <ion-card-content mode='ios' padding>
+      <ion-slides  loop="true" #slider (ionSlideDidChange)="slideChange()" >
+        <ion-slide>
+          <ion-list no-lines>
+            <ion-item>
+              <ion-label stacked>Quantity</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="group.quantity"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>House</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="group.house_id"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label text-wrap stacked>Father</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="group.father_id"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Mother</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="group.mother_id"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>AVG Birth</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="group.avg_birthday"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Round</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="group.round_id"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Breed</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="group.breed_id"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Males</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="group.males"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Females</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="group.females"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Health status</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="group.health_status"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Origin Sum Weight</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="group.origin_sum_weight"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Origin Avg Weight</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="group.origin_avg_weight"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Receive Sum Weight</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="group.receive_sum_weight"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Receive Avg Weight</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="group.receive_avg_weight"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>fcr</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="group.fcr"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>adg</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="group.adg"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>bf</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="group.bf"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>index</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="group.index"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>s1</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="group.s1"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>s2</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="group.s2"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>c</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="group.c"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>d</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="group.d"></ion-input>
+            </ion-item>
+          </ion-list>
+        </ion-slide>
+        <!-- </ion-card-content>
+      </ion-card>
+    </ion-slide>
+    <ion-slide>
+      <ion-card no-margin mode='ios' style="background: white" style="margin-right:0px!important">
+        <ion-card-header no-padding mode='ios'>
+          <ion-card-title text-wrap>Danh sách theo nhóm</ion-card-title>
+        </ion-card-header>
+        <ion-card-content mode='ios' padding> -->
+        <ion-slide>
+          <ion-list no-padding>
+            <button ion-item *ngFor="let item of pigs" (tap)="viewDeltail(item)">
+              <ion-avatar item-start>
+                <ion-icon name="app-pig-outline" font28></ion-icon>
+              </ion-avatar>
+              <h2>{{item.pig_code}}</h2>
+              <ion-row>
+                <ion-col>
+                  <p>House_ID: {{item.house_id}}</p>
+                </ion-col>
+                <ion-col>
+                  <p>Weight: {{item.origin_weight}}</p>
+                </ion-col>
+                <ion-col>
+                  <p>Birth: {{item.birthday}}</p>
+                </ion-col>
+                <ion-col>
+                  <p>Gender: {{item.gender}}</p>
+                </ion-col>
+                <ion-col>
+                  <p>Healpoint: {{item.heath_point}}</p>
+                </ion-col>
+              </ion-row>
+            </button>
+          </ion-list>
+        </ion-slide>
+      </ion-slides>
+    </ion-card-content>
+  </ion-card>
+  <!-- </ion-slide>
+  </ion-slides> -->
+</ion-content>

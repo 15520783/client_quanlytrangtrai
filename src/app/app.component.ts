@@ -3,9 +3,9 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { LoginPage } from '../pages/login/login';
 import { HeaderColor } from '@ionic-native/header-color';
 import { FarmsProvider } from '../providers/farms/farms';
+import { HomePage } from '../pages/home/home';
 
 @Component({
   templateUrl: 'app.html'
@@ -13,7 +13,7 @@ import { FarmsProvider } from '../providers/farms/farms';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = LoginPage;
+  rootPage: any = HomePage;
   splash:boolean = true;
 
   constructor(

@@ -17,6 +17,7 @@ import { SectionInfomationPage } from '../pages/section-infomation/section-infom
 import { HouseInfomationPage } from '../pages/house-infomation/house-infomation';
 import { PigGroupsPage } from '../pages/pig-groups/pig-groups';
 import { EmployeePage } from '../pages/employee/employee';
+import { PigGroupInformationPage } from '../pages/pig-group-information/pig-group-information';
 
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
@@ -53,7 +54,8 @@ const Pages = [
   PigReviewIndexPage,
   HouseInfomationPage,
   PigGroupsPage,
-  EmployeePage
+  EmployeePage,
+  PigGroupInformationPage
 ]
 
 const Components = [
