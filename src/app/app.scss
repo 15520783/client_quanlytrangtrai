@@ -48,6 +48,9 @@ ion-icon {
     &[class*="pig-foot"] {
         mask-image: url(../assets/imgs/pig-foot.svg);
     }
+    &[class*="employees"] {
+        mask-image: url(../assets/imgs/employees.svg);
+    }
 }
 
 .toolbar-title{
@@ -83,7 +86,6 @@ ion-menu {
 
     ion-content{
         
-        // background:linear-gradient(to right ,$themeColor1);
         .item{
             background: transparent!important;
             font-weight: 500!important;
@@ -170,7 +172,7 @@ ion-menu {
 .ion-alert {
     .alert-wrapper{
        border-radius: 10px;
-       background: rgba(255, 255, 255,0.7)!important;
+    //    background: rgba(255, 255, 255,0.7)!important;
     }
 }
 

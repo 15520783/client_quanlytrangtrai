@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Content, Menu, Platform, MenuController, InfiniteScroll } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Content, Menu, Platform, MenuController } from 'ionic-angular';
 import { FormControl } from '@angular/forms';
 import { PigGroupsProvider } from '../../providers/pig-groups/pig-groups';
 import { Utils } from '../../common/utils';

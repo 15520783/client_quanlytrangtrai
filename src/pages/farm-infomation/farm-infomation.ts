@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, Content, Slides } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, Slides } from 'ionic-angular';
 import { farm } from '../../common/entity';
 import { HighChartProvider } from '../../providers/high-chart/high-chart';
 import { FarmsProvider } from '../../providers/farms/farms';

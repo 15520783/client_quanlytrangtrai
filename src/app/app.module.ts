@@ -16,6 +16,7 @@ import { PigReviewIndexPage } from '../pages/pig-review-index/pig-review-index';
 import { SectionInfomationPage } from '../pages/section-infomation/section-infomation';
 import { HouseInfomationPage } from '../pages/house-infomation/house-infomation';
 import { PigGroupsPage } from '../pages/pig-groups/pig-groups';
+import { EmployeePage } from '../pages/employee/employee';
 
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
@@ -36,6 +37,7 @@ import { HousesProvider } from '../providers/houses/houses';
 import { HighChartProvider } from '../providers/high-chart/high-chart';
 import { PigGroupsProvider } from '../providers/pig-groups/pig-groups';
 import { FilterProvider } from '../providers/filter/filter';
+import { EmployeesProvider } from '../providers/employees/employees';
 
 
 const Pages = [
@@ -50,7 +52,8 @@ const Pages = [
   SectionInfomationPage,
   PigReviewIndexPage,
   HouseInfomationPage,
-  PigGroupsPage
+  PigGroupsPage,
+  EmployeePage
 ]
 
 const Components = [
@@ -67,6 +70,7 @@ const Providers = [
   HighChartProvider,
   PigGroupsProvider,
   FilterProvider,
+  EmployeesProvider
 ]
 
 @NgModule({
@@ -100,7 +104,8 @@ const Providers = [
     Utils,
     ...Providers,
     PigGroupsProvider,
-    FilterProvider
+    FilterProvider,
+    EmployeesProvider
   ]
 })
 export class AppModule {}

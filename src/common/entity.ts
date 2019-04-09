@@ -90,9 +90,27 @@ class house {
 	founding:any;
 }
 
+class employee {
+	id:string;
+	regency_id:string;
+	farm_id:string;
+	name:string;
+	gender:number;
+	birthday:any;
+	address:string;
+	level:string;
+	email:string;
+	cmnd:string;
+	date_join:any;
+	date_off:any;
+	images:string;
+	status:string;
+}
+
 
 export {farm}
 export {section}
 export {house}
 export {pig}
 export {group}
+export {employee}

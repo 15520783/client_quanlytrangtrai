@@ -1,15 +1,65 @@
-<!--
-  Generated template for the EmployeePage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
   <ion-navbar>
-    <ion-title>employee</ion-title>
+    <ion-toolbar>
+      <ion-buttons left>
+        <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+      </ion-buttons>
+      <div>
+        <ion-row>
+          <ion-searchbar col-md-7 mode="ios" animated="true" debounce="500" placeholder="Tìm kiếm nhân viên"
+            [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="setFilteredItems()">
+          </ion-searchbar>
+        </ion-row>
+      </div>
+      <ion-buttons right>
+        <button ion-button font20 (tap)="openFilter()">
+          <ion-icon name="funnel"></ion-icon>
+        </button>
+        <button ion-button font20>
+          <ion-icon name="md-qr-scanner" showWhen="ios,android"></ion-icon>
+        </button>
+        <button item-end ion-button font20>
+          <ion-icon name="sync"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-toolbar>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content #content>
+  <ion-item-divider sticky="true">Danh sách nhân viên</ion-item-divider>
+  <ion-list>
+    <button ion-item *ngFor="let item of visible_items" (tap)="viewDeltail(item)">
+      <ion-avatar item-start>
+        <img src="../../assets/imgs/default-user.png">
+      </ion-avatar>
+      <h2>{{item.name}}</h2>
+      <ion-row>
+        <ion-col>
+          <p><b>Birthday:</b> {{item.birthday}}</p>
+        </ion-col>
+        <ion-col>
+          <p><b>Gender:</b> {{item.gender}}</p>
+        </ion-col>
+        <ion-col>
+          <p><b>Address:</b> {{item.address}}</p>
+        </ion-col>
+        <ion-col>
+          <p><b>Email:</b> {{item.email}}</p>
+        </ion-col>
+      </ion-row>
+    </button>
+  </ion-list>
+  <ion-infinite-scroll (ionInfinite)="loadData($event)" *ngIf="page_Idx!==page_Total">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Đang tải dữ liệu...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
+  <ion-fab bottom right *ngIf="platform.is('cordova')">
+    <button ion-fab (tap)="scan()" margin-bottom="10px" showWhen="android,windows,ios">
+      <ion-icon name="barcode"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

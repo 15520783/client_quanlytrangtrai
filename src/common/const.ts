@@ -2,7 +2,8 @@ const KEY = {
     FARMS: 'farms',
     SECTIONS: 'sections',
     PIGS: 'pigs',
-    GROUPS: 'groups'
+    GROUPS: 'groups',
+    EMPLOYEES: 'employees'
 }
 
 const CONFIG = {
@@ -25,7 +26,8 @@ const API = {
     GET_ALL_SECTIONS: '/api/sections',
     GET_ALL_HOUSES: '/api/houses',
     GET_ALL_PIGS: '/api/pigs',
-    GET_ALL_GROUPS: '/api/groups'
+    GET_ALL_GROUPS: '/api/groups',
+    GET_ALL_EMPLOYEES: '/api/employees'
 }
 
 export { KEY }

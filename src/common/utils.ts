@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastController, AlertController, LoadingController, Loading, Platform, ModalController, Modal } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import { Toast } from '@ionic-native/toast';
 
 @Injectable()
 export class Utils {
@@ -18,7 +17,6 @@ export class Utils {
     public loadingCtrl: LoadingController,
     public storage: Storage,
     public platform: Platform,
-    private toastNative: Toast,
     public modalCtrl: ModalController
   ) {
 
