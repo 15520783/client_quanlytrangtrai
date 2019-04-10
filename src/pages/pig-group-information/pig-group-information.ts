@@ -17,8 +17,8 @@ export class PigGroupInformationPage {
   public showSearchbar = false;
   public group: group;
   public pigs: Array<pig> = [];
-  public header = ["", "Thông tin chi tiết", "Danh sách theo nhóm", "Thông tin chi tiết"];
-  public title = this.header[1];
+  public header = ["Thông tin chi tiết", "Danh sách theo nhóm"];
+  public title = this.header[0];
 
   constructor(
     public navCtrl: NavController,
@@ -27,34 +27,28 @@ export class PigGroupInformationPage {
     public modalCtrl: ModalController
   ) {
     this.group = this.navParams.data;
+
+    this.util.showLoading('Đang lấy danh sách heo thuộc nhóm');
     this.util.getKey(KEY.PIGS).then((data: Array<pig>) => {
       this.pigs = data.filter((value) => {
         return value.round_id === this.group.round_id;
       })
-    })
+    }).then(()=>{this.util.closeLoading();})
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PigGroupInformationPage');
   }
 
+
   slideChange() {
-    console.log(this.slider.getActiveIndex());
-    if (this.slider.getActiveIndex() === 0) {
-      this.slider.slideTo(this.header.length - 2, 0);
-    }
-    else if (this.slider.getActiveIndex() === 2) {
-      this.showSearchbar = true;
-    } else {
-      this.showSearchbar = false;
-    }
     this.content.resize();
-    this.title = this.header[this.slider.getActiveIndex()];
   }
 
   ngAfterViewInit() {
-    if (this.slider)
+    if (this.slider){
       this.slider.autoHeight = true;
+    }
     console.log('ngAfterViewInit FarmInfomationPage');
   }
 

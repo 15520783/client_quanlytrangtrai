@@ -167,7 +167,8 @@ ion-menu {
 
 .ion-loading {
    .loading-wrapper{
-       background: rgba(255, 255, 255,0.7)!important;
+    //    background: rgba(255, 255, 255,0.7)!important;
+       background: rgb(255, 255, 255)!important;
        font-weight: bold;
        border-radius: 10px;
    }
@@ -188,7 +189,7 @@ ion-menu {
 
 .ion-actionsheet{
     .action-sheet-group {
-        background: linear-gradient(to right, #01C2FA, #d7d8da)!important;
+        // background: linear-gradient(to right, #01C2FA, #d7d8da)!important;
         padding-bottom:0px!important;
     }
 

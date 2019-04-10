@@ -19,6 +19,14 @@ import { FarmsProvider } from '../../providers/farms/farms';
 export class FarmInfomationPage {
 
   @ViewChild('slider') slider: Slides;
+  
+  public title = [
+    "Thông tin chi tiết",
+    "Quy mô trang trại",
+    "Quy mô các khu",
+    "Cơ cấu đàn nái",
+    "Cơ cấu đàn nộc",
+    "Cơ cấu đàn heo con"];
 
   public farm: farm = {
     id: '1',

@@ -1,14 +1,32 @@
-
 <ion-menu persistent="true" [content]="content">
   <ion-header>
     <ion-toolbar text-center>
-      <ion-card-content>
-        <ion-icon name="ios-ionic" style="font-size: 100px;color:white"></ion-icon>
-      </ion-card-content>
+      <ion-list no-margin no-bounce no-lines>
+        <ion-item style="background: transparent!important">
+          <ion-avatar item-start>
+            <img src="../../assets/imgs/default-user.png">
+          </ion-avatar>
+          <ion-row>
+            <ion-col>
+              <h2 ion-text>Username</h2>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <p ion-text>Email</p>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+      </ion-list>
+      <ion-buttons right>
+        <button ion-button font20 padding>
+          <ion-icon name="ios-information-circle-outline"></ion-icon>
+        </button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
 
-  <ion-content >
+  <ion-content>
     <ion-list *ngFor="let p of pages" no-lines no-margin>
       <button ion-item (click)="openPage(p);p.expand=!p.expand" [attr.active]="p.active?'':null" no-lines>
         <ion-icon item-start [name]="p.icon"></ion-icon>{{p.title}}
@@ -22,7 +40,7 @@
   </ion-content>
 
   <ion-footer padding no-border style="padding:0px!important;">
-    <button mode='ios' ion-button no-margin full color="dark" >Đăng xuất</button>
+    <button mode='ios' ion-button no-margin full color="dark">Đăng xuất</button>
   </ion-footer>
 
 </ion-menu>

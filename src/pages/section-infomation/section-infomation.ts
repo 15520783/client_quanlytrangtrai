@@ -23,6 +23,8 @@ export class SectionInfomationPage {
     department_id:""
   }
 
+  public title = ["Thông tin chi tiết","Cơ cấu đàn nái"];
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,

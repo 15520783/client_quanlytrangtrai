@@ -6,13 +6,14 @@
           <ion-icon name="arrow-back"></ion-icon>
         </button>
       </ion-buttons>
-      <ion-title>Thông tin trang trại</ion-title>
+      <ion-title showWhen="core">Thông tin trang trại</ion-title>
+      <ion-title showWhen="ios,android">{{farm.name}}</ion-title>
     </ion-toolbar>
-    <ion-row showWhen='ios,android'>
+    <!-- <ion-row showWhen='ios,android'>
       <ion-col>
         <h2 ion-text ion-item style="background: transparent!important">{{farm.name}}</h2>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
     <ion-row showWhen='core'>
       <ion-item-divider sticky="true">
         <ion-row>
@@ -176,126 +177,129 @@
 </ion-content>
 
 
-<ion-content no-padding showWhen="ios,android">
-  <ion-slides paper="true"  loop="true" #slider>
-    <ion-slide>
-      <ion-infinite-scroll>
-        <ion-item-divider text-wrap sticky="true">Thông tin chi tiết</ion-item-divider>
-        <ion-list no-lines>
-          <ion-item>
-            <ion-label stacked>Số lượng</ion-label>
-            <ion-input text-wrap type="text" readonly [(ngModel)]="farm.total_pig"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label text-wrap stacked>Địa chỉ</ion-label>
-            <ion-textarea rows="1" cols="20" type="text" readonly [(ngModel)]="farm.address"></ion-textarea>
-          </ion-item>
-          <ion-item>
-            <ion-label stacked>Ngày thành lập</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label stacked>Diện tích</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label stacked>Loại trại</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label stacked>Người quản lý</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label stacked>Chờ bán</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label stacked>Tổng đàn</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label stacked>Khu cách ly</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label stacked>Khu nọc</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label stacked>Khu phối</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label stacked>Khu mang thai</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label stacked>Khu đẻ</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label stacked>Khu cai sữa</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
-          </ion-item>
-        </ion-list>
-      </ion-infinite-scroll>
-    </ion-slide>
+<ion-content no-padding showWhen="ios,android" no-bounce>
+  <ion-item-divider sticky="true" text-wrap>{{title[slider.realIndex]}}</ion-item-divider>
+  <ion-list no-lines>
+    <ion-slides paper="true" #slider>
+      <ion-slide>
+        <ion-infinite-scroll>
+          <!-- <ion-item-divider text-wrap sticky="true">Thông tin chi tiết</ion-item-divider> -->
+          <!-- <ion-list no-lines> -->
+            <ion-item>
+              <ion-label stacked>Số lượng</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="farm.total_pig"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label text-wrap stacked>Địa chỉ</ion-label>
+              <ion-textarea rows="1" cols="20" type="text" readonly [(ngModel)]="farm.address"></ion-textarea>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Ngày thành lập</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Diện tích</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Loại trại</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Người quản lý</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Chờ bán</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Tổng đàn</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Khu cách ly</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Khu nọc</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Khu phối</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Khu mang thai</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Khu đẻ</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Khu cai sữa</ion-label>
+              <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+            </ion-item>
+          <!-- </ion-list> -->
+        </ion-infinite-scroll>
+      </ion-slide>
 
-    <ion-slide>
-      <ion-infinite-scroll>
-        <ion-item-divider sticky="true" text-wrap>Quy mô trang trại</ion-item-divider>
-        <ion-row padding style="margin-top: 10%">
-          <ion-col [attr.col-12]="platform.is('core')?null:''">
-            <div [attr.id]="farm.id" *ngIf="!platform.is('core')"></div>
-          </ion-col>
-        </ion-row>
-      </ion-infinite-scroll>
-    </ion-slide>
+      <ion-slide>
+        <ion-infinite-scroll>
+          <!-- <ion-item-divider sticky="true" text-wrap>Quy mô trang trại</ion-item-divider> -->
+          <ion-row padding style="margin-top: 10%">
+            <ion-col [attr.col-12]="platform.is('core')?null:''">
+              <div [attr.id]="farm.id" *ngIf="!platform.is('core')"></div>
+            </ion-col>
+          </ion-row>
+        </ion-infinite-scroll>
+      </ion-slide>
 
-    <ion-slide>
-      <ion-infinite-scroll>
-        <ion-item-divider sticky="true" text-wrap>Quy mô các khu</ion-item-divider>
-        <ion-row padding style="margin-top: 10%">
-          <ion-col [attr.col-12]="platform.is('core')?null:''">
-            <div id="barChart" *ngIf="!platform.is('core')"></div>
-          </ion-col>
-        </ion-row>
-      </ion-infinite-scroll>
-    </ion-slide>
+      <ion-slide>
+        <ion-infinite-scroll>
+          <!-- <ion-item-divider sticky="true" text-wrap>Quy mô các khu</ion-item-divider> -->
+          <ion-row padding style="margin-top: 10%">
+            <ion-col [attr.col-12]="platform.is('core')?null:''">
+              <div id="barChart" *ngIf="!platform.is('core')"></div>
+            </ion-col>
+          </ion-row>
+        </ion-infinite-scroll>
+      </ion-slide>
 
-    <ion-slide>
-      <ion-infinite-scroll>
-        <ion-item-divider sticky="true" text-wrap>Cơ cấu đàn nái</ion-item-divider>
-        <ion-row padding style="margin-top: 10%">
-          <ion-col [attr.col-12]="platform.is('core')?null:''">
-            <div id='chart2' *ngIf="!platform.is('core')"></div>
-          </ion-col>
-        </ion-row>
-      </ion-infinite-scroll>
-    </ion-slide>
+      <ion-slide>
+        <ion-infinite-scroll>
+          <!-- <ion-item-divider sticky="true" text-wrap>Cơ cấu đàn nái</ion-item-divider> -->
+          <ion-row padding style="margin-top: 10%">
+            <ion-col [attr.col-12]="platform.is('core')?null:''">
+              <div id='chart2' *ngIf="!platform.is('core')"></div>
+            </ion-col>
+          </ion-row>
+        </ion-infinite-scroll>
+      </ion-slide>
 
-    <ion-slide>
-      <ion-infinite-scroll>
-        <ion-item-divider sticky="true" text-wrap>Cơ cấu đàn nộc</ion-item-divider>
-        <ion-row padding style="margin-top: 10%">
-          <ion-col [attr.col-12]="platform.is('core')?null:''">
-            <div id='chart3' *ngIf="!platform.is('core')"></div>
-          </ion-col>
-        </ion-row>
-      </ion-infinite-scroll>
-    </ion-slide>
+      <ion-slide>
+        <ion-infinite-scroll>
+          <!-- <ion-item-divider sticky="true" text-wrap>Cơ cấu đàn nộc</ion-item-divider> -->
+          <ion-row padding style="margin-top: 10%">
+            <ion-col [attr.col-12]="platform.is('core')?null:''">
+              <div id='chart3' *ngIf="!platform.is('core')"></div>
+            </ion-col>
+          </ion-row>
+        </ion-infinite-scroll>
+      </ion-slide>
 
-    <ion-slide>
-      <ion-infinite-scroll>
-        <ion-item-divider sticky="true" text-wrap>Cơ cấu đàn heo con</ion-item-divider>
-        <ion-row padding style="margin-top: 10%">
-          <ion-col [attr.col-12]="platform.is('core')?null:''">
-            <div id='chart1' *ngIf="!platform.is('core')"></div>
-          </ion-col>
-        </ion-row>
-      </ion-infinite-scroll>
-    </ion-slide>
+      <ion-slide>
+        <ion-infinite-scroll>
+          <!-- <ion-item-divider sticky="true" text-wrap>Cơ cấu đàn heo con</ion-item-divider> -->
+          <ion-row padding style="margin-top: 10%">
+            <ion-col [attr.col-12]="platform.is('core')?null:''">
+              <div id='chart1' *ngIf="!platform.is('core')"></div>
+            </ion-col>
+          </ion-row>
+        </ion-infinite-scroll>
+      </ion-slide>
 
-  </ion-slides>
+    </ion-slides>
+  </ion-list>
 </ion-content>

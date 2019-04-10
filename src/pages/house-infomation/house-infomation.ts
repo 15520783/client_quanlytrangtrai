@@ -19,6 +19,8 @@ import { HighChartProvider } from '../../providers/high-chart/high-chart';
 export class HouseInfomationPage {
   @ViewChild('slider') slider: Slides;
   
+  public title = ["Thông tin chi tiết","Quy mô khu"];
+
   public house: house = {
     description: "",
     founding: "2015-04-01T00:00:00.000Z",

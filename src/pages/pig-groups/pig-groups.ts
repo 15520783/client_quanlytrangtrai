@@ -155,6 +155,7 @@ export class PigGroupsPage {
 
   viewDeltail(group) {
     // this.navCtrl.push(PigViewPage,{data:pig});
+    
     const modal = this.modalCtrl.create(
       PigGroupInformationPage, group, {
         cssClass: 'ion-modal'

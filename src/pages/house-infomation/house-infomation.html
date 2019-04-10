@@ -13,7 +13,7 @@
 
 <ion-content no-padding *ngIf="platform.is('core')">
   <ion-item-divider sticky="true">
-    <ion-row  showWhen="core">
+    <ion-row showWhen="core">
       <ion-col no-padding>
         <button color="secondary" ion-button mode='ios' black text-weight padding>
           <!-- <ion-icon padding name="app-function"></ion-icon> -->
@@ -79,49 +79,56 @@
 </ion-content>
 
 <ion-content no-padding *ngIf="!platform.is('core')">
-  <ion-slides loop="true" scrollbar="true" #slider>
-    <ion-slide>
-      <ion-card no-margin mode='ios' style="background: white" style="margin-right:0px">
-        <ion-card-header mode='ios' no-padding>
+  <ion-item-divider sticky="true">{{title[slider.realIndex]}}</ion-item-divider>
+  <ion-list no-lines no-padding>
+    <ion-slides scrollbar="true" #slider>
+      <ion-slide>
+        <ion-infinite-scroll>
+          <!-- <ion-card no-margin mode='ios' style="background: white" style="margin-right:0px"> -->
+          <!-- <ion-card-header mode='ios' no-padding>
           <ion-card-title text-wrap sticky="true">Thông tin chi tiết</ion-card-title>
-        </ion-card-header>
-        <ion-card-content mode='ios' class="card-content-custom" padding>
-          <ion-list no-lines>
-            <ion-item>
-              <ion-label stacked>Loại nhà</ion-label>
-              <ion-input text-wrap type="text" readonly [(ngModel)]="house.type_id"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label stacked>Tên nhà</ion-label>
-              <ion-input type="text" readonly [(ngModel)]="house.name"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label stacked>Mô tả</ion-label>
-              <ion-input type="text" readonly [(ngModel)]="house.description"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label stacked>Người quản lý</ion-label>
-              <ion-input type="text" readonly [(ngModel)]="house.manager"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label stacked>Ngày thành lập</ion-label>
-              <ion-input type="text" readonly [(ngModel)]="house.founding"></ion-input>
-            </ion-item>
-          </ion-list>
-        </ion-card-content>
-      </ion-card>
-    </ion-slide>
-    <ion-slide>
-      <ion-card no-margin mode='ios' style="background: white" style="margin-right:0px">
-        <ion-card-header no-padding mode='ios'>
-          <ion-card-title text-wrap>Thông tin chi tiết</ion-card-title>
-        </ion-card-header>
-        <ion-card-content mode='ios' class="card-content-custom" padding>
+        </ion-card-header> -->
+          <!-- <ion-card-content mode='ios' class="card-content-custom" padding> -->
+          <!-- <ion-list no-lines> -->
+          <ion-item>
+            <ion-label stacked>Loại nhà</ion-label>
+            <ion-input text-wrap type="text" readonly [(ngModel)]="house.type_id"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Tên nhà</ion-label>
+            <ion-input type="text" readonly [(ngModel)]="house.name"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Mô tả</ion-label>
+            <ion-input type="text" readonly [(ngModel)]="house.description"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Người quản lý</ion-label>
+            <ion-input type="text" readonly [(ngModel)]="house.manager"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Ngày thành lập</ion-label>
+            <ion-input type="text" readonly [(ngModel)]="house.founding"></ion-input>
+          </ion-item>
+          <!-- </ion-list> -->
+          <!-- </ion-card-content> -->
+          <!-- </ion-card> -->
+        </ion-infinite-scroll>
+      </ion-slide>
+      <ion-slide>
+        <ion-infinite-scroll>
+          <!-- <ion-card no-margin mode='ios' style="background: white" style="margin-right:0px">
+          <ion-card-header no-padding mode='ios'>
+            <ion-card-title text-wrap>Thông tin chi tiết</ion-card-title>
+          </ion-card-header>
+          <ion-card-content mode='ios' class="card-content-custom" padding> -->
           <div id="chartSummary"></div>
-        </ion-card-content>
-      </ion-card>
-    </ion-slide>
-  </ion-slides>
+          <!-- </ion-card-content>
+        </ion-card> -->
+        </ion-infinite-scroll>
+      </ion-slide>
+    </ion-slides>
+  </ion-list>
 </ion-content>
 
 <ion-footer padding no-border showWhen="ios,android">

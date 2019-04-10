@@ -6,13 +6,14 @@
           <ion-icon name="arrow-back"></ion-icon>
         </button>
       </ion-buttons>
-      <ion-title>Thông tin khu</ion-title>
+      <ion-title showWhen="core">Thông tin khu</ion-title>
+      <ion-title showWhen="ios,android">{{section.name}}</ion-title>
     </ion-toolbar>
-    <ion-row showWhen='ios,android'>
+    <!-- <ion-row showWhen='ios,android'>
       <ion-col>
         <h2 ion-text ion-item style="background: transparent!important">{{section.name}}</h2>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
     <ion-row showWhen='core'>
       <ion-item-divider sticky="true">
         <ion-row>
@@ -126,12 +127,14 @@
   </ion-list>
 </ion-content>
 
-<ion-content *ngIf="!platform.is('core')">
-  <ion-slides loop="true" paper="true" #slider>
-    <ion-slide>
-      <ion-infinite-scroll>
-        <ion-item-divider text-wrap sticky="true">Thông tin chi tiết</ion-item-divider>
-        <ion-list no-padding no-lines>
+<ion-content *ngIf="!platform.is('core')" no-bounce>
+  <ion-item-divider text-wrap sticky="true">{{title[slider.realIndex]}}</ion-item-divider>
+  <ion-list no-padding no-lines>
+    <ion-slides  paper="true" #slider>
+      <ion-slide>
+        <ion-infinite-scroll>
+          <!-- <ion-item-divider text-wrap sticky="true">Thông tin chi tiết</ion-item-divider> -->
+          <!-- <ion-list no-padding no-lines> -->
           <ion-item>
             <ion-label stacked>Số lượng</ion-label>
             <ion-input text-wrap type="text" readonly [(ngModel)]="section.total_pig"></ion-input>
@@ -188,18 +191,19 @@
             <ion-label stacked>Khu cai sữa</ion-label>
             <ion-input type="text" readonly [(ngModel)]="section.fouding"></ion-input>
           </ion-item>
-        </ion-list>
-      </ion-infinite-scroll>
-    </ion-slide>
-    <ion-slide>
-      <ion-infinite-scroll>
-        <ion-item-divider text-wrap sticky="true">Cơ cấu đàn nái</ion-item-divider>
-        <ion-row padding>
-          <ion-col>
-            <div id="chartSummary"></div>
-          </ion-col>
-        </ion-row>
-      </ion-infinite-scroll>
-    </ion-slide>
-  </ion-slides>
+          <!-- </ion-list> -->
+        </ion-infinite-scroll>
+      </ion-slide>
+      <ion-slide>
+        <ion-infinite-scroll>
+          <!-- <ion-item-divider text-wrap sticky="true">Cơ cấu đàn nái</ion-item-divider> -->
+          <ion-row padding>
+            <ion-col>
+              <div id="chartSummary"></div>
+            </ion-col>
+          </ion-row>
+        </ion-infinite-scroll>
+      </ion-slide>
+    </ion-slides>
+  </ion-list>
 </ion-content>
