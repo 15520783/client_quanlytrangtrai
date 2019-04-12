@@ -53,6 +53,9 @@ ion-icon {
     &[class*="employees"] {
         mask-image: url(../assets/imgs/employees.svg);
     }
+    &[class*="schedule"] {
+        mask-image: url(../assets/imgs/calendar.svg);
+    }
 }
 
 .toolbar-title{

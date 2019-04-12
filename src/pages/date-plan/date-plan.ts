@@ -1,7 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import viLocale from '@fullcalendar/core/locales/vi';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import listPlugin from '@fullcalendar/list';
 
 @IonicPage()
 @Component({
@@ -11,12 +12,13 @@ import viLocale from '@fullcalendar/core/locales/vi';
 export class DatePlanPage {
   @ViewChild('calendar') calendar: any;
 
-  calendarPlugins = [dayGridPlugin]; // important!
+  calendarPlugins = [dayGridPlugin,timeGridPlugin,listPlugin]; // important!
   calendarOptions:any ;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    public platform: Platform
   ) {
     this.calendarOptions = {
       dayClick: (date, jsEvent, view, resourceObj) => {

@@ -11,7 +11,7 @@
               defaultView="dayGridMonth" 
               [header]="{
                 left: 'title',
-                right:''
+                right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
               }"
               [footer]="{
                 right: 'today prev,next'
@@ -19,12 +19,21 @@
               [height] = 'parent'
               [fixedWeekCount] = 'false'
               [editable] = 'true'
-              [contentHeight] = "500"
+              [contentHeight] = "platform.is('core')?500:400"
               [plugins]="calendarPlugins"
               [weekends]="true"
               [locale]="'vi'"
               [timeZone]= 'UTC'
+              [eventLimit] = 'true'
+              [views] = '{
+                timeGrid: {
+                  eventLimit: 4 
+                }
+              }'
               [events]="[
+                { title: 'Sự kiện 1', start: '2019-04-01', end:'2019-04-03',classNames:['event-fullcalendar']},
+                { title: 'Sự kiện 1', start: '2019-04-01', end:'2019-04-03',classNames:['event-fullcalendar']},
+                { title: 'Sự kiện 1', start: '2019-04-01', end:'2019-04-03',classNames:['event-fullcalendar']},
                 { title: 'Sự kiện 1', start: '2019-04-01', end:'2019-04-03',classNames:['event-fullcalendar']},
                 { title: 'Sự kiện 3', date: '2019-04-01',classNames:['event-fullcalendar'] },
                 { title: 'Sự kiện 2', date: '2019-04-02',classNames:['event-fullcalendar'] }

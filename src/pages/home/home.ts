@@ -83,7 +83,7 @@ export class HomePage {
       { title: 'Quản lý heo', component: PigsPage, icon: 'app-pig-outline', active: false },
       { title: 'Quản lý nhóm heo', component: PigGroupsPage, icon: 'app-pig-foot', active: false },
       { title: 'Quản lý nhân viên', component: EmployeePage, icon: 'app-employees', active: false },
-      { title: 'Lịch biểu', component: DatePlanPage, icon: 'md-calendar', active: false },
+      { title: 'Lịch biểu', component: DatePlanPage, icon: 'app-schedule', active: false },
     ];
   }
 
