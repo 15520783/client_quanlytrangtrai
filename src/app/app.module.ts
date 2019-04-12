@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpClientModule } from '@angular/common/http';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -18,6 +19,7 @@ import { HouseInfomationPage } from '../pages/house-infomation/house-infomation'
 import { PigGroupsPage } from '../pages/pig-groups/pig-groups';
 import { EmployeePage } from '../pages/employee/employee';
 import { PigGroupInformationPage } from '../pages/pig-group-information/pig-group-information';
+import { DatePlanPage } from '../pages/date-plan/date-plan';
 
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
@@ -41,6 +43,7 @@ import { FilterProvider } from '../providers/filter/filter';
 import { EmployeesProvider } from '../providers/employees/employees';
 
 
+
 const Pages = [
   LoginPage,
   HomePage,
@@ -55,7 +58,8 @@ const Pages = [
   HouseInfomationPage,
   PigGroupsPage,
   EmployeePage,
-  PigGroupInformationPage
+  PigGroupInformationPage,
+  DatePlanPage
 ]
 
 const Components = [
@@ -91,6 +95,7 @@ const Providers = [
       iconMode: 'ios',
       activator:'ripple'
     }),
+    FullCalendarModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

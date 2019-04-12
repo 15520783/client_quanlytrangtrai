@@ -1,0 +1,34 @@
+<ion-header>
+  <header [title]="'Quản lý lịch biểu'"></header>
+</ion-header>
+
+<ion-content padding>
+    <div class='app-calendar' >
+        <full-calendar 
+              (dayClick)="handleDayClick($event)"
+              (eventClick)="handleEventClick($event)"
+              #calendar 
+              defaultView="dayGridMonth" 
+              [header]="{
+                left: 'title',
+                right:''
+              }"
+              [footer]="{
+                right: 'today prev,next'
+              }"
+              [height] = 'parent'
+              [fixedWeekCount] = 'false'
+              [editable] = 'true'
+              [contentHeight] = "500"
+              [plugins]="calendarPlugins"
+              [weekends]="true"
+              [locale]="'vi'"
+              [timeZone]= 'UTC'
+              [events]="[
+                { title: 'Sự kiện 1', start: '2019-04-01', end:'2019-04-03',classNames:['event-fullcalendar']},
+                { title: 'Sự kiện 3', date: '2019-04-01',classNames:['event-fullcalendar'] },
+                { title: 'Sự kiện 2', date: '2019-04-02',classNames:['event-fullcalendar'] }
+              ]">
+        </full-calendar>
+    </div>
+</ion-content>

@@ -9,6 +9,7 @@ import { FarmsProvider } from '../../providers/farms/farms';
 import { SectionsProvider } from '../../providers/sections/sections';
 import { PigGroupsPage } from '../pig-groups/pig-groups';
 import { EmployeePage } from '../employee/employee';
+import { DatePlanPage } from '../date-plan/date-plan';
 
 @Component({
   selector: 'page-home',
@@ -82,6 +83,7 @@ export class HomePage {
       { title: 'Quản lý heo', component: PigsPage, icon: 'app-pig-outline', active: false },
       { title: 'Quản lý nhóm heo', component: PigGroupsPage, icon: 'app-pig-foot', active: false },
       { title: 'Quản lý nhân viên', component: EmployeePage, icon: 'app-employees', active: false },
+      { title: 'Lịch biểu', component: DatePlanPage, icon: 'md-calendar', active: false },
     ];
   }
 

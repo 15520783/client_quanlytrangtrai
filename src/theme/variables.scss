@@ -32,6 +32,7 @@ $app-direction: ltr;
 // to match your app's branding. Ionic uses a Sass map of
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
+@import '../assets/css/style.scss';
 
 $colors: (
   primary:      #005bea,
@@ -96,3 +97,15 @@ $light-tint:#d7d8da;
 
 @import "roboto";
 @import "noto-sans";
+
+
+.event-fullcalendar { 
+  .fc-content{
+    padding: 5px;
+    font-weight: bold;
+    color: white;
+    background:linear-gradient(to right,$themeColor2,$light-tint);
+    border-color:#01C2FA;
+    border-radius: 15px;
+  }
+}

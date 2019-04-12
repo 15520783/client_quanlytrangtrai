@@ -5,7 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HeaderColor } from '@ionic-native/header-color';
 import { FarmsProvider } from '../providers/farms/farms';
-import { HomePage } from '../pages/home/home';
+import { LoginPage } from '../pages/login/login';
 
 @Component({
   templateUrl: 'app.html'
@@ -13,7 +13,7 @@ import { HomePage } from '../pages/home/home';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any = LoginPage;
   splash:boolean = true;
 
   constructor(
