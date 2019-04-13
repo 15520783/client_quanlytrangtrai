@@ -56,6 +56,9 @@ ion-icon {
     &[class*="schedule"] {
         mask-image: url(../assets/imgs/calendar.svg);
     }
+    &[class*="user-account"] {
+        mask-image: url(../assets/imgs/user-account.svg);
+    }
 }
 
 .toolbar-title{
@@ -219,7 +222,15 @@ ion-menu {
 }
 
 
-
+[data-balloon]:after {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    height: 6vH;
+}
 
 
 //splash

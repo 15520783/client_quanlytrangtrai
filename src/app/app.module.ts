@@ -20,10 +20,13 @@ import { PigGroupsPage } from '../pages/pig-groups/pig-groups';
 import { EmployeePage } from '../pages/employee/employee';
 import { PigGroupInformationPage } from '../pages/pig-group-information/pig-group-information';
 import { DatePlanPage } from '../pages/date-plan/date-plan';
+import { EmployeeInformationPage } from '../pages/employee-information/employee-information';
 
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
 import { FarmComponent } from '../components/farm/farm';
+
+import { HideHeaderDirective } from '../directives/hide-header/hide-header';
 
 //Native implement
 import { StatusBar } from '@ionic-native/status-bar';
@@ -59,7 +62,8 @@ const Pages = [
   PigGroupsPage,
   EmployeePage,
   PigGroupInformationPage,
-  DatePlanPage
+  DatePlanPage,
+  EmployeeInformationPage
 ]
 
 const Components = [
@@ -79,11 +83,16 @@ const Providers = [
   EmployeesProvider
 ]
 
+const Directives = [
+  HideHeaderDirective
+]
+
 @NgModule({
   declarations: [
     MyApp,
     ...Pages,
-    ...Components
+    ...Components,
+    ...Directives
   ],
   imports: [
     IonicStorageModule.forRoot(),
@@ -95,7 +104,7 @@ const Providers = [
       iconMode: 'ios',
       activator:'ripple'
     }),
-    FullCalendarModule
+    FullCalendarModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [

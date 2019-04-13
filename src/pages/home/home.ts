@@ -18,7 +18,7 @@ import { DatePlanPage } from '../date-plan/date-plan';
 export class HomePage {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = FarmsPage;
+  rootPage: any = EmployeePage;
 
 
   // pages: Array<{ title: string, component: any, icon: string, active: boolean, init: any }>;

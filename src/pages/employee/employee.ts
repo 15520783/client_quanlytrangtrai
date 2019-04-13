@@ -1,11 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, Menu, Content } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, Menu, Content, ModalController } from 'ionic-angular';
 import { FormControl } from '@angular/forms';
 import { EmployeesProvider } from '../../providers/employees/employees';
 import { Utils } from '../../common/utils';
 import { employee } from '../../common/entity';
 import { KEY } from '../../common/const';
 import { FilterProvider } from '../../providers/filter/filter';
+import { EmployeeInformationPage } from '../employee-information/employee-information';
 
 
 @IonicPage()
@@ -35,7 +36,8 @@ export class EmployeePage {
     public employeeProvider: EmployeesProvider,
     public platform: Platform,
     public util: Utils,
-    public filterProvider: FilterProvider
+    public filterProvider: FilterProvider,
+    public modalCtrl : ModalController
   ) {
   }
 
@@ -119,6 +121,14 @@ export class EmployeePage {
       this.visible_items.push.apply(this.visible_items, this.rows.slice(start, end));
       infiniteScroll.complete();
     }, 800);
+  }
 
+  viewDeltail(employee){
+    const modal = this.modalCtrl.create(
+      EmployeeInformationPage, employee, {
+        cssClass: 'ion-modal'
+      }
+    )
+    modal.present();
   }
 }

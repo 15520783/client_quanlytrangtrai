@@ -1,0 +1,103 @@
+page-employee-information {
+    [height-12vh]{
+        height: 12vH;;
+    }
+
+    ion-item-divider{
+        color:white!important;
+        text-align: left!important;
+        background:linear-gradient(to right,$themeColor2,$light-tint)!important;
+    }
+
+    .app-calendar {
+        margin: 0 auto;
+        max-width: 900px;
+    }
+
+    ion-label{
+        font-size:15px!important;
+        color:black!important;
+        font-weight: bold;    
+    }
+    
+    ion-toolbar .custom-toolbar {
+        position: absolute;
+
+        .toolbar-background{
+            background: transparent!important;
+        }
+    }
+
+    .card-header{
+        background:linear-gradient(to right,$themeColor2,$light-tint)
+    }
+
+    .card-content{
+        background: white;
+    }
+
+    // .card-content-custom{
+    //     max-height: 70.5vH;
+    //     min-height: 70vH;
+    //     overflow: auto;
+    // }
+
+    .card{
+        background: $light-tint;
+    }
+
+    .fc-scroller{
+        // overflow: hidden !important;
+        height: 100%;
+      }
+
+      .fc-day-header{
+        height: 5vH!important;
+        vertical-align: middle!important;
+      }
+
+      .fc-widget-header{
+        background:#DEEDF7;
+      }
+
+      .fc-day{
+        background:#F2F5F7;
+      }
+
+      .fc-day-number{
+        float: right;
+        padding: 10px!important;
+        font-weight: bold;
+        color: #f53d3d;
+      }
+
+      .fc-day-grid-event{
+        background: transparent!important;
+        border:none;
+      }
+
+      .fc-button{
+        background: #01C2FA!important;
+        border:none;
+      }
+
+      button[ion-fab] {
+        overflow: visible;
+        position: relative;
+
+        ion-label {
+            position: absolute;
+            top: -8px;
+            right: 40px;
+
+            color: white;
+            background-color: rgba(0,0,0,0.7);
+            line-height: 24px;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+        contain: layout;
+    }
+    
+    
+}
