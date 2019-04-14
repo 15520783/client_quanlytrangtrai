@@ -10,6 +10,7 @@ export class FilterProvider {
     public util: Utils
   ) {
     console.log('Hello FilterProvider Provider');
+    console.log(this.input);
   }
 
   public input: any = [];

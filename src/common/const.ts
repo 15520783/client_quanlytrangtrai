@@ -7,7 +7,7 @@ const KEY = {
 }
 
 const CONFIG = {
-    SERVER_API: 'http://192.168.0.49:3000',
+    SERVER_API: 'http://192.168.0.223:3000',
     DEFAULT_TIMEOUT: 3000,
     LANGUAGE_DEFAULT:'vi'
 }

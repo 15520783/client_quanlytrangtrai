@@ -22,7 +22,8 @@
         weekLabel: "Tu",
         allDayText: "Cả ngày",
         eventLimitText: function (n) {
-            return "+ thêm " + n;
+            // return "+ thêm " + n;
+            return "+ " + n + " sự kiện";
         },
         noEventsMessage: "Không có sự kiện để hiển thị"
     };

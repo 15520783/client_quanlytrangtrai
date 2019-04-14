@@ -19,6 +19,6 @@ export class PigGroupsProvider {
   }
 
   getAllGroups(){
-    return this.http.get(CONFIG.SERVER_API.concat(API.GET_ALL_GROUPS)).toPromise();
+    return this.http.get(CONFIG.SERVER_API.concat(API.GET_ALL_GROUPS)).timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
   }
 }

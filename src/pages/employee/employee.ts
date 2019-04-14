@@ -43,17 +43,17 @@ export class EmployeePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EmployeePage');
-    this.getAllGroups();
+    this.getAllEmployee();
   }
 
 
-  public getAllGroups() {
+  public getAllEmployee() {
     if (!this.employeeProvider.employees.length) {
       this.util.showLoading('Đang tải dữ liệu');
       this.employeeProvider.getAllEmployee()
         .then((data: Array<employee>) => {
           if (data.length) {
-            this.util.setKey(KEY.GROUPS, data)
+            this.util.setKey(KEY.EMPLOYEES, data)
               .then(() => {
                 this.employeeProvider.employees = data;
                 this.util.closeLoading().then(() => {
@@ -71,7 +71,7 @@ export class EmployeePage {
         })
         .catch((err) => {
           console.log('err_employee_provider', err);
-          this.util.getKey(KEY.GROUPS)
+          this.util.getKey(KEY.EMPLOYEES)
             .then((data: Array<employee>) => {
               this.employeeProvider.employees = data;
               this.util.closeLoading().then(() => {

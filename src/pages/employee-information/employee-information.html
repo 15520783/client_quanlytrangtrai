@@ -1,27 +1,59 @@
-<ion-header *ngIf="!platform.is('core')">
-  <ion-navbar>
-    <ion-toolbar no-border class="custom-toolbar">
-      <ion-buttons left>
-        <button navPop ion-button icon-only>
-          <ion-icon name="arrow-back"></ion-icon>
-        </button>
-      </ion-buttons>
-    </ion-toolbar>
-    <ion-card-content text-center style="padding-bottom:0px;">
-      <ion-avatar>
-        <img #header height-12vh src="../../assets/imgs/default-user.png" alt=""
-          style="transition: max-height 700ms ease-out;overflow: hidden;margin:0 auto;">
-      </ion-avatar>
-      <div #title>
-        <ion-card-title white no-padding>{{employee.name}}</ion-card-title>
-        <p white ion-text no-margin>{{employee.email}}</p>
-      </div>
-    </ion-card-content>
-  </ion-navbar>
-  <ion-item-divider>Thông tin cá nhân</ion-item-divider>
+<ion-header >
+  <div showWhen="ios,android">
+    <ion-navbar>
+      <ion-toolbar no-border class="custom-toolbar" >
+        <ion-buttons left>
+          <button navPop ion-button icon-only>
+            <ion-icon name="arrow-back"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-toolbar>
+      <ion-card-content text-center style="padding-bottom:0px;">
+        <ion-avatar>
+          <img #header height-12vh src="../../assets/imgs/default-user.png" alt=""
+            style="transition: max-height 700ms ease-out;overflow: hidden;margin:0 auto;">
+        </ion-avatar>
+        <div #title>
+          <ion-card-title white no-padding>{{employee.name}}</ion-card-title>
+          <p white ion-text no-margin>{{employee.email}}</p>
+        </div>
+      </ion-card-content>
+    </ion-navbar>
+    <ion-item-divider>Thông tin cá nhân</ion-item-divider>
+  </div>
+  <div showWhen="core">
+    <ion-navbar no-padding>
+      <ion-toolbar style="position: relative">
+        <ion-buttons left>
+          <button navPop ion-button icon-only>
+            <ion-icon name="arrow-back"></ion-icon>
+          </button>
+        </ion-buttons>
+        <!-- <ion-title>Thông tin nhân viên</ion-title> -->
+        <ion-row>
+            <ion-col vertical-center>
+              <ion-title >{{employee.name}}</ion-title>
+            </ion-col>
+            <ion-col>
+              <ion-segment mode='md'>
+                <ion-segment-button black text-weight font15>
+                  <ion-icon vertical-alight-bottom name="ios-information-circle"></ion-icon>
+                  Thông tin chung
+                </ion-segment-button>
+                <ion-segment-button black text-weight font15>
+                  <ion-icon vertical-alight-bottom name="md-clipboard"></ion-icon>
+                  Hoạt động
+                </ion-segment-button>
+              </ion-segment>
+            </ion-col>
+          </ion-row>
+      </ion-toolbar>
+    </ion-navbar>
+  </div>
+  
 </ion-header>
 
-<ion-content no-padding #content hide-header [header]="header" [title]="title" *ngIf="!platform.is('core')">
+<ion-content no-padding #content hide-header [header]="header" [title]="title" showWhen='ios,android'>
   <ion-slides paper="true" #slider>
     <ion-slide>
       <ion-list no-padding style="padding-bottom: 30px">
@@ -79,50 +111,15 @@
   </ion-fab>
 </ion-content>
 
-
-<ion-header *ngIf="platform.is('core')">
-  <ion-navbar no-padding>
-    <ion-toolbar style="position: relative">
-      <ion-buttons left>
-        <button navPop ion-button icon-only>
-          <ion-icon name="arrow-back"></ion-icon>
-        </button>
-      </ion-buttons>
-      <ion-title>Thông tin nhân viên</ion-title>
-    </ion-toolbar>
-    <ion-row>
-      <ion-item-divider sticky="true">
-        <ion-row>
-          <ion-col>
-            <h2 font28 white>{{employee.name}}</h2>
-          </ion-col>
-          <ion-col>
-            <ion-segment mode='md'>
-              <ion-segment-button black text-weight font15>
-                <ion-icon vertical-alight-bottom name="ios-information-circle"></ion-icon>
-                Thông tin chung
-              </ion-segment-button>
-              <ion-segment-button black text-weight font15>
-                <ion-icon vertical-alight-bottom name="md-clipboard"></ion-icon>
-                Hoạt động
-              </ion-segment-button>
-            </ion-segment>
-          </ion-col>
-        </ion-row>
-      </ion-item-divider>
-    </ion-row>
-  </ion-navbar>
-</ion-header>
-
 <ion-content no-padding *ngIf="platform.is('core')">
   <ion-list no-padding no-lines>
     <ion-row>
-      <ion-col col-6>
+      <ion-col col-md-6 col-sm-12>
         <ion-card mode='ios' style="background: white" style="margin-right:0px">
           <ion-card-header mode='ios'>
             <ion-card-title text-wrap>Thông tin chi tiết</ion-card-title>
           </ion-card-header>
-          <ion-card-content mode='ios'>
+          <ion-card-content mode='ios' class="bg-white">
             <ion-list no-lines>
               <ion-row text-center padding>
                 <ion-avatar style="margin: 0 auto!important">
@@ -148,6 +145,10 @@
                     <ion-label stacked>Birthday</ion-label>
                     <ion-input text-wrap type="text" readonly [(ngModel)]="employee.birthday"></ion-input>
                   </ion-item>
+                  <ion-item>
+                    <ion-label stacked>Email</ion-label>
+                    <ion-input text-wrap type="text" readonly [(ngModel)]="employee.email"></ion-input>
+                  </ion-item>
                 </ion-col>
                 <ion-col col-6>
                   <ion-item>
@@ -172,44 +173,52 @@
           </ion-card-content>
         </ion-card>
       </ion-col>
-      <ion-col col-6 padding>
-          <div class='app-calendar' >
-              <full-calendar 
-                    (dayClick)="handleDayClick($event)"
-                    (eventClick)="handleEventClick($event)"
-                    #calendar 
+      <ion-col col-md-6 col-sm-12>
+        <ion-card mode='ios' style="background: white" style="margin-right:0px">
+          <ion-card-header mode='ios'>
+            <ion-card-title text-wrap>Thông tin chi tiết</ion-card-title>
+          </ion-card-header>
+          <ion-card-content mode='ios'padding class="bg-white">
+              <div class='app-calendar'>
+                  <full-calendar (dayClick)="handleDayClick($event)" (eventClick)="handleEventClick($event)" #calendar
                     defaultView="dayGridMonth" 
                     [header]="{
-                      left: 'title',
-                      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-                    }"
+                              left: 'title',
+                              right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                            }" 
                     [footer]="{
                       right: 'today prev,next'
-                    }"
-                    [height] = 'parent'
-                    [fixedWeekCount] = 'false'
-                    [editable] = 'true'
-                    [contentHeight] = "400"
-                    [plugins]="calendarPlugins"
-                    [weekends]="true"
-                    [locale]="'vi'"
-                    [timeZone]= 'UTC'
-                    [eventLimit] = 'true'
-                    [views] = '{
-                      timeGrid: {
-                        eventLimit: 4 
-                      }
-                    }'
+                    }" 
+                    [height]='parent' 
+                    [fixedWeekCount]='false' 
+                    [editable]='true' 
+                    [contentHeight]="400"
+                    [plugins]="calendarPlugins" 
+                    [weekends]="true" 
+                    [locale]="'vi'" 
+                    [eventLimit]='true'
+                    timeFormat = 'hh:mm a'
+                    [views]='{
+                              timeGrid: {
+                                eventLimit: 4 
+                              },
+                              timelineDay: {
+                                slotLabelFormat: ["H:mm"]
+                              }
+                            }' 
                     [events]="[
-                      { title: 'Sự kiện 1', start: '2019-04-01', end:'2019-04-03',classNames:['event-fullcalendar']},
+                      { title: 'Sự kiện 1', start: '2019-04-01 7:20:12', end:'2019-04-01 9:30',classNames:['event-fullcalendar']},
                       { title: 'Sự kiện 1', start: '2019-04-01', end:'2019-04-03',classNames:['event-fullcalendar']},
                       { title: 'Sự kiện 1', start: '2019-04-01', end:'2019-04-03',classNames:['event-fullcalendar']},
                       { title: 'Sự kiện 1', start: '2019-04-01', end:'2019-04-03',classNames:['event-fullcalendar']},
                       { title: 'Sự kiện 3', date: '2019-04-01',classNames:['event-fullcalendar'] },
                       { title: 'Sự kiện 2', date: '2019-04-02',classNames:['event-fullcalendar'] }
                     ]">
-              </full-calendar>
-          </div>
+                  </full-calendar>
+                </div>
+          </ion-card-content>
+        </ion-card>
+        
       </ion-col>
     </ion-row>
   </ion-list>

@@ -51,9 +51,11 @@ export class PigGroupsPage {
     public menuCtrl: MenuController,
     public modalCtrl: ModalController
   ) {
-    this.houseProvider.getAllHouses().then((data: Array<house>) => {
+    this.houseProvider.getAllHouses()
+    .then((data: Array<house>) => {
       this.houses = data;
     })
+    .catch((err)=>{console.log(err)});
   }
 
   ionViewDidLoad() {

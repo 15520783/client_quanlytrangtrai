@@ -32,8 +32,12 @@ $app-direction: ltr;
 // to match your app's branding. Ionic uses a Sass map of
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
-@import '../assets/css/style.scss';
+@import '../assets/css/fullcalendar/style.scss';
+@import '../assets/css/fullcalendar/resource-timeline.scss';
+@import '../assets/css/fullcalendar/timegrid.scss';
+@import '../assets/css/fullcalendar/timeline.scss';
 @import '../assets/css/balloon/main.min.css';
+@import '../assets/css/custom-fullcalendar/style.scss';
 
 $colors: (
   primary:      #005bea,

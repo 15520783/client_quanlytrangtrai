@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
+import resourceTimeline from '@fullcalendar/resource-timeline';
+import interactionPlugin from '@fullcalendar/interaction';
 
 @IonicPage()
 @Component({
@@ -12,8 +14,8 @@ import listPlugin from '@fullcalendar/list';
 export class DatePlanPage {
   @ViewChild('calendar') calendar: any;
 
-  calendarPlugins = [dayGridPlugin,timeGridPlugin,listPlugin]; // important!
-  calendarOptions:any ;
+  calendarPlugins = [interactionPlugin, resourceTimeline, dayGridPlugin, timeGridPlugin, listPlugin]; // important!
+  calendarOptions: any;
 
   constructor(
     public navCtrl: NavController,
@@ -22,7 +24,7 @@ export class DatePlanPage {
   ) {
     this.calendarOptions = {
       dayClick: (date, jsEvent, view, resourceObj) => {
-       console.log('Date: ' + date.format());
+        console.log('Date: ' + date.format());
       }
     };
   }
@@ -37,7 +39,7 @@ export class DatePlanPage {
     console.log(arg.event.end);
   }
 
-  handleDayClick(event){
+  handleDayClick(event) {
     console.log(event);
   }
 }

@@ -25,6 +25,8 @@ import { EmployeeInformationPage } from '../pages/employee-information/employee-
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
 import { FarmComponent } from '../components/farm/farm';
+import { EmployeeListComponent } from '../components/employee-list/employee-list';
+import { PigGroupListComponent } from '../components/pig-group-list/pig-group-list';
 
 import { HideHeaderDirective } from '../directives/hide-header/hide-header';
 
@@ -70,6 +72,8 @@ const Components = [
   ExpandableComponent,
   HeaderComponent,
   FarmComponent,
+  EmployeeListComponent,
+  PigGroupListComponent
 ]
 
 const Providers = [

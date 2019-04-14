@@ -13,6 +13,6 @@ export class EmployeesProvider {
   }
 
   getAllEmployee(){
-    return this.http.get(CONFIG.SERVER_API.concat(API.GET_ALL_EMPLOYEES)).toPromise();
+    return this.http.get(CONFIG.SERVER_API.concat(API.GET_ALL_EMPLOYEES)).timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
   }
 }

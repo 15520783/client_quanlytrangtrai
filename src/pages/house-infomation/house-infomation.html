@@ -15,11 +15,11 @@
   <ion-item-divider sticky="true">
     <ion-row showWhen="core">
       <ion-col no-padding>
-        <button color="secondary" ion-button mode='ios' black text-weight padding>
+        <button color="secondary" ion-button mode='ios' black text-weight padding (tap)="viewPigs()">
           <!-- <ion-icon padding name="app-function"></ion-icon> -->
           Danh sách heo
         </button>
-        <button color="secondary" ion-button mode='ios' black text-weight padding>
+        <button color="secondary" ion-button mode='ios' black text-weight padding (tap)="viewEmployee()">
           Danh sách nhân viên
         </button>
         <button color="secondary" ion-button mode='ios' black text-weight padding>
@@ -84,12 +84,6 @@
     <ion-slides scrollbar="true" #slider>
       <ion-slide>
         <ion-infinite-scroll>
-          <!-- <ion-card no-margin mode='ios' style="background: white" style="margin-right:0px"> -->
-          <!-- <ion-card-header mode='ios' no-padding>
-          <ion-card-title text-wrap sticky="true">Thông tin chi tiết</ion-card-title>
-        </ion-card-header> -->
-          <!-- <ion-card-content mode='ios' class="card-content-custom" padding> -->
-          <!-- <ion-list no-lines> -->
           <ion-item>
             <ion-label stacked>Loại nhà</ion-label>
             <ion-input text-wrap type="text" readonly [(ngModel)]="house.type_id"></ion-input>
@@ -110,21 +104,11 @@
             <ion-label stacked>Ngày thành lập</ion-label>
             <ion-input type="text" readonly [(ngModel)]="house.founding"></ion-input>
           </ion-item>
-          <!-- </ion-list> -->
-          <!-- </ion-card-content> -->
-          <!-- </ion-card> -->
         </ion-infinite-scroll>
       </ion-slide>
       <ion-slide>
         <ion-infinite-scroll>
-          <!-- <ion-card no-margin mode='ios' style="background: white" style="margin-right:0px">
-          <ion-card-header no-padding mode='ios'>
-            <ion-card-title text-wrap>Thông tin chi tiết</ion-card-title>
-          </ion-card-header>
-          <ion-card-content mode='ios' class="card-content-custom" padding> -->
           <div id="chartSummary"></div>
-          <!-- </ion-card-content>
-        </ion-card> -->
         </ion-infinite-scroll>
       </ion-slide>
     </ion-slides>
@@ -138,3 +122,39 @@
     </button>
   </ion-fab>
 </ion-footer>
+
+
+
+<ion-menu [content]="Employee" side="right" #menuEmployee sticky="true" type="overlay" width="500">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons start>
+        <button ion-button font20 (tap)="closeViewEmployee()">
+          <ion-icon name="ios-arrow-forward"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-title>Danh sách nhân viên</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content #employeeContent>
+    <employee-list  [content]="employeeContent" [data]="employeeProvider.employees"></employee-list>
+  </ion-content>
+</ion-menu>
+<ion-nav #Employee></ion-nav>
+
+<ion-menu [content]="Pigs" side="right" #menuPigs sticky="true" type="overlay" width="500">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons start>
+        <button ion-button font20 (tap)="closeViewPigs()">
+          <ion-icon name="ios-arrow-forward"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-title>Danh sách nhóm heo</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content #contentPigGroups>
+      <pig-group-list [content]="contentPigGroups" [data]="groupProvider.groups"></pig-group-list>
+  </ion-content>
+</ion-menu>
+<ion-nav #Pigs></ion-nav>

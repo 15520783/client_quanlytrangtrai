@@ -48,5 +48,7 @@ export class EmployeeInformationPage {
     console.log(arg.event.start);
     console.log(arg.event.end);
   }
-
+  handleDayClick(event){
+    console.log(event);
+  }
 }

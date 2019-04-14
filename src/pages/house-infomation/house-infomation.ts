@@ -1,8 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, ActionSheetController, Slides } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, ActionSheetController, Slides, Menu, Content } from 'ionic-angular';
 import { house } from '../../common/entity';
 import { HousesProvider } from '../../providers/houses/houses';
 import { HighChartProvider } from '../../providers/high-chart/high-chart';
+import { EmployeesProvider } from '../../providers/employees/employees';
+import { PigGroupsProvider } from '../../providers/pig-groups/pig-groups';
 
 /**
  * Generated class for the HouseInfomationPage page.
@@ -18,7 +20,9 @@ import { HighChartProvider } from '../../providers/high-chart/high-chart';
 })
 export class HouseInfomationPage {
   @ViewChild('slider') slider: Slides;
-  
+  @ViewChild('menuEmployee') menuEmployee: Menu;
+  @ViewChild('menuPigs') menuPigs: Menu;
+
   public title = ["Thông tin chi tiết","Quy mô khu"];
 
   public house: house = {
@@ -40,7 +44,9 @@ export class HouseInfomationPage {
     public houseProvider: HousesProvider,
     public chartProvider: HighChartProvider,
     public platform: Platform,
-    public actionSheetCtrl: ActionSheetController
+    public actionSheetCtrl: ActionSheetController,
+    public employeeProvider: EmployeesProvider,
+    public groupProvider: PigGroupsProvider
   ) {
 
   }
@@ -50,7 +56,11 @@ export class HouseInfomationPage {
     console.log('ngAfterViewInit FarmInfomationPage');
   }
 
+
+
   ionViewDidLoad() {
+    setTimeout(() => {
+    }, 500);
     console.log('ionViewDidLoad HouseInfomationPage');
     let data = [
       {
@@ -111,4 +121,22 @@ export class HouseInfomationPage {
     actionSheet.present();
   }
 
+
+  viewEmployee() {
+    this.menuEmployee.enable(true);
+    this.menuEmployee.open();
+  }
+
+  closeViewEmployee() {
+    this.menuEmployee.close();
+  }
+
+  viewPigs() {
+    this.menuPigs.enable(true);
+    this.menuPigs.open();
+  }
+
+  closeViewPigs() {
+    this.menuPigs.close();
+  }
 }

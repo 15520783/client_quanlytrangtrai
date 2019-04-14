@@ -4,10 +4,11 @@
 
 <ion-content padding>
     <div class='app-calendar' >
-        <full-calendar 
+        <!-- <full-calendar 
               (dayClick)="handleDayClick($event)"
               (eventClick)="handleEventClick($event)"
               #calendar 
+              [selectable] = "true"
               defaultView="dayGridMonth" 
               [header]="{
                 left: 'title',
@@ -31,13 +32,73 @@
                 }
               }'
               [events]="[
-                { title: 'Sự kiện 1', start: '2019-04-01', end:'2019-04-03',classNames:['event-fullcalendar']},
+                { title: 'Sự kiện 1', start: '2019-04-01 7:30', end:'2019-04-01 9:30',classNames:['event-fullcalendar']},
                 { title: 'Sự kiện 1', start: '2019-04-01', end:'2019-04-03',classNames:['event-fullcalendar']},
                 { title: 'Sự kiện 1', start: '2019-04-01', end:'2019-04-03',classNames:['event-fullcalendar']},
                 { title: 'Sự kiện 1', start: '2019-04-01', end:'2019-04-03',classNames:['event-fullcalendar']},
                 { title: 'Sự kiện 3', date: '2019-04-01',classNames:['event-fullcalendar'] },
                 { title: 'Sự kiện 2', date: '2019-04-02',classNames:['event-fullcalendar'] }
-              ]">
+              ]"
+              resourceGroupField = 'groupId'
+              resources = "[
+                          {
+                            id: 'A',
+                            groupId: '1',
+                            title: 'Resource A'
+                          },
+                          {
+                            id: 'B',
+                            groupdId: '1',
+                            title: 'Resource B'
+                          },
+                          {
+                            id: 'C',
+                            groupId: '2',
+                            title: 'Resource C'
+                          }
+                        ]"
+              >
+        </full-calendar> -->
+        <full-calendar 
+              (dateClick)="handleDayClick($event)"
+              (eventClick)="handleEventClick($event)"
+              #calendar 
+              defaultView="resourceTimelineDay"
+              [locale]="'vi'"
+              isRTL = "false"
+              [header] = "{
+                left: 'today prev,next',
+                center: 'title',
+                right: 'resourceTimelineDay,resourceTimelineWeek'
+              }"
+              [contentHeight] = "platform.is('core')?550:400"
+              schedulerLicenseKey ='GPL-My-Project-Is-Open-Source'
+              [contentHeight] = "platform.is('core')?500:400"
+              [plugins]="calendarPlugins"
+              [resources] = "[
+                          {
+                            id: 'A',
+                            title: 'Resource A'
+                          },
+                          {
+                            id: 'B',
+                            title: 'Resource B'
+                          },
+                          {
+                            id: 'C',
+                            title: 'Resource C'
+                          }
+                        ]"
+              [events] = "[
+                {
+                  id: '1',
+                  resourceId: 'A',
+                  title: 'Meeting',
+                  start: '2019-04-08 7:30',
+                  end:   '2019-04-08 9:30'
+                }
+              ]"
+              >
         </full-calendar>
     </div>
 </ion-content>

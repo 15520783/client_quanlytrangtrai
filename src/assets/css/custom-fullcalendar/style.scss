@@ -1,0 +1,39 @@
+.fc-scroller{
+    // overflow: hidden !important;
+    height: 100%;
+  }
+
+  .fc-day-header{
+    height: 5vH!important;
+    vertical-align: middle!important;
+  }
+
+  .fc-widget-header{
+    background:#DEEDF7;
+  }
+
+  .fc-day{
+    background:#F2F5F7;
+  }
+
+  .fc-day-number{
+    float: right;
+    padding: 10px!important;
+    font-weight: bold;
+    color: #f53d3d;
+  }
+
+  .fc-day-grid-event{
+    background: transparent!important;
+    border:none;
+  }
+
+  .fc-time-grid-event{
+    background: linear-gradient(to right, #01C2FA, #d7d8da);
+    border-color: aliceblue;
+  }
+
+  .fc-button{
+    background: #01C2FA!important;
+    border:none;
+  }

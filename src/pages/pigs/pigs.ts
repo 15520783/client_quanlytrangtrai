@@ -48,9 +48,12 @@ export class PigsPage {
     public platform: Platform,
     public util: Utils
   ) {
-    this.houseProvider.getAllHouses().then((data: any) => {
+    this.houseProvider.getAllHouses()
+    .then((data: any) => {
       this.houses = data;
     })
+    .catch((err)=>{console.log(err)});
+
   }
 
   getRender(idx) {
