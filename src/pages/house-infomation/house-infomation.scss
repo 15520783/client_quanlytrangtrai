@@ -51,4 +51,26 @@ page-house-infomation {
             width: 50vW;
         }
     }
+
+    .button-ios-main{
+        background-color: #01C2FA;
+        height: 8vH;
+        width: 8vH;
+        margin: 0 auto;
+        border-radius: 20px;
+        font-size: 17px;
+        color: black;
+    }
+
+    .title-button{
+        color: #01C2FA;
+        text-align: center;
+        margin: 10px auto 10px auto;
+        color: black;
+    }
+    
+    ion-footer{
+        padding-top: 10px!important;
+        background: #E0E0E0;
+    }
 }

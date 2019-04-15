@@ -105,6 +105,7 @@
             <ion-input type="text" readonly [(ngModel)]="house.founding"></ion-input>
           </ion-item>
         </ion-infinite-scroll>
+
       </ion-slide>
       <ion-slide>
         <ion-infinite-scroll>
@@ -115,12 +116,32 @@
   </ion-list>
 </ion-content>
 
-<ion-footer padding no-border showWhen="ios,android">
-  <ion-fab center bottom>
+<ion-footer no-padding no-border showWhen="ios,android">
+  <!-- <ion-fab center bottom>
     <button ion-fab color="main" (tap)="presentActionSheet()">
       <ion-icon name="arrow-up"></ion-icon>
     </button>
-  </ion-fab>
+  </ion-fab> -->
+  <ion-row>
+    <ion-col>
+      <button mode='ios' ion-button block small text-wrap color='main'>
+        <ion-icon name="app-action"></ion-icon>
+      </button>
+      <p text-wrap class="title-button">Nhập heo</p>
+    </ion-col>
+    <ion-col>
+      <button mode='ios' ion-button block small text-wrap color='main'>
+        <ion-icon name="app-action"></ion-icon>
+      </button>
+      <p text-wrap class="title-button">Lên giống heo nái</p>
+    </ion-col>
+    <ion-col>
+      <button mode='ios' ion-button block small text-wrap color='main'>
+        <ion-icon name="app-action"></ion-icon>
+      </button>
+      <p text-wrap class="title-button">Chuyển heo</p>
+    </ion-col>
+  </ion-row>
 </ion-footer>
 
 
@@ -137,7 +158,7 @@
     </ion-toolbar>
   </ion-header>
   <ion-content #employeeContent>
-    <employee-list  [content]="employeeContent" [data]="employeeProvider.employees"></employee-list>
+    <employee-list [content]="employeeContent" [data]="employeeProvider.employees"></employee-list>
   </ion-content>
 </ion-menu>
 <ion-nav #Employee></ion-nav>
@@ -154,7 +175,7 @@
     </ion-toolbar>
   </ion-header>
   <ion-content #contentPigGroups>
-      <pig-group-list [content]="contentPigGroups" [data]="groupProvider.groups"></pig-group-list>
+    <pig-group-list [content]="contentPigGroups" [data]="groupProvider.groups"></pig-group-list>
   </ion-content>
 </ion-menu>
 <ion-nav #Pigs></ion-nav>

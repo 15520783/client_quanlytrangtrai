@@ -17,10 +17,7 @@
         <button ion-button font20 (tap)="openFilter()">
           <ion-icon name="funnel"></ion-icon>
         </button>
-        <button ion-button font20>
-          <ion-icon name="md-qr-scanner" showWhen="ios,android"></ion-icon>
-        </button>
-        <button item-end ion-button font20>
+        <button item-end ion-button font20 showWhen="core">
           <ion-icon name="sync"></ion-icon>
         </button>
       </ion-buttons>
@@ -57,9 +54,19 @@
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 
-  <ion-fab bottom right *ngIf="platform.is('cordova')">
-    <button ion-fab (tap)="scan()" margin-bottom="10px" showWhen="android,windows,ios">
-      <ion-icon name="barcode"></ion-icon>
+  <ion-fab bottom right showWhen="android,windows,ios">
+    <button ion-fab>
+      <ion-icon name="ios-arrow-up"></ion-icon>
     </button>
+    <ion-fab-list side="top" style="right:0px">
+      <button data-balloon-visible data-balloon-length="medium" data-balloon="Quét mã QR" data-balloon-pos="left"
+        ion-fab color="main">
+        <ion-icon name="app-qr-scanner"></ion-icon>
+      </button>
+      <button data-balloon-visible data-balloon-length="medium" data-balloon="Cập nhật dữ liệu" data-balloon-pos="left"
+        ion-fab color="main">
+        <ion-icon name="sync"></ion-icon>
+      </button>
+    </ion-fab-list>
   </ion-fab>
 </ion-content>

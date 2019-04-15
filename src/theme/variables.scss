@@ -38,6 +38,10 @@ $app-direction: ltr;
 @import '../assets/css/fullcalendar/timeline.scss';
 @import '../assets/css/balloon/main.min.css';
 @import '../assets/css/custom-fullcalendar/style.scss';
+@import '../assets/css/balloon/balloon-visible.scss';
+@import '../assets/css/my-icon/my-icon.scss';
+@import '../assets/css/splash-animation/splash-animation.scss';
+
 
 $colors: (
   primary:      #005bea,
