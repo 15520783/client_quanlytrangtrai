@@ -1,0 +1,15 @@
+<ion-item pl-0>
+    <ion-label stacked>{{label}}</ion-label>
+    <!-- <ion-input [formControl]="validControl" style="display: none"></ion-input> -->
+    <ion-datetime [attr.border-err]="(!validControl.valid && active)?'':null" [formControl]="validControl" displayFormat="MM/DD/YYYY"></ion-datetime>
+</ion-item>
+<expandable [expanded]="!validControl.valid" *ngIf="active">
+    <span *ngIf="validControl.errors">
+      <p no-margin mt-5 err *ngIf="validControl.errors.required">
+        <ion-icon name="md-information-circle" style="vertical-align: bottom"></ion-icon> {{errorMessage_Required}}
+      </p>
+      <p no-margin mt-5 err *ngIf="validControl.errors.maxlength">
+        <ion-icon name="md-information-circle" style="vertical-align: bottom"></ion-icon> {{errorMessage_Maxlength}}
+      </p>
+    </span>
+</expandable>

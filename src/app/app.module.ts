@@ -21,13 +21,15 @@ import { EmployeePage } from '../pages/employee/employee';
 import { PigGroupInformationPage } from '../pages/pig-group-information/pig-group-information';
 import { DatePlanPage } from '../pages/date-plan/date-plan';
 import { EmployeeInformationPage } from '../pages/employee-information/employee-information';
+import { TestInputPage } from '../pages/test-input/test-input';
 
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
 import { FarmComponent } from '../components/farm/farm';
 import { EmployeeListComponent } from '../components/employee-list/employee-list';
 import { PigGroupListComponent } from '../components/pig-group-list/pig-group-list';
-
+import { InputTextComponent } from '../components/input-text/input-text';
+import { InputDateComponent } from '../components/input-date/input-date';
 import { HideHeaderDirective } from '../directives/hide-header/hide-header';
 
 //Native implement
@@ -36,7 +38,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HeaderColor } from '@ionic-native/header-color';
 import { Toast } from '@ionic-native/toast';
 
-import {Utils} from '../common/utils';
+import { Utils} from '../common/utils';
 import { PigsProvider } from '../providers/pigs/pigs';
 import { FarmsProvider } from '../providers/farms/farms';
 import { IonicStorageModule } from '@ionic/storage';
@@ -46,6 +48,7 @@ import { HighChartProvider } from '../providers/high-chart/high-chart';
 import { PigGroupsProvider } from '../providers/pig-groups/pig-groups';
 import { FilterProvider } from '../providers/filter/filter';
 import { EmployeesProvider } from '../providers/employees/employees';
+
 
 
 
@@ -65,7 +68,8 @@ const Pages = [
   EmployeePage,
   PigGroupInformationPage,
   DatePlanPage,
-  EmployeeInformationPage
+  EmployeeInformationPage,
+  TestInputPage
 ]
 
 const Components = [
@@ -73,7 +77,9 @@ const Components = [
   HeaderComponent,
   FarmComponent,
   EmployeeListComponent,
-  PigGroupListComponent
+  PigGroupListComponent,
+  InputTextComponent,
+  InputDateComponent
 ]
 
 const Providers = [

@@ -8,6 +8,7 @@ import { FarmsProvider } from '../providers/farms/farms';
 import { LoginPage } from '../pages/login/login';
 import { EmployeeInformationPage } from '../pages/employee-information/employee-information';
 import { HomePage } from '../pages/home/home';
+import { TestInputPage } from '../pages/test-input/test-input';
 
 @Component({
   templateUrl: 'app.html'
@@ -15,7 +16,7 @@ import { HomePage } from '../pages/home/home';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any = TestInputPage;
   splash:boolean = true;
 
   constructor(

@@ -1,0 +1,15 @@
+<ion-item pl-0 [attr.err-mode]="(!validControl.valid && active)?'':null">
+  <ion-label stacked>{{label}}</ion-label>
+  <ion-input type="text" [formControl]="validControl"></ion-input>
+</ion-item>
+<expandable [expanded]="!validControl.valid" *ngIf="active">
+  <span *ngIf="validControl.errors">
+    <p no-margin mt-5 err *ngIf="validControl.errors.required">
+      <ion-icon name="md-information-circle" style="vertical-align: bottom"></ion-icon> {{errorMessage_Required}}
+    </p>
+    <p no-margin mt-5 err *ngIf="validControl.errors.maxlength">
+      <ion-icon name="md-information-circle" style="vertical-align: bottom"></ion-icon> {{errorMessage_Maxlength}}
+    </p>
+  </span>
+</expandable>
+
