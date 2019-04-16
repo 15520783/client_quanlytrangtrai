@@ -9,6 +9,7 @@ import { LoginPage } from '../pages/login/login';
 import { EmployeeInformationPage } from '../pages/employee-information/employee-information';
 import { HomePage } from '../pages/home/home';
 import { TestInputPage } from '../pages/test-input/test-input';
+import { FarmInputPage } from '../pages/farm-input/farm-input';
 
 @Component({
   templateUrl: 'app.html'
@@ -16,7 +17,7 @@ import { TestInputPage } from '../pages/test-input/test-input';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = TestInputPage;
+  rootPage: any = HomePage;
   splash:boolean = true;
 
   constructor(

@@ -1,16 +1,21 @@
 <ion-header>
-  <ion-toolbar >
+  <ion-toolbar>
+    <ion-buttons left *ngIf="selectMode">
+      <button navPop ion-button icon-only>
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
     <ion-searchbar col-md-7 mode="ios" animated="true" debounce="500" placeholder="Tìm kiếm nhóm heo"
-        [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="setFilteredItems()">
-      </ion-searchbar>
-      <ion-buttons right>
-        <button ion-button font20 (tap)="showFilter=!showFilter;scrollToTop()">
-          <ion-icon name="funnel"></ion-icon>
-        </button>
-        <button ion-button font20 (tap)="closeMenu()">
-          <ion-icon name="ios-arrow-forward"></ion-icon>
-        </button>
-      </ion-buttons>
+      [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="setFilteredItems()">
+    </ion-searchbar>
+    <ion-buttons right>
+      <button ion-button font20 (tap)="showFilter=!showFilter;scrollToTop()">
+        <ion-icon name="funnel"></ion-icon>
+      </button>
+      <button ion-button font20 (tap)="closeMenu()" *ngIf="selectMode">
+        <ion-icon name="ios-arrow-forward"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-toolbar>
   <expandable [expanded]="showFilter">
     <ion-card-content no-padding style="background: white">
@@ -76,7 +81,7 @@
 </ion-header>
 <ion-content #content>
 
-  
+
 
   <ion-list>
     <button ion-item *ngFor="let item of visible_items" (tap)="select(item)">

@@ -98,4 +98,8 @@ export class InputSelectTargetComponent {
 
 
   }
+
+  scrollTo(){
+    document.getElementById('item').scrollIntoView({ behavior: 'smooth' });
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ElementRef, ViewChild } from '@angular/core';
 
 /**
  * Generated class for the InputTextComponent component.
@@ -12,15 +12,21 @@ import { Component, Input } from '@angular/core';
 })
 export class InputTextComponent {
 
+
   @Input() validControl: any; 
   @Input() errorMessage_Required: string;
   @Input() errorMessage_Maxlength: string;
   @Input() label: string = '';
+  @Input() placeholder: string = '';
   // @Input() value:string = '';
   @Input() active :boolean = false;
 
-  constructor() {
+  constructor(public elementRef: ElementRef) {
+    
     console.log('Hello InputTextComponent Component');
   }
 
+  scrollTo(){
+    document.getElementById('item').scrollIntoView();
+  }
 }

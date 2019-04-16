@@ -1,6 +1,10 @@
-<ion-item pl-0 [attr.err-mode]="(!validControl.valid && active)?'':null">
+<ion-item (tap)="scrollTo()" id="item" #item pl-0 [attr.err-mode]="(!validControl.valid && active)?'':null">
   <ion-label stacked>{{label}}</ion-label>
-  <ion-input type="text" [formControl]="validControl"></ion-input>
+  <ion-input 
+      type="text" 
+      [formControl]="validControl"
+      [placeholder]="placeholder">
+  </ion-input>
 </ion-item>
 <expandable [expanded]="!validControl.valid" *ngIf="active">
   <span *ngIf="validControl.errors">

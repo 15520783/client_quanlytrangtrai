@@ -5,6 +5,7 @@ import { Utils } from '../../common/utils';
 import { farm } from '../../common/entity';
 import { KEY } from '../../common/const';
 import { FarmInfomationPage } from '../farm-infomation/farm-infomation';
+import { FarmInputPage } from '../farm-input/farm-input';
 
 
 @IonicPage()
@@ -83,5 +84,10 @@ export class FarmsPage {
     modal.present();
   }
 
-  
+  addNewFarm(){
+    let modal = this.modalCtrl.create(
+      FarmInputPage
+    );
+    modal.present();
+  }
 }

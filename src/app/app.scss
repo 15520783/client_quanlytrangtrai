@@ -186,10 +186,20 @@ ion-menu {
     background:#f53d3d!important;
 }
 
+
 .ion-popover{
+    
     .popover-content{
-        width: 70vW;
+        // top: 4vW!important;
+        // left: 52vW!important;
+        width: auto;
         height: 80vH;
+        display: table!important;
+    }
+
+    .scroll-content{
+        max-height: 80vH;
+        display: inline-block!important;
     }
 }
 

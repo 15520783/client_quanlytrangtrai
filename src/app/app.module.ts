@@ -22,6 +22,7 @@ import { PigGroupInformationPage } from '../pages/pig-group-information/pig-grou
 import { DatePlanPage } from '../pages/date-plan/date-plan';
 import { EmployeeInformationPage } from '../pages/employee-information/employee-information';
 import { TestInputPage } from '../pages/test-input/test-input';
+import { FarmInputPage } from '../pages/farm-input/farm-input';
 
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
@@ -74,6 +75,7 @@ const Pages = [
   DatePlanPage,
   EmployeeInformationPage,
   TestInputPage,
+  FarmInputPage,
   PigGroupListComponent,
   EmployeeListComponent,
   PigListComponent

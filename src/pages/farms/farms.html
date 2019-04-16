@@ -1,13 +1,18 @@
 <ion-header>
-  <header [title]="'Quản lý trang trại'"></header>
+  <header [title]="'Quản lý trang trại'">
+    <ion-toolbar>
+        <button ion-button mode='ios' color="secondary" (tap)="addNewFarm()">Thêm trang trại</button>
+    </ion-toolbar>
+  </header>
+
 </ion-header>
 
 <ion-content center no-padding showWhen="core">
-  <ion-row *ngIf="farms">
-    <ion-col col-md-4 col-sm-6 *ngFor="let farm of farms">
-      <farm [farm]="farm"></farm>
-    </ion-col>
-  </ion-row>
+    <ion-row *ngIf="farms">
+      <ion-col col-md-4 col-sm-6 *ngFor="let farm of farms">
+        <farm [farm]="farm"></farm>
+      </ion-col>
+    </ion-row>
 </ion-content>
 
 <ion-content #content showWhen="ios,android">

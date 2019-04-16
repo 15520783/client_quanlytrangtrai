@@ -8,7 +8,6 @@ import { Component, Input } from '@angular/core';
 export class InputSelectComponent {
 
   @Input() multiple:boolean = false;
-  @Input() selectOptions: any;
   @Input() interface:string = 'popover';
   @Input() okText:string = 'Chọn';
   @Input() placeholder:string = '';
@@ -20,6 +19,10 @@ export class InputSelectComponent {
   @Input() label: string = '';
   @Input() active :boolean = false;
   @Input() data:any = [];
+  @Input() title:string = '';
+
+  @Input() selectOptions: any = [];
+
 
   constructor() {
     console.log(this.data);
@@ -28,5 +31,9 @@ export class InputSelectComponent {
 
   changeValue(e){
     console.log(e);
+  }
+
+  scrollTo(){
+    document.getElementById('item').scrollIntoView();
   }
 }

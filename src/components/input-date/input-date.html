@@ -1,4 +1,4 @@
-<ion-item >
+<ion-item id="item" (tap)="scrollTo()">
     <ion-label stacked>{{label}}</ion-label>
     <ion-datetime [placeholder]="placeholder" 
     (ionChange)="datetimeChange($event)" 

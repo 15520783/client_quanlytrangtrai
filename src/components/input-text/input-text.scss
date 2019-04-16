@@ -3,6 +3,19 @@ input-text {
         color:#F65050;
     }
 
+
+    .ng-invalid{
+        border-bottom-color: transparent!important;
+    }
+
+    .ng-valid{
+        border-bottom-color: transparent!important;
+    }
+
+    .item-input:last-child {
+        border-bottom:none!important;
+    }
+
     [err-mode] {
         .item-inner{
             border-bottom-color: #F65050!important;

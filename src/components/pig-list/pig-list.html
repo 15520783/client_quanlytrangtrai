@@ -1,5 +1,10 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons left *ngIf="selectMode">
+      <button navPop ion-button icon-only>
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
     <ion-searchbar col-md-7 mode="ios" animated="true" debounce="500" placeholder="Tìm kiếm heo"
       [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="setFilteredItems()">
     </ion-searchbar>
@@ -7,7 +12,7 @@
       <button ion-button font20 (tap)="showFilter=!showFilter;scrollToTop()">
         <ion-icon name="funnel"></ion-icon>
       </button>
-      <button ion-button font20 (tap)="closeMenu()">
+      <button ion-button font20 (tap)="closeMenu()" *ngIf="selectMode">
         <ion-icon name="ios-arrow-forward"></ion-icon>
       </button>
     </ion-buttons>
@@ -52,16 +57,6 @@
           </ion-item>
         </ion-col>
         <ion-col col-md-6 col-sm-12>
-          <!-- <ion-item>
-            <ion-label stacked>
-              Khối lượng trung bình
-              <ion-badge color="danger">{{origin_avg_weight.lower}}</ion-badge>
-              <ion-badge color="danger">{{origin_avg_weight.upper}}</ion-badge>
-            </ion-label>
-            <ion-range mode="ios" pin="true" dualKnobs="true" [(ngModel)]="origin_avg_weight" min="0" max="7"
-              snaps="true" debounce="500" (ionChange)="setFilteredItems()">
-            </ion-range>
-          </ion-item> -->
         </ion-col>
       </ion-row>
       <div text-center>

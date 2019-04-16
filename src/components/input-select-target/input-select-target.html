@@ -1,4 +1,4 @@
-<ion-item [attr.err-mode]="(!validControl.valid && active)?'':null">
+<ion-item id="item" (tap)="scrollTo()" [attr.err-mode]="(!validControl.valid && active)?'':null">
   <ion-label stacked>{{label}}</ion-label>
   <ion-input 
     readonly

@@ -29,4 +29,8 @@ export class InputDateComponent {
   datetimeChange(e){
     this.value = e;;
   }
+
+  scrollTo(){
+    document.getElementById('item').scrollIntoView();
+  }
 }
