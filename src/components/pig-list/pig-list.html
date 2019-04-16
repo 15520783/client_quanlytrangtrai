@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-searchbar col-md-7 mode="ios" animated="true" debounce="500" placeholder="Tìm kiếm heo"
+      [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="setFilteredItems()">
+    </ion-searchbar>
+    <ion-buttons right>
+      <button ion-button font20 (tap)="showFilter=!showFilter;scrollToTop()">
+        <ion-icon name="funnel"></ion-icon>
+      </button>
+      <button ion-button font20 (tap)="closeMenu()">
+        <ion-icon name="ios-arrow-forward"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+  <expandable [expanded]="showFilter">
+    <ion-card-content no-padding style="background: white">
+      <ion-row>
+        <ion-col col-md-6 col-sm-12>
+          <ion-item>
+            <ion-label stacked>Giới tính</ion-label>
+            <ion-select [(ngModel)]="genderFilter" multiple="true" interface="alert" title="Giới tính" mode="ios"
+              okText="Chọn" cancelText="Hủy" [selectOptions]="customAlertOptions" (ionChange)="setFilteredItems()"
+              placeholder="Tất cả">
+              <ion-option value="1">Cái</ion-option>
+              <ion-option value="2">Đực</ion-option>
+              <ion-option value="3">Đực hiến</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col col-md-6 col-sm-12>
+          <ion-item>
+            <ion-label stacked>Nhà</ion-label>
+            <ion-select [(ngModel)]="houseFilter" multiple="true" interface="alert" title="Giới tính" mode="ios"
+              okText="Duyệt" cancelText="Hủy" [selectOptions]="customAlertOptions" placeholder="Tất cả"
+              (ionChange)="setFilteredItems()">
+              <ion-option *ngFor="let house of houses" [value]="house.id">{{house.name}}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-md-6 col-sm-12>
+          <ion-item>
+            <ion-label stacked>
+              Khối lượng gốc
+              <ion-badge color="danger">{{dualValue2.lower}}</ion-badge>
+              <ion-badge color="danger">{{dualValue2.upper}}</ion-badge>
+            </ion-label>
+            <ion-range mode="ios" pin="true" dualKnobs="true" [(ngModel)]="dualValue2" min="0" max="500" snaps="true"
+              debounce="500" (ionChange)="setFilteredItems()">
+            </ion-range>
+          </ion-item>
+        </ion-col>
+        <ion-col col-md-6 col-sm-12>
+          <!-- <ion-item>
+            <ion-label stacked>
+              Khối lượng trung bình
+              <ion-badge color="danger">{{origin_avg_weight.lower}}</ion-badge>
+              <ion-badge color="danger">{{origin_avg_weight.upper}}</ion-badge>
+            </ion-label>
+            <ion-range mode="ios" pin="true" dualKnobs="true" [(ngModel)]="origin_avg_weight" min="0" max="7"
+              snaps="true" debounce="500" (ionChange)="setFilteredItems()">
+            </ion-range>
+          </ion-item> -->
+        </ion-col>
+      </ion-row>
+      <div text-center>
+        <ion-buttons>
+          <button font20>
+            <ion-icon name="ios-arrow-up" (tap)="showFilter=!showFilter"></ion-icon>
+          </button>
+        </ion-buttons>
+      </div>
+    </ion-card-content>
+  </expandable>
+</ion-header>
+
+<ion-content #content>
+  <ion-list>
+    <button ion-item *ngFor="let item of visible_items" (tap)="select(item)">
+      <ion-avatar item-start>
+        <ion-icon name="app-pig-outline" font28></ion-icon>
+      </ion-avatar>
+      <h2>{{item.pig_code}}</h2>
+      <ion-row>
+        <ion-col>
+          <p>House_ID: {{item.house_id}}</p>
+        </ion-col>
+        <ion-col>
+          <p>Weight: {{item.origin_weight}}</p>
+        </ion-col>
+        <ion-col>
+          <p>Birth: {{item.birthday}}</p>
+        </ion-col>
+        <ion-col>
+          <p>Gender: {{item.gender}}</p>
+        </ion-col>
+        <ion-col>
+          <p>Healpoint: {{item.heath_point}}</p>
+        </ion-col>
+      </ion-row>
+    </button>
+  </ion-list>
+  <ion-infinite-scroll (ionInfinite)="loadData($event)" *ngIf="page_Idx!==page_Total">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Đang tải dữ liệu...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

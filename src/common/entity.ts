@@ -41,8 +41,8 @@ class pig {
 }
 
 class group {
-	id:string;
-	group_code:string;
+	id:string = '';
+	group_code:string = '';
 	parent_id:string;
 	round_id:string;
 	father_id:string;

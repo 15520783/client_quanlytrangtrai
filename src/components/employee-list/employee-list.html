@@ -15,7 +15,7 @@
 </ion-header>
 <ion-content #content>
   <ion-list>
-    <button ion-item *ngFor="let item of visible_items" (tap)="viewDeltail(item)">
+    <button ion-item *ngFor="let item of visible_items" (tap)="select(item)">
       <ion-avatar item-start>
         <img src="../../assets/imgs/default-user.png">
       </ion-avatar>

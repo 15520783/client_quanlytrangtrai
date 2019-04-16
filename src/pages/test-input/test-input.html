@@ -40,18 +40,35 @@
                   [placeholder]="'Chọn trang trại'"
                   [(data)]="farms">
       </input-select>
-      <input-select-pig-group [(validControl)] = "credentialsForm.controls.group_code"
-                    [errorMessage_Required]  ="'Group is required.'"
-                    [active]= "submitAttempt"
-                    [placeholder]="'Chọn nhóm heo'"
-                    [active]= "submitAttempt">
-      </input-select-pig-group>
-
+      <input-select-target
+                  [(validControl)] = "credentialsForm.controls.group_code"
+                  [errorMessage_Required]  ="'Group is required.'"
+                  [active]= "submitAttempt"
+                  [placeholder]="'Chọn nhóm heo'"
+                  >
+      </input-select-target>
+      <input-select-target
+                  [(validControl)] = "credentialsForm.controls.employee_id"
+                  [errorMessage_Required]  ="'Employee is required.'"
+                  [active]= "submitAttempt"
+                  [placeholder]="'Chọn nhân viên'"
+                  [label]="'Nhân viên'"
+                  [targertCmp]="'employee'">
+      </input-select-target>
+      <input-select-target
+                  [(validControl)] = "credentialsForm.controls.pig_id"
+                  [errorMessage_Required]  ="'Pig is required.'"
+                  [active]= "submitAttempt"
+                  [placeholder]="'Chọn heo'"
+                  [label]="'Heo'"
+                  [targertCmp]="'pigs'"
+                  (valueChange)="getGroup($event)">
+      </input-select-target>
       <!-- <ion-item >
           <ion-label stacked>Chọn nhóm heo</ion-label>
           <ion-input (tap)="presentModal()" [value]="group_code" ></ion-input>
       </ion-item> -->
     </ion-list>
-    <button [disabled]="!credentialsForm.valid && submitAttempt" ion-button mode='ios' block color="main" (tap)="submitAttempt=true">Submit</button>
+    <button [disabled]="!credentialsForm.valid && submitAttempt" ion-button mode='ios' block color="main" (tap)="submitAttempt=true;submit()">Submit</button>
   </form>
 </ion-content>

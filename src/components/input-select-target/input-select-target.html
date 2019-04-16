@@ -3,11 +3,21 @@
   <ion-input 
     readonly
     (tap)="presentModal()"
-    [(ngModel)]="group.group_code"
-    [(formControl)]="validControl"
-    [placeholder]="placeholder"
-    (ionChange)="changeValue($event)">
+    [(ngModel)]="value_visible"
+    [placeholder]="placeholder">
   </ion-input>
+  <ion-input 
+    style="display: none"
+    [(ngModel)]="value"
+    [(formControl)]="validControl">
+  </ion-input>
+  <!-- <ion-input 
+    readonly
+    (tap)="presentModal()"
+    [(ngModel)]="value"
+    [(formControl)]="validControl"
+    [placeholder]="placeholder">
+  </ion-input> -->
 </ion-item>
 
 <expandable [expanded]="!validControl.valid" *ngIf="active">

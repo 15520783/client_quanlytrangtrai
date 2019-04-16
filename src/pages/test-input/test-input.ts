@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Utils } from '../../common/utils';
 import { KEY } from '../../common/const';
 import { PigGroupListComponent } from '../../components/pig-group-list/pig-group-list';
+import { group } from '../../common/entity';
 
 @IonicPage()
 @Component({
@@ -16,7 +17,8 @@ export class TestInputPage {
   public submitAttempt: boolean = false;
   public farms: any = [];
   public options: any;
-
+  public group:group;
+  
 
   constructor(
     public navCtrl: NavController,
@@ -35,7 +37,9 @@ export class TestInputPage {
       password: ['', Validators.compose([Validators.required, , Validators.maxLength(10)])],
       date: ['', Validators.compose([Validators.required])],
       farm: ['', Validators.compose([Validators.required])],
-      group_code: ['', Validators.compose([Validators.required])]
+      group_code: ['', Validators.compose([Validators.required])],
+      employee_id:['',Validators.compose([Validators.required])],
+      pig_id:['',Validators.compose([Validators.required])],
     });
   }
 
@@ -55,14 +59,10 @@ export class TestInputPage {
     })
   }
 
-  // presentModal() {
-  //   this.util.getKey(KEY.GROUPS).then((data) => {
-  //     let modal = this.modalCtrl.create(PigGroupListComponent, { groups: data, selectMode: true });
-  //     modal.present();
-  //     modal.onDidDismiss((data) => {
-  //       if (data)
-  //         this.group_code = data.group_code;
-  //     })
-  //   })
-  // }
+  getGroup(event){
+    this.group = event;
+  }
+  submit(){
+    console.log(this.group);
+  }
 }
