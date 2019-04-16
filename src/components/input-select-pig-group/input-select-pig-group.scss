@@ -1,0 +1,13 @@
+input-select-pig-group {
+    [err]{
+        color:#F65050;
+    }
+
+    [err-mode] {
+        .item-inner{
+            border-bottom-color: #F65050!important;
+            -webkit-box-shadow: inset 0 -1px 0 0 #F65050!important;
+            box-shadow: inset 0 -1px 0 0 #F65050!important;
+        }
+    }
+}

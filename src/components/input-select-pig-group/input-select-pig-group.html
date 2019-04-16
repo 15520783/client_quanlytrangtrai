@@ -1,0 +1,19 @@
+<ion-item [attr.err-mode]="(!validControl.valid && active)?'':null">
+  <ion-label stacked>{{label}}</ion-label>
+  <ion-input 
+    readonly
+    (tap)="presentModal()"
+    [(ngModel)]="group.group_code"
+    [(formControl)]="validControl"
+    [placeholder]="placeholder"
+    (ionChange)="changeValue($event)">
+  </ion-input>
+</ion-item>
+
+<expandable [expanded]="!validControl.valid" *ngIf="active">
+  <span *ngIf="validControl.errors">
+    <p no-margin mt-5 err *ngIf="validControl.errors.required">
+      <ion-icon name="md-information-circle" style="vertical-align: bottom"></ion-icon> {{errorMessage_Required}}
+    </p>
+  </span>
+</expandable>

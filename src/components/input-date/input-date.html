@@ -1,6 +1,5 @@
 <ion-item >
     <ion-label stacked>{{label}}</ion-label>
-    <!-- <ion-input [formControl]="validControl" style="display: none"></ion-input> -->
     <ion-datetime [placeholder]="placeholder" 
     (ionChange)="datetimeChange($event)" 
     [attr.border-err]="(!validControl.valid && active)?'':null" 

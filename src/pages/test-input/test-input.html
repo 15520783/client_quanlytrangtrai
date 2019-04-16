@@ -1,0 +1,57 @@
+<!--
+  Generated template for the TestInputPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>test-input</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form action="" [formGroup]="credentialsForm">
+    <ion-list no-lines>
+      <input-text [(validControl)] = "credentialsForm.controls.username"
+                  [errorMessage_Required]  ="'Username is required.'"
+                  [errorMessage_Maxlength]  ="'Username is not more 200 characters.'"
+                  [label] = "'Username'"
+                  [active]= "submitAttempt">
+      </input-text>
+
+      <input-text [(validControl)] = "credentialsForm.controls.password"
+                  [errorMessage_Required]  ="'Password is required.'"
+                  [errorMessage_Maxlength]  ="'Password is not more 200 characters.'"
+                  [label] = "'Password'"
+                  [active]= "submitAttempt">
+      </input-text>
+      <input-date [(validControl)] = "credentialsForm.controls.date"
+                  [errorMessage_Required]  ="'Date is required.'"
+                  [errorMessage_Maxlength]  ="'Date is not more 200 characters.'"
+                  [label] = "'Date'"
+                  [active]= "submitAttempt">
+      </input-date>
+      <input-select [(validControl)] = "credentialsForm.controls.farm"
+                  [errorMessage_Required]  ="'Farm is required.'"
+                  [label] = "'Trang trại'"
+                  [active]= "submitAttempt"
+                  [selectOptions]="options"
+                  [placeholder]="'Chọn trang trại'"
+                  [(data)]="farms">
+      </input-select>
+      <input-select-pig-group [(validControl)] = "credentialsForm.controls.group_code"
+                    [errorMessage_Required]  ="'Group is required.'"
+                    [active]= "submitAttempt"
+                    [placeholder]="'Chọn nhóm heo'"
+                    [active]= "submitAttempt">
+      </input-select-pig-group>
+
+      <!-- <ion-item >
+          <ion-label stacked>Chọn nhóm heo</ion-label>
+          <ion-input (tap)="presentModal()" [value]="group_code" ></ion-input>
+      </ion-item> -->
+    </ion-list>
+    <button [disabled]="!credentialsForm.valid && submitAttempt" ion-button mode='ios' block color="main" (tap)="submitAttempt=true">Submit</button>
+  </form>
+</ion-content>
