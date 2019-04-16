@@ -1,6 +1,18 @@
-<ion-item pl-0 [attr.err-mode]="(!validControl.valid && active)?'':null">
+<ion-item [attr.err-mode]="(!validControl.valid && active)?'':null">
   <ion-label stacked>{{label}}</ion-label>
-  <ion-input type="text" [formControl]="validControl"></ion-input>
+  <ion-select 
+      [multiple] = "multiple"
+      [(ngModel)]="toppings" 
+      [selectOptions]="selectOptions"
+      [interface]="interface"
+      [okText]="okText"
+      [placeholder]="placeholder"
+      [cancelText]="cancelText"
+      [formControl]="validControl"
+      [(ngModel)]="value"
+      (ionChange)="changeValue($event)">
+      <ion-option *ngFor="let item of data" [value]="item.value">{{item.name}}</ion-option>
+  </ion-select>
 </ion-item>
 <expandable [expanded]="!validControl.valid" *ngIf="active">
   <span *ngIf="validControl.errors">

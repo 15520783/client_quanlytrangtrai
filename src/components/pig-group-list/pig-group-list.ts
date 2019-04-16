@@ -1,11 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { group } from '../../common/entity';
-import { house } from '../../common/entity';
 import { FormControl } from '@angular/forms';
 import { PigGroupInformationPage } from '../../pages/pig-group-information/pig-group-information';
 import { FilterProvider } from '../../providers/filter/filter';
 import { PigGroupsProvider } from '../../providers/pig-groups/pig-groups';
-import { ModalController, Content } from 'ionic-angular';
+import { ModalController, Content, NavParams , ViewController } from 'ionic-angular';
 
 /**
  * Generated class for the PigGroupListComponent component.
@@ -15,12 +14,14 @@ import { ModalController, Content } from 'ionic-angular';
  */
 @Component({
   selector: 'pig-group-list',
-  templateUrl: 'pig-group-list.html'
+  templateUrl: 'pig-group-list.html',
 })
 export class PigGroupListComponent {
+  @ViewChild('content') content: Content;
 
+  @Output() closeMenuEvent = new EventEmitter();
   @Input() data: Array<group> = [];
-  @Input() content: Content;
+  @Input() selectMode: boolean = false;
 
   showFilter = false;
 
@@ -49,10 +50,15 @@ export class PigGroupListComponent {
   constructor(
     public filterProvider: FilterProvider,
     public pigGroupProvider: PigGroupsProvider,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    public navParams: NavParams,
+    public viewCtrl: ViewController
   ) {
     console.log('Hello PigGroupListComponent Component');
-
+    if(this.navParams.data){
+      this.data = this.navParams.data.groups;
+      this.selectMode = this.navParams.data.selectMode;
+    }
   }
 
   ngAfterViewInit(): void {
@@ -62,12 +68,11 @@ export class PigGroupListComponent {
   }
 
   public setFilteredItems() {
-    this.content.scrollToTop().then(()=>{
-      this.rows = this.filterItems(this.searchTerm);
-      this.page_Total = this.rows.length % 50 === 0 ? parseInt(this.rows.length / 50 + '') : parseInt(this.rows.length / 50 + 1 + '');
-      this.page_Idx = 1;
-      this.visible_items = this.rows.slice(0, 50);
-    });
+    if (this.content) this.content.scrollToTop();
+    this.rows = this.filterItems(this.searchTerm);
+    this.page_Total = this.rows.length % 50 === 0 ? parseInt(this.rows.length / 50 + '') : parseInt(this.rows.length / 50 + 1 + '');
+    this.page_Idx = 1;
+    this.visible_items = this.rows.slice(0, 50);
   }
 
   public filterItems(searchItem) {
@@ -97,6 +102,14 @@ export class PigGroupListComponent {
 
   }
 
+  select(group){
+    if(this.selectMode){
+      this.viewCtrl.dismiss(group);
+    }else{
+      this.viewDeltail(group);
+    }
+  }
+
 
   viewDeltail(group) {
     // this.navCtrl.push(PigViewPage,{data:pig});
@@ -107,5 +120,13 @@ export class PigGroupListComponent {
       }
     )
     modal.present();
+  }
+
+  scrollToTop(){
+      this.content.scrollToTop();
+  }
+
+  closeMenu(){
+    this.closeMenuEvent.emit({close:true});
   }
 }

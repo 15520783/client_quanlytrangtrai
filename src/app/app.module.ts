@@ -29,7 +29,10 @@ import { FarmComponent } from '../components/farm/farm';
 import { EmployeeListComponent } from '../components/employee-list/employee-list';
 import { PigGroupListComponent } from '../components/pig-group-list/pig-group-list';
 import { InputTextComponent } from '../components/input-text/input-text';
+import { InputSelectComponent } from '../components/input-select/input-select';
 import { InputDateComponent } from '../components/input-date/input-date';
+import { InputSelectPigGroupComponent } from '../components/input-select-pig-group/input-select-pig-group';
+
 import { HideHeaderDirective } from '../directives/hide-header/hide-header';
 
 //Native implement
@@ -69,7 +72,8 @@ const Pages = [
   PigGroupInformationPage,
   DatePlanPage,
   EmployeeInformationPage,
-  TestInputPage
+  TestInputPage,
+  PigGroupListComponent
 ]
 
 const Components = [
@@ -79,7 +83,9 @@ const Components = [
   EmployeeListComponent,
   PigGroupListComponent,
   InputTextComponent,
-  InputDateComponent
+  InputDateComponent,
+  InputSelectComponent,
+  InputSelectPigGroupComponent
 ]
 
 const Providers = [
@@ -119,7 +125,7 @@ const Directives = [
   bootstrap: [IonicApp],
   entryComponents: [
     ...Pages,
-    MyApp
+    MyApp,
   ],
   providers: [
     Toast,

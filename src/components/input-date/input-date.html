@@ -1,7 +1,13 @@
-<ion-item pl-0>
+<ion-item >
     <ion-label stacked>{{label}}</ion-label>
     <!-- <ion-input [formControl]="validControl" style="display: none"></ion-input> -->
-    <ion-datetime [attr.border-err]="(!validControl.valid && active)?'':null" [formControl]="validControl" displayFormat="MM/DD/YYYY"></ion-datetime>
+    <ion-datetime [placeholder]="placeholder" 
+    (ionChange)="datetimeChange($event)" 
+    [attr.border-err]="(!validControl.valid && active)?'':null" 
+    [formControl]="validControl" 
+    [displayFormat]="displayFormat"
+    [pickerFormat]="pickerFormat">
+  </ion-datetime>
 </ion-item>
 <expandable [expanded]="!validControl.valid" *ngIf="active">
     <span *ngIf="validControl.errors">

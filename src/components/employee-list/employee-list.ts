@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { employee } from '../../common/entity';
 import { FormControl } from '@angular/forms';
 import { FilterProvider } from '../../providers/filter/filter';
@@ -16,9 +16,10 @@ import { EmployeeInformationPage } from '../../pages/employee-information/employ
   templateUrl: 'employee-list.html'
 })
 export class EmployeeListComponent {
-
+  @ViewChild('content') content: Content;
   @Input() data: Array<employee> = [];
-  @Input() content: Content;
+  @Output()  closeMenuEvent = new EventEmitter();
+  // @Input() content: Content;
 
   public page_Idx: number = 1;
   public page_Total: number = 0;
@@ -87,4 +88,11 @@ export class EmployeeListComponent {
     modal.present();
   }
 
+  scrollToTop(){
+    this.content.scrollToTop();
+  }
+
+  closeMenu(){
+    this.closeMenuEvent.emit({close:true});
+  }
 }

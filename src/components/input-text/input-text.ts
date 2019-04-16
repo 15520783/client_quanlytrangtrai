@@ -16,7 +16,7 @@ export class InputTextComponent {
   @Input() errorMessage_Required: string;
   @Input() errorMessage_Maxlength: string;
   @Input() label: string = '';
-  @Input() value:string = '';
+  // @Input() value:string = '';
   @Input() active :boolean = false;
 
   constructor() {

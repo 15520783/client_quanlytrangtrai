@@ -85,25 +85,25 @@
       <!-- <ion-infinite-scroll> -->
       <ion-list no-padding lines>
         <ion-item>
-            <ion-label stacked>Loại nhà</ion-label>
-            <ion-input text-wrap type="text" readonly [(ngModel)]="house.type_id"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label stacked>Tên nhà</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="house.name"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label stacked>Mô tả</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="house.description"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label stacked>Người quản lý</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="house.manager"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label stacked>Ngày thành lập</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="house.founding"></ion-input>
-          </ion-item>
+          <ion-label stacked>Loại nhà</ion-label>
+          <ion-input text-wrap type="text" readonly [(ngModel)]="house.type_id"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Tên nhà</ion-label>
+          <ion-input type="text" readonly [(ngModel)]="house.name"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Mô tả</ion-label>
+          <ion-input type="text" readonly [(ngModel)]="house.description"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Người quản lý</ion-label>
+          <ion-input type="text" readonly [(ngModel)]="house.manager"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Ngày thành lập</ion-label>
+          <ion-input type="text" readonly [(ngModel)]="house.founding"></ion-input>
+        </ion-item>
         <!-- </ion-infinite-scroll> -->
       </ion-list>
 
@@ -143,35 +143,11 @@
 
 
 <ion-menu [content]="Employee" side="right" #menuEmployee sticky="true" type="overlay" width="500">
-  <ion-header>
-    <ion-toolbar>
-      <ion-buttons start>
-        <button ion-button font20 (tap)="closeViewEmployee()">
-          <ion-icon name="ios-arrow-forward"></ion-icon>
-        </button>
-      </ion-buttons>
-      <ion-title>Danh sách nhân viên</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content #employeeContent>
-    <employee-list [content]="employeeContent" [data]="employeeProvider.employees"></employee-list>
-  </ion-content>
+    <employee-list (closeMenuEvent)="closeViewEmployee()" [data]="employeeProvider.employees"></employee-list>
 </ion-menu>
 <ion-nav #Employee></ion-nav>
 
 <ion-menu [content]="Pigs" side="right" #menuPigs sticky="true" type="overlay" width="500">
-  <ion-header>
-    <ion-toolbar>
-      <ion-buttons start>
-        <button ion-button font20 (tap)="closeViewPigs()">
-          <ion-icon name="ios-arrow-forward"></ion-icon>
-        </button>
-      </ion-buttons>
-      <ion-title>Danh sách nhóm heo</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content #contentPigGroups>
-    <pig-group-list [content]="contentPigGroups" [data]="groupProvider.groups"></pig-group-list>
-  </ion-content>
+    <pig-group-list  (closeMenuEvent)="closeViewPigs()" [data]="groupProvider.groups"></pig-group-list>
 </ion-menu>
 <ion-nav #Pigs></ion-nav>

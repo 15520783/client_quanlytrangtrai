@@ -120,6 +120,12 @@ ion-menu {
     color:black!important;
 }
 
+[toolbar-transparent]{
+    .toolbar-background{
+        background:transparent;
+    }
+}
+
 
 .ion-modal{
    .modal-wrapper {
@@ -178,6 +184,13 @@ ion-menu {
 
 .cancel-button-actionsheet{
     background:#f53d3d!important;
+}
+
+.ion-popover{
+    .popover-content{
+        width: 70vW;
+        height: 80vH;
+    }
 }
 
 
