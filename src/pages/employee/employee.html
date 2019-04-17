@@ -29,7 +29,7 @@
   <ion-item-divider custom-diviver sticky="true" showWhen="core">
     <ion-row>
       <ion-title ion-text font15 color="dark">Danh sách nhân viên</ion-title>
-      <button ion-button item-end mode='ios' color="secondary" (tap)="addNewFarm()">Thêm mới nhân viên</button>
+      <button ion-button item-end mode='ios' color="secondary" (tap)="addNewEmployee()">Thêm mới nhân viên</button>
     </ion-row>
   </ion-item-divider>
   <ion-item-divider sticky="true" showWhen="ios,android">Danh sách nhân viên</ion-item-divider>
@@ -75,7 +75,7 @@
         <ion-icon name="sync"></ion-icon>
       </button>
       <button data-balloon-visible data-balloon-length="medium" data-balloon="Thêm mới nhân viên" data-balloon-pos="left"
-        ion-fab color="main">
+        ion-fab color="main" (tap)="addNewEmployee()">
         <ion-icon name="add"></ion-icon>
       </button>
     </ion-fab-list>

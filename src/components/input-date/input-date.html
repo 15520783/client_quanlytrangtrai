@@ -1,20 +1,23 @@
-<ion-item id="item" (tap)="scrollTo()">
-    <ion-label stacked>{{label}}</ion-label>
-    <ion-datetime [placeholder]="placeholder" 
-    (ionChange)="datetimeChange($event)" 
-    [attr.border-err]="(!validControl.valid && active)?'':null" 
-    [formControl]="validControl" 
-    [displayFormat]="displayFormat"
-    [pickerFormat]="pickerFormat">
-  </ion-datetime>
-</ion-item>
-<expandable [expanded]="!validControl.valid" *ngIf="active">
-    <span *ngIf="validControl.errors">
-      <p no-margin mt-5 err *ngIf="validControl.errors.required">
-        <ion-icon name="md-information-circle" style="vertical-align: bottom"></ion-icon> {{errorMessage_Required}}
-      </p>
-      <p no-margin mt-5 err *ngIf="validControl.errors.maxlength">
-        <ion-icon name="md-information-circle" style="vertical-align: bottom"></ion-icon> {{errorMessage_Maxlength}}
-      </p>
-    </span>
-</expandable>
+<span #input>
+  <ion-item   (tap)="scrollTo()" 
+              [attr.valid-mode] = "(validControl.valid && active)?'':null"
+              [attr.err-mode]="(!validControl.valid && active)?'':null" >
+      <ion-label stacked>{{label}}</ion-label>
+      <ion-datetime [placeholder]="placeholder" 
+      (ionChange)="datetimeChange($event)" 
+      [formControl]="validControl" 
+      [displayFormat]="displayFormat"
+      [pickerFormat]="pickerFormat">
+    </ion-datetime>
+  </ion-item>
+  <expandable [expanded]="!validControl.valid" *ngIf="active">
+      <span *ngIf="validControl.errors">
+        <p no-margin mt-5 err *ngIf="validControl.errors.required">
+          <ion-icon name="md-information-circle" style="vertical-align: bottom"></ion-icon> {{errorMessage_Required}}
+        </p>
+        <p no-margin mt-5 err *ngIf="validControl.errors.maxlength">
+          <ion-icon name="md-information-circle" style="vertical-align: bottom"></ion-icon> {{errorMessage_Maxlength}}
+        </p>
+      </span>
+  </expandable>
+</span>

@@ -1,26 +1,30 @@
-<ion-item id="item" (tap)="scrollTo()" [attr.err-mode]="(!validControl.valid && active)?'':null">
-  <ion-label stacked>{{label}}</ion-label>
-  <ion-select 
-      [multiple] = "multiple"
-      [(ngModel)]="toppings" 
-      [selectOptions]="selectOptions"
-      [interface]="interface"
-      [okText]="okText"
-      [placeholder]="placeholder"
-      [cancelText]="cancelText"
-      [formControl]="validControl"
-      [(ngModel)]="value"
-      (ionChange)="changeValue($event)">
-      <ion-option *ngFor="let item of data" [value]="item.value">{{item.name}}</ion-option>
-  </ion-select>
-</ion-item>
-<expandable [expanded]="!validControl.valid" *ngIf="active">
-  <span *ngIf="validControl.errors">
-    <p no-margin mt-5 err *ngIf="validControl.errors.required">
-      <ion-icon name="md-information-circle" style="vertical-align: bottom"></ion-icon> {{errorMessage_Required}}
-    </p>
-    <p no-margin mt-5 err *ngIf="validControl.errors.maxlength">
-      <ion-icon name="md-information-circle" style="vertical-align: bottom"></ion-icon> {{errorMessage_Maxlength}}
-    </p>
-  </span>
-</expandable>
+<span #input>
+  <ion-item   (tap)="scrollTo()" 
+              [attr.valid-mode]="(validControl.valid && active)?'':null"
+              [attr.err-mode]="(!validControl.valid && active)?'':null">
+    <ion-label stacked>{{label}}</ion-label>
+    <ion-select 
+        [multiple] = "multiple"
+        [(ngModel)]="toppings" 
+        [selectOptions]="selectOptions"
+        [interface]="interface"
+        [okText]="okText"
+        [placeholder]="placeholder"
+        [cancelText]="cancelText"
+        [formControl]="validControl"
+        [(ngModel)]="value"
+        (ionChange)="changeValue($event)">
+        <ion-option *ngFor="let item of data" [value]="item.value">{{item.name}}</ion-option>
+    </ion-select>
+  </ion-item>
+  <expandable [expanded]="!validControl.valid" *ngIf="active">
+    <span *ngIf="validControl.errors">
+      <p no-margin mt-5 err *ngIf="validControl.errors.required">
+        <ion-icon name="md-information-circle" style="vertical-align: bottom"></ion-icon> {{errorMessage_Required}}
+      </p>
+      <p no-margin mt-5 err *ngIf="validControl.errors.maxlength">
+        <ion-icon name="md-information-circle" style="vertical-align: bottom"></ion-icon> {{errorMessage_Maxlength}}
+      </p>
+    </span>
+  </expandable>
+</span>

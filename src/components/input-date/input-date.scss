@@ -6,4 +6,30 @@ input-date {
     [border-err]{
         border-bottom: 1px solid red!important;
     }
+
+    [err-mode] {
+        .item-inner{
+            padding-right: 0px!important;
+            border-bottom: 1px solid #F65050!important;
+            -webkit-box-shadow: inset 0 -1px 0 0 #F65050!important;
+            box-shadow: inset 0 -1px 0 0 #F65050!important;
+        }
+
+        // .datetime{
+        //     border-bottom: 1px solid #F65050!important;
+        // }
+    }
+
+    [valid-mode] {
+        .item-inner{
+            padding-right: 0px!important;
+            border-bottom: 1px solid #32db64!important;
+            -webkit-box-shadow: inset 0 -1px 0 0 #32db64!important;
+            box-shadow: inset 0 -1px 0 0 #32db64!important;
+        }
+
+        // .datetime{
+        //     border-bottom: 1px solid #32db64!important;
+        // }
+    }
 }

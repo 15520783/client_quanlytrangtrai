@@ -7,6 +7,7 @@ import { employee } from '../../common/entity';
 import { KEY } from '../../common/const';
 import { FilterProvider } from '../../providers/filter/filter';
 import { EmployeeInformationPage } from '../employee-information/employee-information';
+import { EmployeeInputPage } from '../employee-input/employee-input';
 
 
 @IonicPage()
@@ -129,6 +130,11 @@ export class EmployeePage {
         cssClass: 'ion-modal'
       }
     )
+    modal.present();
+  }
+
+  addNewEmployee(){
+    let modal = this.modalCtrl.create(EmployeeInputPage);
     modal.present();
   }
 }

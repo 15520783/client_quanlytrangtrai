@@ -6,6 +6,8 @@ const KEY = {
     EMPLOYEES: 'employees'
 }
 
+const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 const CONFIG = {
     SERVER_API: 'http://192.168.0.73:3000',
     DEFAULT_TIMEOUT: 3000,
@@ -34,3 +36,4 @@ export { KEY }
 export { API }
 export { CONFIG }
 export { VARIABLE }
+export { EMAIL_PATTERN } 

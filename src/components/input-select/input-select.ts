@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 
 
 @Component({
@@ -6,6 +6,7 @@ import { Component, Input } from '@angular/core';
   templateUrl: 'input-select.html'
 })
 export class InputSelectComponent {
+  @ViewChild('input') input:any;
 
   @Input() multiple:boolean = false;
   @Input() interface:string = 'popover';
@@ -34,6 +35,6 @@ export class InputSelectComponent {
   }
 
   scrollTo(){
-    document.getElementById('item').scrollIntoView();
+    this.input.nativeElement.scrollIntoView({behavior:'smooth'});
   }
 }

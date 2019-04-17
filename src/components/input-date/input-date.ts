@@ -1,17 +1,13 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 
-/**
- * Generated class for the InputDateComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
 @Component({
   selector: 'input-date',
   templateUrl: 'input-date.html'
 })
 export class InputDateComponent {
+  @ViewChild('input') input:any;
   public currentTime = new Date();
+  
   @Input() validControl: any; 
   @Input() errorMessage_Required: string;
   @Input() errorMessage_Maxlength: string;
@@ -31,6 +27,6 @@ export class InputDateComponent {
   }
 
   scrollTo(){
-    document.getElementById('item').scrollIntoView();
+    this.input.nativeElement.scrollIntoView({behavior:'smooth'});
   }
 }

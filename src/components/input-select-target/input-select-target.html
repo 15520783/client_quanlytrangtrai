@@ -1,29 +1,31 @@
-<ion-item id="item" (tap)="scrollTo()" [attr.err-mode]="(!validControl.valid && active)?'':null">
-  <ion-label stacked>{{label}}</ion-label>
-  <ion-input 
-    readonly
-    (tap)="presentModal()"
-    [(ngModel)]="value_visible"
-    [placeholder]="placeholder">
-  </ion-input>
-  <ion-input 
-    style="display: none"
-    [(ngModel)]="value"
-    [(formControl)]="validControl">
-  </ion-input>
-  <!-- <ion-input 
-    readonly
-    (tap)="presentModal()"
-    [(ngModel)]="value"
-    [(formControl)]="validControl"
-    [placeholder]="placeholder">
-  </ion-input> -->
-</ion-item>
+<span #input>
+  <ion-item  (tap)="scrollTo()" [attr.err-mode]="(!validControl.valid && active)?'':null">
+    <ion-label stacked>{{label}}</ion-label>
+    <ion-input 
+      readonly
+      (tap)="presentModal()"
+      [(ngModel)]="value_visible"
+      [placeholder]="placeholder">
+    </ion-input>
+    <ion-input 
+      style="display: none"
+      [(ngModel)]="value"
+      [(formControl)]="validControl">
+    </ion-input>
+    <!-- <ion-input 
+      readonly
+      (tap)="presentModal()"
+      [(ngModel)]="value"
+      [(formControl)]="validControl"
+      [placeholder]="placeholder">
+    </ion-input> -->
+  </ion-item>
 
-<expandable [expanded]="!validControl.valid" *ngIf="active">
-  <span *ngIf="validControl.errors">
-    <p no-margin mt-5 err *ngIf="validControl.errors.required">
-      <ion-icon name="md-information-circle" style="vertical-align: bottom"></ion-icon> {{errorMessage_Required}}
-    </p>
-  </span>
-</expandable>
+  <expandable [expanded]="!validControl.valid" *ngIf="active">
+    <span *ngIf="validControl.errors">
+      <p no-margin mt-5 err *ngIf="validControl.errors.required">
+        <ion-icon name="md-information-circle" style="vertical-align: bottom"></ion-icon> {{errorMessage_Required}}
+      </p>
+    </span>
+  </expandable>
+</span>

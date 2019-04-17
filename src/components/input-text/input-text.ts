@@ -1,32 +1,28 @@
-import { Component, Input, ElementRef, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 
-/**
- * Generated class for the InputTextComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
 @Component({
   selector: 'input-text',
   templateUrl: 'input-text.html'
 })
 export class InputTextComponent {
-
+  @ViewChild('input') input: any;
 
   @Input() validControl: any; 
   @Input() errorMessage_Required: string;
   @Input() errorMessage_Maxlength: string;
+  @Input() errorMessage_ValidEmail: string;
   @Input() label: string = '';
   @Input() placeholder: string = '';
   // @Input() value:string = '';
   @Input() active :boolean = false;
 
-  constructor(public elementRef: ElementRef) {
+  constructor() {
     
     console.log('Hello InputTextComponent Component');
   }
 
   scrollTo(){
-    document.getElementById('item').scrollIntoView();
+    // document.getElementById(this.id).scrollIntoView();
+    this.input.nativeElement.scrollIntoView({behavior:'smooth'});
   }
 }

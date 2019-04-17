@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { group, employee, pig } from '../../common/entity';
 import { Utils } from '../../common/utils';
 import { ModalController } from 'ionic-angular';
@@ -13,6 +13,7 @@ import { PigListComponent } from '../pig-list/pig-list';
   templateUrl: 'input-select-target.html',
 })
 export class InputSelectTargetComponent {
+  @ViewChild('input') input:any;
 
   @Input() validControl: any;
   @Input() errorMessage_Required: string;
@@ -100,6 +101,6 @@ export class InputSelectTargetComponent {
   }
 
   scrollTo(){
-    document.getElementById('item').scrollIntoView({ behavior: 'smooth' });
+    this.input.nativeElement.scrollIntoView({behavior:'smooth'});
   }
 }
