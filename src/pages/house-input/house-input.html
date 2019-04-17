@@ -1,0 +1,77 @@
+
+<ion-header>
+    <ion-navbar>
+        <ion-toolbar no-border class="custom-toolbar" >
+            <ion-buttons left>
+              <button navPop ion-button icon-only>
+                <ion-icon name="arrow-back"></ion-icon>
+              </button>
+            </ion-buttons>
+          <ion-title style="padding: 0px!important">Nhập thông tin nhà</ion-title>
+        </ion-toolbar>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+    <form action="" (ngSubmit)="onSubmit()">
+      <ion-list >
+        <input-text [(validControl)] = "credentialsForm.controls.name"
+                    [errorMessage_Required]  = "'Tên nhà là hạng mục bắt buộc.'"
+                    [errorMessage_Maxlength]  = "'Tên nhà không được vượt quá 1000 kí tự.'"
+                    [label] = "'Tên nhà'"
+                    [placeholder]="'Nhập tên nhà'"
+                    [active]= "submitAttempt">
+        </input-text>
+        <input-select [(validControl)] = "credentialsForm.controls.type_id"
+                    [errorMessage_Required]  ="'Loại nhà là hạng mục bắt buộc.'"
+                    [label] = "'Loại nhà'"
+                    [active]= "submitAttempt"
+                    [placeholder]="'Chọn loại nhà'"
+                    [(data)]="HouseTypes">
+        </input-select>
+        <input-text [(validControl)] = "credentialsForm.controls.house_code"
+                    [errorMessage_Required]  = "'Mã nhà là hạng mục bắt buộc'"
+                    [errorMessage_Maxlength]  = "'Mã nhà không được vượt quá 1000 kí tự.'"
+                    [label] = "'Mã nhà'"
+                    [placeholder]="'Nhập mã nhà'"
+                    [active]= "submitAttempt">
+        </input-text>
+        <input-text [(validControl)] = "credentialsForm.controls.position"
+                    [errorMessage_Required]  = "'Vị trí là hạng mục bắt buộc'"
+                    [label] = "'Vị trí'"
+                    [placeholder]="'Nhập vị trí nhà'"
+                    [active]= "submitAttempt">
+        </input-text>
+        <input-date [(validControl)] = "credentialsForm.controls.founding"
+                    [errorMessage_Required]  ="'Ngày thành lập là hạng mục bắt buộc.'"
+                    [label] = "'Ngày thành lập'"
+                    [placeholder]="'dd/mm/yyyy'"
+                    [active]= "submitAttempt">
+        </input-date>
+        <input-select-target
+                    [(validControl)] = "credentialsForm.controls.manager"
+                    [errorMessage_Required]  ="'Nhân viên quản lý là hạng mục bắt buộc.'"
+                    [active]= "submitAttempt"
+                    [placeholder]="'Chọn nhân viên'"
+                    [label]="'Nhân viên quản lý'"
+                    [targertCmp]="'employee'">
+        </input-select-target>
+        <input-text [(validControl)] = "credentialsForm.controls.description"
+                    [errorMessage_Required]  = "'Mô tả là hạng mục bắt buộc'"
+                    [label] = "'Mô tả'"
+                    [placeholder]="'Nhập thông tin mô tả'"
+                    [active]= "submitAttempt">
+        </input-text>
+      </ion-list>
+    </form>
+  </ion-content>
+  <ion-footer no-border>
+    <ion-toolbar toolbar-transparent text-right showWhen="core">
+        <button type="submit"  ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
+        <button ion-button   mode='ios' color="danger">Hủy</button>
+    </ion-toolbar>
+    <ion-toolbar toolbar-transparent showWhen="ios,android">
+        <button type="submit" full block ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
+    </ion-toolbar>
+  </ion-footer>
+  

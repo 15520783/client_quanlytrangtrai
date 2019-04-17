@@ -83,7 +83,7 @@ class section {
 }
 
 class house {
-	id:string;
+	id:string='';
 	section_id:string;
 	type_id:string;
 	house_code:string;

@@ -9,4 +9,13 @@ page-sections {
             background:#01C2FA!important;
         }
     }
+
+    [custom-list-header]{
+        .label-md{
+            margin:0px!important;
+        }
+        .toolbar-title {
+            color: black!important;
+        }
+    }
 }

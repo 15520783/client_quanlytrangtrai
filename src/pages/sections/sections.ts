@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ModalController } from 'ionic-angular';
 import { section, house } from '../../common/entity';
 import { SectionsProvider } from '../../providers/sections/sections';
 import { Utils } from '../../common/utils';
 import { KEY } from '../../common/const';
 import { SectionInfomationPage } from '../section-infomation/section-infomation';
 import { HouseInfomationPage } from '../house-infomation/house-infomation';
+import { HouseInputPage } from '../house-input/house-input';
 
 /**
  * Generated class for the SectionsPage page.
@@ -35,6 +36,7 @@ export class SectionsPage {
     public navParams: NavParams,
     public sectionProvider: SectionsProvider,
     public loadingCtrl: LoadingController,
+    public modalCtrl: ModalController,
     public util : Utils
   ) {
     console.log(this.navParams.data);
@@ -108,5 +110,11 @@ export class SectionsPage {
 
   viewHouse(house:house){
     this.util.openModal(HouseInfomationPage,house);
+  }
+
+
+  addNewHouse(section){
+    let modal = this.modalCtrl.create(HouseInputPage,{section:section});
+    modal.present();
   }
 }
