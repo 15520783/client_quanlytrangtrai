@@ -1,0 +1,112 @@
+
+<ion-header>
+    <ion-navbar>
+        <ion-toolbar no-border class="custom-toolbar" >
+            <ion-buttons left>
+              <button navPop ion-button icon-only>
+                <ion-icon name="arrow-back"></ion-icon>
+              </button>
+            </ion-buttons>
+          <ion-title style="padding: 0px!important">Nhập thông tin nhân viên</ion-title>
+        </ion-toolbar>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+    <form action="" (ngSubmit)="onSubmit()">
+      <ion-list >
+        <input-text [(validControl)] = "credentialsForm.controls.name"
+                    [errorMessage_Required]  = "'Tên nhân viên là hạng mục bắt buộc.'"
+                    [errorMessage_Maxlength]  = "'Tên nhân viên không được vượt quá 1000 kí tự.'"
+                    [label] = "'Tên nhân viên'"
+                    [placeholder]="'Nhập tên nhân viên'"
+                    [active]= "submitAttempt">
+        </input-text>
+        <input-select [(validControl)] = "credentialsForm.controls.regency_id"
+                      [errorMessage_Required]  ="'Chức vụ là hạng mục bắt buộc.'"
+                      [label] = "'Chức vị'"
+                      [active]= "submitAttempt"
+                      [placeholder]="'Chọn chức vụ'"
+                      [(data)]="RegencyTypes">
+        </input-select>
+        <input-select [(validControl)] = "credentialsForm.controls.farm_id"
+                    [errorMessage_Required]  ="'Trang trại là hạng mục bắt buộc.'"
+                    [label] = "'Trang trại'"
+                    [active]= "submitAttempt"
+                    [placeholder]="'Chọn trang trại'"
+                    [(data)]="farms">
+        </input-select>
+        <input-select [(validControl)] = "credentialsForm.controls.gender"
+                    [errorMessage_Required]  ="'Giới tính là hạng mục bắt buộc.'"
+                    [label] = "'Giới tính'"
+                    [active]= "submitAttempt"
+                    [placeholder]="'Chọn giới tính'"
+                    [(data)]="genders">
+        </input-select>
+        <input-date [(validControl)] = "credentialsForm.controls.birthday"
+                    [errorMessage_Required]  ="'Ngày sinh là hạng mục bắt buộc.'"
+                    [label] = "'Ngày sinh'"
+                    [placeholder]="'dd/mm/yyyy'"
+                    [active]= "submitAttempt">
+        </input-date>
+        <input-text [(validControl)] = "credentialsForm.controls.address"
+                    [errorMessage_Required]  = "'Địa chỉ là hạng mục bắt buộc'"
+                    [errorMessage_Maxlength]  = "'Địa chỉ không được vượt quá 1000 kí tự.'"
+                    [label] = "'Địa chị'"
+                    [placeholder]="'Nhập địa chỉ'"
+                    [active]= "submitAttempt">
+        </input-text>
+        <input-text [(validControl)] = "credentialsForm.controls.level"
+                    [errorMessage_Required]  = "'Trình độ là hạng mục bắt buộc'"
+                    [errorMessage_Maxlength]  = "'Trình độ không được vượt quá 1000 kí tự.'"
+                    [label] = "'Trình độ'"
+                    [placeholder]="'Nhập trình độ'"
+                    [active]= "submitAttempt">
+        </input-text>
+        <input-text [(validControl)] = "credentialsForm.controls.email"
+                    [errorMessage_Required]  = "'Email là hạng mục bắt buộc'"
+                    [errorMessage_Maxlength]  = "'Email chỉ không được vượt quá 1000 kí tự.'"
+                    [errorMessage_ValidEmail] = "'Email nhập vào không hợp lệ.'"
+                    [label] = "'Email'"
+                    [placeholder]="'Nhập email'"
+                    [active]= "submitAttempt">
+        </input-text>
+        <input-text [(validControl)] = "credentialsForm.controls.cmnd"
+                    [errorMessage_Required]  = "'Chứng minh nhân dân là hạng mục bắt buộc'"
+                    [errorMessage_Maxlength]  = "'Chứng minh nhân dân không được vượt quá 1000 kí tự.'"
+                    [label] = "'Chứng minh nhân dân'"
+                    [placeholder]="'Nhập chứng minh nhân dân'"
+                    [active]= "submitAttempt">
+        </input-text>
+        <input-date [(validControl)] = "credentialsForm.controls.date_join"
+                    [errorMessage_Required]  ="'Ngày vào làm là hạng mục bắt buộc.'"
+                    [label] = "'Ngày vào làm'"
+                    [placeholder]="'dd/mm/yyyy'"
+                    [active]= "submitAttempt">
+        </input-date>
+        <input-date [(validControl)] = "credentialsForm.controls.date_off"
+                    [errorMessage_Required]  ="'Ngày thôi việc là hạng mục bắt buộc.'"
+                    [label] = "'Ngày thôi việc'"
+                    [placeholder]="'dd/mm/yyyy'"
+                    [active]= "submitAttempt">
+        </input-date>
+        <input-select [(validControl)] = "credentialsForm.controls.status"
+                      [errorMessage_Required]  ="'Trạng thái là hạng mục bắt buộc.'"
+                      [label] = "'Trạng thái'"
+                      [active]= "submitAttempt"
+                      [placeholder]="'Chọn trạng thái'"
+                      [(data)]="status">
+        </input-select>
+      </ion-list>
+    </form>
+  </ion-content>
+  <ion-footer no-border>
+    <ion-toolbar toolbar-transparent text-right showWhen="core">
+        <button type="submit"  ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
+        <button ion-button   mode='ios' color="danger">Hủy</button>
+    </ion-toolbar>
+    <ion-toolbar toolbar-transparent showWhen="ios,android">
+        <button type="submit" full block ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
+    </ion-toolbar>
+  </ion-footer>
+  
