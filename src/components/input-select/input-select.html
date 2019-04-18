@@ -5,14 +5,13 @@
     <ion-label stacked>{{label}}</ion-label>
     <ion-select 
         [multiple] = "multiple"
-        [(ngModel)]="toppings" 
+        [(ngModel)]="validControl.value" 
         [selectOptions]="selectOptions"
         [interface]="interface"
         [okText]="okText"
         [placeholder]="placeholder"
         [cancelText]="cancelText"
         [formControl]="validControl"
-        [(ngModel)]="value"
         (ionChange)="changeValue($event)">
         <ion-option *ngFor="let item of data" [value]="item.value">{{item.name}}</ion-option>
     </ion-select>

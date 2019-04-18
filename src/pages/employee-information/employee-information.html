@@ -114,10 +114,21 @@
 <ion-content no-padding *ngIf="platform.is('core')">
   <ion-list no-padding no-lines>
     <ion-row>
-      <ion-col col-md-6 col-sm-12>
+      <ion-col col-lg-6 col-md-12>
         <ion-card mode='ios' style="background: white" style="margin-right:0px">
           <ion-card-header mode='ios'>
-            <ion-card-title text-wrap>Thông tin chi tiết</ion-card-title>
+            <!-- <ion-card-title text-wrap>Thông tin chi tiết</ion-card-title> -->
+            <ion-row>
+              <ion-col>
+                <ion-card-title text-wrap>
+                  <ion-icon name="app-farm" style="vertical-align: sub"></ion-icon>
+                  Thông tin chi tiết
+                </ion-card-title>
+              </ion-col>
+              <ion-col text-right>
+                <button mode='ios'  ion-button item-end color="secondary" (tap)="editEmployee()">Chỉnh sửa</button>
+              </ion-col>
+            </ion-row>
           </ion-card-header>
           <ion-card-content mode='ios' class="bg-white">
             <ion-list no-lines>
@@ -173,7 +184,7 @@
           </ion-card-content>
         </ion-card>
       </ion-col>
-      <ion-col col-md-6 col-sm-12>
+      <ion-col col-lg-6 col-md-12>
         <ion-card mode='ios' style="background: white" style="margin-right:0px">
           <ion-card-header mode='ios'>
             <ion-card-title text-wrap>Thông tin chi tiết</ion-card-title>

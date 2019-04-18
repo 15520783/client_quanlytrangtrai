@@ -49,7 +49,18 @@
       <ion-col>
         <ion-card mode='ios' style="background: white" style="margin-right:0px">
           <ion-card-header mode='ios'>
-            <ion-card-title text-wrap>Thông tin chi tiết</ion-card-title>
+            <!-- <ion-card-title text-wrap>Thông tin chi tiết</ion-card-title> -->
+            <ion-row>
+              <ion-col>
+                <ion-card-title text-wrap>
+                  <ion-icon name="app-farm" style="vertical-align: sub"></ion-icon>
+                  Thông tin chi tiết
+                </ion-card-title>
+              </ion-col>
+              <ion-col text-right>
+                <button mode='ios' ion-button item-end color="secondary" (tap)="editFarm()">Chỉnh sửa</button>
+              </ion-col>
+            </ion-row>
           </ion-card-header>
           <ion-card-content mode='ios' class="card-content-custom" padding>
             <ion-list no-lines>
@@ -185,62 +196,62 @@
         <ion-infinite-scroll>
           <!-- <ion-item-divider text-wrap sticky="true">Thông tin chi tiết</ion-item-divider> -->
           <!-- <ion-list no-lines> -->
-            <ion-item>
-              <ion-label stacked>Số lượng</ion-label>
-              <ion-input text-wrap type="text" readonly [(ngModel)]="farm.total_pig"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label text-wrap stacked>Địa chỉ</ion-label>
-              <ion-textarea rows="1" cols="20" type="text" readonly [(ngModel)]="farm.address"></ion-textarea>
-            </ion-item>
-            <ion-item>
-              <ion-label stacked>Ngày thành lập</ion-label>
-              <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label stacked>Diện tích</ion-label>
-              <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label stacked>Loại trại</ion-label>
-              <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label stacked>Người quản lý</ion-label>
-              <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label stacked>Chờ bán</ion-label>
-              <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label stacked>Tổng đàn</ion-label>
-              <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label stacked>Khu cách ly</ion-label>
-              <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label stacked>Khu nọc</ion-label>
-              <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label stacked>Khu phối</ion-label>
-              <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label stacked>Khu mang thai</ion-label>
-              <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label stacked>Khu đẻ</ion-label>
-              <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label stacked>Khu cai sữa</ion-label>
-              <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
-            </ion-item>
+          <ion-item>
+            <ion-label stacked>Số lượng</ion-label>
+            <ion-input text-wrap type="text" readonly [(ngModel)]="farm.total_pig"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label text-wrap stacked>Địa chỉ</ion-label>
+            <ion-textarea rows="1" cols="20" type="text" readonly [(ngModel)]="farm.address"></ion-textarea>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Ngày thành lập</ion-label>
+            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Diện tích</ion-label>
+            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Loại trại</ion-label>
+            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Người quản lý</ion-label>
+            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Chờ bán</ion-label>
+            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Tổng đàn</ion-label>
+            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Khu cách ly</ion-label>
+            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Khu nọc</ion-label>
+            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Khu phối</ion-label>
+            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Khu mang thai</ion-label>
+            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Khu đẻ</ion-label>
+            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Khu cai sữa</ion-label>
+            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+          </ion-item>
           <!-- </ion-list> -->
         </ion-infinite-scroll>
       </ion-slide>

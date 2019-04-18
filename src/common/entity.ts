@@ -69,7 +69,19 @@ class farm {
     total_pig: number;
     founding: any;
     manager: string;
-    description: string;
+	description: string;
+	
+	constructor(){
+		this.id = '';
+		this.name = '';
+		this.type_id = null;
+		this.address = '';
+		this.area = null;
+		this.total_pig = null;
+		this.founding = '';
+		this.manager = '';
+		this.description = '';
+	}
 }
 
 class section {
@@ -92,6 +104,18 @@ class house {
 	position:string;
 	manager:string;
 	founding:any;
+
+	constructor(){
+		this.id ='';
+		this.section_id = '';
+		this.type_id = '';
+		this.house_code = '';
+		this.name = '';
+		this.description = '';
+		this.position = '';
+		this.manager = '';
+		this.founding = '';
+	}
 }
 
 class employee {
@@ -100,7 +124,7 @@ class employee {
 	farm_id:string;
 	name:string;
 	gender:number;
-	birthday:any;
+	birthday:any ;
 	address:string;
 	level:string;
 	email:string;
@@ -109,6 +133,23 @@ class employee {
 	date_off:any;
 	images:string;
 	status:string;
+
+	constructor(){
+		this.id = '';
+		this.regency_id = '';
+		this.farm_id = '';
+		this.name = '';
+		this.gender = null;
+		this.birthday = '';
+		this.address = '';
+		this.level = '';
+		this.email = '';
+		this.cmnd = '';
+		this.date_join = '';
+		this.date_off = '';
+		this.images = '';
+		this.status = '';
+	}
 }
 
 

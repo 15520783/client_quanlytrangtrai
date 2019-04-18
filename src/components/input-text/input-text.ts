@@ -7,6 +7,7 @@ import { Component, Input, ViewChild } from '@angular/core';
 export class InputTextComponent {
   @ViewChild('input') input: any;
 
+  @Input() type:string = 'text';
   @Input() validControl: any; 
   @Input() errorMessage_Required: string;
   @Input() errorMessage_Maxlength: string;

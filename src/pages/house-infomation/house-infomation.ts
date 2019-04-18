@@ -1,17 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, ActionSheetController, Slides, Menu, Content } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, ActionSheetController, Slides, Menu, Content, ModalController } from 'ionic-angular';
 import { house } from '../../common/entity';
 import { HousesProvider } from '../../providers/houses/houses';
 import { HighChartProvider } from '../../providers/high-chart/high-chart';
 import { EmployeesProvider } from '../../providers/employees/employees';
 import { PigGroupsProvider } from '../../providers/pig-groups/pig-groups';
-
-/**
- * Generated class for the HouseInfomationPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { HouseInputPage } from '../house-input/house-input';
 
 @IonicPage()
 @Component({
@@ -46,7 +40,8 @@ export class HouseInfomationPage {
     public platform: Platform,
     public actionSheetCtrl: ActionSheetController,
     public employeeProvider: EmployeesProvider,
-    public groupProvider: PigGroupsProvider
+    public groupProvider: PigGroupsProvider,
+    public modalCtrl: ModalController
   ) {
 
   }
@@ -138,5 +133,10 @@ export class HouseInfomationPage {
 
   closeViewPigs() {
     this.menuPigs.close();
+  }
+
+  editHouse(){
+    let modal = this.modalCtrl.create(HouseInputPage,{house:this.house});
+    return modal.present();
   }
 }

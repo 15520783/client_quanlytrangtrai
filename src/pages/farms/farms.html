@@ -7,7 +7,7 @@
 
 </ion-header>
 
-<ion-content center no-padding showWhen="core">
+<ion-content center no-padding showWhen="core" has-bouncing="true">
     <ion-row *ngIf="farms">
       <ion-col col-lg-4 col-md-6 col-sm-12 *ngFor="let farm of farms">
         <farm [farm]="farm"></farm>

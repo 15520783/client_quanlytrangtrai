@@ -77,7 +77,7 @@ export class FarmsPage {
 
   viewDetail(farm: farm) {
     const modal = this.modalCtrl.create(
-      FarmInfomationPage, farm, {
+      FarmInfomationPage, {farm:farm}, {
         cssClass: 'ion-modal'
       }
     )

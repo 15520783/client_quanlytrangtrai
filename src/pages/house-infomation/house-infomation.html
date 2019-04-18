@@ -39,7 +39,18 @@
       <ion-col>
         <ion-card mode='ios' style="background: white" style="margin-right:0px">
           <ion-card-header mode='ios'>
-            <ion-card-title text-wrap>Thông tin chi tiết</ion-card-title>
+            <!-- <ion-card-title text-wrap>Thông tin chi tiết</ion-card-title> -->
+            <ion-row>
+              <ion-col>
+                <ion-card-title text-wrap>
+                  <ion-icon name="app-farm" style="vertical-align: sub"></ion-icon>
+                  Thông tin chi tiết
+                </ion-card-title>
+              </ion-col>
+              <ion-col text-right>
+                <button mode='ios' ion-button item-end color="secondary" (tap)="editHouse()">Chỉnh sửa</button>
+              </ion-col>
+            </ion-row>
           </ion-card-header>
           <ion-card-content mode='ios' class="card-content-custom" padding>
             <ion-list no-lines>

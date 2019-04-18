@@ -1,15 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, Slides } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, Slides, ModalController } from 'ionic-angular';
 import { farm } from '../../common/entity';
 import { HighChartProvider } from '../../providers/high-chart/high-chart';
 import { FarmsProvider } from '../../providers/farms/farms';
+import { FarmInputPage } from '../farm-input/farm-input';
 
-/**
- * Generated class for the FarmInfomationPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -47,7 +42,11 @@ export class FarmInfomationPage {
     public platform: Platform,
     public chartProvider: HighChartProvider,
     public farmProvider: FarmsProvider,
+    public modalCtrl: ModalController
   ) {
+    if(this.navParams.data.farm){
+      this.farm = this.navParams.data.farm;
+    }
   }
 
   ngAfterViewInit() {
@@ -182,6 +181,9 @@ export class FarmInfomationPage {
     this.chartProvider.createPieChart(document.getElementById('chart3'), data3, 'Cơ cấu đàn heo con', '');
   }
 
-
+  editFarm(){
+    let modal = this.modalCtrl.create(FarmInputPage,{farm:this.farm});
+    return modal.present();
+  }
 
 }

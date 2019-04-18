@@ -1,9 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Slides, Platform, ModalController } from 'ionic-angular';
 import { employee } from '../../common/entity';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
+import { EmployeeInputPage } from '../employee-input/employee-input';
 
 /**
  * Generated class for the EmployeeInformationPage page.
@@ -25,7 +26,8 @@ export class EmployeeInformationPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public platform: Platform
+    public platform: Platform,
+    public modalCtrl: ModalController
   ) {
     this.employee = this.navParams.data;
   }
@@ -50,5 +52,11 @@ export class EmployeeInformationPage {
   }
   handleDayClick(event){
     console.log(event);
+  }
+
+
+  editEmployee(){
+    let modal = this.modalCtrl.create(EmployeeInputPage,{employee:this.employee});
+    return modal.present();
   }
 }
