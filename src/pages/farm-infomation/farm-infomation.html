@@ -1,43 +1,22 @@
 <ion-header>
   <ion-navbar no-padding>
     <ion-toolbar>
-      <ion-buttons left showWhen="core">
-        <button navPop ion-button icon-only>
-          <ion-icon name="arrow-back"></ion-icon>
-        </button>
-      </ion-buttons>  
-      <ion-title showWhen="ios,android">{{farm.name}}</ion-title>
-      <ion-row showWhen='core'>
-        <ion-item-divider sticky="true" no-lines>
-          <ion-row>
-            <ion-col>
-              <h2 font28 white>{{farm.name}}</h2>
-            </ion-col>
-            <ion-col>
-              <ion-segment mode='md'>
-                <ion-segment-button black text-weight font15>
-                  <ion-icon vertical-alight-bottom name="ios-information-circle"></ion-icon>
-                  Thông tin chung
-                </ion-segment-button>
-                <ion-segment-button black text-weight font15>
-                  <ion-icon vertical-alight-bottom name="md-calendar"></ion-icon>
-                  Lịch
-                </ion-segment-button>
-                <ion-segment-button black text-weight font15>
-                  <ion-icon vertical-alight-bottom name="md-clipboard"></ion-icon>
-                  Hoạt động
-                </ion-segment-button>
-              </ion-segment>
-            </ion-col>
-          </ion-row>
-        </ion-item-divider>
-      </ion-row>
+      <ion-title>{{farm.name}}</ion-title>
     </ion-toolbar>
   </ion-navbar>
+  <ion-toolbar showWhen="core" class="pl-10">
+    <!-- <ion-row showWhen="core" text-left> -->
+      <button color="secondary" ion-button mode='ios' (tap)="viewPigGroups()">
+        Danh sách nhóm heo
+      </button>
+      <button color="secondary" ion-button mode='ios' (tap)="viewEmployee()">
+        Danh sách nhân viên
+      </button>
+    <!-- </ion-row> -->
+  </ion-toolbar>
 </ion-header>
 
 <ion-content no-padding showWhen="core">
-
   <ion-list no-padding>
     <ion-row>
       <ion-col>
@@ -87,14 +66,12 @@
                     <ion-label stacked>Chờ bán</ion-label>
                     <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
                   </ion-item>
+                </ion-col>
+                <ion-col [attr.col-12]="platform.is('core')?null:''">
                   <ion-item>
                     <ion-label stacked>Tổng đàn</ion-label>
                     <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
                   </ion-item>
-                </ion-col>
-
-                <ion-col [attr.col-12]="platform.is('core')?null:''">
-                 
                   <ion-item>
                     <ion-label stacked>Khu cách ly</ion-label>
                     <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
@@ -182,7 +159,7 @@
 </ion-content>
 
 
-<ion-content no-padding showWhen="ios,android" >
+<ion-content no-padding showWhen="ios,android">
   <ion-item-divider sticky="true" text-wrap>{{title[slider.realIndex]}}</ion-item-divider>
   <ion-list no-lines>
     <ion-slides paper="true" #slider>
@@ -300,3 +277,13 @@
     </ion-slides>
   </ion-list>
 </ion-content>
+
+<ion-menu [content]="Employee" side="right" #menuEmployee sticky="true" type="overlay" width="500">
+  <employee-list (closeMenuEvent)="closeViewEmployee()" [data]="employeeProvider.employees"></employee-list>
+</ion-menu>
+<ion-nav #Employee></ion-nav>
+
+<ion-menu [content]="Pigs" side="right" #menuPigs sticky="true" type="overlay" width="500">
+  <pig-group-list (closeMenuEvent)="closeViewPigGroups()" [data]="groupProvider.groups"></pig-group-list>
+</ion-menu>
+<ion-nav #Pigs></ion-nav>

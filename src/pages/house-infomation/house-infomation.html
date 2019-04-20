@@ -15,13 +15,12 @@
   <ion-item-divider sticky="true">
     <ion-row showWhen="core">
       <ion-col no-padding>
-        <button color="secondary" ion-button mode='ios' black text-weight padding (tap)="viewPigs()">
-          <!-- <ion-icon padding name="app-function"></ion-icon> -->
+        <!-- <button color="secondary" ion-button mode='ios' black text-weight padding (tap)="viewPigs()">
           Danh sách heo
         </button>
         <button color="secondary" ion-button mode='ios' black text-weight padding (tap)="viewEmployee()">
           Danh sách nhân viên
-        </button>
+        </button> -->
         <button color="secondary" ion-button mode='ios' black text-weight padding>
           Nhập heo
         </button>
@@ -151,14 +150,14 @@
   </ion-row>
 </ion-footer>
 
-
+<!-- 
 
 <ion-menu [content]="Employee" side="right" #menuEmployee sticky="true" type="overlay" width="500">
-    <employee-list (closeMenuEvent)="closeViewEmployee()" [data]="employeeProvider.employees"></employee-list>
+    <employee-list  (closeMenuEvent)="closeViewEmployee()" [data]="employeeProvider.employees"></employee-list>
 </ion-menu>
 <ion-nav #Employee></ion-nav>
 
 <ion-menu [content]="Pigs" side="right" #menuPigs sticky="true" type="overlay" width="500">
     <pig-group-list  (closeMenuEvent)="closeViewPigs()" [data]="groupProvider.groups"></pig-group-list>
 </ion-menu>
-<ion-nav #Pigs></ion-nav>
+<ion-nav #Pigs></ion-nav> -->

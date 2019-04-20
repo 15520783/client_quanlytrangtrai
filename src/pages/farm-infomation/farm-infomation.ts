@@ -1,9 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, Slides, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, Slides, ModalController, Menu, Events } from 'ionic-angular';
 import { farm } from '../../common/entity';
 import { HighChartProvider } from '../../providers/high-chart/high-chart';
 import { FarmsProvider } from '../../providers/farms/farms';
 import { FarmInputPage } from '../farm-input/farm-input';
+import { EmployeesProvider } from '../../providers/employees/employees';
+import { PigGroupsProvider } from '../../providers/pig-groups/pig-groups';
 
 
 @IonicPage()
@@ -14,6 +16,8 @@ import { FarmInputPage } from '../farm-input/farm-input';
 export class FarmInfomationPage {
 
   @ViewChild('slider') slider: Slides;
+  @ViewChild('menuEmployee') menuEmployee: Menu;
+  @ViewChild('menuPigs') menuPigs: Menu;
   
   public title = [
     "Thông tin chi tiết",
@@ -42,7 +46,10 @@ export class FarmInfomationPage {
     public platform: Platform,
     public chartProvider: HighChartProvider,
     public farmProvider: FarmsProvider,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    public employeeProvider: EmployeesProvider,
+    public groupProvider: PigGroupsProvider,
+    public events: Events
   ) {
     if(this.navParams.data.farm){
       this.farm = this.navParams.data.farm;
@@ -186,6 +193,26 @@ export class FarmInfomationPage {
     // let modal = this.modalCtrl.create(FarmInputPage,{farm:this.farm});
     // return modal.present();
     this.navCtrl.push(FarmInputPage,{farm:this.farm});
+  }
+
+  viewEmployee() {
+    this.menuEmployee.enable(true);
+    this.menuEmployee.open();
+    this.events.publish('viewEmployee:open');
+  }
+
+  closeViewEmployee() {
+    this.menuEmployee.close();
+  }
+
+  viewPigGroups() {
+    this.menuPigs.enable(true);
+    this.menuPigs.open();
+    this.events.publish('viewPigs:open');
+  }
+
+  closeViewPigGroups() {
+    this.menuPigs.close();
   }
 
 }

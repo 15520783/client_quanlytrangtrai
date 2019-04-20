@@ -4,14 +4,8 @@ import { FormControl } from '@angular/forms';
 import { PigGroupInformationPage } from '../../pages/pig-group-information/pig-group-information';
 import { FilterProvider } from '../../providers/filter/filter';
 import { PigGroupsProvider } from '../../providers/pig-groups/pig-groups';
-import { ModalController, Content, NavParams , ViewController } from 'ionic-angular';
+import { ModalController, Content, NavParams, ViewController, Events } from 'ionic-angular';
 
-/**
- * Generated class for the PigGroupListComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
 @Component({
   selector: 'pig-group-list',
   templateUrl: 'pig-group-list.html',
@@ -20,7 +14,8 @@ export class PigGroupListComponent {
   @ViewChild('content') content: Content;
 
   @Output() closeMenuEvent = new EventEmitter();
-  @Input() data: Array<group> = [];
+
+  @Input() data: Array<group> = [new group()];
   @Input() selectMode: boolean = false;
 
   showFilter = false;
@@ -52,19 +47,27 @@ export class PigGroupListComponent {
     public pigGroupProvider: PigGroupsProvider,
     public modalCtrl: ModalController,
     public navParams: NavParams,
-    public viewCtrl: ViewController
+    public viewCtrl: ViewController,
+    public events: Events
   ) {
     console.log('Hello PigGroupListComponent Component');
-    if(this.navParams.data){
+    if (this.navParams.data) {
       this.data = this.navParams.data.groups;
       this.selectMode = this.navParams.data.selectMode;
     }
+
+    this.events.subscribe('viewPigs:open',()=>{
+      this.content.resize();
+    })
   }
+
+  public header;
 
   ngAfterViewInit(): void {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
     this.setFilteredItems();
+    this.content.resize();
   }
 
   public setFilteredItems() {
@@ -102,10 +105,10 @@ export class PigGroupListComponent {
 
   }
 
-  select(group){
-    if(this.selectMode){
+  select(group) {
+    if (this.selectMode) {
       this.viewCtrl.dismiss(group);
-    }else{
+    } else {
       this.viewDeltail(group);
     }
   }
@@ -122,11 +125,11 @@ export class PigGroupListComponent {
     modal.present();
   }
 
-  scrollToTop(){
-      this.content.scrollToTop();
+  scrollToTop() {
+    this.content.scrollToTop();
   }
 
-  closeMenu(){
-    this.closeMenuEvent.emit({close:true});
+  closeMenu() {
+    this.closeMenuEvent.emit({ close: true });
   }
 }

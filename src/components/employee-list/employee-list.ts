@@ -2,15 +2,9 @@ import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core
 import { employee } from '../../common/entity';
 import { FormControl } from '@angular/forms';
 import { FilterProvider } from '../../providers/filter/filter';
-import { Content, ModalController, NavParams, ViewController } from 'ionic-angular';
+import { Content, ModalController, NavParams, ViewController, Events } from 'ionic-angular';
 import { EmployeeInformationPage } from '../../pages/employee-information/employee-information';
 
-/**
- * Generated class for the EmployeeListComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
 @Component({
   selector: 'employee-list',
   templateUrl: 'employee-list.html'
@@ -38,19 +32,21 @@ export class EmployeeListComponent {
     public filterProvider: FilterProvider,
     public modalCtrl: ModalController,
     public navParams: NavParams,
-    public viewCtrl: ViewController
+    public viewCtrl: ViewController,
+    public events: Events
   ) {
     console.log('Hello EmployeeListComponent Component');
-    console.log(this.navParams.data);
     if(this.navParams.data){
       this.data = this.navParams.data.employees;
       this.selectMode = this.navParams.data.selectMode;
     }
+
+    this.events.subscribe('viewEmployee:open',()=>{
+      this.content.resize();
+    })
   }
 
   ngAfterViewInit(): void {
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
     this.setFilteredItems();                  
   }
 

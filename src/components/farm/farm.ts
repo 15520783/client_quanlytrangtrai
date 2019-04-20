@@ -63,12 +63,12 @@ export class FarmComponent {
   }
 
   viewDetail(farm: farm) {
-    const modal = this.modalCtrl.create(
-      FarmInfomationPage, farm, {
-        cssClass: 'ion-modal'
-      }
-    )
-    modal.present();
-    // this.navCtrl.push(FarmInfomationPage,{farm:farm});
+    // const modal = this.modalCtrl.create(
+    //   FarmInfomationPage, farm, {
+    //     cssClass: 'ion-modal'
+    //   }
+    // )
+    // modal.present();
+    this.navCtrl.push(FarmInfomationPage,{farm:farm});
   }
 }
