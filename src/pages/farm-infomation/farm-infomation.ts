@@ -174,7 +174,8 @@ export class FarmInfomationPage {
         selected: false
       },
     ]
-    this.chartProvider.createPieChart(document.getElementById(this.farm.id), data, '', '');
+    // this.chartProvider.createPieChart(document.getElementById(this.farm.id), data, '', '');
+    this.chartProvider.createPieChart(document.getElementById('chartMain'), data, '', '');
     this.chartProvider.createBarchart(document.getElementById('barChart'));
     this.chartProvider.createPieChart(document.getElementById('chart1'), data1, 'Cơ cấu đàn nái', '');
     this.chartProvider.createPieChart(document.getElementById('chart2'), data2, 'Cơ cấu đàn nộc', '');
@@ -182,8 +183,9 @@ export class FarmInfomationPage {
   }
 
   editFarm(){
-    let modal = this.modalCtrl.create(FarmInputPage,{farm:this.farm});
-    return modal.present();
+    // let modal = this.modalCtrl.create(FarmInputPage,{farm:this.farm});
+    // return modal.present();
+    this.navCtrl.push(FarmInputPage,{farm:this.farm});
   }
 
 }

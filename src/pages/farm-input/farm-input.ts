@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { farm } from '../../common/entity';
 
@@ -25,7 +25,8 @@ export class FarmInputPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    public modalCtrl: ModalController
   ) {
     if(this.navParams.data.farm){
       this.farm = this.navParams.data.farm;
@@ -50,5 +51,7 @@ export class FarmInputPage {
   onSubmit(){
     this.submitAttempt = true;
     console.log(this.credentialsForm.value);
+    // let modal = this.modalCtrl.create(FarmInputPage,null,{showBackdrop:false});
+    // return modal.present();
   }
 }

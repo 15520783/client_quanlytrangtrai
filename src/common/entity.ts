@@ -10,9 +10,9 @@ class pig {
 	birthday:any;
 	born_weight:number;
 	born_status:number;
-	origin_id:string;
-	origin_father:string;
-	origin_mother:string;
+	// origin_id:string;
+	// origin_father:string;
+	// origin_mother:string;
 	origin_weight:number;
 	receive_weight:number;
 	health_point:number;
@@ -38,6 +38,48 @@ class pig {
 	point_review:number;
 	status:number;
 	price_code:number;
+
+	constructor(){
+		this.id = '';
+		this.pig_code = '';
+		this.house_id = '';
+		this.round_id = '';
+		this.breed_id = '';
+		this.gender = null;
+		this.father_id = '';
+		this.mother_id = '';
+		this.birthday = '';
+		this.born_weight = null;
+		this.born_status = null;
+		// this.origin_id = '';
+		// this.origin_father = '';
+		// this.origin_mother = '';
+		this.origin_weight = null;
+		this.receive_weight = null;
+		this.health_point = null;
+		this.foot = null;
+		this.function_udder = null;
+		this.total_udder = null;
+		this.gential = null;
+		this.description = null;
+		this.fcr = null;
+		this.adg = null;
+		this.bf = null;
+		this.filet = null;
+		this.long_back = null;
+		this.long_body = null;
+		this.index = null;
+		this.parities = null;
+		this.images = '';
+		this.health_status = null;
+		this.breeding_type = null;
+		this.breed_status = null;
+		this.pregnancy_status = null;
+		this.overview_status = null;
+		this.point_review = null;
+		this.status = null;
+		this.price_code = null;
+	}
 }
 
 class group {

@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { farm } from '../../common/entity';
 import { FarmsProvider } from '../../providers/farms/farms';
 import { Utils } from '../../common/utils';
-import { Platform, ModalController } from 'ionic-angular';
+import { Platform, ModalController, NavController } from 'ionic-angular';
 import { FarmInfomationPage } from '../../pages/farm-infomation/farm-infomation';
 import { HighChartProvider } from '../../providers/high-chart/high-chart';
 
@@ -21,6 +21,7 @@ export class FarmComponent {
   @Input() farm: farm;
 
   constructor(
+    public navCtrl: NavController,
     public platform: Platform,
     public farmProvider: FarmsProvider,
     public modalCtrl: ModalController,
@@ -68,5 +69,6 @@ export class FarmComponent {
       }
     )
     modal.present();
+    // this.navCtrl.push(FarmInfomationPage,{farm:farm});
   }
 }

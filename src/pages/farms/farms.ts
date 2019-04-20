@@ -76,18 +76,20 @@ export class FarmsPage {
   }
 
   viewDetail(farm: farm) {
-    const modal = this.modalCtrl.create(
-      FarmInfomationPage, {farm:farm}, {
-        cssClass: 'ion-modal'
-      }
-    )
-    modal.present();
+    // const modal = this.modalCtrl.create(
+    //   FarmInfomationPage, {farm:farm}, {
+    //     cssClass: 'ion-modal'
+    //   }
+    // )
+    // modal.present();
+    return this.navCtrl.push(FarmInfomationPage,{farm:farm});
   }
 
   addNewFarm(){
-    let modal = this.modalCtrl.create(
-      FarmInputPage
-    );
-    modal.present();
+    // let modal = this.modalCtrl.create(
+    //   FarmInputPage
+    // );
+    // modal.present();
+    return this.navCtrl.push(FarmInputPage);
   }
 }

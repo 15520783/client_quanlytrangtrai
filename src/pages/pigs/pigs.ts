@@ -9,6 +9,7 @@ import { KEY } from '../../common/const';
 import { VARIABLE } from '../../common/const'
 import { PigViewPage } from '../../tabs/pig-view/pig-view';
 import { FilterProvider } from '../../providers/filter/filter';
+import { PigInputPage } from '../pig-input/pig-input';
 
 
 @IonicPage()
@@ -174,6 +175,10 @@ export class PigsPage {
       }
     )
     modal.present();
+  }
+
+  addNewPig(){
+    this.navCtrl.push(PigInputPage);
   }
 
 
