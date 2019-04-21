@@ -1,0 +1,96 @@
+<ion-header>
+    <ion-navbar>
+      <ion-toolbar no-border class="custom-toolbar">
+        <ion-buttons left showWhen="platform.is('core')">
+          <button navPop ion-button icon-only>
+            <ion-icon name="arrow-back"></ion-icon>
+          </button>
+        </ion-buttons>
+        <ion-title style="padding: 0px!important">Nhập thông tin heo</ion-title>
+      </ion-toolbar>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content no-padding style>
+    <form action="" (ngSubmit)="onSubmit()" style="padding-bottom: 10vH">
+      <ion-list>
+        <ion-row>
+          <ion-col col-12 [attr.col-lg-6]="platform.is('core')?'':null" [attr.col-md-12]="platform.is('core')?'':null">
+            <input-text [(validControl)]="credentialsForm.controls.group_code"
+              [errorMessage_Required]="'Số tai nhóm là hạng mục bắt buộc.'"
+              [errorMessage_Maxlength]="'Số tai nhóm không được vượt quá 1000 kí tự.'" [label]="'Số tai heo'"
+              [placeholder]="'Nhập số tai nhóm'" [active]="submitAttempt">
+            </input-text>
+
+            <input-select-target [(validControl)]="credentialsForm.controls.parent_id"
+              [errorMessage_Required]="'Nhóm cha là hạng mục bắt buộc.'" [active]="submitAttempt"
+              [placeholder]="'Chọn nhóm cha'" [label]="'Nhóm cha'" [targertCmp]="'pigGroup'">
+            </input-select-target>
+
+            <input-select [(validControl)]="credentialsForm.controls.round_id"
+              [errorMessage_Required]="'Lứa là hạng mục bắt buộc.'" [label]="'Lứa'" [active]="submitAttempt"
+              [placeholder]="'Chọn lứa'" [(data)]="rounds">
+            </input-select>
+
+
+            <input-select-target 
+                [(validControl)]="credentialsForm.controls.father_id"
+                [errorMessage_Required]="'Heo cha là hạng mục bắt buộc.'" 
+                [active]="submitAttempt"
+                [placeholder]="'Chọn heo cha'" 
+                [label]="'Heo cha'" 
+                [targertCmp]="'pigs'">
+            </input-select-target>
+
+            <input-select-target [(validControl)]="credentialsForm.controls.mother_id"
+              [errorMessage_Required]="'Heo mẹ là hạng mục bắt buộc.'" [active]="submitAttempt"
+              [placeholder]="'Chọn heo mẹ'" [label]="'Heo mẹ'" [targertCmp]="'pigs'">
+            </input-select-target>
+
+            <input-date [(validControl)]="credentialsForm.controls.avg_birthday"
+              [errorMessage_Required]="'Ngày sinh trung bình là hạng mục bắt buộc.'" [label]="'Ngày sinh'"
+              [placeholder]="'dd/mm/yyyy'" [active]="submitAttempt">
+            </input-date>
+
+            <input-text [(validControl)]="credentialsForm.controls.quantity"
+              [errorMessage_Required]="'Số lượng heo là hạng mục bắt buộc.'" [label]="'Số lượng heo'"
+              [placeholder]="'Nhập số lượng heo'" [active]="submitAttempt">
+            </input-text>
+
+          </ion-col>
+          <ion-col col-12 [attr.col-lg-6]="platform.is('core')?'':null" [attr.col-md-12]="platform.is('core')?'':null">
+            <input-text [(validControl)]="credentialsForm.controls.origin_sum_weight"
+              [errorMessage_Required]="'Tổng trọng lượng gốc là hạng mục bắt buộc.'" [label]="'Tổng trọng lượng gốc'"
+              [placeholder]="'Nhập Tổng trọng lượng gốc'" [active]="submitAttempt">
+            </input-text>
+
+            <input-text [(validControl)]="credentialsForm.controls.origin_avg_weight"
+              [errorMessage_Required]="'Trọng lượng gốc trung bình là hạng mục bắt buộc.'" [label]="'Trọng lượng gốc trung bình'"
+              [placeholder]="'Nhập trọng lượng gốc trung bình khi nhận'" [active]="submitAttempt">
+            </input-text>
+
+            <input-select [(validControl)]="credentialsForm.controls.health_status"
+              [errorMessage_Required]="'Trạng thái sức khỏe là hạng mục bắt buộc.'" [label]="'Trạng thái sức khỏe'"
+              [active]="submitAttempt" [placeholder]="'Chọn trạng thái sức khỏe'" [(data)]="health_status">
+            </input-select>
+            
+            <input-text [(validControl)]="credentialsForm.controls.description"
+              [errorMessage_Required]="'Mô tả là hạng mục bắt buộc'"
+              [errorMessage_Maxlength]="'Mô tả không được vượt quá 1000 kí tự.'" [label]="'Mô tả'"
+              [placeholder]="'Nhập thông tin mô tả'" [active]="submitAttempt">
+            </input-text>
+          </ion-col>
+        </ion-row>
+      </ion-list>
+    </form>
+  </ion-content>
+  <ion-footer no-border showWhen="core">
+    <ion-toolbar toolbar-transparent text-right >
+      <button type="submit" ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
+      <button ion-button mode='ios' color="danger">Hủy</button>
+    </ion-toolbar>
+  </ion-footer>
+  
+  <ion-footer no-border no-padding showWhen="ios,android">
+      <button type="submit" no-margin full block ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>    
+  </ion-footer>
