@@ -1,10 +1,10 @@
 <ion-header>
   <ion-navbar no-padding>
-    <ion-toolbar>
+    <ion-toolbar toolbar-transparent>
       <ion-title>{{farm.name}}</ion-title>
     </ion-toolbar>
   </ion-navbar>
-  <ion-toolbar showWhen="core" class="pl-10">
+  <ion-toolbar  showWhen="core" class="pl-10">
     <!-- <ion-row showWhen="core" text-left> -->
       <button color="secondary" ion-button mode='ios' (tap)="viewPigGroups()">
         Danh sách nhóm heo
@@ -276,6 +276,16 @@
 
     </ion-slides>
   </ion-list>
+
+  <ion-fab bottom right>
+    <button ion-fab>Thêm</button>
+    <ion-fab-list side="top" style="right:0px">
+      <button data-balloon-visible data-balloon-length="medium" data-balloon="Chỉnh sửa thông tin"
+        data-balloon-pos="left" ion-fab color="main" (tap)="editFarm()">
+        <ion-icon name="md-create"></ion-icon>
+      </button>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>
 
 <ion-menu [content]="Employee" side="right" #menuEmployee sticky="true" type="overlay" width="500">

@@ -4,10 +4,10 @@ import { FarmInputPage } from './farm-input';
 
 @NgModule({
   declarations: [
-    FarmInputPage,
+    // FarmInputPage,
   ],
   imports: [
-    IonicPageModule.forChild(FarmInputPage),
+    // IonicPageModule.forChild(FarmInputPage),
   ],
 })
 export class FarmInputPageModule {}

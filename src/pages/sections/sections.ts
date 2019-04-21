@@ -105,16 +105,19 @@ export class SectionsPage {
 
 
   viewDetail(section: section) {
-    this.util.openModal(SectionInfomationPage,section);
+    // this.util.openModal(SectionInfomationPage,section);
+    this.navCtrl.push(SectionInfomationPage,section);
   }
 
   viewHouse(house:house){
-    this.util.openModal(HouseInfomationPage,house);
+    // this.util.openModal(HouseInfomationPage,house);
+    this.navCtrl.push(HouseInfomationPage,house);
   }
 
 
   addNewHouse(section){
-    let modal = this.modalCtrl.create(HouseInputPage,{section:section});
-    modal.present();
+    // let modal = this.modalCtrl.create(HouseInputPage,{section:section});
+    // modal.present();
+    this.navCtrl.push(HouseInputPage);
   }
 }

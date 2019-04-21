@@ -4,10 +4,10 @@ import { SectionInfomationPage } from './section-infomation';
 
 @NgModule({
   declarations: [
-    SectionInfomationPage,
+    // SectionInfomationPage,
   ],
   imports: [
-    IonicPageModule.forChild(SectionInfomationPage),
+    // IonicPageModule.forChild(SectionInfomationPage),
   ],
 })
 export class SectionInfomationPageModule {}

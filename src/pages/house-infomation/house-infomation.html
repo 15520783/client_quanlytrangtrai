@@ -1,38 +1,28 @@
 <ion-header>
   <ion-navbar no-padding>
     <ion-toolbar no-border>
-      <ion-buttons left>
+      <!-- <ion-buttons left>
         <button navPop ion-button icon-only>
           <ion-icon name="arrow-back"></ion-icon>
         </button>
-      </ion-buttons>
+      </ion-buttons> -->
       <ion-title>Thông tin nhà</ion-title>
     </ion-toolbar>
   </ion-navbar>
+  <ion-toolbar showWhen="core" class="pl-10">
+    <button color="secondary" ion-button mode='ios'>
+      Nhập heo
+    </button>
+    <button color="secondary" ion-button mode='ios'>
+      Lên giống heo nái
+    </button>
+    <button color="secondary" ion-button mode='ios'>
+      Chuyển heo và xuất bán
+    </button>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content no-padding *ngIf="platform.is('core')">
-  <ion-item-divider sticky="true">
-    <ion-row showWhen="core">
-      <ion-col no-padding>
-        <!-- <button color="secondary" ion-button mode='ios' black text-weight padding (tap)="viewPigs()">
-          Danh sách heo
-        </button>
-        <button color="secondary" ion-button mode='ios' black text-weight padding (tap)="viewEmployee()">
-          Danh sách nhân viên
-        </button> -->
-        <button color="secondary" ion-button mode='ios' black text-weight padding>
-          Nhập heo
-        </button>
-        <button color="secondary" ion-button mode='ios' black text-weight padding>
-          Lên giống heo nái
-        </button>
-        <button color="secondary" ion-button mode='ios' black text-weight>
-          Chuyển heo và xuất bán
-        </button>
-      </ion-col>
-    </ion-row>
-  </ion-item-divider>
   <ion-list no-padding>
     <ion-row>
       <ion-col>

@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpClientModule } from '@angular/common/http';
-import { FullCalendarModule } from '@fullcalendar/angular';
+// import { FullCalendarModule } from 'ng-fullcalendar';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -56,6 +56,7 @@ import { HighChartProvider } from '../providers/high-chart/high-chart';
 import { PigGroupsProvider } from '../providers/pig-groups/pig-groups';
 import { FilterProvider } from '../providers/filter/filter';
 import { EmployeesProvider } from '../providers/employees/employees';
+import { FullCalendarModule } from 'ng-fullcalendar';
 
 
 

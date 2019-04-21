@@ -125,16 +125,18 @@ export class EmployeePage {
   }
 
   viewDeltail(employee){
-    const modal = this.modalCtrl.create(
-      EmployeeInformationPage, employee, {
-        cssClass: 'ion-modal'
-      }
-    )
-    modal.present();
+    // const modal = this.modalCtrl.create(
+    //   EmployeeInformationPage, employee, {
+    //     cssClass: 'ion-modal'
+    //   }
+    // )
+    // modal.present();
+    this.navCtrl.push(EmployeeInformationPage,employee);
   }
 
   addNewEmployee(){
-    let modal = this.modalCtrl.create(EmployeeInputPage);
-    modal.present();
+    this.navCtrl.push(EmployeeInputPage);
+    // let modal = this.modalCtrl.create(EmployeeInputPage);
+    // modal.present();
   }
 }

@@ -23,8 +23,8 @@ import { HousesProvider } from '../providers/houses/houses';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any;
-  splash: boolean = true;
+  rootPage: any = LoginPage;
+  splash: boolean = false;
   public counter = 0;
   dismissing: any;
   lastBack: number;
@@ -106,17 +106,18 @@ export class MyApp {
         });
       }
 
-      this.intinial_sync();
-      this.subscribeEventUpdate();
-      
 
+
+      // this.intinial_sync();
+      // this.subscribeEventUpdate();
+
+
+      this.events.subscribe('app_begin',()=>{
+        this.splash=true;
+        this.intinial_sync();
+        this.subscribeEventUpdate();
+      })
     })
-    // .then(() => {
-    //   setTimeout(() => {
-    //     this.splash = false;
-    //     // this.rootPage = LoginPage;
-    //   }, 4000);
-    // });
   }
 
 
@@ -129,26 +130,27 @@ export class MyApp {
     this.houseProvider.sync();
   }
 
-  subscribeEventUpdate(){
+
+  subscribeEventUpdate() {
     this.events.subscribe('updated:farm', () => {
       this.checkUpdate();
     })
-    this.events.subscribe('updated:pig',()=>{
+    this.events.subscribe('updated:pig', () => {
       this.checkUpdate();
     })
-    this.events.subscribe('updated:pigGroup',()=>{
+    this.events.subscribe('updated:pigGroup', () => {
       this.checkUpdate();
     })
-    this.events.subscribe('updated:section',()=>{
+    this.events.subscribe('updated:section', () => {
       this.checkUpdate();
     })
-    this.events.subscribe('updated:employee',()=>{
+    this.events.subscribe('updated:employee', () => {
       this.checkUpdate();
     })
-    this.events.subscribe('updated:house',()=>{
+    this.events.subscribe('updated:house', () => {
       this.checkUpdate();
     })
-  }  
+  }
 
   checkUpdate() {
     if (
@@ -158,8 +160,10 @@ export class MyApp {
       this.employeeProvider.updated_flag &&
       this.sectionProvider.updated_flag &&
       this.houseProvider.updated_flag) {
+      this.rootPage = HomePage;
+      setTimeout(() => {
         this.splash = false;
-        this.rootPage = HomePage;
+      }, 1000);
     }
   }
 }

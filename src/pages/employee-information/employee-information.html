@@ -104,7 +104,7 @@
         <ion-icon name="app-user-account"></ion-icon>
       </button>
       <button data-balloon-visible data-balloon-length="medium" data-balloon="Chỉnh sửa thông tin"
-        data-balloon-pos="left" ion-fab color="main">
+        data-balloon-pos="left" ion-fab color="main" (tap)="editEmployee()">
         <ion-icon name="md-create"></ion-icon>
       </button>
     </ion-fab-list>
@@ -191,7 +191,13 @@
           </ion-card-header>
           <ion-card-content mode='ios'padding class="bg-white">
               <div class='app-calendar'>
-                  <full-calendar (dayClick)="handleDayClick($event)" (eventClick)="handleEventClick($event)" #calendar
+                  <ng-fullcalendar 
+                      #fullcalendar 
+                      [options]="options"  
+                      (eventClick)="handleEventClick($event)"
+                      (dateClick)="handleDayClick($event)">
+                  </ng-fullcalendar>
+                  <!-- <full-calendar (dayClick)="handleDayClick($event)" (eventClick)="handleEventClick($event)" #calendar
                     defaultView="dayGridMonth" 
                     [header]="{
                               left: 'title',
@@ -225,7 +231,7 @@
                       { title: 'Sự kiện 3', date: '2019-04-01',classNames:['event-fullcalendar'] },
                       { title: 'Sự kiện 2', date: '2019-04-02',classNames:['event-fullcalendar'] }
                     ]">
-                  </full-calendar>
+                  </full-calendar> -->
                 </div>
           </ion-card-content>
         </ion-card>

@@ -20,7 +20,6 @@
     "@angular/http": "5.2.11",
     "@angular/platform-browser": "5.2.11",
     "@angular/platform-browser-dynamic": "5.2.11",
-    "@fullcalendar/angular": "^4.0.2-beta",
     "@fullcalendar/core": "^4.0.2",
     "@fullcalendar/daygrid": "^4.0.1",
     "@fullcalendar/interaction": "^4.0.2",
@@ -43,6 +42,7 @@
     "ionic": "^3.20.1",
     "ionic-angular": "3.9.3",
     "ionicons": "3.0.0",
+    "ng-fullcalendar": "^2.0.3",
     "rxjs": "^5.5.12",
     "sw-toolbox": "3.6.0",
     "zone.js": "0.8.29"

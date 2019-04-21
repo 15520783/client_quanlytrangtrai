@@ -4,6 +4,14 @@
 
 <ion-content padding>
     <div class='app-calendar' >
+        <div *ngIf="options">
+            <ng-fullcalendar 
+                #fullcalendar 
+                [options]="options"  
+                (eventClick)="handleEventClick($event)"
+                (dateClick)="handleDayClick($event)">
+            </ng-fullcalendar>
+        </div>
         <!-- <full-calendar 
               (dayClick)="handleDayClick($event)"
               (eventClick)="handleEventClick($event)"
@@ -59,7 +67,7 @@
                         ]"
               >
         </full-calendar> -->
-        <full-calendar 
+        <!-- <ng-fullcalendar 
               (dateClick)="handleDayClick($event)"
               (eventClick)="handleEventClick($event)"
               #calendar 
@@ -99,6 +107,6 @@
                 }
               ]"
               >
-        </full-calendar>
+        </ng-fullcalendar> -->
     </div>
 </ion-content>

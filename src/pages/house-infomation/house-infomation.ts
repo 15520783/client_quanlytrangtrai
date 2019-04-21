@@ -136,7 +136,8 @@ export class HouseInfomationPage {
   }
 
   editHouse(){
-    let modal = this.modalCtrl.create(HouseInputPage,{house:this.house});
-    return modal.present();
+    // let modal = this.modalCtrl.create(HouseInputPage,{house:this.house});
+    // return modal.present();
+    this.navCtrl.push(HouseInputPage,{house:this.house});
   }
 }

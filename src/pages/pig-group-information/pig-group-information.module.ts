@@ -4,10 +4,10 @@ import { PigGroupInformationPage } from './pig-group-information';
 
 @NgModule({
   declarations: [
-    PigGroupInformationPage,
+    // PigGroupInformationPage,
   ],
   imports: [
-    IonicPageModule.forChild(PigGroupInformationPage),
+    // IonicPageModule.forChild(PigGroupInformationPage),
   ],
 })
 export class PigGroupInformationPageModule {}

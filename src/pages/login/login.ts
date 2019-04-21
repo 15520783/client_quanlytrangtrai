@@ -1,10 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Content, ToastController, MenuController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Content, ToastController, MenuController, Events } from 'ionic-angular';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MyApp } from '../../app/app.component';
 import { HomePage } from '../home/home';
 import { Utils } from '../../common/utils';
 import { FarmsProvider } from '../../providers/farms/farms';
+import { PigsProvider } from '../../providers/pigs/pigs';
+import { PigGroupsProvider } from '../../providers/pig-groups/pig-groups';
+import { SectionsProvider } from '../../providers/sections/sections';
+import { EmployeesProvider } from '../../providers/employees/employees';
+import { HousesProvider } from '../../providers/houses/houses';
 
 @IonicPage()
 @Component({
@@ -23,7 +28,13 @@ export class LoginPage {
     public menuCtrl: MenuController,
     public toastCtrl: ToastController,
     public util: Utils,
-    public farmProvider: FarmsProvider
+    public events: Events,
+    public farmProvider: FarmsProvider,
+    public pigProvider: PigsProvider,
+    public pigGroupProvider: PigGroupsProvider,
+    public sectionProvider: SectionsProvider,
+    public employeeProvider: EmployeesProvider,
+    public houseProvider: HousesProvider
   ) {
     this.menuCtrl.enable(false);
     this.credentialsForm = this.formBuilder.group({
@@ -54,11 +65,12 @@ export class LoginPage {
     this.wait = true;
 
     this.util.showToast('Username/Password is wrong. Try again.')
-    // .then((res)=>{
-    this.wait = false;
-    setTimeout(() => {
-      this.navCtrl.setRoot(HomePage);
-    }, 1000);
-    // })
+      .then((res) => {
+        this.wait = false;
+        setTimeout(() => {
+          this.events.publish('app_begin');
+        }, 1000);
+      })
   }
+
 }

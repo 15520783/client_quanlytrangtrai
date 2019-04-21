@@ -4,10 +4,10 @@ import { DatePlanPage } from './date-plan';
 
 @NgModule({
   declarations: [
-    DatePlanPage,
+    // DatePlanPage,
   ],
   imports: [
-    IonicPageModule.forChild(DatePlanPage),
+    // IonicPageModule.forChild(DatePlanPage),
   ],
 })
 export class DatePlanPageModule {}

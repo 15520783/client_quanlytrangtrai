@@ -4,10 +4,10 @@ import { EmployeeInputPage } from './employee-input';
 
 @NgModule({
   declarations: [
-    EmployeeInputPage,
+    // EmployeeInputPage,
   ],
   imports: [
-    IonicPageModule.forChild(EmployeeInputPage),
+    // IonicPageModule.forChild(EmployeeInputPage),
   ],
 })
 export class EmployeeInputPageModule {}

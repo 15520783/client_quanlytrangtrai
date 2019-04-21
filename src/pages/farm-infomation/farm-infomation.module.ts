@@ -4,10 +4,10 @@ import { FarmInfomationPage } from './farm-infomation';
 
 @NgModule({
   declarations: [
-    FarmInfomationPage,
+    // FarmInfomationPage,
   ],
   imports: [
-    IonicPageModule.forChild(FarmInfomationPage),
+    // IonicPageModule.forChild(FarmInfomationPage),
   ],
 })
 export class FarmInfomationPageModule {}

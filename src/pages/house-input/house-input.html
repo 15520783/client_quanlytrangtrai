@@ -1,19 +1,19 @@
 
 <ion-header>
     <ion-navbar>
-        <ion-toolbar no-border class="custom-toolbar" >
-            <ion-buttons left>
+        <ion-toolbar toolbar-transparent no-border class="custom-toolbar" >
+            <!-- <ion-buttons left>
               <button navPop ion-button icon-only>
                 <ion-icon name="arrow-back"></ion-icon>
               </button>
-            </ion-buttons>
+            </ion-buttons> -->
           <ion-title style="padding: 0px!important">Nhập thông tin nhà</ion-title>
         </ion-toolbar>
     </ion-navbar>
   </ion-header>
   
   <ion-content padding>
-    <form action="" (ngSubmit)="onSubmit()">
+    <form action="" (ngSubmit)="onSubmit()" style="padding-bottom: 10vH">
       <ion-list >
         <input-text [(validControl)] = "credentialsForm.controls.name"
                     [errorMessage_Required]  = "'Tên nhà là hạng mục bắt buộc.'"
@@ -65,13 +65,15 @@
       </ion-list>
     </form>
   </ion-content>
-  <ion-footer no-border>
+
+  <ion-footer no-border showWhen="core">
     <ion-toolbar toolbar-transparent text-right showWhen="core">
         <button type="submit"  ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
         <button ion-button   mode='ios' color="danger">Hủy</button>
     </ion-toolbar>
-    <ion-toolbar toolbar-transparent showWhen="ios,android">
-        <button type="submit" full block ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
-    </ion-toolbar>
+  </ion-footer>
+  
+  <ion-footer no-border no-padding showWhen="ios,android">
+    <button type="submit" no-margin full block ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
   </ion-footer>
   
