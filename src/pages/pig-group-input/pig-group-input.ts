@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { group } from '../../common/entity';
+import { ValidateNumber } from '../../validators/number.validator';
 
 /**
  * Generated class for the PigGroupInputPage page.
@@ -57,8 +58,8 @@ export class PigGroupInputPage {
       quantity:[this.group.quantity,Validators.compose([Validators.required])],
       health_status:[this.group.health_status,Validators.compose([Validators.required])],
       // overview_status:[this.group.overview_status,Validators.compose([Validators.required])],
-      origin_sum_weight:[this.group.origin_sum_weight,Validators.compose([Validators.required])],
-      origin_avg_weight:[this.group.origin_avg_weight,Validators.compose([Validators.required])],
+      origin_sum_weight:[this.group.origin_sum_weight,Validators.compose([Validators.required,ValidateNumber])],
+      origin_avg_weight:[this.group.origin_avg_weight,Validators.compose([Validators.required,ValidateNumber])],
       // status:[this.group.status,Validators.compose([Validators.required])],
       // mark:[this.group.mark,Validators.compose([Validators.required])],
       description:[this.group.description,Validators.compose([Validators.required, Validators.maxLength(1000)])],

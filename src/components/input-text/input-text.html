@@ -16,8 +16,11 @@
         <ion-icon name="md-information-circle" style="vertical-align: bottom"></ion-icon> {{errorMessage_Maxlength}}
       </p>
       <p no-margin mt-5 err *ngIf="validControl.errors.validEmail">
-          <ion-icon name="md-information-circle" style="vertical-align: bottom"></ion-icon> {{errorMessage_ValidEmail}}
-        </p>
+        <ion-icon name="md-information-circle" style="vertical-align: bottom"></ion-icon> {{errorMessage_ValidEmail}}
+      </p>
+      <p no-margin mt-5 err *ngIf="validControl.errors.validNumber">
+        <ion-icon name="md-information-circle" style="vertical-align: bottom"></ion-icon> {{errorMessage_ValidNumber}}
+      </p>
     </span>
   </expandable>
 </span>

@@ -12,6 +12,7 @@ export class InputTextComponent {
   @Input() errorMessage_Required: string;
   @Input() errorMessage_Maxlength: string;
   @Input() errorMessage_ValidEmail: string;
+  @Input() errorMessage_ValidNumber: string;
   @Input() label: string = '';
   @Input() placeholder: string = '';
   // @Input() value:string = '';

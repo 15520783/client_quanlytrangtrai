@@ -59,14 +59,22 @@
 
           </ion-col>
           <ion-col col-12 [attr.col-lg-6]="platform.is('core')?'':null" [attr.col-md-12]="platform.is('core')?'':null">
-            <input-text [(validControl)]="credentialsForm.controls.origin_sum_weight"
-              [errorMessage_Required]="'Tổng trọng lượng gốc là hạng mục bắt buộc.'" [label]="'Tổng trọng lượng gốc'"
-              [placeholder]="'Nhập Tổng trọng lượng gốc'" [active]="submitAttempt">
+            <input-text 
+                  [(validControl)]="credentialsForm.controls.origin_sum_weight"
+                  [errorMessage_Required]="'Tổng trọng lượng gốc là hạng mục bắt buộc.'" 
+                  [errorMessage_ValidNumber]="'Trọng lượng gốc trung bình là hạng mục nhập số'"
+                  [label]="'Tổng trọng lượng gốc'"
+                  [placeholder]="'Nhập Tổng trọng lượng gốc'" 
+                  [active]="submitAttempt">
             </input-text>
 
-            <input-text [(validControl)]="credentialsForm.controls.origin_avg_weight"
-              [errorMessage_Required]="'Trọng lượng gốc trung bình là hạng mục bắt buộc.'" [label]="'Trọng lượng gốc trung bình'"
-              [placeholder]="'Nhập trọng lượng gốc trung bình khi nhận'" [active]="submitAttempt">
+            <input-text 
+                  [(validControl)]="credentialsForm.controls.origin_avg_weight"
+                  [errorMessage_Required]="'Trọng lượng gốc trung bình là hạng mục bắt buộc.'" 
+                  [errorMessage_ValidNumber]="'Trọng lượng gốc trung bình là hạng mục nhập số'"
+                  [label]="'Trọng lượng gốc trung bình'"
+                  [placeholder]="'Nhập trọng lượng gốc trung bình khi nhận'" 
+                  [active]="submitAttempt">
             </input-text>
 
             <input-select [(validControl)]="credentialsForm.controls.health_status"

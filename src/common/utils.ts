@@ -30,6 +30,10 @@ export class Utils {
     return true;
   }
 
+  isNumber(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+  }
+
   showToast(message) {
     this.toastOptions = {
       message: message,
