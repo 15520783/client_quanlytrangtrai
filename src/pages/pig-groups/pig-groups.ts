@@ -8,6 +8,7 @@ import { KEY } from '../../common/const';
 import { FilterProvider } from '../../providers/filter/filter';
 import { HousesProvider } from '../../providers/houses/houses';
 import { PigGroupInformationPage } from '../pig-group-information/pig-group-information';
+import { PigGroupInputPage } from '../pig-group-input/pig-group-input';
 
 @IonicPage()
 @Component({
@@ -158,11 +159,16 @@ export class PigGroupsPage {
   viewDeltail(group) {
     // this.navCtrl.push(PigViewPage,{data:pig});
     
-    const modal = this.modalCtrl.create(
-      PigGroupInformationPage, group, {
-        cssClass: 'ion-modal'
-      }
-    )
-    modal.present();
+    // const modal = this.modalCtrl.create(
+    //   PigGroupInformationPage, group, {
+    //     cssClass: 'ion-modal'
+    //   }
+    // )
+    // modal.present();
+    this.navCtrl.push(PigGroupInformationPage,group);
+  }
+
+  addNewGroup(){
+    this.navCtrl.push(PigGroupInputPage);
   }
 }

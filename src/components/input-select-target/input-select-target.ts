@@ -6,6 +6,8 @@ import { KEY } from '../../common/const';
 import { PigGroupListComponent } from '../pig-group-list/pig-group-list';
 import { EmployeeListComponent } from '../employee-list/employee-list';
 import { PigListComponent } from '../pig-list/pig-list';
+import { PigsProvider } from '../../providers/pigs/pigs';
+import { EmployeesProvider } from '../../providers/employees/employees';
 
 
 @Component({
@@ -13,7 +15,7 @@ import { PigListComponent } from '../pig-list/pig-list';
   templateUrl: 'input-select-target.html',
 })
 export class InputSelectTargetComponent {
-  @ViewChild('input') input:any;
+  @ViewChild('input') input: any;
 
   @Input() validControl: any;
   @Input() errorMessage_Required: string;
@@ -22,16 +24,38 @@ export class InputSelectTargetComponent {
   @Input() active: boolean = false;
   @Input() placeholder: string = '';
   @Input() targertCmp: 'pigGroup' | 'employee' | 'pigs' = 'pigGroup';
-  value_visible: any = '';
+  public value_visible: any = '';
 
-  value: string = '';
+  public value: string = '';
 
   @Output() valueChange = new EventEmitter();
+
+  ngAfterContentInit(){
+    if(this.validControl.value){
+      switch(this.targertCmp){
+        case "pigs":{
+          this.value = this.validControl.value;
+          this.value_visible = this.pigProvider.getPigByID(this.validControl.value).pig_code;
+          break;
+        }
+
+        case "employee":{
+          this.value = this.validControl.value;
+          this.value_visible = this.employeeProvider.getEmployeeByID(this.validControl.value).name;
+          break;
+        }
+
+        default:
+        break;
+      }
+    }
+  }
 
   constructor(
     public util: Utils,
     public modalCtrl: ModalController,
-
+    public pigProvider: PigsProvider,
+    public employeeProvider: EmployeesProvider
   ) {
     console.log('Hello InputSelectPigGroupComponent Component');
   }
@@ -92,15 +116,13 @@ export class InputSelectTargetComponent {
 
         break;
       default:
-        // modal = this.modalCtrl.create(
-        //   PigGroupListComponent, { groups: data, eployees: data, selectMode: true });
         break;
     }
 
 
   }
 
-  scrollTo(){
-    this.input.nativeElement.scrollIntoView({behavior:'smooth'});
+  scrollTo() {
+    this.input.nativeElement.scrollIntoView({ behavior: 'smooth' });
   }
 }

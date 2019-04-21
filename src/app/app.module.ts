@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpClientModule } from '@angular/common/http';
-// import { FullCalendarModule } from 'ng-fullcalendar';
+import { FullCalendarModule } from 'ng-fullcalendar';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -26,6 +26,7 @@ import { FarmInputPage } from '../pages/farm-input/farm-input';
 import { HouseInputPage } from '../pages/house-input/house-input';
 import { EmployeeInputPage } from '../pages/employee-input/employee-input';
 import { PigInputPage } from '../pages/pig-input/pig-input';
+import { PigGroupInputPage } from '../pages/pig-group-input/pig-group-input';
 
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
@@ -56,7 +57,6 @@ import { HighChartProvider } from '../providers/high-chart/high-chart';
 import { PigGroupsProvider } from '../providers/pig-groups/pig-groups';
 import { FilterProvider } from '../providers/filter/filter';
 import { EmployeesProvider } from '../providers/employees/employees';
-import { FullCalendarModule } from 'ng-fullcalendar';
 
 
 
@@ -83,6 +83,7 @@ const Pages = [
   HouseInputPage,
   PigInputPage,
   EmployeeInputPage,
+  PigGroupInputPage,
   PigGroupListComponent,
   EmployeeListComponent,
   PigListComponent

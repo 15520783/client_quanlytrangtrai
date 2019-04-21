@@ -24,6 +24,13 @@ export class EmployeesProvider {
     return this.http.get(CONFIG.SERVER_API.concat(API.GET_ALL_EMPLOYEES)).timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
   }
 
+  getEmployeeByID(id: string) {
+    let employee:Array<employee> =  this.employees.filter((employee: employee) => {
+      return employee.id == id ? true : false;
+    })
+    return employee[0];
+  }
+
   sync() {
     this.getAllEmployee()
       .then((data: Array<employee>) => {

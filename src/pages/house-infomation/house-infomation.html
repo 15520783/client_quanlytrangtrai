@@ -26,7 +26,7 @@
   <ion-list no-padding>
     <ion-row>
       <ion-col>
-        <ion-card mode='ios' style="background: white" style="margin-right:0px">
+        <ion-card mode='ios' style="background: white">
           <ion-card-header mode='ios'>
             <!-- <ion-card-title text-wrap>Thông tin chi tiết</ion-card-title> -->
             <ion-row>
@@ -114,6 +114,16 @@
       </ion-infinite-scroll>
     </ion-slide>
   </ion-slides>
+
+  <ion-fab bottom right>
+    <button ion-fab><ion-icon name="ios-arrow-up"></ion-icon></button>
+    <ion-fab-list side="top" style="right:0px">
+      <button data-balloon-visible data-balloon-length="medium" data-balloon="Chỉnh sửa thông tin"
+        data-balloon-pos="left" ion-fab color="main" (tap)="editHouse()">
+        <ion-icon name="md-create"></ion-icon>
+      </button>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>
 
 <ion-footer no-padding no-border showWhen="ios,android">

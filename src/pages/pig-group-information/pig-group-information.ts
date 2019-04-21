@@ -4,6 +4,7 @@ import { group, pig } from '../../common/entity';
 import { Utils } from '../../common/utils';
 import { KEY } from '../../common/const';
 import { PigViewPage } from '../../tabs/pig-view/pig-view';
+import { PigGroupInputPage } from '../pig-group-input/pig-group-input';
 
 @IonicPage()
 @Component({
@@ -60,5 +61,9 @@ export class PigGroupInformationPage {
       }
     )
     modal.present();
+  }
+
+  editGroup(){
+   this.navCtrl.push(PigGroupInputPage,{group:this.group}); 
   }
 }

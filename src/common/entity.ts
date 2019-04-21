@@ -83,8 +83,8 @@ class pig {
 }
 
 class group {
-	id:string = '';
-	group_code:string = '';
+	id:string;
+	group_code:string;
 	parent_id:string;
 	round_id:string;
 	father_id:string;
@@ -99,6 +99,25 @@ class group {
 	mark:string;
 	health_status:string;
 	description:string;
+
+	constructor(){
+		this.id = '';
+		this.group_code  = '';
+		this.parent_id = '';
+		this.round_id = '';
+		this.father_id = '';
+		this.mother_id = '';
+		this.avg_birthday = '';
+		this.quantity = null;
+		this.heal_status = '';
+		this.overview_status = '';
+		this.origin_sum_weight = null;
+		this.origin_avg_weight = null;
+		this.status = '';
+		this.mark = '';
+		this.health_status = '';
+		this.description = '';
+	}
 }
 
 
