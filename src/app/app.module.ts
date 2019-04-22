@@ -57,6 +57,8 @@ import { HighChartProvider } from '../providers/high-chart/high-chart';
 import { PigGroupsProvider } from '../providers/pig-groups/pig-groups';
 import { FilterProvider } from '../providers/filter/filter';
 import { EmployeesProvider } from '../providers/employees/employees';
+import { WarehousesPage } from '../pages/warehouses/warehouses';
+import { WarehousesProvider } from '../providers/warehouses/warehouses';
 
 
 
@@ -67,6 +69,7 @@ const Pages = [
   FarmsPage,
   SectionsPage,
   PigsPage,
+  WarehousesPage,
   PigViewPage,
   PigInfomationPage,
   FarmInfomationPage,
@@ -110,7 +113,8 @@ const Providers = [
   HighChartProvider,
   PigGroupsProvider,
   FilterProvider,
-  EmployeesProvider
+  EmployeesProvider,
+  WarehousesProvider
 ]
 
 const Directives = [
@@ -149,9 +153,6 @@ const Directives = [
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Utils,
     ...Providers,
-    PigGroupsProvider,
-    FilterProvider,
-    EmployeesProvider
   ]
 })
 export class AppModule {}

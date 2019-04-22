@@ -10,9 +10,9 @@ ion-icon {
         height: 1em;
     }
     // custom icons
-    &[class*="warehouse"] {
-        mask-image: url(../../../assets/imgs/warehouse-solid.svg);
-    }
+    // &[class*="warehouse"] {
+    //     mask-image: url(../../../assets/imgs/warehouse-solid.svg);
+    // }
     &[class*="pig-outline"] {
         mask-image: url(../../../assets/imgs/pig-outline.svg);
     }
@@ -45,5 +45,14 @@ ion-icon {
     }
     &[class*="action"] {
         mask-image: url(../../../assets/imgs/chalkboard-teacher-solid.svg);
+    }
+    &[class*="warehouse"] {
+        mask-image: url(../../../assets/imgs/warehouse.svg);
+    }
+    &[class*="food"] {
+        mask-image: url(../../../assets/imgs/grain.svg);
+    }
+    &[class*="medicine"] {
+        mask-image: url(../../../assets/imgs/pills-bottle.svg);
     }
 }

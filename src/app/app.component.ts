@@ -15,6 +15,7 @@ import { PigGroupsProvider } from '../providers/pig-groups/pig-groups';
 import { SectionsProvider } from '../providers/sections/sections';
 import { EmployeesProvider } from '../providers/employees/employees';
 import { HousesProvider } from '../providers/houses/houses';
+import { WarehousesProvider } from '../providers/warehouses/warehouses';
 
 
 @Component({
@@ -54,7 +55,8 @@ export class MyApp {
     public pigGroupProvider: PigGroupsProvider,
     public sectionProvider: SectionsProvider,
     public employeeProvider: EmployeesProvider,
-    public houseProvider: HousesProvider
+    public houseProvider: HousesProvider,
+    public warehouseProvider: WarehousesProvider
   ) {
     this.initializeApp();
   }
@@ -128,6 +130,7 @@ export class MyApp {
     this.employeeProvider.sync();
     this.sectionProvider.sync();
     this.houseProvider.sync();
+    this.warehouseProvider.sync();
   }
 
 
@@ -150,6 +153,9 @@ export class MyApp {
     this.events.subscribe('updated:house', () => {
       this.checkUpdate();
     })
+    this.events.subscribe('updated:warehouse', () => {
+      this.checkUpdate();
+    })
   }
 
   checkUpdate() {
@@ -159,7 +165,8 @@ export class MyApp {
       this.pigGroupProvider.updated_flag &&
       this.employeeProvider.updated_flag &&
       this.sectionProvider.updated_flag &&
-      this.houseProvider.updated_flag) {
+      this.houseProvider.updated_flag &&
+      this.warehouseProvider.updated_flag) {
       this.rootPage = HomePage;
       setTimeout(() => {
         this.splash = false;

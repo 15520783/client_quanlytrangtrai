@@ -10,6 +10,7 @@ import { SectionsProvider } from '../../providers/sections/sections';
 import { PigGroupsPage } from '../pig-groups/pig-groups';
 import { EmployeePage } from '../employee/employee';
 import { DatePlanPage } from '../date-plan/date-plan';
+import { WarehousesPage } from '../warehouses/warehouses';
 
 @Component({
   selector: 'page-home',
@@ -19,7 +20,6 @@ export class HomePage {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = FarmsPage;
-
 
   // pages: Array<{ title: string, component: any, icon: string, active: boolean, init: any }>;
   pages: any;
@@ -34,9 +34,9 @@ export class HomePage {
     
 
     this.pages = [
-      { title: 'Quản lý trang trại', component: FarmsPage, icon: 'app-farm', active: true },
+      { title: 'Trang trại', component: FarmsPage, icon: 'app-farm', active: true },
       {
-        title: 'Quản lý khu', component: SectionsPage, icon: 'app-sections', active: false, init: true,
+        title: 'Khu', component: SectionsPage, icon: 'app-sections', active: false, init: true,
         initProcess(util: Utils, nav: Nav, pages: any, component, farms: Array<farm>) {
           let data = [];
           farms.forEach((e: farm) => {
@@ -80,9 +80,10 @@ export class HomePage {
           return util.showAlert(options);
         }
       },
-      { title: 'Quản lý heo', component: PigsPage, icon: 'app-pig-outline', active: false },
-      { title: 'Quản lý nhóm heo', component: PigGroupsPage, icon: 'app-pig-foot', active: false },
-      { title: 'Quản lý nhân viên', component: EmployeePage, icon: 'app-employees', active: false },
+      { title: 'Heo', component: PigsPage, icon: 'app-pig-outline', active: false },
+      { title: 'Nhóm heo', component: PigGroupsPage, icon: 'app-pig-foot', active: false },
+      { title: 'Nhân viên', component: EmployeePage, icon: 'app-employees', active: false },
+      { title: 'Kho', component: WarehousesPage, icon: 'app-warehouse', active: false },
       { title: 'Lịch biểu', component: DatePlanPage, icon: 'app-schedule', active: false },
     ];
   }

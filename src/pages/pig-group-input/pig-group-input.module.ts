@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
-import { PigGroupInputPage } from './pig-group-input';
+// import { IonicPageModule } from 'ionic-angular';
+// import { PigGroupInputPage } from './pig-group-input';
 
 @NgModule({
   declarations: [
-    PigGroupInputPage,
+    // PigGroupInputPage,
   ],
   imports: [
-    IonicPageModule.forChild(PigGroupInputPage),
+    // IonicPageModule.forChild(PigGroupInputPage),
   ],
 })
 export class PigGroupInputPageModule {}

@@ -4,13 +4,14 @@ const KEY = {
     HOUSES:'houses',
     PIGS: 'pigs',
     GROUPS: 'groups',
-    EMPLOYEES: 'employees'
+    EMPLOYEES: 'employees',
+    WAREHOUSES: 'warehouses'
 }
 
 const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const CONFIG = {
-    SERVER_API: 'http://192.168.0.43:3000',
+    SERVER_API: 'http://192.168.1.223:3000',
     DEFAULT_TIMEOUT: 3000,
     LANGUAGE_DEFAULT:'vi'
 }
@@ -30,7 +31,8 @@ const API = {
     GET_ALL_HOUSES: '/api/houses',
     GET_ALL_PIGS: '/api/pigs',
     GET_ALL_GROUPS: '/api/groups',
-    GET_ALL_EMPLOYEES: '/api/employees'
+    GET_ALL_EMPLOYEES: '/api/employees',
+    GET_ALL_WAREHOUSES: '/api/warehouses'
 }
 
 export { KEY }

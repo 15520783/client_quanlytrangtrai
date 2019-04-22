@@ -1,0 +1,24 @@
+page-warehouses {
+    ion-scroll{
+        height: 72vH!important;
+        .scroll-content{
+            padding:0px!important;
+        }
+    }
+
+    .card-header{
+        background:linear-gradient(to right,$themeColor2,$light-tint)
+    }
+
+    .card{
+        background: $light-tint;
+    }
+
+    ion-col{
+        padding:0px!important;
+    }
+
+    ion-card-header{
+        padding:5px 10px!important;
+    }
+}

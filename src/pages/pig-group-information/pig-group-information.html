@@ -168,10 +168,6 @@
 </ion-content>
 
 <ion-content no-padding showWhen="ios,android" #content no-bounce>
-  <!-- <ion-slides pager="true" loop="true" #slider (ionSlideDidChange)="slideChange()">
-    <ion-slide> -->
-  <!-- <ion-card no-margin mode='ios' style="background: white" style="margin-right:0px!important"> -->
-  <!-- <ion-card-header mode='ios' padding> -->
   <ion-item-divider text-wrap sticky="true">
     <ion-row no-padding>
       {{header[slider.realIndex]}}
@@ -187,11 +183,8 @@
     </ion-row>
   </ion-item-divider>
   <ion-list no-padding>
-    <!-- </ion-card-header> -->
-    <!-- <ion-card-content mode='ios' padding> -->
     <ion-slides #slider (ionSlideDidChange)="slideChange()">
       <ion-slide>
-        <!-- <ion-list no-lines> -->
         <ion-item>
           <ion-label stacked>Quantity</ion-label>
           <ion-input text-wrap type="text" readonly [(ngModel)]="group.quantity"></ion-input>
@@ -280,19 +273,8 @@
           <ion-label stacked>d</ion-label>
           <ion-input type="text" readonly [(ngModel)]="group.d"></ion-input>
         </ion-item>
-        <!-- </ion-list> -->
       </ion-slide>
-      <!-- </ion-card-content>
-      </ion-card>
-    </ion-slide>
-    <ion-slide>
-      <ion-card no-margin mode='ios' style="background: white" style="margin-right:0px!important">
-        <ion-card-header no-padding mode='ios'>
-          <ion-card-title text-wrap>Danh sách theo nhóm</ion-card-title>
-        </ion-card-header>
-        <ion-card-content mode='ios' padding> -->
       <ion-slide>
-        <!-- <ion-list no-padding> -->
         <button ion-item *ngFor="let item of pigs" (tap)="viewDeltail(item)">
           <ion-avatar item-start>
             <ion-icon name="app-pig-outline" font28></ion-icon>
@@ -316,13 +298,8 @@
             </ion-col>
           </ion-row>
         </button>
-        <!-- </ion-list> -->
       </ion-slide>
     </ion-slides>
-    <!-- </ion-card-content> -->
-    <!-- </ion-card> -->
-    <!-- </ion-slide>
-  </ion-slides> -->
   </ion-list>
 
   <ion-fab bottom right>

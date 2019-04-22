@@ -213,6 +213,26 @@ class employee {
 	}
 }
 
+class warehouse{
+	id:string;
+	type_id:string;
+	unit_id:string;
+	unit_type:string;
+	name:string;
+	description:string;
+	manager:string;
+
+	constructor(){
+		this.id = '';
+		this.type_id = '';
+		this.unit_id = '';
+		this.unit_type = '';
+		this.name = '';
+		this.description = '';
+		this.manager = '';
+	}
+}
+
 
 export {farm}
 export {section}
@@ -220,3 +240,4 @@ export {house}
 export {pig}
 export {group}
 export {employee}
+export {warehouse}
