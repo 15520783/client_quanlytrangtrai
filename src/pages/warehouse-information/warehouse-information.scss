@@ -1,6 +1,6 @@
-page-warehouses {
+page-warehouse-information {
     .scroll-custom {
-        height: 72vH!important;
+        height: 78vH!important;
         .scroll-content{
             padding:0px!important;
         }
@@ -14,9 +14,19 @@ page-warehouses {
         background: $light-tint;
     }
 
-    ion-col{
-        padding:0px!important;
+    .card-content{
+        background: white;
     }
+
+    .card-content-custom{
+        max-height: 72vH!important;
+        height: 72vH;
+        overflow: auto;
+    }
+
+    // ion-col{
+    //     padding:0px!important;
+    // }
 
     ion-card-header{
         padding:5px 10px!important;

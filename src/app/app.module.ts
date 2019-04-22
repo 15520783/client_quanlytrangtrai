@@ -27,6 +27,8 @@ import { HouseInputPage } from '../pages/house-input/house-input';
 import { EmployeeInputPage } from '../pages/employee-input/employee-input';
 import { PigInputPage } from '../pages/pig-input/pig-input';
 import { PigGroupInputPage } from '../pages/pig-group-input/pig-group-input';
+import { WarehouseInformationPage } from '../pages/warehouse-information/warehouse-information';
+import { WarehousesPage } from '../pages/warehouses/warehouses';
 
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
@@ -57,7 +59,6 @@ import { HighChartProvider } from '../providers/high-chart/high-chart';
 import { PigGroupsProvider } from '../providers/pig-groups/pig-groups';
 import { FilterProvider } from '../providers/filter/filter';
 import { EmployeesProvider } from '../providers/employees/employees';
-import { WarehousesPage } from '../pages/warehouses/warehouses';
 import { WarehousesProvider } from '../providers/warehouses/warehouses';
 
 
@@ -72,15 +73,16 @@ const Pages = [
   WarehousesPage,
   PigViewPage,
   PigInfomationPage,
+  EmployeeInformationPage,
   FarmInfomationPage,
+  PigGroupInformationPage,
   SectionInfomationPage,
   PigReviewIndexPage,
   HouseInfomationPage,
+  WarehouseInformationPage,
   PigGroupsPage,
   EmployeePage,
-  PigGroupInformationPage,
   DatePlanPage,
-  EmployeeInformationPage,
   TestInputPage,
   FarmInputPage,
   HouseInputPage,

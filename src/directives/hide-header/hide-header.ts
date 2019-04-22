@@ -35,17 +35,17 @@ export class HideHeaderDirective {
   onContentScroll(event) {
       if (event.scrollTop > 20) {
         this.DomCtrl.write(()=>{
-          this.renderer.setElementStyle(this.header, "max-height", "0px")
-          this.renderer.setElementStyle(this.scrollContent, "margin-top", "18vH")
+          this.renderer.setElementStyle(this.header, "max-height", "0px");
+          this.renderer.setElementStyle(this.scrollContent, "margin-top", "18vH");
           this.renderer.setElementStyle(this.title, 'text-align', 'left');
-          this.renderer.setElementStyle(this.title, 'padding-left', '50px');
+          // this.renderer.setElementStyle(this.title, 'padding-left', '50px');
         })
       } else {
         this.DomCtrl.write(()=>{
           this.renderer.setElementStyle(this.header, "max-height", "15vH");
           this.renderer.setElementStyle(this.scrollContent, "margin-top", "31vH");
           this.renderer.setElementStyle(this.title, 'text-align', 'center');
-          this.renderer.setElementStyle(this.title, 'padding-left', '0');
+          // this.renderer.setElementStyle(this.title, 'padding-left', '0');
         })
       }
   }

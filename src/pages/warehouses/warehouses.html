@@ -3,9 +3,9 @@
     <ion-toolbar showWhen="core" toolbar-transparent>
       <ion-row>
         <ion-col col-lg-2 col-md-3 col-sm-4 showWhen="core">
-          <button ion-item style="background: transparent!important">Vĩnh Tân 1
-            <ion-icon name="ios-arrow-down" style="vertical-align: bottom"></ion-icon>
-          </button>
+          <ion-select style="background: transparent!important" [(ngModel)]="SelectedFarm" interface='popover'>
+            <ion-option *ngFor="let farm of farmProvider.farms" [value]="farm.id">{{farm.name}}</ion-option>
+          </ion-select>
         </ion-col>
         <ion-col>
           <button ion-button mode='ios' color="secondary" (tap)="addNewFarm()">Thêm kho</button>
@@ -30,7 +30,7 @@
           </ion-card-title>
         </ion-card-header>
         <ion-card-content no-padding>
-          <ion-scroll scrollY="true">
+          <ion-scroll scrollY="true" class="scroll-custom">
             <ion-item-group>
               <ion-list>
                 <button ion-item *ngFor="let warehouse of food_warehouses" (tap)="viewDeltail(warehouse)">
@@ -61,7 +61,7 @@
           </ion-card-title>
         </ion-card-header>
         <ion-card-content no-padding>
-          <ion-scroll scrollY="true">
+          <ion-scroll scrollY="true" class="scroll-custom">
             <ion-item-group>
               <ion-list>
                 <button ion-item *ngFor="let warehouse of medicine_warehouses" (tap)="viewDeltail(warehouse)">
@@ -87,41 +87,47 @@
   </ion-row>
 </ion-content>
 
-<ion-content no-padding showWhen="ios,android">
+<ion-content no-padding showWhen="ios,android" #content>
   <ion-slides #slider (ionSlideDidChange)="slideChange()">
-    <ion-slide >
-      <ion-list>
-        <button ion-item *ngFor="let warehouse of food_warehouses" (tap)="viewDeltail(warehouse)">
-          <ion-avatar item-start>
-            <ion-icon name="app-warehouse" font28></ion-icon>
-          </ion-avatar>
-          <h2>{{warehouse.name}}</h2>
-          <ion-row>
-            <ion-col>
-              <p>Người quản lý: {{warehouse.manager}}</p>
-            </ion-col>
-            <ion-col>
-              <p>Chi tiết: {{warehouse.description}}</p>
-            </ion-col>
-          </ion-row>
-        </button>
-      </ion-list>
+    <ion-slide>
+      <ion-scroll scrollY="true" class="modal-scroll">
+        <ion-list>
+          <button ion-item *ngFor="let warehouse of food_warehouses" (tap)="viewDeltail(warehouse)">
+            <ion-avatar item-start>
+              <ion-icon name="app-warehouse" font28></ion-icon>
+            </ion-avatar>
+            <h2>{{warehouse.name}}</h2>
+            <ion-row>
+              <ion-col>
+                <p>Người quản lý: {{warehouse.manager}}</p>
+              </ion-col>
+              <ion-col>
+                <p>Chi tiết: {{warehouse.description}}</p>
+              </ion-col>
+            </ion-row>
+          </button>
+        </ion-list>
+      </ion-scroll>
     </ion-slide>
     <ion-slide>
-      <button ion-item *ngFor="let warehouse of medicine_warehouses" (tap)="viewDeltail(warehouse)">
-        <ion-avatar item-start>
-          <ion-icon name="app-warehouse" font28></ion-icon>
-        </ion-avatar>
-        <h2>{{warehouse.name}}</h2>
-        <ion-row>
-          <ion-col>
-            <p>Người quản lý: {{warehouse.manager}}</p>
-          </ion-col>
-          <ion-col>
-            <p>Chi tiết: {{warehouse.description}}</p>
-          </ion-col>
-        </ion-row>
-      </button>
+      <ion-scroll scrollY="true" class="modal-scroll">
+        <ion-list>
+          <button ion-item *ngFor="let warehouse of medicine_warehouses" (tap)="viewDeltail(warehouse)">
+            <ion-avatar item-start>
+              <ion-icon name="app-warehouse" font28></ion-icon>
+            </ion-avatar>
+            <h2>{{warehouse.name}}</h2>
+            <ion-row>
+              <ion-col>
+                <p>Người quản lý: {{warehouse.manager}}</p>
+              </ion-col>
+              <ion-col>
+                <p>Chi tiết: {{warehouse.description}}</p>
+              </ion-col>
+            </ion-row>
+          </button>
+        </ion-list>
+      </ion-scroll>
     </ion-slide>
   </ion-slides>
 </ion-content>

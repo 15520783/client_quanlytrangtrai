@@ -19,6 +19,10 @@
     color:#f4f4f4;
 }
 
+.main-bg{
+    background:linear-gradient(to right,$themeColor2,$light-tint)!important;
+}
+
 .toolbar-background{
     background:linear-gradient(to right,$themeColor2,$light-tint);
 }
