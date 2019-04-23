@@ -29,6 +29,7 @@ import { PigInputPage } from '../pages/pig-input/pig-input';
 import { PigGroupInputPage } from '../pages/pig-group-input/pig-group-input';
 import { WarehouseInformationPage } from '../pages/warehouse-information/warehouse-information';
 import { WarehousesPage } from '../pages/warehouses/warehouses';
+import { SettingsPage } from '../pages/settings/settings';
 
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
@@ -60,6 +61,7 @@ import { PigGroupsProvider } from '../providers/pig-groups/pig-groups';
 import { FilterProvider } from '../providers/filter/filter';
 import { EmployeesProvider } from '../providers/employees/employees';
 import { WarehousesProvider } from '../providers/warehouses/warehouses';
+import { SettingsProvider } from '../providers/settings/settings';
 
 
 
@@ -71,6 +73,7 @@ const Pages = [
   SectionsPage,
   PigsPage,
   WarehousesPage,
+  SettingsPage,
   PigViewPage,
   PigInfomationPage,
   EmployeeInformationPage,
@@ -116,7 +119,8 @@ const Providers = [
   PigGroupsProvider,
   FilterProvider,
   EmployeesProvider,
-  WarehousesProvider
+  WarehousesProvider,
+  SettingsProvider
 ]
 
 const Directives = [
@@ -155,6 +159,7 @@ const Directives = [
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Utils,
     ...Providers,
+    SettingsProvider,
   ]
 })
 export class AppModule {}

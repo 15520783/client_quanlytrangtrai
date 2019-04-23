@@ -55,4 +55,10 @@ ion-icon {
     &[class*="medicine"] {
         mask-image: url(../../../assets/imgs/pills-bottle.svg);
     }
+    &[class*="setting"] {
+        mask-image: url(../../../assets/imgs/settings.svg);
+    }
+    &[class*="item-setting"] {
+        mask-image: url(../../../assets/imgs/list-item-setting.svg);
+    }
 }

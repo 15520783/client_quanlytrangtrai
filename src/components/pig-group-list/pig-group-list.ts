@@ -4,7 +4,7 @@ import { FormControl } from '@angular/forms';
 import { PigGroupInformationPage } from '../../pages/pig-group-information/pig-group-information';
 import { FilterProvider } from '../../providers/filter/filter';
 import { PigGroupsProvider } from '../../providers/pig-groups/pig-groups';
-import { ModalController, Content, NavParams, ViewController, Events } from 'ionic-angular';
+import { ModalController, Content, NavParams, ViewController, Events, NavController } from 'ionic-angular';
 
 @Component({
   selector: 'pig-group-list',
@@ -46,6 +46,7 @@ export class PigGroupListComponent {
     public filterProvider: FilterProvider,
     public pigGroupProvider: PigGroupsProvider,
     public modalCtrl: ModalController,
+    public navCtrl: NavController,
     public navParams: NavParams,
     public viewCtrl: ViewController,
     public events: Events
@@ -115,14 +116,13 @@ export class PigGroupListComponent {
 
 
   viewDeltail(group) {
-    // this.navCtrl.push(PigViewPage,{data:pig});
-
-    const modal = this.modalCtrl.create(
-      PigGroupInformationPage, group, {
-        cssClass: 'ion-modal'
-      }
-    )
-    modal.present();
+    // const modal = this.modalCtrl.create(
+    //   PigGroupInformationPage, group, {
+    //     cssClass: 'ion-modal'
+    //   }
+    // )
+    // modal.present();
+    this.navCtrl.push(PigGroupInformationPage,group);
   }
 
   scrollToTop() {

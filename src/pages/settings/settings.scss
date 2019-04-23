@@ -1,0 +1,29 @@
+page-settings {
+    .card-header{
+        background:linear-gradient(to right,$themeColor2,$light-tint)
+    }
+
+    ion-scroll{
+        .scroll-content{
+            top:12px;
+        }
+    }
+    
+    .ion-card-content-list-setting{
+        max-height: 80vH!important;
+        height: 80vH;
+        overflow: auto;
+
+
+    }
+
+    .content-item-setting{
+        max-height: 50vH!important;
+        height: 50vH;
+        overflow: auto;
+
+        .label-md{
+            margin: 0px!important;
+        }
+    }
+}

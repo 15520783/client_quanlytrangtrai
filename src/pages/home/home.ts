@@ -11,6 +11,7 @@ import { PigGroupsPage } from '../pig-groups/pig-groups';
 import { EmployeePage } from '../employee/employee';
 import { DatePlanPage } from '../date-plan/date-plan';
 import { WarehousesPage } from '../warehouses/warehouses';
+import { SettingsPage } from '../settings/settings';
 
 @Component({
   selector: 'page-home',
@@ -84,7 +85,8 @@ export class HomePage {
       { title: 'Nhóm heo', component: PigGroupsPage, icon: 'app-pig-foot', active: false },
       { title: 'Nhân viên', component: EmployeePage, icon: 'app-employees', active: false },
       { title: 'Kho', component: WarehousesPage, icon: 'app-warehouse', active: false },
-      { title: 'Lịch biểu', component: DatePlanPage, icon: 'app-schedule', active: false },
+      { title: 'Thiết lập', component: SettingsPage, icon: 'app-settings', active: false },
+      // { title: 'Lịch biểu', component: DatePlanPage, icon: 'app-schedule', active: false },
     ];
   }
 

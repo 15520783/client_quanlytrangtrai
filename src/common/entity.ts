@@ -1,3 +1,15 @@
+class users{
+	id:string;
+	username:string;
+	password:string;
+	email:string;
+	employee_id:string;
+	activate:number;
+	language:string;
+	last_active:any;
+	login:number;
+}
+
 class pig {
 	id:string;
 	pig_code:string;
@@ -233,7 +245,18 @@ class warehouse{
 	}
 }
 
+class breeds {
+	id:string;
+	name:string;
+	line_code:string;
+	symbol:string;
+	code:string;
+	level:string;
+	line:string;
+	description:string;
+}
 
+export {users}
 export {farm}
 export {section}
 export {house}
@@ -241,3 +264,4 @@ export {pig}
 export {group}
 export {employee}
 export {warehouse}
+export {breeds}

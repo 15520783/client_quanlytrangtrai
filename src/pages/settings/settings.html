@@ -1,0 +1,101 @@
+<ion-header>
+  <header [title]="'Thiết lập'">
+
+  </header>
+
+</ion-header>
+<ion-content>
+  <ion-row>
+    <ion-col col-lg-4>
+      <ion-toolbar toolbar-transparent no-padding>
+        <ion-card mode='ios'>
+          <ion-card-header>Danh sách thiết lập</ion-card-header>
+          <ion-card-content class="ion-card-content-list-setting">
+            <ion-list>
+              <button *ngFor="let setting of list_settings" ion-item (tap)="scrollToView(setting.compt)">
+                <ion-row>
+                  <ion-icon name="app-item-setting" font28></ion-icon>
+                  <ion-col>
+                    <h2>{{setting.title}}</h2>
+                  </ion-col>
+                </ion-row>
+              </button>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-toolbar>
+    </ion-col>
+
+    <ion-col col-lg-8>
+      <ion-scroll scrollY="true" style="height: 88vH">
+        <ion-list style='padding-bottom: 35vH'>
+          <span #pregnancyStatus>
+            <ion-card mode='ios' style="margin-top: 0px!important">
+              <ion-card-header>
+                Trạng thái mang thai
+              </ion-card-header>
+              <ion-card-content>
+                <ion-list-header no-margin>
+                  <ion-row>
+                    <ion-col col-5 text-wrap>Tên</ion-col>
+                    <ion-col col-5 text-wrap>Mô tả</ion-col>
+                    <ion-col col-2></ion-col>
+                  </ion-row>
+                </ion-list-header>
+                <ion-list class="content-item-setting">
+                  <ion-item *ngFor="let item of pregnancy_status">
+                    <ion-row>
+                      <ion-col col-5 align-self-center text-wrap>{{item.name}}</ion-col>
+                      <ion-col col-5 align-self-center text-wrap>{{item.description}}</ion-col>
+                      <ion-col col-2>
+                        <button small text-wrap ion-button block mode='ios' color="primary">Chỉnh sửa</button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-item>
+                </ion-list>
+                <ion-row>
+                  <ion-col item-end>
+                    <button mode='ios' ion-button item-end color="secondary">Thêm</button>
+                  </ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
+          </span>
+
+          <span #breedingTypes>
+            <ion-card mode='ios' style="margin-top: 0px!important">
+              <ion-card-header>
+                Trạng thái lên giống
+              </ion-card-header>
+              <ion-card-content>
+                <ion-list-header no-margiw>
+                  <ion-row>
+                    <ion-col col-5 text-wrap>Tên</ion-col>
+                    <ion-col col-5 text-wrap>Mô tả</ion-col>
+                    <ion-col col-2 text-wrap></ion-col>
+                  </ion-row>
+                </ion-list-header>
+                <ion-list class="content-item-setting">
+                  <ion-item *ngFor="let item of breeding_types">
+                    <ion-row>
+                      <ion-col col-5 align-self-center text-wrap>{{item.name}}</ion-col>
+                      <ion-col col-5 align-self-center text-wrap>{{item.description}}</ion-col>
+                      <ion-col col-2 >
+                        <button small text-wrap ion-button block mode='ios' color="primary">Chỉnh sửa</button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-item>
+                </ion-list>
+                <ion-row>
+                  <ion-col item-end>
+                    <button  mode='ios' ion-button item-end color="secondary">Thêm</button>
+                  </ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
+          </span>
+        </ion-list>
+      </ion-scroll>
+    </ion-col>
+  </ion-row>
+</ion-content>
