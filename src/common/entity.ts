@@ -1,57 +1,100 @@
-class users{
-	id:string;
-	username:string;
-	password:string;
-	email:string;
-	employee_id:string;
-	activate:number;
-	language:string;
-	last_active:any;
-	login:number;
+export { base }
+export { users }
+export { farm }
+export { section }
+export { house }
+export { pig }
+export { group }
+export { employee }
+export { warehouse }
+export { breeds }
+export { breeding_type }
+export { pregnancy_status }
+export { health_status }
+export { diseases }
+export { farm_type }
+export { food_type }
+export { food }
+export { medicine_type }
+export { medicine_units }
+export { price_codes }
+export { foot_type }
+export { gential_type }
+export { issues }
+export { mark_types }
+export { permissions }
+export { regencies }
+export { mating_status }
+export { warehouse_type }
+
+
+class base {
+	id: string;
+	created_at: any;
+	updated_at: any;
+
+	constructor() {
+		this.created_at = '';
+		this.updated_at = '';
+	}
 }
 
-class pig {
-	id:string;
-	pig_code:string;
-	house_id:string;
-	round_id:string;
-	breed_id:string;
-	gender:number;
-	father_id:string;
-	mother_id:string;
-	birthday:any;
-	born_weight:number;
-	born_status:number;
+class users extends base {
+	username: string;
+	password: string;
+	email: string;
+	employee_id: string;
+	activate: number;
+	language: string;
+	last_active: any;
+	login: number;
+	constructor() {
+		super();
+	}
+}
+
+class pig extends base {
+	pig_code: string;
+	house_id: string;
+	round_id: string;
+	breed_id: string;
+	gender: number;
+	father_id: string;
+	mother_id: string;
+	birthday: any;
+	born_weight: number;
+	born_status: number;
 	// origin_id:string;
 	// origin_father:string;
 	// origin_mother:string;
-	origin_weight:number;
-	receive_weight:number;
-	health_point:number;
-	foot:number;
-	function_udder:number;
-	total_udder:number;
-	gential:number;
-	description:string;
-	fcr:number;
-	adg:number;
-	bf:number;
-	filet:number;
-	long_back:number;
-	long_body:number;
-	index:number;
-	parities:number;
-	images:string;
-	health_status:number;
-	breeding_type:number;
-	breed_status:number;
-	pregnancy_status:number;
-	overview_status:number;
-	point_review:number;
-	status:number;
-	price_code:number;
+	origin_weight: number;
+	receive_weight: number;
+	health_point: number;
+	foot: number;
+	function_udder: number;
+	total_udder: number;
+	gential: number;
+	description: string;
+	fcr: number;
+	adg: number;
+	bf: number;
+	filet: number;
+	long_back: number;
+	long_body: number;
+	index: number;
+	parities: number;
+	images: string;
+	health_status: number;
+	breeding_type: number;
+	breed_status: number;
+	pregnancy_status: number;
+	overview_status: number;
+	point_review: number;
+	status: number;
+	price_code: number;
 
-	constructor(){
+	constructor() {
+		super();
 		this.id = '';
 		this.pig_code = '';
 		this.house_id = '';
@@ -94,27 +137,27 @@ class pig {
 	}
 }
 
-class group {
-	id:string;
-	group_code:string;
-	parent_id:string;
-	round_id:string;
-	father_id:string;
-	mother_id:string;
-	avg_birthday:any;
-	quantity:number;
-	heal_status:string;
-	overview_status:string;
-	origin_sum_weight:number;
-	origin_avg_weight:number;
-	status:string;
-	mark:string;
-	health_status:string;
-	description:string;
+class group extends base {
+	group_code: string;
+	parent_id: string;
+	round_id: string;
+	father_id: string;
+	mother_id: string;
+	avg_birthday: any;
+	quantity: number;
+	heal_status: string;
+	overview_status: string;
+	origin_sum_weight: number;
+	origin_avg_weight: number;
+	status: string;
+	mark: string;
+	health_status: string;
+	description: string;
 
-	constructor(){
+	constructor() {
+		super();
 		this.id = '';
-		this.group_code  = '';
+		this.group_code = '';
 		this.parent_id = '';
 		this.round_id = '';
 		this.father_id = '';
@@ -133,18 +176,18 @@ class group {
 }
 
 
-class farm {
-    id: string;
-    name:string;
-    type_id: number;
-    address: string;
-    area: number;
-    total_pig: number;
-    founding: any;
-    manager: string;
+class farm extends base {
+	name: string;
+	type_id: number;
+	address: string;
+	area: number;
+	total_pig: number;
+	founding: any;
+	manager: string;
 	description: string;
-	
-	constructor(){
+
+	constructor() {
+		super();
 		this.id = '';
 		this.name = '';
 		this.type_id = null;
@@ -157,29 +200,31 @@ class farm {
 	}
 }
 
-class section {
-	id:string;
-	type_id:string;
-	department_id:string;
-	name:string;
-	description:string;
-	manager:string;
-	founding:any;
+class section extends base {
+	type_id: string;
+	department_id: string;
+	name: string;
+	description: string;
+	manager: string;
+	founding: any;
+	constructor() {
+		super();
+	}
 }
 
-class house {
-	id:string='';
-	section_id:string;
-	type_id:string;
-	house_code:string;
-	name:string;
-	description:string;
-	position:string;
-	manager:string;
-	founding:any;
+class house extends base {
+	section_id: string;
+	type_id: string;
+	house_code: string;
+	name: string;
+	description: string;
+	position: string;
+	manager: string;
+	founding: any;
 
-	constructor(){
-		this.id ='';
+	constructor() {
+		super();
+		this.id = '';
 		this.section_id = '';
 		this.type_id = '';
 		this.house_code = '';
@@ -191,23 +236,23 @@ class house {
 	}
 }
 
-class employee {
-	id:string;
-	regency_id:string;
-	farm_id:string;
-	name:string;
-	gender:number;
-	birthday:any ;
-	address:string;
-	level:string;
-	email:string;
-	cmnd:string;
-	date_join:any;
-	date_off:any;
-	images:string;
-	status:string;
+class employee extends base {
+	regency_id: string;
+	farm_id: string;
+	name: string;
+	gender: number;
+	birthday: any;
+	address: string;
+	level: string;
+	email: string;
+	cmnd: string;
+	date_join: any;
+	date_off: any;
+	images: string;
+	status: string;
 
-	constructor(){
+	constructor() {
+		super();
 		this.id = '';
 		this.regency_id = '';
 		this.farm_id = '';
@@ -225,16 +270,16 @@ class employee {
 	}
 }
 
-class warehouse{
-	id:string;
-	type_id:string;
-	unit_id:string;
-	unit_type:string;
-	name:string;
-	description:string;
-	manager:string;
+class warehouse extends base {
+	type_id: string;
+	unit_id: string;
+	unit_type: string;
+	name: string;
+	description: string;
+	manager: string;
 
-	constructor(){
+	constructor() {
+		super();
 		this.id = '';
 		this.type_id = '';
 		this.unit_id = '';
@@ -245,23 +290,207 @@ class warehouse{
 	}
 }
 
-class breeds {
-	id:string;
-	name:string;
-	line_code:string;
-	symbol:string;
-	code:string;
-	level:string;
-	line:string;
-	description:string;
+
+
+
+class pregnancy_status extends base {
+	name: string;
+	description: string;
+	created_at: any;
+	updated_at: any;
+	constructor() {
+		super();
+	}
 }
 
-export {users}
-export {farm}
-export {section}
-export {house}
-export {pig}
-export {group}
-export {employee}
-export {warehouse}
-export {breeds}
+class breeds extends base {
+	name: string;
+	line_code: string;
+	symbol: string;
+	code: string;
+	level: string;
+	line: string;
+	description: string;
+	created_at: any;
+	updated_at: any;
+
+	constructor() {
+		super();
+	}
+}
+
+class breeding_type extends base {
+	name: string;
+	description: string;
+	constructor() {
+		super();
+	}
+}
+
+class health_status extends base {
+	name: string;
+	description: string;
+	created_at: any;
+	updated_at: any;
+	constructor() {
+		super();
+	}
+}
+
+class diseases extends base {
+	name: string;
+	description: string;
+	agent: string;
+	symptom: string;
+	diagnose: string;
+	treatment: string;
+	note: string;
+	created_at: any;
+	updated_at: any;
+	constructor() {
+		super();
+	}
+}
+
+class farm_type extends base {
+	name: string;
+	description: string;
+	created_at: any;
+	updated_at: any;
+	constructor() {
+		super();
+	}
+}
+
+class food_type extends base {
+	name: string;
+	description: string;
+	created_at: any;
+	updated_at: any;
+	constructor() {
+		super();
+	}
+}
+
+class food extends base {
+	food_code: string;
+	type_id: string;
+	name: string;
+	use_for: string;
+	guide: string;
+	description: string;
+	created_at: any;
+	updated_at: any;
+	constructor() {
+		super();
+	}
+}
+
+class medicine_type extends base {
+	name: string;
+	description: string;
+	created_at: any;
+	updated_at: any;
+	constructor() {
+		super();
+	}
+}
+
+class medicine_units extends base {
+	name: string;
+	quantity: string;
+	description: string;
+	base_unit: string;
+	created_at: any;
+	updated_at: any;
+	constructor() {
+		super();
+	}
+}
+
+class price_codes extends base {
+	id: string;
+	name: string;
+	description: string;
+	created_at: any;
+	updated_at: any;
+	constructor() {
+		super();
+	}
+}
+
+class foot_type extends base {
+	name: string;
+	description: string;
+	created_at: any;
+	updated_at: any;
+	constructor() {
+		super();
+	}
+}
+
+class gential_type extends base {
+
+	name: string;
+	description: string;
+
+	constructor() {
+		super();
+	}
+}
+
+class issues extends base {
+	level: string;
+	symptom: string;
+	lesions: string;
+	description: string;
+	constructor() {
+		super();
+	}
+}
+
+class mark_types extends base {
+	name: string;
+	description: string;
+	constructor() {
+		super();
+	}
+}
+
+class permissions extends base {
+	name: string;
+	group_id: string;
+	show: string;
+	object_type: string;
+	description: string;
+	code: string;
+	order: string;
+	constructor() {
+		super();
+	}
+}
+
+class regencies extends base {
+	name: string;
+	description: string;
+	constructor() {
+		super();
+	}
+}
+
+class mating_status extends base {
+	name: string;
+	description: string;
+	constructor() {
+		super();
+	}
+}
+
+class warehouse_type extends base {
+	name: string;
+	description: string;
+	constructor() {
+		super();
+	}
+}
+

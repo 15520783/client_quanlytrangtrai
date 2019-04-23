@@ -1,11 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { pregnancy_status } from '../../common/entity';
 
 @IonicPage()
 @Component({
   selector: 'page-settings',
   templateUrl: 'settings.html',
 })
+
 export class SettingsPage {
   @ViewChild('pregnancyStatus') pregnancy_status_ele: any;
   @ViewChild('breedingTypes') breeding_types_ele: any;

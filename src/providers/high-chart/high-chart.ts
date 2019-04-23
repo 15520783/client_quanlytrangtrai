@@ -24,7 +24,7 @@ export class HighChartProvider {
         plotShadow: false,
         type: 'pie'
       },
-      colors: ['#4572A7', '#AA4643', '#89A54E', '#80699B', '#3D96AE',
+      colors: ['#04A9FF', '#FFB840', '#FF5A47', '#00BD9F', '#3D96AE',
         '#DB843D', '#92A8CD', '#A47D7C', '#B5CA92'],
       credits: {
         enabled: false
@@ -74,7 +74,7 @@ export class HighChartProvider {
         plotShadow: false,
         type: 'pie'
       },
-      colors: ['#4572A7', '#AA4643', '#89A54E', '#80699B', '#3D96AE',
+      colors: ['#04A9FF', '#FFB840', '#FF5A47', '#00BD9F', '#3D96AE',
         '#DB843D', '#92A8CD', '#A47D7C', '#B5CA92'],
       credits: {
         enabled: false
@@ -132,7 +132,7 @@ export class HighChartProvider {
       subtitle: {
         text: ''
       },
-      colors: ['#4572A7', '#AA4643', '#89A54E', '#80699B', '#3D96AE',
+      colors: ['#04A9FF', '#FFB840', '#FF5A47', '#00BD9F', '#3D96AE',
         '#DB843D', '#92A8CD', '#A47D7C', '#B5CA92'],
       xAxis: {
         categories: [

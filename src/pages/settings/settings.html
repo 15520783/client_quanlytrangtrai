@@ -6,7 +6,7 @@
 </ion-header>
 <ion-content>
   <ion-row>
-    <ion-col col-lg-4>
+    <ion-col col-lg-3>
       <ion-toolbar toolbar-transparent no-padding>
         <ion-card mode='ios'>
           <ion-card-header>Danh sách thiết lập</ion-card-header>
@@ -14,9 +14,11 @@
             <ion-list>
               <button *ngFor="let setting of list_settings" ion-item (tap)="scrollToView(setting.compt)">
                 <ion-row>
-                  <ion-icon name="app-item-setting" font28></ion-icon>
-                  <ion-col>
-                    <h2>{{setting.title}}</h2>
+                  <ion-col align-self-center col-2>
+                    <ion-icon name="app-item-setting" font28></ion-icon>
+                  </ion-col>
+                  <ion-col col-10>
+                    <h2 text-wrap>{{setting.title}}</h2>
                   </ion-col>
                 </ion-row>
               </button>
@@ -26,7 +28,7 @@
       </ion-toolbar>
     </ion-col>
 
-    <ion-col col-lg-8>
+    <ion-col col-lg-9>
       <ion-scroll scrollY="true" style="height: 88vH">
         <ion-list style='padding-bottom: 35vH'>
           <span #pregnancyStatus>
@@ -80,7 +82,7 @@
                     <ion-row>
                       <ion-col col-5 align-self-center text-wrap>{{item.name}}</ion-col>
                       <ion-col col-5 align-self-center text-wrap>{{item.description}}</ion-col>
-                      <ion-col col-2 >
+                      <ion-col col-2>
                         <button small text-wrap ion-button block mode='ios' color="primary">Chỉnh sửa</button>
                       </ion-col>
                     </ion-row>
@@ -88,7 +90,7 @@
                 </ion-list>
                 <ion-row>
                   <ion-col item-end>
-                    <button  mode='ios' ion-button item-end color="secondary">Thêm</button>
+                    <button mode='ios' ion-button item-end color="secondary">Thêm</button>
                   </ion-col>
                 </ion-row>
               </ion-card-content>
