@@ -17,6 +17,7 @@ export { food_type }
 export { food }
 export { medicine_type }
 export { medicine_units }
+export { medicines }
 export { price_codes }
 export { foot_type }
 export { gential_type }
@@ -403,6 +404,19 @@ class medicine_units extends base {
 	base_unit: string;
 	created_at: any;
 	updated_at: any;
+	constructor() {
+		super();
+	}
+}
+
+class medicines extends base {
+	id: string;
+	medicine_code: string;
+	type_id: string;
+	name: string;
+	use_for: string;
+	guide: string;
+	description: string;
 	constructor() {
 		super();
 	}
