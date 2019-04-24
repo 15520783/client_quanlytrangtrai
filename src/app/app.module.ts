@@ -42,6 +42,7 @@ import { InputDateComponent } from '../components/input-date/input-date';
 import { InputSelectTargetComponent } from '../components/input-select-target/input-select-target';
 import { PigListComponent } from '../components/pig-list/pig-list';
 import { SettingUtilComponent } from '../components/setting-util/setting-util';
+import { SettingInputUtilComponent } from '../components/setting-input-util/setting-input-util';
 
 import { HideHeaderDirective } from '../directives/hide-header/hide-header';
 
@@ -96,7 +97,8 @@ const Pages = [
   PigGroupListComponent,
   EmployeeListComponent,
   PigListComponent,
-  SettingUtilComponent
+  SettingUtilComponent,
+  SettingInputUtilComponent
 ]
 
 const Components = [
@@ -110,7 +112,8 @@ const Components = [
   InputSelectComponent,
   InputSelectTargetComponent,
   PigListComponent,
-  SettingUtilComponent
+  SettingUtilComponent,
+  SettingInputUtilComponent  
 ]
 
 const Providers = [

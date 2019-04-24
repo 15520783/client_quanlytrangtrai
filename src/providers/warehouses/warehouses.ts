@@ -46,6 +46,7 @@ export class WarehousesProvider {
         this.util.getKey(KEY.WAREHOUSES)
           .then((data: Array<warehouse>) => {
             this.warehouses = data;
+            console.log(data);
             this.publishUpdateEvent();
           })
           .catch((err) => {

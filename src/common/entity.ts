@@ -31,13 +31,8 @@ export { warehouse_type }
 
 class base {
 	id: string;
-	created_at: any;
-	updated_at: any;
-
-	constructor() {
-		this.created_at = '';
-		this.updated_at = '';
-	}
+	created_at: any = '';
+	updated_at: any = '';
 }
 
 class users extends base {
@@ -49,269 +44,136 @@ class users extends base {
 	language: string;
 	last_active: any;
 	login: number;
-	constructor() {
-		super();
-	}
 }
 
 class pig extends base {
-	pig_code: string;
-	farm_id: string;
-	house_id: string;
-	round_id: string;
-	breed_id: string;
-	gender: number;
-	father_id: string;
-	mother_id: string;
-	birthday: any;
-	born_weight: number;
-	born_status: number;
+	pig_code: string = '';
+	farm_id: string = '';
+	house_id: string = '';
+	round_id: string = '';
+	breed_id: string = '';
+	gender: number = null;
+	father_id: string = '';
+	mother_id: string = '';
+	birthday: any = '';
+	born_weight: number = null;
+	born_status: number = null;
 	// origin_id:string;
 	// origin_father:string;
 	// origin_mother:string;
-	origin_weight: number;
-	receive_weight: number;
-	health_point: number;
-	foot: number;
-	function_udder: number;
-	total_udder: number;
-	gential: number;
-	description: string;
-	fcr: number;
-	adg: number;
-	bf: number;
-	filet: number;
-	long_back: number;
-	long_body: number;
-	index: number;
-	parities: number;
-	images: string;
-	health_status: number;
-	breeding_type: number;
-	breed_status: number;
-	pregnancy_status: number;
-	overview_status: number;
-	point_review: number;
-	status: number;
-	price_code: number;
-
-	constructor() {
-		super();
-		this.id = '';
-		this.farm_id = '';
-		this.pig_code = '';
-		this.house_id = '';
-		this.round_id = '';
-		this.breed_id = '';
-		this.gender = null;
-		this.father_id = '';
-		this.mother_id = '';
-		this.birthday = '';
-		this.born_weight = null;
-		this.born_status = null;
-		// this.origin_id = '';
-		// this.origin_father = '';
-		// this.origin_mother = '';
-		this.origin_weight = null;
-		this.receive_weight = null;
-		this.health_point = null;
-		this.foot = null;
-		this.function_udder = null;
-		this.total_udder = null;
-		this.gential = null;
-		this.description = null;
-		this.fcr = null;
-		this.adg = null;
-		this.bf = null;
-		this.filet = null;
-		this.long_back = null;
-		this.long_body = null;
-		this.index = null;
-		this.parities = null;
-		this.images = '';
-		this.health_status = null;
-		this.breeding_type = null;
-		this.breed_status = null;
-		this.pregnancy_status = null;
-		this.overview_status = null;
-		this.point_review = null;
-		this.status = null;
-		this.price_code = null;
-	}
+	origin_weight: number = null;
+	receive_weight: number = null;
+	health_point: number = null;
+	foot: number = null;
+	function_udder: number = null;
+	total_udder: number = null;
+	gential: number = null;
+	description: string = '';
+	fcr: number = null;
+	adg: number = null;
+	bf: number = null;
+	filet: number = null;
+	long_back: number = null;
+	long_body: number = null;
+	index: number = null;
+	parities: number = null;
+	images: string = '';
+	health_status: number = null;
+	breeding_type: number = null;
+	breed_status: number = null;
+	pregnancy_status: number = null;
+	overview_status: number = null;
+	point_review: number = null;
+	status: number = null;
+	price_code: number = null;
 }
 
 class group extends base {
-	farm_id:string;
-	house_id:string;
-	group_code: string;
-	parent_id: string;
-	round_id: string;
-	father_id: string;
-	mother_id: string;
-	avg_birthday: any;
-	quantity: number;
-	heal_status: string;
-	overview_status: string;
-	origin_sum_weight: number;
-	origin_avg_weight: number;
-	status: string;
-	mark: string;
-	health_status: string;
-	description: string;
-
-	constructor() {
-		super();
-		this.id = '';
-		this.farm_id = '';
-		this.house_id = '';
-		this.group_code = '';
-		this.parent_id = '';
-		this.round_id = '';
-		this.father_id = '';
-		this.mother_id = '';
-		this.avg_birthday = '';
-		this.quantity = null;
-		this.heal_status = '';
-		this.overview_status = '';
-		this.origin_sum_weight = null;
-		this.origin_avg_weight = null;
-		this.status = '';
-		this.mark = '';
-		this.health_status = '';
-		this.description = '';
-	}
+	farm_id: string = '';
+	house_id: string = '';
+	group_code: string = '';
+	parent_id: string = '';
+	round_id: string = '';
+	father_id: string = '';
+	mother_id: string = '';
+	avg_birthday: any = '';
+	quantity: number = null;
+	heal_status: string = '';
+	overview_status: string = '';
+	origin_sum_weight: number = null;
+	origin_avg_weight: number = null;
+	status: string = '';
+	mark: string = '';
+	health_status: string = '';
+	description: string = '';
 }
 
 
 class farm extends base {
-	name: string;
-	type_id: number;
-	address: string;
-	area: number;
-	total_pig: number;
-	founding: any;
-	manager: string;
-	description: string;
-
-	constructor() {
-		super();
-		this.id = '';
-		this.name = '';
-		this.type_id = null;
-		this.address = '';
-		this.area = null;
-		this.total_pig = null;
-		this.founding = '';
-		this.manager = '';
-		this.description = '';
-	}
+	name: string = '';
+	type_id: number = null;
+	address: string = '';
+	area: number = null;
+	total_pig: number = null;
+	founding: any = '';
+	manager: string = '';
+	description: string = '';
 }
 
 class section extends base {
-	farm_id:string;
+	farm_id: string;
 	type_id: string;
 	name: string;
 	description: string;
 	manager: string;
 	founding: any;
-	constructor() {
-		super();
-	}
 }
 
 class house extends base {
-	farm_id:string;
-	section_id: string;
-	type_id: string;
-	house_code: string;
-	name: string;
-	description: string;
-	position: string;
-	manager: string;
-	founding: any;
-
-	constructor() {
-		super();
-		this.id = '';
-		this.farm_id = '';
-		this.section_id = '';
-		this.type_id = '';
-		this.house_code = '';
-		this.name = '';
-		this.description = '';
-		this.position = '';
-		this.manager = '';
-		this.founding = '';
-	}
+	farm_id: string = '';
+	section_id: string = '';
+	type_id: string = '';
+	house_code: string = '';
+	name: string = '';
+	description: string = '';
+	position: string = '';
+	manager: string = '';
+	founding: any = '';
 }
 
 class employee extends base {
-	regency_id: string;
-	farm_id: string;
-	name: string;
-	gender: number;
-	birthday: any;
-	address: string;
-	level: string;
-	email: string;
-	cmnd: string;
-	date_join: any;
-	date_off: any;
-	images: string;
-	status: string;
+	regency_id: string = '';
+	farm_id: string = '';
+	name: string = '';
+	gender: number = null;
+	birthday: any = '';
+	address: string = '';
+	level: string = '';
+	email: string = '';
+	cmnd: string = '';
+	date_join: any = '';
+	date_off: any = '';
+	images: string = '';
+	status: string = '';
 
-	constructor() {
-		super();
-		this.id = '';
-		this.regency_id = '';
-		this.farm_id = '';
-		this.name = '';
-		this.gender = null;
-		this.birthday = '';
-		this.address = '';
-		this.level = '';
-		this.email = '';
-		this.cmnd = '';
-		this.date_join = '';
-		this.date_off = '';
-		this.images = '';
-		this.status = '';
-	}
 }
 
 class warehouse extends base {
-	farm_id:string;
-	type_id: string;
-	unit_id: string;
-	unit_type: string;
-	name: string;
-	description: string;
-	manager: string;
-
-	constructor() {
-		super();
-		this.id = '';
-		this.farm_id = '';
-		this.type_id = '';
-		this.unit_id = '';
-		this.unit_type = '';
-		this.name = '';
-		this.description = '';
-		this.manager = '';
-	}
+	farm_id: string = '';
+	type_id: string= '';
+	unit_id: string= '';
+	unit_type: string= '';
+	name: string= '';
+	description: string= '';
+	manager: string= '';
 }
 
 
 
 
 class pregnancy_status extends base {
-	name: string;
-	description: string;
-	created_at: any;
-	updated_at: any;
-	constructor() {
-		super();
-	}
+	name: string = '';
+	description: string = '';
 }
 
 class breeds extends base {
@@ -331,11 +193,8 @@ class breeds extends base {
 }
 
 class breeding_type extends base {
-	name: string;
-	description: string;
-	constructor() {
-		super();
-	}
+	name: string = '';
+	description: string = '';
 }
 
 class health_status extends base {
@@ -518,3 +377,21 @@ class warehouse_type extends base {
 	}
 }
 
+
+
+class InputObject {
+	name: string;
+	type: "input-text" | "input-select" | "input-date";
+	label: string;
+	isRequire: boolean = false;
+	isNumber: boolean = false;
+	isMailFormat: boolean = false;
+	isMaxlength: boolean = false;
+	maxlength: number;
+	value: any;
+	message: { isRequire: string, isNumber: string, isMailFormat: string, isMaxlength: string };
+	placeholder: string;
+	data: any;
+}
+
+export { InputObject }

@@ -1,6 +1,10 @@
 import { Component, ViewChild, Renderer } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides, Events } from 'ionic-angular';
 import { EmployeesProvider } from '../../providers/employees/employees';
+import { SettingInputUtilComponent } from '../../components/setting-input-util/setting-input-util';
+import { PregnancyStatusRole } from '../../role-input/pregnancy_status';
+import { FormBuilder } from '@angular/forms';
+import { BreedingTypesRole } from '../../role-input/breeding_type';
 
 @IonicPage()
 @Component({
@@ -70,15 +74,21 @@ export class SettingsPage {
         attributes: ["name", "description"],
         mainAttribute: 'name',
         data: this.pregnancy_status,
-        create(e) {
-          if (e)
-            console.log('handle active');
+        create(navCtrl: NavController) {
+          let pregnancy_status_role = new PregnancyStatusRole();
+          navCtrl.push(SettingInputUtilComponent,
+            {
+              title: 'Nhập thông tin trạng thái mang thai',
+              InputObjects: pregnancy_status_role.inputRole,
+              object: pregnancy_status_role.pregnancy_status,
+            }
+          )
         },
         edit(e) {
           if (e) console.log(e);
         },
-        remove(e){
-          if(e) console.log(e);
+        remove(e) {
+          if (e) console.log(e);
         }
       },
       {
@@ -88,15 +98,21 @@ export class SettingsPage {
         attributes: ["name", "description"],
         mainAttribute: 'name',
         data: this.breeding_types,
-        create(e) {
-          if (e)
-            console.log('handle active');
+        create(navCtrl: NavController) {
+          let breeding_types_role = new BreedingTypesRole();
+          navCtrl.push(SettingInputUtilComponent,
+            {
+              title: 'Nhập thông tin trạng thái lên giống',
+              InputObjects: breeding_types_role.inputRole,
+              object: breeding_types_role.breeding_type
+            }
+          )
         },
         edit(e) {
           if (e) console.log(e);
         },
-        remove(e){
-          if(e) console.log(e);
+        remove(e) {
+          if (e) console.log(e);
         }
       },
       { title: 'Trạng thái sức khỏe', compt: '' },
@@ -142,4 +158,8 @@ export class SettingsPage {
     // element.nativeElement.scrollIntoView({ behavior: 'smooth' });
   }
 
+
+  create(item) {
+    item.create(this.navCtrl);
+  }
 }

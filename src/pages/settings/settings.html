@@ -102,7 +102,7 @@
         <ion-slide *ngFor="let setting of list_settings">
           <setting-util *ngIf="setting.data"
               [options]='setting' 
-              (clickAddButton)="setting.create($event)"
+              (clickAddButton)="create(setting)"
               (clickEditButton)="setting.edit($event)"
               (clickRemoveButton)="setting.remove($event)">
           </setting-util>
