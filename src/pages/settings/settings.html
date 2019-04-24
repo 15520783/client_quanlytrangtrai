@@ -1,35 +1,31 @@
 <ion-header>
   <header [title]="'Thiết lập'">
-
   </header>
-
 </ion-header>
 <ion-content>
   <ion-row>
-    <ion-col col-lg-3>
-      <ion-toolbar toolbar-transparent no-padding>
-        <ion-card mode='ios'>
-          <ion-card-header>Danh sách thiết lập</ion-card-header>
-          <ion-card-content class="ion-card-content-list-setting">
-            <ion-list>
-              <button *ngFor="let setting of list_settings" ion-item (tap)="scrollToView(setting.compt)">
-                <ion-row>
-                  <ion-col align-self-center col-2>
-                    <ion-icon name="app-item-setting" font28></ion-icon>
-                  </ion-col>
-                  <ion-col col-10>
-                    <h2 text-wrap>{{setting.title}}</h2>
-                  </ion-col>
-                </ion-row>
-              </button>
-            </ion-list>
-          </ion-card-content>
-        </ion-card>
-      </ion-toolbar>
+    <ion-col col-lg-3 col-md-4>
+      <ion-card mode='ios'>
+        <ion-card-header>Danh sách thiết lập</ion-card-header>
+        <ion-card-content class="ion-card-content-list-setting">
+          <ion-list>
+            <button *ngFor="let setting of list_settings;let idx= index" ion-item (tap)="scrollToView(idx)">
+              <ion-row>
+                <ion-col align-self-center col-2>
+                  <ion-icon name="app-item-setting" font28></ion-icon>
+                </ion-col>
+                <ion-col col-10>
+                  <h2 text-wrap>{{setting.title}}</h2>
+                </ion-col>
+              </ion-row>
+            </button>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
     </ion-col>
 
-    <ion-col col-lg-9>
-      <ion-scroll scrollY="true" style="height: 88vH">
+    <ion-col col-lg-9 col-md-8 no-padding>
+      <!-- <ion-scroll scrollY="true" style="height: 88vH">
         <ion-list style='padding-bottom: 35vH'>
           <span #pregnancyStatus>
             <ion-card mode='ios' style="margin-top: 0px!important">
@@ -97,7 +93,18 @@
             </ion-card>
           </span>
         </ion-list>
-      </ion-scroll>
+      </ion-scroll> -->
+
+
+      <ion-slides paper="true" #slider >
+        <ion-slide *ngFor="let setting of list_settings">
+          <setting-util *ngIf="setting.data"
+              [options]='setting' 
+              (clickAddButton)="setting.create($event)"
+              (clickEditButton)="setting.edit($event)">
+          </setting-util>
+        </ion-slide>
+      </ion-slides>
     </ion-col>
   </ion-row>
 </ion-content>

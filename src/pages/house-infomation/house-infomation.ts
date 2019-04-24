@@ -20,6 +20,7 @@ export class HouseInfomationPage {
   public title = ["Thông tin chi tiết","Quy mô khu"];
 
   public house: house = {
+    farm_id:'',
     description: "",
     founding: "2015-04-01T00:00:00.000Z",
     house_code: "01",
@@ -29,6 +30,8 @@ export class HouseInfomationPage {
     position: null,
     section_id: "1",
     type_id: "1",
+    created_at:'',
+    updated_at:''
   }
 
 

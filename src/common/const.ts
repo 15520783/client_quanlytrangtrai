@@ -11,8 +11,8 @@ const KEY = {
 const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const CONFIG = {
-    SERVER_API: 'http://192.168.1.223:3000',
-    DEFAULT_TIMEOUT: 3000,
+    SERVER_API: 'http://192.168.1.226:3000',
+    DEFAULT_TIMEOUT: 10000,
     LANGUAGE_DEFAULT:'vi'
 }
 

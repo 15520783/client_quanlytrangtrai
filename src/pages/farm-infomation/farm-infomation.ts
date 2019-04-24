@@ -36,7 +36,9 @@ export class FarmInfomationPage {
     description: '',
     manager: "1",
     total_pig: 5000,
-    type_id: 2
+    type_id: 2,
+    created_at:'',
+    updated_at:''
   };
   slideElements: any;
 

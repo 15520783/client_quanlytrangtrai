@@ -56,6 +56,7 @@ class users extends base {
 
 class pig extends base {
 	pig_code: string;
+	farm_id: string;
 	house_id: string;
 	round_id: string;
 	breed_id: string;
@@ -97,6 +98,7 @@ class pig extends base {
 	constructor() {
 		super();
 		this.id = '';
+		this.farm_id = '';
 		this.pig_code = '';
 		this.house_id = '';
 		this.round_id = '';
@@ -139,6 +141,8 @@ class pig extends base {
 }
 
 class group extends base {
+	farm_id:string;
+	house_id:string;
 	group_code: string;
 	parent_id: string;
 	round_id: string;
@@ -158,6 +162,8 @@ class group extends base {
 	constructor() {
 		super();
 		this.id = '';
+		this.farm_id = '';
+		this.house_id = '';
 		this.group_code = '';
 		this.parent_id = '';
 		this.round_id = '';
@@ -202,8 +208,8 @@ class farm extends base {
 }
 
 class section extends base {
+	farm_id:string;
 	type_id: string;
-	department_id: string;
 	name: string;
 	description: string;
 	manager: string;
@@ -214,6 +220,7 @@ class section extends base {
 }
 
 class house extends base {
+	farm_id:string;
 	section_id: string;
 	type_id: string;
 	house_code: string;
@@ -226,6 +233,7 @@ class house extends base {
 	constructor() {
 		super();
 		this.id = '';
+		this.farm_id = '';
 		this.section_id = '';
 		this.type_id = '';
 		this.house_code = '';
@@ -272,6 +280,7 @@ class employee extends base {
 }
 
 class warehouse extends base {
+	farm_id:string;
 	type_id: string;
 	unit_id: string;
 	unit_type: string;
@@ -282,6 +291,7 @@ class warehouse extends base {
 	constructor() {
 		super();
 		this.id = '';
+		this.farm_id = '';
 		this.type_id = '';
 		this.unit_id = '';
 		this.unit_type = '';

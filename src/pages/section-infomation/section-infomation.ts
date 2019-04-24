@@ -20,10 +20,12 @@ export class SectionInfomationPage {
     manager: "15",
     name: "Khu cách ly",
     type_id: "1",
-    department_id:""
+    created_at: '',
+    updated_at: '',
+    farm_id: ''
   }
 
-  public title = ["Thông tin chi tiết","Cơ cấu đàn nái"];
+  public title = ["Thông tin chi tiết", "Cơ cấu đàn nái"];
 
   constructor(
     public navCtrl: NavController,
@@ -37,11 +39,11 @@ export class SectionInfomationPage {
   }
 
   ngAfterViewInit() {
-    if(this.slider)
-    this.slider.autoHeight = true;
+    if (this.slider)
+      this.slider.autoHeight = true;
     console.log('ngAfterViewInit FarmInfomationPage');
   }
-  
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad SectionInfomationPage');
     let data = [
@@ -51,7 +53,7 @@ export class SectionInfomationPage {
         unit: 'con',
         sliced: false,
         selected: false,
-        drilldown:"Đực"
+        drilldown: "Đực"
       }, {
         name: 'Nái',
         y: 1000,
@@ -75,13 +77,13 @@ export class SectionInfomationPage {
         "id": "Nái",
         "data": [
           [
-            "Nhà 1",200
+            "Nhà 1", 200
           ],
           [
-            "Nhà 2",300
+            "Nhà 2", 300
           ],
           [
-            "Nhà 3",500
+            "Nhà 3", 500
           ]
         ]
       },
@@ -90,13 +92,13 @@ export class SectionInfomationPage {
         "id": "Đực",
         "data": [
           [
-            "Nhà 1",300
+            "Nhà 1", 300
           ],
           [
-            "Nhà 2",200
+            "Nhà 2", 200
           ],
           [
-            "Nhà 3",0
+            "Nhà 3", 0
           ]
         ]
       }
