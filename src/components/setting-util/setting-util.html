@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons left *ngIf="selectMode">
+      <button navPop ion-button icon-only>
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-searchbar col-md-7 mode="ios" animated="true" debounce="500" [placeholder]="placeholderSearch"
+      [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="setFilteredItems()">
+    </ion-searchbar>
+    <!-- <ion-buttons right>
+      <button ion-button font20 (tap)="showFilter=!showFilter">
+        <ion-icon name="funnel"></ion-icon>
+      </button>
+      <button ion-button font20 (tap)="closeMenu()" *ngIf="selectMode">
+        <ion-icon name="ios-arrow-forward"></ion-icon>
+      </button>
+    </ion-buttons> -->
+  </ion-toolbar>
+</ion-header>
+<ion-content #content class="setting-util-component">
+  <ion-item-divider custom-diviver sticky="true">
+    <ion-row>
+      <button no-margin ion-button item-end mode='ios' color="secondary" (tap)="add()">{{addButtonLabel}}</button>
+    </ion-row>
+  </ion-item-divider>
+  <ion-list>
+    <ion-item *ngFor="let item of visible_items" >
+      <!-- <ion-avatar item-start>
+        <img src="../../assets/imgs/default-user.png">
+      </ion-avatar> -->
+      <h2 *ngIf="mainAttribute">{{item[mainAttribute]}}</h2>
+      <ion-row>
+        <ion-col *ngFor="let attr of attributes">
+          <p><b>{{attr}}:</b> {{item[attr]}}</p>
+        </ion-col>
+      </ion-row>
+      <button ion-button item-end mode='ios' color="main" (tap)="edit(item)">Sửa</button>
+      <button ion-button item-end mode='ios' color="danger" (tap)="remove(item)">Xóa</button>
+    </ion-item>
+  </ion-list>
+  <ion-infinite-scroll (ionInfinite)="loadData($event)" *ngIf="page_Idx!==page_Total">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Đang tải dữ liệu...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

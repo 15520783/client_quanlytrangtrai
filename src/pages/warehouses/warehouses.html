@@ -2,12 +2,12 @@
   <header [title]="'Kho'">
     <ion-toolbar showWhen="core" toolbar-transparent>
       <ion-row>
-        <ion-col col-lg-2 col-md-3 col-sm-4 showWhen="core">
-          <ion-select style="background: transparent!important" [(ngModel)]="SelectedFarm" interface='popover'>
-            <ion-option *ngFor="let farm of farmProvider.farms" [value]="farm.id">{{farm.name}}</ion-option>
-          </ion-select>
+        <ion-col showWhen="core">
+          <input-select class="input-select" [value]="farms_select[0].value" [placeholder]="'Chọn trang trại'"
+            [(data)]="farms_select">
+          </input-select>
         </ion-col>
-        <ion-col>
+        <ion-col text-right>
           <button ion-button mode='ios' color="secondary" (tap)="addNewFarm()">Thêm kho</button>
         </ion-col>
       </ion-row>
@@ -24,10 +24,7 @@
   <ion-row>
     <ion-col col-lg-6 col-md-6 col-sm-12 col-xs-12>
       <ion-card mode='ios'>
-        <ion-card-header>
-          <ion-card-title>
-            <ion-icon style="vertical-align: sub" font28 vertical-center name="app-food"></ion-icon>Kho cám
-          </ion-card-title>
+        <ion-card-header>Kho cám
         </ion-card-header>
         <ion-card-content no-padding>
           <ion-scroll scrollY="true" class="scroll-custom">
@@ -55,10 +52,7 @@
     </ion-col>
     <ion-col col-lg-6 col-md-6 col-sm-12 col-xs-12>
       <ion-card mode='ios'>
-        <ion-card-header>
-          <ion-card-title>
-            <ion-icon style="vertical-align: sub" font28 vertical-center name="app-medicine"></ion-icon>Kho thuốc
-          </ion-card-title>
+        <ion-card-header>Kho thuốc
         </ion-card-header>
         <ion-card-content no-padding>
           <ion-scroll scrollY="true" class="scroll-custom">

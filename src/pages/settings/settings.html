@@ -7,9 +7,11 @@
     <ion-col col-lg-3 col-md-4>
       <ion-card mode='ios'>
         <ion-card-header>Danh sách thiết lập</ion-card-header>
-        <ion-card-content class="ion-card-content-list-setting">
+        <ion-card-content class="ion-card-content-list-setting" no-padding>
           <ion-list>
-            <button *ngFor="let setting of list_settings;let idx= index" ion-item (tap)="scrollToView(idx)">
+            <button   *ngFor="let setting of list_settings;let idx= index" 
+                      [attr.active]="idx === slider.realIndex? '':null"
+                      ion-item (tap)="scrollToView(idx)">
               <ion-row>
                 <ion-col align-self-center col-2>
                   <ion-icon name="app-item-setting" font28></ion-icon>
@@ -101,7 +103,8 @@
           <setting-util *ngIf="setting.data"
               [options]='setting' 
               (clickAddButton)="setting.create($event)"
-              (clickEditButton)="setting.edit($event)">
+              (clickEditButton)="setting.edit($event)"
+              (clickRemoveButton)="setting.remove($event)">
           </setting-util>
         </ion-slide>
       </ion-slides>

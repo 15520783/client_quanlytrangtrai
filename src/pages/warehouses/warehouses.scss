@@ -18,7 +18,14 @@ page-warehouses {
         padding:0px!important;
     }
 
-    ion-card-header{
-        padding:5px 10px!important;
+    // ion-card-header{
+    //     padding:5px 10px!important;
+    // }
+
+    .input-select{
+        ion-select{
+            font-size: 20px!important;
+            color:white!important;
+        }
     }
 }

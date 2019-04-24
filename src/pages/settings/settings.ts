@@ -76,13 +76,16 @@ export class SettingsPage {
         },
         edit(e) {
           if (e) console.log(e);
+        },
+        remove(e){
+          if(e) console.log(e);
         }
       },
       {
         title: 'Trạng thái lên giống',
         placeholderSearch: 'Tìm kiếm loại lên giống',
-        filter_default: ["name", "address", "email", "birthday"],
-        attributes: ["name", "address", "email", "birthday"],
+        filter_default: ["name", "description"],
+        attributes: ["name", "description"],
         mainAttribute: 'name',
         data: this.breeding_types,
         create(e) {
@@ -91,6 +94,9 @@ export class SettingsPage {
         },
         edit(e) {
           if (e) console.log(e);
+        },
+        remove(e){
+          if(e) console.log(e);
         }
       },
       { title: 'Trạng thái sức khỏe', compt: '' },

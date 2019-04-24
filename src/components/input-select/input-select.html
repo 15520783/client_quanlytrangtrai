@@ -1,4 +1,4 @@
-<span #input>
+<span #input *ngIf="validControl">
   <ion-item   (tap)="scrollTo()" 
               [attr.valid-mode]="(validControl.valid && active)?'':null"
               [attr.err-mode]="(!validControl.valid && active)?'':null">
@@ -26,4 +26,19 @@
       </p>
     </span>
   </expandable>
+</span>
+
+<span #input *ngIf="!validControl">
+    <ion-label  *ngIf="label">{{label}}</ion-label>
+    <ion-select 
+        [multiple] = "multiple"
+        [(ngModel)]="value" 
+        [selectOptions]="selectOptions"
+        [interface]="interface"
+        [okText]="okText"
+        [placeholder]="placeholder"
+        [cancelText]="cancelText"
+        (ionChange)="changeValue($event)">
+        <ion-option *ngFor="let item of data" [value]="item.value">{{item.name}}</ion-option>
+    </ion-select>
 </span>

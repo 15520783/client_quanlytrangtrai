@@ -1,6 +1,6 @@
 import { Component, ViewChild, Renderer } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides, Scroll, Content } from 'ionic-angular';
-import { warehouse } from '../../common/entity';
+import { warehouse, farm } from '../../common/entity';
 import { WarehousesProvider } from '../../providers/warehouses/warehouses';
 import { FarmsProvider } from '../../providers/farms/farms';
 import { WarehouseInformationPage } from '../warehouse-information/warehouse-information';
@@ -19,6 +19,7 @@ export class WarehousesPage {
   public type = "0";
   public food_warehouses: Array<warehouse> = []
   public medicine_warehouses: Array<warehouse> = [];
+  public farms_select:any = [];
 
   constructor(
     public navCtrl: NavController,
@@ -27,6 +28,12 @@ export class WarehousesPage {
     public farmProvider: FarmsProvider,
     public renderer: Renderer
   ) {
+    this.farmProvider.farms.forEach((e:farm)=>{
+      this.farms_select.push({
+        name:e.name,
+        value:e.id
+      })
+    })
     this.food_warehouses = this.warehouseProvider.getFoodWarehouse().slice(0,50);
     this.medicine_warehouses = this.warehouseProvider.getMedicineWarehouse().slice(0,50);
   }

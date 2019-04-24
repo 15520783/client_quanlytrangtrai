@@ -13,6 +13,11 @@ page-settings {
         max-height: 84vH!important;
         height: 84vH;
         overflow: auto;
+
+        [active]{
+            color:#005bea!important;
+            background:linear-gradient(to right,$themeColor1)!important;
+        }
     }
 
     .content-item-setting{
