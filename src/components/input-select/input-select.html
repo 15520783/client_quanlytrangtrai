@@ -38,7 +38,7 @@
         [okText]="okText"
         [placeholder]="placeholder"
         [cancelText]="cancelText"
-        (ionChange)="changeValue($event)">
+        (ionChange)="eventChangeValue($event)">
         <ion-option *ngFor="let item of data" [value]="item.value">{{item.name}}</ion-option>
     </ion-select>
 </span>

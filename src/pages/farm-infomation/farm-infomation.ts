@@ -27,19 +27,7 @@ export class FarmInfomationPage {
     "Cơ cấu đàn nộc",
     "Cơ cấu đàn heo con"];
 
-  public farm: farm = {
-    id: '1',
-    name: 'Vĩnh Tân 1',
-    address: 'Địa chỉ: Vĩnh Tân - Tân Uyên - Bình Dương',
-    founding: new Date(),
-    area: 12,
-    description: '',
-    manager: "1",
-    total_pig: 5000,
-    type_id: 2,
-    created_at:'',
-    updated_at:''
-  };
+  public farm: farm = new farm();
   slideElements: any;
 
   constructor(

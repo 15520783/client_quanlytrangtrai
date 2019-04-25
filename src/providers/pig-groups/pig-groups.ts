@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { group } from '../../common/entity';
 import { API, CONFIG, KEY } from '../../common/const';
@@ -21,7 +21,10 @@ export class PigGroupsProvider {
   }
 
   getAllGroups() {
-    return this.http.get(CONFIG.SERVER_API.concat(API.GET_ALL_GROUPS)).timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
+    let headers = new HttpHeaders().set('Authorization', CONFIG.ACCESS_KEY);
+    return this.http
+    .get(CONFIG.SERVER_API.concat(API.GET_ALL_GROUPS),{headers:headers})
+    .timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
   }
 
   sync() {

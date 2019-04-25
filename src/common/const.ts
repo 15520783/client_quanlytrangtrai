@@ -13,9 +13,11 @@ const KEY = {
 const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const CONFIG = {
-    SERVER_API: 'http://192.168.0.36:3000',
-    DEFAULT_TIMEOUT: 10000,
-    LANGUAGE_DEFAULT:'vi'
+    // SERVER_API: 'http://192.168.0.36:3000',
+    SERVER_API: 'https://quanlytrangtrai-uit.herokuapp.com',
+    DEFAULT_TIMEOUT: 20000,
+    LANGUAGE_DEFAULT:'vi',
+    ACCESS_KEY:''
 }
 
 const VARIABLE = {
@@ -29,13 +31,19 @@ const VARIABLE = {
 
 const API = {
     LOGIN:'https://quanlytrangtrai-uit.herokuapp.com/auth/login',
-    GET_ALL_FARMS: '/api/farms',
-    GET_ALL_SECTIONS: '/api/sections',
-    GET_ALL_HOUSES: '/api/houses',
+    // GET_ALL_FARMS: '/api/farms',
+    GET_ALL_FARMS:'https://quanlytrangtrai-uit.herokuapp.com/api/farms/list',
+    // GET_ALL_SECTIONS: '/api/sections',
+    GET_ALL_SECTIONS: '/api/sections/list',
+    // GET_ALL_HOUSES: '/api/houses',
+    GET_ALL_HOUSES: '/api/houses/list',
     GET_ALL_PIGS: '/api/pigs',
-    GET_ALL_GROUPS: '/api/groups',
-    GET_ALL_EMPLOYEES: '/api/employees',
-    GET_ALL_WAREHOUSES: '/api/warehouses',
+    // GET_ALL_GROUPS: '/api/groups',
+    GET_ALL_GROUPS: '/api/groups/list',
+    // GET_ALL_EMPLOYEES: '/api/employees',
+    GET_ALL_EMPLOYEES: 'https://quanlytrangtrai-uit.herokuapp.com/api/employees/list',
+    // GET_ALL_WAREHOUSES: '/api/warehouses',
+    GET_ALL_WAREHOUSES: '/api/warehouses/list'
 }
 
 export { KEY }

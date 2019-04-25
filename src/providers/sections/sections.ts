@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { section } from '../../common/entity';
 import { API, CONFIG, KEY } from '../../common/const';
@@ -21,7 +21,10 @@ export class SectionsProvider {
   }
 
   getSections() {
-    return this.http.get(CONFIG.SERVER_API.concat(API.GET_ALL_SECTIONS)).timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
+    let headers = new HttpHeaders().set('Authorization', CONFIG.ACCESS_KEY);
+    return this.http
+      .get(CONFIG.SERVER_API.concat(API.GET_ALL_SECTIONS), { headers: headers })
+      .timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
   }
 
 
@@ -59,5 +62,11 @@ export class SectionsProvider {
   publishUpdateEvent() {
     this.updated_flag = true;
     this.events.publish('updated:section');
+  }
+
+  getSectionByIdFarm(id: string) {
+    return this.sections.filter((section) => {
+      return section.farm.id === id ? true : false;
+    })
   }
 }

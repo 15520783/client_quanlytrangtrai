@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 
 
 @Component({
@@ -23,18 +23,18 @@ export class InputSelectComponent {
   @Input() title: string = '';
 
   @Input() selectOptions: any = [];
-
+  @Output() changeValue = new EventEmitter();
 
   constructor() {
     console.log('Hello InputSelectComponent Component');
   }
 
   ngAfterViewInit(): void {
-    console.log(this.value);
+    // console.log(this.value);
   }
 
-  changeValue(e) {
-    console.log(e);
+  eventChangeValue(e) {
+    this.changeValue.emit({valueId:this.value});
   }
 
   scrollTo() {

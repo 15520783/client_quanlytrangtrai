@@ -13,17 +13,7 @@ import { section } from '../../common/entity';
 export class SectionInfomationPage {
   @ViewChild('slider') slider: Slides;
 
-  public section: section = {
-    description: "",
-    founding: new Date("2015-04-01T00:00:00.000Z"),
-    id: "1",
-    manager: "15",
-    name: "Khu cách ly",
-    type_id: "1",
-    created_at: '',
-    updated_at: '',
-    farm_id: ''
-  }
+  public section: section = new section();
 
   public title = ["Thông tin chi tiết", "Cơ cấu đàn nái"];
 

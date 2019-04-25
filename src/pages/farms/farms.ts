@@ -72,6 +72,8 @@ export class FarmsPage {
               })
           });
         })
+    }else{
+      console.log(this.farmProvider.farms);
     }
   }
 

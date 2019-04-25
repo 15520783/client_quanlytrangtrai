@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CONFIG, API, KEY } from '../../common/const';
 import { employee } from '../../common/entity';
@@ -21,7 +21,10 @@ export class EmployeesProvider {
   }
 
   getAllEmployee() {
-    return this.http.get(CONFIG.SERVER_API.concat(API.GET_ALL_EMPLOYEES)).timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
+    let headers = new HttpHeaders().set('Authorization', CONFIG.ACCESS_KEY);
+    return this.http
+    .get(API.GET_ALL_EMPLOYEES,{headers:headers})
+    .timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
   }
 
   getEmployeeByID(id: string) {

@@ -72,7 +72,7 @@ export class InputSelectTargetComponent {
             if (group) {
               this.valueChange.emit(group);
               this.value = group.id;
-              this.value_visible = group.group_code;
+              this.value_visible = group.groupCode;
               this.validControl.setErrors(null);
             }
           })

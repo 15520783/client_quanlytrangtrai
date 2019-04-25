@@ -6,12 +6,6 @@ import { Platform, ModalController, NavController } from 'ionic-angular';
 import { FarmInfomationPage } from '../../pages/farm-infomation/farm-infomation';
 import { HighChartProvider } from '../../providers/high-chart/high-chart';
 
-/**
- * Generated class for the FarmComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
 @Component({
   selector: 'farm',
   templateUrl: 'farm.html'

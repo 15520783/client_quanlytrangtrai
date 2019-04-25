@@ -31,13 +31,13 @@ export class HouseInputPage {
       this.house = this.navParams.data.house;
     }
     if(this.navParams.data.section){
-      this.house.section_id = this.navParams.data.section.id;
+      this.house.section.id = this.navParams.data.section.id;
     }
 
     this.credentialsForm = this.formBuilder.group({
-      section_id: [this.house.section_id, Validators.compose([Validators.required, Validators.maxLength(1000)])],
-      type_id: [this.house.type_id, Validators.compose([Validators.required])],
-      house_code: [this.house.house_code, Validators.compose([Validators.required, Validators.maxLength(1000)])],
+      section_id: [this.house.section.id, Validators.compose([Validators.required, Validators.maxLength(1000)])],
+      type_id: [this.house.typeId, Validators.compose([Validators.required])],
+      house_code: [this.house.houseCode, Validators.compose([Validators.required, Validators.maxLength(1000)])],
       name: [this.house.name, Validators.compose([Validators.required,Validators.maxLength(1000)])],
       position:[this.house.position, Validators.compose([Validators.required,Validators.maxLength(1000)])],
       founding:[this.house.founding, Validators.compose([Validators.required])],

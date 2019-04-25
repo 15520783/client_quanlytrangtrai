@@ -57,17 +57,16 @@ export class EmployeeInputPage {
     });
 
     this.credentialsForm = this.formBuilder.group({
-      regency_id: [this.employee.regency_id, Validators.compose([Validators.required])],
-      farm_id: [this.employee.farm_id, Validators.compose([Validators.required])],
+      regency_id: [this.employee.regency.id, Validators.compose([Validators.required])],
+      farm_id: [this.employee.farm.id, Validators.compose([Validators.required])],
       name: [this.employee.name, Validators.compose([Validators.required, Validators.maxLength(1000)])],
       gender: [this.employee.gender, Validators.compose([Validators.required])],
       birthday: [this.employee.birthday, Validators.compose([Validators.required])],
       address: [this.employee.address, Validators.compose([Validators.required, Validators.maxLength(1000)])],
-      level: [this.employee.level, Validators.compose([Validators.required, Validators.maxLength(1000)])],
       email: [this.employee.email, Validators.compose([Validators.required, Validators.maxLength(1000), ValidateEmail])],
       cmnd: [this.employee.cmnd, Validators.compose([Validators.required, Validators.maxLength(1000)])],
-      date_join: [this.employee.date_join, Validators.compose([Validators.required])],
-      date_off: [this.employee.date_off, Validators.compose([])],
+      date_join: [this.employee.dateJoin, Validators.compose([Validators.required])],
+      date_off: [this.employee.dateOff, Validators.compose([])],
       status: [this.employee.status, Validators.compose([Validators.required])]
     });
   }

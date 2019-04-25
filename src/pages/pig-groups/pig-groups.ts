@@ -28,7 +28,8 @@ export class PigGroupsPage {
   public page_Total: number = 0;
   public rows: Array<group> = [];
   public cols: any = [];
-  public filter_default: any = ["group_code", "avg_birthday", "quantity", "health_status", "origin_avg_weight", "origin_sum_weight"];
+  // public filter_default: any = ["groupCode", "avgBirthday", "quantity", "health_status", "origin_avg_weight", "origin_sum_weight"];
+  public filter_default: any = ["groupCode", "avgBirthday", "quantity", "originAvgWeight", "originSumWeight"];
   protected visible_items: Array<group> = [];
   protected houses: Array<house> = [];
 
@@ -149,10 +150,9 @@ export class PigGroupsPage {
     this.filterProvider.searchWithInclude.house_id = this.houseFilter;
     this.filterProvider.searchText = searchItem;
     this.filterProvider.searchWithText = this.filter_default;
-
     this.filterProvider.searchWithRange = {
-      origin_sum_weight : { min: this.origin_sum_weight.lower, max: this.origin_sum_weight.upper },
-      origin_avg_weight : { min: this.origin_avg_weight.lower, max: this.origin_avg_weight.upper }
+      originSumWeight : { min: this.origin_sum_weight.lower, max: this.origin_sum_weight.upper },
+      originAvgWeight : { min: this.origin_avg_weight.lower, max: this.origin_avg_weight.upper }
     }
     return this.filterProvider.filter();
   }

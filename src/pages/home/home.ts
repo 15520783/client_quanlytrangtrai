@@ -75,7 +75,7 @@ export class HomePage {
                     element.active = false;
                   });
                   this.active = true;
-                  nav.setRoot(component,data);
+                  nav.setRoot(component,{farm:data});
                 }
               }
             ]

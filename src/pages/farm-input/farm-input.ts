@@ -35,7 +35,7 @@ export class FarmInputPage {
     this.credentialsForm = this.formBuilder.group({
       id: this.farm.id,
       name: [this.farm.name, Validators.compose([Validators.required, Validators.maxLength(1000)])],
-      type_id: [this.farm.type_id, Validators.compose([Validators.required])],
+      type_id: [this.farm.type.id, Validators.compose([Validators.required])],
       address: [this.farm.address, Validators.compose([Validators.required, Validators.maxLength(1000)])],
       area: [this.farm.area, Validators.compose([Validators.required])],
       founding:[this.farm.founding, Validators.compose([Validators.required])],

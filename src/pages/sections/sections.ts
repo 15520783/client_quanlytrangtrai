@@ -8,13 +8,7 @@ import { SectionInfomationPage } from '../section-infomation/section-infomation'
 import { HouseInfomationPage } from '../house-infomation/house-infomation';
 import { HouseInputPage } from '../house-input/house-input';
 import { FarmsProvider } from '../../providers/farms/farms';
-
-/**
- * Generated class for the SectionsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { HousesProvider } from '../../providers/houses/houses';
 
 @IonicPage()
 @Component({
@@ -23,15 +17,11 @@ import { FarmsProvider } from '../../providers/farms/farms';
 })
 export class SectionsPage {
 
-  public sections: Array<section> = this.sectionProvider.sections;
+  public sections: Array<section> = [];
 
-  items = [
-    { idx: 1, expand: false },
-    { idx: 2, expand: false },
-    { idx: 3, expand: false },
-    { idx: 4, expand: false }
-  ]
+  public houses: Array<house> = [];
   
+  public farm_init:number;
   public farms_select: any = [];
 
   constructor(
@@ -41,16 +31,27 @@ export class SectionsPage {
     public loadingCtrl: LoadingController,
     public modalCtrl: ModalController,
     public util : Utils,
-    public farmProvider : FarmsProvider
+    public farmProvider : FarmsProvider,
+    public houseProvider: HousesProvider
   ) {
+    this.init();
+  }
+
+  init(){
+    this.sections = this.sectionProvider.getSectionByIdFarm(this.navParams.data.farm.id);
+    this.sections.forEach((section:any)=>{
+      section.houses = this.houseProvider.getHouseByIdSection(section.id);
+    })
+    
     this.farmProvider.farms.forEach((e:farm)=>{
       this.farms_select.push({
         name:e.name,
         value:e.id
       })
     })
-    console.log(this.navParams.data);
   }
+
+  
 
   ionViewWillEnter() {
     console.log('ionViewWillEnter SectionsPage');
@@ -59,6 +60,14 @@ export class SectionsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SectionsPage');
+    this.farm_init = this.navParams.data.farm.id;
+  }
+
+  changeFarm(res){
+    this.sections = this.sectionProvider.getSectionByIdFarm(res.valueId);
+    this.sections.forEach((section:any)=>{
+      section.houses = this.houseProvider.getHouseByIdSection(section.id);
+    })
   }
 
   activeItem(section) {

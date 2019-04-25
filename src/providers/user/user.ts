@@ -14,26 +14,12 @@ export class UserProvider {
   }
 
   login(param){
-    // const httpOptions = {
-    //   headers: new HttpHeaders({
-    //     'Content-Type':  'application/json',
-    //     'Access-Control-Allow-Origin': '*',
-    //     'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
-    //     'Access-Control-Allow-Headers': 'Content-Type'
-    //   })
-    // };
-
-    let headers = new HttpHeaders().set('Content-Type', 'application/json');
-    headers = headers.set('Access-Control-Allow-Origin', '*');
-    headers = headers.set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    headers = headers.set('Access-Control-Allow-Headers', 'Content-Type');
 
     let body = {
       username:param.username,
       password:param.password
     }
-    console.log(body);
-    return this.http.post(API.LOGIN,body,{headers:headers}).timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
+    return this.http.post(API.LOGIN,body).timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
   }
 
 }

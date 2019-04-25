@@ -15,12 +15,12 @@
     <ion-toolbar showWhen="core" toolbar-transparent>
       <ion-row>
         <ion-col showWhen="core">
-          <input-select class="input-select" [value]="farms_select[0].value" [placeholder]="'Chọn trang trại'"
-            [(data)]="farms_select">
+          <input-select class="input-select" [value]="farm_init" [placeholder]="'Chọn trang trại'"
+            [(data)]="farms_select" (changeValue)="changeFarm($event)">
           </input-select>
         </ion-col>
         <ion-col text-right>
-          <button ion-button mode='ios' color="secondary" (tap)="addNewFarm()">Thêm kho</button>
+          <button ion-button mode='ios' color="secondary" (tap)="addNewFarm()">Thêm khu</button>
         </ion-col>
       </ion-row>
     </ion-toolbar>
@@ -55,9 +55,25 @@
                     nhà</button>
                 </ion-row>
               </ion-list-header>
-              <button item-end ion-item *ngFor="let item of items" (tap)="viewHouse(item)">
-                <ion-icon name="ios-home" style="vertical-align: bottom" font28></ion-icon>
-                Nhà {{item.idx}}
+              <button item-end ion-item *ngFor="let house of section.houses" (tap)="viewHouse(item)">
+                <ion-avatar item-start>
+                  <ion-icon name="ios-home" style="vertical-align: bottom" font28></ion-icon>
+                </ion-avatar>
+                <h2>{{house.name}}</h2>
+                <ion-row>
+                  <ion-col>
+                    <p><b>Loại nhà:</b> {{house.typeId}}</p>
+                  </ion-col>
+                  <ion-col>
+                    <p><b>Số nhà:</b> {{house.houseCode}}</p>
+                  </ion-col>
+                  <ion-col>
+                    <p><b>Mô tả:</b> {{house.description}}</p>
+                  </ion-col>
+                  <ion-col>
+                    <p><b>Ngày thành lập:</b> {{house.founding|date:'dd/MM/yyyy'}}</p>
+                  </ion-col>
+                </ion-row>
               </button>
               <ion-toolbar showWhen="ios,android" toolbar-transparent>
                 <ion-buttons item-start>

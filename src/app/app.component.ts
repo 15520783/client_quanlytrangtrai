@@ -14,7 +14,7 @@ import { EmployeesProvider } from '../providers/employees/employees';
 import { HousesProvider } from '../providers/houses/houses';
 import { WarehousesProvider } from '../providers/warehouses/warehouses';
 import { Utils } from '../common/utils';
-import { KEY } from '../common/const';
+import { KEY, CONFIG } from '../common/const';
 
 
 @Component({
@@ -114,29 +114,40 @@ export class MyApp {
             this.util.getKey(KEY.TOKENTYPE)
               .then((tokenType) => {
                 if (tokenType) {
+                  CONFIG.ACCESS_KEY = tokenType.concat(' ').concat(accessToken);
                   this.splash = true;
                   this.intinial_sync();
                   this.subscribeEventUpdate();
                 }
-                else{
+                else {
                   this.rootPage = LoginPage;
                 }
               })
-          }else{
+          } else {
             this.rootPage = LoginPage;
           }
         })
 
-
-
-      // this.intinial_sync();
-      // this.subscribeEventUpdate();
-
-
       this.events.subscribe('app_begin', () => {
-        this.splash = true;
-        this.intinial_sync();
-        this.subscribeEventUpdate();
+        this.util.getKey(KEY.ACCESSTOKEN)
+          .then((accessToken) => {
+            if (accessToken) {
+              this.util.getKey(KEY.TOKENTYPE)
+                .then((tokenType) => {
+                  if (tokenType) {
+                    CONFIG.ACCESS_KEY = tokenType.concat(' ').concat(accessToken);
+                    this.splash = true;
+                    this.intinial_sync();
+                    this.subscribeEventUpdate();
+                  }
+                  else {
+                    this.rootPage = LoginPage;
+                  }
+                })
+            } else {
+              this.rootPage = LoginPage;
+            }
+          })
       })
 
       this.events.subscribe('app_logout', () => {

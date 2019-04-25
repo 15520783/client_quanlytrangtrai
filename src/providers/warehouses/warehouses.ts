@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { warehouse } from '../../common/entity';
 import { CONFIG, KEY } from '../../common/const';
@@ -21,7 +21,10 @@ export class WarehousesProvider {
   }
 
   public getWarehouses() {
-    return this.http.get(CONFIG.SERVER_API.concat(API.GET_ALL_WAREHOUSES)).timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
+    let headers = new HttpHeaders().set('Authorization', CONFIG.ACCESS_KEY);
+    return this.http
+    .get(CONFIG.SERVER_API.concat(API.GET_ALL_WAREHOUSES),{headers:headers})
+    .timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
   }
 
   sync() {
@@ -46,7 +49,6 @@ export class WarehousesProvider {
         this.util.getKey(KEY.WAREHOUSES)
           .then((data: Array<warehouse>) => {
             this.warehouses = data;
-            console.log(data);
             this.publishUpdateEvent();
           })
           .catch((err) => {
@@ -64,13 +66,13 @@ export class WarehousesProvider {
 
   getFoodWarehouse() {
     return this.warehouses.filter((warehouse: warehouse) => {
-      return warehouse.type_id === "1" ? true : false;
+      return warehouse.type.id == "1" ? true : false;
     })
   }
 
   getMedicineWarehouse() {
     return this.warehouses.filter((warehouse: warehouse) => {
-      return warehouse.type_id === "2" ? true : false;
+      return warehouse.type.id == "2" ? true : false;
     })
   }
 }

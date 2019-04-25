@@ -1,18 +1,18 @@
 <ion-header>
   <header [title]="'Quản lý trang trại'">
     <ion-toolbar showWhen="core">
-        <button ion-button mode='ios' color="secondary" (tap)="addNewFarm()">Thêm trang trại</button>
+      <button ion-button mode='ios' color="secondary" (tap)="addNewFarm()">Thêm trang trại</button>
     </ion-toolbar>
   </header>
 
 </ion-header>
 
-<ion-content center no-padding showWhen="core" >
-    <ion-row *ngIf="farms">
-      <ion-col col-lg-4 col-md-6 col-sm-12 *ngFor="let farm of farms">
-        <farm [farm]="farm"></farm>
-      </ion-col>
-    </ion-row>
+<ion-content center no-padding showWhen="core">
+  <ion-row *ngIf="farms">
+    <ion-col col-lg-4 col-md-6 col-sm-12 *ngFor="let farm of farms">
+      <farm [farm]="farm"></farm>
+    </ion-col>
+  </ion-row>
 </ion-content>
 
 <ion-content #content showWhen="ios,android">
@@ -25,10 +25,7 @@
       <h2>{{farm.name}}</h2>
       <ion-row>
         <ion-col>
-          <p><b>Tổng số heo:</b> {{farm.total_pig}}</p>
-        </ion-col>
-        <ion-col text-wrap>
-          <p><b>Địa chỉ:</b> {{farm.address}}</p>
+          <p><b>Tổng số heo:</b> {{farm.totalPig}}</p>
         </ion-col>
         <ion-col>
           <p><b>Diện tích</b>: {{farm.area}}</p>
@@ -36,18 +33,21 @@
         <ion-col>
           <p><b>Ngày thành lập:</b> {{farm.founding|date:'dd/MM/yyyy'}}</p>
         </ion-col>
+        <ion-col text-wrap col-12>
+          <p><b>Địa chỉ:</b> {{farm.address}}</p>
+        </ion-col>
       </ion-row>
     </button>
   </ion-list>
   <ion-fab bottom right showWhen="android,windows,ios">
-      <button ion-fab>
-        <ion-icon name="ios-arrow-up"></ion-icon>
+    <button ion-fab>
+      <ion-icon name="ios-arrow-up"></ion-icon>
+    </button>
+    <ion-fab-list side="top" style="right:0px">
+      <button data-balloon-visible data-balloon-length="medium" data-balloon="Thêm trang trại" data-balloon-pos="left"
+        ion-fab color="main" (tap)="addNewFarm()">
+        <ion-icon name="add"></ion-icon>
       </button>
-      <ion-fab-list side="top" style="right:0px" >
-        <button data-balloon-visible data-balloon-length="medium" data-balloon="Thêm trang trại" data-balloon-pos="left"
-          ion-fab color="main" (tap)="addNewFarm()">
-          <ion-icon name="add"></ion-icon>
-        </button>
-      </ion-fab-list>
-    </ion-fab>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>

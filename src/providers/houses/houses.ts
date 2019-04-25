@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API, CONFIG, KEY } from '../../common/const';
 import 'rxjs/add/operator/timeout';
@@ -22,7 +22,16 @@ export class HousesProvider {
   }
 
   getAllHouses() {
-    return this.http.get(CONFIG.SERVER_API.concat(API.GET_ALL_HOUSES)).timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
+    let headers = new HttpHeaders().set('Authorization', CONFIG.ACCESS_KEY);
+    return this.http
+    .get(CONFIG.SERVER_API.concat(API.GET_ALL_HOUSES),{headers:headers})
+    .timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
+  }
+
+  getHouseByIdSection(id:string){
+    return this.houses.filter((house)=>{
+      return house.section.id === id? true:false;
+    })
   }
 
   sync() {
@@ -43,7 +52,7 @@ export class HousesProvider {
       })
       .catch((err) => {
         this.util.showToast('Danh sách nhà chưa được cập nhật. Vui lòng kiểm tra kết nối.');
-        console.log('err_farm_provider', err);
+        console.log('err_house_provider', err);
         this.util.getKey(KEY.HOUSES)
           .then((data: Array<house>) => {
             this.houses = data;
@@ -52,7 +61,7 @@ export class HousesProvider {
           .catch((err) => {
             this.houses = [];
             this.publishUpdateEvent();
-            console.log('err_get_storage_farm', err);
+            console.log('err_get_storage_house', err);
           })
       })
   }

@@ -32,9 +32,9 @@ export class PigGroupInformationPage {
     this.util.showLoading('Đang lấy danh sách heo thuộc nhóm');
     this.util.getKey(KEY.PIGS).then((data: Array<pig>) => {
       this.pigs = data.filter((value) => {
-        return value.round_id === this.group.round_id;
+        return value.round_id == this.group.round.id;
       })
-    }).then(()=>{this.util.closeLoading();})
+    }).then(() => { this.util.closeLoading(); })
   }
 
   ionViewDidLoad() {
@@ -47,7 +47,7 @@ export class PigGroupInformationPage {
   }
 
   ngAfterViewInit() {
-    if (this.slider){
+    if (this.slider) {
       this.slider.autoHeight = true;
     }
     console.log('ngAfterViewInit FarmInfomationPage');
@@ -63,7 +63,7 @@ export class PigGroupInformationPage {
     modal.present();
   }
 
-  editGroup(){
-   this.navCtrl.push(PigGroupInputPage,{group:this.group}); 
+  editGroup() {
+    this.navCtrl.push(PigGroupInputPage, { group: this.group });
   }
 }

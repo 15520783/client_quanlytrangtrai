@@ -27,12 +27,14 @@ export { permissions }
 export { regencies }
 export { mating_status }
 export { warehouse_type }
+export { round }
 
 
 class base {
-	id: string;
-	created_at: any = '';
-	updated_at: any = '';
+	id: string = '';
+	createdAt: any = '';
+	updatedAt: any = '';
+	delFlag: boolean = false;
 }
 
 class user extends base {
@@ -91,49 +93,47 @@ class pig extends base {
 class group extends base {
 	farm_id: string = '';
 	house_id: string = '';
-	group_code: string = '';
-	parent_id: string = '';
-	round_id: string = '';
-	father_id: string = '';
-	mother_id: string = '';
-	avg_birthday: any = '';
+	groupCode: string = '';
+	parentId: string = '';
+	round: round = new round();
+	// father_id: string = '';
+	// mother_id: string = '';
+	avgBirthday: any = '';
 	quantity: number = null;
-	heal_status: string = '';
-	overview_status: string = '';
-	origin_sum_weight: number = null;
-	origin_avg_weight: number = null;
+	overviewStatus: string = '';
+	originSumWeight: number = null;
+	originAvgWeight: number = null;
 	status: string = '';
-	mark: string = '';
-	health_status: string = '';
+	mark: mark_types = new mark_types();
+	healthStatus: health_status = new health_status();
 	description: string = '';
 }
 
 
 class farm extends base {
 	name: string = '';
-	type_id: number = null;
+	type: farm_type = new farm_type();
 	address: string = '';
 	area: number = null;
-	total_pig: number = null;
+	totalPig: number = null;
 	founding: any = '';
 	manager: string = '';
 	description: string = '';
 }
 
 class section extends base {
-	farm_id: string;
-	type_id: string;
-	name: string;
-	description: string;
-	manager: string;
-	founding: any;
+	farm: farm = new farm();
+	typeId: string = '';
+	name: string = '';
+	description: string = '';
+	manager: string = '';
+	founding: any = '';
 }
 
 class house extends base {
-	farm_id: string = '';
-	section_id: string = '';
-	type_id: string = '';
-	house_code: string = '';
+	section: section = new section();
+	typeId: string = '';
+	houseCode: string = '';
 	name: string = '';
 	description: string = '';
 	position: string = '';
@@ -142,30 +142,30 @@ class house extends base {
 }
 
 class employee extends base {
-	regency_id: string = '';
-	farm_id: string = '';
+	regency: regencies = new regencies();
+	farm: farm = new farm();
 	name: string = '';
 	gender: number = null;
 	birthday: any = '';
 	address: string = '';
-	level: string = '';
 	email: string = '';
 	cmnd: string = '';
-	date_join: any = '';
-	date_off: any = '';
+	// level: string = '';
+	dateJoin: any = '';
+	dateOff: any = '';
 	images: string = '';
 	status: string = '';
-
 }
 
 class warehouse extends base {
 	farm_id: string = '';
-	type_id: string= '';
-	unit_id: string= '';
-	unit_type: string= '';
-	name: string= '';
-	description: string= '';
-	manager: string= '';
+	type: farm_type = new farm_type();
+	groupId:string = '';
+	unitId: string = '';
+	unitType: string = '';
+	name: string = '';
+	description: string = '';
+	manager: string = '';
 }
 
 
@@ -198,10 +198,8 @@ class breeding_type extends base {
 }
 
 class health_status extends base {
-	name: string;
-	description: string;
-	created_at: any;
-	updated_at: any;
+	name: string = '';
+	description: string ='';
 	constructor() {
 		super();
 	}
@@ -223,10 +221,9 @@ class diseases extends base {
 }
 
 class farm_type extends base {
-	name: string;
-	description: string;
-	created_at: any;
-	updated_at: any;
+	name: string = '';
+	description: string = '';
+
 	constructor() {
 		super();
 	}
@@ -333,8 +330,8 @@ class issues extends base {
 }
 
 class mark_types extends base {
-	name: string;
-	description: string;
+	name: string = '';
+	description: string = '';
 	constructor() {
 		super();
 	}
@@ -354,8 +351,8 @@ class permissions extends base {
 }
 
 class regencies extends base {
-	name: string;
-	description: string;
+	name: string = '';
+	description: string = '';
 	constructor() {
 		super();
 	}
@@ -370,11 +367,18 @@ class mating_status extends base {
 }
 
 class warehouse_type extends base {
-	name: string;
-	description: string;
+	name: string = '';
+	description: string = '';
 	constructor() {
 		super();
 	}
+}
+
+class round extends base {
+	from: any = '';
+	to: any = '';
+	numberOfPig: number = null;
+	birthId: string = '';
 }
 
 
