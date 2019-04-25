@@ -85,6 +85,10 @@ export class Utils {
     return this.storage.set(key, data);
   }
 
+  removeKey(key:string){
+    return this.storage.remove(key);
+  }
+
   openModal(page, data) {
     this.modal = this.modalCtrl.create(page, data, { cssClass: 'ion-modal' });
     return this.modal.present();

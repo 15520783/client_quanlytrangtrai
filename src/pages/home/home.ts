@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, Nav, LoadingController } from 'ionic-angular';
+import { NavController, Nav, LoadingController, Events } from 'ionic-angular';
 import { FarmsPage } from '../farms/farms';
 import { SectionsPage } from '../sections/sections';
 import { PigsPage } from '../pigs/pigs';
@@ -12,6 +12,8 @@ import { EmployeePage } from '../employee/employee';
 import { DatePlanPage } from '../date-plan/date-plan';
 import { WarehousesPage } from '../warehouses/warehouses';
 import { SettingsPage } from '../settings/settings';
+import { KEY } from '../../common/const';
+import { LoginPage } from '../login/login';
 
 @Component({
   selector: 'page-home',
@@ -30,7 +32,8 @@ export class HomePage {
     public loadingCtrl: LoadingController,
     public util: Utils,
     public farmProvider: FarmsProvider,
-    public sectionProvider: SectionsProvider
+    public sectionProvider: SectionsProvider,
+    public events: Events
   ) {
     
 
@@ -110,5 +113,16 @@ export class HomePage {
     }
   }
 
-  
+  logOut(){
+    this.util.removeKey(KEY.ACCESSTOKEN)
+    .then(()=>{
+      this.util.removeKey(KEY.TOKENTYPE)
+      .then(()=>{
+        this.events.publish('app_logout');
+      })
+    })
+    .catch((err:any)=>{
+      console.log(err);
+    })
+  }
 }

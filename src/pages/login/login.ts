@@ -70,17 +70,13 @@ export class LoginPage {
         username: this.credentialsForm.get('username').value,
         password: this.credentialsForm.get('password').value
       }
-      console.log(params);
       this.userProvider.login(params) 
         .then((res: any) => {
           if (res) {
             this.util.setKey(KEY.ACCESSTOKEN, res.accessToken)
               .then(() => {
                 this.util.setKey(KEY.TOKENTYPE, res.tokenType).then(() => {
-                  this.wait = false;
-                  setTimeout(() => {
-                    this.events.publish('app_begin');
-                  }, 1000);
+                  this.events.publish('app_begin');
                 })
               })
               .catch((err: Error) => {

@@ -33,7 +33,7 @@ export class UserProvider {
       password:param.password
     }
     console.log(body);
-    return this.http.post(API.LOGIN,body,{headers:headers}).toPromise();
+    return this.http.post(API.LOGIN,body,{headers:headers}).timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
   }
 
 }

@@ -6,16 +6,15 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HeaderColor } from '@ionic-native/header-color';
 import { FarmsProvider } from '../providers/farms/farms';
 import { LoginPage } from '../pages/login/login';
-import { EmployeeInformationPage } from '../pages/employee-information/employee-information';
 import { HomePage } from '../pages/home/home';
-import { TestInputPage } from '../pages/test-input/test-input';
-import { FarmInputPage } from '../pages/farm-input/farm-input';
 import { PigsProvider } from '../providers/pigs/pigs';
 import { PigGroupsProvider } from '../providers/pig-groups/pig-groups';
 import { SectionsProvider } from '../providers/sections/sections';
 import { EmployeesProvider } from '../providers/employees/employees';
 import { HousesProvider } from '../providers/houses/houses';
 import { WarehousesProvider } from '../providers/warehouses/warehouses';
+import { Utils } from '../common/utils';
+import { KEY } from '../common/const';
 
 
 @Component({
@@ -24,7 +23,7 @@ import { WarehousesProvider } from '../providers/warehouses/warehouses';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = LoginPage;
+  rootPage: any;
   splash: boolean = false;
   public counter = 0;
   dismissing: any;
@@ -56,7 +55,8 @@ export class MyApp {
     public sectionProvider: SectionsProvider,
     public employeeProvider: EmployeesProvider,
     public houseProvider: HousesProvider,
-    public warehouseProvider: WarehousesProvider
+    public warehouseProvider: WarehousesProvider,
+    public util: Utils
   ) {
     this.initializeApp();
   }
@@ -108,16 +108,39 @@ export class MyApp {
         });
       }
 
+      this.util.getKey(KEY.ACCESSTOKEN)
+        .then((accessToken) => {
+          if (accessToken) {
+            this.util.getKey(KEY.TOKENTYPE)
+              .then((tokenType) => {
+                if (tokenType) {
+                  this.splash = true;
+                  this.intinial_sync();
+                  this.subscribeEventUpdate();
+                }
+                else{
+                  this.rootPage = LoginPage;
+                }
+              })
+          }else{
+            this.rootPage = LoginPage;
+          }
+        })
+
 
 
       // this.intinial_sync();
       // this.subscribeEventUpdate();
 
 
-      this.events.subscribe('app_begin',()=>{
-        this.splash=true;
+      this.events.subscribe('app_begin', () => {
+        this.splash = true;
         this.intinial_sync();
         this.subscribeEventUpdate();
+      })
+
+      this.events.subscribe('app_logout', () => {
+        this.rootPage = LoginPage;
       })
     })
   }
