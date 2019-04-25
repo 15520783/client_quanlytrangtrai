@@ -130,7 +130,7 @@ export class SectionsPage {
 
   viewHouse(house:house){
     // this.util.openModal(HouseInfomationPage,house);
-    this.navCtrl.push(HouseInfomationPage,house);
+    this.navCtrl.push(HouseInfomationPage,{house:house});
   }
 
 

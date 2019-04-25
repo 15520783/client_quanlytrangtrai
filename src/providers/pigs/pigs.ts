@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API, CONFIG, KEY } from '../../common/const';
 import { pig } from '../../common/entity';
@@ -24,7 +24,10 @@ export class PigsProvider {
   }
 
   getPigs() {
-    return this.http.get(CONFIG.SERVER_API.concat(API.GET_ALL_PIGS)).timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
+    let headers = new HttpHeaders().set('Authorization', CONFIG.ACCESS_KEY);
+    return this.http
+    .get(CONFIG.SERVER_API.concat(API.GET_ALL_PIGS),{headers:headers})
+    .timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
   }
 
   getPigByID(id: string) {
@@ -115,7 +118,7 @@ export class PigsProvider {
 
       series: <any>[{
         name: 'Chỉ số heo',
-        data: [pig.index / 200 * 5, pig.origin_weight / 300 * 5, pig.foot / 6 * 5, pig.total_udder / 30 * 5, pig.bf / 16 * 5, pig.adg / 3000 * 5],
+        data: [pig.index / 200 * 5, pig.originWeight / 300 * 5, pig.footTypeId / 6 * 5, pig.totalUdder / 30 * 5, pig.bf / 16 * 5, pig.adg / 3000 * 5],
         pointPlacement: 'off',
       }]
 

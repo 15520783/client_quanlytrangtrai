@@ -4,6 +4,7 @@ import { SectionsProvider } from '../../providers/sections/sections';
 import { Utils } from '../../common/utils';
 import { HighChartProvider } from '../../providers/high-chart/high-chart';
 import { section } from '../../common/entity';
+import { EmployeesProvider } from '../../providers/employees/employees';
 
 @IonicPage()
 @Component({
@@ -22,10 +23,15 @@ export class SectionInfomationPage {
     public navParams: NavParams,
     public sectionProvider: SectionsProvider,
     public chartProvider: HighChartProvider,
+    public employeeProvider: EmployeesProvider,
     public util: Utils,
     public platform: Platform
   ) {
     this.section = this.navParams.data;
+    this.section['managerEmployee']=this.employeeProvider.employees.filter((emp)=>{
+      return emp.id == this.section.manager? true:false;
+    })[0];
+    this.section.founding = this.util.convertDate(this.section.founding);
   }
 
   ngAfterViewInit() {

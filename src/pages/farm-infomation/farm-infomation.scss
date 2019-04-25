@@ -27,7 +27,8 @@ page-farm-infomation {
     // }
       
     .card-header{
-        background:linear-gradient(to right,$themeColor2,$light-tint)
+        background:linear-gradient(to right,$themeColor2,$light-tint);
+        padding: 5px 15px!important;
     }
 
     .card-content{

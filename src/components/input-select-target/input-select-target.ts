@@ -35,7 +35,7 @@ export class InputSelectTargetComponent {
       switch(this.targertCmp){
         case "pigs":{
           this.value = this.validControl.value;
-          this.value_visible = this.pigProvider.getPigByID(this.validControl.value).pig_code;
+          this.value_visible = this.pigProvider.getPigByID(this.validControl.value).pigCode;
           break;
         }
 
@@ -106,7 +106,7 @@ export class InputSelectTargetComponent {
             if (pig) {
               this.valueChange.emit(pig);
               this.value = pig.id;
-              this.value_visible = pig.pig_code;
+              this.value_visible = pig.pigCode;
               this.validControl.setErrors(null);
             }
           })

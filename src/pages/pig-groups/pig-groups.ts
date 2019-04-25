@@ -179,7 +179,7 @@ export class PigGroupsPage {
     this.menuCtrl.close();
   }
 
-  viewDeltail(group) {
+  viewDeltail(group:group) {
     // this.navCtrl.push(PigViewPage,{data:pig});
     
     // const modal = this.modalCtrl.create(
@@ -188,7 +188,7 @@ export class PigGroupsPage {
     //   }
     // )
     // modal.present();
-    this.navCtrl.push(PigGroupInformationPage,group);
+    this.navCtrl.push(PigGroupInformationPage,{group:group});
   }
 
   addNewGroup(){

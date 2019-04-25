@@ -6,6 +6,7 @@ import { HighChartProvider } from '../../providers/high-chart/high-chart';
 import { EmployeesProvider } from '../../providers/employees/employees';
 import { PigGroupsProvider } from '../../providers/pig-groups/pig-groups';
 import { HouseInputPage } from '../house-input/house-input';
+import { Utils } from '../../common/utils';
 
 @IonicPage()
 @Component({
@@ -31,10 +32,17 @@ export class HouseInfomationPage {
     public actionSheetCtrl: ActionSheetController,
     public employeeProvider: EmployeesProvider,
     public groupProvider: PigGroupsProvider,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    public util: Utils
   ) {
-
+    this.house = this.navParams.data.house;
+    console.log(this.navParams.data);
+    this.house['managerEmployee'] = this.employeeProvider.employees.filter((emp)=>{
+      return emp.id  == this.house.manager? true:false;
+    })[0];
+    this.house.founding = this.util.convertDate(this.house.founding);
   }
+
   ngAfterViewInit() {
     if(this.slider)
     this.slider.autoHeight = true;

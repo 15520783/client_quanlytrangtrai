@@ -39,20 +39,20 @@
       <ion-avatar item-start>
         <ion-icon name="app-pig-outline" font28></ion-icon>
       </ion-avatar>
-      <h2><b>{{item.pig_code}}</b></h2>
+      <h2><b>{{item.pigCode}}</b></h2>
       <ion-row>
         <ion-col col-lg-2 [attr.col-12]="!platform.is('core')?'':null">
-          <p><b>Ngày sinh:</b> {{item.birthday|date:'dd/MM/yyyy'}}</p>
+          <p><b>Ngày sinh:</b> {{item.birthday|date:'yyyy-MM-dd'}}</p>
         </ion-col>
         <!-- <ion-col col-2  [attr.col-6]="!platform.is('core')?'':null">
           <p ><b>House_ID:</b> {{item.house_id}}</p>
         </ion-col> -->
-        <ion-col col-lg-2 [attr.col-6]="!platform.is('core')?'':null">
-          <p><b>Giống</b>: {{breeds[item.breed_id].name}}</p>
+        <ion-col col-lg-2 [attr.col-6]="!platform.is('core')?'':null" >
+          <p><b>Giống</b>: {{breeds[item.breedId].name}}</p>
         </ion-col>
         <ion-col  [attr.col-6]="!platform.is('core')?'':null">
           <p><b>Cân nặng:</b>
-            <ion-badge style="padding: 5px" color="secondary">{{item.origin_weight}} kg</ion-badge>
+            <ion-badge style="padding: 5px" color="secondary">{{item.originWeight}} kg</ion-badge>
           </p>
         </ion-col>
         
@@ -76,12 +76,12 @@
         </ion-col>
         <ion-col col-lg-2 [attr.col-6]="!platform.is('core')?'':null">
           <p><b>Chỉ số sức khỏe:</b>
-            <ion-badge style="padding: 5px" color="secondary">{{item.heath_point}}</ion-badge>
+            <ion-badge style="padding: 5px" color="secondary">{{item.healthPoint}}</ion-badge>
           </p>
         </ion-col>
         <ion-col text-wrap *ngIf="health_status[item.heath_point]" col-lg-2 [attr.col-12]="!platform.is('core')?'':null">
           <p><b>Trạng thái sức khỏe:</b>
-            {{health_status[item.heath_point].name}}
+            {{health_status[item.healthStatusId].name}}
           </p>
         </ion-col>
       </ion-row>

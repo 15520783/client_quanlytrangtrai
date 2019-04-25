@@ -6,6 +6,7 @@ import { FarmsProvider } from '../../providers/farms/farms';
 import { FarmInputPage } from '../farm-input/farm-input';
 import { EmployeesProvider } from '../../providers/employees/employees';
 import { PigGroupsProvider } from '../../providers/pig-groups/pig-groups';
+import { Utils } from '../../common/utils';
 
 
 @IonicPage()
@@ -39,10 +40,15 @@ export class FarmInfomationPage {
     public modalCtrl: ModalController,
     public employeeProvider: EmployeesProvider,
     public groupProvider: PigGroupsProvider,
-    public events: Events
+    public events: Events,
+    public util: Utils
   ) {
     if(this.navParams.data.farm){
       this.farm = this.navParams.data.farm;
+      this.farm.founding = this.util.convertDate(this.farm.founding);
+      this.farm['managerEmployee'] = this.employeeProvider.employees.filter((emp)=>{
+        return emp.farm.id == this.farm.id? true:false;
+      })[0];
     }
   }
 

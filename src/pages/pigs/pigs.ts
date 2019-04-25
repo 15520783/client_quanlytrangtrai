@@ -76,7 +76,7 @@ export class PigsPage {
   public page_Total: number = 0;
   public rows: Array<pig> = [];
   public cols: any = [];
-  public filter_default: any = ["pig_code", "birthday", "gender", "heath_point", "origin_weight"];
+  public filter_default: any = ["pigCode", "birthday", "gender", "healthPoint", "originWeight"];
   public dualValue2 = { lower: 0, upper: 500 };
 
   public genderFilter = [];
@@ -186,7 +186,7 @@ export class PigsPage {
     this.filterProvider.searchText = searchItem;
     this.filterProvider.searchWithText = this.filter_default;
     this.filterProvider.searchWithRange = {
-       origin_weight : { min: this.dualValue2.lower, max: this.dualValue2.upper }
+      originWeight : { min: this.dualValue2.lower, max: this.dualValue2.upper }
     }
     return this.filterProvider.filter();
   }

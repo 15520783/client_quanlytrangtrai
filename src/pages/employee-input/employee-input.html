@@ -56,13 +56,6 @@
                     [placeholder]="'Nhập địa chỉ'"
                     [active]= "submitAttempt">
         </input-text>
-        <input-text [(validControl)] = "credentialsForm.controls.level"
-                    [errorMessage_Required]  = "'Trình độ là hạng mục bắt buộc'"
-                    [errorMessage_Maxlength]  = "'Trình độ không được vượt quá 1000 kí tự.'"
-                    [label] = "'Trình độ'"
-                    [placeholder]="'Nhập trình độ'"
-                    [active]= "submitAttempt">
-        </input-text>
         <input-text [(validControl)] = "credentialsForm.controls.email"
                     [errorMessage_Required]  = "'Email là hạng mục bắt buộc'"
                     [errorMessage_Maxlength]  = "'Email chỉ không được vượt quá 1000 kí tự.'"

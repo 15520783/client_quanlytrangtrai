@@ -68,7 +68,7 @@ export class Utils {
 
   convertDate(date) {
     var options = {
-      weekday: "long",
+      // weekday: "long",
       year: "numeric",
       month: "2-digit",
       day: "numeric"

@@ -4,7 +4,7 @@
       <ion-title>{{section.name}}</ion-title>
     </ion-toolbar>
   </ion-navbar>
-  <ion-toolbar showWhen="core">
+  <!-- <ion-toolbar showWhen="core">
     <ion-segment mode='md'>
       <ion-segment-button font15>
         <ion-icon vertical-alight-bottom name="ios-information-circle"></ion-icon>
@@ -19,7 +19,7 @@
         Hoạt động
       </ion-segment-button>
     </ion-segment>
-  </ion-toolbar>
+  </ion-toolbar> -->
 </ion-header>
 
 <ion-content no-padding *ngIf="platform.is('core')">
@@ -36,8 +36,8 @@
               <ion-row>
                 <ion-col>
                   <ion-item>
-                    <ion-label stacked>Số lượng</ion-label>
-                    <ion-input text-wrap type="text" readonly [(ngModel)]="section.total_pig"></ion-input>
+                    <ion-label stacked>Tên khu</ion-label>
+                    <ion-input text-wrap type="text" readonly [(ngModel)]="section.name"></ion-input>
                   </ion-item>
                   <ion-item>
                     <ion-label text-wrap stacked>Địa chỉ</ion-label>
@@ -45,27 +45,22 @@
                   </ion-item>
                   <ion-item>
                     <ion-label stacked>Ngày thành lập</ion-label>
-                    <ion-input type="text" readonly [(ngModel)]="section.fouding"></ion-input>
+                    <ion-input type="text" readonly [(ngModel)]="section.founding"></ion-input>
                   </ion-item>
                   <ion-item>
-                    <ion-label stacked>Diện tích</ion-label>
-                    <ion-input type="text" readonly [(ngModel)]="section.fouding"></ion-input>
-                  </ion-item>
-                  <ion-item>
-                    <ion-label stacked>Loại trại</ion-label>
-                    <ion-input type="text" readonly [(ngModel)]="section.type_id"></ion-input>
+                    <ion-label stacked>Loại khu</ion-label>
+                    <ion-input type="text" readonly [(ngModel)]="section.typeId"></ion-input>
                   </ion-item>
                   <ion-item>
                     <ion-label stacked>Người quản lý</ion-label>
-                    <ion-input type="text" readonly [(ngModel)]="section.manager"></ion-input>
+                    <ion-input type="text" readonly [(ngModel)]="section.managerEmployee.name"></ion-input>
                   </ion-item>
                   <ion-item>
-                    <ion-label stacked>Chờ bán</ion-label>
-                    <ion-input type="text" readonly [(ngModel)]="section.fouding"></ion-input>
+                    <ion-label stacked>Mô tả</ion-label>
+                    <ion-input type="text" readonly [(ngModel)]="section.description"></ion-input>
                   </ion-item>
                 </ion-col>
-
-                <ion-col>
+                <!-- <ion-col>
                   <ion-item>
                     <ion-label stacked>Tổng đàn</ion-label>
                     <ion-input type="text" readonly [(ngModel)]="section.fouding"></ion-input>
@@ -94,7 +89,7 @@
                     <ion-label stacked>Khu cai sữa</ion-label>
                     <ion-input type="text" readonly [(ngModel)]="section.fouding"></ion-input>
                   </ion-item>
-                </ion-col>
+                </ion-col> -->
                 <ion-col>
                   <div id="chartSummary"></div>
                 </ion-col>
@@ -116,8 +111,8 @@
           <!-- <ion-item-divider text-wrap sticky="true">Thông tin chi tiết</ion-item-divider> -->
           <!-- <ion-list no-padding no-lines> -->
           <ion-item>
-            <ion-label stacked>Số lượng</ion-label>
-            <ion-input text-wrap type="text" readonly [(ngModel)]="section.total_pig"></ion-input>
+            <ion-label stacked>Tên khu</ion-label>
+            <ion-input text-wrap type="text" readonly [(ngModel)]="section.name"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label text-wrap stacked>Địa chỉ</ion-label>
@@ -125,25 +120,25 @@
           </ion-item>
           <ion-item>
             <ion-label stacked>Ngày thành lập</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="section.fouding"></ion-input>
+            <ion-input type="text" readonly [(ngModel)]="section.founding"></ion-input>
           </ion-item>
-          <ion-item>
+          <!-- <ion-item>
             <ion-label stacked>Diện tích</ion-label>
             <ion-input type="text" readonly [(ngModel)]="section.fouding"></ion-input>
-          </ion-item>
+          </ion-item> -->
           <ion-item>
             <ion-label stacked>Loại trại</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="section.type_id"></ion-input>
+            <ion-input type="text" readonly [(ngModel)]="section.typeId"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label stacked>Người quản lý</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="section.manager"></ion-input>
+            <ion-input type="text" readonly [(ngModel)]="section.managerEmployee.name"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label stacked>Chờ bán</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="section.fouding"></ion-input>
+            <ion-label stacked>Mô tả</ion-label>
+            <ion-input type="text" readonly [(ngModel)]="section.description"></ion-input>
           </ion-item>
-          <ion-item>
+          <!-- <ion-item>
             <ion-label stacked>Tổng đàn</ion-label>
             <ion-input type="text" readonly [(ngModel)]="section.fouding"></ion-input>
           </ion-item>
@@ -170,7 +165,7 @@
           <ion-item>
             <ion-label stacked>Khu cai sữa</ion-label>
             <ion-input type="text" readonly [(ngModel)]="section.fouding"></ion-input>
-          </ion-item>
+          </ion-item> -->
           <!-- </ion-list> -->
         </ion-infinite-scroll>
       </ion-slide>

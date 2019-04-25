@@ -49,45 +49,43 @@ class user extends base {
 }
 
 class pig extends base {
-	pig_code: string = '';
+	pigCode: string = '';
 	farm_id: string = '';
-	house_id: string = '';
-	round_id: string = '';
-	breed_id: string = '';
+	houseId: string = '';
+	roundId: string = '';
+	breedId: string = '';
 	gender: number = null;
-	father_id: string = '';
-	mother_id: string = '';
 	birthday: any = '';
 	born_weight: number = null;
-	born_status: number = null;
-	// origin_id:string;
-	// origin_father:string;
-	// origin_mother:string;
-	origin_weight: number = null;
-	receive_weight: number = null;
-	health_point: number = null;
-	foot: number = null;
-	function_udder: number = null;
-	total_udder: number = null;
-	gential: number = null;
+	bornStatus: number = null;
+	originId:string = '';	
+	originFather:string = '';
+	originMother: string = '';
+	originWeight: number = null;
+	receiveWeight: number = null;
+	healthPoint: number = null;
+	footTypeId: number = null;
+	functionUdder: number = null;
+	totalUdder: number = null;
+	gentialTypeId: number = null;
 	description: string = '';
 	fcr: number = null;
 	adg: number = null;
 	bf: number = null;
 	filet: number = null;
-	long_back: number = null;
-	long_body: number = null;
+	longBack: number = null;
+	longBody: number = null;
 	index: number = null;
 	parities: number = null;
 	images: string = '';
-	health_status: number = null;
-	breeding_type: number = null;
-	breed_status: number = null;
-	pregnancy_status: number = null;
-	overview_status: number = null;
+	healthStatusId: number = null;
+	breedingType: number = null;
+	breedStatus: number = null;
+	pregnancyStatusId: number = null;
 	point_review: number = null;
 	status: number = null;
-	price_code: number = null;
+	priceCodeId: number = null;
+	overviewStatus: number = null;
 }
 
 class group extends base {

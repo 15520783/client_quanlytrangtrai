@@ -16,7 +16,7 @@ export class PigGroupInformationPage {
   @ViewChild('slider') slider: Slides;
 
   public showSearchbar = false;
-  public group: group;
+  public group: group = new group();
   public pigs: Array<pig> = [];
   public header = ["Thông tin chi tiết", "Danh sách theo nhóm"];
   public title = this.header[0];
@@ -27,12 +27,16 @@ export class PigGroupInformationPage {
     public util: Utils,
     public modalCtrl: ModalController
   ) {
-    this.group = this.navParams.data;
+    this.group = this.navParams.data.group;
+    this.group.round.from = this.util.convertDate(this.group.round.from);
+    this.group.round.to = this.util.convertDate(this.group.round.to);
+    this.group['roundTerm']= this.group.round.from.concat(' - ').concat(this.group.round.to);
+    // this.group.avgBirthday = this.util.convertDate(this.group.avgBirthday);
 
     this.util.showLoading('Đang lấy danh sách heo thuộc nhóm');
     this.util.getKey(KEY.PIGS).then((data: Array<pig>) => {
       this.pigs = data.filter((value) => {
-        return value.round_id == this.group.round.id;
+        return value.roundId == this.group.round.id;
       })
     }).then(() => { this.util.closeLoading(); })
   }

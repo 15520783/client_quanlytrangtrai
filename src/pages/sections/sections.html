@@ -20,7 +20,7 @@
           </input-select>
         </ion-col>
         <ion-col text-right>
-          <button ion-button mode='ios' color="secondary" (tap)="addNewFarm()">Thêm khu</button>
+          <button ion-button mode='ios' color="secondary" >Thêm khu</button>
         </ion-col>
       </ion-row>
     </ion-toolbar>
@@ -44,8 +44,15 @@
             </div>
             <ion-list no-lines>
               <button item-end ion-item (tap)="viewDetail(section)">
-                <ion-icon name="ios-information-circle" style="vertical-align: sub" font28></ion-icon>
-                Xem thông tin khu
+                <ion-avatar item-start>
+                    <ion-icon name="ios-information-circle" style="vertical-align: bottom" font28></ion-icon>
+                </ion-avatar>
+                <!-- <ion-icon name="ios-information-circle" style="vertical-align: sub" font28></ion-icon> -->
+                <ion-row>
+                    <h2>
+                      Xem thông tin khu
+                    </h2>
+                </ion-row>
               </button>
               <ion-list-header custom-list-header [attr.active_header]="section.active?'':null">
                 <div showWhen='ios,android'>Danh sách nhà</div>
@@ -55,7 +62,7 @@
                     nhà</button>
                 </ion-row>
               </ion-list-header>
-              <button item-end ion-item *ngFor="let house of section.houses" (tap)="viewHouse(item)">
+              <button item-end ion-item *ngFor="let house of section.houses" (tap)="viewHouse(house)">
                 <ion-avatar item-start>
                   <ion-icon name="ios-home" style="vertical-align: bottom" font28></ion-icon>
                 </ion-avatar>

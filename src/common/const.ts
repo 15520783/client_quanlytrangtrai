@@ -15,7 +15,7 @@ const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".
 const CONFIG = {
     // SERVER_API: 'http://192.168.0.36:3000',
     SERVER_API: 'https://quanlytrangtrai-uit.herokuapp.com',
-    DEFAULT_TIMEOUT: 20000,
+    DEFAULT_TIMEOUT: 30000,
     LANGUAGE_DEFAULT:'vi',
     ACCESS_KEY:''
 }
@@ -37,7 +37,8 @@ const API = {
     GET_ALL_SECTIONS: '/api/sections/list',
     // GET_ALL_HOUSES: '/api/houses',
     GET_ALL_HOUSES: '/api/houses/list',
-    GET_ALL_PIGS: '/api/pigs',
+    // GET_ALL_PIGS: '/api/pigs',
+    GET_ALL_PIGS: '/api/pigs/list',
     // GET_ALL_GROUPS: '/api/groups',
     GET_ALL_GROUPS: '/api/groups/list',
     // GET_ALL_EMPLOYEES: '/api/employees',
