@@ -41,6 +41,29 @@ export class PigGroupsPage {
   protected searchControl: FormControl = new FormControl();
   protected searchTerm: string = '';
 
+  public health_status = {
+    1:{name:'Tốt'},
+    2:{name:'Vấn đề(chưa rõ)'},
+    3:{name:'Vấn đề(chưa rõ)'},
+    4:{name:'Vấn đề(chưa rõ)'},
+    5:{name:'Ốm'},
+    6:{name:'Tái viêm'},
+    7:{name:'Xù lông, thở bụng.'},
+    8:{name:'Đau chân'},
+    9:{name:'Viêm khớp'},
+    10:{name:'Ké chân'},
+    11:{name:'Đau mắt'},
+    12:{name:'Viêm rốn'},
+    13:{name:'Sa ruột (Hernia cà)'},
+    14:{name:'Thiến sót'},
+    15:{name:'Năm móng'},
+    16:{name:'không đạt trọng lượng'},
+    17:{name:'Ghẻ'},
+    19:{name:'Ho'},
+    20:{name:'Tiêu chảy'},
+    21:{name:'Còi cọc'},
+  }
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,

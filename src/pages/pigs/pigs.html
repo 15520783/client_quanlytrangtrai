@@ -27,7 +27,7 @@
 
 
 <ion-content #content>
-  <ion-item-divider  custom-diviver sticky="true" showWhen="core">
+  <ion-item-divider custom-diviver sticky="true" showWhen="core">
     <ion-row>
       <ion-title ion-text font15 color="dark">Danh sách heo</ion-title>
       <button ion-button item-end mode='ios' color="secondary" (tap)="addNewPig()">Thêm mới heo</button>
@@ -39,22 +39,50 @@
       <ion-avatar item-start>
         <ion-icon name="app-pig-outline" font28></ion-icon>
       </ion-avatar>
-      <h2>{{item.pig_code}}</h2>
+      <h2><b>{{item.pig_code}}</b></h2>
       <ion-row>
-        <ion-col>
-          <p>House_ID: {{item.house_id}}</p>
+        <ion-col col-lg-2 [attr.col-12]="!platform.is('core')?'':null">
+          <p><b>Ngày sinh:</b> {{item.birthday|date:'dd/MM/yyyy'}}</p>
         </ion-col>
-        <ion-col>
-          <p>Weight: {{item.origin_weight}}</p>
+        <!-- <ion-col col-2  [attr.col-6]="!platform.is('core')?'':null">
+          <p ><b>House_ID:</b> {{item.house_id}}</p>
+        </ion-col> -->
+        <ion-col col-lg-2 [attr.col-6]="!platform.is('core')?'':null">
+          <p><b>Giống</b>: {{breeds[item.breed_id].name}}</p>
         </ion-col>
-        <ion-col>
-          <p>Birth: {{item.birthday}}</p>
+        <ion-col  [attr.col-6]="!platform.is('core')?'':null">
+          <p><b>Cân nặng:</b>
+            <ion-badge style="padding: 5px" color="secondary">{{item.origin_weight}} kg</ion-badge>
+          </p>
         </ion-col>
-        <ion-col>
+        
+        <!-- <ion-col>
           <p>Gender: {{item.gender}}</p>
+        </ion-col> -->
+        <ion-col col-lg-2 [attr.col-4]="!platform.is('core')?'':null">
+          <p><b>bf:</b>
+            <ion-badge style="padding: 5px" color="secondary">{{item.bf}}</ion-badge>
+          </p>
         </ion-col>
-        <ion-col>
-          <p>Healpoint: {{item.heath_point}}</p>
+        <ion-col col-lg-2 [attr.col-4]="!platform.is('core')?'':null">
+          <p><b>fcr:</b>
+            <ion-badge style="padding: 5px" color="secondary">{{item.fcr}}</ion-badge>
+          </p>
+        </ion-col>
+        <ion-col col-lg-2 [attr.col-4]="!platform.is('core')?'':null">
+          <p><b>adg:</b>
+            <ion-badge style="padding: 5px" color="secondary">{{item.adg}}</ion-badge>
+          </p>
+        </ion-col>
+        <ion-col col-lg-2 [attr.col-6]="!platform.is('core')?'':null">
+          <p><b>Chỉ số sức khỏe:</b>
+            <ion-badge style="padding: 5px" color="secondary">{{item.heath_point}}</ion-badge>
+          </p>
+        </ion-col>
+        <ion-col text-wrap *ngIf="health_status[item.heath_point]" col-lg-2 [attr.col-12]="!platform.is('core')?'':null">
+          <p><b>trạng thái sức khỏe:</b>
+            {{health_status[item.heath_point].name}}
+          </p>
         </ion-col>
       </ion-row>
     </button>

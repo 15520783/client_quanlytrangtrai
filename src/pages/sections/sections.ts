@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ModalController } from 'ionic-angular';
-import { section, house } from '../../common/entity';
+import { section, house, farm } from '../../common/entity';
 import { SectionsProvider } from '../../providers/sections/sections';
 import { Utils } from '../../common/utils';
 import { KEY } from '../../common/const';
 import { SectionInfomationPage } from '../section-infomation/section-infomation';
 import { HouseInfomationPage } from '../house-infomation/house-infomation';
 import { HouseInputPage } from '../house-input/house-input';
+import { FarmsProvider } from '../../providers/farms/farms';
 
 /**
  * Generated class for the SectionsPage page.
@@ -30,6 +31,8 @@ export class SectionsPage {
     { idx: 3, expand: false },
     { idx: 4, expand: false }
   ]
+  
+  public farms_select: any = [];
 
   constructor(
     public navCtrl: NavController,
@@ -37,8 +40,15 @@ export class SectionsPage {
     public sectionProvider: SectionsProvider,
     public loadingCtrl: LoadingController,
     public modalCtrl: ModalController,
-    public util : Utils
+    public util : Utils,
+    public farmProvider : FarmsProvider
   ) {
+    this.farmProvider.farms.forEach((e:farm)=>{
+      this.farms_select.push({
+        name:e.name,
+        value:e.id
+      })
+    })
     console.log(this.navParams.data);
   }
 

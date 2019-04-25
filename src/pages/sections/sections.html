@@ -1,6 +1,6 @@
 <ion-header>
   <header [title]="'Quản lý khu'">
-    <ion-toolbar showWhen="core">
+    <!-- <ion-toolbar showWhen="core">
       <ion-row>
         <ion-col col-xl-2 col-lg-2 col-md-3 col-sm-6 col-4 showWhen="core">
           <button ion-item style="background: transparent!important">Vĩnh Tân 1
@@ -11,19 +11,19 @@
           <button ion-button mode='ios' color="secondary" (tap)="addNewFarm()">Thêm khu</button>
         </ion-col>
       </ion-row>
+    </ion-toolbar> -->
+    <ion-toolbar showWhen="core" toolbar-transparent>
+      <ion-row>
+        <ion-col showWhen="core">
+          <input-select class="input-select" [value]="farms_select[0].value" [placeholder]="'Chọn trang trại'"
+            [(data)]="farms_select">
+          </input-select>
+        </ion-col>
+        <ion-col text-right>
+          <button ion-button mode='ios' color="secondary" (tap)="addNewFarm()">Thêm kho</button>
+        </ion-col>
+      </ion-row>
     </ion-toolbar>
-    <!-- <ion-row>
-      <ion-col col-xl-2 col-lg-2 col-md-3 col-sm-6 col-4 showWhen="core">
-        <button ion-item style="background: transparent!important">Vĩnh Tân 1
-          <ion-icon name="ios-arrow-down" style="vertical-align: bottom"></ion-icon>
-        </button>
-      </ion-col>
-      <ion-col col-5 showWhen="ios,android">
-        <button ion-item style="background: transparent!important">Vĩnh Tân 1
-          <ion-icon name="ios-arrow-down" style="vertical-align: bottom"></ion-icon>
-        </button>
-      </ion-col>
-    </ion-row> -->
   </header>
 </ion-header>
 
@@ -51,7 +51,8 @@
                 <div showWhen='ios,android'>Danh sách nhà</div>
                 <ion-row showWhen="core">
                   <ion-title ion-text font15 color="dark">Danh sách nhà</ion-title>
-                  <button ion-button item-end mode='ios' color="secondary" (tap)="addNewHouse(section)">Thêm nhà</button>
+                  <button ion-button item-end mode='ios' color="secondary" (tap)="addNewHouse(section)">Thêm
+                    nhà</button>
                 </ion-row>
               </ion-list-header>
               <button item-end ion-item *ngFor="let item of items" (tap)="viewHouse(item)">
@@ -59,12 +60,12 @@
                 Nhà {{item.idx}}
               </button>
               <ion-toolbar showWhen="ios,android" toolbar-transparent>
-                  <ion-buttons item-start>
-                    <button ion-button mode='ios' block color="secondary" (tap)="addNewHouse(section)">
-                      <ion-icon name='md-add-circle' padding></ion-icon>
-                       Thêm nhà
-                    </button>
-                  </ion-buttons>
+                <ion-buttons item-start>
+                  <button ion-button mode='ios' block color="secondary" (tap)="addNewHouse(section)">
+                    <ion-icon name='md-add-circle' padding></ion-icon>
+                    Thêm nhà
+                  </button>
+                </ion-buttons>
               </ion-toolbar>
             </ion-list>
           </expandable>

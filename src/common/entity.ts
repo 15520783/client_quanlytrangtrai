@@ -1,5 +1,5 @@
 export { base }
-export { users }
+export { user }
 export { farm }
 export { section }
 export { house }
@@ -35,14 +35,14 @@ class base {
 	updated_at: any = '';
 }
 
-class users extends base {
-	username: string;
-	password: string;
+class user extends base {
+	username: string = '';
+	password: string = '';
 	email: string;
-	employee_id: string;
-	activate: number;
-	language: string;
-	last_active: any;
+	employee_id: string = '';
+	activate: number = null;
+	language: string = '';
+	last_active: any = '';
 	login: number;
 }
 

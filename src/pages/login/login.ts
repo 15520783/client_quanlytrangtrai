@@ -10,6 +10,8 @@ import { PigGroupsProvider } from '../../providers/pig-groups/pig-groups';
 import { SectionsProvider } from '../../providers/sections/sections';
 import { EmployeesProvider } from '../../providers/employees/employees';
 import { HousesProvider } from '../../providers/houses/houses';
+import { UserProvider } from '../../providers/user/user';
+import { KEY } from '../../common/const';
 
 @IonicPage()
 @Component({
@@ -34,12 +36,13 @@ export class LoginPage {
     public pigGroupProvider: PigGroupsProvider,
     public sectionProvider: SectionsProvider,
     public employeeProvider: EmployeesProvider,
-    public houseProvider: HousesProvider
+    public houseProvider: HousesProvider,
+    public userProvider: UserProvider
   ) {
     this.menuCtrl.enable(false);
     this.credentialsForm = this.formBuilder.group({
-      username: ['', Validators.compose([Validators.required, Validators.maxLength(10)])],
-      password: ['', Validators.compose([Validators.required, , Validators.maxLength(10)])]
+      username: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
+      password: ['', Validators.compose([Validators.required, , Validators.maxLength(100)])]
     });
   }
 
@@ -60,17 +63,51 @@ export class LoginPage {
   public wait: boolean = false;
 
   login() {
-    console.log(this.credentialsForm.controls.username);
-    console.log(this.credentialsForm.controls.password);
-    this.wait = true;
+    
+    if (this.credentialsForm.valid) {
+      this.wait = true;
+      let params = {
+        username: this.credentialsForm.get('username').value,
+        password: this.credentialsForm.get('password').value
+      }
+      console.log(params);
+      this.userProvider.login(params) 
+        .then((res: any) => {
+          if (res) {
+            this.util.setKey(KEY.ACCESSTOKEN, res.accessToken)
+              .then(() => {
+                this.util.setKey(KEY.TOKENTYPE, res.tokenType).then(() => {
+                  this.wait = false;
+                  setTimeout(() => {
+                    this.events.publish('app_begin');
+                  }, 1000);
+                })
+              })
+              .catch((err: Error) => {
+                console.log(err);
+              })
+          }
+        })
+        .catch((err: any) => {
+          console.log(err);
+          if (err.status === 401) {
+            this.util.showToast('Tên đăng nhập hoặc mật khẩu không đúng. Thử lại.');
+            this.wait = false;
+          }
+        })
+    }
 
-    this.util.showToast('Username/Password is wrong. Try again.')
-      .then((res) => {
-        this.wait = false;
-        setTimeout(() => {
-          this.events.publish('app_begin');
-        }, 1000);
-      })
+
+    // console.log(this.credentialsForm.controls.username);
+    // console.log(this.credentialsForm.controls.password);
+
+    // this.util.showToast('Username/Password is wrong. Try again.')
+    //   .then((res) => {
+    //     this.wait = false;
+    //     setTimeout(() => {
+    //       this.events.publish('app_begin');
+    //     }, 1000);
+    //   })
   }
 
 }

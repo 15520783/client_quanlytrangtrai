@@ -3,6 +3,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpClientModule } from '@angular/common/http';
 import { FullCalendarModule } from 'ng-fullcalendar';
+import { HttpModule } from '../../node_modules/@angular/http';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -64,8 +65,7 @@ import { FilterProvider } from '../providers/filter/filter';
 import { EmployeesProvider } from '../providers/employees/employees';
 import { WarehousesProvider } from '../providers/warehouses/warehouses';
 import { SettingsProvider } from '../providers/settings/settings';
-
-
+import { UserProvider } from '../providers/user/user';
 
 
 const Pages = [
@@ -126,7 +126,8 @@ const Providers = [
   FilterProvider,
   EmployeesProvider,
   WarehousesProvider,
-  SettingsProvider
+  SettingsProvider,
+  UserProvider
 ]
 
 const Directives = [
@@ -151,6 +152,7 @@ const Directives = [
       activator:'ripple'
     }),
     FullCalendarModule,
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -166,6 +168,7 @@ const Directives = [
     Utils,
     ...Providers,
     SettingsProvider,
+    UserProvider,
   ]
 })
 export class AppModule {}

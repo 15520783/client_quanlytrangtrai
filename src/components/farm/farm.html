@@ -22,15 +22,15 @@
       <ion-item-divider>Thông tin chung</ion-item-divider>
       <ion-row>
         <ion-col class="pd-5" col-6>
-          <h2>Số lượng: {{farm.total_pig}} <ion-icon name="app-pig-outline" style="vertical-align: bottom">
+          <h2><b>Số lượng:</b> {{farm.total_pig}} <ion-icon name="app-pig-outline" style="vertical-align: bottom">
             </ion-icon>
           </h2>
         </ion-col>
         <ion-col class="pd-5" col-6>
-          <h2>Địa chỉ: {{farm.address}}</h2>
+          <h2><b>Địa chỉ:</b> {{farm.address}}</h2>
         </ion-col>
         <ion-col class="pd-5" col-6>
-          <h2>Ngày thành lập: {{farm.founding}}</h2>
+          <h2><b>Ngày thành lập:</b> {{farm.founding|date:'dd/MM/yyyy'}}</h2>
         </ion-col>
       </ion-row>
     </ion-row>

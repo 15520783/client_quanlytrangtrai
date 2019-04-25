@@ -39,22 +39,22 @@
       <ion-avatar item-start>
         <ion-icon name="app-pig-foot" font28></ion-icon>
       </ion-avatar>
-      <h2>{{item.group_code}}</h2>
+      <h2><b>{{item.group_code}}</b></h2>
       <ion-row>
-        <ion-col>
-          <p><b>Birthday average:</b> {{item.avg_birthday}}</p>
+        <ion-col  [attr.col-12]="!platform.is('core')?'':null">
+          <p><b>Ngày sinh trung bình:</b> {{item.avg_birthday| date: 'dd/MM/yyyy'}}</p>
         </ion-col>
-        <ion-col>
-          <p><b>Sum weight:</b> {{item.origin_sum_weight}}</p>
+        <ion-col [attr.col-12]="!platform.is('core')?'':null">
+          <p><b>Số lượng:</b>{{item.quantity}} con</p>
         </ion-col>
-        <ion-col>
-          <p><b>Average weight:</b> {{item.origin_avg_weight}}</p>
+        <ion-col  [attr.col-12]="!platform.is('core')?'':null">
+          <p><b>Tổng trọng lượng:</b><ion-badge style="padding: 5px" color="secondary">{{item.origin_sum_weight}} kg</ion-badge></p>
         </ion-col>
-        <ion-col>
-          <p><b>Health status:</b> {{item.health_status}}</p>
+        <ion-col  [attr.col-12]="!platform.is('core')?'':null">
+          <p><b>Trọng lượng trung bình:</b><ion-badge style="padding: 5px" color="secondary">{{item.origin_avg_weight}} kg</ion-badge></p>
         </ion-col>
-        <ion-col>
-          <p><b>Quantity:</b> {{item.quantity}}</p>
+        <ion-col [attr.col-12]="!platform.is('core')?'':null">
+          <p><b>Trạng thái sức khỏe:</b> {{health_status[item.health_status].name}}</p>
         </ion-col>
       </ion-row>
     </button>

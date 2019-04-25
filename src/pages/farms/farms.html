@@ -25,16 +25,16 @@
       <h2>{{farm.name}}</h2>
       <ion-row>
         <ion-col>
-          <p>Tổng số heo: {{farm.total_pig}}</p>
+          <p><b>Tổng số heo:</b> {{farm.total_pig}}</p>
+        </ion-col>
+        <ion-col text-wrap>
+          <p><b>Địa chỉ:</b> {{farm.address}}</p>
         </ion-col>
         <ion-col>
-          <p>Địa chỉ: {{farm.address}}</p>
+          <p><b>Diện tích</b>: {{farm.area}}</p>
         </ion-col>
         <ion-col>
-          <p>Diện tích: {{farm.area}}</p>
-        </ion-col>
-        <ion-col>
-          <p>Ngày thành lập: {{farm.founding}}</p>
+          <p><b>Ngày thành lập:</b> {{farm.founding|date:'dd/MM/yyyy'}}</p>
         </ion-col>
       </ion-row>
     </button>
