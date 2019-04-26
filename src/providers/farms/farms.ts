@@ -62,6 +62,6 @@ export class FarmsProvider {
 
   publishUpdateEvent() {
     this.updated_flag = true;
-    this.events.publish('updated:farm');
+    this.events.publish('updated');
   }
 }

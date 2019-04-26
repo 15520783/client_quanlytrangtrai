@@ -8,21 +8,21 @@ export { group }
 export { employee }
 export { warehouse }
 export { breeds }
-export { breeding_type }
-export { pregnancy_status }
-export { health_status }
+export { breedingType }
+export { pregnancyStatus }
+export { healthStatus }
 export { diseases }
-export { farm_type }
-export { food_type }
-export { food }
-export { medicine_type }
-export { medicine_units }
+export { farmTypes }
+export { foodType }
+export { foods }
+export { medicineType }
+export { medicineUnits }
 export { medicines }
-export { price_codes }
-export { foot_type }
-export { gential_type }
+export { priceCodes }
+export { footType }
+export { gentialType }
 export { issues }
-export { mark_types }
+export { markTypes }
 export { permissions }
 export { regencies }
 export { mating_status }
@@ -58,8 +58,8 @@ class pig extends base {
 	birthday: any = '';
 	born_weight: number = null;
 	bornStatus: number = null;
-	originId:string = '';	
-	originFather:string = '';
+	originId: string = '';
+	originFather: string = '';
 	originMother: string = '';
 	originWeight: number = null;
 	receiveWeight: number = null;
@@ -102,15 +102,15 @@ class group extends base {
 	originSumWeight: number = null;
 	originAvgWeight: number = null;
 	status: string = '';
-	mark: mark_types = new mark_types();
-	healthStatus: health_status = new health_status();
+	mark: markTypes = new markTypes();
+	healthStatus: healthStatus = new healthStatus();
 	description: string = '';
 }
 
 
 class farm extends base {
 	name: string = '';
-	type: farm_type = new farm_type();
+	type: farmTypes = new farmTypes();
 	address: string = '';
 	area: number = null;
 	totalPig: number = null;
@@ -157,8 +157,8 @@ class employee extends base {
 
 class warehouse extends base {
 	farm_id: string = '';
-	type: farm_type = new farm_type();
-	groupId:string = '';
+	type: warehouse_type = new warehouse_type();
+	groupId: string = '';
 	unitId: string = '';
 	unitType: string = '';
 	name: string = '';
@@ -169,56 +169,53 @@ class warehouse extends base {
 
 
 
-class pregnancy_status extends base {
+class pregnancyStatus extends base {
 	name: string = '';
 	description: string = '';
 }
 
 class breeds extends base {
-	name: string;
-	line_code: string;
-	symbol: string;
-	code: string;
-	level: string;
-	line: string;
-	description: string;
-	created_at: any;
-	updated_at: any;
+	name: string = '';
+	lineCode: string = '';
+	symbol: string = '';
+	code: string = '';
+	level: string = '';
+	line: string = '';
+	description: string = '';
 
 	constructor() {
 		super();
 	}
 }
 
-class breeding_type extends base {
+class breedingType extends base {
 	name: string = '';
 	description: string = '';
 }
 
-class health_status extends base {
+class healthStatus extends base {
 	name: string = '';
-	description: string ='';
+	description: string = '';
 	constructor() {
 		super();
 	}
 }
 
 class diseases extends base {
-	name: string;
-	description: string;
-	agent: string;
-	symptom: string;
-	diagnose: string;
-	treatment: string;
-	note: string;
-	created_at: any;
-	updated_at: any;
+	name: string = '';
+	description: string = '';
+	agent: string = '';
+	symptom: string = '';
+	diagnose: string = '';
+	treatment: string = '';
+	note: string = '';
+	images: string = '';
 	constructor() {
 		super();
 	}
 }
 
-class farm_type extends base {
+class farmTypes extends base {
 	name: string = '';
 	description: string = '';
 
@@ -227,90 +224,80 @@ class farm_type extends base {
 	}
 }
 
-class food_type extends base {
-	name: string;
-	description: string;
-	created_at: any;
-	updated_at: any;
+class foodType extends base {
+	name: string = '';
+	description: string = '';
 	constructor() {
 		super();
 	}
 }
 
-class food extends base {
-	food_code: string;
-	type_id: string;
-	name: string;
-	use_for: string;
-	guide: string;
-	description: string;
-	created_at: any;
-	updated_at: any;
+class foods extends base {
+	foodCode: string;
+	type: foodType = new foodType();
+	name: string = '';
+	useFor: string = '';
+	guide: string = '';
+	description: string = '';
+	images: string = '';
 	constructor() {
 		super();
 	}
 }
 
-class medicine_type extends base {
-	name: string;
-	description: string;
-	created_at: any;
-	updated_at: any;
+class medicineType extends base {
+	name: string = '';
+	description: string = '';
 	constructor() {
 		super();
 	}
 }
 
-class medicine_units extends base {
-	name: string;
-	quantity: string;
-	description: string;
-	base_unit: string;
-	created_at: any;
-	updated_at: any;
+class medicineUnits extends base {
+	name: string = '';
+	quantity: string = '';
+	description: string = '';
+	baseUnit: string = '';
+
 	constructor() {
 		super();
 	}
 }
 
 class medicines extends base {
-	id: string;
-	medicine_code: string;
-	type_id: string;
-	name: string;
-	use_for: string;
-	guide: string;
-	description: string;
+	medicineCode: string = '';
+	type: medicineType = new medicineType();
+	name: string = '';
+	useFor: string = '';
+	guide: string = '';
+	description: string = '';
 	constructor() {
 		super();
 	}
 }
 
-class price_codes extends base {
-	id: string;
-	name: string;
-	description: string;
-	created_at: any;
-	updated_at: any;
+class priceCodes extends base {
+	name: string = '';
+	description: string = '';
+
 	constructor() {
 		super();
 	}
 }
 
-class foot_type extends base {
-	name: string;
-	description: string;
-	created_at: any;
-	updated_at: any;
+class footType extends base {
+	name: string = '';
+	description: string = '';
+
 	constructor() {
 		super();
 	}
 }
 
-class gential_type extends base {
+class gentialType extends base {
 
-	name: string;
-	description: string;
+	name: string = '';
+	description: string = '';
 
 	constructor() {
 		super();
@@ -318,16 +305,16 @@ class gential_type extends base {
 }
 
 class issues extends base {
-	level: string;
-	symptom: string;
-	lesions: string;
-	description: string;
+	level: string = '';
+	symptom: string = '';
+	lesions: string = '';
+	description: string = '';
 	constructor() {
 		super();
 	}
 }
 
-class mark_types extends base {
+class markTypes extends base {
 	name: string = '';
 	description: string = '';
 	constructor() {

@@ -68,6 +68,6 @@ export class EmployeesProvider {
 
   publishUpdateEvent() {
     this.updated_flag = true;
-    this.events.publish('updated:employee');
+    this.events.publish('updated');
   }
 }

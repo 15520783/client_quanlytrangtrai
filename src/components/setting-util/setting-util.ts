@@ -14,7 +14,7 @@ export class SettingUtilComponent {
   @Input() data: Array<any> = [];
   @Input() selectMode: boolean = false;
   @Input() mainAttribute: string;
-  @Input() attributes: Array<string> = [];
+  @Input() attributes: Array<{name:string,label:string}> = [];
   @Input() placeholderSearch: string = ''
   @Input() filter_default: Array<string> = [];
   @Input() addButtonLabel:string = 'Thêm';
@@ -26,7 +26,7 @@ export class SettingUtilComponent {
     data: Array<any>,
     selectMode: boolean,
     mainAttribute: string,
-    attributes: Array<string>,
+    attributes: Array<{name:string,label:string}>,
     placeholderSearch: string,
     filter_default: Array<string>,
     addButtonLabel:string

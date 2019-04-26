@@ -70,7 +70,7 @@ export class PigsProvider {
 
   publishUpdateEvent() {
     this.updated_flag = true;
-    this.events.publish('updated:pig');
+    this.events.publish('updated');
   }
 
   ViewIndexChart(pig: pig, element: any) {

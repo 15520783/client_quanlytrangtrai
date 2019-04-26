@@ -61,6 +61,6 @@ export class PigGroupsProvider {
 
   publishUpdateEvent(){
     this.updated_flag = true;
-    this.events.publish('updated:pigGroup');
+    this.events.publish('updated');
   }
 }

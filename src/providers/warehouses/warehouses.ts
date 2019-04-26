@@ -61,7 +61,7 @@ export class WarehousesProvider {
 
   publishUpdateEvent() {
     this.updated_flag = true;
-    this.events.publish('updated:warehouse');
+    this.events.publish('updated');
   }
 
   getFoodWarehouse() {

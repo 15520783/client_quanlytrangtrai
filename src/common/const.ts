@@ -7,7 +7,8 @@ const KEY = {
     PIGS: 'pigs',
     GROUPS: 'groups',
     EMPLOYEES: 'employees',
-    WAREHOUSES: 'warehouses'
+    WAREHOUSES: 'warehouses',
+    SETTINGS:'settings'
 }
 
 const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -44,7 +45,8 @@ const API = {
     // GET_ALL_EMPLOYEES: '/api/employees',
     GET_ALL_EMPLOYEES: 'https://quanlytrangtrai-uit.herokuapp.com/api/employees/list',
     // GET_ALL_WAREHOUSES: '/api/warehouses',
-    GET_ALL_WAREHOUSES: '/api/warehouses/list'
+    GET_ALL_WAREHOUSES: '/api/warehouses/list',
+    GET_ALL_SETTINGS:'/api/settings/list'
 }
 
 export { KEY }

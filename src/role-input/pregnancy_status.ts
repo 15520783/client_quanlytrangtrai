@@ -1,7 +1,7 @@
-import { InputObject, pregnancy_status } from "../common/entity";
+import { InputObject, pregnancyStatus } from "../common/entity";
 
 export class PregnancyStatusRole {
-    public pregnancy_status = new pregnancy_status();
+    public pregnancy_status = new pregnancyStatus();
 
     public inputRole:Array<InputObject> =[
         {

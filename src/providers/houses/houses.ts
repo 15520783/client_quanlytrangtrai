@@ -68,6 +68,6 @@ export class HousesProvider {
 
   publishUpdateEvent() {
     this.updated_flag = true;
-    this.events.publish('updated:house');
+    this.events.publish('updated');
   }
 }

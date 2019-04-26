@@ -1,7 +1,7 @@
-import { InputObject, breeding_type } from "../common/entity";
+import { InputObject, breedingType } from "../common/entity";
 
 export class BreedingTypesRole {
-    public breeding_type = new breeding_type();
+    public breeding_type = new breedingType();
 
     public inputRole:Array<InputObject> =[
         {

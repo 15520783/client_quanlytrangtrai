@@ -15,6 +15,7 @@ import { HousesProvider } from '../providers/houses/houses';
 import { WarehousesProvider } from '../providers/warehouses/warehouses';
 import { Utils } from '../common/utils';
 import { KEY, CONFIG } from '../common/const';
+import { SettingsProvider } from '../providers/settings/settings';
 
 
 @Component({
@@ -56,6 +57,7 @@ export class MyApp {
     public employeeProvider: EmployeesProvider,
     public houseProvider: HousesProvider,
     public warehouseProvider: WarehousesProvider,
+    public settingProvider: SettingsProvider,
     public util: Utils
   ) {
     this.initializeApp();
@@ -70,42 +72,6 @@ export class MyApp {
         this.statusBar.styleBlackTranslucent();
         this.splashScreen.hide();
         this.headerColor.tint('#01C2FA');
-
-        this.platform.registerBackButtonAction(() => {
-          // getActiveNav is being deprecated so, fetch the first available nav.
-          const nav = this.app.getActiveNavs()[0];
-          const active = nav.getActive();
-
-          let closeDelay = 2000;
-          let spamDelay = 500;
-
-          if (active.isOverlay) {
-            // Checks if is dismissing something..
-            // avoid exceptions if user spams back-button and stack isn't finished dismissing view yet.
-            if (!this.dismissing) {
-              active.dismiss().then(() => this.dismissing = false);
-            }
-            this.dismissing = true;
-          } else if (((Date.now() - this.lastBack) < closeDelay) &&
-            (Date.now() - this.lastBack) > spamDelay) {
-            // Leaves app if user pressed button not faster than 500ms a time, 
-            // and not slower than 2000ms a time.
-            this.platform.exitApp();
-          } else {
-            if (!this.spamming) { // avoids multiple toasts caused by button spam.
-              let t = this.toast.create({
-                message: "'Nhấn lần nữa để thoát.",
-                duration: closeDelay,
-                dismissOnPageChange: true
-              });
-              t.onDidDismiss(() => this.spamming = false);
-              t.present();
-            }
-            this.spamming = true;
-          }
-
-          this.lastBack = Date.now();
-        });
       }
 
       this.util.getKey(KEY.ACCESSTOKEN)
@@ -165,29 +131,13 @@ export class MyApp {
     this.sectionProvider.sync();
     this.houseProvider.sync();
     this.warehouseProvider.sync();
+    this.settingProvider.sync();
+    this.sectionProvider.sync();
   }
 
 
   subscribeEventUpdate() {
-    this.events.subscribe('updated:farm', () => {
-      this.checkUpdate();
-    })
-    this.events.subscribe('updated:pig', () => {
-      this.checkUpdate();
-    })
-    this.events.subscribe('updated:pigGroup', () => {
-      this.checkUpdate();
-    })
-    this.events.subscribe('updated:section', () => {
-      this.checkUpdate();
-    })
-    this.events.subscribe('updated:employee', () => {
-      this.checkUpdate();
-    })
-    this.events.subscribe('updated:house', () => {
-      this.checkUpdate();
-    })
-    this.events.subscribe('updated:warehouse', () => {
+    this.events.subscribe('updated', () => {
       this.checkUpdate();
     })
   }
@@ -200,7 +150,8 @@ export class MyApp {
       this.employeeProvider.updated_flag &&
       this.sectionProvider.updated_flag &&
       this.houseProvider.updated_flag &&
-      this.warehouseProvider.updated_flag) {
+      this.warehouseProvider.updated_flag &&
+      this.settingProvider.updated_flag) {
       this.rootPage = HomePage;
       setTimeout(() => {
         this.splash = false;

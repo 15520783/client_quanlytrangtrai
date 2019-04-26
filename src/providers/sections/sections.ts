@@ -61,7 +61,7 @@ export class SectionsProvider {
 
   publishUpdateEvent() {
     this.updated_flag = true;
-    this.events.publish('updated:section');
+    this.events.publish('updated');
   }
 
   getSectionByIdFarm(id: string) {

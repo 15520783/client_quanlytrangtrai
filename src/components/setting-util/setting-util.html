@@ -31,8 +31,8 @@
       </ion-avatar> -->
       <h2 *ngIf="mainAttribute">{{item[mainAttribute]}}</h2>
       <ion-row>
-        <ion-col *ngFor="let attr of attributes">
-          <p><b>{{attr}}:</b> {{item[attr]}}</p>
+        <ion-col *ngFor="let attr of attributes"  col-6 text-wrap>
+          <p style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
         </ion-col>
       </ion-row>
       <button ion-button item-end mode='ios' color="main" (tap)="edit(item)">Sửa</button>

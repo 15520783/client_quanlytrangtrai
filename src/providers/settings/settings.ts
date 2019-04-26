@@ -1,35 +1,90 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { breeds, pregnancy_status, breeding_type, health_status, diseases, farm_type, food_type, food, medicine_type, medicine_units, price_codes, foot_type, gential_type, issues, mark_types, medicines } from '../../common/entity';
+import { breeds, issues, medicines, pregnancyStatus, breedingType, healthStatus, diseases, farmTypes, foodType, foods, medicineType, medicineUnits, priceCodes, footType, gentialType, markTypes } from '../../common/entity';
+import { CONFIG, API, KEY } from '../../common/const';
+import { Utils } from '../../common/utils';
+import { Events } from 'ionic-angular';
+
+
+export class setting {
+  pregnancyStatus: Array<pregnancyStatus> = [];
+  breeds: Array<breeds> = [];
+  breedingType: Array<breedingType> = [];
+  healthStatus: Array<healthStatus> = [];
+  diseases: Array<diseases> = [];
+  farmTypes: Array<farmTypes> = [];
+  foodType: Array<foodType> = [];
+  foods: Array<foods> = [];
+  medicineType: Array<medicineType> = [];
+  medicineUnits: Array<medicineUnits> = [];
+  medicines: Array<medicines> = [];
+  priceCodes: Array<priceCodes> = [];
+  footTypes: Array<footType> = [];
+  gentialTypes: Array<gentialType> = [];
+  issues: Array<issues> = [];
+  markTypes: Array<markTypes> = [];
+  constructor() {
+
+  }
+}
 
 @Injectable()
 export class SettingsProvider {
 
 
-  public setting: {
-    pregnancyStatus:Array<pregnancy_status>,
-    breeds:Array<breeds>,
-    breedingType:Array<breeding_type>,
-    health_status:Array<health_status>,
-    diseases:Array<diseases>,
-    farmType:Array<farm_type>,
-    foodType:Array<food_type>,
-    food:Array<food>,
-    medicineType:Array<medicine_type>,
-    medicineUnits:Array<medicine_units>,
-    medicines:Array<medicines>
-    priceCodes:Array<price_codes>,
-    footTypes:Array<foot_type>,
-    gentialTypes:Array<gential_type>,
-    issues:Array<issues>,
-    markTypes:Array<mark_types>
-  } 
+  public setting:setting = new setting();
+  public updated_flag = false;
 
-
-  constructor(public http: HttpClient) {
+  constructor(
+    public http: HttpClient,
+    public util : Utils,
+    public events: Events
+  ) {
     console.log('Hello SettingsProvider Provider');
   }
 
-  
 
+  getAllSettings() {
+    let headers = new HttpHeaders().set('Authorization', CONFIG.ACCESS_KEY);
+    return this.http
+      .get(CONFIG.SERVER_API.concat(API.GET_ALL_SETTINGS), { headers: headers })
+      .timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
+  }
+
+
+  sync() {
+    this.getAllSettings()
+      .then((data: setting) => {
+        if (data) {
+          this.util.setKey(KEY.SETTINGS, data)
+            .then(() => {
+              this.setting = data;
+              this.publishUpdateEvent();
+            })
+            .catch((err) => {
+              this.setting = data;
+              this.publishUpdateEvent();
+              console.log('err_storage_setting', err);
+            })
+        }
+      })
+      .catch((err) => {
+        this.util.showToast('Danh sách kho chưa được cập nhật. Vui lòng kiểm tra kết nối.');
+        console.log('err_setting_provider', err);
+        this.util.getKey(KEY.SETTINGS)
+          .then((data:setting) => {
+            this.setting = data;
+            this.publishUpdateEvent();
+          })
+          .catch((err) => {
+            this.publishUpdateEvent();
+            console.log('err_get_setting', err);
+          })
+      })
+  }
+
+  publishUpdateEvent(){
+    this.updated_flag = true;
+    this.events.publish('updated');
+  }
 }

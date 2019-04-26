@@ -9,7 +9,7 @@
         <ion-card-header>Danh sách thiết lập</ion-card-header>
         <ion-card-content class="ion-card-content-list-setting" no-padding>
           <ion-list>
-            <button   *ngFor="let setting of list_settings;let idx= index" 
+            <button   *ngFor="let key of list_keys;let idx= index" 
                       [attr.active]="idx === slider.realIndex? '':null"
                       ion-item (tap)="scrollToView(idx)">
               <ion-row>
@@ -17,7 +17,7 @@
                   <ion-icon name="app-item-setting" font28></ion-icon>
                 </ion-col>
                 <ion-col col-10>
-                  <h2 text-wrap>{{setting.title}}</h2>
+                  <h2 text-wrap>{{list_settings[key].title}}</h2>
                 </ion-col>
               </ion-row>
             </button>
@@ -99,10 +99,10 @@
 
 
       <ion-slides paper="true" #slider >
-        <ion-slide *ngFor="let setting of list_settings">
-          <setting-util *ngIf="setting.data"
-              [options]='setting' 
-              (clickAddButton)="create(setting)"
+        <ion-slide *ngFor="let key of list_keys">
+          <setting-util *ngIf="list_settings[key].data"
+              [options]='list_settings[key]' 
+              (clickAddButton)="create(list_settings[key])"
               (clickEditButton)="setting.edit($event)"
               (clickRemoveButton)="setting.remove($event)">
           </setting-util>
