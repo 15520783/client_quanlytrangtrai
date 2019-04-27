@@ -42,7 +42,7 @@
       <h2><b>{{item.groupCode}}</b></h2>
       <ion-row>
         <ion-col  [attr.col-12]="!platform.is('core')?'':null">
-          <p><b>Ngày sinh trung bình:</b> {{item.avgBirthday|date: 'dd/MM/yyyy'}}</p>
+          <p><b>Ngày sinh trung bình:</b> {{item.avgBirthday|date: 'yyyy-MM-dd'}}</p>
         </ion-col>
         <ion-col [attr.col-12]="!platform.is('core')?'':null">
           <p><b>Số lượng:</b>{{item.quantity}} con</p>

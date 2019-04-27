@@ -1,10 +1,10 @@
 import { Component, ViewChild, Renderer } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides, Events } from 'ionic-angular';
 import { EmployeesProvider } from '../../providers/employees/employees';
-import { SettingInputUtilComponent } from '../../components/setting-input-util/setting-input-util';
 import { PregnancyStatusRole } from '../../role-input/pregnancy_status';
-import { BreedingTypesRole } from '../../role-input/breeding_type';
 import { SettingsProvider } from '../../providers/settings/settings';
+import { BreedsRole } from '../../role-input/breeds';
+import { BreedingTypesRole } from '../../role-input/breeding_type';
 
 @IonicPage()
 @Component({
@@ -13,8 +13,6 @@ import { SettingsProvider } from '../../providers/settings/settings';
 })
 
 export class SettingsPage {
-  @ViewChild('pregnancyStatus') pregnancy_status_ele: any;
-  @ViewChild('breedingTypes') breeding_types_ele: any;
   @ViewChild('slider') slider: Slides;
 
 
@@ -31,7 +29,6 @@ export class SettingsPage {
     public renderer: Renderer,
     public settingProvider: SettingsProvider
   ) {
-    console.log(this.settingProvider.setting);
     this.settingProvider.setting.foods.forEach((food,idx)=>{
       this.foods_temp.push(food);
       this.foods_temp[idx].typeName = food.type.name;
@@ -43,6 +40,17 @@ export class SettingsPage {
     })
 
     this.list_settings = {
+      pregnancyStatus: {
+        title: 'Trạng thái mang thai',
+        placeholderSearch: 'Tìm kiếm trạng thái mang thai',
+        filter_default: ["name", "description"],
+        attributes: [
+          { name: "description", label: 'Mô tả' },
+        ],
+        mainAttribute: 'name',
+        data: this.settingProvider.setting.pregnancyStatus,
+        roleInput:new PregnancyStatusRole(this.settingProvider),        
+      },
       breeds: {
         title: 'Danh sách giống',
         placeholderSearch: 'Tìm kiếm giống',
@@ -57,48 +65,7 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.breeds,
-        create(navCtrl: NavController) {
-          let breeding_types_role = new BreedingTypesRole();
-          navCtrl.push(SettingInputUtilComponent,
-            {
-              title: 'Nhập thông tin trạng thái lên giống',
-              InputObjects: breeding_types_role.inputRole,
-              object: breeding_types_role.breeding_type
-            }
-          )
-        },
-        edit(e) {
-          if (e) console.log(e);
-        },
-        remove(e) {
-          if (e) console.log(e);
-        }
-      },
-      pregnancyStatus: {
-        title: 'Trạng thái mang thai',
-        placeholderSearch: 'Tìm kiếm trạng thái mang thai',
-        filter_default: ["name", "description"],
-        attributes: [
-          { name: "description", label: 'Mô tả' },
-        ],
-        mainAttribute: 'name',
-        data: this.settingProvider.setting.pregnancyStatus,
-        create(navCtrl: NavController) {
-          let pregnancy_status_role = new PregnancyStatusRole();
-          navCtrl.push(SettingInputUtilComponent,
-            {
-              title: 'Nhập thông tin trạng thái mang thai',
-              InputObjects: pregnancy_status_role.inputRole,
-              object: pregnancy_status_role.pregnancy_status,
-            }
-          )
-        },
-        edit(e) {
-          if (e) console.log(e);
-        },
-        remove(e) {
-          if (e) console.log(e);
-        }
+        roleInput:new BreedsRole(),
       },
       breedingType: {
         title: 'Loại lên giống',
@@ -109,22 +76,7 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.breedingType,
-        create(navCtrl: NavController) {
-          let breeding_types_role = new BreedingTypesRole();
-          navCtrl.push(SettingInputUtilComponent,
-            {
-              title: 'Nhập thông tin trạng thái lên giống',
-              InputObjects: breeding_types_role.inputRole,
-              object: breeding_types_role.breeding_type
-            }
-          )
-        },
-        edit(e) {
-          if (e) console.log(e);
-        },
-        remove(e) {
-          if (e) console.log(e);
-        }
+        roleInput:new BreedingTypesRole(),
       },
       healthStatus: {
         title: 'Trạng thái sức khỏe',
@@ -135,22 +87,6 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.healthStatus,
-        create(navCtrl: NavController) {
-          let breeding_types_role = new BreedingTypesRole();
-          navCtrl.push(SettingInputUtilComponent,
-            {
-              title: 'Nhập thông tin trạng thái lên giống',
-              InputObjects: breeding_types_role.inputRole,
-              object: breeding_types_role.breeding_type
-            }
-          )
-        },
-        edit(e) {
-          if (e) console.log(e);
-        },
-        remove(e) {
-          if (e) console.log(e);
-        }
       },
       diseases: {
         title: 'Danh sách bệnh',
@@ -166,22 +102,7 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.diseases,
-        create(navCtrl: NavController) {
-          let breeding_types_role = new BreedingTypesRole();
-          navCtrl.push(SettingInputUtilComponent,
-            {
-              title: 'Nhập thông tin trạng thái lên giống',
-              InputObjects: breeding_types_role.inputRole,
-              object: breeding_types_role.breeding_type
-            }
-          )
-        },
-        edit(e) {
-          if (e) console.log(e);
-        },
-        remove(e) {
-          if (e) console.log(e);
-        }
+       
       },
       farmTypes: {
         title: 'Danh sách loại trang trại',
@@ -192,22 +113,6 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.farmTypes,
-        create(navCtrl: NavController) {
-          let breeding_types_role = new BreedingTypesRole();
-          navCtrl.push(SettingInputUtilComponent,
-            {
-              title: 'Nhập thông tin trạng thái lên giống',
-              InputObjects: breeding_types_role.inputRole,
-              object: breeding_types_role.breeding_type
-            }
-          )
-        },
-        edit(e) {
-          if (e) console.log(e);
-        },
-        remove(e) {
-          if (e) console.log(e);
-        }
       },
       foodType: {
         title: 'Danh sách loại thức ăn',
@@ -218,22 +123,6 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.foodType,
-        create(navCtrl: NavController) {
-          let breeding_types_role = new BreedingTypesRole();
-          navCtrl.push(SettingInputUtilComponent,
-            {
-              title: 'Nhập thông tin trạng thái lên giống',
-              InputObjects: breeding_types_role.inputRole,
-              object: breeding_types_role.breeding_type
-            }
-          )
-        },
-        edit(e) {
-          if (e) console.log(e);
-        },
-        remove(e) {
-          if (e) console.log(e);
-        }
       },
       foods: {
         title: 'Danh sách thức ăn cho heo',
@@ -248,22 +137,6 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.foods_temp,
-        create(navCtrl: NavController) {
-          let breeding_types_role = new BreedingTypesRole();
-          navCtrl.push(SettingInputUtilComponent,
-            {
-              title: 'Nhập thông tin trạng thái lên giống',
-              InputObjects: breeding_types_role.inputRole,
-              object: breeding_types_role.breeding_type
-            }
-          )
-        },
-        edit(e) {
-          if (e) console.log(e);
-        },
-        remove(e) {
-          if (e) console.log(e);
-        }
       },
       medicineType: {
         title: 'Danh sách nhóm thuốc',
@@ -274,22 +147,6 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.medicineType,
-        create(navCtrl: NavController) {
-          let breeding_types_role = new BreedingTypesRole();
-          navCtrl.push(SettingInputUtilComponent,
-            {
-              title: 'Nhập thông tin trạng thái lên giống',
-              InputObjects: breeding_types_role.inputRole,
-              object: breeding_types_role.breeding_type
-            }
-          )
-        },
-        edit(e) {
-          if (e) console.log(e);
-        },
-        remove(e) {
-          if (e) console.log(e);
-        }
       },
       medicineUnits: {
         title: 'Danh sách bệnh',
@@ -301,22 +158,6 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.medicineUnits,
-        create(navCtrl: NavController) {
-          let breeding_types_role = new BreedingTypesRole();
-          navCtrl.push(SettingInputUtilComponent,
-            {
-              title: 'Nhập thông tin trạng thái lên giống',
-              InputObjects: breeding_types_role.inputRole,
-              object: breeding_types_role.breeding_type
-            }
-          )
-        },
-        edit(e) {
-          if (e) console.log(e);
-        },
-        remove(e) {
-          if (e) console.log(e);
-        }
       },
       medicines: {
         title: 'Danh sách thuốc',
@@ -331,22 +172,7 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.medicines_temp,
-        create(navCtrl: NavController) {
-          let breeding_types_role = new BreedingTypesRole();
-          navCtrl.push(SettingInputUtilComponent,
-            {
-              title: 'Nhập thông tin trạng thái lên giống',
-              InputObjects: breeding_types_role.inputRole,
-              object: breeding_types_role.breeding_type
-            }
-          )
-        },
-        edit(e) {
-          if (e) console.log(e);
-        },
-        remove(e) {
-          if (e) console.log(e);
-        }
+      
       },
       priceCodes: {
         title: 'Danh sách mã sản phẩm',
@@ -357,22 +183,6 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.priceCodes,
-        create(navCtrl: NavController) {
-          let breeding_types_role = new BreedingTypesRole();
-          navCtrl.push(SettingInputUtilComponent,
-            {
-              title: 'Nhập thông tin trạng thái lên giống',
-              InputObjects: breeding_types_role.inputRole,
-              object: breeding_types_role.breeding_type
-            }
-          )
-        },
-        edit(e) {
-          if (e) console.log(e);
-        },
-        remove(e) {
-          if (e) console.log(e);
-        }
       },
       footType: {
         title: 'Danh sách loại chân',
@@ -383,22 +193,6 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.foodType,
-        create(navCtrl: NavController) {
-          let breeding_types_role = new BreedingTypesRole();
-          navCtrl.push(SettingInputUtilComponent,
-            {
-              title: 'Nhập thông tin trạng thái lên giống',
-              InputObjects: breeding_types_role.inputRole,
-              object: breeding_types_role.breeding_type
-            }
-          )
-        },
-        edit(e) {
-          if (e) console.log(e);
-        },
-        remove(e) {
-          if (e) console.log(e);
-        }
       },
       gentialType: {
         title: 'Danh sách loại bộ phận sinh dục',
@@ -408,23 +202,7 @@ export class SettingsPage {
           { name: "description", label: 'Mô tả' },
         ],
         mainAttribute: 'name',
-        data: this.settingProvider.setting.gentialTypes,
-        create(navCtrl: NavController) {
-          let breeding_types_role = new BreedingTypesRole();
-          navCtrl.push(SettingInputUtilComponent,
-            {
-              title: 'Nhập thông tin trạng thái lên giống',
-              InputObjects: breeding_types_role.inputRole,
-              object: breeding_types_role.breeding_type
-            }
-          )
-        },
-        edit(e) {
-          if (e) console.log(e);
-        },
-        remove(e) {
-          if (e) console.log(e);
-        }
+        data: this.settingProvider.setting.gentialType,
       },
       issues: {
         title: 'Danh sách lâm sàn',
@@ -438,22 +216,6 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.issues,
-        create(navCtrl: NavController) {
-          let breeding_types_role = new BreedingTypesRole();
-          navCtrl.push(SettingInputUtilComponent,
-            {
-              title: 'Nhập thông tin trạng thái lên giống',
-              InputObjects: breeding_types_role.inputRole,
-              object: breeding_types_role.breeding_type
-            }
-          )
-        },
-        edit(e) {
-          if (e) console.log(e);
-        },
-        remove(e) {
-          if (e) console.log(e);
-        }
       },
       markTypes: {
         title: 'Danh sách loại đánh dấu',
@@ -464,23 +226,34 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.markTypes,
-        create(navCtrl: NavController) {
-          let breeding_types_role = new BreedingTypesRole();
-          navCtrl.push(SettingInputUtilComponent,
-            {
-              title: 'Nhập thông tin trạng thái lên giống',
-              InputObjects: breeding_types_role.inputRole,
-              object: breeding_types_role.breeding_type
-            }
-          )
-        },
-        edit(e) {
-          if (e) console.log(e);
-        },
-        remove(e) {
-          if (e) console.log(e);
-        }
       },
+      // roles: {
+      //   title: 'Danh sách chức vụ',
+      //   placeholderSearch: 'Tìm kiếm chức vụ',
+      //   filter_default: ["name", "description"],
+      //   attributes: [
+      //     { name: "description", label: 'Mô tả' },
+      //   ],
+      //   mainAttribute: 'name',
+      //   data: this.settingProvider.setting.roles,
+      //   create(navCtrl: NavController) {
+      //     let breeding_types_role = new BreedingTypesRole();
+      //     navCtrl.push(SettingInputUtilComponent,
+      //       {
+      //         title: 'Nhập thông tin chức vụ',
+      //         InputObjects: breeding_types_role.inputRole,
+      //         object: breeding_types_role.breeding_type
+      //       }
+      //     )
+      //   },
+      //   edit(e) {
+      //     if (e) console.log(e);
+      //   },
+      //   remove(e) {
+      //     if (e) console.log(e);
+      //   }
+      // },
+
       // { title: 'Danh sách phương pháp phối giống', compt: '' },
       // { title: 'Danh sách lâm sàn', compt: '' },
       // { title: 'Danh sách quyền', compt: '' },
@@ -518,5 +291,9 @@ export class SettingsPage {
 
   create(item) {
     item.create(this.navCtrl);
+  }
+
+  edit(item,data){
+    item.edit(this.navCtrl,data);
   }
 }

@@ -169,6 +169,12 @@ ion-menu {
     }
 }
 
+.ion-toast-success {
+    .toast-wrapper{
+       background: #32db64!important;
+    }
+}
+
 .ion-actionsheet{
     .action-sheet-group {
         // background: linear-gradient(to right, #01C2FA, #d7d8da)!important;

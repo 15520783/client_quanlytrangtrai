@@ -47,6 +47,19 @@ export class Utils {
     return this.toast.present();
   }
 
+  showToastSuccess(message) {
+    this.toastOptions = {
+      message: message,
+      duration: 5000,
+      position: 'bottom',
+      closeButtonText: 'Close',
+      cssClass: 'ion-toast-success',
+      showCloseButton: true,
+    }
+    this.toast = this.toastCtrl.create(this.toastOptions)
+    return this.toast.present();
+  }
+
   showAlert(options: any) {
     let alert = this.alertCtrl.create(options);
     return alert.present();

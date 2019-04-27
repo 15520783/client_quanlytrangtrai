@@ -8,9 +8,9 @@
   </ion-header>
   
   <ion-content padding>
-    <form action="" (ngSubmit)="onSubmit()" style="padding-bottom: 10vH">
+    <form [formGroup]="credentialsForm" action="" (ngSubmit)="onSubmit()" style="padding-bottom: 10vH">
       <ion-list>
-        <span *ngFor="let field of InputObjects">
+        <span *ngFor="let field of roleInput.inputRole">
             <input-text *ngIf="field.type == 'input-text' "
                         [(validControl)] = "credentialsForm.controls[field.name]"
                         [errorMessage_Required]  = "field.message.isRequire"

@@ -1,7 +1,11 @@
 import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { Content } from 'ionic-angular';
+import { Content, NavController, Events } from 'ionic-angular';
 import { FormControl } from '@angular/forms';
 import { FilterProvider } from '../../providers/filter/filter';
+import { SettingInputUtilComponent } from '../setting-input-util/setting-input-util';
+import { Utils } from '../../common/utils';
+import { KEY } from '../../common/const';
+import { SettingsProvider } from '../../providers/settings/settings';
 
 
 @Component({
@@ -14,27 +18,28 @@ export class SettingUtilComponent {
   @Input() data: Array<any> = [];
   @Input() selectMode: boolean = false;
   @Input() mainAttribute: string;
-  @Input() attributes: Array<{name:string,label:string}> = [];
+  @Input() attributes: Array<{ name: string, label: string }> = [];
   @Input() placeholderSearch: string = ''
   @Input() filter_default: Array<string> = [];
-  @Input() addButtonLabel:string = 'Thêm';
-  @Input() editButtonLabel:string = 'Sửa';
-  @Input() removeButtonLabel:string = 'Xóa';
-
+  @Input() addButtonLabel: string = 'Thêm';
+  @Input() editButtonLabel: string = 'Sửa';
+  @Input() removeButtonLabel: string = 'Xóa';
+  @Input() roleInput: any;
 
   @Input() options: {
     data: Array<any>,
     selectMode: boolean,
     mainAttribute: string,
-    attributes: Array<{name:string,label:string}>,
+    attributes: Array<{ name: string, label: string }>,
     placeholderSearch: string,
     filter_default: Array<string>,
-    addButtonLabel:string
+    addButtonLabel: string,
+    roleInput: any;
   }
 
-  @Output() clickAddButton  = new EventEmitter(); 
-  @Output() clickEditButton  = new EventEmitter(); 
-  @Output() clickRemoveButton  = new EventEmitter(); 
+  @Output() clickAddButton = new EventEmitter();
+  @Output() clickEditButton = new EventEmitter();
+  @Output() clickRemoveButton = new EventEmitter();
 
   public page_Idx: number = 1;
   public page_Total: number = 0;
@@ -47,17 +52,26 @@ export class SettingUtilComponent {
 
   constructor(
     public filterProvider: FilterProvider,
+    public navCtrl: NavController,
+    public events: Events,
+    public util: Utils,
+    public settingProvider: SettingsProvider
   ) {
     console.log('Hello SettingUtilComponent Component');
   }
 
   ngAfterViewInit(): void {
+    this.init();
+  }
+
+  init() {
     this.options.mainAttribute ? this.mainAttribute = this.options.mainAttribute : this.mainAttribute;
     this.options.data.length ? this.data = this.options.data : this.data;
     this.options.placeholderSearch ? this.placeholderSearch = this.options.placeholderSearch : this.placeholderSearch;
     this.options.attributes.length ? this.attributes = this.options.attributes : this.attributes;
     this.options.filter_default.length ? this.filter_default = this.options.filter_default : this.filter_default;
     this.options.addButtonLabel ? this.addButtonLabel = this.options.addButtonLabel : this.addButtonLabel;
+    this.options.roleInput ? this.roleInput = this.options.roleInput : this.roleInput;
     this.setFilteredItems();
   }
 
@@ -95,15 +109,75 @@ export class SettingUtilComponent {
     }, 800);
   }
 
-  add(){
-    this.clickAddButton.emit(true);
+  add() {
+    this.navCtrl.push(SettingInputUtilComponent,
+      {
+        insertMode: true,
+        roleInput: this.roleInput
+      }
+    )
+
+    this.events.subscribe('callback', (data) => {
+      if (data) {
+        this.data = data;
+        this.setFilteredItems();
+        this.roleInput.clear();
+        this.events.unsubscribe('callback');
+      }
+    })
   }
 
-  edit(item){
-    this.clickEditButton.emit({data:item});
+
+  edit(item) {
+    // this.clickEditButton.emit(item);
+    this.roleInput.object = item;
+    this.navCtrl.push(SettingInputUtilComponent,
+      {
+        // title: this.roleInput.headerTitle.insertMode,
+        // InputObjects: this.roleInput.inputRole,
+        // object: item
+        editMode: true,
+        roleInput: this.roleInput,
+        callback: this.loadData
+      }
+    )
   }
 
-  remove(item){
-    this.clickRemoveButton.emit({data:item});
+  remove(item) {
+    this.util.showLoading('Tiến hành xử lý dữ liệu');
+    this.roleInput.delete(item)
+      .then((res: any) => {
+        if (res) {
+          this.util.closeLoading().then(() => {
+            this.util.showToastSuccess('Đã xóa.');
+          })
+          this.util.getKey(KEY.SETTINGS).then((setting) => {
+            if (setting) {
+              let idx = setting[this.roleInput.keySettingStorage].findIndex(obj => obj.id == item.id);
+              setting[this.roleInput.keySettingStorage].splice(idx, 1);
+              this.util.setKey(KEY.SETTINGS, setting).then(() => {
+                this.settingProvider.setting = setting;
+                this.data = setting[this.roleInput.keySettingStorage];
+                this.setFilteredItems();
+              })
+            }
+          })
+        }
+      })
+      .catch((err:Error)=>{
+        console.log(err);
+        this.util.closeLoading().then(() => {
+          this.util.showToast('Xóa thất bại. ERR:' + err.message);
+        })
+      })
   }
+
+
+  // reload = data =>{
+  //   return new Promise((resolve, reject) => {
+  //     this.data = data;
+  //     this.setFilteredItems();
+  //     resolve();
+  //   });
+  // }
 }

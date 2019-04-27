@@ -10,7 +10,6 @@ export class FilterProvider {
     public util: Utils
   ) {
     console.log('Hello FilterProvider Provider');
-    console.log(this.input);
   }
 
   public input: any = [];
@@ -56,7 +55,6 @@ export class FilterProvider {
       })
     })
 
-    console.log(this.searchWithRange);
     Object.keys(this.searchWithRange).forEach((e) => {
       result = result.filter((value) => {
         // if (value[e] !== undefined)

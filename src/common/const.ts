@@ -1,14 +1,19 @@
 const KEY = {
-    ACCESSTOKEN:'accessToken',
-    TOKENTYPE:'tokenType',
+    ACCESSTOKEN: 'accessToken',
+    TOKENTYPE: 'tokenType',
     FARMS: 'farms',
     SECTIONS: 'sections',
-    HOUSES:'houses',
+    HOUSES: 'houses',
     PIGS: 'pigs',
     GROUPS: 'groups',
     EMPLOYEES: 'employees',
     WAREHOUSES: 'warehouses',
-    SETTINGS:'settings'
+    SETTINGS: 'settings',
+    PARTNERS: 'partners'
+}
+
+const SETTING_STORAGE_KEY = {
+    PREGNANCY_STATUS: 'pregnancyStatus',
 }
 
 const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -17,8 +22,8 @@ const CONFIG = {
     // SERVER_API: 'http://192.168.0.36:3000',
     SERVER_API: 'https://quanlytrangtrai-uit.herokuapp.com',
     DEFAULT_TIMEOUT: 30000,
-    LANGUAGE_DEFAULT:'vi',
-    ACCESS_KEY:''
+    LANGUAGE_DEFAULT: 'vi',
+    ACCESS_KEY: ''
 }
 
 const VARIABLE = {
@@ -31,9 +36,9 @@ const VARIABLE = {
 }
 
 const API = {
-    LOGIN:'https://quanlytrangtrai-uit.herokuapp.com/auth/login',
+    LOGIN: 'https://quanlytrangtrai-uit.herokuapp.com/auth/login',
     // GET_ALL_FARMS: '/api/farms',
-    GET_ALL_FARMS:'https://quanlytrangtrai-uit.herokuapp.com/api/farms/list',
+    GET_ALL_FARMS: 'https://quanlytrangtrai-uit.herokuapp.com/api/farms/list',
     // GET_ALL_SECTIONS: '/api/sections',
     GET_ALL_SECTIONS: '/api/sections/list',
     // GET_ALL_HOUSES: '/api/houses',
@@ -46,11 +51,16 @@ const API = {
     GET_ALL_EMPLOYEES: 'https://quanlytrangtrai-uit.herokuapp.com/api/employees/list',
     // GET_ALL_WAREHOUSES: '/api/warehouses',
     GET_ALL_WAREHOUSES: '/api/warehouses/list',
-    GET_ALL_SETTINGS:'/api/settings/list'
+    GET_ALL_SETTINGS: '/api/settings/list',
+
+
+    CREATE_PREGNANCY_STATUS: '/api/pregnancystatus/',
+    DELETE_PREGNANCY_STATUS:'/api/pregnancystatus/'
 }
 
 export { KEY }
 export { API }
 export { CONFIG }
 export { VARIABLE }
-export { EMAIL_PATTERN } 
+export { EMAIL_PATTERN }
+export { SETTING_STORAGE_KEY }

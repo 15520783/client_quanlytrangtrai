@@ -1,8 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NavParams } from 'ionic-angular';
+import { NavParams, NavController, Events } from 'ionic-angular';
 import { ValidateEmail } from '../../validators/email.validator';
 import { ValidateNumber } from '../../validators/number.validator';
+import { Utils } from '../../common/utils';
+import { KEY } from '../../common/const';
+import { SettingsProvider } from '../../providers/settings/settings';
 
 @Component({
   selector: 'setting-input-util',
@@ -16,27 +19,41 @@ export class SettingInputUtilComponent {
   // @Input() InputObjects: any = [];
   // @Input() groupFormBuild: any;
 
-  public title: string = 'Nhập thông tin';
-  public InputObjects: any = [];
-  public groupFormBuild: any = {};
-  public object: any = {};
 
+  public title: string = 'Nhập thông tin';
+  // public InputObjects: any = [];
+  // public object: any = {};
+
+  public roleInput: { inputRole: any, object: any, headerTitle: any, keySettingStorage: string, insert() };
+  public groupFormBuild: any = {};
   public submitAttempt: boolean = false;
   credentialsForm: FormGroup;
 
   constructor(
+    public navCtrl: NavController,
     public navParams: NavParams,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public util: Utils,
+    public settingProvider: SettingsProvider,
+    public events: Events
   ) {
     if (this.navParams.data) {
-      this.title = this.navParams.data.title;
-      this.InputObjects = this.navParams.data.InputObjects;
-      this.object = this.navParams.data.object;
-      console.log(this.navParams.data.object);
+      this.roleInput = this.navParams.data.roleInput;
+      if (this.navParams.data.insertMode) {
+        this.title = this.navParams.data.roleInput.headerTitle.insertMode;
+      }
+      if (this.navParams.data.editMode) {
+        this.title = this.navParams.data.roleInput.headerTitle.updateMode;
+      }
+
+      // this.title = this.navParams.data.title;
+      // this.InputObjects = this.navParams.data.InputObjects;
+      // this.object = this.navParams.data.object;
     }
-    this.navParams.data.InputObjects.forEach(e => {
+
+    this.navParams.data.roleInput.inputRole.forEach(e => {
       this.groupFormBuild[e.name] = [
-        this.navParams.data.object[e.name],
+        this.navParams.data.roleInput.object[e.name],
         Validators.compose([
           e.isRequire ? Validators.required : null,
           e.isMaxlength ? Validators.maxLength(e.maxlength) : null,
@@ -46,13 +63,54 @@ export class SettingInputUtilComponent {
       ]
     })
 
+
     this.credentialsForm = this.formBuilder.group(this.groupFormBuild);
     console.log('Hello SettingInputUtilComponent Component');
   }
 
   onSubmit() {
     this.submitAttempt = true;
-    console.log(this.credentialsForm.value);
-    console.log(this.InputObjects);
+    if (this.credentialsForm.valid) {
+      this.roleInput.inputRole.forEach(e => {
+        this.roleInput.object[e.name] = this.credentialsForm.controls[e.name].value;
+      });
+
+      if (this.navParams.data.insertMode) {
+        this.util.showLoading('Tiến hành xử lý dữ liệu');
+        this.roleInput.insert()
+          .then((data: any) => {
+            if (data) {
+              this.util.closeLoading().then(() => {
+                this.util.showToastSuccess('Dữ liệu đã cập nhật.');
+              })
+              this.util.getKey(KEY.SETTINGS).then((setting) => {
+                if (setting) {
+                  setting[this.roleInput.keySettingStorage].push(data);
+                  this.util.setKey(KEY.SETTINGS, setting).then(() => {
+                    this.settingProvider.setting = setting;
+                    this.events.publish('callback', setting[this.roleInput.keySettingStorage]);
+                    this.navCtrl.pop();
+                  })
+                }
+              })
+            }
+          })
+          .catch((err: Error) => {
+            console.log(err);
+            this.util.closeLoading().then(() => {
+              this.util.showToast('Dữ liệu cập nhật thất bại. ERR:' + err.message);
+            })
+          })
+      }
+    }
+
   }
+
+  ngAfterContentInit(): void {
+
+    this.navParams.data.roleInput.inputRole.forEach(e => {
+      this.credentialsForm.controls[e.name].setValue(this.roleInput.object[e.name]);
+    })
+  }
+
 }

@@ -1,7 +1,12 @@
 import { InputObject, breedingType } from "../common/entity";
 
 export class BreedingTypesRole {
-    public breeding_type = new breedingType();
+    public object = new breedingType();
+    
+    public headerTitle = {
+        insertMode:'Nhập thông tin trạng thái lên giống',
+        updateMode:'Cập nhật thông tin trạng thái lên giống'
+    }
 
     public inputRole:Array<InputObject> =[
         {
@@ -20,7 +25,7 @@ export class BreedingTypesRole {
                 isMaxlength:'Tên trạng thái lên giống không được vượt quá 1000 ký tự'
             },
             type:"input-text",
-            value: this.breeding_type.name,
+            value: this.object.name,
             data:null
         },
         {
@@ -39,7 +44,7 @@ export class BreedingTypesRole {
                 isMaxlength:'Thông tin mô tả không được vượt quá 1000 ký tự'
             },
             type:"input-text",
-            value:this.breeding_type.description,
+            value:this.object.description,
             data:null
         }
     ];

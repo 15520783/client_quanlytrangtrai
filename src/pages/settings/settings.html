@@ -2,16 +2,15 @@
   <header [title]="'Thiết lập'">
   </header>
 </ion-header>
-<ion-content>
+<ion-content showWhen="core">
   <ion-row>
     <ion-col col-lg-3 col-md-4>
       <ion-card mode='ios'>
         <ion-card-header>Danh sách thiết lập</ion-card-header>
         <ion-card-content class="ion-card-content-list-setting" no-padding>
           <ion-list>
-            <button   *ngFor="let key of list_keys;let idx= index" 
-                      [attr.active]="idx === slider.realIndex? '':null"
-                      ion-item (tap)="scrollToView(idx)">
+            <button *ngFor="let key of list_keys;let idx= index" [attr.active]="idx === slider.realIndex? '':null"
+              ion-item (tap)="scrollToView(idx)">
               <ion-row>
                 <ion-col align-self-center col-2>
                   <ion-icon name="app-item-setting" font28></ion-icon>
@@ -27,87 +26,50 @@
     </ion-col>
 
     <ion-col col-lg-9 col-md-8 no-padding>
-      <!-- <ion-scroll scrollY="true" style="height: 88vH">
-        <ion-list style='padding-bottom: 35vH'>
-          <span #pregnancyStatus>
-            <ion-card mode='ios' style="margin-top: 0px!important">
-              <ion-card-header>
-                Trạng thái mang thai
-              </ion-card-header>
-              <ion-card-content>
-                <ion-list-header no-margin>
-                  <ion-row>
-                    <ion-col col-5 text-wrap>Tên</ion-col>
-                    <ion-col col-5 text-wrap>Mô tả</ion-col>
-                    <ion-col col-2></ion-col>
-                  </ion-row>
-                </ion-list-header>
-                <ion-list class="content-item-setting">
-                  <ion-item *ngFor="let item of pregnancy_status">
-                    <ion-row>
-                      <ion-col col-5 align-self-center text-wrap>{{item.name}}</ion-col>
-                      <ion-col col-5 align-self-center text-wrap>{{item.description}}</ion-col>
-                      <ion-col col-2>
-                        <button small text-wrap ion-button block mode='ios' color="primary">Chỉnh sửa</button>
-                      </ion-col>
-                    </ion-row>
-                  </ion-item>
-                </ion-list>
-                <ion-row>
-                  <ion-col item-end>
-                    <button mode='ios' ion-button item-end color="secondary">Thêm</button>
-                  </ion-col>
-                </ion-row>
-              </ion-card-content>
-            </ion-card>
-          </span>
-
-          <span #breedingTypes>
-            <ion-card mode='ios' style="margin-top: 0px!important">
-              <ion-card-header>
-                Trạng thái lên giống
-              </ion-card-header>
-              <ion-card-content>
-                <ion-list-header no-margiw>
-                  <ion-row>
-                    <ion-col col-5 text-wrap>Tên</ion-col>
-                    <ion-col col-5 text-wrap>Mô tả</ion-col>
-                    <ion-col col-2 text-wrap></ion-col>
-                  </ion-row>
-                </ion-list-header>
-                <ion-list class="content-item-setting">
-                  <ion-item *ngFor="let item of breeding_types">
-                    <ion-row>
-                      <ion-col col-5 align-self-center text-wrap>{{item.name}}</ion-col>
-                      <ion-col col-5 align-self-center text-wrap>{{item.description}}</ion-col>
-                      <ion-col col-2>
-                        <button small text-wrap ion-button block mode='ios' color="primary">Chỉnh sửa</button>
-                      </ion-col>
-                    </ion-row>
-                  </ion-item>
-                </ion-list>
-                <ion-row>
-                  <ion-col item-end>
-                    <button mode='ios' ion-button item-end color="secondary">Thêm</button>
-                  </ion-col>
-                </ion-row>
-              </ion-card-content>
-            </ion-card>
-          </span>
-        </ion-list>
-      </ion-scroll> -->
-
-
-      <ion-slides paper="true" #slider >
+      <ion-slides paper="true" #slider>
         <ion-slide *ngFor="let key of list_keys">
-          <setting-util *ngIf="list_settings[key].data"
-              [options]='list_settings[key]' 
-              (clickAddButton)="create(list_settings[key])"
-              (clickEditButton)="setting.edit($event)"
-              (clickRemoveButton)="setting.remove($event)">
+          <setting-util *ngIf="list_settings[key].data" [options]='list_settings[key]'
+            (clickAddButton)="create(list_settings[key])" (clickEditButton)="edit(list_settings[key],$event)"
+            (clickRemoveButton)="list_settings[key].remove($event)">
           </setting-util>
         </ion-slide>
       </ion-slides>
     </ion-col>
   </ion-row>
 </ion-content>
+
+<!-- <ion-content showWhen="ios,android">
+  <ion-row>
+    <ion-col col-lg-3 col-md-4>
+      <ion-card mode='ios'>
+        <ion-card-header>Danh sách thiết lập</ion-card-header>
+        <ion-card-content class="ion-card-content-list-setting" no-padding>
+          <ion-list>
+            <button *ngFor="let key of list_keys;let idx= index" [attr.active]="idx === slider.realIndex? '':null"
+              ion-item (tap)="scrollToView(idx)">
+              <ion-row>
+                <ion-col align-self-center col-2>
+                  <ion-icon name="app-item-setting" font28></ion-icon>
+                </ion-col>
+                <ion-col col-10>
+                  <h2 text-wrap>{{list_settings[key].title}}</h2>
+                </ion-col>
+              </ion-row>
+            </button>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+
+    <ion-col col-lg-9 col-md-8 no-padding>
+      <ion-slides paper="true" #slider>
+        <ion-slide *ngFor="let key of list_keys">
+          <setting-util *ngIf="list_settings[key].data" [options]='list_settings[key]'
+            (clickAddButton)="create(list_settings[key])" (clickEditButton)="edit(list_settings[key],$event)"
+            (clickRemoveButton)="list_settings[key].remove($event)">
+          </setting-util>
+        </ion-slide>
+      </ion-slides>
+    </ion-col>
+  </ion-row>
+</ion-content> -->

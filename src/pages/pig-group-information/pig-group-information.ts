@@ -31,7 +31,6 @@ export class PigGroupInformationPage {
     this.group.round.from = this.util.convertDate(this.group.round.from);
     this.group.round.to = this.util.convertDate(this.group.round.to);
     this.group['roundTerm']= this.group.round.from.concat(' - ').concat(this.group.round.to);
-    // this.group.avgBirthday = this.util.convertDate(this.group.avgBirthday);
 
     this.util.showLoading('Đang lấy danh sách heo thuộc nhóm');
     this.util.getKey(KEY.PIGS).then((data: Array<pig>) => {
@@ -45,6 +44,9 @@ export class PigGroupInformationPage {
     console.log('ionViewDidLoad PigGroupInformationPage');
   }
 
+  ngAfterContentInit(): void {
+      this.group.avgBirthday = this.util.convertDate(this.group.avgBirthday);
+  }
 
   slideChange() {
     this.content.resize();

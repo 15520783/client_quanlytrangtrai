@@ -28,6 +28,8 @@ export { regencies }
 export { mating_status }
 export { warehouse_type }
 export { round }
+export {partners}
+export {roles}
 
 
 class base {
@@ -364,6 +366,28 @@ class round extends base {
 	to: any = '';
 	numberOfPig: number = null;
 	birthId: string = '';
+}
+
+class roles extends base {
+	name:string='';
+	code:string='';
+	description:string='';
+}
+
+
+class partners extends base {
+	code:string = '';
+	name:string = '';
+	manager:string = '';
+	address:string='';
+	phone:string = '';
+	agencyName:string = '';
+	agencyAddress:string = '';
+	agencyPhone:string='';
+	distributionName:string='';
+	distributionAddress:string='';
+	distributionPhone:string='';
+	description:string='';
 }
 
 

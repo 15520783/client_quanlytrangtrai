@@ -29,7 +29,7 @@
       <!-- <ion-avatar item-start>
         <img src="../../assets/imgs/default-user.png">
       </ion-avatar> -->
-      <h2 *ngIf="mainAttribute">{{item[mainAttribute]}}</h2>
+      <h2 *ngIf="mainAttribute"><b>{{item[mainAttribute]}}</b></h2>
       <ion-row>
         <ion-col *ngFor="let attr of attributes"  col-6 text-wrap>
           <p style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
