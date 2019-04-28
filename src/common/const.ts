@@ -55,7 +55,8 @@ const API = {
 
 
     CREATE_PREGNANCY_STATUS: '/api/pregnancystatus/',
-    DELETE_PREGNANCY_STATUS:'/api/pregnancystatus/'
+    DELETE_PREGNANCY_STATUS:'/api/pregnancystatus/',
+    UPDATE_PREGNANCY_STATUS:'/api/pregnancystatus/'
 }
 
 export { KEY }

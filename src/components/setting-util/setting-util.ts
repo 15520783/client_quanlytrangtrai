@@ -129,18 +129,21 @@ export class SettingUtilComponent {
 
 
   edit(item) {
-    // this.clickEditButton.emit(item);
     this.roleInput.object = item;
     this.navCtrl.push(SettingInputUtilComponent,
       {
-        // title: this.roleInput.headerTitle.insertMode,
-        // InputObjects: this.roleInput.inputRole,
-        // object: item
         editMode: true,
         roleInput: this.roleInput,
-        callback: this.loadData
       }
     )
+    this.events.subscribe('callback', (data) => {
+      if (data) {
+        this.data = data;
+        this.setFilteredItems();
+        this.roleInput.clear();
+        this.events.unsubscribe('callback');
+      }
+    })
   }
 
   remove(item) {
@@ -148,6 +151,7 @@ export class SettingUtilComponent {
     this.roleInput.delete(item)
       .then((res: any) => {
         if (res) {
+          console.log(res);
           this.util.closeLoading().then(() => {
             this.util.showToastSuccess('Đã xóa.');
           })

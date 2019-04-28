@@ -24,7 +24,7 @@ export class SettingInputUtilComponent {
   // public InputObjects: any = [];
   // public object: any = {};
 
-  public roleInput: { inputRole: any, object: any, headerTitle: any, keySettingStorage: string, insert() };
+  public roleInput: { inputRole: any, object: any, headerTitle: any, keySettingStorage: string, insert(),update() };
   public groupFormBuild: any = {};
   public submitAttempt: boolean = false;
   credentialsForm: FormGroup;
@@ -86,6 +86,35 @@ export class SettingInputUtilComponent {
               this.util.getKey(KEY.SETTINGS).then((setting) => {
                 if (setting) {
                   setting[this.roleInput.keySettingStorage].push(data);
+                  this.util.setKey(KEY.SETTINGS, setting).then(() => {
+                    this.settingProvider.setting = setting;
+                    this.events.publish('callback', setting[this.roleInput.keySettingStorage]);
+                    this.navCtrl.pop();
+                  })
+                }
+              })
+            }
+          })
+          .catch((err: Error) => {
+            console.log(err);
+            this.util.closeLoading().then(() => {
+              this.util.showToast('Dữ liệu cập nhật thất bại. ERR:' + err.message);
+            })
+          })
+      }
+
+      if(this.navParams.data.editMode){
+        this.util.showLoading('Tiến hành xử lý dữ liệu');
+        this.roleInput.update()
+          .then((data: any) => {
+            if (data) {
+              this.util.closeLoading().then(() => {
+                this.util.showToastSuccess('Dữ liệu đã cập nhật.');
+              })
+              this.util.getKey(KEY.SETTINGS).then((setting) => {
+                if (setting) {
+                  let idx = setting[this.roleInput.keySettingStorage].findIndex(obj => obj.id == data.id);
+                  setting[this.roleInput.keySettingStorage][idx] = data;
                   this.util.setKey(KEY.SETTINGS, setting).then(() => {
                     this.settingProvider.setting = setting;
                     this.events.publish('callback', setting[this.roleInput.keySettingStorage]);

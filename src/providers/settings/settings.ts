@@ -98,7 +98,6 @@ export class SettingsProvider {
   }
 
   deletePregnancyStatus(objBody:pregnancyStatus){
-    let headers =  new HttpHeaders().set('Authorization', CONFIG.ACCESS_KEY);
     
     const options = {
       headers: new HttpHeaders({
@@ -107,6 +106,13 @@ export class SettingsProvider {
       body: objBody
     };
     return this.http.delete(CONFIG.SERVER_API.concat(API.DELETE_PREGNANCY_STATUS),options)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  updatePregnancyStatus(objBody:pregnancyStatus){
+    let headers =  new HttpHeaders().set('Authorization', CONFIG.ACCESS_KEY);
+    return this.http.put(CONFIG.SERVER_API.concat(API.UPDATE_PREGNANCY_STATUS),objBody,{headers:headers})
     .timeout(CONFIG.DEFAULT_TIMEOUT)
     .toPromise();
   }

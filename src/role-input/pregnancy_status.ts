@@ -62,8 +62,12 @@ export class PregnancyStatusRole {
         return this.settingProvider.createNewPregnancyStatus(this.object)
     }
 
-    delete(){
-        return this.settingProvider.deletePregnancyStatus(this.object);
+    delete(object){
+        return this.settingProvider.deletePregnancyStatus(object);
+    }
+
+    update(){
+        return this.settingProvider.updatePregnancyStatus(this.object);
     }
 
     clear(){
