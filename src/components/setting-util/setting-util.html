@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons left *ngIf="selectMode">
+    <ion-buttons left showWhen="ios,android">
       <button navPop ion-button icon-only>
         <ion-icon name="arrow-back"></ion-icon>
       </button>
@@ -8,39 +8,46 @@
     <ion-searchbar col-md-7 mode="ios" animated="true" debounce="500" [placeholder]="placeholderSearch"
       [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="setFilteredItems()">
     </ion-searchbar>
-    <!-- <ion-buttons right>
-      <button ion-button font20 (tap)="showFilter=!showFilter">
-        <ion-icon name="funnel"></ion-icon>
-      </button>
-      <button ion-button font20 (tap)="closeMenu()" *ngIf="selectMode">
-        <ion-icon name="ios-arrow-forward"></ion-icon>
-      </button>
-    </ion-buttons> -->
   </ion-toolbar>
 </ion-header>
 <ion-content #content class="setting-util-component">
-  <ion-item-divider custom-diviver sticky="true">
+  <ion-item-divider custom-diviver sticky="true" showWhen="core">
     <ion-row>
       <button no-margin ion-button item-end mode='ios' color="secondary" (tap)="add()">{{addButtonLabel}}</button>
     </ion-row>
   </ion-item-divider>
   <ion-list>
-    <ion-item *ngFor="let item of visible_items" >
-      <!-- <ion-avatar item-start>
-        <img src="../../assets/imgs/default-user.png">
-      </ion-avatar> -->
-      <h2 *ngIf="mainAttribute"><b>{{item[mainAttribute]}}</b></h2>
-      <ion-row>
-        <ion-col *ngFor="let attr of attributes"  col-6 text-wrap>
-          <p style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
-        </ion-col>
-      </ion-row>
-      <button ion-button item-end mode='ios' color="main" (tap)="edit(item)">Sửa</button>
-      <button ion-button item-end mode='ios' color="danger" (tap)="remove(item)">Xóa</button>
-    </ion-item>
+    <ion-item-sliding *ngFor="let item of visible_items">
+      <ion-item>
+        <h2 *ngIf="mainAttribute"><b>{{item[mainAttribute]}}</b></h2>
+        <ion-row>
+          <ion-col *ngFor="let attr of attributes" col-6 text-wrap>
+            <p style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
+          </ion-col>
+        </ion-row>
+        <button showWhen="core" ion-button item-end mode='ios' color="main" (tap)="edit(item)">Sửa</button>
+        <button showWhen="core" ion-button item-end mode='ios' color="danger" (tap)="remove(item)">Xóa</button>
+      </ion-item>
+      <ion-item-options side="right" showWhe="ios,android">
+        <button ion-button color="main" (tap)="edit(item)">Sửa</button>
+        <button ion-button color="danger" (tap)="remove(item)">Xóa</button>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
   <ion-infinite-scroll (ionInfinite)="loadData($event)" *ngIf="page_Idx!==page_Total">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Đang tải dữ liệu...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
+
+  <ion-fab bottom right showWhen="android,windows,ios" color="secondary" >
+    <button ion-fab (tap)="add()">
+      <ion-icon name="add" ></ion-icon>
+    </button>
+    <!-- <ion-fab-list side="top" style="right:0px">
+      <button data-balloon-visible data-balloon-length="medium" data-balloon="Thêm mới" data-balloon-pos="left" ion-fab
+        color="main" (tap)="add()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-fab-list> -->
+  </ion-fab>
 </ion-content>

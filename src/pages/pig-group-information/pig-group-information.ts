@@ -5,6 +5,7 @@ import { Utils } from '../../common/utils';
 import { KEY } from '../../common/const';
 import { PigViewPage } from '../../tabs/pig-view/pig-view';
 import { PigGroupInputPage } from '../pig-group-input/pig-group-input';
+import { DatePipe } from '@angular/common';
 
 @IonicPage()
 @Component({
@@ -25,12 +26,14 @@ export class PigGroupInformationPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public util: Utils,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    public datePipe : DatePipe
   ) {
     this.group = this.navParams.data.group;
     this.group.round.from = this.util.convertDate(this.group.round.from);
     this.group.round.to = this.util.convertDate(this.group.round.to);
     this.group['roundTerm']= this.group.round.from.concat(' - ').concat(this.group.round.to);
+    this.group['avgBirthdayDisplay'] = this.datePipe.transform(this.group.avgBirthday, 'dd/MM/yyyy');
 
     this.util.showLoading('Đang lấy danh sách heo thuộc nhóm');
     this.util.getKey(KEY.PIGS).then((data: Array<pig>) => {
@@ -44,9 +47,6 @@ export class PigGroupInformationPage {
     console.log('ionViewDidLoad PigGroupInformationPage');
   }
 
-  ngAfterContentInit(): void {
-      this.group.avgBirthday = this.util.convertDate(this.group.avgBirthday);
-  }
 
   slideChange() {
     this.content.resize();

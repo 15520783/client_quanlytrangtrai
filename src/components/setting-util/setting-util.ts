@@ -1,5 +1,5 @@
 import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { Content, NavController, Events } from 'ionic-angular';
+import { Content, NavController, Events, NavParams } from 'ionic-angular';
 import { FormControl } from '@angular/forms';
 import { FilterProvider } from '../../providers/filter/filter';
 import { SettingInputUtilComponent } from '../setting-input-util/setting-input-util';
@@ -53,11 +53,14 @@ export class SettingUtilComponent {
   constructor(
     public filterProvider: FilterProvider,
     public navCtrl: NavController,
+    public navParams: NavParams,
     public events: Events,
     public util: Utils,
     public settingProvider: SettingsProvider
   ) {
-    console.log('Hello SettingUtilComponent Component');
+    if(this.navParams.data.options){
+      this.options = this.navParams.data.options;
+    }
   }
 
   ngAfterViewInit(): void {
@@ -110,6 +113,7 @@ export class SettingUtilComponent {
   }
 
   add() {
+    this.roleInput.clear();
     this.navCtrl.push(SettingInputUtilComponent,
       {
         insertMode: true,
@@ -121,7 +125,6 @@ export class SettingUtilComponent {
       if (data) {
         this.data = data;
         this.setFilteredItems();
-        this.roleInput.clear();
         this.events.unsubscribe('callback');
       }
     })

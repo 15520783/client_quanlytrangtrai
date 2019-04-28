@@ -84,7 +84,7 @@ export class Utils {
       // weekday: "long",
       year: "numeric",
       month: "2-digit",
-      day: "numeric"
+      day: "2-digit"
     };
 
     return new Date(date).toLocaleDateString("vn", options);

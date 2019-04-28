@@ -5,6 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { FullCalendarModule } from 'ng-fullcalendar';
 import { HttpModule } from '../../node_modules/@angular/http';
 
+import { DatePipe } from '@angular/common';
+
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
@@ -169,6 +171,7 @@ const Directives = [
     ...Providers,
     SettingsProvider,
     UserProvider,
+    DatePipe
   ]
 })
 export class AppModule {}

@@ -1,6 +1,4 @@
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
-import { EmployeeInformationPage } from './employee-information';
 
 @NgModule({
   declarations: [

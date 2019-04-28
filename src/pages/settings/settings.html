@@ -38,30 +38,27 @@
   </ion-row>
 </ion-content>
 
-<!-- <ion-content showWhen="ios,android">
+<ion-content showWhen="ios,android">
   <ion-row>
-    <ion-col col-lg-3 col-md-4>
-      <ion-card mode='ios'>
-        <ion-card-header>Danh sách thiết lập</ion-card-header>
-        <ion-card-content class="ion-card-content-list-setting" no-padding>
-          <ion-list>
-            <button *ngFor="let key of list_keys;let idx= index" [attr.active]="idx === slider.realIndex? '':null"
-              ion-item (tap)="scrollToView(idx)">
-              <ion-row>
-                <ion-col align-self-center col-2>
-                  <ion-icon name="app-item-setting" font28></ion-icon>
-                </ion-col>
-                <ion-col col-10>
-                  <h2 text-wrap>{{list_settings[key].title}}</h2>
-                </ion-col>
-              </ion-row>
-            </button>
-          </ion-list>
-        </ion-card-content>
-      </ion-card>
-    </ion-col>
+    <ion-card mode='ios'>
+      <ion-card-header>Danh sách thiết lập</ion-card-header>
+      <ion-card-content class="ion-card-content-list-setting" no-padding>
+        <ion-list>
+          <button *ngFor="let key of list_keys;let idx= index" ion-item (tap)="openPage(list_settings[key])">
+            <ion-row>
+              <ion-col align-self-center col-2>
+                <ion-icon name="app-item-setting" font28></ion-icon>
+              </ion-col>
+              <ion-col col-10>
+                <h2 text-wrap>{{list_settings[key].title}}</h2>
+              </ion-col>
+            </ion-row>
+          </button>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
 
-    <ion-col col-lg-9 col-md-8 no-padding>
+    <!-- <ion-col col-lg-9 col-md-8 no-padding>
       <ion-slides paper="true" #slider>
         <ion-slide *ngFor="let key of list_keys">
           <setting-util *ngIf="list_settings[key].data" [options]='list_settings[key]'
@@ -70,6 +67,6 @@
           </setting-util>
         </ion-slide>
       </ion-slides>
-    </ion-col>
+    </ion-col> -->
   </ion-row>
-</ion-content> -->
+</ion-content>

@@ -1,10 +1,11 @@
 import { Component, ViewChild, Renderer } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Slides, Events, Platform } from 'ionic-angular';
 import { EmployeesProvider } from '../../providers/employees/employees';
 import { PregnancyStatusRole } from '../../role-input/pregnancy_status';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { BreedsRole } from '../../role-input/breeds';
 import { BreedingTypesRole } from '../../role-input/breeding_type';
+import { SettingUtilComponent } from '../../components/setting-util/setting-util';
 
 @IonicPage()
 @Component({
@@ -27,7 +28,8 @@ export class SettingsPage {
     public employeeProvider: EmployeesProvider,
     public events: Events,
     public renderer: Renderer,
-    public settingProvider: SettingsProvider
+    public settingProvider: SettingsProvider,
+    public platform: Platform
   ) {
     this.settingProvider.setting.foods.forEach((food,idx)=>{
       this.foods_temp.push(food);
@@ -149,8 +151,8 @@ export class SettingsPage {
         data: this.settingProvider.setting.medicineType,
       },
       medicineUnits: {
-        title: 'Danh sách bệnh',
-        placeholderSearch: 'Tìm kiếm bệnh',
+        title: 'Danh sách đơn vị thuốc',
+        placeholderSearch: 'Tìm kiếm đơn vị thuốc',
         filter_default: ["name","quantity","description"],
         attributes: [
           { name: "quantity", label: 'Số lượng' },
@@ -227,37 +229,16 @@ export class SettingsPage {
         mainAttribute: 'name',
         data: this.settingProvider.setting.markTypes,
       },
-      // roles: {
-      //   title: 'Danh sách chức vụ',
-      //   placeholderSearch: 'Tìm kiếm chức vụ',
-      //   filter_default: ["name", "description"],
-      //   attributes: [
-      //     { name: "description", label: 'Mô tả' },
-      //   ],
-      //   mainAttribute: 'name',
-      //   data: this.settingProvider.setting.roles,
-      //   create(navCtrl: NavController) {
-      //     let breeding_types_role = new BreedingTypesRole();
-      //     navCtrl.push(SettingInputUtilComponent,
-      //       {
-      //         title: 'Nhập thông tin chức vụ',
-      //         InputObjects: breeding_types_role.inputRole,
-      //         object: breeding_types_role.breeding_type
-      //       }
-      //     )
-      //   },
-      //   edit(e) {
-      //     if (e) console.log(e);
-      //   },
-      //   remove(e) {
-      //     if (e) console.log(e);
-      //   }
-      // },
-
-      // { title: 'Danh sách phương pháp phối giống', compt: '' },
-      // { title: 'Danh sách lâm sàn', compt: '' },
-      // { title: 'Danh sách quyền', compt: '' },
-      // { title: 'Danh sách chức vụ', compt: '' },
+      roles: {
+        title: 'Danh sách chức vụ',
+        placeholderSearch: 'Tìm kiếm chức vụ',
+        filter_default: ["name", "description"],
+        attributes: [
+          { name: "description", label: 'Mô tả' },
+        ],
+        mainAttribute: 'name',
+        data: this.settingProvider.setting.roles,
+      },
     }
 
     this.list_keys = Object.keys(this.list_settings);
@@ -266,8 +247,6 @@ export class SettingsPage {
   ngAfterViewInit() {
     if (this.slider)
       this.slider.autoHeight = true;
-    console.log('ngAfterViewInit FarmInfomationPage');
-    // this.events.publish('viewEmployee:open');
 
     let element: any = document.getElementsByClassName('setting-util-component');
     for (let i = 0; i < element.length; i++) {
@@ -275,17 +254,8 @@ export class SettingsPage {
     }
   }
 
-  ionViewDidLoad() {
-    // this.slider.lockSwipes(true);
-    console.log('ionViewDidLoad SettingsPage');
-
-
-
-  }
-
   scrollToView(idx: number) {
     this.slider.slideTo(idx);
-    // element.nativeElement.scrollIntoView({ behavior: 'smooth' });
   }
 
 
@@ -295,5 +265,9 @@ export class SettingsPage {
 
   edit(item,data){
     item.edit(this.navCtrl,data);
+  }
+
+  openPage(item){
+    this.navCtrl.push(SettingUtilComponent,{options:item});
   }
 }
