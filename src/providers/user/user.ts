@@ -19,7 +19,18 @@ export class UserProvider {
       username:param.username,
       password:param.password
     }
-    return this.http.post(API.LOGIN,body).timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
+    return this.http
+    .post(CONFIG.SERVER_API.concat(API.LOGIN),body)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  checkServer(){
+    let headers = new HttpHeaders().set('Authorization', CONFIG.ACCESS_KEY);
+    return this.http
+    .get(CONFIG.SERVER_API.concat(API.CHECK_SERVER),{headers:headers})
+    .timeout(3000)
+    .toPromise();
   }
 
 }

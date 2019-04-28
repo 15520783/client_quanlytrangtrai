@@ -17,7 +17,10 @@ export class WarehousesProvider {
     public util: Utils,
     public events: Events
   ) {
-    console.log('Hello WarehousesProvider Provider');
+    this.util.getKey(KEY.WAREHOUSES)
+    .then((data)=>{
+      this.warehouses = data;
+    })
   }
 
   public getWarehouses() {

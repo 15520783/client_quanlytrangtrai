@@ -41,7 +41,10 @@ export class SettingsProvider {
     public util: Utils,
     public events: Events
   ) {
-    console.log('Hello SettingsProvider Provider');
+    this.util.getKey(KEY.SETTINGS)
+    .then((data)=>{
+      this.setting = data;
+    })
   }
 
 

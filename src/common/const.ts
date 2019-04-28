@@ -36,20 +36,15 @@ const VARIABLE = {
 }
 
 const API = {
-    LOGIN: 'https://quanlytrangtrai-uit.herokuapp.com/auth/login',
-    // GET_ALL_FARMS: '/api/farms',
-    GET_ALL_FARMS: 'https://quanlytrangtrai-uit.herokuapp.com/api/farms/list',
-    // GET_ALL_SECTIONS: '/api/sections',
+    LOGIN: '/auth/login',
+    CHECK_SERVER:'/auth/check_login',
+    
+    GET_ALL_FARMS: '/api/farms/list',
     GET_ALL_SECTIONS: '/api/sections/list',
-    // GET_ALL_HOUSES: '/api/houses',
     GET_ALL_HOUSES: '/api/houses/list',
-    // GET_ALL_PIGS: '/api/pigs',
     GET_ALL_PIGS: '/api/pigs/list',
-    // GET_ALL_GROUPS: '/api/groups',
     GET_ALL_GROUPS: '/api/groups/list',
-    // GET_ALL_EMPLOYEES: '/api/employees',
-    GET_ALL_EMPLOYEES: 'https://quanlytrangtrai-uit.herokuapp.com/api/employees/list',
-    // GET_ALL_WAREHOUSES: '/api/warehouses',
+    GET_ALL_EMPLOYEES: '/api/employees/list',
     GET_ALL_WAREHOUSES: '/api/warehouses/list',
     GET_ALL_SETTINGS: '/api/settings/list',
 

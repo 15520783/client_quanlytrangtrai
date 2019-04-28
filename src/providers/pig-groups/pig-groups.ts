@@ -17,7 +17,10 @@ export class PigGroupsProvider {
     public util: Utils,
     public events: Events
   ) {
-    console.log('Hello PigGroupsProvider Provider');
+    this.util.getKey(KEY.GROUPS)
+    .then((data)=>{
+      this.groups = data;
+    })
   }
 
   getAllGroups() {

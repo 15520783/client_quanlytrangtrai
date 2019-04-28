@@ -18,7 +18,10 @@ export class HousesProvider {
     public util: Utils,
     public events: Events
   ) {
-    console.log('Hello HousesProvider Provider');
+    this.util.getKey(KEY.HOUSES)
+    .then((data)=>{
+      this.houses = data;
+    })
   }
 
   getAllHouses() {

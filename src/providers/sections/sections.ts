@@ -17,7 +17,10 @@ export class SectionsProvider {
     public util: Utils,
     public events: Events
   ) {
-    console.log('Hello SectionsProvider Provider');
+    this.util.getKey(KEY.SECTIONS)
+    .then((data)=>{
+      this.sections = data;
+    })
   }
 
   getSections() {

@@ -16,14 +16,17 @@ export class FarmsProvider {
     public util: Utils,
     public events: Events
   ) {
-
+    this.util.getKey(KEY.FARMS)
+    .then((data)=>{
+      this.farms = data;
+    })
   }
 
 
   public getFarms() {
     let headers = new HttpHeaders().set('Authorization', CONFIG.ACCESS_KEY);
     return this.http
-      .get(API.GET_ALL_FARMS,{headers:headers})
+      .get(CONFIG.SERVER_API.concat(API.GET_ALL_FARMS),{headers:headers})
       .timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
   }
 

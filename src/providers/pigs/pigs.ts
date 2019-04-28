@@ -20,7 +20,10 @@ export class PigsProvider {
     public util: Utils,
     public events: Events
   ) {
-    console.log('Hello PigsProvider Provider');
+    this.util.getKey(KEY.PIGS)
+    .then((data)=>{
+      this.pigs = data;
+    })
   }
 
   getPigs() {

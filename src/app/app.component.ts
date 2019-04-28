@@ -16,6 +16,7 @@ import { WarehousesProvider } from '../providers/warehouses/warehouses';
 import { Utils } from '../common/utils';
 import { KEY, CONFIG } from '../common/const';
 import { SettingsProvider } from '../providers/settings/settings';
+import { UserProvider } from '../providers/user/user';
 
 
 @Component({
@@ -58,7 +59,8 @@ export class MyApp {
     public houseProvider: HousesProvider,
     public warehouseProvider: WarehousesProvider,
     public settingProvider: SettingsProvider,
-    public util: Utils
+    public util: Utils,
+    public userProvider:UserProvider
   ) {
     this.initializeApp();
   }
@@ -124,15 +126,34 @@ export class MyApp {
 
 
   intinial_sync() {
-    this.farmProvider.sync();
-    this.pigProvider.sync();
-    this.pigGroupProvider.sync();
-    this.employeeProvider.sync();
-    this.sectionProvider.sync();
-    this.houseProvider.sync();
-    this.warehouseProvider.sync();
-    this.settingProvider.sync();
-    this.sectionProvider.sync();
+    this.userProvider.checkServer()
+    .then((res:any)=>{
+      if(res.success){
+        this.farmProvider.sync();
+        this.pigProvider.sync();
+        this.pigGroupProvider.sync();
+        this.employeeProvider.sync();
+        this.sectionProvider.sync();
+        this.houseProvider.sync();
+        this.warehouseProvider.sync();
+        this.settingProvider.sync();
+        this.sectionProvider.sync();
+      }
+    })
+    .catch((err:any)=>{
+      if(err.status == 401){
+        this.rootPage = LoginPage;
+        this.splash = false;
+        this.util.showToast('Phiên làm việc quá hạn. Vui lòng đăng nhập lại');
+      }
+      else{
+        this.util.showToast('Lỗi kết nối đến máy chủ. Vui lòng kiểm tra lại kết nối.');
+        this.rootPage = HomePage;
+        setTimeout(() => {
+          this.splash = false;
+        }, 1000);
+      }
+    })
   }
 
 

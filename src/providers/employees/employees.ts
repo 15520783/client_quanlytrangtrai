@@ -18,12 +18,16 @@ export class EmployeesProvider {
     public events: Events
   ) {
     console.log('Hello EmployeesProvider Provider');
+    this.util.getKey(KEY.EMPLOYEES)
+    .then((data)=>{
+      this.employees = data;
+    })
   }
 
   getAllEmployee() {
     let headers = new HttpHeaders().set('Authorization', CONFIG.ACCESS_KEY);
     return this.http
-    .get(API.GET_ALL_EMPLOYEES,{headers:headers})
+    .get(CONFIG.SERVER_API.concat(API.GET_ALL_EMPLOYEES),{headers:headers})
     .timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
   }
 
