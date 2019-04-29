@@ -2,7 +2,7 @@
   <header [title]="'Thiết lập'">
   </header>
 </ion-header>
-<ion-content showWhen="core">
+<ion-content *ngIf="platform.is('core')">
   <ion-row>
     <ion-col col-lg-3 col-md-4>
       <ion-card mode='ios'>
@@ -38,10 +38,11 @@
   </ion-row>
 </ion-content>
 
-<ion-content showWhen="ios,android">
+<ion-content *ngIf="!platform.is('core')">
+  <ion-item-divider>Danh sách thiết lập</ion-item-divider>
   <ion-row>
     <ion-card mode='ios'>
-      <ion-card-header>Danh sách thiết lập</ion-card-header>
+      <!-- <ion-card-header>Danh sách thiết lập</ion-card-header> -->
       <ion-card-content class="ion-card-content-list-setting" no-padding>
         <ion-list>
           <button *ngFor="let key of list_keys;let idx= index" ion-item (tap)="openPage(list_settings[key])">
@@ -57,16 +58,5 @@
         </ion-list>
       </ion-card-content>
     </ion-card>
-
-    <!-- <ion-col col-lg-9 col-md-8 no-padding>
-      <ion-slides paper="true" #slider>
-        <ion-slide *ngFor="let key of list_keys">
-          <setting-util *ngIf="list_settings[key].data" [options]='list_settings[key]'
-            (clickAddButton)="create(list_settings[key])" (clickEditButton)="edit(list_settings[key],$event)"
-            (clickRemoveButton)="list_settings[key].remove($event)">
-          </setting-util>
-        </ion-slide>
-      </ion-slides>
-    </ion-col> -->
   </ion-row>
 </ion-content>

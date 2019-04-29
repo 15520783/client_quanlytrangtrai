@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-navbar>
+    <ion-toolbar>
+      <ion-buttons left>
+        <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+      </ion-buttons>
+      <div>
+        <ion-row>
+          <ion-searchbar col-md-7 mode="ios" animated="true" debounce="500" placeholder="Tìm kiếm đối tác"
+            [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="setFilteredItems()">
+          </ion-searchbar>
+        </ion-row>
+      </div>
+      <ion-buttons right>
+        <button ion-button font20 (tap)="openFilter()">
+          <ion-icon name="funnel"></ion-icon>
+        </button>
+        <button item-end ion-button font20 showWhen="core">
+          <ion-icon name="sync"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-navbar>
+</ion-header>
+
+<ion-content #content>
+  <ion-item-divider custom-diviver sticky="true" showWhen="core">
+    <ion-row>
+      <ion-title ion-text font15 color="dark">Danh sách đối tác</ion-title>
+      <button ion-button item-end mode='ios' color="secondary" (tap)="addNewEmployee()">Thêm mới đối tác</button>
+    </ion-row>
+  </ion-item-divider>
+  <ion-item-divider sticky="true" showWhen="ios,android">Danh sách đối tác</ion-item-divider>
+
+  <ion-list>
+    <button ion-item *ngFor="let item of visible_items" (tap)="viewDeltail(item)">
+      <ion-avatar item-start>
+        <ion-icon name="app-partner" font28></ion-icon>
+      </ion-avatar>
+      <h2 text-wrap>{{item.name}}</h2>
+      <ion-row>
+        <ion-col text-wrap [attr.col-12]="!platform.is('core')?'':null">
+          <p><b>Người phụ trách:</b> {{item.manager}}</p>
+        </ion-col>
+        <ion-col text-wrap [attr.col-12]="!platform.is('core')?'':null">
+          <p><b>Địa chỉ:</b> {{item.address}}</p>
+        </ion-col>
+        <ion-col text-wrap [attr.col-12]="!platform.is('core')?'':null">
+          <p><b>Số điện thoại:</b> {{item.phone}}</p>
+        </ion-col>
+      </ion-row>
+    </button>
+  </ion-list>
+  <ion-infinite-scroll (ionInfinite)="loadData($event)" *ngIf="page_Idx!==page_Total">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Đang tải dữ liệu...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <ion-fab bottom right showWhen="android,windows,ios">
+    <button ion-fab>
+      <ion-icon name="ios-arrow-up"></ion-icon>
+    </button>
+    <ion-fab-list side="top" style="right:0px">
+      <button data-balloon-visible data-balloon-length="medium" data-balloon="Quét mã QR" data-balloon-pos="left"
+        ion-fab color="main">
+        <ion-icon name="app-qr-scanner"></ion-icon>
+      </button>
+      <button data-balloon-visible data-balloon-length="medium" data-balloon="Cập nhật dữ liệu" data-balloon-pos="left"
+        ion-fab color="main">
+        <ion-icon name="sync"></ion-icon>
+      </button>
+      <button data-balloon-visible data-balloon-length="medium" data-balloon="Thêm mới nhân viên" data-balloon-pos="left"
+        ion-fab color="main" (tap)="addNewEmployee()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>

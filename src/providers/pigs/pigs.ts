@@ -76,6 +76,8 @@ export class PigsProvider {
     this.events.publish('updated');
   }
 
+
+
   ViewIndexChart(pig: pig, element: any) {
     Highcharts.chart(element, {
 

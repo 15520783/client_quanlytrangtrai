@@ -6,6 +6,7 @@ import { farm } from '../../common/entity';
 import { KEY } from '../../common/const';
 import { FarmInfomationPage } from '../farm-infomation/farm-infomation';
 import { FarmInputPage } from '../farm-input/farm-input';
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 
 
 @IonicPage()
@@ -24,8 +25,15 @@ export class FarmsPage {
     public farmProvider: FarmsProvider,
     public util: Utils,
     public loadingCtrl: LoadingController,
-    public modalCtrl : ModalController
+    public modalCtrl: ModalController,
+    public deployDataProvider: DeployDataProvider
   ) {
+    this.farmProvider.farms.forEach((farm)=>{
+      console.log(farm.id,{
+        male:this.deployDataProvider.get_male_pig_of_farm(farm.id),
+        female:this.deployDataProvider.get_female_pig_of_farm(farm.id)
+      })
+    })
   }
 
   ionViewDidEnter() {
@@ -72,26 +80,18 @@ export class FarmsPage {
               })
           });
         })
-    }else{
+    } else {
       console.log(this.farmProvider.farms);
     }
   }
 
   viewDetail(farm: farm) {
-    // const modal = this.modalCtrl.create(
-    //   FarmInfomationPage, {farm:farm}, {
-    //     cssClass: 'ion-modal'
-    //   }
-    // )
-    // modal.present();
-    return this.navCtrl.push(FarmInfomationPage,{farm:farm});
+    return this.navCtrl.push(FarmInfomationPage, { farm: farm });
   }
 
-  addNewFarm(){
-    // let modal = this.modalCtrl.create(
-    //   FarmInputPage
-    // );
-    // modal.present();
+  addNewFarm() {
     return this.navCtrl.push(FarmInputPage);
   }
+
+
 }

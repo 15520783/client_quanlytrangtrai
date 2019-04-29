@@ -33,6 +33,7 @@ import { PigGroupInputPage } from '../pages/pig-group-input/pig-group-input';
 import { WarehouseInformationPage } from '../pages/warehouse-information/warehouse-information';
 import { WarehousesPage } from '../pages/warehouses/warehouses';
 import { SettingsPage } from '../pages/settings/settings';
+import { PartnersPage } from '../pages/partners/partners';
 
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
@@ -68,6 +69,8 @@ import { EmployeesProvider } from '../providers/employees/employees';
 import { WarehousesProvider } from '../providers/warehouses/warehouses';
 import { SettingsProvider } from '../providers/settings/settings';
 import { UserProvider } from '../providers/user/user';
+import { DeployDataProvider } from '../providers/deploy-data/deploy-data';
+import { PartnerProvider } from '../providers/partner/partner';
 
 
 const Pages = [
@@ -77,6 +80,7 @@ const Pages = [
   SectionsPage,
   PigsPage,
   WarehousesPage,
+  PartnersPage,
   SettingsPage,
   PigViewPage,
   PigInfomationPage,
@@ -129,7 +133,9 @@ const Providers = [
   EmployeesProvider,
   WarehousesProvider,
   SettingsProvider,
-  UserProvider
+  UserProvider,
+  DeployDataProvider,
+  PartnerProvider
 ]
 
 const Directives = [
@@ -171,7 +177,9 @@ const Directives = [
     ...Providers,
     SettingsProvider,
     UserProvider,
-    DatePipe
+    DatePipe,
+    DeployDataProvider,
+    PartnerProvider
   ]
 })
 export class AppModule {}

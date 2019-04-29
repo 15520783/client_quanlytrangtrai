@@ -101,15 +101,9 @@ export class EmployeePage {
 
   public filterItems(searchItem) {
     this.filterProvider.input = this.employeeProvider.employees;
-    // this.filterProvider.searchWithInclude.gender = this.genderFilter;/
-    // this.filterProvider.searchWithInclude.house_id = this.houseFilter;
     this.filterProvider.searchText = searchItem;
     this.filterProvider.searchWithText = this.filter_default;
-
-    this.filterProvider.searchWithRange = {
-      // origin_sum_weight : { min: this.origin_sum_weight.lower, max: this.origin_sum_weight.upper },
-      // origin_avg_weight : { min: this.origin_avg_weight.lower, max: this.origin_avg_weight.upper }
-    }
+    this.filterProvider.searchWithRange = {}
     return this.filterProvider.filter();
   }
 

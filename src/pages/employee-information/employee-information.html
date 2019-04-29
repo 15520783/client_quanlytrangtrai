@@ -63,32 +63,36 @@
           <ion-input text-wrap type="text" readonly [(ngModel)]="employee.regency.name"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label stacked>Farm id</ion-label>
+          <ion-label stacked>Trạng trại</ion-label>
           <ion-input text-wrap type="text" readonly [(ngModel)]="employee.farm.name"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label stacked>Gender</ion-label>
+          <ion-label stacked>Giới tính</ion-label>
           <ion-input text-wrap type="text" readonly [(ngModel)]="employee.gender"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label stacked>Birthday</ion-label>
-          <ion-input text-wrap type="text" readonly [(ngModel)]="employee.birthday"></ion-input>
+          <ion-label stacked>Ngày sinh</ion-label>
+          <ion-input text-wrap type="text" readonly [(ngModel)]="employee.birthdayDisplay"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label stacked>Address</ion-label>
+          <ion-label stacked>Địa chỉ</ion-label>
           <ion-input text-wrap type="text" readonly [(ngModel)]="employee.address"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label stacked>CMND</ion-label>
           <ion-input text-wrap type="text" readonly [(ngModel)]="employee.cmnd"></ion-input>
         </ion-item>
-        <ion-item>
+        <!-- <ion-item>
           <ion-label stacked>Level</ion-label>
           <ion-input text-wrap type="text" readonly [(ngModel)]="employee.level"></ion-input>
+        </ion-item> -->
+        <ion-item>
+          <ion-label stacked>Ngày vào làm</ion-label>
+          <ion-input text-wrap type="text" readonly [(ngModel)]="employee.dateJoinDisplay"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label stacked>Date join</ion-label>
-          <ion-input text-wrap type="text" readonly [(ngModel)]="employee.date_join"></ion-input>
+          <ion-label stacked>Ngày nghỉ</ion-label>
+          <ion-input text-wrap type="text" readonly [(ngModel)]="employee.dateOffDisplay"></ion-input>
         </ion-item>
       </ion-list>
     </ion-slide>
@@ -142,42 +146,50 @@
               <ion-row>
                 <ion-col col-6>
                   <ion-item>
-                    <ion-label stacked>Regency id</ion-label>
-                    <ion-input text-wrap type="text" readonly [(ngModel)]="employee.regency_id"></ion-input>
+                    <ion-label stacked>Họ và tên:</ion-label>
+                    <ion-input text-wrap type="text" readonly [(ngModel)]="employee.name"></ion-input>
                   </ion-item>
                   <ion-item>
-                    <ion-label stacked>Farm id</ion-label>
-                    <ion-input text-wrap type="text" readonly [(ngModel)]="employee.farm_id"></ion-input>
+                    <ion-label stacked>Chức vụ</ion-label>
+                    <ion-input text-wrap type="text" readonly [(ngModel)]="employee.regency.name"></ion-input>
                   </ion-item>
                   <ion-item>
-                    <ion-label stacked>Gender</ion-label>
+                    <ion-label stacked>Trang trại</ion-label>
+                    <ion-input text-wrap type="text" readonly [(ngModel)]="employee.farm.name"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label stacked>Giới tính</ion-label>
                     <ion-input text-wrap type="text" readonly [(ngModel)]="employee.gender"></ion-input>
                   </ion-item>
                   <ion-item>
-                    <ion-label stacked>Birthday</ion-label>
-                    <ion-input text-wrap type="text" readonly [(ngModel)]="employee.birthday"></ion-input>
-                  </ion-item>
-                  <ion-item>
-                    <ion-label stacked>Email</ion-label>
-                    <ion-input text-wrap type="text" readonly [(ngModel)]="employee.email"></ion-input>
+                    <ion-label stacked>Ngày sinh</ion-label>
+                    <ion-input text-wrap type="text" readonly [(ngModel)]="employee.birthdayDisplay"></ion-input>
                   </ion-item>
                 </ion-col>
                 <ion-col col-6>
                   <ion-item>
-                    <ion-label stacked>Address</ion-label>
+                    <ion-label stacked>Email</ion-label>
+                    <ion-input text-wrap type="text" readonly [(ngModel)]="employee.email"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label stacked>Địa chỉ</ion-label>
                     <ion-input text-wrap type="text" readonly [(ngModel)]="employee.address"></ion-input>
                   </ion-item>
                   <ion-item>
                     <ion-label stacked>CMND</ion-label>
                     <ion-input text-wrap type="text" readonly [(ngModel)]="employee.cmnd"></ion-input>
                   </ion-item>
-                  <ion-item>
+                  <!-- <ion-item>
                     <ion-label stacked>Level</ion-label>
                     <ion-input text-wrap type="text" readonly [(ngModel)]="employee.level"></ion-input>
+                  </ion-item> -->
+                  <ion-item>
+                    <ion-label stacked>Ngày vào làm</ion-label>
+                    <ion-input text-wrap type="text" readonly [(ngModel)]="employee.dateJoinDisplay"></ion-input>
                   </ion-item>
                   <ion-item>
-                    <ion-label stacked>Date join</ion-label>
-                    <ion-input text-wrap type="text" readonly [(ngModel)]="employee.date_join"></ion-input>
+                    <ion-label stacked>Ngày nghỉ</ion-label>
+                    <ion-input text-wrap type="text" readonly [(ngModel)]="employee.dateOffDisplay"></ion-input>
                   </ion-item>
                 </ion-col>
               </ion-row>

@@ -12,6 +12,8 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import resourceTimeline from '@fullcalendar/resource-timeline';
 import interactionPlugin from '@fullcalendar/interaction';
+import { SettingsProvider } from '../../providers/settings/settings';
+import { Utils } from '../../common/utils';
 
 /**
  * Generated class for the EmployeeInformationPage page.
@@ -34,9 +36,14 @@ export class EmployeeInformationPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    public settingProvider:SettingsProvider,
+    public util:Utils
   ) {
     this.employee = this.navParams.data;
+    this.employee['dateJoinDisplay']=this.util.convertDate(this.employee.dateJoin);
+    this.employee['dateOffDisplay']=this.util.convertDate(this.employee.dateOff);
+    this.employee['birthdayDisplay']=this.util.convertDate(this.employee.birthday);
   }
 
   ionViewDidLoad() {

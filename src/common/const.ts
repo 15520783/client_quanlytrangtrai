@@ -32,13 +32,86 @@ const VARIABLE = {
         { id: 1, name: 'Nái' },
         { id: 2, name: 'Đực' },
         { id: 3, name: 'Đực hiến' }
+    ],
+    section_type: [
+        {
+            id: 1,
+            name: "Khu cách ly",
+            function: {
+                inputPig: "Nhập heo",
+                breeding: "Lên giống",
+                transfer: "Chuyển(xuất) heo"
+            }
+        },
+        {
+            id: 2,
+            name: "Khu nọc",
+            function: {
+                inputPig: "Nhập heo",
+                sperm: "Khai thác tinh heo",
+                transfer: "Chuyển(xuất) heo"
+            }
+        },
+        {
+            id: 3,
+            name: "Khu phối",
+            function: {
+                inputPig: "Nhập heo",
+                mating: "Phối giống",
+                transfer: "Chuyển(xuất) heo"
+            }
+        },
+        {
+            id: 4,
+            name: "Khu mang thai",
+            function: {
+                inputPig: "Nhập heo",
+                pregnancyFollow: "Phối giống",
+                transfer: "Chuyển(xuất) heo"
+            }
+        },
+        {
+            id: 5,
+            name: "Khu đẻ",
+            function:{
+                inputPig: "Nhập heo",
+                bornFollow: "Phối giống",
+                weaning: "Cai sữa heo nái",
+                transfer: "Chuyển(xuất) heo"
+            }
+        },
+        { 
+            id: 6, 
+            name: "Khu cai sữa" ,
+            function:{
+                inputPig: "Nhập heo",
+                transfer: "Chuyển(xuất) heo"
+            }
+        },
+        { 
+            id: 7, 
+            name: "Khu hậu bị" ,
+            function:{
+                inputPig: "Nhập heo",
+                reviewOfftest: "Đánh giá Offtest heo con",
+                transfer: "Chuyển(xuất) heo"
+            }
+        },
+        { 
+            id: 8, 
+            name: "Khu chờ bán" ,
+            function:{
+                prepareToSale:"Lên danh sách chờ bán",
+                exportSale:"Xuất bán heo"
+            }
+        },
     ]
 }
 
 const API = {
     LOGIN: '/auth/login',
-    CHECK_SERVER:'/auth/check_login',
-    
+    CHECK_SERVER: '/auth/check_login',
+
     GET_ALL_FARMS: '/api/farms/list',
     GET_ALL_SECTIONS: '/api/sections/list',
     GET_ALL_HOUSES: '/api/houses/list',
@@ -47,11 +120,12 @@ const API = {
     GET_ALL_EMPLOYEES: '/api/employees/list',
     GET_ALL_WAREHOUSES: '/api/warehouses/list',
     GET_ALL_SETTINGS: '/api/settings/list',
+    GET_ALL_PARTNERS: '/api/partners/list',
 
 
     CREATE_PREGNANCY_STATUS: '/api/pregnancystatus/',
-    DELETE_PREGNANCY_STATUS:'/api/pregnancystatus/',
-    UPDATE_PREGNANCY_STATUS:'/api/pregnancystatus/'
+    DELETE_PREGNANCY_STATUS: '/api/pregnancystatus/',
+    UPDATE_PREGNANCY_STATUS: '/api/pregnancystatus/'
 }
 
 export { KEY }

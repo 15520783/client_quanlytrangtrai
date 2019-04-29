@@ -61,4 +61,7 @@ ion-icon {
     &[class*="item-setting"] {
         mask-image: url(../../../assets/imgs/list-item-setting.svg);
     }
+    &[class*="partner"] {
+        mask-image: url(../../../assets/imgs/users-solid.svg);
+    }
 }
