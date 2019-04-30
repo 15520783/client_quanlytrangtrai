@@ -64,4 +64,10 @@ ion-icon {
     &[class*="partner"] {
         mask-image: url(../../../assets/imgs/users-solid.svg);
     }
+    &[class*="activities"] {
+        mask-image: url(../../../assets/imgs/briefcase-solid.svg);
+    }
+    &[class*="file"] {
+        mask-image: url(../../../assets/imgs/file-alt-solid.svg);
+    }
 }

@@ -30,6 +30,7 @@ export { warehouse_type }
 export { round }
 export {partners}
 export {roles}
+export {invoicesPig}
 
 
 class base {
@@ -387,6 +388,27 @@ class partners extends base {
 	distributionName:string='';
 	distributionAddress:string='';
 	distributionPhone:string='';
+	description:string='';
+}
+
+class invoicesPig extends base {
+	invoiceNo:string='';
+	invoiceType:number=null;
+	sourceId:string='';
+	sourceManager:number = null;
+	sourceManagerName:string = '';
+	sourceAddress:string='';
+	destinationId:string='';
+	destinationManager:string='';
+	destinationManagerName:string='';
+	destinationAddress:string='';
+	vehicleNumber:string='';
+	quantity:number = null;
+	unitPrice:string='';
+	totalWeight:number=null;
+	totalPrice:number=null;
+	importDate:any='';
+	exportDate:any='';
 	description:string='';
 }
 

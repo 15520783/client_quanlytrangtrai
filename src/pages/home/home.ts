@@ -15,6 +15,8 @@ import { SettingsPage } from '../settings/settings';
 import { KEY } from '../../common/const';
 import { LoginPage } from '../login/login';
 import { PartnersPage } from '../partners/partners';
+import { ActivitiesPage } from '../activities/activities';
+import { InvoicesPage } from '../invoices/invoices';
 
 @Component({
   selector: 'page-home',
@@ -90,6 +92,8 @@ export class HomePage {
       { title: 'Nhân viên', component: EmployeePage, icon: 'app-employees', active: false },
       { title: 'Kho', component: WarehousesPage, icon: 'app-warehouse', active: false },
       { title: 'Đối tác', component: PartnersPage, icon: 'app-partner', active: false },
+      { title: 'Chứng từ', component: InvoicesPage, icon: 'app-file', active: false },
+      { title: 'Hoạt động', component: ActivitiesPage, icon: 'app-activities', active: false },
       { title: 'Thiết lập', component: SettingsPage, icon: 'app-settings', active: false },
       // { title: 'Lịch biểu', component: DatePlanPage, icon: 'app-schedule', active: false },
     ];

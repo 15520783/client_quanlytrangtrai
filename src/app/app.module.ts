@@ -34,6 +34,8 @@ import { WarehouseInformationPage } from '../pages/warehouse-information/warehou
 import { WarehousesPage } from '../pages/warehouses/warehouses';
 import { SettingsPage } from '../pages/settings/settings';
 import { PartnersPage } from '../pages/partners/partners';
+import { ActivitiesPage } from '../pages/activities/activities';
+import { InvoicesPage } from '../pages/invoices/invoices';
 
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
@@ -47,6 +49,7 @@ import { InputSelectTargetComponent } from '../components/input-select-target/in
 import { PigListComponent } from '../components/pig-list/pig-list';
 import { SettingUtilComponent } from '../components/setting-util/setting-util';
 import { SettingInputUtilComponent } from '../components/setting-input-util/setting-input-util';
+import { InternalPigInvoicesComponent } from '../components/internal-pig-invoices/internal-pig-invoices';
 
 import { HideHeaderDirective } from '../directives/hide-header/hide-header';
 
@@ -100,6 +103,8 @@ const Pages = [
   PigInputPage,
   EmployeeInputPage,
   PigGroupInputPage,
+  ActivitiesPage,
+  InvoicesPage,
   PigGroupListComponent,
   EmployeeListComponent,
   PigListComponent,
@@ -119,7 +124,8 @@ const Components = [
   InputSelectTargetComponent,
   PigListComponent,
   SettingUtilComponent,
-  SettingInputUtilComponent  
+  SettingInputUtilComponent,
+  InternalPigInvoicesComponent
 ]
 
 const Providers = [
