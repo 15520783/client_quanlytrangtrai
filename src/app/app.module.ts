@@ -50,6 +50,8 @@ import { PigListComponent } from '../components/pig-list/pig-list';
 import { SettingUtilComponent } from '../components/setting-util/setting-util';
 import { SettingInputUtilComponent } from '../components/setting-input-util/setting-input-util';
 import { InternalPigInvoicesComponent } from '../components/internal-pig-invoices/internal-pig-invoices';
+import { ExternalPigInvoicesComponent } from '../components/external-pig-invoices/external-pig-invoices';
+import { InvoiceInputUtilComponent } from '../components/invoice-input-util/invoice-input-util';
 
 import { HideHeaderDirective } from '../directives/hide-header/hide-header';
 
@@ -74,6 +76,7 @@ import { SettingsProvider } from '../providers/settings/settings';
 import { UserProvider } from '../providers/user/user';
 import { DeployDataProvider } from '../providers/deploy-data/deploy-data';
 import { PartnerProvider } from '../providers/partner/partner';
+import { InvoicesProvider } from '../providers/invoices/invoices';
 
 
 const Pages = [
@@ -109,7 +112,8 @@ const Pages = [
   EmployeeListComponent,
   PigListComponent,
   SettingUtilComponent,
-  SettingInputUtilComponent
+  SettingInputUtilComponent,
+  InvoiceInputUtilComponent
 ]
 
 const Components = [
@@ -125,7 +129,9 @@ const Components = [
   PigListComponent,
   SettingUtilComponent,
   SettingInputUtilComponent,
-  InternalPigInvoicesComponent
+  InvoiceInputUtilComponent,
+  InternalPigInvoicesComponent,
+  ExternalPigInvoicesComponent
 ]
 
 const Providers = [
@@ -141,7 +147,8 @@ const Providers = [
   SettingsProvider,
   UserProvider,
   DeployDataProvider,
-  PartnerProvider
+  PartnerProvider,
+  InvoicesProvider
 ]
 
 const Directives = [
@@ -185,7 +192,8 @@ const Directives = [
     UserProvider,
     DatePipe,
     DeployDataProvider,
-    PartnerProvider
+    PartnerProvider,
+    InvoicesProvider
   ]
 })
 export class AppModule {}

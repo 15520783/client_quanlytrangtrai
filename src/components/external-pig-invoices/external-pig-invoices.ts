@@ -1,34 +1,36 @@
 import { Component, ViewChild, Input } from '@angular/core';
-import { Content, NavController, Events } from 'ionic-angular';
-import { invoicesPig, } from '../../common/entity';
 import { FormControl } from '@angular/forms';
+import { Content, NavController, Events } from 'ionic-angular';
+import { invoicesPig,  } from '../../common/entity';
 import { FilterProvider } from '../../providers/filter/filter';
 import { Utils } from '../../common/utils';
-import { InternalPigInvoiceRole } from '../../role-input/internalPigInvoice';
-import { InvoicesProvider } from '../../providers/invoices/invoices';
+import { ExternalPigInvoiceRole } from '../../role-input/externalPigInvoice';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { InvoiceInputUtilComponent } from '../invoice-input-util/invoice-input-util';
 
+
 @Component({
-  selector: 'internal-pig-invoices',
-  templateUrl: 'internal-pig-invoices.html'
+  selector: 'external-pig-invoices',
+  templateUrl: 'external-pig-invoices.html'
 })
-export class InternalPigInvoicesComponent {
+export class ExternalPigInvoicesComponent {
 
   @ViewChild('content') content: Content;
   @Input() invoices: Array<invoicesPig> = [];
   public roleInput: any;
 
+  
   public mainAttribute = "invoiceNo";
-  public attributes = [
+  public attributes =  [
     { name: "sourceManagerName", label: 'Nguồn cung cấp' },
     { name: "destinationManagerName", label: 'Nơi nhận' },
     { name: "exportDate", label: 'Ngày xuất' },
     { name: "quantity", label: 'Tổng số heo' }
   ];
   public placeholderSearch: string = 'Tìm kiếm chứng từ'
-  public filter_default: Array<string> = ["invoiceNo", "sourceManagerName", "destinationManagerName", "exportDate", "quantity"];
-
+  public filter_default: Array<string> = ["invoiceNo", "sourceManagerName","destinationManagerName","exportDate","quantity"];
+  
   public page_Idx: number = 1;
   public page_Total: number = 0;
   public rows: Array<any> = [];
@@ -40,20 +42,19 @@ export class InternalPigInvoicesComponent {
 
   constructor(
     public filterProvider: FilterProvider,
-    public invoiceProvider: InvoicesProvider,
-    public deployData: DeployDataProvider,
     public util: Utils,
     public navCtrl: NavController,
-    public events: Events
+    public events: Events,
+    public deployData: DeployDataProvider,
+    public invoiceProvider: InvoicesProvider
   ) {
-    this.roleInput = new InternalPigInvoiceRole(deployData, invoiceProvider);
 
+    this.roleInput = new ExternalPigInvoiceRole(this.deployData,this.invoiceProvider);
   }
 
   ngAfterViewInit(): void {
     this.setFilteredItems();
   }
-
 
 
   public setFilteredItems() {

@@ -31,7 +31,7 @@ export { round }
 export {partners}
 export {roles}
 export {invoicesPig}
-
+export {invoicesProduct}
 
 class base {
 	id: string = '';
@@ -409,6 +409,23 @@ class invoicesPig extends base {
 	totalPrice:number=null;
 	importDate:any='';
 	exportDate:any='';
+	description:string='';
+}
+
+class invoicesProduct extends base {
+	invoiceNo:string='';
+	invoiceType:number=null;
+	sourceId:string='';
+	sourceManager:number = null;
+	sourceManagerName:string = '';
+	sourceAddress:string='';
+	destinationId:string='';
+	destinationManager:string='';
+	destinationManagerName:string='';
+	warehouseId:string = '';
+	quantity:number = null;
+	price:number = null;
+	importDate:any='';
 	description:string='';
 }
 

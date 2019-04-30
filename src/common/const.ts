@@ -121,11 +121,13 @@ const API = {
     GET_ALL_WAREHOUSES: '/api/warehouses/list',
     GET_ALL_SETTINGS: '/api/settings/list',
     GET_ALL_PARTNERS: '/api/partners/list',
-
+    GET_ALL_INVOICES: '/api/invoices/list',
 
     CREATE_PREGNANCY_STATUS: '/api/pregnancystatus/',
     DELETE_PREGNANCY_STATUS: '/api/pregnancystatus/',
-    UPDATE_PREGNANCY_STATUS: '/api/pregnancystatus/'
+    UPDATE_PREGNANCY_STATUS: '/api/pregnancystatus/',
+
+    CREATE_INVOICE:'/api/invoicespig/'
 }
 
 export { KEY }
