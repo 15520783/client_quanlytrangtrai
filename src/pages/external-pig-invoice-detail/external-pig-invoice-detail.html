@@ -63,63 +63,59 @@
         </ion-card-header>
         <ion-card-content class="card-content-custom">
           <ion-list>
-            <ion-item *ngFor="let item of details">
-              <ion-avatar item-start>
-                <ion-icon name="app-food" font28></ion-icon>
-              </ion-avatar>
-              <h2><b>{{item.food_name}}</b></h2>
-              <ion-row>
-                <ion-col>
-                  <ion-row>
-                    <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>Mã heo:</b></p>
-                    </ion-col>
-                    <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>Giống:</b></p>
-                    </ion-col>
-                    <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>Giới tính:</b></p>
-                    </ion-col>
-                    <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>Ngày sinh:</b></p>
-                    </ion-col>
-                    <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>Nhà:</b></p>
-                    </ion-col>
-                    <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>Khu:</b></p>
-                    </ion-col>
-                    <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>Hiện trạng:</b></p>
-                    </ion-col>
-                    <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>Vú:</b></p>
-                    </ion-col>
-                    <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>BPSD:</b></p>
-                    </ion-col>
-                    <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>Chân:</b></p>
-                    </ion-col>
-                    <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>Điểm TT:</b></p>
-                    </ion-col>
-                    <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>Sức khỏe:</b></p>
-                    </ion-col>
-                    <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>TL từ NCC:</b></p>
-                    </ion-col>
-                    <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>TL tại trại:</b></p>
-                    </ion-col>
-                  </ion-row>
-                </ion-col>
-                <ion-col col-lg-2 col-md-3 col-sm-3>
+            <span *ngFor="let item of details">
+              <ion-item *ngIf="pigs[item.objectId]">
+                <ion-avatar item-start>
+                  <ion-icon name="app-food" font28></ion-icon>
+                </ion-avatar>
+                <h2><b>{{item.food_name}}</b></h2>
+                <ion-row>
+                  <ion-col>
+                    <ion-row>
+                      <ion-col col-lg-3 col-md-6 col-sm-12>
+                        <p text-wrap><b>Mã heo:</b>{{pigs[item.objectId].pigCode}}</p>
+                      </ion-col>
+                      <ion-col col-lg-3 col-md-6 col-sm-12>
+                        <p text-wrap><b>Giống:</b>{{pigs[item.objectId].breedId}}</p>
+                      </ion-col>
+                      <ion-col col-lg-3 col-md-6 col-sm-12>
+                        <p text-wrap><b>Giới tính:</b>{{pigs[item.objectId].gender}}</p>
+                      </ion-col>
+                      <ion-col col-lg-3 col-md-6 col-sm-12>
+                        <p text-wrap><b>Ngày sinh:</b>{{pigs[item.objectId].birthday}}</p>
+                      </ion-col>
+                      <ion-col col-lg-3 col-md-6 col-sm-12>
+                        <p text-wrap><b>Nhà:</b>{{house[pigs[item.objectId].houseId].name}}</p>
+                      </ion-col>
+                      <ion-col col-lg-3 col-md-6 col-sm-12>
+                        <p text-wrap><b>Khu:</b>{{house[pigs[item.objectId].houseId].section.name}}</p>
+                      </ion-col>
+                      <ion-col col-lg-3 col-md-6 col-sm-12 *ngIf="gentials[pigs[item.objectId].gentialTypeId]">
+                        <p text-wrap><b>BPSD:</b>{{gentials[pigs[item.objectId].gentialTypeId].name}}</p>
+                      </ion-col>
+                      <ion-col col-lg-3 col-md-6 col-sm-12>
+                        <p text-wrap><b>Chân:</b>{{foots[pigs[item.objectId].footTypeId].name}}</p>
+                      </ion-col>
+                      <ion-col col-lg-3 col-md-6 col-sm-12>
+                        <p text-wrap><b>Điểm TT:</b>{{pigs[item.objectId].healthPoint}}</p>
+                      </ion-col>
+                      <ion-col col-lg-3 col-md-6 col-sm-12>
+                        <p text-wrap><b>Sức khỏe:</b>{{healStatus[pigs[item.objectId].healthStatusId].name}}</p>
+                      </ion-col>
+                      <ion-col col-lg-3 col-md-6 col-sm-12>
+                        <p text-wrap><b>TL từ NCC:</b>{{pigs[item.objectId].originWeight}}</p>
+                      </ion-col>
+                      <ion-col col-lg-3 col-md-6 col-sm-12>
+                        <p text-wrap><b>TL tại trại:</b>{{pigs[item.objectId].receiveWeight}}</p>
+                      </ion-col>
+                    </ion-row>
+                  </ion-col>
+                  <!-- <ion-col col-lg-2 col-md-3 col-sm-3>
                   <button ion-button mode='ios' block color="secondary" text-wrap>Chuyển cám</button>
-                </ion-col>
-              </ion-row>
-            </ion-item>
+                </ion-col> -->
+                </ion-row>
+              </ion-item>
+            </span>
           </ion-list>
         </ion-card-content>
       </ion-card>

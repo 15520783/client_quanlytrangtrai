@@ -29,7 +29,7 @@ export class UserProvider {
     let headers = new HttpHeaders().set('Authorization', CONFIG.ACCESS_KEY);
     return this.http
     .get(CONFIG.SERVER_API.concat(API.CHECK_SERVER),{headers:headers})
-    .timeout(3000)
+    .timeout(10000)
     .toPromise();
   }
 

@@ -28,10 +28,9 @@ const CONFIG = {
 
 const VARIABLE = {
     gender: [
-        { id: 0, name: 'Không xác định' },
-        { id: 1, name: 'Nái' },
-        { id: 2, name: 'Đực' },
-        { id: 3, name: 'Đực hiến' }
+        { value: '1', name: 'Đực' },
+        { value: '2', name: 'Nái' },
+        { value: '3', name: 'Đực hiến' }
     ],
     section_type: [
         {
@@ -123,13 +122,15 @@ const API = {
     GET_ALL_PARTNERS: '/api/partners/list',
     GET_ALL_INVOICES: '/api/invoices/list',
 
-    GET_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/',
+    GET_PIG_INVOICE_DETAIL_FROM_INVOICE: '/api/invoicepigdetail/invoice/',
 
     CREATE_PREGNANCY_STATUS: '/api/pregnancystatus/',
     DELETE_PREGNANCY_STATUS: '/api/pregnancystatus/',
     UPDATE_PREGNANCY_STATUS: '/api/pregnancystatus/',
 
-    CREATE_INVOICE:'/api/invoicespig/',
+    // CREATE_PIG_INVOICE:'/api/invoicespig/',
+    CREATE_PIG_INVOICE:'/api/invoicepigdetail/pigsinvoicepigdetail/',
+    CREATE_PIG_INVOICE_DETAIL:'/api/invoicepigdetail/',
 
     CREATE_PIG:'/api/pigs/'
 

@@ -7,6 +7,7 @@ import { PartnerProvider } from '../partner/partner';
 import { EmployeesProvider } from '../employees/employees';
 import { SectionsProvider } from '../sections/sections';
 import { SettingsProvider } from '../settings/settings';
+import { pig, house } from '../../common/entity';
 
 
 @Injectable()
@@ -20,7 +21,7 @@ export class DeployDataProvider {
     public partnerProvider: PartnerProvider,
     public employeeProvider: EmployeesProvider,
     public sectionProvider: SectionsProvider,
-    public settingProvider:SettingsProvider
+    public settingProvider: SettingsProvider
   ) {
   }
 
@@ -172,6 +173,61 @@ export class DeployDataProvider {
   }
 
   /**
+   * Lấy các đối tượng heo với Object key  là id
+   */
+  get_object_list_key_of_pig(){
+    let pigs = {};
+    this.pigsProvider.pigs.forEach((pig)=>{
+      pigs[pig.id] = pig;
+    })
+    return pigs;
+  }
+
+  /**
+   * Lấy các đối tượng nhà với Object key  là id
+   */
+  get_object_list_key_of_house(){
+    let houses = {};
+    this.houseProvider.houses.forEach((house)=>{
+      houses[house.id]=house;
+    })
+    return houses;
+  }
+
+  /**
+   * Lấy các đối tượng BPSD với Object key  là id
+   */
+  get_object_list_key_of_gential(){
+    let gentials = {};
+    this.settingProvider.setting.gentialType.forEach((gential)=>{
+      gentials[gential.id] = gential;
+    })
+    return gentials;
+  }
+
+  /**
+   * Lấy các đối tượng loại chân với Object key  là id
+   */
+  get_object_list_key_of_foot(){
+    let foots = {};
+    this.settingProvider.setting.footType.forEach((foot)=>{
+      foots[foot.id] = foot;
+    })
+    return foots;
+  }
+
+  /**
+   * Lấy các đối tượng tình trạng sức khỏe với Object key  là id
+   */
+  get_object_list_key_of_healthStatus(){
+    let healthStatus = {};
+    this.settingProvider.setting.healthStatus.forEach((health)=>{
+      healthStatus[health.id] = health;
+    })
+    return healthStatus;
+  }
+
+  /**
    * Lấy thông tin nhà thông qua id
    * @param houseId 
    */
@@ -185,9 +241,9 @@ export class DeployDataProvider {
    * Lấy thông tin giống thông qua id
    * @param breedId 
    */
-  get_breed_by_id(breedId){
-    return this.settingProvider.setting.breeds.filter((breed)=>{
-      return breed.id == breedId ? true:false;
+  get_breed_by_id(breedId) {
+    return this.settingProvider.setting.breeds.filter((breed) => {
+      return breed.id == breedId ? true : false;
     })[0];
   }
 
@@ -195,9 +251,9 @@ export class DeployDataProvider {
    * Lấy thông tin loại chân thông qua id
    * @param footId 
    */
-  get_foot_by_id(footId){
-    return this.settingProvider.setting.footType.filter((foot)=>{
-      return foot.id == footId ? true:false;
+  get_foot_by_id(footId) {
+    return this.settingProvider.setting.footType.filter((foot) => {
+      return foot.id == footId ? true : false;
     })[0];
   }
 
@@ -205,9 +261,9 @@ export class DeployDataProvider {
    * Lấy thông tin trạng thái sức khỏe thông qua id
    * @param healStatusId 
    */
-  get_healthstatus_by_id(healStatusId){
-    return this.settingProvider.setting.healthStatus.filter((healthStatus)=>{
-      return healthStatus.id == healStatusId ? true:false;
+  get_healthstatus_by_id(healStatusId) {
+    return this.settingProvider.setting.healthStatus.filter((healthStatus) => {
+      return healthStatus.id == healStatusId ? true : false;
     })[0];
   }
 
@@ -215,9 +271,9 @@ export class DeployDataProvider {
    * Lấy thông tin trạng thái mang thai thông qua id
    * @param pregnancyStatusId 
    */
-  get_pregnancystatus_by_id(pregnancyStatusId){
-    return this.settingProvider.setting.pregnancyStatus.filter((pregnancyStatus)=>{
-      return pregnancyStatus.id == pregnancyStatusId ? true:false;
+  get_pregnancystatus_by_id(pregnancyStatusId) {
+    return this.settingProvider.setting.pregnancyStatus.filter((pregnancyStatus) => {
+      return pregnancyStatus.id == pregnancyStatusId ? true : false;
     })[0];
   }
 
@@ -225,9 +281,31 @@ export class DeployDataProvider {
    * Lấy thông tin sản phẩm thông qua id
    * @param pregnancyStatusId 
    */
-  get_pricecode_by_id(priceCodeId){
-    return this.settingProvider.setting.priceCodes.filter((priceCode)=>{
-      return priceCode.id == priceCodeId ? true:false;
+  get_pricecode_by_id(priceCodeId) {
+    return this.settingProvider.setting.priceCodes.filter((priceCode) => {
+      return priceCode.id == priceCodeId ? true : false;
+    })[0];
+  }
+
+  get_parent_of_pig(target: pig) {
+    let result: any = {};
+    result['father'] = this.pigsProvider.pigs.filter((pig) => {
+      return target.originFather == pig.pigCode ? true : false;
+    })[0];
+    result['mother'] = this.pigsProvider.pigs.filter((pig) => {
+      return target.originMother == pig.pigCode ? true : false;
+    })[0];
+    console.log(result);
+    return result;
+  }
+
+  /**
+   * Lấy thông tin heo thông qua id
+   * @param pigId 
+   */
+  get_pig_by_id(pigId: string) {
+    return this.pigsProvider.pigs.filter((pig) => {
+      return pig.id == pigId ? true : false;
     })[0];
   }
 }

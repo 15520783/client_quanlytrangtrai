@@ -26,7 +26,7 @@
               </ion-item>
               <ion-item>
                 <ion-label stacked>Giống :</ion-label>
-                <ion-input text-wrap type="text" readonly [(ngModel)]="pig.breedId"></ion-input>
+                <ion-input text-wrap type="text" readonly [(ngModel)]="breed.name"></ion-input>
               </ion-item>
               <!-- <ion-item>
                 <ion-label stacked>Cấp giống :</ion-label>
@@ -46,13 +46,12 @@
               </ion-item> -->
               <ion-item>
                 <ion-label stacked>Trang trại :</ion-label>
-                <ion-input text-wrap type="text" readonly ></ion-input>
+                <ion-input text-wrap type="text" readonly [(ngModel)]="house.section.farm.name"></ion-input>
               </ion-item>
               <ion-item>
                 <ion-label stacked>Khu :</ion-label>
-                <ion-input text-wrap type="text" readonly ></ion-input>
+                <ion-input text-wrap type="text" readonly [(ngModel)]="house.section.name"></ion-input>
               </ion-item>
-
             </ion-list>
           </ion-col>
 
@@ -60,15 +59,15 @@
             <ion-list no-padding>
               <ion-item>
                 <ion-label stacked>Nhà :</ion-label>
-                <ion-input text-wrap type="text" readonly [(ngModel)]="pig.houseId"></ion-input>
+                <ion-input text-wrap type="text" readonly [(ngModel)]="house.name"></ion-input>
               </ion-item>
               <ion-item>
                 <ion-label stacked>Số tai mẹ :</ion-label>
-                <ion-input text-wrap type="text" readonly [(ngModel)]="pig.originMother"></ion-input>
+                <ion-input text-wrap type="text" readonly [(ngModel)]="mother.pigCode"></ion-input>
               </ion-item>
               <ion-item>
                 <ion-label stacked>Số tai cha :</ion-label>
-                <ion-input text-wrap type="text" readonly [(ngModel)]="pig.originFather"></ion-input>
+                <ion-input text-wrap type="text" readonly [(ngModel)]="father.pigCode"></ion-input>
               </ion-item>
               <!-- <ion-item>
                 <ion-label stacked>Trọng lượng :</ion-label>
@@ -84,35 +83,35 @@
               </ion-item> -->
               <ion-item>
                 <ion-label stacked>Sức khỏe :</ion-label>
-                <ion-input text-wrap type="text" readonly [(ngModel)]="pig.healthStatusId"></ion-input>
+                <ion-input text-wrap type="text" readonly [(ngModel)]="healthStatus.name"></ion-input>
               </ion-item>
             </ion-list>
           </ion-col>
 
           <ion-col col-sm-6 col-md-2>
             <ion-list no-padding>
-              <ion-item>
+              <!-- <ion-item>
                 <ion-label stacked>Index :</ion-label>
                 <ion-input text-wrap type="text" readonly [(ngModel)]="pig.index"></ion-input>
-              </ion-item>
+              </ion-item> -->
               <ion-item>
                 <ion-label stacked>Trọng lượng :</ion-label>
                 <ion-input text-wrap type="text" readonly [(ngModel)]="pig.originWeight"></ion-input>
               </ion-item>
               <ion-item>
                 <ion-label stacked>Loại chân :</ion-label>
-                <ion-input text-wrap type="text" readonly [(ngModel)]="pig.footTypeId"></ion-input>
+                <ion-input text-wrap type="text" readonly [(ngModel)]="foot.name"></ion-input>
               </ion-item>
               <ion-item>
                 <ion-label stacked>Số vú :</ion-label>
                 <ion-input text-wrap type="text" readonly [(ngModel)]="pig.totalUdder"></ion-input>
               </ion-item>
               <ion-item>
-                <ion-label stacked>Chỉ số BF :</ion-label>
+                <ion-label stacked>Chỉ số mỡ lưng :</ion-label>
                 <ion-input text-wrap type="text" readonly [(ngModel)]="pig.bf"></ion-input>
               </ion-item>
               <ion-item>
-                <ion-label stacked>Chỉ số ADG :</ion-label>
+                <ion-label stacked>Chỉ số ADG:</ion-label>
                 <ion-input text-wrap type="text" readonly [(ngModel)]="pig.adg"></ion-input>
               </ion-item>
             </ion-list>

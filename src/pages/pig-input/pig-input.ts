@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { pig } from '../../common/entity';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { SettingsProvider } from '../../providers/settings/settings';
+import { VARIABLE } from '../../common/const';
 
 
 @IonicPage()
@@ -16,11 +17,7 @@ export class PigInputPage {
   public credentialsForm: FormGroup;
   public submitAttempt: boolean = false;
 
-  public genders: any = [
-    { name: 'Đực', value: 1 },
-    { name: 'Cái', value: 2 },
-    { name: 'Đực hiến', value: 3 },
-  ]
+
 
   public pig = new pig();
 
@@ -56,7 +53,7 @@ export class PigInputPage {
       footTypeId: [this.pig.footTypeId, Validators.compose([Validators.required])],
       functionUdder: [this.pig.functionUdder, Validators.compose([Validators.required])],
       totalUdder: [this.pig.totalUdder, Validators.compose([Validators.required])],
-      gential: [this.pig.gential, Validators.compose([Validators.required])],
+      gentialTypeId: [this.pig.gentialTypeId, Validators.compose([Validators.required])],
       adg: [this.pig.adg, Validators.compose([Validators.required])],
       fcr: [this.pig.fcr, Validators.compose([Validators.required])],
       bf: [this.pig.bf, Validators.compose([Validators.required])],
@@ -112,7 +109,7 @@ export class PigInputPage {
   public rounds:Array<{ name: string, value: string }> = [];
   public pregnancyStatus:Array<{ name: string, value: string }> = [];
   public priceCodes:Array<{ name: string, value: string }> = [];
-
+  public genders: Array<{ name: string, value: string }> = [];
   init() {
     this.farms = this.deployData.get_farm_list_for_select();
     this.settingProvider.setting.breeds.forEach((breed)=>{
@@ -121,6 +118,8 @@ export class PigInputPage {
         value:breed.id
       })
     })
+    this.genders = VARIABLE.gender;
+    
     for(let i = 0;i<=5;i+=0.5){
       this.health_points.push({
         name:i.toString(),

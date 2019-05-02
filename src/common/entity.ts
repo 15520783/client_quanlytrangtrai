@@ -40,8 +40,8 @@ class base {
 	updatedAt: any = '';
 	delFlag: boolean = false;
 
-	setId(id){
-		this.id = id;
+	constructor(){
+
 	}
 }
 
@@ -75,7 +75,7 @@ class pig extends base {
 	footTypeId: string = '';
 	functionUdder: number = null;
 	totalUdder: number = null;
-	gential: string = '';
+	gentialTypeId: string = '';
 	// gentialTypeId: number = null;
 	description: string = '';
 	fcr: number = null;
@@ -95,6 +95,10 @@ class pig extends base {
 	status: string = '0';
 	priceCodeId: string = '0';
 	overviewStatus: string = '0';
+
+	constructor(){
+		super();
+	}
 }
 
 class group extends base {
@@ -437,7 +441,7 @@ class invoicesProduct extends base {
 
 class invoicePigDetail extends base{
 	invoice:invoicesPig = new invoicesPig();
-	objectType:number = null;
+	objectType:string = '1';
 	objectId:string = '';
 }
 

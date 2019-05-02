@@ -33,7 +33,7 @@ export class InvoicesProvider {
   createPigInvoice(objBody: invoicesPig) {
     let headers = new HttpHeaders().set('Authorization', CONFIG.ACCESS_KEY);
     return this.http
-      .post(CONFIG.SERVER_API.concat(API.CREATE_INVOICE), objBody, { headers: headers })
+      .post(CONFIG.SERVER_API.concat(API.CREATE_PIG_INVOICE), objBody, { headers: headers })
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise();
   }
@@ -41,9 +41,17 @@ export class InvoicesProvider {
   getPigInvoiceDetail(invoiceId:string){
     let headers = new HttpHeaders().set('Authorization', CONFIG.ACCESS_KEY);
     return this.http
-    .get(CONFIG.SERVER_API.concat(API.GET_PIG_INVOICE_DETAIL).concat(invoiceId),{headers})
+    .get(CONFIG.SERVER_API.concat(API.GET_PIG_INVOICE_DETAIL_FROM_INVOICE).concat(invoiceId),{headers})
     .timeout(CONFIG.DEFAULT_TIMEOUT)
     .toPromise();
+  }
+  
+  createPigInvoiceDetail(objBody:invoicePigDetail){
+    let headers = new HttpHeaders().set('Authorization', CONFIG.ACCESS_KEY);
+    return this.http
+      .post(CONFIG.SERVER_API.concat(API.CREATE_PIG_INVOICE_DETAIL),objBody,{headers:headers})
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
   sync() {
