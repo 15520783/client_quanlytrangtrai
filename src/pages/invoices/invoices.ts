@@ -14,8 +14,8 @@ export class InvoicesPage {
   public list_invoice_type;
   public list_keys;
 
-  public internalPigInvoices: any;
-  public externalPigInvoices: any;
+  public internalPigInvoices: any = [];
+  public externalPigInvoices: any = [];
 
   constructor(
     public navCtrl: NavController,
@@ -24,13 +24,18 @@ export class InvoicesPage {
     public renderer: Renderer,
     public invoicesProvider: InvoicesProvider
   ) {
-    this.internalPigInvoices = this.invoicesProvider.invoices.invoicesPigs.filter((invoices) => {
-      return invoices.invoiceType == 1 ? true : false;
-    });
+    if (this.invoicesProvider.invoices) {
+      if (this.invoicesProvider.invoices.invoicesPigs.length) {
+        this.internalPigInvoices = this.invoicesProvider.invoices.invoicesPigs.filter((invoices) => {
+          return invoices.invoiceType == 1 ? true : false;
+        });
 
-    this.externalPigInvoices = this.invoicesProvider.invoices.invoicesPigs.filter((invoices) => {
-      return invoices.invoiceType == 2 ? true : false;
-    })
+        this.externalPigInvoices = this.invoicesProvider.invoices.invoicesPigs.filter((invoices) => {
+          return invoices.invoiceType == 2 ? true : false;
+        })
+      }
+    }
+
 
     this.list_invoice_type = {
       internalPigInvoice: {

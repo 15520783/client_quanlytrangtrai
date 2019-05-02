@@ -36,6 +36,7 @@ import { SettingsPage } from '../pages/settings/settings';
 import { PartnersPage } from '../pages/partners/partners';
 import { ActivitiesPage } from '../pages/activities/activities';
 import { InvoicesPage } from '../pages/invoices/invoices';
+import { ExternalPigInvoiceDetailPage } from '../pages/external-pig-invoice-detail/external-pig-invoice-detail';
 
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
@@ -108,12 +109,13 @@ const Pages = [
   PigGroupInputPage,
   ActivitiesPage,
   InvoicesPage,
+  ExternalPigInvoiceDetailPage,
   PigGroupListComponent,
   EmployeeListComponent,
   PigListComponent,
   SettingUtilComponent,
   SettingInputUtilComponent,
-  InvoiceInputUtilComponent
+  InvoiceInputUtilComponent,
 ]
 
 const Components = [
@@ -131,7 +133,7 @@ const Components = [
   SettingInputUtilComponent,
   InvoiceInputUtilComponent,
   InternalPigInvoicesComponent,
-  ExternalPigInvoicesComponent
+  ExternalPigInvoicesComponent,
 ]
 
 const Providers = [

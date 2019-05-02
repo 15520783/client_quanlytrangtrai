@@ -32,12 +32,17 @@ export {partners}
 export {roles}
 export {invoicesPig}
 export {invoicesProduct}
+export {invoicePigDetail}
 
 class base {
-	id: string = '';
+	id;
 	createdAt: any = '';
 	updatedAt: any = '';
 	delFlag: boolean = false;
+
+	setId(id){
+		this.id = id;
+	}
 }
 
 class user extends base {
@@ -55,7 +60,7 @@ class pig extends base {
 	pigCode: string = '';
 	farm_id: string = '';
 	houseId: string = '';
-	roundId: string = '';
+	roundId: string = '0';
 	breedId: string = '';
 	gender: number = null;
 	birthday: any = '';
@@ -67,10 +72,11 @@ class pig extends base {
 	originWeight: number = null;
 	receiveWeight: number = null;
 	healthPoint: number = null;
-	footTypeId: number = null;
+	footTypeId: string = '';
 	functionUdder: number = null;
 	totalUdder: number = null;
-	gentialTypeId: number = null;
+	gential: string = '';
+	// gentialTypeId: number = null;
 	description: string = '';
 	fcr: number = null;
 	adg: number = null;
@@ -82,13 +88,13 @@ class pig extends base {
 	parities: number = null;
 	images: string = '';
 	healthStatusId: number = null;
-	breedingType: number = null;
-	breedStatus: number = null;
-	pregnancyStatusId: number = null;
-	point_review: number = null;
-	status: number = null;
-	priceCodeId: number = null;
-	overviewStatus: number = null;
+	breedingType: string = '0';
+	breedStatus: string = '0';
+	pregnancyStatusId: string = '0';
+	point_review: string = '0';
+	status: string = '0';
+	priceCodeId: string = '0';
+	overviewStatus: string = '0';
 }
 
 class group extends base {
@@ -427,6 +433,12 @@ class invoicesProduct extends base {
 	price:number = null;
 	importDate:any='';
 	description:string='';
+}
+
+class invoicePigDetail extends base{
+	invoice:invoicesPig = new invoicesPig();
+	objectType:number = null;
+	objectId:string = '';
 }
 
 

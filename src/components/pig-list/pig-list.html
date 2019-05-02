@@ -76,22 +76,22 @@
       <ion-avatar item-start>
         <ion-icon name="app-pig-outline" font28></ion-icon>
       </ion-avatar>
-      <h2>{{item.pig_code}}</h2>
+      <h2>{{item.pigCode}}</h2>
       <ion-row>
         <ion-col>
-          <p>House_ID: {{item.house_id}}</p>
+          <p><b>Nhà:</b> {{item.houseId}}</p>
         </ion-col>
         <ion-col>
-          <p>Weight: {{item.origin_weight}}</p>
+          <p><b>Cân nặng:</b> {{item.originWeight}}</p>
         </ion-col>
         <ion-col>
-          <p>Birth: {{item.birthday}}</p>
+          <p><b>Ngày sinh:</b> {{item.birthday|date:'dd/MM/yyyy'}}</p>
         </ion-col>
         <ion-col>
-          <p>Gender: {{item.gender}}</p>
+          <p><b>Giới tính:</b> {{item.gender}}</p>
         </ion-col>
         <ion-col>
-          <p>Healpoint: {{item.heath_point}}</p>
+          <p><b>Điểm thể trạng:</b> {{item.healthPoint}}</p>
         </ion-col>
       </ion-row>
     </button>

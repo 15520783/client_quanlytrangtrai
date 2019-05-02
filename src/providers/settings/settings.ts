@@ -19,7 +19,7 @@ export class setting {
   medicineUnits: Array<medicineUnits> = [];
   medicines: Array<medicines> = [];
   priceCodes: Array<priceCodes> = [];
-  footTypes: Array<footType> = [];
+  footType: Array<footType> = [];
   gentialType: Array<gentialType> = [];
   issues: Array<issues> = [];
   markTypes: Array<markTypes> = [];

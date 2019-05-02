@@ -1,13 +1,14 @@
 import { Component, ViewChild, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Content, NavController, Events } from 'ionic-angular';
-import { invoicesPig,  } from '../../common/entity';
+import { invoicesPig, invoicePigDetail,  } from '../../common/entity';
 import { FilterProvider } from '../../providers/filter/filter';
 import { Utils } from '../../common/utils';
 import { ExternalPigInvoiceRole } from '../../role-input/externalPigInvoice';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { InvoiceInputUtilComponent } from '../invoice-input-util/invoice-input-util';
+import { ExternalPigInvoiceDetailPage } from '../../pages/external-pig-invoice-detail/external-pig-invoice-detail';
 
 
 @Component({
@@ -23,13 +24,14 @@ export class ExternalPigInvoicesComponent {
   
   public mainAttribute = "invoiceNo";
   public attributes =  [
-    { name: "sourceManagerName", label: 'Nguồn cung cấp' },
-    { name: "destinationManagerName", label: 'Nơi nhận' },
-    { name: "exportDate", label: 'Ngày xuất' },
+    { name: "sourceName", label: 'Nguồn cung cấp' },
+    { name: "destinationName", label: 'Nơi nhận' },
+    { name: "importDateDisplay", label: 'Ngày nhập' },
     { name: "quantity", label: 'Tổng số heo' }
   ];
+
   public placeholderSearch: string = 'Tìm kiếm chứng từ'
-  public filter_default: Array<string> = ["invoiceNo", "sourceManagerName","destinationManagerName","exportDate","quantity"];
+  public filter_default: Array<string> = ["invoiceNo", "sourceName","destinationName","importDateDisplay","quantity"];
   
   public page_Idx: number = 1;
   public page_Total: number = 0;
@@ -48,11 +50,21 @@ export class ExternalPigInvoicesComponent {
     public deployData: DeployDataProvider,
     public invoiceProvider: InvoicesProvider
   ) {
-
+    
+    console.log(this.invoices);
     this.roleInput = new ExternalPigInvoiceRole(this.deployData,this.invoiceProvider);
   }
 
   ngAfterViewInit(): void {
+    let partners_util = this.deployData.get_object_list_key_of_partner();
+    let farms_util = this.deployData.get_object_list_key_of_farm();
+    if(this.invoices.length){
+      this.invoices.forEach((invoice)=>{
+        invoice['sourceName'] = partners_util[invoice.sourceId].name;
+        invoice['destinationName'] = farms_util[invoice.destinationId].name;
+        invoice['importDateDisplay'] = this.util.convertDate(invoice.importDate);
+      })
+    }
     this.setFilteredItems();
   }
 
@@ -102,5 +114,9 @@ export class ExternalPigInvoicesComponent {
         this.events.unsubscribe('callback');
       }
     })
+  }
+
+  input_pig(item){
+    this.navCtrl.push(ExternalPigInvoiceDetailPage,{invoice:item});
   }
 }

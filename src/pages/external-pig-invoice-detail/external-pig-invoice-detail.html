@@ -6,11 +6,11 @@
             <ion-icon name="arrow-back"></ion-icon>
           </button>
         </ion-buttons> -->
-      <ion-title>{{warehouse.name}}</ion-title>
+      <ion-title>Chứng từ : {{invoice.invoiceNo}}</ion-title>
     </ion-toolbar>
   </ion-navbar>
   <ion-toolbar showWhen="core" class="pl-10">
-    <button ion-button mode='ios' color="secondary">Lịch sử xuất, sử dụng</button>
+    <button ion-button mode='ios' color="secondary" (tap)="input_pig()">Nhập heo</button>
   </ion-toolbar>
 </ion-header>
 
@@ -19,33 +19,37 @@
     <ion-col col-lg-4 col-md-4 col-sm-12 col-xs-12>
       <ion-card mode='ios'>
         <ion-card-header>
-          <ion-card-title>Thông tin kho</ion-card-title>
+          <ion-card-title>Thông tin chứng từ</ion-card-title>
         </ion-card-header>
         <ion-card-content class="card-content-custom">
-          <ion-list>
+          <ion-list *ngIf="invoice">
             <ion-item>
-              <ion-label stacked>Tên kho</ion-label>
-              <ion-input text-wrap type="text" readonly [(ngModel)]="warehouse.name"></ion-input>
+              <ion-label stacked>Nơi cung cấp:</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.source.name"></ion-input>
             </ion-item>
             <ion-item>
-              <ion-label stacked>Loại kho</ion-label>
-              <ion-input text-wrap type="text" readonly [(ngModel)]="warehouse.type_id"></ion-input>
+              <ion-label stacked>Người đại diện:</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.sourceManagerName"></ion-input>
             </ion-item>
             <ion-item>
-              <ion-label stacked>Trực thuộc</ion-label>
-              <ion-input text-wrap type="text" readonly [(ngModel)]="warehouse.unit_id"></ion-input>
+              <ion-label stacked>Nơi nhận:</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.destination.name"></ion-input>
             </ion-item>
             <ion-item>
-              <ion-label stacked>Phụ trách kho</ion-label>
-              <ion-input text-wrap type="text" readonly [(ngModel)]="warehouse.manager.name"></ion-input>
+              <ion-label stacked>Người đại diện</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.destinationManagerName"></ion-input>
             </ion-item>
             <ion-item>
-              <ion-label stacked>Tổng cám</ion-label>
-              <ion-input text-wrap type="text" readonly></ion-input>
+              <ion-label stacked>Ngày nhập:</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.importDate"></ion-input>
             </ion-item>
             <ion-item>
-              <ion-label stacked>Mô tả</ion-label>
-              <ion-input text-wrap type="text" readonly [(ngModel)]="warehouse.description"></ion-input>
+              <ion-label stacked>Ngày cập nhật:</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.updatedAt"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Tổng số heo theo chứng từ:</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.quantity"></ion-input>
             </ion-item>
           </ion-list>
         </ion-card-content>
@@ -55,11 +59,11 @@
     <ion-col col-lg-8 col-md-8 col-sm-12 col-xs-12>
       <ion-card mode='ios'>
         <ion-card-header>
-          <ion-card-title>Danh sách cám chi tiết</ion-card-title>
+          <ion-card-title>Danh sách heo theo chứng từ</ion-card-title>
         </ion-card-header>
         <ion-card-content class="card-content-custom">
           <ion-list>
-            <ion-item *ngFor="let item of food_warehouses">
+            <ion-item *ngFor="let item of details">
               <ion-avatar item-start>
                 <ion-icon name="app-food" font28></ion-icon>
               </ion-avatar>
@@ -68,28 +72,46 @@
                 <ion-col>
                   <ion-row>
                     <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>Mã cám:</b>{{item.food_code}}</p>
+                      <p text-wrap><b>Mã heo:</b></p>
                     </ion-col>
                     <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>Ngày nhập:</b> {{item.import_date}}</p>
+                      <p text-wrap><b>Giống:</b></p>
                     </ion-col>
                     <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>Số lượng nhập:</b> {{item.quantity}}</p>
+                      <p text-wrap><b>Giới tính:</b></p>
                     </ion-col>
                     <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>Tổng:</b> {{item.total}}</p>
+                      <p text-wrap><b>Ngày sinh:</b></p>
                     </ion-col>
                     <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>Đã dùng:</b> {{item.used}}</p>
+                      <p text-wrap><b>Nhà:</b></p>
                     </ion-col>
                     <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>Tồn:</b> {{item.remain}}</p>
+                      <p text-wrap><b>Khu:</b></p>
                     </ion-col>
                     <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>Ngày sản xuất:</b> {{item.mfg_date}}</p>
+                      <p text-wrap><b>Hiện trạng:</b></p>
                     </ion-col>
                     <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>Hạn sử dụng:</b> {{item.expiry_date}}</p>
+                      <p text-wrap><b>Vú:</b></p>
+                    </ion-col>
+                    <ion-col col-3 col-md-6 col-sm-12>
+                      <p text-wrap><b>BPSD:</b></p>
+                    </ion-col>
+                    <ion-col col-3 col-md-6 col-sm-12>
+                      <p text-wrap><b>Chân:</b></p>
+                    </ion-col>
+                    <ion-col col-3 col-md-6 col-sm-12>
+                      <p text-wrap><b>Điểm TT:</b></p>
+                    </ion-col>
+                    <ion-col col-3 col-md-6 col-sm-12>
+                      <p text-wrap><b>Sức khỏe:</b></p>
+                    </ion-col>
+                    <ion-col col-3 col-md-6 col-sm-12>
+                      <p text-wrap><b>TL từ NCC:</b></p>
+                    </ion-col>
+                    <ion-col col-3 col-md-6 col-sm-12>
+                      <p text-wrap><b>TL tại trại:</b></p>
                     </ion-col>
                   </ion-row>
                 </ion-col>
@@ -106,7 +128,7 @@
 </ion-content>
 
 
-<ion-content no-padding showWhen="ios,android">
+<!-- <ion-content no-padding showWhen="ios,android">
   <ion-item-divider text-wrap sticky="true">
     <ion-row no-padding>
       {{header[slider.realIndex]}}
@@ -181,4 +203,4 @@
       </ion-list>
     </ion-slide>
   </ion-slides>
-</ion-content>
+</ion-content> -->

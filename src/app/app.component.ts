@@ -68,10 +68,12 @@ export class MyApp {
                 this.subscribeEventUpdate();
               }
               else {
+                this.splash = false;
                 this.rootPage = LoginPage;
               }
             })
         } else {
+          this.splash = false;
           this.rootPage = LoginPage;
         }
       })

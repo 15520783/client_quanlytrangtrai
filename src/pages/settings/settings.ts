@@ -194,7 +194,7 @@ export class SettingsPage {
           { name: "description", label: 'Mô tả' },
         ],
         mainAttribute: 'name',
-        data: this.settingProvider.setting.foodType,
+        data: this.settingProvider.setting.footType,
       },
       gentialType: {
         title: 'Danh sách loại bộ phận sinh dục',
