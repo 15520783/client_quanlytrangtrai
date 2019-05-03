@@ -66,7 +66,7 @@
             <span *ngFor="let item of details">
               <ion-item *ngIf="pigs[item.objectId]">
                 <ion-avatar item-start>
-                  <ion-icon name="app-food" font28></ion-icon>
+                  <ion-icon name="app-pig-outline" font28></ion-icon>
                 </ion-avatar>
                 <h2><b>{{item.food_name}}</b></h2>
                 <ion-row>
@@ -82,7 +82,7 @@
                         <p text-wrap><b>Giới tính:</b>{{pigs[item.objectId].gender}}</p>
                       </ion-col>
                       <ion-col col-lg-3 col-md-6 col-sm-12>
-                        <p text-wrap><b>Ngày sinh:</b>{{pigs[item.objectId].birthday}}</p>
+                        <p text-wrap><b>Ngày sinh:</b>{{pigs[item.objectId].birthday|date:'dd/MM/yyyy'}}</p>
                       </ion-col>
                       <ion-col col-lg-3 col-md-6 col-sm-12>
                         <p text-wrap><b>Nhà:</b>{{house[pigs[item.objectId].houseId].name}}</p>
@@ -90,7 +90,7 @@
                       <ion-col col-lg-3 col-md-6 col-sm-12>
                         <p text-wrap><b>Khu:</b>{{house[pigs[item.objectId].houseId].section.name}}</p>
                       </ion-col>
-                      <ion-col col-lg-3 col-md-6 col-sm-12 *ngIf="gentials[pigs[item.objectId].gentialTypeId]">
+                      <ion-col col-lg-3 col-md-6 col-sm-12 >
                         <p text-wrap><b>BPSD:</b>{{gentials[pigs[item.objectId].gentialTypeId].name}}</p>
                       </ion-col>
                       <ion-col col-lg-3 col-md-6 col-sm-12>
@@ -110,9 +110,9 @@
                       </ion-col>
                     </ion-row>
                   </ion-col>
-                  <!-- <ion-col col-lg-2 col-md-3 col-sm-3>
-                  <button ion-button mode='ios' block color="secondary" text-wrap>Chuyển cám</button>
-                </ion-col> -->
+                  <ion-col col-lg-2 col-md-3 col-sm-3>
+                  <button ion-button mode='ios' block color="danger" text-wrap (tap)="removePigInvoicesDetail(item)">Xóa</button>
+                </ion-col>
                 </ion-row>
               </ion-item>
             </span>

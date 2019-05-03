@@ -53,6 +53,9 @@ export class ExternalPigInvoicesComponent {
     
     console.log(this.invoices);
     this.roleInput = new ExternalPigInvoiceRole(this.deployData,this.invoiceProvider);
+    this.events.subscribe('invoicesReload',()=>{
+      this.setFilteredItems();
+    })
   }
 
   ngAfterViewInit(): void {

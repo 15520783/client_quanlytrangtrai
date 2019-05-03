@@ -18,8 +18,6 @@ import { KEY, CONFIG } from '../common/const';
 import { SettingsProvider } from '../providers/settings/settings';
 import { UserProvider } from '../providers/user/user';
 import { PartnerProvider } from '../providers/partner/partner';
-import { InvoicesProvider } from '../providers/invoices/invoices';
-
 
 @Component({
   templateUrl: 'app.html'
@@ -53,7 +51,6 @@ export class MyApp {
     public partnerProvider: PartnerProvider,
     public util: Utils,
     public userProvider: UserProvider,
-    public invoicesProvider: InvoicesProvider
   ) {
     this.initializeApp();
     this.util.getKey(KEY.ACCESSTOKEN)
@@ -135,7 +132,7 @@ export class MyApp {
           this.warehouseProvider.sync();
           this.settingProvider.sync();
           this.sectionProvider.sync();
-          this.invoicesProvider.sync();
+          // this.invoicesProvider.sync();
         }
       })
       .catch((err: any) => {
@@ -171,11 +168,9 @@ export class MyApp {
       this.houseProvider.updated_flag &&
       this.warehouseProvider.updated_flag &&
       this.settingProvider.updated_flag && 
-      this.partnerProvider.updated_flag && 
-      this.invoicesProvider.updated_flag) {
+      this.partnerProvider.updated_flag ) {
       this.rootPage = HomePage;
       setTimeout(() => {
-        console.log(this.invoicesProvider.invoices);
         this.splash = false;
       }, 1000);
     }

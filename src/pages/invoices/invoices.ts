@@ -1,6 +1,7 @@
 import { Component, ViewChild, Renderer } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, Slides, Slide } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, Slides, Slide, Events } from 'ionic-angular';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
+import { Utils } from '../../common/utils';
 
 
 @IonicPage()
@@ -22,20 +23,11 @@ export class InvoicesPage {
     public navParams: NavParams,
     public platform: Platform,
     public renderer: Renderer,
-    public invoicesProvider: InvoicesProvider
+    public invoicesProvider: InvoicesProvider,
+    public util:Utils,
+    public events: Events
   ) {
-    if (this.invoicesProvider.invoices) {
-      if (this.invoicesProvider.invoices.invoicesPigs.length) {
-        this.internalPigInvoices = this.invoicesProvider.invoices.invoicesPigs.filter((invoices) => {
-          return invoices.invoiceType == 1 ? true : false;
-        });
-
-        this.externalPigInvoices = this.invoicesProvider.invoices.invoicesPigs.filter((invoices) => {
-          return invoices.invoiceType == 2 ? true : false;
-        })
-      }
-    }
-
+    
 
     this.list_invoice_type = {
       internalPigInvoice: {
@@ -56,7 +48,7 @@ export class InvoicesPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad InvoicesPage');
+    this.getInvoices();
   }
 
   ngAfterViewInit() {
@@ -74,4 +66,31 @@ export class InvoicesPage {
   }
 
 
+
+  getInvoices(){
+    this.util.showLoading('Đang tải dữ liệu');
+    this.invoicesProvider.getAllInvoices()
+      .then((data: any) => {
+        if (data) {
+          this.invoicesProvider.invoices = data;
+          if (data.invoicesPigs.length) {
+            this.internalPigInvoices = data.invoicesPigs.filter((invoices) => {
+              return invoices.invoiceType == 1 ? true : false;
+            });
+
+            this.externalPigInvoices = data.invoicesPigs.filter((invoices) => {
+              return invoices.invoiceType == 2 ? true : false;
+            })
+          }
+        }
+        this.events.publish('invoicesReload');
+        this.util.closeLoading();
+      })
+      .catch((err:Error)=>{
+        console.log(err);
+        this.util.closeLoading().then(()=>{
+          this.util.showToast('Dữ liệu chưa được tải về. Vui lòng kiểm tra lại kết nối.')
+        })
+      })
+  }
 }

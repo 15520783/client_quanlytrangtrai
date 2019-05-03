@@ -130,9 +130,12 @@ const API = {
 
     // CREATE_PIG_INVOICE:'/api/invoicespig/',
     CREATE_PIG_INVOICE:'/api/invoicepigdetail/pigsinvoicepigdetail/',
-    CREATE_PIG_INVOICE_DETAIL:'/api/invoicepigdetail/',
 
-    CREATE_PIG:'/api/pigs/'
+    CREATE_PIG_INVOICE_DETAIL:'/api/invoicepigdetail/',
+    DELETE_PIG_INVOICE_DETAIL:'/api/invoicepigdetail/',
+
+    CREATE_PIG:'/api/pigs/',
+    DELETE_PIG:'/api/pigs/'
 
 }
 

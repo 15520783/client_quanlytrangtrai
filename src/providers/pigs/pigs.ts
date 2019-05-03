@@ -41,6 +41,18 @@ export class PigsProvider {
     .toPromise();
   }
 
+  removePig(objBody:pig){
+    const options = {
+      headers: new HttpHeaders({
+        'Authorization':  CONFIG.ACCESS_KEY,
+      }),
+      body: objBody
+    };
+    return this.http.delete(CONFIG.SERVER_API.concat(API.DELETE_PIG),options)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
   getPigByID(id: string) {
     let pig:Array<pig> =  this.pigs.filter((pig: pig) => {
       return pig.id === id ? true : false;

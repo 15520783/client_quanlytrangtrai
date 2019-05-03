@@ -45,6 +45,19 @@ export class InvoicesProvider {
     .timeout(CONFIG.DEFAULT_TIMEOUT)
     .toPromise();
   }
+
+  removePigInvoiceDetail(objBody:invoicePigDetail){
+    const options = {
+      headers: new HttpHeaders({
+        'Authorization':  CONFIG.ACCESS_KEY,
+      }),
+      body: objBody
+    };
+    return this.http
+    .delete(CONFIG.SERVER_API.concat(API.DELETE_PIG_INVOICE_DETAIL),options)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
   
   createPigInvoiceDetail(objBody:invoicePigDetail){
     let headers = new HttpHeaders().set('Authorization', CONFIG.ACCESS_KEY);

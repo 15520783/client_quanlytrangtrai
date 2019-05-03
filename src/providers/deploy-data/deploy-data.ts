@@ -175,9 +175,9 @@ export class DeployDataProvider {
   /**
    * Lấy các đối tượng heo với Object key  là id
    */
-  get_object_list_key_of_pig(){
+  get_object_list_key_of_pig() {
     let pigs = {};
-    this.pigsProvider.pigs.forEach((pig)=>{
+    this.pigsProvider.pigs.forEach((pig) => {
       pigs[pig.id] = pig;
     })
     return pigs;
@@ -186,10 +186,10 @@ export class DeployDataProvider {
   /**
    * Lấy các đối tượng nhà với Object key  là id
    */
-  get_object_list_key_of_house(){
+  get_object_list_key_of_house() {
     let houses = {};
-    this.houseProvider.houses.forEach((house)=>{
-      houses[house.id]=house;
+    this.houseProvider.houses.forEach((house) => {
+      houses[house.id] = house;
     })
     return houses;
   }
@@ -197,9 +197,9 @@ export class DeployDataProvider {
   /**
    * Lấy các đối tượng BPSD với Object key  là id
    */
-  get_object_list_key_of_gential(){
+  get_object_list_key_of_gential() {
     let gentials = {};
-    this.settingProvider.setting.gentialType.forEach((gential)=>{
+    this.settingProvider.setting.gentialType.forEach((gential) => {
       gentials[gential.id] = gential;
     })
     return gentials;
@@ -208,9 +208,9 @@ export class DeployDataProvider {
   /**
    * Lấy các đối tượng loại chân với Object key  là id
    */
-  get_object_list_key_of_foot(){
+  get_object_list_key_of_foot() {
     let foots = {};
-    this.settingProvider.setting.footType.forEach((foot)=>{
+    this.settingProvider.setting.footType.forEach((foot) => {
       foots[foot.id] = foot;
     })
     return foots;
@@ -219,9 +219,9 @@ export class DeployDataProvider {
   /**
    * Lấy các đối tượng tình trạng sức khỏe với Object key  là id
    */
-  get_object_list_key_of_healthStatus(){
+  get_object_list_key_of_healthStatus() {
     let healthStatus = {};
-    this.settingProvider.setting.healthStatus.forEach((health)=>{
+    this.settingProvider.setting.healthStatus.forEach((health) => {
       healthStatus[health.id] = health;
     })
     return healthStatus;
@@ -287,6 +287,17 @@ export class DeployDataProvider {
     })[0];
   }
 
+  /**
+   * Lấy thông tin loại BPSD thông qua id
+   * @param gentialTypeId 
+   */
+  get_gentialtype_by_id(gentialTypeId) {
+    return this.settingProvider.setting.gentialType.filter((gential) => {
+      return gential.id == gentialTypeId ? true : false;
+    })[0];
+  }
+
+
   get_parent_of_pig(target: pig) {
     let result: any = {};
     result['father'] = this.pigsProvider.pigs.filter((pig) => {
@@ -307,5 +318,25 @@ export class DeployDataProvider {
     return this.pigsProvider.pigs.filter((pig) => {
       return pig.id == pigId ? true : false;
     })[0];
+  }
+
+  /**
+   * Lấy Object chuẩn của heo  để thực hiện gửi request
+   * @param pig 
+   */
+  get_pig_object_to_send_request(pig: pig) {
+    pig['house'] = this.get_house_by_id(pig.houseId);
+    pig['round'] = { id: 0 };
+    pig['breed'] = this.get_breed_by_id(pig.breedId);
+    pig['foot'] = this.get_foot_by_id(pig.footTypeId);
+    pig['healthStatus'] = this.get_healthstatus_by_id(pig.healthStatusId);
+    pig['pregnancyStatus'] = this.get_pregnancystatus_by_id(pig.pregnancyStatusId);
+    pig['priceCode'] = this.get_pricecode_by_id(pig.priceCodeId);
+    pig['gentialType'] = this.get_gentialtype_by_id(pig.gentialTypeId);
+    let father = this.get_pig_by_id(pig.originFather);
+    let mother = this.get_pig_by_id(pig.originMother);
+    pig.originFather = father ? father.pigCode : '';
+    pig.originMother = mother ? mother.pigCode : '';
+    return pig;
   }
 }
