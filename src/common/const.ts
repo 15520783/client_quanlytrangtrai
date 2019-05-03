@@ -128,8 +128,10 @@ const API = {
     DELETE_PREGNANCY_STATUS: '/api/pregnancystatus/',
     UPDATE_PREGNANCY_STATUS: '/api/pregnancystatus/',
 
-    // CREATE_PIG_INVOICE:'/api/invoicespig/',
-    CREATE_PIG_INVOICE:'/api/invoicepigdetail/pigsinvoicepigdetail/',
+    CREATE_PIG_INVOICE:'/api/invoicespig/',
+    
+    CREATE_PRODUCT_INVOICE:'/api/invoicesproduct/',
+    // CREATE_PIG_INVOICE:'/api/invoicepigdetail/pigsinvoicepigdetail/',
 
     CREATE_PIG_INVOICE_DETAIL:'/api/invoicepigdetail/',
     DELETE_PIG_INVOICE_DETAIL:'/api/invoicepigdetail/',

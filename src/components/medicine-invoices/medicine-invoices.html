@@ -10,27 +10,27 @@
     </ion-searchbar>
   </ion-toolbar>
 </ion-header>
-<ion-content #contentSetting class="setting-util-component">
+<ion-content #content class="setting-util-component">
   <ion-item-divider custom-diviver sticky="true" showWhen="core">
     <ion-row>
-      <button no-margin ion-button item-end mode='ios' color="secondary" (tap)="add()">{{addButtonLabel}}</button>
+      <button no-margin ion-button item-end mode='ios' color="secondary" (tap)="add()">Thêm chứng từ</button>
     </ion-row>
   </ion-item-divider>
   <ion-list>
     <ion-item-sliding *ngFor="let item of visible_items">
       <ion-item>
-        <h2 *ngIf="mainAttribute"><b>{{item[mainAttribute]}}</b></h2>
+        <h2 *ngIf="mainAttribute"><b>Số chứng từ: </b>{{item[mainAttribute]}}</h2>
         <ion-row>
           <ion-col *ngFor="let attr of attributes" col-6 text-wrap>
             <p style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
           </ion-col>
         </ion-row>
-        <button showWhen="core" ion-button item-end mode='ios' color="main" (tap)="edit(item)">Sửa</button>
-        <button showWhen="core" ion-button item-end mode='ios' color="danger" (tap)="remove(item)">Xóa</button>
+        <button showWhen="core" ion-button item-end mode='ios' color="main" (tap)="edit(item)">Đánh giá & Xác nhận</button>
+        <!-- <button showWhen="core" ion-button item-end mode='ios' color="danger" (tap)="remove(item)">Xóa</button> -->
       </ion-item>
       <ion-item-options side="right" showWhen="ios,android">
-        <button ion-button color="main" (tap)="edit(item)">Sửa</button>
-        <button ion-button color="danger" (tap)="remove(item)">Xóa</button>
+        <button ion-button color="main" (tap)="edit(item)">Đánh giá & Xác nhận</button>
+        <!-- <button ion-button color="danger" (tap)="remove(item)">Xóa</button> -->
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
@@ -43,11 +43,5 @@
     <button ion-fab (tap)="add()">
       <ion-icon name="add" ></ion-icon>
     </button>
-    <!-- <ion-fab-list side="top" style="right:0px">
-      <button data-balloon-visible data-balloon-length="medium" data-balloon="Thêm mới" data-balloon-pos="left" ion-fab
-        color="main" (tap)="add()">
-        <ion-icon name="add"></ion-icon>
-      </button>
-    </ion-fab-list> -->
   </ion-fab>
 </ion-content>

@@ -14,7 +14,7 @@ import { SettingsProvider } from '../../providers/settings/settings';
 })
 export class SettingUtilComponent {
 
-  @ViewChild('content') content: Content;
+  @ViewChild('contentSetting') content: Content;
   @Input() data: Array<any> = [];
   @Input() selectMode: boolean = false;
   @Input() mainAttribute: string;

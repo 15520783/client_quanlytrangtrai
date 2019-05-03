@@ -108,4 +108,17 @@ export class BreedsRole {
     constructor() {
 
     }
+
+    insert() {
+    }
+
+    delete(object){
+    }
+
+    update(){
+    }
+
+    clear(){
+        this.object = new breeds();
+    }
 }

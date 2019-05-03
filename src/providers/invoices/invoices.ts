@@ -38,6 +38,14 @@ export class InvoicesProvider {
       .toPromise();
   }
 
+  createProductInvoice(objBody:invoicesProduct){
+    let headers = new HttpHeaders().set('Authorization', CONFIG.ACCESS_KEY);
+    return this.http
+    .post(CONFIG.SERVER_API.concat(API.CREATE_PRODUCT_INVOICE),objBody,{headers:headers})
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();    
+  }
+
   getPigInvoiceDetail(invoiceId:string){
     let headers = new HttpHeaders().set('Authorization', CONFIG.ACCESS_KEY);
     return this.http

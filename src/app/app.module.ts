@@ -53,6 +53,7 @@ import { SettingInputUtilComponent } from '../components/setting-input-util/sett
 import { InternalPigInvoicesComponent } from '../components/internal-pig-invoices/internal-pig-invoices';
 import { ExternalPigInvoicesComponent } from '../components/external-pig-invoices/external-pig-invoices';
 import { InvoiceInputUtilComponent } from '../components/invoice-input-util/invoice-input-util';
+import { FoodInvoicesComponent } from '../components/food-invoices/food-invoices';
 
 import { HideHeaderDirective } from '../directives/hide-header/hide-header';
 
@@ -78,6 +79,7 @@ import { UserProvider } from '../providers/user/user';
 import { DeployDataProvider } from '../providers/deploy-data/deploy-data';
 import { PartnerProvider } from '../providers/partner/partner';
 import { InvoicesProvider } from '../providers/invoices/invoices';
+import { MedicineInvoicesComponent } from '../components/medicine-invoices/medicine-invoices';
 
 
 const Pages = [
@@ -134,6 +136,8 @@ const Components = [
   InvoiceInputUtilComponent,
   InternalPigInvoicesComponent,
   ExternalPigInvoicesComponent,
+  FoodInvoicesComponent,
+  MedicineInvoicesComponent
 ]
 
 const Providers = [

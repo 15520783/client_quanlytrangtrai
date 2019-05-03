@@ -17,6 +17,8 @@ export class InvoicesPage {
 
   public internalPigInvoices: any = [];
   public externalPigInvoices: any = [];
+  public foodInvoices: any = [];
+  public medicineInvoices: any = [];
 
   constructor(
     public navCtrl: NavController,
@@ -24,10 +26,10 @@ export class InvoicesPage {
     public platform: Platform,
     public renderer: Renderer,
     public invoicesProvider: InvoicesProvider,
-    public util:Utils,
+    public util: Utils,
     public events: Events
   ) {
-    
+
 
     this.list_invoice_type = {
       internalPigInvoice: {
@@ -67,7 +69,7 @@ export class InvoicesPage {
 
 
 
-  getInvoices(){
+  getInvoices() {
     this.util.showLoading('Đang tải dữ liệu');
     this.invoicesProvider.getAllInvoices()
       .then((data: any) => {
@@ -77,8 +79,13 @@ export class InvoicesPage {
             this.internalPigInvoices = data.invoicesPigs.filter((invoices) => {
               return invoices.invoiceType == 1 ? true : false;
             });
-
             this.externalPigInvoices = data.invoicesPigs.filter((invoices) => {
+              return invoices.invoiceType == 2 ? true : false;
+            })
+            this.foodInvoices = data.invoicesProducts.filter((invoices) => {
+              return invoices.invoiceType == 1 ? true : false;
+            })
+            this.medicineInvoices = data.invoicesProducts.filter((invoices) => {
               return invoices.invoiceType == 2 ? true : false;
             })
           }
@@ -86,9 +93,9 @@ export class InvoicesPage {
         this.events.publish('invoicesReload');
         this.util.closeLoading();
       })
-      .catch((err:Error)=>{
+      .catch((err: Error) => {
         console.log(err);
-        this.util.closeLoading().then(()=>{
+        this.util.closeLoading().then(() => {
           this.util.showToast('Dữ liệu chưa được tải về. Vui lòng kiểm tra lại kết nối.')
         })
       })

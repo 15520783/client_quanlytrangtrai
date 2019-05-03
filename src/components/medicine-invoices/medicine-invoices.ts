@@ -1,24 +1,21 @@
 import { Component, ViewChild, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Content, NavController, Events } from 'ionic-angular';
-import { invoicesPig, invoicePigDetail,  } from '../../common/entity';
+import { InvoiceInputUtilComponent } from '../invoice-input-util/invoice-input-util';
 import { FilterProvider } from '../../providers/filter/filter';
+import { NavController, Events, Content } from 'ionic-angular';
 import { Utils } from '../../common/utils';
-import { ExternalPigInvoiceRole } from '../../role-input/externalPigInvoice';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
-import { InvoiceInputUtilComponent } from '../invoice-input-util/invoice-input-util';
-import { ExternalPigInvoiceDetailPage } from '../../pages/external-pig-invoice-detail/external-pig-invoice-detail';
-
+import { FormControl } from '@angular/forms';
+import { invoicesProduct } from '../../common/entity';
+import { MedicineInvoiceRole } from '../../role-input/medicineInvoice';
 
 @Component({
-  selector: 'external-pig-invoices',
-  templateUrl: 'external-pig-invoices.html'
+  selector: 'medicine-invoices',
+  templateUrl: 'medicine-invoices.html'
 })
-export class ExternalPigInvoicesComponent {
-
+export class MedicineInvoicesComponent {
   @ViewChild('content') content: Content;
-  @Input() invoices: Array<invoicesPig> = [];
+  @Input() invoices: Array<invoicesProduct> = [];
   public roleInput: any;
 
   
@@ -51,7 +48,7 @@ export class ExternalPigInvoicesComponent {
     public invoiceProvider: InvoicesProvider
   ) {
     
-    this.roleInput = new ExternalPigInvoiceRole(this.deployData,this.invoiceProvider);
+    this.roleInput = new MedicineInvoiceRole(this.deployData,this.invoiceProvider);
     this.events.subscribe('invoicesReload',()=>{
       this.setFilteredItems();
     })
@@ -118,7 +115,7 @@ export class ExternalPigInvoicesComponent {
     })
   }
 
-  input_pig(item){
-    this.navCtrl.push(ExternalPigInvoiceDetailPage,{invoice:item});
-  }
+  // input_pig(item){
+  //   this.navCtrl.push(ExternalPigInvoiceDetailPage,{invoice:item});
+  // }
 }

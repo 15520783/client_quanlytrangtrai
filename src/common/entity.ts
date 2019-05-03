@@ -385,7 +385,6 @@ class roles extends base {
 	description:string='';
 }
 
-
 class partners extends base {
 	code:string = '';
 	name:string = '';
@@ -426,15 +425,15 @@ class invoicesProduct extends base {
 	invoiceNo:string='';
 	invoiceType:number=null;
 	sourceId:string='';
-	sourceManager:number = null;
+	// sourceManager:string = '';
 	sourceManagerName:string = '';
 	sourceAddress:string='';
 	destinationId:string='';
 	destinationManager:string='';
 	destinationManagerName:string='';
-	warehouseId:string = '';
-	quantity:number = null;
-	price:number = null;
+	// warehouseId:string = '';
+	// quantity:number = null;          // !!!!!!!!!!!!!!!
+	price:number = 0;
 	importDate:any='';
 	description:string='';
 }
@@ -444,8 +443,6 @@ class invoicePigDetail extends base{
 	objectType:string = '1';
 	objectId:string = '';
 }
-
-
 
 class InputObject {
 	name: string;

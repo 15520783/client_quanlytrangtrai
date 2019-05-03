@@ -20,14 +20,14 @@ export class InternalPigInvoicesComponent {
   public roleInput: any;
 
   public mainAttribute = "invoiceNo";
-  public attributes = [
-    { name: "sourceManagerName", label: 'Nguồn cung cấp' },
-    { name: "destinationManagerName", label: 'Nơi nhận' },
-    { name: "exportDate", label: 'Ngày xuất' },
+  public attributes =  [
+    { name: "sourceName", label: 'Nguồn cung cấp' },
+    { name: "destinationName", label: 'Nơi nhận' },
+    { name: "importDateDisplay", label: 'Ngày nhập' },
     { name: "quantity", label: 'Tổng số heo' }
   ];
   public placeholderSearch: string = 'Tìm kiếm chứng từ'
-  public filter_default: Array<string> = ["invoiceNo", "sourceManagerName", "destinationManagerName", "exportDate", "quantity"];
+  public filter_default: Array<string> = ["invoiceNo", "sourceName", "destinationName", "importDateDisplay", "quantity"];
 
   public page_Idx: number = 1;
   public page_Total: number = 0;
@@ -47,10 +47,22 @@ export class InternalPigInvoicesComponent {
     public events: Events
   ) {
     this.roleInput = new InternalPigInvoiceRole(deployData, invoiceProvider);
-
+    this.events.subscribe('invoicesReload',()=>{
+      console.log(this.invoices);
+      this.setFilteredItems();
+    })
   }
 
   ngAfterViewInit(): void {
+    let partners_util = this.deployData.get_object_list_key_of_partner();
+    let farms_util = this.deployData.get_object_list_key_of_farm();
+    if(this.invoices.length){
+      this.invoices.forEach((invoice)=>{
+        invoice['sourceName'] = partners_util[invoice.sourceId].name;
+        invoice['destinationName'] = farms_util[invoice.destinationId].name;
+        invoice['importDateDisplay'] = this.util.convertDate(invoice.importDate);
+      })
+    }
     this.setFilteredItems();
   }
 

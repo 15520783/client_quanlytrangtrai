@@ -8,6 +8,7 @@ import { EmployeesProvider } from '../employees/employees';
 import { SectionsProvider } from '../sections/sections';
 import { SettingsProvider } from '../settings/settings';
 import { pig, house } from '../../common/entity';
+import { WarehousesProvider } from '../warehouses/warehouses';
 
 
 @Injectable()
@@ -21,7 +22,8 @@ export class DeployDataProvider {
     public partnerProvider: PartnerProvider,
     public employeeProvider: EmployeesProvider,
     public sectionProvider: SectionsProvider,
-    public settingProvider: SettingsProvider
+    public settingProvider: SettingsProvider,
+    public warehouseProvider: WarehousesProvider
   ) {
   }
 
@@ -338,5 +340,15 @@ export class DeployDataProvider {
     pig.originFather = father ? father.pigCode : '';
     pig.originMother = mother ? mother.pigCode : '';
     return pig;
+  }
+
+  /**
+   * Lấy danh sach kho cám của 1 trang trại
+   * @param farmId 
+   */
+  get_food_warehouse_of_farm(farmId: string) {
+    return this.warehouseProvider.warehouses.filter((warehouse) => {
+      return (warehouse.farm_id == farmId && warehouse.type.id == "1") ? true : false;
+    })
   }
 }
