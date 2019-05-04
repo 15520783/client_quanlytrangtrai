@@ -139,10 +139,12 @@ const API = {
     DELETE_PIG_INVOICE:'/api/invoicespig/',
     
     CREATE_PRODUCT_INVOICE:'/api/invoicesproduct/',
+    DELETE_PRODUCT_INVOICE:'/api/invoicesproduct/',
     // CREATE_PIG_INVOICE:'/api/invoicepigdetail/pigsinvoicepigdetail/',
 
     CREATE_PIG_INVOICE_DETAIL:'/api/invoicepigdetail/',
     DELETE_PIG_INVOICE_DETAIL:'/api/invoicepigdetail/',
+    
 
     CREATE_FOOD_WAREHOUSE:'/api/foodwarehouse/',
 

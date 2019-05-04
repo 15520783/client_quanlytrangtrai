@@ -77,4 +77,24 @@ export class FoodInvoiceDetailPage {
       })
     })
   }
+
+  removeInvoice() {
+    this.util.showLoading('Đang tiến hành xử lí dữ liệu')
+    this.invoiceProvider.removeProductInvoice(this.invoice)
+      .then((isOK) => {
+        if (isOK) {
+          this.util.showToastSuccess('Dữ liệu đã cập nhật thành công');
+          this.viewCtrl.dismiss().then(() => {
+            this.events.publish('removeInvoiceEvent', this.invoice);
+          });
+        }
+        this.util.closeLoading();
+      })
+      .catch((err: Error) => {
+        console.log(err);
+        this.util.closeLoading().then(() => {
+          this.util.showToast('Dữ liệu cập nhật thất bại. Vui lòng kiểm tra lại kết nối.');
+        })
+      })
+  }
 }

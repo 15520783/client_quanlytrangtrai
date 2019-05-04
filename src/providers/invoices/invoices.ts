@@ -59,6 +59,19 @@ export class InvoicesProvider {
     .toPromise();    
   }
 
+  removeProductInvoice(objBody:invoicesProduct){
+    const options = {
+      headers: new HttpHeaders({
+        'Authorization':  CONFIG.ACCESS_KEY,
+      }),
+      body: objBody
+    };
+    return this.http
+    .delete(CONFIG.SERVER_API.concat(API.DELETE_PRODUCT_INVOICE),options)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
   getPigInvoiceDetail(invoiceId:string){
     let headers = new HttpHeaders().set('Authorization', CONFIG.ACCESS_KEY);
     return this.http
@@ -95,6 +108,8 @@ export class InvoicesProvider {
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise();
   }
+
+  
 
   sync() {
     this.getAllInvoices()

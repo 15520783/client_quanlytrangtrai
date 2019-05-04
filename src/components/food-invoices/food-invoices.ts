@@ -25,11 +25,11 @@ export class FoodInvoicesComponent {
     { name: "sourceName", label: 'Nguồn cung cấp' },
     { name: "destinationName", label: 'Nơi nhận' },
     { name: "importDateDisplay", label: 'Ngày nhập' },
-    { name: "quantity", label: 'Tổng số heo' }
+    { name: "price", label: 'Tổng giá' }
   ];
 
   public placeholderSearch: string = 'Tìm kiếm chứng từ'
-  public filter_default: Array<string> = ["invoiceNo", "sourceName", "destinationName", "importDateDisplay", "quantity"];
+  public filter_default: Array<string> = ["invoiceNo", "sourceName", "destinationName", "importDateDisplay", "price"];
 
   public page_Idx: number = 1;
   public page_Total: number = 0;
@@ -117,5 +117,15 @@ export class FoodInvoicesComponent {
 
   input_food(item){
     this.navCtrl.push(FoodInvoiceDetailPage,{invoice:item});
+
+    this.events.subscribe('removeInvoiceEvent', (invoice) => {
+      if (invoice) {
+        let idx = this.invoices.findIndex(Obj => Obj.id == invoice.id);
+        if (idx > -1)
+          this.invoices.splice(idx, 1);
+        this.setFilteredItems();
+        this.events.unsubscribe('removeInvoiceEvent');
+      }
+    })
   }
 }
