@@ -1,0 +1,85 @@
+<ion-header>
+    <ion-navbar>
+        <ion-toolbar toolbar-transparent no-border class="custom-toolbar" >
+          <ion-title style="padding: 0px!important">Nhập thông tin cám nhập</ion-title>
+        </ion-toolbar>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+    <form action="" (ngSubmit)="onSubmit()" style="padding-bottom: 10vH">
+      <ion-list >
+          <input-select 
+              [(validControl)] = "credentialsForm.controls.warehouse_id"
+              [errorMessage_Required]  ="'Kho là hạng mục bắt buộc.'"
+              [active]= "submitAttempt"
+              [placeholder]="'Chọn kho'"
+              [(data)]="warehouses"
+              [selectOptions]="selectOptions">
+          </input-select>
+
+          <input-select 
+              [(validControl)] = "credentialsForm.controls.food_id"
+              [errorMessage_Required]  ="'Cám là hạng mục bắt buộc.'"
+              [active]= "submitAttempt"
+              [placeholder]="'Chọn cám'"
+              [(data)]="foods">
+          </input-select>
+
+          <input-select 
+              [(validControl)] = "credentialsForm.controls.unit"
+              [errorMessage_Required]  ="'Đơn vị là hạng mục bắt buộc.'"
+              [active]= "submitAttempt"
+              [placeholder]="'Chọn đơn vị'"
+              [(data)]="unit">
+          </input-select>
+
+          <input-text 
+              [(validControl)] = "credentialsForm.controls.quantity"
+              [errorMessage_Required]  = "'Số lượng là hạng mục bắt buộc.'"
+              [errorMessage_ValidNumber] = "'Số lượng là hạng mục nhập số'"
+              [label] = "'Tên trang trại'"
+              [placeholder]="'Nhập số lượng'"
+              [active]= "submitAttempt">
+          </input-text>
+
+          <input-text 
+              [(validControl)] = "credentialsForm.controls.manufacturer"
+              [errorMessage_Required]  = "'Nhà sản xuất là hạng mục bắt buộc.'"
+              [label] = "'Nhà sản xuất'"
+              [placeholder]="'Nhập nhà sản xuất'"
+              [active]= "submitAttempt">
+          </input-text>
+
+       
+          <input-date 
+                [(validControl)] = "credentialsForm.controls.mfgDate"
+                [errorMessage_Required]  ="'Ngày sản xuất là hạng mục bắt buộc.'"
+                [label] = "'Ngày sản xuất'"
+                [placeholder]="'dd/mm/yyyy'"
+                [active]= "submitAttempt">
+          </input-date>
+
+          <input-date 
+                [(validControl)] = "credentialsForm.controls.expiryDate"
+                [errorMessage_Required]  ="'Hạn sử dụng là hạng mục bắt buộc.'"
+                [label] = "'Hạn sử dụng'"
+                [placeholder]="'dd/mm/yyyy'"
+                [active]= "submitAttempt">
+          </input-date>
+      
+      </ion-list>
+    </form>
+  </ion-content>
+  
+  <ion-footer no-border showWhen="core">
+    <ion-toolbar toolbar-transparent text-right showWhen="core">
+        <button type="submit"  ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
+        <button ion-button   mode='ios' color="danger">Hủy</button>
+    </ion-toolbar>
+  </ion-footer>
+  
+  <ion-footer no-border no-padding showWhen="ios,android">
+    <button type="submit" no-margin full block ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
+  </ion-footer>
+  

@@ -33,6 +33,7 @@ export { roles }
 export { invoicesPig }
 export { invoicesProduct }
 export { invoicePigDetail }
+export { foodWareHouse }
 
 class base {
 	id: string;
@@ -169,14 +170,14 @@ class employee extends base {
 }
 
 class warehouse extends base {
-	farm_id: string = '';
+	// farm_id: string = '';
 	type: warehouse_type = new warehouse_type();
-	groupId: string = '';
-	unitId: string = '';
-	unitType: string = '';
+	// groupId: string = '';
+	// unitId: string = '';
+	// unitType: string = '';
 	name: string = '';
 	description: string = '';
-	manager: string = '';
+	manager:employee = new employee();
 }
 
 
@@ -424,19 +425,13 @@ class invoicesPig extends base {
 class invoicesProduct extends base {
 	invoiceNo: string = '';
 	type: string = '';
-	// sourceId:string='';
 	source = new partners();
 	source_id: string = '';
-	// sourceManager:string = '';
 	sourceManagerName: string = '';
-	// sourceAddress: string = '';
-	// destinationId:string='';
 	destination = new farm();
-	destination_id:string = '';
+	destination_id: string = '';
 	destinationManager: string = '';
 	destinationManagerName: string = '';
-	// warehouseId:string = '';
-	// quantity:number = null;          // !!!!!!!!!!!!!!!
 	price: number = 0;
 	importDate: any = '';
 	description: string = '';
@@ -446,6 +441,24 @@ class invoicePigDetail extends base {
 	invoice: invoicesPig = new invoicesPig();
 	objectType: string = '1';
 	objectId: string = '';
+}
+
+class foodWareHouse extends base {
+	warehouse = new warehouse();
+	warehouse_id: string = '';
+	food = new foods();
+	food_id:string = '';
+	invoiceId: string = '';
+	parentId: string = '';
+	unit: string = '';
+	quantity: string = '0';
+	total: string = '0';
+	used: string = '0';
+	remain: string = '0';
+	manufacturer: string = '';
+	mfgDate: any = '';
+	expiryDate: any = '';
+	images: string = '';
 }
 
 class InputObject {

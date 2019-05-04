@@ -19,21 +19,21 @@
     </ion-item-divider>
     <ion-list>
       <ion-item-sliding *ngFor="let item of visible_items">
-        <ion-item>
+        <button ion-item (tap)="input_food(item)">
           <h2 *ngIf="mainAttribute"><b>Số chứng từ: </b>{{item[mainAttribute]}}</h2>
           <ion-row>
             <ion-col *ngFor="let attr of attributes" col-6 text-wrap>
               <p style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
             </ion-col>
           </ion-row>
-          <button showWhen="core" ion-button item-end mode='ios' color="main" (tap)="edit(item)">Đánh giá & Xác
-            nhận</button>
+          <!-- <button showWhen="core" ion-button item-end mode='ios' color="main" (tap)="edit(item)">Đánh giá & Xác
+            nhận</button> -->
           <!-- <button showWhen="core" ion-button item-end mode='ios' color="danger" (tap)="remove(item)">Xóa</button> -->
-        </ion-item>
-        <ion-item-options side="right" showWhen="ios,android">
-          <button ion-button color="main" (tap)="edit(item)">Đánh giá & Xác nhận</button>
+          </button>
+        <!-- <ion-item-options side="right" showWhen="ios,android"> -->
+          <!-- <button ion-button color="main" (tap)="edit(item)">Đánh giá & Xác nhận</button> -->
           <!-- <button ion-button color="danger" (tap)="remove(item)">Xóa</button> -->
-        </ion-item-options>
+        <!-- </ion-item-options> -->
       </ion-item-sliding>
     </ion-list>
     <ion-infinite-scroll (ionInfinite)="loadData($event)" *ngIf="page_Idx!==page_Total">

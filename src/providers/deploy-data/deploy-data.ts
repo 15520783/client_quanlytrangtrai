@@ -7,7 +7,7 @@ import { PartnerProvider } from '../partner/partner';
 import { EmployeesProvider } from '../employees/employees';
 import { SectionsProvider } from '../sections/sections';
 import { SettingsProvider } from '../settings/settings';
-import { pig, house } from '../../common/entity';
+import { pig, house, foodWareHouse } from '../../common/entity';
 import { WarehousesProvider } from '../warehouses/warehouses';
 
 
@@ -101,6 +101,21 @@ export class DeployDataProvider {
     })
     return options_select;
   }
+
+  /**
+   *  Lấy danh sách cám cho ion-select
+   */
+  get_food_list_for_select() {
+    let food_select = [];
+    this.settingProvider.setting.foods.forEach(food => {
+      food_select.push({
+        name: food.name,
+        value: food.id
+      })
+    })
+    return food_select;
+  }
+
 
   /**
    * Lấy trạng trại bằng Id
@@ -299,6 +314,30 @@ export class DeployDataProvider {
     })[0];
   }
 
+  /**
+   * Lấy thông tin nhà kho thông qua id
+   * @param warehouseId 
+   */
+  get_warehouse_by_id(warehouseId: string) {
+    let idx = this.warehouseProvider.warehouses.findIndex(warehouse => warehouse.id == warehouseId);
+    if (idx > -1)
+      return this.warehouseProvider.warehouses[idx];
+    else
+      return null;
+  }
+
+  /**
+   * Lấy thông tin cám thông qua id
+   * @param foodId 
+   */
+  get_food_by_id(foodId: string) {
+    let idx = this.settingProvider.setting.foods.findIndex(food => food.id == foodId);
+    if (idx > -1)
+      return this.settingProvider.setting.foods[idx];
+    else
+      return null;
+  }
+
 
   get_parent_of_pig(target: pig) {
     let result: any = {};
@@ -342,13 +381,20 @@ export class DeployDataProvider {
     return pig;
   }
 
+  get_foodWarehouse_object_to_send_request(foodWarehouse: foodWareHouse) {
+    foodWarehouse.warehouse = this.get_warehouse_by_id(foodWarehouse.warehouse_id);
+    foodWarehouse.food = this.get_food_by_id(foodWarehouse.food_id);
+    return foodWarehouse;
+  }
+
   /**
    * Lấy danh sach kho cám của 1 trang trại
    * @param farmId 
    */
   get_food_warehouse_of_farm(farmId: string) {
     return this.warehouseProvider.warehouses.filter((warehouse) => {
-      return (warehouse.farm_id == farmId && warehouse.type.id == "1") ? true : false;
+      return (warehouse.manager.farm.id == farmId && warehouse.type.id == "1") ? true : false;
     })
   }
+
 }

@@ -37,6 +37,8 @@ import { PartnersPage } from '../pages/partners/partners';
 import { ActivitiesPage } from '../pages/activities/activities';
 import { InvoicesPage } from '../pages/invoices/invoices';
 import { ExternalPigInvoiceDetailPage } from '../pages/external-pig-invoice-detail/external-pig-invoice-detail';
+import { FoodWarehouseInputPage } from '../pages/food-warehouse-input/food-warehouse-input';
+import { FoodInvoiceDetailPage } from '../pages/food-invoice-detail/food-invoice-detail';
 
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
@@ -54,6 +56,7 @@ import { InternalPigInvoicesComponent } from '../components/internal-pig-invoice
 import { ExternalPigInvoicesComponent } from '../components/external-pig-invoices/external-pig-invoices';
 import { InvoiceInputUtilComponent } from '../components/invoice-input-util/invoice-input-util';
 import { FoodInvoicesComponent } from '../components/food-invoices/food-invoices';
+import { MedicineInvoicesComponent } from '../components/medicine-invoices/medicine-invoices';
 
 import { HideHeaderDirective } from '../directives/hide-header/hide-header';
 
@@ -79,7 +82,6 @@ import { UserProvider } from '../providers/user/user';
 import { DeployDataProvider } from '../providers/deploy-data/deploy-data';
 import { PartnerProvider } from '../providers/partner/partner';
 import { InvoicesProvider } from '../providers/invoices/invoices';
-import { MedicineInvoicesComponent } from '../components/medicine-invoices/medicine-invoices';
 
 
 const Pages = [
@@ -106,7 +108,6 @@ const Pages = [
   TestInputPage,
   FarmInputPage,
   HouseInputPage,
-  PigInputPage,
   EmployeeInputPage,
   PigGroupInputPage,
   ActivitiesPage,
@@ -118,6 +119,9 @@ const Pages = [
   SettingUtilComponent,
   SettingInputUtilComponent,
   InvoiceInputUtilComponent,
+  PigInputPage,
+  FoodWarehouseInputPage,
+  FoodInvoiceDetailPage
 ]
 
 const Components = [

@@ -8,6 +8,7 @@ import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { InvoiceInputUtilComponent } from '../invoice-input-util/invoice-input-util';
 import { FoodInvoiceRole } from '../../role-input/foodInvoice';
+import { FoodInvoiceDetailPage } from '../../pages/food-invoice-detail/food-invoice-detail';
 
 @Component({
   selector: 'food-invoices',
@@ -114,7 +115,7 @@ export class FoodInvoicesComponent {
     })
   }
 
-  // input_pig(item){
-  //   this.navCtrl.push(ExternalPigInvoiceDetailPage,{invoice:item});
-  // }
+  input_food(item){
+    this.navCtrl.push(FoodInvoiceDetailPage,{invoice:item});
+  }
 }

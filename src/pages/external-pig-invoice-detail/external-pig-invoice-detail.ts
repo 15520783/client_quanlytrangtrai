@@ -76,18 +76,6 @@ export class ExternalPigInvoiceDetailPage {
     this.navCtrl.push(PigInputPage);
 
     this.events.subscribe('createPig', (pig: pig) => {
-      // pig['house'] = this.deployData.get_house_by_id(pig.houseId);
-      // pig['round'] = { id: 0 };
-      // pig['breed'] = this.deployData.get_breed_by_id(pig.breedId);
-      // pig['foot'] = this.deployData.get_foot_by_id(pig.footTypeId);
-      // pig['healthStatus'] = this.deployData.get_healthstatus_by_id(pig.healthStatusId);
-      // pig['pregnancyStatus'] = this.deployData.get_pregnancystatus_by_id(pig.pregnancyStatusId)
-      // pig['priceCode'] = this.deployData.get_pricecode_by_id(pig.priceCodeId)
-      // let father = this.deployData.get_pig_by_id(pig.originFather);
-      // let mother = this.deployData.get_pig_by_id(pig.originMother);
-      // pig.originFather = father ? father.pigCode : '';
-      // pig.originMother = mother ? mother.pigCode : '';
-
       pig = this.deployData.get_pig_object_to_send_request(pig);
       this.util.showLoading('Đang xử lí dữ liệu')
       this.pigProvider.createPig(pig)
@@ -104,20 +92,12 @@ export class ExternalPigInvoiceDetailPage {
                   if (invoiceDetail) {
                     this.util.closeLoading().then(() => {
                       this.details.push(invoiceDetail);
-                      console.log(this.details);
-                      console.log(invoiceDetail);
                       this.util.showToastSuccess('Dữ liệu cập nhật thành công');
                       this.events.unsubscribe('createPig');
                       this.events.publish('OK');
                     })
                   }
                 })
-              // .catch((err: Error) => {
-              //   console.log(err);
-              //   this.util.closeLoading().then(() => {
-              //     this.util.showToast('Cập nhật thất bại.ERROR: ' + err.message);
-              //   })
-              // })
             });
           }
         })

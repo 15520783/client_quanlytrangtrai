@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CONFIG, API } from '../../common/const';
-import { invoicesPig, invoicesProduct, invoicePigDetail } from '../../common/entity';
+import { invoicesPig, invoicesProduct, invoicePigDetail, foodWareHouse } from '../../common/entity';
 import { Events } from 'ionic-angular';
 
 
@@ -84,6 +84,14 @@ export class InvoicesProvider {
     let headers = new HttpHeaders().set('Authorization', CONFIG.ACCESS_KEY);
     return this.http
       .post(CONFIG.SERVER_API.concat(API.CREATE_PIG_INVOICE_DETAIL),objBody,{headers:headers})
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  createFoodWareHouse(objBody:foodWareHouse){
+    let headers = new HttpHeaders().set('Authorization', CONFIG.ACCESS_KEY);
+    return this.http
+      .post(CONFIG.SERVER_API.concat(API.CREATE_FOOD_WAREHOUSE),objBody,{headers:headers})
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise();
   }
