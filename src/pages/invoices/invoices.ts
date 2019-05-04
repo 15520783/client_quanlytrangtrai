@@ -2,6 +2,7 @@ import { Component, ViewChild, Renderer } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, Slides, Slide, Events } from 'ionic-angular';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { Utils } from '../../common/utils';
+import { VARIABLE } from '../../common/const';
 
 
 @IonicPage()
@@ -83,15 +84,16 @@ export class InvoicesPage {
               return invoices.invoiceType == 2 ? true : false;
             })
             this.foodInvoices = data.invoicesProducts.filter((invoices) => {
-              return invoices.invoiceType == 1 ? true : false;
+              return invoices.type === VARIABLE.INVOICE_PRODUCT_TYPE.FOOD ? true : false;
             })
             this.medicineInvoices = data.invoicesProducts.filter((invoices) => {
-              return invoices.invoiceType == 2 ? true : false;
+              return invoices.type === VARIABLE.INVOICE_PRODUCT_TYPE.MEDICINE ? true : false;
             })
           }
         }
-        this.events.publish('invoicesReload');
         this.util.closeLoading();
+      }).then(()=>{
+        this.events.publish('invoicesReload');
       })
       .catch((err: Error) => {
         console.log(err);

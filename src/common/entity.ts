@@ -28,19 +28,19 @@ export { regencies }
 export { mating_status }
 export { warehouse_type }
 export { round }
-export {partners}
-export {roles}
-export {invoicesPig}
-export {invoicesProduct}
-export {invoicePigDetail}
+export { partners }
+export { roles }
+export { invoicesPig }
+export { invoicesProduct }
+export { invoicePigDetail }
 
 class base {
-	id;
+	id: string;
 	createdAt: any = '';
 	updatedAt: any = '';
 	delFlag: boolean = false;
 
-	constructor(){
+	constructor() {
 
 	}
 }
@@ -96,7 +96,7 @@ class pig extends base {
 	priceCodeId: string = '0';
 	overviewStatus: string = '0';
 
-	constructor(){
+	constructor() {
 		super();
 	}
 }
@@ -380,68 +380,72 @@ class round extends base {
 }
 
 class roles extends base {
-	name:string='';
-	code:string='';
-	description:string='';
+	name: string = '';
+	code: string = '';
+	description: string = '';
 }
 
 class partners extends base {
-	code:string = '';
-	name:string = '';
-	manager:string = '';
-	address:string='';
-	phone:string = '';
-	agencyName:string = '';
-	agencyAddress:string = '';
-	agencyPhone:string='';
-	distributionName:string='';
-	distributionAddress:string='';
-	distributionPhone:string='';
-	description:string='';
+	code: string = '';
+	name: string = '';
+	manager: string = '';
+	address: string = '';
+	phone: string = '';
+	agencyName: string = '';
+	agencyAddress: string = '';
+	agencyPhone: string = '';
+	distributionName: string = '';
+	distributionAddress: string = '';
+	distributionPhone: string = '';
+	description: string = '';
 }
 
 class invoicesPig extends base {
-	invoiceNo:string='';
-	invoiceType:number=null;
-	sourceId:string='';
-	sourceManager:number = null;
-	sourceManagerName:string = '';
-	sourceAddress:string='';
-	destinationId:string='';
-	destinationManager:string='';
-	destinationManagerName:string='';
-	destinationAddress:string='';
-	vehicleNumber:string='';
-	quantity:number = null;
-	unitPrice:string='';
-	totalWeight:number=null;
-	totalPrice:number=null;
-	importDate:any='';
-	exportDate:any='';
-	description:string='';
+	invoiceNo: string = '';
+	invoiceType: number = null;
+	sourceId: string = '';
+	sourceManager: number = null;
+	sourceManagerName: string = '';
+	sourceAddress: string = '';
+	destinationId: string = '';
+	destinationManager: string = '';
+	destinationManagerName: string = '';
+	destinationAddress: string = '';
+	vehicleNumber: string = '';
+	quantity: number = null;
+	unitPrice: string = '';
+	totalWeight: number = null;
+	totalPrice: number = null;
+	importDate: any = '';
+	exportDate: any = '';
+	description: string = '';
 }
 
 class invoicesProduct extends base {
-	invoiceNo:string='';
-	invoiceType:number=null;
-	sourceId:string='';
+	invoiceNo: string = '';
+	type: string = '';
+	// sourceId:string='';
+	source = new partners();
+	source_id: string = '';
 	// sourceManager:string = '';
-	sourceManagerName:string = '';
-	sourceAddress:string='';
-	destinationId:string='';
-	destinationManager:string='';
-	destinationManagerName:string='';
+	sourceManagerName: string = '';
+	// sourceAddress: string = '';
+	// destinationId:string='';
+	destination = new farm();
+	destination_id:string = '';
+	destinationManager: string = '';
+	destinationManagerName: string = '';
 	// warehouseId:string = '';
 	// quantity:number = null;          // !!!!!!!!!!!!!!!
-	price:number = 0;
-	importDate:any='';
-	description:string='';
+	price: number = 0;
+	importDate: any = '';
+	description: string = '';
 }
 
-class invoicePigDetail extends base{
-	invoice:invoicesPig = new invoicesPig();
-	objectType:string = '1';
-	objectId:string = '';
+class invoicePigDetail extends base {
+	invoice: invoicesPig = new invoicesPig();
+	objectType: string = '1';
+	objectId: string = '';
 }
 
 class InputObject {

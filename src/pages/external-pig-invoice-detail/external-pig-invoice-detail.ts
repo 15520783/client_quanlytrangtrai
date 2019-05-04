@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events, ViewController } from 'ionic-angular';
 import { invoicesPig, invoicePigDetail, pig, round, breeds, footType, healthStatus, pregnancyStatus, priceCodes } from '../../common/entity';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { Utils } from '../../common/utils';
@@ -31,7 +31,8 @@ export class ExternalPigInvoiceDetailPage {
     public deployData: DeployDataProvider,
     public util: Utils,
     public events: Events,
-    public pigProvider: PigsProvider
+    public pigProvider: PigsProvider,
+    public viewCtrl: ViewController
   ) {
     if (this.navParams.data.invoice) {
       this.invoice = this.navParams.data.invoice;
@@ -144,18 +145,33 @@ export class ExternalPigInvoiceDetailPage {
               }
               this.util.closeLoading();
             })
-          // .catch((err: Error) => {
-          //   console.log(err);
-          //   this.util.closeLoading().then(() => {
-          //     this.util.showToast('Cập nhật thất bại.ERROR: ' + err.message);
-          //   })
-          // })
         }
       })
       .catch((err: Error) => {
         console.log(err);
         this.util.closeLoading().then(() => {
           this.util.showToast('Cập nhật thất bại.ERROR: ' + err.message);
+        })
+      })
+  }
+
+
+  removeInvoice() {
+    this.util.showLoading('Đang tiến hành xử lí dữ liệu')
+    this.invoiceProvider.removePigInvoice(this.invoice)
+      .then((isOK) => {
+        if (isOK) {
+          this.util.showToastSuccess('Dữ liệu đã cập nhật thành công');
+          this.viewCtrl.dismiss().then(() => {
+            this.events.publish('removeInvoiceEvent', this.invoice);
+          });
+        }
+        this.util.closeLoading();
+      })
+      .catch((err: Error) => {
+        console.log(err);
+        this.util.closeLoading().then(() => {
+          this.util.showToast('Dữ liệu cập nhật thất bại. Vui lòng kiểm tra lại kết nối.');
         })
       })
   }

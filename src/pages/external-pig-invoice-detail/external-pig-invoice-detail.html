@@ -11,6 +11,7 @@
   </ion-navbar>
   <ion-toolbar showWhen="core" class="pl-10">
     <button ion-button mode='ios' color="secondary" (tap)="input_pig()">Nhập heo</button>
+    <button *ngIf="!details.length" ion-button mode='ios' color="danger" (tap)="removeInvoice()">Xóa chứng từ</button>
   </ion-toolbar>
 </ion-header>
 

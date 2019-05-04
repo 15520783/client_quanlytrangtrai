@@ -32,6 +32,12 @@ const VARIABLE = {
         { value: '2', name: 'Nái' },
         { value: '3', name: 'Đực hiến' }
     ],
+    INVOICE_PRODUCT_TYPE:{
+        FOOD:'food',
+        MEDICINE:'medicine'
+    }
+
+    ,
     section_type: [
         {
             id: 1,
@@ -129,6 +135,8 @@ const API = {
     UPDATE_PREGNANCY_STATUS: '/api/pregnancystatus/',
 
     CREATE_PIG_INVOICE:'/api/invoicespig/',
+    UPDATE_PIG_INVOICE:'/api/invoicespig/',
+    DELETE_PIG_INVOICE:'/api/invoicespig/',
     
     CREATE_PRODUCT_INVOICE:'/api/invoicesproduct/',
     // CREATE_PIG_INVOICE:'/api/invoicepigdetail/pigsinvoicepigdetail/',

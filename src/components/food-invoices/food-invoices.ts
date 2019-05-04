@@ -14,13 +14,13 @@ import { FoodInvoiceRole } from '../../role-input/foodInvoice';
   templateUrl: 'food-invoices.html'
 })
 export class FoodInvoicesComponent {
-  @ViewChild('content') content: Content;
+  @ViewChild('contentFoodInvoice') content: Content;
   @Input() invoices: Array<invoicesProduct> = [];
   public roleInput: any;
 
-  
+
   public mainAttribute = "invoiceNo";
-  public attributes =  [
+  public attributes = [
     { name: "sourceName", label: 'Nguồn cung cấp' },
     { name: "destinationName", label: 'Nơi nhận' },
     { name: "importDateDisplay", label: 'Ngày nhập' },
@@ -28,8 +28,8 @@ export class FoodInvoicesComponent {
   ];
 
   public placeholderSearch: string = 'Tìm kiếm chứng từ'
-  public filter_default: Array<string> = ["invoiceNo", "sourceName","destinationName","importDateDisplay","quantity"];
-  
+  public filter_default: Array<string> = ["invoiceNo", "sourceName", "destinationName", "importDateDisplay", "quantity"];
+
   public page_Idx: number = 1;
   public page_Total: number = 0;
   public rows: Array<any> = [];
@@ -47,37 +47,36 @@ export class FoodInvoicesComponent {
     public deployData: DeployDataProvider,
     public invoiceProvider: InvoicesProvider
   ) {
-    
-    this.roleInput = new FoodInvoiceRole(this.deployData,this.invoiceProvider);
-    this.events.subscribe('invoicesReload',()=>{
+
+    this.roleInput = new FoodInvoiceRole(this.deployData, this.invoiceProvider);
+    this.events.subscribe('invoicesReload', () => {
       this.setFilteredItems();
     })
   }
 
-  ngAfterViewInit(): void {
-    let partners_util = this.deployData.get_object_list_key_of_partner();
-    let farms_util = this.deployData.get_object_list_key_of_farm();
-    if(this.invoices.length){
-      this.invoices.forEach((invoice)=>{
-        invoice['sourceName'] = partners_util[invoice.sourceId].name;
-        invoice['destinationName'] = farms_util[invoice.destinationId].name;
-        invoice['importDateDisplay'] = this.util.convertDate(invoice.importDate);
-      })
-    }
-    this.setFilteredItems();
-  }
+  public partners_util = this.deployData.get_object_list_key_of_partner();
+  public farms_util = this.deployData.get_object_list_key_of_farm();
+
 
 
   public setFilteredItems() {
-    this.content.scrollToTop().then(() => {
+    // this.content.scrollToTop().then(() => {
+    setTimeout(() => {
       this.rows = this.filterItems(this.searchTerm);
       this.page_Total = this.rows.length % 50 === 0 ? parseInt(this.rows.length / 50 + '') : parseInt(this.rows.length / 50 + 1 + '');
       this.page_Idx = 1;
       this.visible_items = this.rows.slice(0, 50);
-    });
+      document.getElementById('content').scrollTop = 0;
+    }, 200);
+    // });
   }
 
   public filterItems(searchItem) {
+    this.invoices.forEach((invoice) => {
+      invoice['sourceName'] = this.partners_util[invoice.source.id].name;
+      invoice['destinationName'] = this.farms_util[invoice.destination.id].name;
+      invoice['importDateDisplay'] = this.util.convertDate(invoice.importDate);
+    })
     this.filterProvider.input = this.invoices;
     this.filterProvider.searchText = searchItem;
     this.filterProvider.searchWithText = this.filter_default;

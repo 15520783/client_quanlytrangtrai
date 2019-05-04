@@ -1,22 +1,23 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-buttons left showWhen="ios,android">
-        <button navPop ion-button icon-only>
-          <ion-icon name="arrow-back"></ion-icon>
-        </button>
-      </ion-buttons>
-      <ion-searchbar col-md-7 mode="ios" animated="true" debounce="500" [placeholder]="placeholderSearch"
-        [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="setFilteredItems()">
-      </ion-searchbar>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content #content class="setting-util-component">
+  <ion-toolbar>
+    <ion-buttons left showWhen="ios,android">
+      <button navPop ion-button icon-only>
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-searchbar col-md-7 mode="ios" animated="true" debounce="500" [placeholder]="placeholderSearch"
+      [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="setFilteredItems()">
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+<ion-content #contentInternalInvoice class="setting-util-component">
+  <div id="content">
     <ion-item-divider custom-diviver sticky="true" showWhen="core">
       <ion-row>
         <button no-margin ion-button item-end mode='ios' color="secondary" (tap)="add()">Thêm chứng từ</button>
       </ion-row>
     </ion-item-divider>
-    <ion-list>
+    <ion-list >
       <ion-item-sliding *ngFor="let item of visible_items">
         <ion-item>
           <h2 *ngIf="mainAttribute"><b>Số chứng từ: </b>{{item[mainAttribute]}}</h2>
@@ -25,7 +26,8 @@
               <p style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
             </ion-col>
           </ion-row>
-          <button showWhen="core" ion-button item-end mode='ios' color="main" (tap)="edit(item)">Đánh giá & Xác nhận</button>
+          <button showWhen="core" ion-button item-end mode='ios' color="main" (tap)="edit(item)">Đánh giá & Xác
+            nhận</button>
           <!-- <button showWhen="core" ion-button item-end mode='ios' color="danger" (tap)="remove(item)">Xóa</button> -->
         </ion-item>
         <ion-item-options side="right" showWhen="ios,android">
@@ -38,10 +40,11 @@
       <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Đang tải dữ liệu...">
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
-  
-    <ion-fab bottom right showWhen="android,windows,ios" color="secondary" >
+
+    <ion-fab bottom right showWhen="android,windows,ios" color="secondary">
       <button ion-fab (tap)="add()">
-        <ion-icon name="add" ></ion-icon>
+        <ion-icon name="add"></ion-icon>
       </button>
     </ion-fab>
-  </ion-content>
+  </div>
+</ion-content>

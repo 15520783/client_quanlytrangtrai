@@ -6,7 +6,14 @@
   <ion-row>
     <ion-col col-lg-3 col-md-4>
       <ion-card mode='ios'>
-        <ion-card-header>Danh sách chứng từ</ion-card-header>
+        <ion-card-header>
+          <ion-toolbar>
+              Danh sách chứng từ
+              <ion-buttons right>
+                <button ion-button (tap)="getInvoices()"><ion-icon name="ios-sync"></ion-icon></button>
+              </ion-buttons>
+          </ion-toolbar>
+        </ion-card-header>
         <ion-card-content class="ion-card-content-list-setting" no-padding>
           <ion-list>
             <button *ngFor="let key of list_keys;let idx= index" [attr.active]="idx === slider.realIndex? '':null"

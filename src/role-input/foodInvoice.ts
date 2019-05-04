@@ -1,6 +1,7 @@
 import { invoicesProduct } from "../common/entity";
 import { DeployDataProvider } from "../providers/deploy-data/deploy-data";
 import { InvoicesProvider } from "../providers/invoices/invoices";
+import { VARIABLE } from "../common/const";
 
 export class FoodInvoiceRole {
     public object = new invoicesProduct();
@@ -21,7 +22,7 @@ export class FoodInvoiceRole {
 
         this.inputRole = [
             {
-                name: 'sourceId',
+                name: 'source_id',
                 label: 'Đơn vị nguồn',
                 placeholder: 'Chọn đơn vị nguồn',
                 isRequire: true,
@@ -36,7 +37,7 @@ export class FoodInvoiceRole {
                     isMaxlength: ''
                 },
                 type: "input-select",
-                value: this.object.sourceId,
+                value: this.object.source_id,
                 data: this.deployData.get_partner_list_for_select(),
                 selectOptions: {
                     cssClass: 'ion-popover'
@@ -80,7 +81,7 @@ export class FoodInvoiceRole {
                 data: null
             },
             {
-                name: 'destinationId',
+                name: 'destination_id',
                 label: 'Nơi nhận (Trang trại)',
                 placeholder: 'Chọn nơi nhận',
                 isRequire: true,
@@ -95,23 +96,24 @@ export class FoodInvoiceRole {
                     isMaxlength: ''
                 },
                 type: "input-select",
-                value: this.object.destinationId,
+                value: this.object.destination_id,
                 data: this.deployData.get_farm_list_for_select()
             }
         ];
     }
 
     insert() {
-        this.object.invoiceType = 1;
-        let source = this.deployData.get_partner_by_id(this.object.sourceId);
-        let destination = this.deployData.get_farm_by_id(this.object.destinationId);
+        this.object.type = VARIABLE.INVOICE_PRODUCT_TYPE.FOOD;
+        let source = this.deployData.get_partner_by_id(this.object.source_id);
+        let destination = this.deployData.get_farm_by_id(this.object.destination_id);
         let des_manager = this.deployData.get_employee_by_id(this.object.destinationManager);
         if (source) {
-            this.object.sourceAddress = source.address;
-            // this.object.sourceManager = source.manager;
+            this.object.sourceManagerName = source.manager;
+            this.object.source = source;
         }
         if(destination){
             this.object.destinationManager = destination.manager;
+            this.object.destination = destination;
         }
         if(des_manager){
             this.object.destinationManagerName = des_manager.name;

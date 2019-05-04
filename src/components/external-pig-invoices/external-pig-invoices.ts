@@ -1,7 +1,7 @@
 import { Component, ViewChild, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Content, NavController, Events } from 'ionic-angular';
-import { invoicesPig, invoicePigDetail,  } from '../../common/entity';
+import { invoicesPig, invoicePigDetail, } from '../../common/entity';
 import { FilterProvider } from '../../providers/filter/filter';
 import { Utils } from '../../common/utils';
 import { ExternalPigInvoiceRole } from '../../role-input/externalPigInvoice';
@@ -17,13 +17,13 @@ import { ExternalPigInvoiceDetailPage } from '../../pages/external-pig-invoice-d
 })
 export class ExternalPigInvoicesComponent {
 
-  @ViewChild('content') content: Content;
+  @ViewChild('contentExternalInvoice') content: Content;
   @Input() invoices: Array<invoicesPig> = [];
   public roleInput: any;
 
-  
+
   public mainAttribute = "invoiceNo";
-  public attributes =  [
+  public attributes = [
     { name: "sourceName", label: 'Nguồn cung cấp' },
     { name: "destinationName", label: 'Nơi nhận' },
     { name: "importDateDisplay", label: 'Ngày nhập' },
@@ -31,8 +31,8 @@ export class ExternalPigInvoicesComponent {
   ];
 
   public placeholderSearch: string = 'Tìm kiếm chứng từ'
-  public filter_default: Array<string> = ["invoiceNo", "sourceName","destinationName","importDateDisplay","quantity"];
-  
+  public filter_default: Array<string> = ["invoiceNo", "sourceName", "destinationName", "importDateDisplay", "quantity"];
+
   public page_Idx: number = 1;
   public page_Total: number = 0;
   public rows: Array<any> = [];
@@ -42,6 +42,9 @@ export class ExternalPigInvoicesComponent {
 
   public visible_items: Array<any> = [];
 
+  public partners_util = {};
+  public farms_util = {};
+
   constructor(
     public filterProvider: FilterProvider,
     public util: Utils,
@@ -50,37 +53,36 @@ export class ExternalPigInvoicesComponent {
     public deployData: DeployDataProvider,
     public invoiceProvider: InvoicesProvider
   ) {
-    
-    this.roleInput = new ExternalPigInvoiceRole(this.deployData,this.invoiceProvider);
-    this.events.subscribe('invoicesReload',()=>{
+
+
+    this.roleInput = new ExternalPigInvoiceRole(this.deployData, this.invoiceProvider);
+    this.partners_util = this.deployData.get_object_list_key_of_partner();
+    this.farms_util = this.deployData.get_object_list_key_of_farm()
+
+    this.events.subscribe('invoicesReload', () => {
       this.setFilteredItems();
     })
   }
 
-  ngAfterViewInit(): void {
-    let partners_util = this.deployData.get_object_list_key_of_partner();
-    let farms_util = this.deployData.get_object_list_key_of_farm();
-    if(this.invoices.length){
-      this.invoices.forEach((invoice)=>{
-        invoice['sourceName'] = partners_util[invoice.sourceId].name;
-        invoice['destinationName'] = farms_util[invoice.destinationId].name;
-        invoice['importDateDisplay'] = this.util.convertDate(invoice.importDate);
-      })
-    }
-    this.setFilteredItems();
-  }
-
 
   public setFilteredItems() {
-    this.content.scrollToTop().then(() => {
+    // this.content.scrollToTop().then(() => {
+    setTimeout(() => {
       this.rows = this.filterItems(this.searchTerm);
       this.page_Total = this.rows.length % 50 === 0 ? parseInt(this.rows.length / 50 + '') : parseInt(this.rows.length / 50 + 1 + '');
       this.page_Idx = 1;
       this.visible_items = this.rows.slice(0, 50);
-    });
+      document.getElementById('content').scrollTop = 0;
+    }, 200);
+    // })
   }
 
   public filterItems(searchItem) {
+    this.invoices.forEach((invoice) => {
+      invoice['sourceName'] = this.partners_util[invoice.sourceId].name;
+      invoice['destinationName'] = this.farms_util[invoice.destinationId].name;
+      invoice['importDateDisplay'] = this.util.convertDate(invoice.importDate);
+    })
     this.filterProvider.input = this.invoices;
     this.filterProvider.searchText = searchItem;
     this.filterProvider.searchWithText = this.filter_default;
@@ -118,7 +120,17 @@ export class ExternalPigInvoicesComponent {
     })
   }
 
-  input_pig(item){
-    this.navCtrl.push(ExternalPigInvoiceDetailPage,{invoice:item});
+  input_pig(item) {
+    this.navCtrl.push(ExternalPigInvoiceDetailPage, { invoice: item });
+
+    this.events.subscribe('removeInvoiceEvent', (invoice) => {
+      if (invoice) {
+        let idx = this.invoices.findIndex(Obj => Obj.id == invoice.id);
+        if (idx > -1)
+          this.invoices.splice(idx, 1);
+        this.setFilteredItems();
+        this.events.unsubscribe('removeInvoiceEvent');
+      }
+    })
   }
 }
