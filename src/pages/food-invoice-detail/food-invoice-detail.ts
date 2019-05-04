@@ -57,44 +57,27 @@ export class FoodInvoiceDetailPage {
 
     this.events.subscribe('createFoodWarehouse',(foodWarehouse)=>{
       foodWarehouse = this.deployData.get_foodWarehouse_object_to_send_request(foodWarehouse);
-      console.log(foodWarehouse);
-      this.util.showLoading('Đang xử lí dữ liệu');
       this.invoiceProvider.createFoodWareHouse(foodWarehouse)
       .then((foodhouse:foodWareHouse)=>{
         if(foodhouse){
           this.details.push(foodhouse);
-          this.util.showToastSuccess('Dữ liệu cập nhật thành công');
           this.events.unsubscribe('createFoodWarehouse');
           this.events.publish('OK');
         }
-        this.util.closeLoading();
       })
-      .catch((err:Error)=>{
-        console.log(err);
-        this.util.closeLoading().then(()=>{
-          this.util.showToast('Cập nhật thất bại.ERROR: ' + err.message);
-        })
-      })
+      .catch((err:Error)=>{})
     })
   }
 
   removeInvoice() {
-    this.util.showLoading('Đang tiến hành xử lí dữ liệu')
     this.invoiceProvider.removeProductInvoice(this.invoice)
       .then((isOK) => {
         if (isOK) {
-          this.util.showToastSuccess('Dữ liệu đã cập nhật thành công');
           this.viewCtrl.dismiss().then(() => {
             this.events.publish('removeInvoiceEvent', this.invoice);
           });
         }
-        this.util.closeLoading();
       })
-      .catch((err: Error) => {
-        console.log(err);
-        this.util.closeLoading().then(() => {
-          this.util.showToast('Dữ liệu cập nhật thất bại. Vui lòng kiểm tra lại kết nối.');
-        })
-      })
+      .catch((err: Error) => {})
   }
 }

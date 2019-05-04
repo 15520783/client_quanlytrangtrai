@@ -2,7 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Content, ToastController, MenuController, Events } from 'ionic-angular';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MyApp } from '../../app/app.component';
-import { HomePage } from '../home/home';
 import { Utils } from '../../common/utils';
 import { FarmsProvider } from '../../providers/farms/farms';
 import { PigsProvider } from '../../providers/pigs/pigs';
@@ -63,14 +62,14 @@ export class LoginPage {
   public wait: boolean = false;
 
   login() {
-    
+
     if (this.credentialsForm.valid) {
       this.wait = true;
       let params = {
         username: this.credentialsForm.get('username').value,
         password: this.credentialsForm.get('password').value
       }
-      this.userProvider.login(params) 
+      this.userProvider.login(params)
         .then((res: any) => {
           if (res) {
             this.util.setKey(KEY.ACCESSTOKEN, res.accessToken)
@@ -85,11 +84,7 @@ export class LoginPage {
           }
         })
         .catch((err: any) => {
-          console.log(err);
-          if (err.status === 401) {
-            this.util.showToast('Tên đăng nhập hoặc mật khẩu không đúng. Thử lại.');
-            this.wait = false;
-          }
+          this.wait = false;
         })
     }
 

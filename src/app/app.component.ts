@@ -74,6 +74,11 @@ export class MyApp {
           this.rootPage = LoginPage;
         }
       })
+
+    this.events.subscribe('app_logout', () => {
+      this.splash = false;
+      this.rootPage = LoginPage;
+    })
   }
 
   initializeApp() {
@@ -108,9 +113,7 @@ export class MyApp {
             }
           })
       })
-      this.events.subscribe('app_logout', () => {
-        this.rootPage = LoginPage;
-      })
+
     })
   }
 
@@ -135,20 +138,21 @@ export class MyApp {
           // this.invoicesProvider.sync();
         }
       })
-      .catch((err: any) => {
-        if (err.status == 401) {
-          this.rootPage = LoginPage;
-          this.splash = false;
-          this.util.showToast('Phiên làm việc quá hạn. Vui lòng đăng nhập lại');
-        }
-        else {
-          this.util.showToast('Lỗi kết nối đến máy chủ. Vui lòng kiểm tra lại kết nối.');
-          this.rootPage = HomePage;
-          setTimeout(() => {
-            this.splash = false;
-          }, 1000);
-        }
-      })
+    .catch((err: any) => {
+      console.log(err);
+      // if (err.status == 401) {
+      //   this.rootPage = LoginPage;
+      //   this.splash = false;
+      //   this.util.showToast('Phiên làm việc quá hạn. Vui lòng đăng nhập lại');
+      // }
+      // else {
+      //   this.util.showToast('Lỗi kết nối đến máy chủ. Vui lòng kiểm tra lại kết nối.');
+      //   this.rootPage = HomePage;
+      //   setTimeout(() => {
+      //     this.splash = false;
+      //   }, 1000);
+      // }
+    })
   }
 
 
@@ -167,8 +171,8 @@ export class MyApp {
       this.sectionProvider.updated_flag &&
       this.houseProvider.updated_flag &&
       this.warehouseProvider.updated_flag &&
-      this.settingProvider.updated_flag && 
-      this.partnerProvider.updated_flag ) {
+      this.settingProvider.updated_flag &&
+      this.partnerProvider.updated_flag) {
       this.rootPage = HomePage;
       setTimeout(() => {
         this.splash = false;

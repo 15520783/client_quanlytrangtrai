@@ -1,4 +1,4 @@
-import { InputObject, invoicesPig } from "../common/entity";
+import { invoicesPig } from "../common/entity";
 import { DeployDataProvider } from "../providers/deploy-data/deploy-data";
 import { InvoicesProvider } from "../providers/invoices/invoices";
 

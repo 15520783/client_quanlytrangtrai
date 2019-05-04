@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { NavController, PopoverController, ModalController } from 'ionic-angular';
-import { PigsPage } from '../../pages/pigs/pigs';
 import { PigListComponent } from '../pig-list/pig-list';
 import { Utils } from '../../common/utils';
 import { KEY } from '../../common/const';

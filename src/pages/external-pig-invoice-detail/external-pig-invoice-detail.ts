@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, ViewController } from 'ionic-angular';
-import { invoicesPig, invoicePigDetail, pig, round, breeds, footType, healthStatus, pregnancyStatus, priceCodes } from '../../common/entity';
+import { invoicesPig, invoicePigDetail, pig } from '../../common/entity';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { Utils } from '../../common/utils';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';

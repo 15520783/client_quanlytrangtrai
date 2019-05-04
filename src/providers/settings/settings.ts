@@ -49,9 +49,8 @@ export class SettingsProvider {
 
 
   getAllSettings() {
-    let headers =  new HttpHeaders().set('Authorization', CONFIG.ACCESS_KEY);
     return this.http
-      .get(CONFIG.SERVER_API.concat(API.GET_ALL_SETTINGS), { headers: headers })
+      .get(API.GET_ALL_SETTINGS)
       .timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
   }
 

@@ -24,9 +24,8 @@ export class WarehousesProvider {
   }
 
   public getWarehouses() {
-    let headers = new HttpHeaders().set('Authorization', CONFIG.ACCESS_KEY);
     return this.http
-    .get(CONFIG.SERVER_API.concat(API.GET_ALL_WAREHOUSES),{headers:headers})
+    .get(API.GET_ALL_WAREHOUSES)
     .timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
   }
 

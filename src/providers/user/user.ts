@@ -14,21 +14,19 @@ export class UserProvider {
   }
 
   login(param){
-
     let body = {
       username:param.username,
       password:param.password
     }
     return this.http
-    .post(CONFIG.SERVER_API.concat(API.LOGIN),body)
+    .post(API.LOGIN,body)
     .timeout(CONFIG.DEFAULT_TIMEOUT)
     .toPromise();
   }
 
   checkServer(){
-    let headers = new HttpHeaders().set('Authorization', CONFIG.ACCESS_KEY);
     return this.http
-    .get(CONFIG.SERVER_API.concat(API.CHECK_SERVER),{headers:headers})
+    .get(API.CHECK_SERVER)
     .timeout(10000)
     .toPromise();
   }

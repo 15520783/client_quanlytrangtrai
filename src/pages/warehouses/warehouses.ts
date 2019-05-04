@@ -1,5 +1,5 @@
 import { Component, ViewChild, Renderer } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides, Scroll, Content } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Slides, Scroll,  } from 'ionic-angular';
 import { warehouse, farm } from '../../common/entity';
 import { WarehousesProvider } from '../../providers/warehouses/warehouses';
 import { FarmsProvider } from '../../providers/farms/farms';

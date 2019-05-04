@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FullCalendarModule } from 'ng-fullcalendar';
 import { HttpModule } from '../../node_modules/@angular/http';
 
@@ -82,6 +82,7 @@ import { UserProvider } from '../providers/user/user';
 import { DeployDataProvider } from '../providers/deploy-data/deploy-data';
 import { PartnerProvider } from '../providers/partner/partner';
 import { InvoicesProvider } from '../providers/invoices/invoices';
+import { TokenInterceptor } from './interceptor';
 
 
 const Pages = [
@@ -196,6 +197,11 @@ const Directives = [
     SplashScreen,
     HeaderColor ,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
     Utils,
     ...Providers,
     SettingsProvider,

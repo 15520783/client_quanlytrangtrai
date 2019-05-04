@@ -66,22 +66,14 @@ export class InvoiceInputUtilComponent {
       
 
       if (this.navParams.data.insertMode) {
-        this.util.showLoading('Tiến hành xử lý dữ liệu');
         this.roleInput.insert()
           .then((data: any) => {
             if (data) {
-              this.util.closeLoading().then(() => {
-                this.util.showToastSuccess('Dữ liệu đã cập nhật.');
-              })
               this.events.publish('callback', data);
               this.navCtrl.pop();
             }
           })
           .catch((err: Error) => {
-            console.log(err);
-            this.util.closeLoading().then(() => {
-              this.util.showToast('Dữ liệu cập nhật thất bại. ERR:' + err.message);
-            })
           })
       }
 

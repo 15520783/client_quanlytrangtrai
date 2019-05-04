@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, Menu, Content, LoadingController, 
 import { FormControl } from '@angular/forms';
 import { PigsProvider } from '../../providers/pigs/pigs';
 import { HousesProvider } from '../../providers/houses/houses';
-import { pig, house, group } from '../../common/entity';
+import { pig, house } from '../../common/entity';
 import { Utils } from '../../common/utils';
 import { KEY } from '../../common/const';
 import { VARIABLE } from '../../common/const'

@@ -27,28 +27,24 @@ export class PigsProvider {
   }
 
   getPigs() {
-    let headers = new HttpHeaders().set('Authorization', CONFIG.ACCESS_KEY);
     return this.http
-    .get(CONFIG.SERVER_API.concat(API.GET_ALL_PIGS),{headers:headers})
+    .get(API.GET_ALL_PIGS)
     .timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
   }
 
   createPig(objBody:pig){
-    let headers = new HttpHeaders().set('Authorization', CONFIG.ACCESS_KEY);
     return this.http
-    .post<pig>(CONFIG.SERVER_API.concat(API.CREATE_PIG),objBody,{headers:headers})
+    .post<pig>(API.CREATE_PIG,objBody)
     .timeout(CONFIG.DEFAULT_TIMEOUT)
     .toPromise();
   }
 
   removePig(objBody:pig){
     const options = {
-      headers: new HttpHeaders({
-        'Authorization':  CONFIG.ACCESS_KEY,
-      }),
+      headers: new HttpHeaders(),
       body: objBody
     };
-    return this.http.delete(CONFIG.SERVER_API.concat(API.DELETE_PIG),options)
+    return this.http.delete(API.DELETE_PIG,options)
     .timeout(CONFIG.DEFAULT_TIMEOUT)
     .toPromise();
   }
