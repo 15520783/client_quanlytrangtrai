@@ -31,7 +31,7 @@ export class MedicineWarehouseInputPage {
     public viewCtrl: ViewController
   ) {
     if (this.navParams.data.invoice) {
-      this.medicineWarehouse.invoiceID = this.navParams.data.invoice.id;
+      this.medicineWarehouse.invoice = this.navParams.data.invoice;
       this.medicineWarehouse['farmId'] = this.navParams.data.invoice.destination.id;
     }
 
@@ -39,7 +39,7 @@ export class MedicineWarehouseInputPage {
       id: this.medicineWarehouse.id,
       warehouse_id: [this.medicineWarehouse.warehouse_id, Validators.compose([Validators.required])],
       medicine_id: [this.medicineWarehouse.medicine_id, Validators.compose([Validators.required])],
-      invoiceId: this.medicineWarehouse.invoiceID,
+      invoice: this.medicineWarehouse.invoice,
       parentId: this.medicineWarehouse.parentId,
       unit_id: [this.medicineWarehouse.unit_id, Validators.compose([Validators.required])],
       quantity: [this.medicineWarehouse.quantity, Validators.compose([Validators.required, ValidateNumber])],

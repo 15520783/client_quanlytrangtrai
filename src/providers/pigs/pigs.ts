@@ -21,36 +21,58 @@ export class PigsProvider {
     public events: Events,
   ) {
     this.util.getKey(KEY.PIGS)
-    .then((data)=>{
-      this.pigs = data;
-    })
+      .then((data) => {
+        this.pigs = data;
+      })
   }
 
   getPigs() {
     return this.http
-    .get(API.GET_ALL_PIGS)
-    .timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
+      .get(API.GET_ALL_PIGS)
+      .timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
   }
 
-  createPig(objBody:pig){
+  createPig(objBody: pig) {
     return this.http
-    .post<pig>(API.CREATE_PIG,objBody)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+      .post<pig>(API.CREATE_PIG, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise().then((pig: pig) => {
+        if (pig) {
+          this.util.getKey(KEY.PIGS).then((pigs: Array<pig>) => {
+            pigs.push(pig);
+            this.util.setKey(KEY.PIGS, pigs).then(() => {
+              this.pigs.push(pig);
+            })
+          })
+        }
+        return pig;
+      });
   }
 
-  removePig(objBody:pig){
+  removePig(objBody: pig) {
     const options = {
       headers: new HttpHeaders(),
       body: objBody
     };
-    return this.http.delete(API.DELETE_PIG,options)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+    return this.http.delete(API.DELETE_PIG, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise().then((isOK) => {
+        if (isOK) {
+          this.util.getKey(KEY.PIGS).then((pigs: Array<pig>) => {
+            let idx = pigs.findIndex(pig => pig.id == objBody.id);
+            if (idx > -1)
+              pigs.splice(idx, 1);
+            this.util.setKey(KEY.PIGS, pigs).then(() => {
+              this.pigs = pigs;
+            });
+          })
+        }
+        return isOK;
+      });
   }
 
   getPigByID(id: string) {
-    let pig:Array<pig> =  this.pigs.filter((pig: pig) => {
+    let pig: Array<pig> = this.pigs.filter((pig: pig) => {
       return pig.id === id ? true : false;
     })
     return pig[0];

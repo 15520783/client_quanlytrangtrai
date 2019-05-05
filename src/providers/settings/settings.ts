@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { breeds, issues, medicines, pregnancyStatus, breedingType, healthStatus, diseases, farmTypes, foodType, foods, medicineType, medicineUnits, priceCodes, footType, gentialType, markTypes, roles } from '../../common/entity';
+import { breeds, issues, medicines, pregnancyStatus, breedingType, healthStatus, diseases, farmTypes, foodType, foods, medicineType, medicineUnits, priceCodes, footType, gentialType, markTypes, roles, status, round } from '../../common/entity';
 import { CONFIG, API, KEY } from '../../common/const';
 import { Utils } from '../../common/utils';
 import { Events } from 'ionic-angular';
@@ -22,8 +22,10 @@ export class setting {
   footType: Array<footType> = [];
   gentialType: Array<gentialType> = [];
   issues: Array<issues> = [];
-  markTypes: Array<markTypes> = [];
+  // markTypes: Array<markTypes> = [];
   roles: Array<roles> = [];
+  status: Array<status> = [];
+  rounds: Array<round> = [];
   constructor() {
 
   }
@@ -99,7 +101,6 @@ export class SettingsProvider {
   }
 
   deletePregnancyStatus(objBody:pregnancyStatus){
-    
     const options = {
       headers: new HttpHeaders(),
       body: objBody
@@ -111,6 +112,29 @@ export class SettingsProvider {
 
   updatePregnancyStatus(objBody:pregnancyStatus){
     return this.http.put(API.UPDATE_PREGNANCY_STATUS,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  createNewBreed(objBody:breeds){
+    return this.http
+    .post(API.CREATE_BREED,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  deleteBreed(objBody:breeds){
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http.delete(API.DELETE_BREED,options)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  updateBreed(objBody:breeds){
+    return this.http.put(API.UPDATE_BREED,objBody)
     .timeout(CONFIG.DEFAULT_TIMEOUT)
     .toPromise();
   }

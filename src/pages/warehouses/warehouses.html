@@ -3,8 +3,12 @@
     <ion-toolbar showWhen="core" toolbar-transparent>
       <ion-row>
         <ion-col showWhen="core">
-          <input-select class="input-select" [value]="farms_select[0].value" [placeholder]="'Chọn trang trại'"
-            [(data)]="farms_select">
+          <input-select 
+            class="input-select" 
+            [value]="farms_select[0].value" 
+            [placeholder]="'Chọn trang trại'"
+            [(data)]="farms_select"
+            (changeValue)="changeFarm($event)">
           </input-select>
         </ion-col>
         <ion-col text-right>

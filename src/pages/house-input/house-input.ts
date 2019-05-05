@@ -36,12 +36,13 @@ export class HouseInputPage {
 
     this.credentialsForm = this.formBuilder.group({
       section_id: [this.house.section.id, Validators.compose([Validators.required, Validators.maxLength(1000)])],
-      type_id: [this.house.typeId, Validators.compose([Validators.required])],
+      // type_id: [this.house.typeId, Validators.compose([Validators.required])],
       house_code: [this.house.houseCode, Validators.compose([Validators.required, Validators.maxLength(1000)])],
       name: [this.house.name, Validators.compose([Validators.required,Validators.maxLength(1000)])],
       position:[this.house.position, Validators.compose([Validators.required,Validators.maxLength(1000)])],
       founding:[this.house.founding, Validators.compose([Validators.required])],
       manager:[this.house.manager,Validators.compose([Validators.required])],
+      status:this.house.status,
       description:[this.house.description,Validators.compose([Validators.required, Validators.maxLength(1000)])],
     });
   }

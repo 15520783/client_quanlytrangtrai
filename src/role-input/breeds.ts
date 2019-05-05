@@ -1,7 +1,10 @@
 import { InputObject, breeds } from "../common/entity";
+import { SETTING_STORAGE_KEY } from "../common/const";
+import { SettingsProvider } from "../providers/settings/settings";
 
 export class BreedsRole {
     public object = new breeds();
+    public keySettingStorage = SETTING_STORAGE_KEY.BREEDS;
 
     public headerTitle = {
         insertMode:'Nhập thông tin giống',
@@ -105,17 +108,20 @@ export class BreedsRole {
         }
     ];
 
-    constructor() {
+    constructor(public settingProvider:SettingsProvider) {
 
     }
 
     insert() {
+        return this.settingProvider.createNewBreed(this.object)
     }
 
     delete(object){
+        return this.settingProvider.deleteBreed(object);
     }
 
     update(){
+        return this.settingProvider.updateBreed(this.object);
     }
 
     clear(){

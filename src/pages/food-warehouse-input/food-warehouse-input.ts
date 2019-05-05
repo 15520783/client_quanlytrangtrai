@@ -31,7 +31,7 @@ export class FoodWarehouseInputPage {
   ) {
     if (this.navParams.data.invoice) {
       console.log(this.navParams.data.invoice);
-      this.foodWarehouse.invoiceId = this.navParams.data.invoice.id;
+      this.foodWarehouse.invoice = this.navParams.data.invoice;
       this.foodWarehouse['farmId'] = this.navParams.data.invoice.destination.id;
     }
 
@@ -39,7 +39,7 @@ export class FoodWarehouseInputPage {
       id: this.foodWarehouse.id,
       warehouse_id: [this.foodWarehouse.warehouse_id, Validators.compose([Validators.required])],
       food_id: [this.foodWarehouse.food_id, Validators.compose([Validators.required])],
-      invoiceId: this.foodWarehouse.invoiceId,
+      invoice: this.foodWarehouse.invoice,
       parentId: this.foodWarehouse.parentId,
       unit: [this.foodWarehouse.unit, Validators.compose([Validators.required])],
       quantity: [this.foodWarehouse.quantity, Validators.compose([Validators.required, ValidateNumber])],

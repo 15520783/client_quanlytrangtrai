@@ -15,10 +15,10 @@ import { KEY } from '../../common/const';
   templateUrl: 'external-pig-invoice-detail.html',
 })
 export class ExternalPigInvoiceDetailPage {
-  @ViewChild('slider') slider : Slides;
-  
+  @ViewChild('slider') slider: Slides;
+
   public tab = "0";
-  public header:Array<string> = ["Thông tin chứng từ","Danh sách heo thuộc chứng từ"];
+  public header: Array<string> = ["Thông tin chứng từ", "Danh sách heo thuộc chứng từ"];
 
   public invoice: invoicesPig;
   public details: Array<invoicePigDetail> = [];
@@ -71,7 +71,7 @@ export class ExternalPigInvoiceDetailPage {
   }
 
   ngAfterViewInit() {
-    if (this.slider){
+    if (this.slider) {
       this.slider.autoHeight = true;
     }
   }
@@ -87,38 +87,27 @@ export class ExternalPigInvoiceDetailPage {
 
   input_pig() {
     this.navCtrl.push(PigInputPage);
-
+    this.events.unsubscribe('createPig');
     this.events.subscribe('createPig', (pig: pig) => {
       pig = this.deployData.get_pig_object_to_send_request(pig);
-      this.util.showLoading('Đang xử lí dữ liệu')
       this.pigProvider.createPig(pig)
         .then((data) => {
           if (data) {
-            this.pigProvider.pigs.push(data);
             this.pigs[data.id] = data;
-            this.util.setKey(KEY.PIGS, this.pigProvider.pigs).then(() => {
-              let invoiceDetail = new invoicePigDetail();
-              invoiceDetail.objectId = data.id;
-              invoiceDetail.invoice = this.invoice;
-              this.invoiceProvider.createPigInvoiceDetail(invoiceDetail)
-                .then((invoiceDetail: invoicePigDetail) => {
-                  if (invoiceDetail) {
-                    this.util.closeLoading().then(() => {
-                      this.details.push(invoiceDetail);
-                      this.util.showToastSuccess('Dữ liệu cập nhật thành công');
-                      this.events.unsubscribe('createPig');
-                      this.events.publish('OK');
-                    })
-                  }
-                })
-            });
+            let invoiceDetail = new invoicePigDetail();
+            invoiceDetail.objectId = data.id;
+            invoiceDetail.invoice = this.invoice;
+            this.invoiceProvider.createPigInvoiceDetail(invoiceDetail)
+              .then((invoiceDetail: invoicePigDetail) => {
+                if (invoiceDetail) {
+                  this.details.push(invoiceDetail);
+                  this.events.unsubscribe('createPig');
+                  this.events.publish('OK');
+                }
+              })
           }
         })
         .catch((err: Error) => {
-          console.log(err);
-          this.util.closeLoading().then(() => {
-            this.util.showToast('Cập nhật thất bại.ERROR: ' + err.message);
-          })
         })
     })
   }
@@ -132,12 +121,13 @@ export class ExternalPigInvoiceDetailPage {
             .then((isOK_pig) => {
               if (isOK_pig) {
                 let idx = this.details.findIndex(detail => detail.id == invoiceDetail.id);
-                this.details.splice(idx, 1);
+                if (idx > -1)
+                  this.details.splice(idx, 1);
               }
             })
         }
       })
-      .catch((err: Error) => {})
+      .catch((err: Error) => { })
   }
 
 
@@ -150,6 +140,6 @@ export class ExternalPigInvoiceDetailPage {
           });
         }
       })
-      .catch((err: Error) => {})
+      .catch((err: Error) => { })
   }
 }

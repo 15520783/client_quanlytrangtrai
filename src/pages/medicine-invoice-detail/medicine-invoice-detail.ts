@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, ViewController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Events, ViewController, Slides } from 'ionic-angular';
 import { invoicesProduct } from '../../common/entity';
 import { medicineWarehouse } from '../../common/entity';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
@@ -15,10 +15,13 @@ import { MedicineWarehouseInputPage } from '../medicine-warehouse-input/medicine
   templateUrl: 'medicine-invoice-detail.html',
 })
 export class MedicineInvoiceDetailPage {
+  @ViewChild('slider') slider : Slides;
+
+  public tab = "0";
 
   public invoice: invoicesProduct;
   public details: Array<medicineWarehouse> = [];
-
+  
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -33,6 +36,20 @@ export class MedicineInvoiceDetailPage {
       this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destination.id);
       this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.source.id);
     }
+  }
+
+  ngAfterViewInit() {
+    if (this.slider){
+      this.slider.autoHeight = true;
+    }
+  }
+
+  slideChange() {
+    this.tab = this.slider.realIndex.toString();
+  }
+
+  selectedTab(index) {
+    this.slider.slideTo(index);
   }
 
   ionViewDidLoad() {
@@ -54,31 +71,31 @@ export class MedicineInvoiceDetailPage {
 
   input_medicine() {
     this.navCtrl.push(MedicineWarehouseInputPage, { invoice: this.invoice });
-
-    this.events.subscribe('createMedicineWarehouse',(medicineWarehouse)=>{
+    this.events.unsubscribe('createMedicineWarehouse');
+    this.events.subscribe('createMedicineWarehouse', (medicineWarehouse) => {
       medicineWarehouse = this.deployData.get_medicine_object_to_send_request(medicineWarehouse);
       this.invoiceProvider.createMedicineWarehouse(medicineWarehouse)
-      .then((new_medicineWarehouse:medicineWarehouse)=>{
-        if(new_medicineWarehouse){
-          this.details.push(new_medicineWarehouse);
-          this.events.unsubscribe('createMedicineWarehouse');
-          this.events.publish('OK');
-        }
-      })
-      .catch((err:Error)=>{})
+        .then((new_medicineWarehouse: medicineWarehouse) => {
+          if (new_medicineWarehouse) {
+            this.details.push(new_medicineWarehouse);
+            this.events.unsubscribe('createMedicineWarehouse');
+            this.events.publish('OK');
+          }
+        })
+        .catch((err: Error) => { })
     })
   }
 
   removeInvoice() {
-    // this.invoiceProvider.removeProductInvoice(this.invoice)
-    //   .then((isOK) => {
-    //     if (isOK) {
-    //       this.viewCtrl.dismiss().then(() => {
-    //         this.events.publish('removeInvoiceEvent', this.invoice);
-    //       });
-    //     }
-    //   })
-    //   .catch((err: Error) => {})
+    this.invoiceProvider.removeProductInvoice(this.invoice)
+      .then((isOK) => {
+        if (isOK) {
+          this.viewCtrl.dismiss().then(() => {
+            this.events.publish('removeInvoiceEvent', this.invoice);
+          });
+        }
+      })
+      .catch((err: Error) => { })
   }
 
 }

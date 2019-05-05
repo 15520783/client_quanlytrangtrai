@@ -22,7 +22,7 @@
         <button ion-item (tap)="input_medicine(item)">
           <h2 *ngIf="mainAttribute"><b>Số chứng từ: </b>{{item[mainAttribute]}}</h2>
           <ion-row>
-            <ion-col *ngFor="let attr of attributes" col-6 text-wrap>
+            <ion-col *ngFor="let attr of attributes" col-12 text-wrap>
               <p style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
             </ion-col>
           </ion-row>

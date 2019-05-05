@@ -14,6 +14,7 @@ const KEY = {
 
 const SETTING_STORAGE_KEY = {
     PREGNANCY_STATUS: 'pregnancyStatus',
+    BREEDS:'breeds'
 }
 
 const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -21,6 +22,7 @@ const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".
 const CONFIG = {
     // SERVER_API: 'http://192.168.0.36:3000',
     SERVER_API: 'https://quanlytrangtrai-uit.herokuapp.com',
+    // SERVER_API: 'http://192.168.1.45:8080',
     DEFAULT_TIMEOUT: 30000,
     LANGUAGE_DEFAULT: 'vi',
     ACCESS_KEY: ''
@@ -136,6 +138,10 @@ const API = {
     CREATE_PREGNANCY_STATUS: '/api/pregnancystatus/',
     DELETE_PREGNANCY_STATUS: '/api/pregnancystatus/',
     UPDATE_PREGNANCY_STATUS: '/api/pregnancystatus/',
+
+    CREATE_BREED:'/api/breeds/',
+    UPDATE_BREED:'/api/breeds/',
+    DELETE_BREED:'/api/breeds/',
 
     CREATE_PIG_INVOICE:'/api/invoicespig/',
     UPDATE_PIG_INVOICE:'/api/invoicespig/',

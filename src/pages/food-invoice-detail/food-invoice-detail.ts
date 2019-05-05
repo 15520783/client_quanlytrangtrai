@@ -12,10 +12,10 @@ import { FoodWarehouseInputPage } from '../food-warehouse-input/food-warehouse-i
   templateUrl: 'food-invoice-detail.html',
 })
 export class FoodInvoiceDetailPage {
-  @ViewChild('slider') slider : Slides;
-  
+  @ViewChild('slider') slider: Slides;
+
   public tab = "0";
-  
+
   public invoice: invoicesProduct;
   public details: Array<foodWareHouse> = [];
 
@@ -36,7 +36,7 @@ export class FoodInvoiceDetailPage {
   }
 
   ngAfterViewInit() {
-    if (this.slider){
+    if (this.slider) {
       this.slider.autoHeight = true;
     }
   }
@@ -68,18 +68,18 @@ export class FoodInvoiceDetailPage {
 
   input_food() {
     this.navCtrl.push(FoodWarehouseInputPage, { invoice: this.invoice });
-
-    this.events.subscribe('createFoodWarehouse',(foodWarehouse)=>{
+    this.events.unsubscribe('createFoodWarehouse');
+    this.events.subscribe('createFoodWarehouse', (foodWarehouse) => {
       foodWarehouse = this.deployData.get_foodWarehouse_object_to_send_request(foodWarehouse);
       this.invoiceProvider.createFoodWareHouse(foodWarehouse)
-      .then((foodhouse:foodWareHouse)=>{
-        if(foodhouse){
-          this.details.push(foodhouse);
-          this.events.unsubscribe('createFoodWarehouse');
-          this.events.publish('OK');
-        }
-      })
-      .catch((err:Error)=>{})
+        .then((foodhouse: foodWareHouse) => {
+          if (foodhouse) {
+            this.details.push(foodhouse);
+            this.events.unsubscribe('createFoodWarehouse');
+            this.events.publish('OK');
+          }
+        })
+        .catch((err: Error) => { })
     })
   }
 
@@ -92,6 +92,6 @@ export class FoodInvoiceDetailPage {
           });
         }
       })
-      .catch((err: Error) => {})
+      .catch((err: Error) => { })
   }
 }

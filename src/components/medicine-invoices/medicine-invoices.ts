@@ -121,5 +121,15 @@ export class MedicineInvoicesComponent {
 
   input_medicine(item){
     this.navCtrl.push(MedicineInvoiceDetailPage,{invoice:item});
+    
+    this.events.subscribe('removeInvoiceEvent', (invoice) => {
+      if (invoice) {
+        let idx = this.invoices.findIndex(Obj => Obj.id == invoice.id);
+        if (idx > -1)
+          this.invoices.splice(idx, 1);
+        this.setFilteredItems();
+        this.events.unsubscribe('removeInvoiceEvent');
+      }
+    })
   }
 }

@@ -15,7 +15,7 @@
   <form action="" (ngSubmit)="onSubmit()" style="padding-bottom: 10vH">
     <ion-list>
       <ion-row>
-        <ion-col col-12 [attr.col-lg-4]="platform.is('core')?'':null" [attr.col-md-12]="platform.is('core')?'':null">
+        <ion-col col-12 [attr.col-lg-4]="platform.is('core')?'':null" [attr.col-md-12]="!platform.is('core')?'':null">
           <input-select 
             [(validControl)]="credentialsForm.controls.farmId"
             [label]="'Trang trại'" 
@@ -65,7 +65,7 @@
           </input-date>
           
         </ion-col>
-        <ion-col [attr.col-lg-4]="platform.is('core')?'':null" [attr.col-md-12]="platform.is('core')?'':null">
+        <ion-col [attr.col-lg-4]="platform.is('core')?'':null" [attr.col-md-12]="!platform.is('core')?'':null">
           <input-select [(validControl)]="credentialsForm.controls.roundId"
             [errorMessage_Required]="'Lứa là hạng mục bắt buộc.'" [label]="'Lứa'" [active]="submitAttempt"
             [placeholder]="'Chọn lứa'" [(data)]="rounds">
@@ -112,7 +112,7 @@
             [(data)]="health_status">
           </input-select>
         </ion-col>
-        <ion-col [attr.col-lg-4]="platform.is('core')?'':null" [attr.col-md-12]="platform.is('core')?'':null">
+        <ion-col [attr.col-lg-4]="platform.is('core')?'':null" [attr.col-md-12]="!platform.is('core')?'':null">
           <input-text [(validControl)]="credentialsForm.controls.fcr"
             [errorMessage_Required]="'FCR là hạng mục bắt buộc'" [label]="'FCR'" [placeholder]="'Nhập chỉ số FCR'"
             [active]="submitAttempt">

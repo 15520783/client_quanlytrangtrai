@@ -34,7 +34,11 @@ export class InputSelectComponent {
   }
 
   eventChangeValue(e) {
-    this.changeValue.emit({valueId:this.validControl.value});
+    this.changeValue.emit({ valueId: this.validControl.value });
+  }
+
+  eventChangeValue2(e) {
+    this.changeValue.emit({ valueId: this.value });
   }
 
   scrollTo() {

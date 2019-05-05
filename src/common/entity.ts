@@ -35,6 +35,7 @@ export { invoicesProduct }
 export { invoicePigDetail }
 export { foodWareHouse }
 export { medicineWarehouse }
+export { status }
 
 class base {
 	id: string;
@@ -145,13 +146,14 @@ class section extends base {
 
 class house extends base {
 	section: section = new section();
-	typeId: string = '';
+	// typeId: string = '';
 	houseCode: string = '';
 	name: string = '';
 	description: string = '';
 	position: string = '';
 	manager: string = '';
 	founding: any = '';
+	status: string = '';
 }
 
 class employee extends base {
@@ -193,9 +195,9 @@ class breeds extends base {
 	name: string = '';
 	lineCode: string = '';
 	symbol: string = '';
-	code: string = '';
+	code: string = '0';
 	level: string = '';
-	line: string = '';
+	line: string = '0';
 	description: string = '';
 
 	constructor() {
@@ -377,14 +379,22 @@ class warehouse_type extends base {
 class round extends base {
 	from: any = '';
 	to: any = '';
-	numberOfPig: number = null;
-	birthId: string = '';
+	// numberOfPig: number = null;
+	// birthId: string = '';
 }
+
+
 
 class roles extends base {
 	name: string = '';
 	code: string = '';
 	description: string = '';
+}
+
+class status extends base {
+	name: string = '';
+	description: string = '';
+	previousStatus: string = '0';
 }
 
 class partners extends base {
@@ -449,7 +459,7 @@ class foodWareHouse extends base {
 	warehouse_id: string = '';
 	food = new foods();
 	food_id: string = '';
-	invoiceId: string = '';
+	invoice = new invoicesProduct();
 	parentId: string = '';
 	unit: string = '';
 	quantity: string = '0';
@@ -467,7 +477,7 @@ class medicineWarehouse extends base {
 	warehouse_id: string = '';
 	medicine = new medicines();
 	medicine_id: string = '';
-	invoiceID: string = '';
+	invoice = new invoicesProduct();
 	parentId: string = '';
 	importDate: any = '';
 	unit = new medicineUnits();

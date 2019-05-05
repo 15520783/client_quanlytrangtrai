@@ -120,7 +120,8 @@ export class SettingUtilComponent {
         roleInput: this.roleInput
       }
     )
-
+    
+    this.events.unsubscribe('callback');
     this.events.subscribe('callback', (data) => {
       if (data) {
         this.data = data;

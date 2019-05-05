@@ -67,7 +67,7 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.breeds,
-        roleInput:new BreedsRole(),
+        roleInput:new BreedsRole(this.settingProvider),
       },
       breedingType: {
         title: 'Loại lên giống',
@@ -219,15 +219,26 @@ export class SettingsPage {
         mainAttribute: 'name',
         data: this.settingProvider.setting.issues,
       },
-      markTypes: {
-        title: 'Danh sách loại đánh dấu',
-        placeholderSearch: 'Tìm kiếm loại đánh dấu',
-        filter_default: ["name", "description"],
+      status: {
+        title: 'Danh sách trạng thái heo',
+        placeholderSearch: 'Tìm kiếm trạng thái heo',
+        filter_default: ["name", "description","previousStatus"],
         attributes: [
           { name: "description", label: 'Mô tả' },
+          { name: "previousStatus", label: 'Trạng thái trước'}
         ],
         mainAttribute: 'name',
-        data: this.settingProvider.setting.markTypes,
+        data: this.settingProvider.setting.status,
+      },
+      rounds: {
+        title: 'Danh sách lứa',
+        placeholderSearch: 'Tìm kiếm lứa heo',
+        filter_default: ["name", "from","to"],
+        attributes: [
+          { name: "from", label: 'Từ ngày' },
+          { name: "from", label: 'Đến ngày'}
+        ],
+        data: this.settingProvider.setting.rounds,
       },
       roles: {
         title: 'Danh sách chức vụ',

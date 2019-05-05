@@ -4,6 +4,7 @@ import { warehouse, farm } from '../../common/entity';
 import { WarehousesProvider } from '../../providers/warehouses/warehouses';
 import { FarmsProvider } from '../../providers/farms/farms';
 import { WarehouseInformationPage } from '../warehouse-information/warehouse-information';
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 
 @IonicPage()
 @Component({
@@ -14,7 +15,7 @@ export class WarehousesPage {
   @ViewChild('slider') slider: Slides;
   @ViewChild('scroll') scroll: Scroll;
 
-  SelectedFarm = this.farmProvider.farms[0].id;
+  public SelectedFarm;
 
   public type = "0";
   public food_warehouses: Array<warehouse> = []
@@ -25,17 +26,13 @@ export class WarehousesPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public warehouseProvider: WarehousesProvider,
-    public farmProvider: FarmsProvider,
-    public renderer: Renderer
+    public renderer: Renderer,
+    public deployData: DeployDataProvider
   ) {
-    this.farmProvider.farms.forEach((e:farm)=>{
-      this.farms_select.push({
-        name:e.name,
-        value:e.id
-      })
-    })
-    this.food_warehouses = this.warehouseProvider.getFoodWarehouse().slice(0,50);
-    this.medicine_warehouses = this.warehouseProvider.getMedicineWarehouse().slice(0,50);
+    this.farms_select = this.deployData.get_farm_list_for_select();
+    this.SelectedFarm = this.farms_select[0].value;
+    this.food_warehouses = this.deployData.get_food_warehouse_of_farm(this.SelectedFarm);
+    this.medicine_warehouses = this.deployData.get_medicine_warehouse_of_farm(this.SelectedFarm);
   }
 
   ionViewDidLoad() {
@@ -43,15 +40,12 @@ export class WarehousesPage {
     let ion_scroll = document.getElementsByClassName('modal-scroll');
     this.renderer.setElementStyle(ion_scroll[0],'height',heightContent+ 100 + 'px');
     this.renderer.setElementStyle(ion_scroll[1],'height',heightContent+ 100 + 'px');
-    console.log('ionViewDidLoad WarehousesPage');
-    
   }
 
   ngAfterViewInit() {
     if (this.slider) {
       this.slider.autoHeight = true;
     }
-    console.log('ngAfterViewInit FarmInfomationPage');
   }
 
   slideChange() {
@@ -64,5 +58,11 @@ export class WarehousesPage {
 
   viewDeltail(warehouse){
     this.navCtrl.push(WarehouseInformationPage,{warehouse:warehouse});
+  }
+
+  changeFarm(e){
+    this.SelectedFarm = e.valueId;
+    this.food_warehouses = this.deployData.get_food_warehouse_of_farm(this.SelectedFarm);
+    this.medicine_warehouses = this.deployData.get_medicine_warehouse_of_farm(this.SelectedFarm);
   }
 }

@@ -64,16 +64,21 @@
   <ion-row no-padding justify-content-center align-items-center>
     <ion-col col-12 col-sm-10 text-center>
       <button [disabled]="active && credentialsForm.invalid" mode='ios' (click)="active=true;login();" ion-button block
-        style="background: rgba(50, 211, 152,0.8)!important;" padding>Đăng nhập</button>
+        style="background: rgba(50, 211, 152,0.8)!important;" padding [disabled]="wait">Đăng nhập</button>
     </ion-col>
   </ion-row>
-  <ion-row>
+  <ion-row *ngIf="wait">
+    <ion-col text-center>
+      <ion-spinner color="secondary"></ion-spinner>
+    </ion-col>
+  </ion-row>
+  <!-- <ion-row>
     <ion-col text-center>
       <button ion-button clear color="light" font10>
         Quên mật khẩu?
       </button>
     </ion-col>
-  </ion-row>
+  </ion-row> -->
 </ion-content>
 
 
@@ -126,8 +131,8 @@
 
         <ion-row class="sign-in-button-container">
           <ion-col text-center>
-            <button [disabled]="active && credentialsForm.invalid" mode="ios" (click)="active=true;login();" ion-button block [disabled]="wait"
-              style="background: rgba(50, 211, 152,0.8)!important;" padding>
+            <button [disabled]="active && credentialsForm.invalid" mode="ios" (click)="active=true;login();" ion-button
+              block [disabled]="wait" style="background: rgba(50, 211, 152,0.8)!important;" padding>
               Sign in
             </button>
           </ion-col>
@@ -137,13 +142,13 @@
             <ion-spinner color="secondary"></ion-spinner>
           </ion-col>
         </ion-row>
-        <ion-row>
+        <!-- <ion-row>
           <ion-col text-center>
             <button ion-button clear color="light" font10>
               Forgot your password?
             </button>
           </ion-col>
-        </ion-row>
+        </ion-row> -->
       </form>
     </ion-col>
   </ion-row>
