@@ -1,5 +1,5 @@
 import { Component, ViewChild, Input } from '@angular/core';
-import { Content, NavController, Events } from 'ionic-angular';
+import { Content, NavController, Events, NavParams } from 'ionic-angular';
 import { invoicesProduct } from '../../common/entity';
 import { FormControl } from '@angular/forms';
 import { FilterProvider } from '../../providers/filter/filter';
@@ -46,9 +46,13 @@ export class FoodInvoicesComponent {
     public navCtrl: NavController,
     public events: Events,
     public deployData: DeployDataProvider,
-    public invoiceProvider: InvoicesProvider
+    public invoiceProvider: InvoicesProvider,
+    public navParams: NavParams
   ) {
-
+    if(this.navParams.data.invoice){
+      this.invoices = this.navParams.data.invoice;
+      this.setFilteredItems();
+    }
     this.roleInput = new FoodInvoiceRole(this.deployData, this.invoiceProvider);
     this.events.subscribe('invoicesReload', () => {
       this.setFilteredItems();

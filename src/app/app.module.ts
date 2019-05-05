@@ -195,6 +195,7 @@ const Directives = [
   bootstrap: [IonicApp],
   entryComponents: [
     ...Pages,
+    ...Components,
     MyApp,
   ],
   providers: [

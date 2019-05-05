@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, ViewController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Events, ViewController, Slides } from 'ionic-angular';
 import { invoicesPig, invoicePigDetail, pig } from '../../common/entity';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { Utils } from '../../common/utils';
@@ -15,6 +15,10 @@ import { KEY } from '../../common/const';
   templateUrl: 'external-pig-invoice-detail.html',
 })
 export class ExternalPigInvoiceDetailPage {
+  @ViewChild('slider') slider : Slides;
+  
+  public tab = "0";
+  public header:Array<string> = ["Thông tin chứng từ","Danh sách heo thuộc chứng từ"];
 
   public invoice: invoicesPig;
   public details: Array<invoicePigDetail> = [];
@@ -64,8 +68,20 @@ export class ExternalPigInvoiceDetailPage {
           this.util.showToast('Dữ liệu chưa được tải về. Vui lòng kiểm tra kết nối');
         })
       })
+  }
 
+  ngAfterViewInit() {
+    if (this.slider){
+      this.slider.autoHeight = true;
+    }
+  }
 
+  slideChange() {
+    this.tab = this.slider.realIndex.toString();
+  }
+
+  selectedTab(index) {
+    this.slider.slideTo(index);
   }
 
 

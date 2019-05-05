@@ -17,7 +17,7 @@
         <button no-margin ion-button item-end mode='ios' color="secondary" (tap)="add()">Thêm chứng từ</button>
       </ion-row>
     </ion-item-divider>
-    <ion-list >
+    <ion-list>
       <ion-item-sliding *ngFor="let item of visible_items">
         <button ion-item (tap)="input_pig(item)">
           <h2 *ngIf="mainAttribute"><b>Số chứng từ: </b>{{item[mainAttribute]}}</h2>
@@ -26,25 +26,17 @@
               <p style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
             </ion-col>
           </ion-row>
-          <!-- <button showWhen="core" ion-button item-end mode='ios' color="main" (tap)="edit(item)">Đánh giá & Xác
-            nhận</button> -->
-          <!-- <button showWhen="core" ion-button item-end mode='ios' color="danger" (tap)="remove(item)">Xóa</button> -->
-          </button>
-        <!-- <ion-item-options side="right" showWhen="ios,android"> -->
-          <!-- <button ion-button color="main" (tap)="edit(item)">Đánh giá & Xác nhận</button> -->
-          <!-- <button ion-button color="danger" (tap)="remove(item)">Xóa</button> -->
-        <!-- </ion-item-options> -->
+        </button>
       </ion-item-sliding>
     </ion-list>
     <ion-infinite-scroll (ionInfinite)="loadData($event)" *ngIf="page_Idx!==page_Total">
       <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Đang tải dữ liệu...">
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
-
-    <ion-fab bottom right showWhen="android,windows,ios" color="secondary">
-      <button ion-fab (tap)="add()">
-        <ion-icon name="add"></ion-icon>
-      </button>
-    </ion-fab>
   </div>
+  <ion-fab bottom right showWhen="android,windows,ios" color="secondary">
+    <button ion-fab (tap)="add()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

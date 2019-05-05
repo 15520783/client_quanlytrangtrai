@@ -8,10 +8,12 @@
       <ion-card mode='ios'>
         <ion-card-header>
           <ion-toolbar>
-              Danh sách chứng từ
-              <ion-buttons right>
-                <button ion-button (tap)="getInvoices()"><ion-icon name="ios-sync"></ion-icon></button>
-              </ion-buttons>
+            Danh sách chứng từ
+            <ion-buttons right>
+              <button ion-button (tap)="getInvoices()">
+                <ion-icon name="ios-sync"></ion-icon>
+              </button>
+            </ion-buttons>
           </ion-toolbar>
         </ion-card-header>
         <ion-card-content class="ion-card-content-list-setting" no-padding>
@@ -51,24 +53,18 @@
   </ion-row>
 </ion-content>
 
-<!-- <ion-content *ngIf="!platform.is('core')">
-      <ion-item-divider>Danh sách thiết lập</ion-item-divider>
+<ion-content *ngIf="!platform.is('core')">
+  <ion-item-divider>Danh sách thiết lập</ion-item-divider>
+  <ion-list>
+    <button *ngFor="let key of list_keys;let idx= index" ion-item (tap)="openPage(list_invoice_type[key])">
       <ion-row>
-        <ion-card mode='ios'>
-          <ion-card-content class="ion-card-content-list-setting" no-padding>
-            <ion-list>
-              <button *ngFor="let key of list_keys;let idx= index" ion-item (tap)="openPage(list_settings[key])">
-                <ion-row>
-                  <ion-col align-self-center col-2>
-                    <ion-icon name="app-item-setting" font28></ion-icon>
-                  </ion-col>
-                  <ion-col col-10>
-                    <h2 text-wrap>{{list_settings[key].title}}</h2>
-                  </ion-col>
-                </ion-row>
-              </button>
-            </ion-list>
-          </ion-card-content>
-        </ion-card>
+        <ion-col align-self-center col-2>
+          <ion-icon name="app-file" font28></ion-icon>
+        </ion-col>
+        <ion-col>
+          <h2 text-wrap>{{list_invoice_type[key].title}}</h2>
+        </ion-col>
       </ion-row>
-    </ion-content> -->
+    </button>
+  </ion-list>
+</ion-content>

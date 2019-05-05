@@ -1,7 +1,7 @@
 import { Component, ViewChild, Input } from '@angular/core';
 import { InvoiceInputUtilComponent } from '../invoice-input-util/invoice-input-util';
 import { FilterProvider } from '../../providers/filter/filter';
-import { NavController, Events, Content } from 'ionic-angular';
+import { NavController, Events, Content, NavParams } from 'ionic-angular';
 import { Utils } from '../../common/utils';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
@@ -49,8 +49,13 @@ export class MedicineInvoicesComponent {
     public navCtrl: NavController,
     public events: Events,
     public deployData: DeployDataProvider,
-    public invoiceProvider: InvoicesProvider
+    public invoiceProvider: InvoicesProvider,
+    public navParams: NavParams
   ) {
+    if(this.navParams.data.invoice){
+      this.invoices = this.navParams.data.invoice;
+      this.setFilteredItems();
+    }
     this.partners_util = this.deployData.get_object_list_key_of_partner();
     this.farms_util = this.deployData.get_object_list_key_of_farm();
     this.roleInput = new MedicineInvoiceRole(this.deployData, this.invoiceProvider);

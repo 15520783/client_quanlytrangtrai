@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, ViewController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Events, ViewController, Slides } from 'ionic-angular';
 import { invoicesPig, invoicePigDetail } from '../../common/entity';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
@@ -12,7 +12,10 @@ import { PigsProvider } from '../../providers/pigs/pigs';
   templateUrl: 'internal-pig-invoice-detail.html',
 })
 export class InternalPigInvoiceDetailPage {
-
+  @ViewChild('slider') slider : Slides;
+  
+  public tab = "0";
+  
   public invoice: invoicesPig;
   public details: Array<invoicePigDetail> = [];
   public pigs: any;
@@ -45,6 +48,20 @@ export class InternalPigInvoiceDetailPage {
     this.foots = this.deployData.get_object_list_key_of_foot();
   }
 
+  ngAfterViewInit() {
+    if (this.slider){
+      this.slider.autoHeight = true;
+    }
+  }
+
+  slideChange() {
+    this.tab = this.slider.realIndex.toString();
+  }
+
+  selectedTab(index) {
+    this.slider.slideTo(index);
+  }
+
   ionViewDidLoad() {
     this.util.showLoading('Đang tải dữ liệu');
     this.invoiceProvider.getPigInvoiceDetail(this.navParams.data.invoice.id)
@@ -60,8 +77,6 @@ export class InternalPigInvoiceDetailPage {
           this.util.showToast('Dữ liệu chưa được tải về. Vui lòng kiểm tra kết nối');
         })
       })
-
-
   }
 
 

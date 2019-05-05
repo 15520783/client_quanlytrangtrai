@@ -1,6 +1,6 @@
 import { Component, ViewChild, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Content, NavController, Events } from 'ionic-angular';
+import { Content, NavController, Events, NavParams } from 'ionic-angular';
 import { invoicesPig, invoicePigDetail, } from '../../common/entity';
 import { FilterProvider } from '../../providers/filter/filter';
 import { Utils } from '../../common/utils';
@@ -51,10 +51,13 @@ export class ExternalPigInvoicesComponent {
     public navCtrl: NavController,
     public events: Events,
     public deployData: DeployDataProvider,
-    public invoiceProvider: InvoicesProvider
+    public invoiceProvider: InvoicesProvider,
+    public navParams: NavParams
   ) {
-
-
+    if(this.navParams.data.invoice){
+      this.invoices = this.navParams.data.invoice;
+      this.setFilteredItems();
+    }
     this.roleInput = new ExternalPigInvoiceRole(this.deployData, this.invoiceProvider);
     this.partners_util = this.deployData.get_object_list_key_of_partner();
     this.farms_util = this.deployData.get_object_list_key_of_farm()
@@ -72,7 +75,8 @@ export class ExternalPigInvoicesComponent {
       this.page_Total = this.rows.length % 50 === 0 ? parseInt(this.rows.length / 50 + '') : parseInt(this.rows.length / 50 + 1 + '');
       this.page_Idx = 1;
       this.visible_items = this.rows.slice(0, 50);
-      document.getElementById('content').scrollTop = 0;
+      if (document.getElementById('content'))
+        document.getElementById('content').scrollTop = 0;
     }, 200);
     // })
   }

@@ -3,6 +3,10 @@ import { IonicPage, NavController, NavParams, Platform, Slides, Slide, Events } 
 import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { Utils } from '../../common/utils';
 import { VARIABLE } from '../../common/const';
+import { InternalPigInvoicesComponent } from '../../components/internal-pig-invoices/internal-pig-invoices';
+import { ExternalPigInvoicesComponent } from '../../components/external-pig-invoices/external-pig-invoices';
+import { FoodInvoicesComponent } from '../../components/food-invoices/food-invoices';
+import { MedicineInvoicesComponent } from '../../components/medicine-invoices/medicine-invoices';
 
 
 @IonicPage()
@@ -13,7 +17,7 @@ import { VARIABLE } from '../../common/const';
 export class InvoicesPage {
   @ViewChild('slider') slider: Slides;
 
-  public list_invoice_type;
+  public list_invoice_type:any = {};
   public list_keys;
 
   public internalPigInvoices: any = [];
@@ -34,16 +38,24 @@ export class InvoicesPage {
 
     this.list_invoice_type = {
       internalPigInvoice: {
-        title: 'Chứng từ nhập heo trong hệ thống'
+        title: 'Chứng từ nhập heo trong hệ thống',
+        invoices:[],
+        component:InternalPigInvoicesComponent
       },
       externalPigInvoice: {
-        title: 'Chứng từ nhập heo ngoài hệ thống'
+        title: 'Chứng từ nhập heo ngoài hệ thống',
+        invoices:[],
+        component:ExternalPigInvoicesComponent
       },
       foodInvoice: {
-        title: 'Chứng từ nhập cám'
+        title: 'Chứng từ nhập cám',
+        invoices:[],
+        component:FoodInvoicesComponent
       },
       medicineInvoice: {
-        title: 'Chứng từ nhập thuốc'
+        title: 'Chứng từ nhập thuốc',
+        invoices:[],
+        component:MedicineInvoicesComponent
       }
     }
 
@@ -91,6 +103,10 @@ export class InvoicesPage {
             })
           }
         }
+        this.list_invoice_type.externalPigInvoice.invoices = this.externalPigInvoices;
+        this.list_invoice_type.internalPigInvoice.invoices = this.internalPigInvoices;
+        this.list_invoice_type.foodInvoice.invoices = this.foodInvoices;
+        this.list_invoice_type.medicineInvoice.invoices = this.medicineInvoices;
         this.util.closeLoading();
       }).then(()=>{
         this.events.publish('invoicesReload');
@@ -101,5 +117,10 @@ export class InvoicesPage {
           this.util.showToast('Dữ liệu chưa được tải về. Vui lòng kiểm tra lại kết nối.')
         })
       })
+  }
+
+
+  openPage(item){
+    this.navCtrl.push(item.component,{invoice:item.invoices});
   }
 }

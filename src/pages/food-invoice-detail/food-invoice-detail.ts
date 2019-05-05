@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, ViewController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Events, ViewController, Slides } from 'ionic-angular';
 import { invoicesProduct, foodWareHouse } from '../../common/entity';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
@@ -12,7 +12,10 @@ import { FoodWarehouseInputPage } from '../food-warehouse-input/food-warehouse-i
   templateUrl: 'food-invoice-detail.html',
 })
 export class FoodInvoiceDetailPage {
-
+  @ViewChild('slider') slider : Slides;
+  
+  public tab = "0";
+  
   public invoice: invoicesProduct;
   public details: Array<foodWareHouse> = [];
 
@@ -30,6 +33,20 @@ export class FoodInvoiceDetailPage {
       this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destination.id);
       this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.source.id);
     }
+  }
+
+  ngAfterViewInit() {
+    if (this.slider){
+      this.slider.autoHeight = true;
+    }
+  }
+
+  slideChange() {
+    this.tab = this.slider.realIndex.toString();
+  }
+
+  selectedTab(index) {
+    this.slider.slideTo(index);
   }
 
   ionViewDidLoad() {
