@@ -7,7 +7,7 @@ import { PartnerProvider } from '../partner/partner';
 import { EmployeesProvider } from '../employees/employees';
 import { SectionsProvider } from '../sections/sections';
 import { SettingsProvider } from '../settings/settings';
-import { pig, house, foodWareHouse } from '../../common/entity';
+import { pig, house, foodWareHouse, medicineWarehouse } from '../../common/entity';
 import { WarehousesProvider } from '../warehouses/warehouses';
 
 
@@ -114,6 +114,34 @@ export class DeployDataProvider {
       })
     })
     return food_select;
+  }
+
+  /**
+   * Lấy danh sách thuốc cho ion-select
+   */
+  get_medicine_list_for_select() {
+    let medicine_select = [];
+    this.settingProvider.setting.medicines.forEach(medicine => {
+      medicine_select.push({
+        name: medicine.name,
+        value: medicine.id
+      })
+    })
+    return medicine_select;
+  }
+
+  /**
+   * Lấy danh sách đơn vị thuốc
+   */
+  get_medicineUnit_list_for_select() {
+    let medicineUnit_select = [];
+    this.settingProvider.setting.medicineUnits.forEach(unit => {
+      medicineUnit_select.push({
+        name: unit.name,
+        value: unit.id
+      })
+    })
+    return medicineUnit_select;
   }
 
 
@@ -322,8 +350,7 @@ export class DeployDataProvider {
     let idx = this.warehouseProvider.warehouses.findIndex(warehouse => warehouse.id == warehouseId);
     if (idx > -1)
       return this.warehouseProvider.warehouses[idx];
-    else
-      return null;
+    else return null;
   }
 
   /**
@@ -334,10 +361,30 @@ export class DeployDataProvider {
     let idx = this.settingProvider.setting.foods.findIndex(food => food.id == foodId);
     if (idx > -1)
       return this.settingProvider.setting.foods[idx];
-    else
-      return null;
+    else return null;
   }
 
+  /**
+   * Lấy thông tin thuốc thông qua id
+   * @param medicineId 
+   */
+  get_medicine_by_id(medicineId: string) {
+    let idx = this.settingProvider.setting.medicines.findIndex(medicine => medicine.id == medicineId);
+    if (idx > -1)
+      return this.settingProvider.setting.medicines[idx];
+    else return null;
+  }
+
+  /**
+   * Lấy thông đơn vị thông qua id
+   * @param unitId 
+   */
+  get_unit_by_id(unitId: string) {
+    let idx = this.settingProvider.setting.medicineUnits.findIndex(unit => unit.id == unitId);
+    if (idx > -1)
+      return this.settingProvider.setting.medicineUnits[idx];
+    else return null;
+  }
 
   get_parent_of_pig(target: pig) {
     let result: any = {};
@@ -381,10 +428,25 @@ export class DeployDataProvider {
     return pig;
   }
 
+  /**
+   * Lấy Object chuẩn của foodWarehouse  để thực hiện gửi request
+   * @param pifoodWarehouseg 
+   */
   get_foodWarehouse_object_to_send_request(foodWarehouse: foodWareHouse) {
     foodWarehouse.warehouse = this.get_warehouse_by_id(foodWarehouse.warehouse_id);
     foodWarehouse.food = this.get_food_by_id(foodWarehouse.food_id);
     return foodWarehouse;
+  }
+
+  /**
+   * Lấy Object chuẩn của medicineWarehouse  để thực hiện gửi request
+   * @param medicineWarehouse 
+   */
+  get_medicine_object_to_send_request(medicineWarehouse: medicineWarehouse) {
+    medicineWarehouse.warehouse = this.get_warehouse_by_id(medicineWarehouse.warehouse_id);
+    medicineWarehouse.medicine = this.get_medicine_by_id(medicineWarehouse.medicine_id);
+    medicineWarehouse.unit = this.get_unit_by_id(medicineWarehouse.unit_id);
+    return medicineWarehouse;
   }
 
   /**
@@ -394,6 +456,16 @@ export class DeployDataProvider {
   get_food_warehouse_of_farm(farmId: string) {
     return this.warehouseProvider.warehouses.filter((warehouse) => {
       return (warehouse.manager.farm.id == farmId && warehouse.type.id == "1") ? true : false;
+    })
+  }
+
+  /**
+   * Lấy danh sách kho thuốc của 1 trang trại
+   * @param farmId 
+   */
+  get_medicine_warehouse_of_farm(farmId: string) {
+    return this.warehouseProvider.warehouses.filter((warehouse) => {
+      return (warehouse.manager.farm.id == farmId && warehouse.type.id == "2") ? true : false;
     })
   }
 

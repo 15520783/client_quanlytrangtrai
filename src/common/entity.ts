@@ -34,6 +34,7 @@ export { invoicesPig }
 export { invoicesProduct }
 export { invoicePigDetail }
 export { foodWareHouse }
+export { medicineWarehouse }
 
 class base {
 	id: string;
@@ -177,7 +178,7 @@ class warehouse extends base {
 	// unitType: string = '';
 	name: string = '';
 	description: string = '';
-	manager:employee = new employee();
+	manager: employee = new employee();
 }
 
 
@@ -447,7 +448,7 @@ class foodWareHouse extends base {
 	warehouse = new warehouse();
 	warehouse_id: string = '';
 	food = new foods();
-	food_id:string = '';
+	food_id: string = '';
 	invoiceId: string = '';
 	parentId: string = '';
 	unit: string = '';
@@ -459,6 +460,26 @@ class foodWareHouse extends base {
 	mfgDate: any = '';
 	expiryDate: any = '';
 	images: string = '';
+}
+
+class medicineWarehouse extends base {
+	warehouse = new warehouse();
+	warehouse_id: string = '';
+	medicine = new medicines();
+	medicine_id: string = '';
+	invoiceID: string = '';
+	parentId: string = '';
+	importDate: any = '';
+	unit = new medicineUnits();
+	unit_id: string = '';
+	quantity: string = '0';
+	total: string = '0';
+	used: string = '0';
+	remain: string = '0';
+	manufacturer: string = '';
+	mfgDate: any = '';
+	expiryDate: any = '';
+	typeUse: string = '';
 }
 
 class InputObject {

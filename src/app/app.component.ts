@@ -139,19 +139,12 @@ export class MyApp {
         }
       })
     .catch((err: any) => {
-      console.log(err);
-      // if (err.status == 401) {
-      //   this.rootPage = LoginPage;
-      //   this.splash = false;
-      //   this.util.showToast('Phiên làm việc quá hạn. Vui lòng đăng nhập lại');
-      // }
-      // else {
-      //   this.util.showToast('Lỗi kết nối đến máy chủ. Vui lòng kiểm tra lại kết nối.');
-      //   this.rootPage = HomePage;
-      //   setTimeout(() => {
-      //     this.splash = false;
-      //   }, 1000);
-      // }
+      if (err.status != 401) {
+        this.rootPage = HomePage;
+        setTimeout(() => {
+          this.splash = false;
+        }, 1000);
+      }
     })
   }
 

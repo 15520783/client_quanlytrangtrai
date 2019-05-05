@@ -8,6 +8,7 @@ import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { FormControl } from '@angular/forms';
 import { invoicesProduct } from '../../common/entity';
 import { MedicineInvoiceRole } from '../../role-input/medicineInvoice';
+import { MedicineInvoiceDetailPage } from '../../pages/medicine-invoice-detail/medicine-invoice-detail';
 
 @Component({
   selector: 'medicine-invoices',
@@ -103,18 +104,17 @@ export class MedicineInvoicesComponent {
         roleInput: this.roleInput
       }
     )
-    this.events.unsubscribe('callback', () => {
-      this.events.subscribe('callback', (data) => {
-        if (data) {
-          this.invoices.push(data);
-          this.setFilteredItems();
-          this.events.unsubscribe('callback');
-        }
-      })
+    this.events.unsubscribe('callback');
+    this.events.subscribe('callback', (data) => {
+      if (data) {
+        this.invoices.push(data);
+        this.setFilteredItems();
+        this.events.unsubscribe('callback');
+      }
     })
   }
 
-  // input_pig(item){
-  //   this.navCtrl.push(ExternalPigInvoiceDetailPage,{invoice:item});
-  // }
+  input_medicine(item){
+    this.navCtrl.push(MedicineInvoiceDetailPage,{invoice:item});
+  }
 }

@@ -108,7 +108,6 @@ export class ExternalPigInvoiceDetailPage {
   }
 
   removePigInvoicesDetail(invoiceDetail: invoicePigDetail) {
-    this.util.showLoading('Đang xử lí dữ liệu');
     this.invoiceProvider.removePigInvoiceDetail(invoiceDetail)
       .then((isOK_detail) => {
         if (isOK_detail) {
@@ -116,40 +115,25 @@ export class ExternalPigInvoiceDetailPage {
           this.pigProvider.removePig(pig)
             .then((isOK_pig) => {
               if (isOK_pig) {
-                this.util.showToastSuccess('Dữ liệu cập nhật thành công');
                 let idx = this.details.findIndex(detail => detail.id == invoiceDetail.id);
                 this.details.splice(idx, 1);
               }
-              this.util.closeLoading();
             })
         }
       })
-      .catch((err: Error) => {
-        console.log(err);
-        this.util.closeLoading().then(() => {
-          this.util.showToast('Cập nhật thất bại.ERROR: ' + err.message);
-        })
-      })
+      .catch((err: Error) => {})
   }
 
 
   removeInvoice() {
-    this.util.showLoading('Đang tiến hành xử lí dữ liệu')
     this.invoiceProvider.removePigInvoice(this.invoice)
       .then((isOK) => {
         if (isOK) {
-          this.util.showToastSuccess('Dữ liệu đã cập nhật thành công');
           this.viewCtrl.dismiss().then(() => {
             this.events.publish('removeInvoiceEvent', this.invoice);
           });
         }
-        this.util.closeLoading();
       })
-      .catch((err: Error) => {
-        console.log(err);
-        this.util.closeLoading().then(() => {
-          this.util.showToast('Dữ liệu cập nhật thất bại. Vui lòng kiểm tra lại kết nối.');
-        })
-      })
+      .catch((err: Error) => {})
   }
 }

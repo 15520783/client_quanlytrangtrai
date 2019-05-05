@@ -106,14 +106,13 @@ export class FoodInvoicesComponent {
       }
     )
 
-    this.events.unsubscribe('callback', () => {
-      this.events.subscribe('callback', (data) => {
-        if (data) {
-          this.invoices.push(data);
-          this.setFilteredItems();
-          this.events.unsubscribe('callback');
-        }
-      })
+    this.events.unsubscribe('callback');
+    this.events.subscribe('callback', (data) => {
+      if (data) {
+        this.invoices.push(data);
+        this.setFilteredItems();
+        this.events.unsubscribe('callback');
+      }
     })
   }
 

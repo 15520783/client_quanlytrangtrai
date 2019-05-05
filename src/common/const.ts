@@ -130,6 +130,7 @@ const API = {
 
     GET_PIG_INVOICE_DETAIL_FROM_INVOICE: '/api/invoicepigdetail/invoice/',
     GET_FOOD_WAREHOUSE_FROM_INVOICE: '/api/foodwarehouse/invoice/',
+    GET_MEDICINE_WAREHOUSE_FROM_INVOICE: '/api/medicinewarehouse/invoice/',
 
 
     CREATE_PREGNANCY_STATUS: '/api/pregnancystatus/',
@@ -149,6 +150,7 @@ const API = {
     
 
     CREATE_FOOD_WAREHOUSE:'/api/foodwarehouse/',
+    CREATE_MEDICINE_WAREHOUSE: '/api/medicinewarehouse/',
 
     CREATE_PIG:'/api/pigs/',
     DELETE_PIG:'/api/pigs/'
