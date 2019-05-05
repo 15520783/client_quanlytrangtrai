@@ -1,0 +1,34 @@
+page-internal-pig-invoice-detail {
+    .scroll-custom {
+        height: 78vH!important;
+        .scroll-content{
+            padding:0px!important;
+        }
+    }
+
+    .card-header{
+        background:linear-gradient(to right,$themeColor2,$light-tint)
+    }
+
+    .card{
+        background: $light-tint;
+    }
+
+    .card-content{
+        background: white;
+    }
+
+    .card-content-custom{
+        max-height: 72vH!important;
+        height: 72vH;
+        overflow: auto;
+    }
+
+    // ion-col{
+    //     padding:0px!important;
+    // }
+
+    ion-card-header{
+        padding:5px 10px!important;
+    }
+}

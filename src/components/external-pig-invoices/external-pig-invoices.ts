@@ -124,7 +124,7 @@ export class ExternalPigInvoicesComponent {
 
   input_pig(item) {
     this.navCtrl.push(ExternalPigInvoiceDetailPage, { invoice: item });
-
+    
     this.events.subscribe('removeInvoiceEvent', (invoice) => {
       if (invoice) {
         let idx = this.invoices.findIndex(Obj => Obj.id == invoice.id);

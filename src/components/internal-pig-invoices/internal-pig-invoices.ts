@@ -8,6 +8,7 @@ import { InternalPigInvoiceRole } from '../../role-input/internalPigInvoice';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { InvoiceInputUtilComponent } from '../invoice-input-util/invoice-input-util';
+import { InternalPigInvoiceDetailPage } from '../../pages/internal-pig-invoice-detail/internal-pig-invoice-detail';
 
 @Component({
   selector: 'internal-pig-invoices',
@@ -125,6 +126,20 @@ export class InternalPigInvoicesComponent {
         this.invoices.push(data);
         this.setFilteredItems();
         this.events.unsubscribe('callback');
+      }
+    })
+  }
+
+  input_pig(item) {
+    this.navCtrl.push(InternalPigInvoiceDetailPage, { invoice: item });
+
+    this.events.subscribe('removeInvoiceEvent', (invoice) => {
+      if (invoice) {
+        let idx = this.invoices.findIndex(Obj => Obj.id == invoice.id);
+        if (idx > -1)
+          this.invoices.splice(idx, 1);
+        this.setFilteredItems();
+        this.events.unsubscribe('removeInvoiceEvent');
       }
     })
   }
