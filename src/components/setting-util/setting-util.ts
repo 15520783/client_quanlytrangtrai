@@ -150,14 +150,9 @@ export class SettingUtilComponent {
   }
 
   remove(item) {
-    this.util.showLoading('Tiến hành xử lý dữ liệu');
     this.roleInput.delete(item)
       .then((res: any) => {
         if (res) {
-          console.log(res);
-          this.util.closeLoading().then(() => {
-            this.util.showToastSuccess('Đã xóa.');
-          })
           this.util.getKey(KEY.SETTINGS).then((setting) => {
             if (setting) {
               let idx = setting[this.roleInput.keySettingStorage].findIndex(obj => obj.id == item.id);
@@ -171,20 +166,6 @@ export class SettingUtilComponent {
           })
         }
       })
-      .catch((err:Error)=>{
-        console.log(err);
-        this.util.closeLoading().then(() => {
-          this.util.showToast('Xóa thất bại. ERR:' + err.message);
-        })
-      })
+      .catch((err:Error)=>{})
   }
-
-
-  // reload = data =>{
-  //   return new Promise((resolve, reject) => {
-  //     this.data = data;
-  //     this.setFilteredItems();
-  //     resolve();
-  //   });
-  // }
 }

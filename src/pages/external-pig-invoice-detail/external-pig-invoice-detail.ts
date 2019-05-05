@@ -56,9 +56,6 @@ export class ExternalPigInvoiceDetailPage {
         if (details.length) {
           this.details = details;
         }
-        this.details.forEach(e => {
-          console.log(this.pigs[e.objectId]);
-        });
         this.util.closeLoading();
       })
       .catch((err: Error) => {

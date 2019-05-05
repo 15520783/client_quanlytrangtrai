@@ -53,6 +53,9 @@ export class TokenInterceptor implements HttpInterceptor {
             this.util.showToast('Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại');
           }
         }
+        else if(error.status === 504){
+          this.util.showToast('Thời gian chờ phản hồi quá hạn. Vui lòng thao tác lại.');
+        }
         else {
           this.util.showToast('Có lỗi xảy ra. Vui lòng kiểm tra lại.');
         }

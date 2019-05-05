@@ -72,6 +72,13 @@ export class InvoicesProvider {
     .toPromise();
   }
 
+  getFoodWarehouse(invoiceId:string){
+    return this.http
+    .get(API.GET_FOOD_WAREHOUSE_FROM_INVOICE.concat(invoiceId))
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
   removePigInvoiceDetail(objBody:invoicePigDetail){
     const options = {
       headers: new HttpHeaders(),

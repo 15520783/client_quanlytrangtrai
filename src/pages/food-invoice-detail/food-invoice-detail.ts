@@ -33,23 +33,20 @@ export class FoodInvoiceDetailPage {
   }
 
   ionViewDidLoad() {
-    // this.util.showLoading('Đang tải dữ liệu');
-    // this.invoiceProvider.getPigInvoiceDetail(this.navParams.data.invoice.id)
-    //   .then((details: any) => {
-    //     if (details.length) {
-    //       this.details = details;
-    //     }
-    //     this.details.forEach(e => {
-    //       console.log(this.pigs[e.objectId]);
-    //     });
-    //     this.util.closeLoading();
-    //   })
-    //   .catch((err: Error) => {
-    //     console.log(err);
-    //     this.util.closeLoading().then(() => {
-    //       this.util.showToast('Dữ liệu chưa được tải về. Vui lòng kiểm tra kết nối');
-    //     })
-    //   })
+    this.util.showLoading('Đang tải dữ liệu');
+    this.invoiceProvider.getFoodWarehouse(this.navParams.data.invoice.id)
+      .then((details: any) => {
+        if (details.length) {
+          this.details = details;
+        }
+        this.util.closeLoading();
+      })
+      .catch((err: Error) => {
+        console.log(err);
+        this.util.closeLoading().then(() => {
+          this.util.showToast('Dữ liệu chưa được tải về. Vui lòng kiểm tra kết nối');
+        })
+      })
   }
 
   input_food() {

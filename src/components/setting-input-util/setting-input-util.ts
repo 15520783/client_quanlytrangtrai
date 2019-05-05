@@ -67,41 +67,28 @@ export class SettingInputUtilComponent {
       console.log(this.roleInput.object);
 
       if (this.navParams.data.insertMode) {
-        this.util.showLoading('Tiến hành xử lý dữ liệu');
         this.roleInput.insert()
           .then((data: any) => {
             if (data) {
-              this.util.closeLoading().then(() => {
-                this.util.showToastSuccess('Dữ liệu đã cập nhật.');
-              })
               this.util.getKey(KEY.SETTINGS).then((setting) => {
                 if (setting) {
                   setting[this.roleInput.keySettingStorage].push(data);
                   this.util.setKey(KEY.SETTINGS, setting).then(() => {
                     this.settingProvider.setting = setting;
                     this.events.publish('callback', setting[this.roleInput.keySettingStorage]);
-                    this.navCtrl.pop();
                   })
                 }
               })
+              this.navCtrl.pop();
             }
           })
-          .catch((err: Error) => {
-            console.log(err);
-            this.util.closeLoading().then(() => {
-              this.util.showToast('Dữ liệu cập nhật thất bại. ERR:' + err.message);
-            })
-          })
+          .catch((err: Error) => {})
       }
 
       if(this.navParams.data.editMode){
-        this.util.showLoading('Tiến hành xử lý dữ liệu');
         this.roleInput.update()
           .then((data: any) => {
             if (data) {
-              this.util.closeLoading().then(() => {
-                this.util.showToastSuccess('Dữ liệu đã cập nhật.');
-              })
               this.util.getKey(KEY.SETTINGS).then((setting) => {
                 if (setting) {
                   let idx = setting[this.roleInput.keySettingStorage].findIndex(obj => obj.id == data.id);
@@ -109,18 +96,13 @@ export class SettingInputUtilComponent {
                   this.util.setKey(KEY.SETTINGS, setting).then(() => {
                     this.settingProvider.setting = setting;
                     this.events.publish('callback', setting[this.roleInput.keySettingStorage]);
-                    this.navCtrl.pop();
                   })
                 }
               })
+              this.navCtrl.pop();
             }
           })
-          .catch((err: Error) => {
-            console.log(err);
-            this.util.closeLoading().then(() => {
-              this.util.showToast('Dữ liệu cập nhật thất bại. ERR:' + err.message);
-            })
-          })
+          .catch((err: Error) => {})
       }
     }
 

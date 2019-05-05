@@ -58,51 +58,42 @@
             <ion-card-title>Danh sách cám nhập thuộc chứng từ</ion-card-title>
           </ion-card-header>
           <ion-card-content class="card-content-custom">
-            <!-- <ion-list>
+            <ion-list>
               <span *ngFor="let item of details">
-                <ion-item *ngIf="pigs[item.objectId]">
+                <ion-item >
                   <ion-avatar item-start>
-                    <ion-icon name="app-pig-outline" font28></ion-icon>
+                    <ion-icon name="app-food" font28></ion-icon>
                   </ion-avatar>
                   <h2><b>{{item.food_name}}</b></h2>
                   <ion-row>
                     <ion-col>
                       <ion-row>
-                        <ion-col col-lg-3 col-md-6 col-sm-12>
+                        <!-- <ion-col col-lg-3 col-md-6 col-sm-12>
                           <p text-wrap><b>Mã heo:</b>{{pigs[item.objectId].pigCode}}</p>
+                        </ion-col> -->
+                        <ion-col col-lg-3 col-md-6 col-sm-12>
+                          <p text-wrap><b>Mã cám:</b>{{item.food.id}}</p>
                         </ion-col>
                         <ion-col col-lg-3 col-md-6 col-sm-12>
-                          <p text-wrap><b>Giống:</b>{{pigs[item.objectId].breedId}}</p>
+                          <p text-wrap><b>Tên cám:</b>{{item.food.name}}</p>
                         </ion-col>
                         <ion-col col-lg-3 col-md-6 col-sm-12>
-                          <p text-wrap><b>Giới tính:</b>{{pigs[item.objectId].gender}}</p>
+                          <p text-wrap><b>Loại cám:</b>{{item.food.type.name}}</p>
                         </ion-col>
                         <ion-col col-lg-3 col-md-6 col-sm-12>
-                          <p text-wrap><b>Ngày sinh:</b>{{pigs[item.objectId].birthday|date:'dd/MM/yyyy'}}</p>
+                          <p text-wrap><b>Nhà sản xuất:</b>{{item.manufacturer}}</p>
                         </ion-col>
                         <ion-col col-lg-3 col-md-6 col-sm-12>
-                          <p text-wrap><b>Nhà:</b>{{house[pigs[item.objectId].houseId].name}}</p>
+                          <p text-wrap><b>Số lượng:</b>{{item.quantity}}</p>
+                        </ion-col>
+                        <!-- <ion-col col-lg-3 col-md-6 col-sm-12 >
+                          <p text-wrap><b>Tổng:</b></p>
+                        </ion-col> -->
+                        <ion-col col-lg-3 col-md-6 col-sm-12>
+                          <p text-wrap><b>Ngày sản xuất:</b>{{item.mfgDate}}</p>
                         </ion-col>
                         <ion-col col-lg-3 col-md-6 col-sm-12>
-                          <p text-wrap><b>Khu:</b>{{house[pigs[item.objectId].houseId].section.name}}</p>
-                        </ion-col>
-                        <ion-col col-lg-3 col-md-6 col-sm-12 >
-                          <p text-wrap><b>BPSD:</b>{{gentials[pigs[item.objectId].gentialTypeId].name}}</p>
-                        </ion-col>
-                        <ion-col col-lg-3 col-md-6 col-sm-12>
-                          <p text-wrap><b>Chân:</b>{{foots[pigs[item.objectId].footTypeId].name}}</p>
-                        </ion-col>
-                        <ion-col col-lg-3 col-md-6 col-sm-12>
-                          <p text-wrap><b>Điểm TT:</b>{{pigs[item.objectId].healthPoint}}</p>
-                        </ion-col>
-                        <ion-col col-lg-3 col-md-6 col-sm-12>
-                          <p text-wrap><b>Sức khỏe:</b>{{healStatus[pigs[item.objectId].healthStatusId].name}}</p>
-                        </ion-col>
-                        <ion-col col-lg-3 col-md-6 col-sm-12>
-                          <p text-wrap><b>TL từ NCC:</b>{{pigs[item.objectId].originWeight}}</p>
-                        </ion-col>
-                        <ion-col col-lg-3 col-md-6 col-sm-12>
-                          <p text-wrap><b>TL tại trại:</b>{{pigs[item.objectId].receiveWeight}}</p>
+                          <p text-wrap><b>Hạn sử dụng:</b>{{item.expiryDate}}</p>
                         </ion-col>
                       </ion-row>
                     </ion-col>
@@ -112,7 +103,7 @@
                   </ion-row>
                 </ion-item>
               </span>
-            </ion-list> -->
+            </ion-list>
           </ion-card-content>
         </ion-card>
       </ion-col>

@@ -73,8 +73,7 @@ export class InvoiceInputUtilComponent {
               this.navCtrl.pop();
             }
           })
-          .catch((err: Error) => {
-          })
+          .catch((err: Error) => {})
       }
 
       if(this.navParams.data.editMode){
