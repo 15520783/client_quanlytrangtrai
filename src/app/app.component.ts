@@ -127,7 +127,7 @@ export class MyApp {
         if (res.success) {
           this.farmProvider.sync();
           this.pigProvider.sync();
-          this.pigGroupProvider.sync();
+          // this.pigGroupProvider.sync();
           this.employeeProvider.sync();
           this.partnerProvider.sync();
           this.sectionProvider.sync();
@@ -159,7 +159,7 @@ export class MyApp {
     if (
       this.farmProvider.updated_flag &&
       this.pigProvider.updated_flag &&
-      this.pigGroupProvider.updated_flag &&
+      // this.pigGroupProvider.updated_flag &&
       this.employeeProvider.updated_flag &&
       this.sectionProvider.updated_flag &&
       this.houseProvider.updated_flag &&

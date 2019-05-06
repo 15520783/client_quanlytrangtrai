@@ -74,7 +74,7 @@ export class SettingsProvider {
         }
       })
       .catch((err) => {
-        this.util.showToast('Danh sách kho chưa được cập nhật. Vui lòng kiểm tra kết nối.');
+        this.util.showToast('Danh sách thiết lập chưa được cập nhật. Vui lòng kiểm tra kết nối.');
         console.log('err_setting_provider', err);
         this.util.getKey(KEY.SETTINGS)
           .then((data: setting) => {

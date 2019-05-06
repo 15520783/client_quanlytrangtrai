@@ -469,4 +469,13 @@ export class DeployDataProvider {
     })
   }
 
+  /**
+   * Lấy danh dách heo thuộc chuồng heo
+   * @param houseId 
+   */
+  get_pigs_of_house(houseId: string) {
+    return this.pigsProvider.pigs.filter((pig) => {
+      return pig.houseId == houseId ? true : false;
+    })
+  }
 }
