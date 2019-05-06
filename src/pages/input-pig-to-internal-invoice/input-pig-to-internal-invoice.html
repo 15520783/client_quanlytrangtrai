@@ -23,7 +23,7 @@
         [attr.col-12]="!platform.is('core')?'':null">
           <input-select-target 
             (valueChange)="changePig($event)"
-            [(validControl)]="credentialsForm.controls.pigCode"
+            [(validControl)]="credentialsForm.controls.id"
             [errorMessage_Required]="'Heo.'" 
             [active]="submitAttempt"
             [placeholder]="'Chọn heo'" 

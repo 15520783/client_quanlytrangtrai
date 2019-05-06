@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CONFIG, API } from '../../common/const';
-import { invoicesPig, invoicesProduct, invoicePigDetail, foodWareHouse, medicineWarehouse } from '../../common/entity';
+import { CONFIG, API, KEY } from '../../common/const';
+import { invoicesPig, invoicesProduct, invoicePigDetail, foodWareHouse, medicineWarehouse, pig } from '../../common/entity';
 import { Events } from 'ionic-angular';
+import { Utils } from '../../common/utils';
 
 
 export class invoices {
@@ -15,7 +16,8 @@ export class InvoicesProvider {
 
   constructor(
     public http: HttpClient,
-    public events: Events
+    public events: Events,
+    public util: Utils
   ) {
   }
 
@@ -132,12 +134,30 @@ export class InvoicesProvider {
    * Tạo mới chi tiết của chứng từ heo
    * @param objBody 
    */
-  createPigInvoiceDetail(objBody: invoicePigDetail) {
+  // createPigInvoiceDetail(objBody: invoicePigDetail) {
+  //   return this.http
+  //     .post(API.CREATE_PIG_INVOICE_DETAIL, objBody)
+  //     .timeout(CONFIG.DEFAULT_TIMEOUT)
+  //     .toPromise();
+  // }
+  createPigInvoiceDetail(objBody:{pigs:any,invoicesPig:invoicesPig}){
     return this.http
-      .post(API.CREATE_PIG_INVOICE_DETAIL, objBody)
-      .timeout(CONFIG.DEFAULT_TIMEOUT)
-      .toPromise();
+    .post<{invoicePigDetail:invoicePigDetail,pigs:pig}>(API.CREATE_PIG_INVOICE_DETAIL,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise()
+    .then((response)=>{
+      if(response && response.pigs && response.invoicePigDetail){
+        this.util.getKey(KEY.PIGS).then((pigs: Array<pig>) => {
+          pigs.push(response.pigs);
+          this.util.setKey(KEY.PIGS, pigs);
+        })
+      }
+      return response;
+    })
   }
+
+
+
 
   /**
    * Tạo mới một chi tiết cho chứng từ cám

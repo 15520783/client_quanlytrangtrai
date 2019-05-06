@@ -357,6 +357,16 @@ export class DeployDataProvider {
   }
 
   /**
+   * Lấy thông tin trạng thái của heo
+   * @param statusId 
+   */
+  get_status_by_id(statusId) {
+    return this.settingProvider.setting.status.filter((status) => {
+      return status.id == statusId ? true : false;
+    })[0];
+  }
+
+  /**
    * Lấy thông tin nhà kho thông qua id
    * @param warehouseId 
    */
@@ -435,6 +445,7 @@ export class DeployDataProvider {
     pig['pregnancyStatus'] = this.get_pregnancystatus_by_id(pig.pregnancyStatusId);
     pig['priceCode'] = this.get_pricecode_by_id(pig.priceCodeId);
     pig['gentialType'] = this.get_gentialtype_by_id(pig.gentialTypeId);
+    pig['status'] = this.get_status_by_id(pig.status_id);
     let father = this.get_pig_by_id(pig.originFather);
     let mother = this.get_pig_by_id(pig.originMother);
     pig.originFather = father ? father.pigCode : '';

@@ -22,8 +22,8 @@ const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".
 
 const CONFIG = {
     // SERVER_API: 'http://192.168.0.36:3000',
-    SERVER_API: 'https://quanlytrangtrai-uit.herokuapp.com',
-    // SERVER_API: 'http://192.168.1.45:8080',
+    // SERVER_API: 'https://quanlytrangtrai-uit.herokuapp.com',
+    SERVER_API: 'http://192.168.1.45:8080',
     DEFAULT_TIMEOUT: 30000,
     LANGUAGE_DEFAULT: 'vi',
     ACCESS_KEY: ''
@@ -157,7 +157,8 @@ const API = {
     DELETE_PRODUCT_INVOICE: '/api/invoicesproduct/',
     // CREATE_PIG_INVOICE:'/api/invoicepigdetail/pigsinvoicepigdetail/',
 
-    CREATE_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/',
+    // CREATE_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/',
+    CREATE_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/pigsinvoicepigdetail/',
     DELETE_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/',
 
 

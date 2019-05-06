@@ -7,8 +7,7 @@ import { KEY } from '../../common/const';
 import { SectionInfomationPage } from '../section-infomation/section-infomation';
 import { HouseInfomationPage } from '../house-infomation/house-infomation';
 import { HouseInputPage } from '../house-input/house-input';
-import { FarmsProvider } from '../../providers/farms/farms';
-import { HousesProvider } from '../../providers/houses/houses';
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 
 @IonicPage()
 @Component({
@@ -21,8 +20,8 @@ export class SectionsPage {
 
   public houses: Array<house> = [];
   
-  public farm_init:number;
-  public farms_select: any = [];
+  public farms:any = [];
+  public farmSelected:any;
 
   constructor(
     public navCtrl: NavController,
@@ -30,24 +29,17 @@ export class SectionsPage {
     public sectionProvider: SectionsProvider,
     public loadingCtrl: LoadingController,
     public modalCtrl: ModalController,
+    public deployData: DeployDataProvider,
     public util : Utils,
-    public farmProvider : FarmsProvider,
-    public houseProvider: HousesProvider
   ) {
     this.init();
   }
 
   init(){
-    this.sections = this.sectionProvider.getSectionByIdFarm(this.navParams.data.farm.id);
+    this.farms = this.deployData.get_farm_list_for_select();
+    this.sections = this.deployData.get_sections_of_farm(this.farms[0].value);
     this.sections.forEach((section:any)=>{
-      section.houses = this.houseProvider.getHouseByIdSection(section.id);
-    })
-    
-    this.farmProvider.farms.forEach((e:farm)=>{
-      this.farms_select.push({
-        name:e.name,
-        value:e.id
-      })
+      section.houses = this.deployData.get_houses_of_section(section.id);
     })
   }
 
@@ -60,13 +52,13 @@ export class SectionsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SectionsPage');
-    this.farm_init = this.navParams.data.farm.id;
+    this.farmSelected = this.farms[0].id;
   }
 
   changeFarm(res){
-    this.sections = this.sectionProvider.getSectionByIdFarm(res.valueId);
+    this.sections = this.deployData.get_sections_of_farm(res.valueId);
     this.sections.forEach((section:any)=>{
-      section.houses = this.houseProvider.getHouseByIdSection(section.id);
+      section.houses = this.deployData.get_houses_of_section(section.id);
     })
   }
 

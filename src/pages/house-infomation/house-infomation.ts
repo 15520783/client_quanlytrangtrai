@@ -22,7 +22,7 @@ export class HouseInfomationPage {
 
   public house: house = new house();
   public pigs: Array<pig> = [];
-
+  public tab = "0";
 
   constructor(
     public navCtrl: NavController,
@@ -38,9 +38,6 @@ export class HouseInfomationPage {
     public renderer: Renderer
   ) {
     this.house = this.navParams.data.house;
-    // this.house['managerEmployee'] = this.employeeProvider.employees.filter((emp)=>{
-    //   return emp.id  == this.house.manager? true:false;
-    // })[0];
     this.pigs = this.deployData.get_pigs_of_house(this.navParams.data.house.id);
     this.house.founding = this.util.convertDate(this.house.founding);
   }
@@ -53,6 +50,13 @@ export class HouseInfomationPage {
     this.renderer.setElementStyle(element[0], 'overflow', 'hidden');
   }
 
+  slideChange() {
+    this.tab = this.slider.realIndex.toString();
+  }
+
+  selectedTab(index) {
+    this.slider.slideTo(index);
+  }
 
   ionViewDidLoad() {
 

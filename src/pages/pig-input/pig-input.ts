@@ -61,8 +61,8 @@ export class PigInputPage {
       longBack: [this.pig.longBack, Validators.compose([Validators.required])],
       longBody: [this.pig.longBody, Validators.compose([Validators.required])],
       pregnancyStatusId:[this.pig.pregnancyStatusId, Validators.compose([Validators.required])],
-      priceCodeId: [this.pig.priceCodeId, Validators.compose([Validators.required])]
-
+      priceCodeId: [this.pig.priceCodeId, Validators.compose([Validators.required])],
+      status:this.pig.status_id
 
       // born_weight: [this.pig.born_weight, Validators.compose([Validators.required])],
       // born_status:[this.pig.born_status,Validators.compose([Validators.required])],

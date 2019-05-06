@@ -33,13 +33,13 @@ export class InputPigToInternalInvoicePage {
   ) {
     this.init();
     this.credentialsForm = this.formBuilder.group({
-      pigCode: ['', Validators.compose([Validators.required])],
+      id: ['', Validators.compose([Validators.required])],
       // id: this.pig.id,
       farmId: '',
       sectionId: '',
       houseId: [this.pig.houseId, Validators.compose([Validators.required])],
       originWeight: [this.pig.originWeight, Validators.compose([Validators.required])],
-      status: [this.pig.status, Validators.compose([Validators.required])],
+      status: [this.pig.status_id, Validators.compose([Validators.required])],
       healthStatusId: [this.pig.healthStatusId, Validators.compose([Validators.required])],
       description: [this.pig.description, Validators.compose([Validators.maxLength(1000)])],
       healthPoint: [this.pig.healthPoint, Validators.compose([Validators.required])],
@@ -74,12 +74,10 @@ export class InputPigToInternalInvoicePage {
 
   onSubmit() {
     this.submitAttempt = true;
-    console.log(this.credentialsForm);
     if (this.credentialsForm.valid) {
       Object.keys(this.credentialsForm.value).forEach((attr) => {
         this.pig[attr] = this.credentialsForm.value[attr];
       });
-
       this.events.publish('updatePig', this.pig);
       this.events.subscribe('OK', () => {
         this.viewCtrl.dismiss();
@@ -193,13 +191,12 @@ export class InputPigToInternalInvoicePage {
     this.sections = this.deployData.get_section_list_for_select();
     this.houses = this.deployData.get_house_list_for_select();
 
-    let pig: any = this.deployData.get_pig_by_id(e.id);
-    let house: any = this.deployData.get_house_by_id(pig.houseId);
-    pig.farmId = house.section.farm.id;
-    pig.sectionId = house.section.id;
-    console.log(pig);
+    this.pig = this.deployData.get_pig_by_id(e.id);
+    let house: any = this.deployData.get_house_by_id(this.pig.houseId);
+    this.pig['farmId'] = house.section.farm.id;
+    this.pig['sectionId'] = house.section.id;
     Object.keys(this.credentialsForm.value).forEach((attr) => {
-      this.credentialsForm.controls[attr].setValue(pig[attr]);        
+      this.credentialsForm.controls[attr].setValue(this.pig[attr]);
     });
   }
 }

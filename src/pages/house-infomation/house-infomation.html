@@ -1,24 +1,14 @@
 <ion-header>
   <ion-navbar no-padding>
     <ion-toolbar no-border>
-      <!-- <ion-buttons left>
-        <button navPop ion-button icon-only>
-          <ion-icon name="arrow-back"></ion-icon>
-        </button>
-      </ion-buttons> -->
       <ion-title>Thông tin nhà</ion-title>
     </ion-toolbar>
   </ion-navbar>
-  <ion-toolbar showWhen="core" class="pl-10">
-    <button color="secondary" ion-button mode='ios'>
-      Nhập heo
-    </button>
-    <button color="secondary" ion-button mode='ios'>
-      Lên giống heo nái
-    </button>
-    <button color="secondary" ion-button mode='ios'>
-      Chuyển heo và xuất bán
-    </button>
+  <ion-toolbar showWhen='ios,android'>
+    <ion-segment [(ngModel)]="tab" scrollable >
+      <ion-segment-button value="0" (tap)="selectedTab(0)">Thông tin chuồng</ion-segment-button>
+      <ion-segment-button value="1" (tap)="selectedTab(1)">Danh sách heo</ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
@@ -72,8 +62,8 @@
 </ion-content>
 
 <ion-content no-padding *ngIf="!platform.is('core')" #content  class="mobile">
-  <ion-item-divider sticky="true">{{title[slider.realIndex]}}</ion-item-divider>
-  <ion-slides scrollbar="true" #slider >
+  <!-- <ion-item-divider sticky="true">{{title[slider.realIndex]}}</ion-item-divider> -->
+  <ion-slides  #slider  (ionSlideDidChange)="slideChange()">
     <ion-slide>
       <ion-list no-padding lines>
         <ion-item>
@@ -115,27 +105,3 @@
     </ion-fab-list>
   </ion-fab>
 </ion-content>
-
-<!-- <ion-footer no-padding no-border showWhen="ios,android">
-
-  <ion-row>
-    <ion-col>
-      <button mode='ios' ion-button block small text-wrap color='main'>
-        <ion-icon name="app-action"></ion-icon>
-      </button>
-      <p text-wrap class="title-button">Nhập heo</p>
-    </ion-col>
-    <ion-col>
-      <button mode='ios' ion-button block small text-wrap color='main'>
-        <ion-icon name="app-action"></ion-icon>
-      </button>
-      <p text-wrap class="title-button">Lên giống heo nái</p>
-    </ion-col>
-    <ion-col>
-      <button mode='ios' ion-button block small text-wrap color='main'>
-        <ion-icon name="app-action"></ion-icon>
-      </button>
-      <p text-wrap class="title-button">Chuyển heo</p>
-    </ion-col>
-  </ion-row>
-</ion-footer> -->

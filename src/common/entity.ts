@@ -63,7 +63,7 @@ class pig extends base {
 	pigCode: string = '';
 	farm_id: string = '';
 	houseId: string = '';
-	roundId: string = '0';
+	roundId: string = '';
 	breedId: string = '';
 	gender: number = null;
 	birthday: any = '';
@@ -81,21 +81,22 @@ class pig extends base {
 	gentialTypeId: string = '';
 	// gentialTypeId: number = null;
 	description: string = '';
-	fcr: number = null;
-	adg: number = null;
-	bf: number = null;
-	filet: number = null;
-	longBack: number = null;
-	longBody: number = null;
-	index: number = null;
-	parities: number = null;
+	fcr: number = 0;
+	adg: number = 0;
+	bf: number = 0;
+	filet: number = 0;
+	longBack: number = 0;
+	longBody: number = 0;
+	index: number = 0;
+	parities: number = 0;
 	images: string = '';
 	healthStatusId: number = null;
 	breedingType: string = '0';
 	breedStatus: string = '0';
 	pregnancyStatusId: string = '0';
 	point_review: string = '0';
-	status: string = '0';
+	status = new status();
+	status_id:string = '0';
 	priceCodeId: string = '0';
 	overviewStatus: string = '0';
 
@@ -430,6 +431,7 @@ class invoicesPig extends base {
 	totalPrice: number = null;
 	importDate: any = '';
 	exportDate: any = '';
+	status:string = '';
 	description: string = '';
 }
 

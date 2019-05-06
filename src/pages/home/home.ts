@@ -43,52 +43,53 @@ export class HomePage {
     this.pages = [
       { title: 'Trang trại', component: FarmsPage, icon: 'app-farm', active: true },
       {
-        title: 'Khu', component: SectionsPage, icon: 'app-sections', active: false, init: true,
-        initProcess(util: Utils, nav: Nav, pages: any, component, farms: Array<farm>) {
-          let data = [];
-          farms.forEach((e: farm) => {
-            if (e) {
-              data.push({
-                name: e.name,
-                type: 'radio',
-                label: e.name,
-                value: e,
-              })
-            }
-          });
-          data[0].check = true;
+        title: 'Khu', component: SectionsPage, icon: 'app-sections', active: false, 
+        // init: true,
+        // initProcess(util: Utils, nav: Nav, pages: any, component, farms: Array<farm>) {
+        //   let data = [];
+        //   farms.forEach((e: farm) => {
+        //     if (e) {
+        //       data.push({
+        //         name: e.name,
+        //         type: 'radio',
+        //         label: e.name,
+        //         value: e,
+        //       })
+        //     }
+        //   });
+        //   data[0].check = true;
 
-          let options = {
-            multiple: false,
-            cssClass: 'ion-alert',
-            title: 'Chọn trang trại',
-            inputs: data,
-            buttons: [
-              {
-                text: 'Đóng',
-                role: 'cancel',
-                cssClass: 'secondary',
-                handler: () => {
-                  console.log('Confirm Cancel');
-                }
-              }, {
-                text: 'Chọn',
-                handler: (data) => {
-                  pages.forEach((element: any) => {
-                    element.active = false;
-                  });
-                  this.active = true;
-                  nav.setRoot(component,{farm:data});
-                }
-              }
-            ]
-          }
+        //   let options = {
+        //     multiple: false,
+        //     cssClass: 'ion-alert',
+        //     title: 'Chọn trang trại',
+        //     inputs: data,
+        //     buttons: [
+        //       {
+        //         text: 'Đóng',
+        //         role: 'cancel',
+        //         cssClass: 'secondary',
+        //         handler: () => {
+        //           console.log('Confirm Cancel');
+        //         }
+        //       }, {
+        //         text: 'Chọn',
+        //         handler: (data) => {
+        //           pages.forEach((element: any) => {
+        //             element.active = false;
+        //           });
+        //           this.active = true;
+        //           nav.setRoot(component,{farm:data});
+        //         }
+        //       }
+        //     ]
+        //   }
 
-          return util.showAlert(options);
-        }
+        //   return util.showAlert(options);
+        // }
       },
       { title: 'Heo', component: PigsPage, icon: 'app-pig-outline', active: false },
-      { title: 'Nhóm heo', component: PigGroupsPage, icon: 'app-pig-foot', active: false },
+      // { title: 'Nhóm heo', component: PigGroupsPage, icon: 'app-pig-foot', active: false },
       { title: 'Nhân viên', component: EmployeePage, icon: 'app-employees', active: false },
       { title: 'Kho', component: WarehousesPage, icon: 'app-warehouse', active: false },
       { title: 'Đối tác', component: PartnersPage, icon: 'app-partner', active: false },

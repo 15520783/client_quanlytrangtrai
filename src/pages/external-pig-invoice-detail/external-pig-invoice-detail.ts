@@ -89,26 +89,20 @@ export class ExternalPigInvoiceDetailPage {
     this.navCtrl.push(PigInputPage);
     this.events.unsubscribe('createPig');
     this.events.subscribe('createPig', (pig: pig) => {
-      pig = this.deployData.get_pig_object_to_send_request(pig);
-      this.pigProvider.createPig(pig)
-        .then((data) => {
-          if (data) {
-            this.pigs[data.id] = data;
-            let invoiceDetail = new invoicePigDetail();
-            invoiceDetail.objectId = data.id;
-            invoiceDetail.invoice = this.invoice;
-            this.invoiceProvider.createPigInvoiceDetail(invoiceDetail)
-              .then((invoiceDetail: invoicePigDetail) => {
-                if (invoiceDetail) {
-                  this.details.push(invoiceDetail);
-                  this.events.unsubscribe('createPig');
-                  this.events.publish('OK');
-                }
-              })
+      this.invoiceProvider.createPigInvoiceDetail({
+        pigs: this.deployData.get_pig_object_to_send_request(pig),
+        invoicesPig: this.invoice
+      })
+        .then((response) => {
+          if (response && response.pigs && response.invoicePigDetail) {
+            this.pigs[response.pigs.id] = response.pigs;
+            this.pigProvider.pigs.push(response.pigs);
+            this.details.push(response.invoicePigDetail);
+            this.events.unsubscribe('createPig');
+            this.events.publish('OK');
           }
         })
-        .catch((err: Error) => {
-        })
+        .catch((err: Error) => { })
     })
   }
 
