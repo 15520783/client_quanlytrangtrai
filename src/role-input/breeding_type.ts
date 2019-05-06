@@ -1,7 +1,10 @@
 import { InputObject, breedingType } from "../common/entity";
+import { SETTING_STORAGE_KEY } from "../common/const";
+import { SettingsProvider } from "../providers/settings/settings";
 
 export class BreedingTypesRole {
     public object = new breedingType();
+    public keySettingStorage = SETTING_STORAGE_KEY.BREEDING_TYPE;
     
     public headerTitle = {
         insertMode:'Nhập thông tin trạng thái lên giống',
@@ -49,7 +52,23 @@ export class BreedingTypesRole {
         }
     ];
 
-    constructor(){
+    constructor(public settingProvider:SettingsProvider){
 
+    }
+
+    insert() {
+        return this.settingProvider.createNewBreedingType(this.object)
+    }
+
+    delete(object){
+        return this.settingProvider.deleteBreedingType(object);
+    }
+
+    update(){
+        return this.settingProvider.updateBreedingType(this.object);
+    }
+
+    clear(){
+        this.object = new breedingType();
     }
 }

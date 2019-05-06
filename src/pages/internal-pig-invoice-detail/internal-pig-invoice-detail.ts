@@ -1,10 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, ViewController, Slides } from 'ionic-angular';
-import { invoicesPig, invoicePigDetail } from '../../common/entity';
+import { invoicesPig, invoicePigDetail, pig } from '../../common/entity';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { Utils } from '../../common/utils';
 import { PigsProvider } from '../../providers/pigs/pigs';
+import { InputPigToInternalInvoicePage } from '../input-pig-to-internal-invoice/input-pig-to-internal-invoice';
 
 @IonicPage()
 @Component({
@@ -81,41 +82,31 @@ export class InternalPigInvoiceDetailPage {
 
 
   input_pig() {
-    // this.navCtrl.push(PigInputPage);
-
-    // this.events.subscribe('createPig', (pig: pig) => {
-    //   pig = this.deployData.get_pig_object_to_send_request(pig);
-    //   this.util.showLoading('Đang xử lí dữ liệu')
-    //   this.pigProvider.createPig(pig)
-    //     .then((data) => {
-    //       if (data) {
-    //         this.pigProvider.pigs.push(data);
-    //         this.pigs[data.id] = data;
-    //         this.util.setKey(KEY.PIGS, this.pigProvider.pigs).then(() => {
-    //           let invoiceDetail = new invoicePigDetail();
-    //           invoiceDetail.objectId = data.id;
-    //           invoiceDetail.invoice = this.invoice;
-    //           this.invoiceProvider.createPigInvoiceDetail(invoiceDetail)
-    //             .then((invoiceDetail: invoicePigDetail) => {
-    //               if (invoiceDetail) {
-    //                 this.util.closeLoading().then(() => {
-    //                   this.details.push(invoiceDetail);
-    //                   this.util.showToastSuccess('Dữ liệu cập nhật thành công');
-    //                   this.events.unsubscribe('createPig');
-    //                   this.events.publish('OK');
-    //                 })
-    //               }
-    //             })
-    //         });
-    //       }
-    //     })
-    //     .catch((err: Error) => {
-    //       console.log(err);
-    //       this.util.closeLoading().then(() => {
-    //         this.util.showToast('Cập nhật thất bại.ERROR: ' + err.message);
-    //       })
-    //     })
-    // })
+    this.navCtrl.push(InputPigToInternalInvoicePage);
+    this.events.unsubscribe('updatePig');
+    this.events.subscribe('updatePig', (pig: pig) => {
+      pig = this.deployData.get_pig_object_to_send_request(pig);
+      this.pigProvider.updatePig(pig)
+        .then((data) => {
+          if (data) {
+            console.log(data);
+            // this.pigs[data.id] = data;
+            // let invoiceDetail = new invoicePigDetail();
+            // invoiceDetail.objectId = data.id;
+            // invoiceDetail.invoice = this.invoice;
+            // this.invoiceProvider.createPigInvoiceDetail(invoiceDetail)
+            //   .then((invoiceDetail: invoicePigDetail) => {
+            //     if (invoiceDetail) {
+            //       this.details.push(invoiceDetail);
+            //       this.events.unsubscribe('updatePig');
+            //       this.events.publish('OK');
+            //     }
+            //   })
+          }
+        })
+        .catch((err: Error) => {
+        })
+    })
   }
 
   removePigInvoicesDetail(invoiceDetail: invoicePigDetail) {

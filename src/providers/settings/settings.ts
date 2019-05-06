@@ -116,6 +116,7 @@ export class SettingsProvider {
     .toPromise();
   }
 
+
   createNewBreed(objBody:breeds){
     return this.http
     .post(API.CREATE_BREED,objBody)
@@ -135,6 +136,30 @@ export class SettingsProvider {
 
   updateBreed(objBody:breeds){
     return this.http.put(API.UPDATE_BREED,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+
+  createNewBreedingType(objBody:breedingType){
+    return this.http
+    .post(API.CREATE_BREEDING_TYPE,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  deleteBreedingType(objBody:breedingType){
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http.delete(API.CREATE_BREEDING_TYPE,options)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  updateBreedingType(objBody:breedingType){
+    return this.http.put(API.CREATE_BREEDING_TYPE,objBody)
     .timeout(CONFIG.DEFAULT_TIMEOUT)
     .toPromise();
   }

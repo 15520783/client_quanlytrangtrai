@@ -14,7 +14,8 @@ const KEY = {
 
 const SETTING_STORAGE_KEY = {
     PREGNANCY_STATUS: 'pregnancyStatus',
-    BREEDS:'breeds'
+    BREEDS: 'breeds',
+    BREEDING_TYPE: 'breedingType'
 }
 
 const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -34,9 +35,9 @@ const VARIABLE = {
         { value: '2', name: 'Nái' },
         { value: '3', name: 'Đực hiến' }
     ],
-    INVOICE_PRODUCT_TYPE:{
-        FOOD:'food',
-        MEDICINE:'medicine'
+    INVOICE_PRODUCT_TYPE: {
+        FOOD: 'food',
+        MEDICINE: 'medicine'
     }
 
     ,
@@ -80,36 +81,36 @@ const VARIABLE = {
         {
             id: 5,
             name: "Khu đẻ",
-            function:{
+            function: {
                 inputPig: "Nhập heo",
                 bornFollow: "Phối giống",
                 weaning: "Cai sữa heo nái",
                 transfer: "Chuyển(xuất) heo"
             }
         },
-        { 
-            id: 6, 
-            name: "Khu cai sữa" ,
-            function:{
+        {
+            id: 6,
+            name: "Khu cai sữa",
+            function: {
                 inputPig: "Nhập heo",
                 transfer: "Chuyển(xuất) heo"
             }
         },
-        { 
-            id: 7, 
-            name: "Khu hậu bị" ,
-            function:{
+        {
+            id: 7,
+            name: "Khu hậu bị",
+            function: {
                 inputPig: "Nhập heo",
                 reviewOfftest: "Đánh giá Offtest heo con",
                 transfer: "Chuyển(xuất) heo"
             }
         },
-        { 
-            id: 8, 
-            name: "Khu chờ bán" ,
-            function:{
-                prepareToSale:"Lên danh sách chờ bán",
-                exportSale:"Xuất bán heo"
+        {
+            id: 8,
+            name: "Khu chờ bán",
+            function: {
+                prepareToSale: "Lên danh sách chờ bán",
+                exportSale: "Xuất bán heo"
             }
         },
     ]
@@ -139,27 +140,33 @@ const API = {
     DELETE_PREGNANCY_STATUS: '/api/pregnancystatus/',
     UPDATE_PREGNANCY_STATUS: '/api/pregnancystatus/',
 
-    CREATE_BREED:'/api/breeds/',
-    UPDATE_BREED:'/api/breeds/',
-    DELETE_BREED:'/api/breeds/',
+    CREATE_BREED: '/api/breeds/',
+    UPDATE_BREED: '/api/breeds/',
+    DELETE_BREED: '/api/breeds/',
 
-    CREATE_PIG_INVOICE:'/api/invoicespig/',
-    UPDATE_PIG_INVOICE:'/api/invoicespig/',
-    DELETE_PIG_INVOICE:'/api/invoicespig/',
-    
-    CREATE_PRODUCT_INVOICE:'/api/invoicesproduct/',
-    DELETE_PRODUCT_INVOICE:'/api/invoicesproduct/',
+    CREATE_BREEDING_TYPE: '/api/breedingtype/',
+    UPDATE_BREEDING_TYPE: '/api/breedingtype/',
+    DELETE_BREEDING_TYPE: '/api/breedingtype/',
+
+
+    CREATE_PIG_INVOICE: '/api/invoicespig/',
+    UPDATE_PIG_INVOICE: '/api/invoicespig/',
+    DELETE_PIG_INVOICE: '/api/invoicespig/',
+
+    CREATE_PRODUCT_INVOICE: '/api/invoicesproduct/',
+    DELETE_PRODUCT_INVOICE: '/api/invoicesproduct/',
     // CREATE_PIG_INVOICE:'/api/invoicepigdetail/pigsinvoicepigdetail/',
 
-    CREATE_PIG_INVOICE_DETAIL:'/api/invoicepigdetail/',
-    DELETE_PIG_INVOICE_DETAIL:'/api/invoicepigdetail/',
-    
+    CREATE_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/',
+    DELETE_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/',
 
-    CREATE_FOOD_WAREHOUSE:'/api/foodwarehouse/',
+
+    CREATE_FOOD_WAREHOUSE: '/api/foodwarehouse/',
     CREATE_MEDICINE_WAREHOUSE: '/api/medicinewarehouse/',
 
-    CREATE_PIG:'/api/pigs/',
-    DELETE_PIG:'/api/pigs/'
+    CREATE_PIG: '/api/pigs/',
+    UPDATE_PIG: '/api/pigs/',
+    DELETE_PIG: '/api/pigs/'
 
 }
 

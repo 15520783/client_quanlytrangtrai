@@ -42,6 +42,7 @@ import { FoodInvoiceDetailPage } from '../pages/food-invoice-detail/food-invoice
 import { MedicineInvoiceDetailPage } from '../pages/medicine-invoice-detail/medicine-invoice-detail';
 import { MedicineWarehouseInputPage } from '../pages/medicine-warehouse-input/medicine-warehouse-input';
 import { InternalPigInvoiceDetailPage } from '../pages/internal-pig-invoice-detail/internal-pig-invoice-detail';
+import { InputPigToInternalInvoicePage } from '../pages/input-pig-to-internal-invoice/input-pig-to-internal-invoice';
 
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
@@ -128,7 +129,8 @@ const Pages = [
   FoodWarehouseInputPage,
   FoodInvoiceDetailPage,
   MedicineInvoiceDetailPage,
-  MedicineWarehouseInputPage
+  MedicineWarehouseInputPage,
+  InputPigToInternalInvoicePage
 ]
 
 const Components = [

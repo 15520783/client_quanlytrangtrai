@@ -19,8 +19,8 @@ export class SettingsPage {
 
   public list_settings: any;
   public list_keys: any = [];
-  public foods_temp:any = [];
-  public medicines_temp:any = [];
+  public foods_temp: any = [];
+  public medicines_temp: any = [];
 
   constructor(
     public navCtrl: NavController,
@@ -31,12 +31,12 @@ export class SettingsPage {
     public settingProvider: SettingsProvider,
     public platform: Platform
   ) {
-    this.settingProvider.setting.foods.forEach((food,idx)=>{
+    this.settingProvider.setting.foods.forEach((food, idx) => {
       this.foods_temp.push(food);
       this.foods_temp[idx].typeName = food.type.name;
     })
 
-    this.settingProvider.setting.medicines.forEach((medicine,idx)=>{
+    this.settingProvider.setting.medicines.forEach((medicine, idx) => {
       this.medicines_temp.push(medicine);
       this.medicines_temp[idx].typeName = medicine.type.name;
     })
@@ -51,12 +51,12 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.pregnancyStatus,
-        roleInput:new PregnancyStatusRole(this.settingProvider),        
+        roleInput: new PregnancyStatusRole(this.settingProvider),
       },
       breeds: {
         title: 'Danh sách giống',
         placeholderSearch: 'Tìm kiếm giống',
-        filter_default: ["name","lineCode","symbol","code","level","line", "description"],
+        filter_default: ["name", "lineCode", "symbol", "code", "level", "line", "description"],
         attributes: [
           { name: "lineCode", label: 'Mã dòng' },
           { name: "symbol", label: 'Ký hiệu' },
@@ -67,7 +67,7 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.breeds,
-        roleInput:new BreedsRole(this.settingProvider),
+        roleInput: new BreedsRole(this.settingProvider),
       },
       breedingType: {
         title: 'Loại lên giống',
@@ -78,7 +78,7 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.breedingType,
-        roleInput:new BreedingTypesRole(),
+        roleInput: new BreedingTypesRole(this.settingProvider),
       },
       healthStatus: {
         title: 'Trạng thái sức khỏe',
@@ -93,7 +93,7 @@ export class SettingsPage {
       diseases: {
         title: 'Danh sách bệnh',
         placeholderSearch: 'Tìm kiếm bệnh',
-        filter_default: ["name","agent","symptom","diagnose","treatment","note", "description"],
+        filter_default: ["name", "agent", "symptom", "diagnose", "treatment", "note", "description"],
         attributes: [
           { name: "agent", label: 'Tác nhân' },
           { name: "symptom", label: 'Triệu chứng' },
@@ -104,7 +104,7 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.diseases,
-       
+
       },
       farmTypes: {
         title: 'Danh sách loại trang trại',
@@ -129,7 +129,7 @@ export class SettingsPage {
       foods: {
         title: 'Danh sách thức ăn cho heo',
         placeholderSearch: 'Tìm kiếm thức ăn',
-        filter_default: ["name","foodCode","typeName","useFor","guide", "description"],
+        filter_default: ["name", "foodCode", "typeName", "useFor", "guide", "description"],
         attributes: [
           { name: "foodCode", label: 'Mã thức ăn' },
           { name: "typeName", label: 'Loại thức ăn' },
@@ -153,7 +153,7 @@ export class SettingsPage {
       medicineUnits: {
         title: 'Danh sách đơn vị thuốc',
         placeholderSearch: 'Tìm kiếm đơn vị thuốc',
-        filter_default: ["name","quantity","description"],
+        filter_default: ["name", "quantity", "description"],
         attributes: [
           { name: "quantity", label: 'Số lượng' },
           { name: "description", label: 'Mô tả' },
@@ -164,7 +164,7 @@ export class SettingsPage {
       medicines: {
         title: 'Danh sách thuốc',
         placeholderSearch: 'Tìm kiếm thuốc',
-        filter_default: ["name","medicineCode","typeName","useFor","guide","description"],
+        filter_default: ["name", "medicineCode", "typeName", "useFor", "guide", "description"],
         attributes: [
           { name: "medicineCode", label: 'Mã thuốc' },
           { name: "typeName", label: 'Loại thuốc' },
@@ -174,7 +174,7 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.medicines_temp,
-      
+
       },
       priceCodes: {
         title: 'Danh sách mã sản phẩm',
@@ -209,7 +209,7 @@ export class SettingsPage {
       issues: {
         title: 'Danh sách lâm sàn',
         placeholderSearch: 'Tìm kiếm lâm sàn',
-        filter_default: ["name","symptom","lesions","description"],
+        filter_default: ["name", "symptom", "lesions", "description"],
         attributes: [
           { name: "agent", label: 'Tác nhân' },
           { name: "symptom", label: 'Triệu chứng' },
@@ -222,10 +222,10 @@ export class SettingsPage {
       status: {
         title: 'Danh sách trạng thái heo',
         placeholderSearch: 'Tìm kiếm trạng thái heo',
-        filter_default: ["name", "description","previousStatus"],
+        filter_default: ["name", "description", "previousStatus"],
         attributes: [
           { name: "description", label: 'Mô tả' },
-          { name: "previousStatus", label: 'Trạng thái trước'}
+          { name: "previousStatus", label: 'Trạng thái trước' }
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.status,
@@ -233,10 +233,10 @@ export class SettingsPage {
       rounds: {
         title: 'Danh sách lứa',
         placeholderSearch: 'Tìm kiếm lứa heo',
-        filter_default: ["name", "from","to"],
+        filter_default: ["name", "from", "to"],
         attributes: [
           { name: "from", label: 'Từ ngày' },
-          { name: "from", label: 'Đến ngày'}
+          { name: "from", label: 'Đến ngày' }
         ],
         data: this.settingProvider.setting.rounds,
       },
@@ -274,11 +274,11 @@ export class SettingsPage {
     item.create(this.navCtrl);
   }
 
-  edit(item,data){
-    item.edit(this.navCtrl,data);
+  edit(item, data) {
+    item.edit(this.navCtrl, data);
   }
 
-  openPage(item){
-    this.navCtrl.push(SettingUtilComponent,{options:item});
+  openPage(item) {
+    this.navCtrl.push(SettingUtilComponent, { options: item });
   }
 }

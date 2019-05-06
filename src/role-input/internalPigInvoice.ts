@@ -56,7 +56,7 @@ export class InternalPigInvoiceRole {
                 },
                 type: "input-select",
                 value: this.object.sourceId,
-                data: [{ name: "Chọn đơn vị nguồn", value: "" }]
+                data: this.deployData.get_farm_list_for_select()
             },
             {
                 name: 'invoiceNo',

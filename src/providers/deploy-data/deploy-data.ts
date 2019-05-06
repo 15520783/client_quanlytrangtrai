@@ -89,6 +89,20 @@ export class DeployDataProvider {
   }
 
   /**
+   *  Lấy danh sách nhà cho ion-select
+   */
+  get_house_list_for_select() {
+    let options_select = [];
+    this.houseProvider.houses.forEach(house => {
+      options_select.push({
+        name: house.name,
+        value: house.id
+      })
+    })
+    return options_select;
+  }
+
+  /**
    *  Lấy danh sach đối tác cho ion-select
    */
   get_partner_list_for_select() {

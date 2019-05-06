@@ -1,7 +1,7 @@
 import { Component, ViewChild, Input } from '@angular/core';
 import { InvoiceInputUtilComponent } from '../invoice-input-util/invoice-input-util';
 import { FilterProvider } from '../../providers/filter/filter';
-import { NavController, Events, Content, NavParams } from 'ionic-angular';
+import { NavController, Events, Content, NavParams, Platform } from 'ionic-angular';
 import { Utils } from '../../common/utils';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
@@ -44,6 +44,7 @@ export class MedicineInvoicesComponent {
   public farms_util;
 
   constructor(
+    public platform: Platform,
     public filterProvider: FilterProvider,
     public util: Utils,
     public navCtrl: NavController,

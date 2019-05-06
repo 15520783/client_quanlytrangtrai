@@ -30,23 +30,23 @@ export class InputSelectTargetComponent {
 
   @Output() valueChange = new EventEmitter();
 
-  ngAfterContentInit(){
-    if(this.validControl.value){
-      switch(this.targertCmp){
-        case "pigs":{
+  ngAfterContentInit() {
+    if (this.validControl.value) {
+      switch (this.targertCmp) {
+        case "pigs": {
           this.value = this.validControl.value;
           this.value_visible = this.pigProvider.getPigByID(this.validControl.value).pigCode;
           break;
         }
 
-        case "employee":{
+        case "employee": {
           this.value = this.validControl.value;
           this.value_visible = this.employeeProvider.getEmployeeByID(this.validControl.value).name;
           break;
         }
 
         default:
-        break;
+          break;
       }
     }
   }
@@ -125,4 +125,5 @@ export class InputSelectTargetComponent {
   scrollTo() {
     this.input.nativeElement.scrollIntoView({ behavior: 'smooth' });
   }
+
 }
