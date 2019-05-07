@@ -39,7 +39,7 @@ export class InputPigToInternalInvoicePage {
       sectionId: '',
       houseId: [this.pig.houseId, Validators.compose([Validators.required])],
       originWeight: [this.pig.originWeight, Validators.compose([Validators.required])],
-      status: [this.pig.status_id, Validators.compose([Validators.required])],
+      statusId: [this.pig.statusId, Validators.compose([Validators.required])],
       healthStatusId: [this.pig.healthStatusId, Validators.compose([Validators.required])],
       description: [this.pig.description, Validators.compose([Validators.maxLength(1000)])],
       healthPoint: [this.pig.healthPoint, Validators.compose([Validators.required])],

@@ -1,11 +1,19 @@
 page-home {
-    .scroll-content::-webkit-scrollbar{
-        display: none;// Safari and Chrome
+  .scroll-content::-webkit-scrollbar {
+    display: none; // Safari and Chrome
+  }
+  ion-content {
+    [active] {
+      color: #005bea !important;
+      background: linear-gradient(to right, $themeColor1) !important;
     }
-    ion-content {
-        [active]{
-            color:#005bea!important;
-            background:linear-gradient(to right,$themeColor1)!important;
-        }
-    }
+  }
+  
+  .ion-badge-notification {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    font-weight: bold;
+    font-size: 12px;
+  }
 }

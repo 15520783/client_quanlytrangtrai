@@ -18,7 +18,6 @@ export class ExternalPigInvoiceDetailPage {
   @ViewChild('slider') slider: Slides;
 
   public tab = "0";
-  public header: Array<string> = ["Thông tin chứng từ", "Danh sách heo thuộc chứng từ"];
 
   public invoice: invoicesPig;
   public details: Array<invoicePigDetail> = [];
@@ -87,8 +86,8 @@ export class ExternalPigInvoiceDetailPage {
 
   input_pig() {
     this.navCtrl.push(PigInputPage);
-    this.events.unsubscribe('createPig');
-    this.events.subscribe('createPig', (pig: pig) => {
+    this.events.unsubscribe('pig-inputs:createPig');
+    this.events.subscribe('pig-inputs:createPig', (pig: pig) => {
       this.invoiceProvider.createPigInvoiceDetail({
         pigs: this.deployData.get_pig_object_to_send_request(pig),
         invoicesPig: this.invoice
@@ -98,9 +97,38 @@ export class ExternalPigInvoiceDetailPage {
             this.pigs[response.pigs.id] = response.pigs;
             this.pigProvider.pigs.push(response.pigs);
             this.details.push(response.invoicePigDetail);
-            this.events.unsubscribe('createPig');
+            this.events.unsubscribe('pig-inputs:createPig');
             this.events.publish('OK');
           }
+        })
+        .catch((err: Error) => { })
+    })
+  }
+
+  edit(item: invoicePigDetail) {
+    this.navCtrl.push(PigInputPage, { pigId: item.objectId });
+    this.events.unsubscribe('pig-inputs:updatePig');
+    this.events.subscribe('pig-inputs:updatePig', (pig: pig) => {
+      // this.invoiceProvider.createPigInvoiceDetail({
+      //   pigs: this.deployData.get_pig_object_to_send_request(pig),
+      //   invoicesPig: this.invoice
+      // })
+      //   .then((response) => {
+      //     if (response && response.pigs && response.invoicePigDetail) {
+      //       this.pigs[response.pigs.id] = response.pigs;
+      //       this.pigProvider.pigs.push(response.pigs);
+      //       this.details.push(response.invoicePigDetail);
+      //       this.events.unsubscribe('pig-inputs:updatePig');
+      //       this.events.publish('OK');
+      //     }
+      //   })
+      //   .catch((err: Error) => { })
+      pig = this.deployData.get_pig_object_to_send_request(pig);
+      this.pigProvider.updatePig(pig)
+        .then((pig) => {
+          this.pigs[pig.id] = pig;
+          this.events.unsubscribe('pig-inputs:updatePig');
+          this.events.publish('OK');
         })
         .catch((err: Error) => { })
     })

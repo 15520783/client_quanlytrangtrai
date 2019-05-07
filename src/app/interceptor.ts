@@ -7,7 +7,7 @@ import {
   HttpHeaders
 } from '@angular/common/http';
 
-import { CONFIG, KEY, API } from '../common/const';
+import { CONFIG, KEY, API, MESSAGE } from '../common/const';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
@@ -26,7 +26,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
     if (request.method === 'POST' || request.method === 'PUT' || request.method === 'DELETE') {
       if (request.url !== CONFIG.SERVER_API.concat(API.LOGIN))
-        this.util.showLoading('Đang xử lí dữ liệu');
+        this.util.showLoading(MESSAGE[CONFIG.LANGUAGE_DEFAULT].PROCESS_DATA);
     }
 
     return next.handle(request).pipe(
@@ -41,7 +41,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
         if (error.status === 401) {
           if (request.url === CONFIG.SERVER_API.concat(API.LOGIN)) {
-            this.util.showToast('Tên đăng nhập hoặc mật khẩu không đúng. Vui lòng thử lại');
+            this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].LOGIN_INVALID);
           } else {
             this.util.removeKey(KEY.ACCESSTOKEN)
               .then(() => {
@@ -50,19 +50,19 @@ export class TokenInterceptor implements HttpInterceptor {
                     this.events.publish('app_logout');
                   })
               })
-            this.util.showToast('Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại');
+            this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].SESSIONS_NOT_EXPIRE);
           }
         }
         else {
-          this.util.showToast('Có lỗi xảy ra. Vui lòng kiểm tra lại.');
+          this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].ERROR_OCCUR);
         }
         //return the error to the method that called it
-        return Observable.throw(error);
+        return error;
       }, () => {
         if (request.method === 'POST' || request.method === 'PUT' || request.method === 'DELETE') {
           if (request.url !== CONFIG.SERVER_API.concat(API.LOGIN))
             this.util.closeLoading().then(() => {
-              this.util.showToastSuccess('Dữ liệu cập nhật thành công');
+              this.util.showToastSuccess(MESSAGE[CONFIG.LANGUAGE_DEFAULT].UPDATE_SUCCESS);
             });
         }
       })

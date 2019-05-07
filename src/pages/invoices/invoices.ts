@@ -96,10 +96,10 @@ export class InvoicesPage {
               return invoices.invoiceType == 2 ? true : false;
             })
             this.foodInvoices = data.invoicesProducts.filter((invoices) => {
-              return invoices.type === VARIABLE.INVOICE_PRODUCT_TYPE.FOOD ? true : false;
+              return invoices.invoiceType === VARIABLE.INVOICE_PRODUCT_TYPE.FOOD ? true : false;
             })
             this.medicineInvoices = data.invoicesProducts.filter((invoices) => {
-              return invoices.type === VARIABLE.INVOICE_PRODUCT_TYPE.MEDICINE ? true : false;
+              return invoices.invoiceType === VARIABLE.INVOICE_PRODUCT_TYPE.MEDICINE ? true : false;
             })
           }
         }

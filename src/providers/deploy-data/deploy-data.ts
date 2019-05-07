@@ -7,7 +7,7 @@ import { PartnerProvider } from '../partner/partner';
 import { EmployeesProvider } from '../employees/employees';
 import { SectionsProvider } from '../sections/sections';
 import { SettingsProvider } from '../settings/settings';
-import { pig, house, foodWareHouse, medicineWarehouse } from '../../common/entity';
+import { pig, house, foodWareHouse, medicineWarehouse, section } from '../../common/entity';
 import { WarehousesProvider } from '../warehouses/warehouses';
 
 
@@ -145,7 +145,7 @@ export class DeployDataProvider {
   }
 
   /**
-   * Lấy danh sách đơn vị thuốc
+   * Lấy danh sách đơn vị thuốc cho ion-select
    */
   get_medicineUnit_list_for_select() {
     let medicineUnit_select = [];
@@ -156,6 +156,20 @@ export class DeployDataProvider {
       })
     })
     return medicineUnit_select;
+  }
+
+  /**
+   * Lấy danh sách đơn vị cám cho ion-select
+   */
+  get_foodUnit_list_for_select() {
+    let foodUnit_select = [];
+    this.settingProvider.setting.foodUnits.forEach(unit => {
+      foodUnit_select.push({
+        name: unit.name,
+        value: unit.id
+      })
+    })
+    return foodUnit_select;
   }
 
 
@@ -400,13 +414,24 @@ export class DeployDataProvider {
   }
 
   /**
-   * Lấy thông đơn vị thông qua id
+   * Lấy thông tin đơn vị thuốc thông qua id
    * @param unitId 
    */
-  get_unit_by_id(unitId: string) {
+  get_medicineUnit_by_id(unitId: string) {
     let idx = this.settingProvider.setting.medicineUnits.findIndex(unit => unit.id == unitId);
     if (idx > -1)
       return this.settingProvider.setting.medicineUnits[idx];
+    else return null;
+  }
+
+  /**
+   * Lấy thông tin đơn vị cám thông qua id
+   * @param unitId 
+   */
+  get_foodUnit_by_id(unitId: string) {
+    let idx = this.settingProvider.setting.foodUnits.findIndex(unit => unit.id == unitId);
+    if (idx > -1)
+      return this.settingProvider.setting.foodUnits[idx];
     else return null;
   }
 
@@ -427,9 +452,11 @@ export class DeployDataProvider {
    * @param pigId 
    */
   get_pig_by_id(pigId: string) {
-    return this.pigsProvider.pigs.filter((pig) => {
+    let pig = this.pigsProvider.pigs.filter((pig) => {
       return pig.id == pigId ? true : false;
     })[0];
+
+    return pig;
   }
 
   /**
@@ -445,9 +472,9 @@ export class DeployDataProvider {
     pig['pregnancyStatus'] = this.get_pregnancystatus_by_id(pig.pregnancyStatusId);
     pig['priceCode'] = this.get_pricecode_by_id(pig.priceCodeId);
     pig['gentialType'] = this.get_gentialtype_by_id(pig.gentialTypeId);
-    pig['status'] = this.get_status_by_id(pig.status_id);
-    let father = this.get_pig_by_id(pig.originFather);
-    let mother = this.get_pig_by_id(pig.originMother);
+    pig['status'] = this.get_status_by_id(pig.statusId);
+    let father = this.get_pig_by_id(pig.originFatherId);
+    let mother = this.get_pig_by_id(pig.originMotherId);
     pig.originFather = father ? father.pigCode : '';
     pig.originMother = mother ? mother.pigCode : '';
     return pig;
@@ -460,6 +487,7 @@ export class DeployDataProvider {
   get_foodWarehouse_object_to_send_request(foodWarehouse: foodWareHouse) {
     foodWarehouse.warehouse = this.get_warehouse_by_id(foodWarehouse.warehouse_id);
     foodWarehouse.food = this.get_food_by_id(foodWarehouse.food_id);
+    foodWarehouse.unit = this.get_foodUnit_by_id(foodWarehouse.unit_id);
     return foodWarehouse;
   }
 
@@ -470,7 +498,7 @@ export class DeployDataProvider {
   get_medicine_object_to_send_request(medicineWarehouse: medicineWarehouse) {
     medicineWarehouse.warehouse = this.get_warehouse_by_id(medicineWarehouse.warehouse_id);
     medicineWarehouse.medicine = this.get_medicine_by_id(medicineWarehouse.medicine_id);
-    medicineWarehouse.unit = this.get_unit_by_id(medicineWarehouse.unit_id);
+    medicineWarehouse.unit = this.get_medicineUnit_by_id(medicineWarehouse.unit_id);
     return medicineWarehouse;
   }
 
@@ -494,6 +522,8 @@ export class DeployDataProvider {
     })
   }
 
+
+
   /**
    * Lấy danh dách heo thuộc chuồng heo
    * @param houseId 
@@ -502,5 +532,27 @@ export class DeployDataProvider {
     return this.pigsProvider.pigs.filter((pig) => {
       return pig.houseId == houseId ? true : false;
     })
+  }
+
+  get_pigs_pig_of_section(sectionTypeId:string) {
+    let housesId: any = [];
+    this.houseProvider.houses.filter((house) => {
+      return (house.section.typeId == sectionTypeId) ? true : false;
+    }).forEach((house) => {
+      housesId.push(house.id);
+    })
+
+    return this.pigsProvider.pigs.filter((pig) => {
+      return housesId.includes(pig.houseId)? true : false;
+    })
+  }
+
+  /**
+   * Lấy thông tin heo dựa vào mã heo
+   */
+  get_pig_by_pig_code(pigCode: string) {
+    return this.pigsProvider.pigs.filter((pig) => {
+      return pig.pigCode == pigCode ? true : false;
+    })[0];
   }
 }

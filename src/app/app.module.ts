@@ -43,6 +43,7 @@ import { MedicineInvoiceDetailPage } from '../pages/medicine-invoice-detail/medi
 import { MedicineWarehouseInputPage } from '../pages/medicine-warehouse-input/medicine-warehouse-input';
 import { InternalPigInvoiceDetailPage } from '../pages/internal-pig-invoice-detail/internal-pig-invoice-detail';
 import { InputPigToInternalInvoicePage } from '../pages/input-pig-to-internal-invoice/input-pig-to-internal-invoice';
+import { PigOutPage } from '../pages/pig-out/pig-out';
 
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
@@ -130,7 +131,8 @@ const Pages = [
   FoodInvoiceDetailPage,
   MedicineInvoiceDetailPage,
   MedicineWarehouseInputPage,
-  InputPigToInternalInvoicePage
+  InputPigToInternalInvoicePage,
+  PigOutPage
 ]
 
 const Components = [

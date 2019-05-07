@@ -56,11 +56,11 @@
             [errorMessage_Required]="'Giới tính là hạng mục bắt buộc.'" [label]="'Giới tính'" [active]="submitAttempt"
             [placeholder]="'Chọn giới tính'" [(data)]="genders">
           </input-select>
-          <input-select-target [(validControl)]="credentialsForm.controls.originFather"
+          <input-select-target [(validControl)]="credentialsForm.controls.originFatherId"
             [errorMessage_Required]="'Heo cha là hạng mục bắt buộc.'" [active]="submitAttempt"
             [placeholder]="'Chọn heo cha'" [label]="'Heo cha'" [targertCmp]="'pigs'">
           </input-select-target>
-          <input-select-target [(validControl)]="credentialsForm.controls.originMother"
+          <input-select-target [(validControl)]="credentialsForm.controls.originMotherId"
             [errorMessage_Required]="'Heo mẹ là hạng mục bắt buộc.'" [active]="submitAttempt"
             [placeholder]="'Chọn heo mẹ'" [label]="'Heo mẹ'" [targertCmp]="'pigs'">
           </input-select-target>

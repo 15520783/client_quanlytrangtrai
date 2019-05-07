@@ -41,7 +41,7 @@ export class FoodWarehouseInputPage {
       food_id: [this.foodWarehouse.food_id, Validators.compose([Validators.required])],
       invoice: this.foodWarehouse.invoice,
       parentId: this.foodWarehouse.parentId,
-      unit: [this.foodWarehouse.unit, Validators.compose([Validators.required])],
+      unit_id: [this.foodWarehouse.unit_id, Validators.compose([Validators.required])],
       quantity: [this.foodWarehouse.quantity, Validators.compose([Validators.required, ValidateNumber])],
       total: this.foodWarehouse.total,
       used: this.foodWarehouse.used,
@@ -75,11 +75,7 @@ export class FoodWarehouseInputPage {
 
   public warehouses: Array<{ name: string, value: string }> = [];
   public foods: Array<{ name: string, value: string }> = [];
-  public unit: Array<{ name: string, value: string }> = [
-    { name: 'Bao', value: '1' },
-    { name: 'Thùng', value: '2' },
-    { name: 'Gói', value: '3' },
-  ];
+  public unit: Array<{ name: string, value: string }> = [];
   public selectOptions: any;
 
   init() {
@@ -95,6 +91,7 @@ export class FoodWarehouseInputPage {
     });
 
     this.foods = this.deployData.get_food_list_for_select();
+    this.unit = this.deployData.get_foodUnit_list_for_select();
   }
 
 

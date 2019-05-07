@@ -14,7 +14,7 @@ import { EmployeesProvider } from '../providers/employees/employees';
 import { HousesProvider } from '../providers/houses/houses';
 import { WarehousesProvider } from '../providers/warehouses/warehouses';
 import { Utils } from '../common/utils';
-import { KEY, CONFIG } from '../common/const';
+import { KEY, CONFIG, MESSAGE, ERROR_NAME } from '../common/const';
 import { SettingsProvider } from '../providers/settings/settings';
 import { UserProvider } from '../providers/user/user';
 import { PartnerProvider } from '../providers/partner/partner';
@@ -127,7 +127,6 @@ export class MyApp {
         if (res.success) {
           this.farmProvider.sync();
           this.pigProvider.sync();
-          // this.pigGroupProvider.sync();
           this.employeeProvider.sync();
           this.partnerProvider.sync();
           this.sectionProvider.sync();
@@ -135,17 +134,19 @@ export class MyApp {
           this.warehouseProvider.sync();
           this.settingProvider.sync();
           this.sectionProvider.sync();
-          // this.invoicesProvider.sync();
         }
       })
-    .catch((err: any) => {
-      if (err.status != 401) {
-        this.rootPage = HomePage;
-        setTimeout(() => {
-          this.splash = false;
-        }, 1000);
-      }
-    })
+      .catch((err: any) => {
+        if (err.status != 401) {
+          if (err.name == ERROR_NAME.TIMEMOUT_ERROR || err.name == ERROR_NAME.ERROR_RESPONSE) {
+            this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].TIMEOUT_REQUEST);
+            this.rootPage = HomePage;
+            setTimeout(() => {
+              this.splash = false;
+            }, 1000);
+          }
+        }
+      })
   }
 
 

@@ -22,8 +22,8 @@ const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".
 
 const CONFIG = {
     // SERVER_API: 'http://192.168.0.36:3000',
-    // SERVER_API: 'https://quanlytrangtrai-uit.herokuapp.com',
-    SERVER_API: 'http://192.168.1.45:8080',
+    SERVER_API: 'https://quanlytrangtrai-uit.herokuapp.com',
+    // SERVER_API: 'http://192.168.1.45:8080',
     DEFAULT_TIMEOUT: 30000,
     LANGUAGE_DEFAULT: 'vi',
     ACCESS_KEY: ''
@@ -38,8 +38,18 @@ const VARIABLE = {
     INVOICE_PRODUCT_TYPE: {
         FOOD: 'food',
         MEDICINE: 'medicine'
-    }
-
+    },
+    SECTION_TYPE:[
+      {id:'0',value:'0',name:'Chưa xác định'},
+      {id:'1',value:'1',name:'Khu cách ly'},
+      {id:'2',value:'2',name:'Khu nọc'},  
+      {id:'3',value:'3',name:'Khu phối'},  
+      {id:'4',value:'4',name:'Khu mang thai'},  
+      {id:'5',value:'5',name:'Khu đẻ'},  
+      {id:'6',value:'6',name:'Khu cai sữa'},  
+      {id:'7',value:'7',name:'Khu hậu bị'},
+      {id:'8',value:'8',name:'Khu 8'}  
+    ]
     ,
     section_type: [
         {
@@ -171,9 +181,26 @@ const API = {
 
 }
 
+const ERROR_NAME = {
+    TIMEMOUT_ERROR: 'TimeoutError',
+    ERROR_RESPONSE: 'HttpErrorResponse'
+}
+
+const MESSAGE = {
+    vi: {
+        TIMEOUT_REQUEST: 'Không có phản hồi từ máy chủ. Vui lòng kiểm tra kết nối',
+        PROCESS_DATA: 'Đang xử lí dữ liệu',
+        LOGIN_INVALID: 'Tên đăng nhập hoặc mật khẩu không đúng. Vui lòng thử lại',
+        SESSIONS_NOT_EXPIRE: 'Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại',
+        ERROR_OCCUR: 'Có lỗi xảy ra. Vui lòng kiểm tra lại.',
+        UPDATE_SUCCESS: 'Dữ liệu cập nhật thành công',
+    }
+}
+
 export { KEY }
 export { API }
 export { CONFIG }
 export { VARIABLE }
 export { EMAIL_PATTERN }
 export { SETTING_STORAGE_KEY }
+export { MESSAGE, ERROR_NAME }

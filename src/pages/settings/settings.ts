@@ -126,6 +126,16 @@ export class SettingsPage {
         mainAttribute: 'name',
         data: this.settingProvider.setting.foodType,
       },
+      foodUnits: {
+        title: 'Danh sách đơn vị cám',
+        placeholderSearch: 'Tìm kiếm đơn vị cám',
+        filter_default: ["name", "description"],
+        attributes: [
+          { name: "description", label: 'Mô tả' },
+        ],
+        mainAttribute: 'name',
+        data: this.settingProvider.setting.foodUnits,
+      },
       foods: {
         title: 'Danh sách thức ăn cho heo',
         placeholderSearch: 'Tìm kiếm thức ăn',

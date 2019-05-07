@@ -112,11 +112,14 @@
                       </ion-col>
                     </ion-row>
                   </ion-col>
-                  <ion-col col-lg-2 col-md-3 col-sm-3>
-                    <button ion-button mode='ios' block color="danger" text-wrap
-                      (tap)="removePigInvoicesDetail(item)">Xóa</button>
-                  </ion-col>
+                  <!-- <ion-col col-lg-2 col-md-3 col-sm-3> -->
+                    <!-- <button ion-button mode='ios' block color="danger" text-wrap
+                      (tap)="removePigInvoicesDetail(item)">Xóa</button> -->
+                      
+                  <!-- </ion-col> -->
                 </ion-row>
+                <button showWhen="core" ion-button item-end mode='ios' color="main" (tap)="edit(item)">Đánh giá lại</button>
+                <button showWhen="core" ion-button item-end mode='ios' color="danger" (tap)="removePigInvoicesDetail(item)">Xóa</button>
               </ion-item>
             </span>
           </ion-list>
@@ -128,11 +131,6 @@
 
 
 <ion-content no-padding showWhen="ios,android">
-  <!-- <ion-item-divider text-wrap sticky="true">
-    <ion-row no-padding>
-      {{header[slider.realIndex]}}
-    </ion-row>
-  </ion-item-divider> -->
   <ion-slides #slider (ionSlideDidChange)="slideChange()">
     <ion-slide>
       <ion-list *ngIf="invoice">
@@ -216,7 +214,6 @@
             </ion-row>
           </ion-item>
           <ion-item-options side="right" showWhen="ios,android">
-            <!-- <button ion-button color="main" (tap)="edit(item)">Nhập heo</button> -->
             <button ion-button color="danger" (tap)="removePigInvoicesDetail(item)">Xóa</button>
           </ion-item-options>
         </ion-item-sliding>

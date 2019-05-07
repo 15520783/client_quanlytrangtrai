@@ -16,7 +16,7 @@ export { farmTypes }
 export { foodType }
 export { foods }
 export { medicineType }
-export { medicineUnits }
+export { medicineUnits , foodUnits}
 export { medicines }
 export { priceCodes }
 export { footType }
@@ -72,6 +72,8 @@ class pig extends base {
 	originId: string = '';
 	originFather: string = '';
 	originMother: string = '';
+	originFatherId: string = '';
+	originMotherId: string = '';
 	originWeight: number = null;
 	receiveWeight: number = null;
 	healthPoint: number = null;
@@ -96,7 +98,7 @@ class pig extends base {
 	pregnancyStatusId: string = '0';
 	point_review: string = '0';
 	status = new status();
-	status_id:string = '0';
+	statusId:string = '0';
 	priceCodeId: string = '0';
 	overviewStatus: string = '0';
 
@@ -282,6 +284,17 @@ class medicineUnits extends base {
 	}
 }
 
+class foodUnits extends base {
+	name: string = '';
+	quantity: string = '';
+	description: string = '';
+	baseUnit: string = '';
+
+	constructor() {
+		super();
+	}
+}
+
 class medicines extends base {
 	medicineCode: string = '';
 	type: medicineType = new medicineType();
@@ -437,7 +450,7 @@ class invoicesPig extends base {
 
 class invoicesProduct extends base {
 	invoiceNo: string = '';
-	type: string = '';
+	invoiceType: string = '';
 	source = new partners();
 	source_id: string = '';
 	sourceManagerName: string = '';
@@ -463,7 +476,8 @@ class foodWareHouse extends base {
 	food_id: string = '';
 	invoice = new invoicesProduct();
 	parentId: string = '';
-	unit: string = '';
+	unit = new foodUnits();
+	unit_id:string = '';
 	quantity: string = '0';
 	total: string = '0';
 	used: string = '0';

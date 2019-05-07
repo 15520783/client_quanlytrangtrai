@@ -103,7 +103,7 @@ export class MedicineInvoiceRole {
     }
 
     insert() {
-        this.object.type = VARIABLE.INVOICE_PRODUCT_TYPE.MEDICINE;
+        this.object.invoiceType = VARIABLE.INVOICE_PRODUCT_TYPE.MEDICINE;
         let source = this.deployData.get_partner_by_id(this.object.source_id);
         let destination = this.deployData.get_farm_by_id(this.object.destination_id);
         let des_manager = this.deployData.get_employee_by_id(this.object.destinationManager);
