@@ -8,8 +8,8 @@ import { Events } from 'ionic-angular';
 @Injectable()
 export class PartnerProvider {
 
-  public partners:Array<partners> = [];
-  public updated_flag:boolean = false;
+  public partners: Array<partners> = [];
+  public updated_flag: boolean = false;
 
   constructor(
     public http: HttpClient,
@@ -17,9 +17,9 @@ export class PartnerProvider {
     public events: Events
   ) {
     this.util.getKey(KEY.PARTNERS)
-    .then((data)=>{
-      this.partners = data;
-    })
+      .then((data) => {
+        this.partners = data;
+      })
   }
 
   getAllPartners() {
@@ -35,12 +35,7 @@ export class PartnerProvider {
           this.util.setKey(KEY.PARTNERS, data)
             .then(() => {
               this.partners = data;
-              this.publishUpdateEvent();
-            })
-            .catch((err) => {
-              this.partners = data;
-              this.publishUpdateEvent();
-              console.log('err_storage_partner', err);
+              // this.publishUpdateEvent();
             })
         }
       })
@@ -50,13 +45,10 @@ export class PartnerProvider {
         this.util.getKey(KEY.PARTNERS)
           .then((data: Array<partners>) => {
             this.partners = data;
-            this.publishUpdateEvent();
           })
-          .catch((err) => {
-            this.partners = [];
-            this.publishUpdateEvent();
-            console.log('err_get_storage_partner', err);
-          })
+      })
+      .then(() => {
+        this.publishUpdateEvent();
       })
   }
 

@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, Events, Nav } from 'ionic-angular';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
-import { PigOutPage } from '../pig-out/pig-out';
 import { VARIABLE } from '../../common/const';
+import { PigListSectionPage } from '../pig-list-section/pig-list-section';
 
 @IonicPage()
 @Component({
@@ -16,7 +16,7 @@ export class ActivitiesPage {
   public section_type: any;
   public pages: any = [];
   public components: any = {};
-  public rootParam:any = {name:'Thái'};
+  public rootParam:any;
 
   constructor(
     public navCtrl: NavController,
@@ -26,68 +26,86 @@ export class ActivitiesPage {
     public events: Events
   ) {
     this.components = {
-      move_pig_khu_cach_ly: {
-        name: 'Chuyển(xuất) heo', component: PigOutPage, active: false,
+      list_pig_khu_cach_ly:{
+        name: 'Danh sách heo tại khu', component: PigListSectionPage, active: false,
+        data:{
+          sectionType:VARIABLE.SECTION_TYPE[1],
+        }
+      },
+      list_pig_for_sale_khu_cach_ly: {
+        name: 'Danh sách heo chờ bán', component: PigListSectionPage, active: false,
+        data:{
+          sectionType:VARIABLE.SECTION_TYPE[1]
+        }
+      },
+      list_pig_move_khu_cach_ly: {
+        name: 'Danh sách heo chờ chuyển trại', component: PigListSectionPage, active: false,
+        data:{
+          sectionType:VARIABLE.SECTION_TYPE[1]
+        }
+      },
+      list_pig_breeding_khu_cach_ly: {
+        name: 'Danh sách heo lên giống', component: PigListSectionPage, active: false,
         data:{
           sectionType:VARIABLE.SECTION_TYPE[1]
         }
       },
       move_pig_khu_noc: {
-        name: 'Chuyển(xuất) heo', component: PigOutPage, active: false,
+        name: 'Chuyển(xuất) heo', component: PigListSectionPage, active: false,
         data:{
           sectionType:VARIABLE.SECTION_TYPE[2]
         }
       },
       move_pig_khu_phoi: {
-        name: 'Chuyển(xuất) heo', component: PigOutPage, active: false,
+        name: 'Chuyển(xuất) heo', component: PigListSectionPage, active: false,
         data:{
           sectionType:VARIABLE.SECTION_TYPE[3]
         }
       },
       move_pig_khu_mang_thai: {
-        name: 'Chuyển(xuất) heo', component: PigOutPage, active: false,
+        name: 'Chuyển(xuất) heo', component: PigListSectionPage, active: false,
         data:{
           sectionType:VARIABLE.SECTION_TYPE[4]
         }
       },
       move_pig_khu_de: {
-        name: 'Chuyển(xuất) heo', component: PigOutPage, active: false,
+        name: 'Chuyển(xuất) heo', component: PigListSectionPage, active: false,
         data:{
           sectionType:VARIABLE.SECTION_TYPE[5]
         }
       },
       move_pig_khu_cai_sua: {
-        name: 'Chuyển(xuất) heo', component: PigOutPage, active: false,
+        name: 'Chuyển(xuất) heo', component: PigListSectionPage, active: false,
         data:{
           sectionType:VARIABLE.SECTION_TYPE[6]
         }
       },
       move_pig_khu_hau_bi: {
-        name: 'Chuyển(xuất) heo', component: PigOutPage, active: false,
+        name: 'Chuyển(xuất) heo', component: PigListSectionPage, active: false,
         data:{
           sectionType:VARIABLE.SECTION_TYPE[7]
         }
       },
       move_pig_khu_8:{
-        name: 'Chuyển(xuất) heo', component: PigOutPage, active: false,
+        name: 'Chuyển(xuất) heo', component: PigListSectionPage, active: false,
         data:{
           sectionType:VARIABLE.SECTION_TYPE[8]
         }
       },
       breeding_pig_khu_cach_ly: {
-        name: 'Lên giống', component: PigOutPage, active: false
+        name: 'Lên giống', component: PigListSectionPage, active: false
       },
       sperm_pig_khu_noc: {
-        name: 'Khai thác tinh heo', component: PigOutPage, active: false
+        name: 'Khai thác tinh heo', component: PigListSectionPage, active: false
       },
       mating_pig_khu_phoi: {
-        name: 'Phối giống', component: PigOutPage, active: false
+        name: 'Phối giống', component: PigListSectionPage, active: false
       },
       pregnancy_pig_khu_mang_thai: {
-        name: 'Danh sách heo mang thai', component: PigOutPage, active: false
+        name: 'Danh sách heo mang thai', component: PigListSectionPage, active: false
       },
       chuyen_heo_nen_khu_cai_sua: {
-        name: 'Chuyển heo nền', component: PigOutPage, active: false
+        name: 'Chuyển heo nền', component: PigListSectionPage, active: false
       }
     }
 
@@ -95,8 +113,10 @@ export class ActivitiesPage {
       {
         title: 'Khu cách ly',
         components: [
-          this.components.move_pig_khu_cach_ly,
-          this.components.breeding_pig_khu_cach_ly
+          this.components.list_pig_khu_cach_ly,
+          this.components.list_pig_for_sale_khu_cach_ly,
+          this.components.list_pig_move_khu_cach_ly,
+          this.components.list_pig_breeding_khu_cach_ly
         ],
         icon: 'app-activities', active: true, expand: false
       },

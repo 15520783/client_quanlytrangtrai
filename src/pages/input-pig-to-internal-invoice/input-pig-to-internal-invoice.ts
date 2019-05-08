@@ -188,11 +188,26 @@ export class InputPigToInternalInvoicePage {
   }
 
   changePig(e) {
-    this.sections = this.deployData.get_section_list_for_select();
-    this.houses = this.deployData.get_house_list_for_select();
+    // this.sections = this.deployData.get_section_list_for_select();
+    // this.houses = this.deployData.get_house_list_for_select();
 
     this.pig = this.deployData.get_pig_by_id(e.id);
     let house: any = this.deployData.get_house_by_id(this.pig.houseId);
+
+    this.deployData.get_sections_of_farm(house.section.farm.id).forEach((section)=>{
+      this.sections.push({
+        name:section.name,
+        value:section.id
+      })
+    })
+
+    this.deployData.get_houses_of_section(house.section.id).forEach((house)=>{
+      this.houses.push({
+        name:house.name,
+        value:house.id
+      })
+    })
+
     this.pig['farmId'] = house.section.farm.id;
     this.pig['sectionId'] = house.section.id;
     Object.keys(this.credentialsForm.value).forEach((attr) => {

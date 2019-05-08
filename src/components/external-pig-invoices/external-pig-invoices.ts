@@ -1,6 +1,6 @@
 import { Component, ViewChild, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Content, NavController, Events, NavParams } from 'ionic-angular';
+import { Content, NavController, Events, NavParams, Platform } from 'ionic-angular';
 import { invoicesPig, invoicePigDetail, } from '../../common/entity';
 import { FilterProvider } from '../../providers/filter/filter';
 import { Utils } from '../../common/utils';
@@ -27,11 +27,12 @@ export class ExternalPigInvoicesComponent {
     { name: "sourceName", label: 'Nguồn cung cấp' },
     { name: "destinationName", label: 'Nơi nhận' },
     { name: "importDateDisplay", label: 'Ngày nhập' },
-    { name: "quantity", label: 'Tổng số heo' }
+    { name: "quantity", label: 'Tổng số heo' },
+    { name: "totalWeight", label: 'Tổng trọng lượng' }
   ];
 
   public placeholderSearch: string = 'Tìm kiếm chứng từ'
-  public filter_default: Array<string> = ["invoiceNo", "sourceName", "destinationName", "importDateDisplay", "quantity"];
+  public filter_default: Array<string> = ["invoiceNo", "sourceName", "destinationName", "importDateDisplay", "quantity","totalWeight"];
 
   public page_Idx: number = 1;
   public page_Total: number = 0;
@@ -52,9 +53,10 @@ export class ExternalPigInvoicesComponent {
     public events: Events,
     public deployData: DeployDataProvider,
     public invoiceProvider: InvoicesProvider,
-    public navParams: NavParams
+    public navParams: NavParams,
+    public platform: Platform
   ) {
-    if(this.navParams.data.invoice){
+    if (this.navParams.data.invoice) {
       this.invoices = this.navParams.data.invoice;
       this.setFilteredItems();
     }
@@ -117,7 +119,7 @@ export class ExternalPigInvoicesComponent {
 
     this.events.unsubscribe('callback');
     this.events.subscribe('callback', (data) => {
-      console.log('TEST',data);
+      console.log('TEST', data);
       if (data) {
         this.invoices.push(data);
         this.setFilteredItems();
@@ -128,7 +130,7 @@ export class ExternalPigInvoicesComponent {
 
   input_pig(item) {
     this.navCtrl.push(ExternalPigInvoiceDetailPage, { invoice: item });
-    
+
     this.events.subscribe('removeInvoiceEvent', (invoice) => {
       if (invoice) {
         let idx = this.invoices.findIndex(Obj => Obj.id == invoice.id);

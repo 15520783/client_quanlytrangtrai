@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform, Events, ViewController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { pig } from '../../common/entity';
+import { pig, house } from '../../common/entity';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { VARIABLE } from '../../common/const';
 import { Utils } from '../../common/utils';
+import { ValidateNumber } from '../../validators/number.validator';
 
 
 @IonicPage()
@@ -47,24 +48,24 @@ export class PigInputPage {
       roundId: [this.pig.roundId, Validators.compose([Validators.required])],
       breedId: [this.pig.breedId, Validators.compose([Validators.required])],
       gender: [this.pig.gender, Validators.compose([Validators.required])],
-      originFatherId: [this.pig.originFatherId, Validators.compose([Validators.required])],
-      originMotherId: [this.pig.originMotherId, Validators.compose([Validators.required])],
+      originFatherId: [this.pig.originFatherId, Validators.compose([])],
+      originMotherId: [this.pig.originMotherId, Validators.compose([])],
       birthday: [this.pig.birthday, Validators.compose([Validators.required])],
-      originWeight: [this.pig.originWeight, Validators.compose([Validators.required])],
-      receiveWeight: [this.pig.receiveWeight, Validators.compose([Validators.required])],
+      originWeight: [this.pig.originWeight, Validators.compose([Validators.required,ValidateNumber])],
+      receiveWeight: [this.pig.receiveWeight, Validators.compose([Validators.required,ValidateNumber])],
       description: [this.pig.description, Validators.compose([Validators.maxLength(1000)])],
       healthPoint: [this.pig.healthPoint, Validators.compose([Validators.required])],
       healthStatusId: [this.pig.healthStatusId, Validators.compose([Validators.required])],
       footTypeId: [this.pig.footTypeId, Validators.compose([Validators.required])],
-      functionUdder: [this.pig.functionUdder, Validators.compose([Validators.required])],
-      totalUdder: [this.pig.totalUdder, Validators.compose([Validators.required])],
+      functionUdder: [this.pig.functionUdder, Validators.compose([Validators.required,ValidateNumber])],
+      totalUdder: [this.pig.totalUdder, Validators.compose([Validators.required,ValidateNumber])],
       gentialTypeId: [this.pig.gentialTypeId, Validators.compose([Validators.required])],
-      adg: [this.pig.adg, Validators.compose([Validators.required])],
-      fcr: [this.pig.fcr, Validators.compose([Validators.required])],
-      bf: [this.pig.bf, Validators.compose([Validators.required])],
-      filet: [this.pig.filet, Validators.compose([Validators.required])],
-      longBack: [this.pig.longBack, Validators.compose([Validators.required])],
-      longBody: [this.pig.longBody, Validators.compose([Validators.required])],
+      adg: [this.pig.adg, Validators.compose([Validators.required,ValidateNumber])],
+      fcr: [this.pig.fcr, Validators.compose([Validators.required,ValidateNumber])],
+      bf: [this.pig.bf, Validators.compose([Validators.required,ValidateNumber])],
+      filet: [this.pig.filet, Validators.compose([Validators.required,ValidateNumber])],
+      longBack: [this.pig.longBack, Validators.compose([Validators.required,ValidateNumber])],
+      longBody: [this.pig.longBody, Validators.compose([Validators.required,ValidateNumber])],
       pregnancyStatusId: [this.pig.pregnancyStatusId, Validators.compose([Validators.required])],
       priceCodeId: [this.pig.priceCodeId, Validators.compose([Validators.required])],
       statusId: this.pig.statusId
@@ -83,11 +84,23 @@ export class PigInputPage {
 
     if (this.navParams.data.pigId) {
       this.UpdateMode = true;
-      this.sections = this.deployData.get_section_list_for_select();
-      this.houses = this.deployData.get_house_list_for_select();
-      
       this.pig = this.deployData.get_pig_by_id(this.navParams.data.pigId);
-      let house: any = this.deployData.get_house_by_id(this.pig.houseId);
+      let house: house = this.deployData.get_house_by_id(this.pig.houseId);
+      
+      this.deployData.get_sections_of_farm(house.section.farm.id).forEach((section)=>{
+        this.sections.push({
+          name:section.name,
+          value:section.id
+        })
+      })
+
+      this.deployData.get_houses_of_section(house.section.id).forEach((house)=>{
+        this.houses.push({
+          name:house.name,
+          value:house.id
+        })
+      })
+
       let mother = this.deployData.get_pig_by_pig_code(this.pig.originMother);
       let father = this.deployData.get_pig_by_pig_code(this.pig.originFather);
       this.pig['farmId'] = house.section.farm.id;

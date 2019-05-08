@@ -17,9 +17,9 @@ export class FarmsProvider {
     public events: Events
   ) {
     this.util.getKey(KEY.FARMS)
-    .then((data)=>{
-      this.farms = data;
-    })
+      .then((data) => {
+        this.farms = data;
+      })
   }
 
 
@@ -36,12 +36,6 @@ export class FarmsProvider {
           this.util.setKey(KEY.FARMS, data)
             .then(() => {
               this.farms = data;
-              this.publishUpdateEvent();
-            })
-            .catch((err) => {
-              this.farms = data;
-              this.publishUpdateEvent();
-              console.log('err_storage_farm', err);
             })
         }
       })
@@ -51,13 +45,10 @@ export class FarmsProvider {
         this.util.getKey(KEY.FARMS)
           .then((data: Array<farm>) => {
             this.farms = data;
-            this.publishUpdateEvent();
           })
-          .catch((err) => {
-            this.farms = [];
-            this.publishUpdateEvent();
-            console.log('err_get_storage_farm', err);
-          })
+      })
+      .then(() => {
+        this.publishUpdateEvent();
       })
   }
 

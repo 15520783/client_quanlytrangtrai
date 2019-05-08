@@ -1,47 +1,59 @@
 page-invoices {
-    .card-header{
-        background:linear-gradient(to right,$themeColor2,$light-tint)
+  .card-header {
+    background: linear-gradient(to right, $themeColor2, $light-tint);
+  }
+
+  ion-scroll {
+    .scroll-content {
+      top: 12px;
+    }
+  }
+
+  .ion-card-content-list-setting {
+    max-height: 84vh !important;
+    height: 84vh;
+    overflow: auto;
+
+    [active] {
+      color: #005bea !important;
+      background: linear-gradient(to right, $themeColor1) !important;
+    }
+  }
+
+  .content-item-setting {
+    max-height: 50vh !important;
+    height: 50vh;
+    overflow: auto;
+
+    .label-md {
+      margin: 0px !important;
+    }
+  }
+
+  ion-col {
+    padding: 0px !important;
+  }
+
+  ion-card {
+    margin: 0px !important;
+    width: calc(100% - 0px) !important;
+  }
+
+  ion-item-divider {
+    .label {
+      margin: 0px !important;
+    }
+  }
+
+  ion-content {
+    .scroll-content {
+      overflow: hidden;
     }
 
-    ion-scroll{
+    .setting-util-component{
         .scroll-content{
-            top:12px;
+            overflow: auto!important;
         }
     }
-    
-    .ion-card-content-list-setting{
-        max-height: 84vH!important;
-        height: 84vH;
-        overflow: auto;
-
-        [active]{
-            color:#005bea!important;
-            background:linear-gradient(to right,$themeColor1)!important;
-        }
-    }
-
-    .content-item-setting{
-        max-height: 50vH!important;
-        height: 50vH;
-        overflow: auto;
-
-        .label-md{
-            margin: 0px!important;
-        }
-    }
-
-    ion-col{
-        padding:0px!important;
-    }
-
-    ion-card{
-        margin:0px!important;
-        width: calc(100% - 0px)!important;
-    }
-
-    ion-item-divider{
-        .label{
-            margin:0px!important;
-        }
-    }
+  }
 }

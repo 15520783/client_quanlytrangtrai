@@ -2,7 +2,7 @@ import { Component, ViewChild, Output, Input, EventEmitter } from '@angular/core
 import { FormControl } from '@angular/forms';
 import { pig, house } from '../../common/entity';
 import { HousesProvider } from '../../providers/houses/houses';
-import { NavParams, Content, ModalController, ViewController } from 'ionic-angular';
+import { NavParams, Content, ModalController, ViewController, NavController } from 'ionic-angular';
 import { FilterProvider } from '../../providers/filter/filter';
 import { PigViewPage } from '../../tabs/pig-view/pig-view';
 
@@ -46,7 +46,8 @@ export class PigListComponent {
     public navParams: NavParams,
     public filterProvider: FilterProvider,
     public modalCtrl: ModalController,
-    public viewCtrl: ViewController
+    public viewCtrl: ViewController,
+    public navCtrl: NavController
   ) {
     console.log('Hello PigListComponent Component');
 
@@ -109,13 +110,13 @@ export class PigListComponent {
 
 
   viewDeltail(pig) {
-    // this.navCtrl.push(PigViewPage,{data:pig});
-    const modal = this.modalCtrl.create(
-      PigViewPage, pig, {
-        cssClass: 'ion-modal'
-      }
-    )
-    modal.present();
+    this.navCtrl.push(PigViewPage,{data:pig});
+    // const modal = this.modalCtrl.create(
+    //   PigViewPage, pig, {
+    //     cssClass: 'ion-modal'
+    //   }
+    // )
+    // modal.present();
   }
 
   scrollToTop(){

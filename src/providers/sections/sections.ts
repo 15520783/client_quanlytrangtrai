@@ -37,11 +37,6 @@ export class SectionsProvider {
           this.util.setKey(KEY.SECTIONS, data)
             .then(() => {
               this.sections = data;
-              this.publishUpdateEvent();
-            })
-            .catch((err) => {
-              console.log('err_storage_section', err);
-              this.publishUpdateEvent();
             })
         }
       })
@@ -51,13 +46,10 @@ export class SectionsProvider {
         this.util.getKey(KEY.SECTIONS)
           .then((data: Array<section>) => {
             this.sections = data;
-            this.publishUpdateEvent();
           })
-          .catch((err) => {
-            this.sections = [];
-            this.publishUpdateEvent();
-            console.log('err_get_storage_section', err);
-          })
+      })
+      .then(() => {
+        this.publishUpdateEvent();
       })
   }
 

@@ -44,29 +44,37 @@
           <input-text 
             [(validControl)]="credentialsForm.controls.pigCode"
             [errorMessage_Required]="'Số tai heo là hạng mục bắt buộc.'"
-            [errorMessage_Maxlength]="'Số tai heo không được vượt quá 1000 kí tự.'" [label]="'Số tai heo'"
+            [errorMessage_Maxlength]="'Số tai heo không được vượt quá 1000 kí tự.'" 
+            [label]="'Số tai heo'"
             [placeholder]="'Nhập số tai heo'" [active]="submitAttempt">
           </input-text>
           <input-select [(validControl)]="credentialsForm.controls.breedId"
-            [errorMessage_Required]="'Giống heo là hạng mục bắt buộc.'" [label]="'Giống'" [active]="submitAttempt"
+            [errorMessage_Required]="'Giống heo là hạng mục bắt buộc.'" [label]="'Giống'" 
+            [active]="submitAttempt"
             [placeholder]="'Chọn giống heo'" 
             [(data)]="breeds">
           </input-select>
           <input-select [(validControl)]="credentialsForm.controls.gender"
-            [errorMessage_Required]="'Giới tính là hạng mục bắt buộc.'" [label]="'Giới tính'" [active]="submitAttempt"
-            [placeholder]="'Chọn giới tính'" [(data)]="genders">
+            [errorMessage_Required]="'Giới tính là hạng mục bắt buộc.'" [label]="'Giới tính'" 
+            [active]="submitAttempt"
+            [placeholder]="'Chọn giới tính'" 
+            [(data)]="genders">
           </input-select>
           <input-select-target [(validControl)]="credentialsForm.controls.originFatherId"
-            [errorMessage_Required]="'Heo cha là hạng mục bắt buộc.'" [active]="submitAttempt"
-            [placeholder]="'Chọn heo cha'" [label]="'Heo cha'" [targertCmp]="'pigs'">
+            [errorMessage_Required]="'Heo cha là hạng mục bắt buộc.'" 
+            [active]="submitAttempt"
+            [placeholder]="'Chọn heo cha'" [label]="'Heo cha'" 
+            [targertCmp]="'pigs'">
           </input-select-target>
           <input-select-target [(validControl)]="credentialsForm.controls.originMotherId"
             [errorMessage_Required]="'Heo mẹ là hạng mục bắt buộc.'" [active]="submitAttempt"
-            [placeholder]="'Chọn heo mẹ'" [label]="'Heo mẹ'" [targertCmp]="'pigs'">
+            [placeholder]="'Chọn heo mẹ'" [label]="'Heo mẹ'" 
+            [targertCmp]="'pigs'">
           </input-select-target>
           <input-date [(validControl)]="credentialsForm.controls.birthday"
             [errorMessage_Required]="'Ngày sinh là hạng mục bắt buộc.'" [label]="'Ngày sinh'"
-            [placeholder]="'dd/mm/yyyy'" [active]="submitAttempt">
+            [placeholder]="'dd/mm/yyyy'" 
+            [active]="submitAttempt">
           </input-date>
           
         </ion-col>
@@ -77,20 +85,27 @@
             [attr.col-sm-12]="platform.is('core')?'':null"
             [attr.col-12]="!platform.is('core')?'':null">
           <input-select [(validControl)]="credentialsForm.controls.roundId"
-            [errorMessage_Required]="'Lứa là hạng mục bắt buộc.'" [label]="'Lứa'" [active]="submitAttempt"
+            [errorMessage_Required]="'Lứa là hạng mục bắt buộc.'" [label]="'Lứa'" 
+            [active]="submitAttempt"
             [placeholder]="'Chọn lứa'" [(data)]="rounds">
           </input-select>
           <input-text [(validControl)]="credentialsForm.controls.originWeight"
-            [errorMessage_Required]="'Trọng lượng NCC là hạng mục bắt buộc.'" [label]="'Trọng lượng NCC'"
-            [placeholder]="'Nhập Trọng lượng NCC'" [active]="submitAttempt">
+            [errorMessage_Required]="'Trọng lượng NCC là hạng mục bắt buộc.'" 
+            [label]="'Trọng lượng NCC'"
+            [placeholder]="'Nhập Trọng lượng NCC'" 
+            [active]="submitAttempt">
           </input-text>
           <input-text [(validControl)]="credentialsForm.controls.receiveWeight"
-            [errorMessage_Required]="'Trọng lượng tại trại là hạng mục bắt buộc.'" [label]="'Trọng lượng tại trại'"
-            [placeholder]="'Nhập Trọng lượng tại trại'" [active]="submitAttempt">
+            [errorMessage_Required]="'Trọng lượng tại trại là hạng mục bắt buộc.'" 
+            [label]="'Trọng lượng tại trại'"
+            [placeholder]="'Nhập Trọng lượng tại trại'" 
+            [active]="submitAttempt">
           </input-text>
           <input-select [(validControl)]="credentialsForm.controls.healthPoint"
-            [errorMessage_Required]="'Điểm thể trạng là hạng mục bắt buộc.'" [label]="'Điểm thể trạng'"
-            [placeholder]="'Nhập điểm thể trạng'" [active]="submitAttempt"
+            [errorMessage_Required]="'Điểm thể trạng là hạng mục bắt buộc.'" 
+            [label]="'Điểm thể trạng'"
+            [placeholder]="'Nhập điểm thể trạng'" 
+            [active]="submitAttempt"
             [(data)]="health_points">
           </input-select>
           <input-select [(validControl)]="credentialsForm.controls.footTypeId"
@@ -102,10 +117,12 @@
           <input-text [(validControl)]="credentialsForm.controls.functionUdder"
             [errorMessage_Required]="'Số vú chức năng là hạng mục bắt buộc.'" 
             [label]="'Số vú chức năng'"
+            [errorMessage_ValidNumber]="'Số vú chức năng là hạng mục nhập số.'"
             [placeholder]="'Nhập số vú chức năng'" [active]="submitAttempt">
           </input-text>
           <input-text [(validControl)]="credentialsForm.controls.totalUdder"
-            [errorMessage_Required]="'Tổng số vú là hạng mục bắt buộc.'" 
+            [errorMessage_Required]="'Tổng số vú là hạng mục bắt buộc.'"
+            [errorMessage_ValidNumber]="'Tổng số vú chức năng là hạng mục nhập số.'"
             [label]="'Tổng số vú'"
             [placeholder]="'Nhập tổng số vú'" [active]="submitAttempt">
           </input-text>
@@ -129,30 +146,46 @@
             [attr.col-sm-12]="platform.is('core')?'':null"
             [attr.col-12]="!platform.is('core')?'':null">
           <input-text [(validControl)]="credentialsForm.controls.fcr"
-            [errorMessage_Required]="'FCR là hạng mục bắt buộc'" [label]="'FCR'" [placeholder]="'Nhập chỉ số FCR'"
+            [errorMessage_Required]="'FCR là hạng mục bắt buộc'" 
+            [label]="'FCR'" 
+            [placeholder]="'Nhập chỉ số FCR'"
+            [errorMessage_ValidNumber]="'FCR là hạng mục nhập số.'"
             [active]="submitAttempt">
           </input-text>
           <input-text [(validControl)]="credentialsForm.controls.adg"
-            [errorMessage_Required]="'ADG là hạng mục bắt buộc'" [label]="'ADG'" [placeholder]="'Nhập chỉ số ADG'"
+            [errorMessage_Required]="'ADG là hạng mục bắt buộc'" 
+            [label]="'ADG'" 
+            [placeholder]="'Nhập chỉ số ADG'"
+            [errorMessage_ValidNumber]="'ADG là hạng mục nhập số.'"
             [active]="submitAttempt">
           </input-text>
           <input-text [(validControl)]="credentialsForm.controls.bf" 
             [errorMessage_Required]="'Mỡ lưng là hạng mục bắt buộc'"
             [label]="'Mỡ lưng'" 
-            [placeholder]="'Nhập mỡ lưng'" 
+            [placeholder]="'Nhập mỡ lưng'"
+            [errorMessage_ValidNumber]="'BF là hạng mục nhập số.'"
             [active]="submitAttempt">
           </input-text>
           <input-text [(validControl)]="credentialsForm.controls.filet"
-            [errorMessage_Required]="'Thăn thịt là hạng mục bắt buộc'" [label]="'Thăn thịt'"
-            [placeholder]="'Nhập chỉ số thăn thịt'" [active]="submitAttempt">
+            [errorMessage_Required]="'Thăn thịt là hạng mục bắt buộc'" 
+            [label]="'Thăn thịt'"
+            [placeholder]="'Nhập chỉ số thăn thịt'" 
+            [errorMessage_ValidNumber]="'Thăn thịt là hạng mục nhập số.'"
+            [active]="submitAttempt">
           </input-text>
           <input-text [(validControl)]="credentialsForm.controls.longBody"
-            [errorMessage_Required]="'Chiều dài thân là hạng mục bắt buộc'" [label]="'Chiều dài thân'"
-            [placeholder]="'Nhập chiều dài thân'" [active]="submitAttempt">
+            [errorMessage_Required]="'Chiều dài thân là hạng mục bắt buộc'" 
+            [errorMessage_ValidNumber]="'Chiều dài thân là hạng mục nhập số.'"
+            [label]="'Chiều dài thân'"
+            [placeholder]="'Nhập chiều dài thân'" 
+            [active]="submitAttempt">
           </input-text>
           <input-text [(validControl)]="credentialsForm.controls.longBack"
-            [errorMessage_Required]="'Dài thân là hạng mục bắt buộc'" [label]="'Dài thân'"
-            [placeholder]="'Nhập chiều cài thân'" [active]="submitAttempt">
+            [errorMessage_Required]="'Vòng ngực là hạng mục bắt buộc'" 
+            [errorMessage_ValidNumber]="'Vòng ngực là hạng mục nhập số.'"
+            [label]="'Dài thân'"
+            [placeholder]="'Nhập chiều cài thân'" 
+            [active]="submitAttempt">
           </input-text>
           <!-- <input-text [(validControl)]="credentialsForm.controls.index"
             [errorMessage_Required]="'Chỉ số duy truyền là hạng mục bắt buộc'" [label]="'Chỉ số duy truyền'"

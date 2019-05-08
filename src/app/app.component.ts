@@ -27,10 +27,6 @@ export class MyApp {
 
   rootPage: any;
   splash: boolean = true;
-  public counter = 0;
-  dismissing: any;
-  lastBack: number;
-  spamming: any;
 
   constructor(
     public platform: Platform,
@@ -53,32 +49,6 @@ export class MyApp {
     public userProvider: UserProvider,
   ) {
     this.initializeApp();
-    this.util.getKey(KEY.ACCESSTOKEN)
-      .then((accessToken) => {
-        if (accessToken) {
-          this.util.getKey(KEY.TOKENTYPE)
-            .then((tokenType) => {
-              if (tokenType) {
-                CONFIG.ACCESS_KEY = tokenType.concat(' ').concat(accessToken);
-                this.splash = true;
-                this.intinial_sync();
-                this.subscribeEventUpdate();
-              }
-              else {
-                this.splash = false;
-                this.rootPage = LoginPage;
-              }
-            })
-        } else {
-          this.splash = false;
-          this.rootPage = LoginPage;
-        }
-      })
-
-    this.events.subscribe('app_logout', () => {
-      this.splash = false;
-      this.rootPage = LoginPage;
-    })
   }
 
   initializeApp() {
@@ -91,6 +61,28 @@ export class MyApp {
         this.splashScreen.hide();
         this.headerColor.tint('#01C2FA');
       }
+
+      this.util.getKey(KEY.ACCESSTOKEN)
+        .then((accessToken) => {
+          if (accessToken) {
+            this.util.getKey(KEY.TOKENTYPE)
+              .then((tokenType) => {
+                if (tokenType) {
+                  CONFIG.ACCESS_KEY = tokenType.concat(' ').concat(accessToken);
+                  this.splash = true;
+                  this.intinial_sync();
+                  this.subscribeEventUpdate();
+                }
+                else {
+                  this.splash = false;
+                  this.rootPage = LoginPage;
+                }
+              })
+          } else {
+            this.splash = false;
+            this.rootPage = LoginPage;
+          }
+        })
 
       this.events.subscribe('app_begin', () => {
         this.util.getKey(KEY.ACCESSTOKEN)
@@ -105,10 +97,13 @@ export class MyApp {
                     this.subscribeEventUpdate();
                   }
                   else {
+                    this.splash = false;
                     this.rootPage = LoginPage;
+
                   }
                 })
             } else {
+              this.splash = false;
               this.rootPage = LoginPage;
             }
           })
@@ -168,9 +163,21 @@ export class MyApp {
       this.settingProvider.updated_flag &&
       this.partnerProvider.updated_flag) {
       this.rootPage = HomePage;
+
       setTimeout(() => {
         this.splash = false;
-      }, 1000);
+        this.listener_logout();
+      }, 2000);
     }
+  }
+
+  listener_logout() {
+    this.events.subscribe('app_logout', () => {
+      this.splash = true;
+      this.rootPage = LoginPage;
+      setTimeout(() => {
+        this.splash = false;
+      }, 2000);
+    })
   }
 }

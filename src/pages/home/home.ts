@@ -4,19 +4,16 @@ import { FarmsPage } from '../farms/farms';
 import { SectionsPage } from '../sections/sections';
 import { PigsPage } from '../pigs/pigs';
 import { Utils } from '../../common/utils';
-import { farm } from '../../common/entity';
 import { FarmsProvider } from '../../providers/farms/farms';
 import { SectionsProvider } from '../../providers/sections/sections';
-import { PigGroupsPage } from '../pig-groups/pig-groups';
 import { EmployeePage } from '../employee/employee';
-import { DatePlanPage } from '../date-plan/date-plan';
 import { WarehousesPage } from '../warehouses/warehouses';
 import { SettingsPage } from '../settings/settings';
 import { KEY } from '../../common/const';
-import { LoginPage } from '../login/login';
 import { PartnersPage } from '../partners/partners';
 import { ActivitiesPage } from '../activities/activities';
 import { InvoicesPage } from '../invoices/invoices';
+import { LoginPage } from '../login/login';
 
 @Component({
   selector: 'page-home',
@@ -25,9 +22,11 @@ import { InvoicesPage } from '../invoices/invoices';
 export class HomePage {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = FarmsPage;
+  rootPage: any;
 
   pages: any;
+
+  activeLogOut: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -37,8 +36,6 @@ export class HomePage {
     public sectionProvider: SectionsProvider,
     public events: Events
   ) {
-
-
     this.pages = [
       { title: 'Trang trại', component: FarmsPage, icon: 'app-farm', active: true },
       { title: 'Khu', component: SectionsPage, icon: 'app-sections', active: false, },
@@ -54,7 +51,10 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad HomePage');
+    this.rootPage = this.pages[0].component;
+    setTimeout(() => {
+      this.activeLogOut = true;
+    }, 3000);
   }
 
   openPage(page) {

@@ -138,15 +138,17 @@ export class ExternalPigInvoiceDetailPage {
     this.invoiceProvider.removePigInvoiceDetail(invoiceDetail)
       .then((isOK_detail) => {
         if (isOK_detail) {
-          let pig = this.deployData.get_pig_object_to_send_request(this.pigs[invoiceDetail.objectId]);
-          this.pigProvider.removePig(pig)
-            .then((isOK_pig) => {
-              if (isOK_pig) {
-                let idx = this.details.findIndex(detail => detail.id == invoiceDetail.id);
-                if (idx > -1)
-                  this.details.splice(idx, 1);
-              }
-            })
+          let idx = this.details.findIndex(detail => detail.id == invoiceDetail.id);
+          if (idx > -1)
+            this.details.splice(idx, 1);
+          this.util.getKey(KEY.PIGS).then((pigs: Array<pig>) => {
+            let idx = pigs.findIndex(pig => pig.id == invoiceDetail.objectId);
+            if (idx > -1)
+              pigs.splice(idx, 1);
+            this.util.setKey(KEY.PIGS, pigs).then(() => {
+              this.pigProvider.pigs = pigs;
+            });
+          })
         }
       })
       .catch((err: Error) => { })

@@ -44,12 +44,6 @@ export class EmployeesProvider {
           this.util.setKey(KEY.EMPLOYEES, data)
             .then(() => {
               this.employees = data;
-              this.publishUpdateEvent();
-            })
-            .catch((err) => {
-              this.employees = data;
-              this.publishUpdateEvent();
-              console.log('err_storage_employee', err);
             })
         }
       })
@@ -58,14 +52,11 @@ export class EmployeesProvider {
         this.util.getKey(KEY.EMPLOYEES)
           .then((data: Array<employee>) => {
             this.employees = data;
-            this.publishUpdateEvent();
-          })
-          .catch((err) => {
-            console.log('err_get_storage_employee', err);
-            this.employees = [];
-            this.publishUpdateEvent();
           })
         this.util.showToast('Danh sách nhân viên chưa được cập nhật. Vui lòng kiểm tra kết nối.');
+      })
+      .then(() => {
+        this.publishUpdateEvent();
       })
   }
 

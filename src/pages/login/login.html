@@ -1,11 +1,11 @@
-<div *ngIf="splash" class="splash">
+<!-- <div *ngIf="splash" class="splash">
   <div class="sk-folding-cube">
     <div class="sk-cube1 sk-cube"></div>
     <div class="sk-cube2 sk-cube"></div>
     <div class="sk-cube4 sk-cube"></div>
     <div class="sk-cube3 sk-cube"></div>
   </div>
-</div>
+</div> -->
 
 <ion-header no-border>
 </ion-header>
@@ -46,7 +46,7 @@
             <ion-input pl-16 type="password" [formControl]="credentialsForm.controls.password"></ion-input>
           </ion-item>
           <expandable *ngIf="active" [expanded]="!credentialsForm.controls.password.valid">
-            <span *ngIf="credentialsForm.controls.username.errors">
+            <span *ngIf="credentialsForm.controls.password.errors">
               <p no-margin mt-5 err *ngIf="credentialsForm.controls.password.errors.required">
                 <ion-icon name="md-information-circle" style="vertical-align: bottom"></ion-icon> Mật khẩu là hạng mục
                 bắt buộc.
@@ -98,13 +98,13 @@
             <ion-label class="pt-5" pl-16 no-margin floating>Username</ion-label>
             <ion-input pl-16 font28 [formControl]="credentialsForm.controls['username']"></ion-input>
           </ion-item>
-          <expandable *ngIf="active" [expanded]="!this.credentialsForm.controls.username.valid">
+          <expandable *ngIf="active" [expanded]="!credentialsForm.controls.username.valid">
             <span *ngIf="credentialsForm.controls.username.errors">
-              <p no-margin mt-5 err *ngIf="this.credentialsForm.controls.username.errors.required">
+              <p no-margin mt-5 err *ngIf="credentialsForm.controls.username.errors.required">
                 <ion-icon name="md-information-circle" style="vertical-align: bottom"></ion-icon> Tên đăng nhập là hạng
                 mục bắt buộc.
               </p>
-              <p no-margin mt-5 err *ngIf="this.credentialsForm.controls.username.errors.maxlength">
+              <p no-margin mt-5 err *ngIf="credentialsForm.controls.username.errors.maxlength">
                 <ion-icon name="md-information-circle" style="vertical-align: bottom"></ion-icon> Tên đăng nhập không
                 được vượt quá 100 ký tự.
               </p>
@@ -113,7 +113,7 @@
 
           <ion-item mt-15 pl-0>
             <ion-label class="pt-5" pl-16 no-margin floating>Password</ion-label>
-            <ion-input pl-16 type="password" font28 [formControl]="credentialsForm.controls['password']"></ion-input>
+            <ion-input pl-16 type="password" font28 [formControl]="credentialsForm.controls.password"></ion-input>
           </ion-item>
           <expandable *ngIf="active" [expanded]="!credentialsForm.controls.password.valid">
             <span *ngIf="credentialsForm.controls.password.errors">

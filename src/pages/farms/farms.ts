@@ -28,12 +28,12 @@ export class FarmsPage {
     public modalCtrl: ModalController,
     public deployDataProvider: DeployDataProvider
   ) {
-    this.farmProvider.farms.forEach((farm)=>{
-      console.log(farm.id,{
-        male:this.deployDataProvider.get_male_pig_of_farm(farm.id),
-        female:this.deployDataProvider.get_female_pig_of_farm(farm.id)
-      })
-    })
+    // this.farmProvider.farms.forEach((farm)=>{
+    //   console.log(farm.id,{
+    //     male:this.deployDataProvider.get_male_pig_of_farm(farm.id),
+    //     female:this.deployDataProvider.get_female_pig_of_farm(farm.id)
+    //   })
+    // })
   }
 
   ionViewDidEnter() {

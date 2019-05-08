@@ -19,20 +19,20 @@ export class HousesProvider {
     public events: Events
   ) {
     this.util.getKey(KEY.HOUSES)
-    .then((data)=>{
-      this.houses = data;
-    })
+      .then((data) => {
+        this.houses = data;
+      })
   }
 
   getAllHouses() {
     return this.http
-    .get(API.GET_ALL_HOUSES)
-    .timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
+      .get(API.GET_ALL_HOUSES)
+      .timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
   }
 
-  getHouseByIdSection(id:string){
-    return this.houses.filter((house)=>{
-      return house.section.id === id? true:false;
+  getHouseByIdSection(id: string) {
+    return this.houses.filter((house) => {
+      return house.section.id === id ? true : false;
     })
   }
 
@@ -43,12 +43,6 @@ export class HousesProvider {
           this.util.setKey(KEY.HOUSES, data)
             .then(() => {
               this.houses = data;
-              this.publishUpdateEvent();
-            })
-            .catch((err) => {
-              this.houses = data;
-              console.log('err_storage_house', err);
-              this.publishUpdateEvent();
             })
         }
       })
@@ -58,13 +52,10 @@ export class HousesProvider {
         this.util.getKey(KEY.HOUSES)
           .then((data: Array<house>) => {
             this.houses = data;
-            this.publishUpdateEvent();
           })
-          .catch((err) => {
-            this.houses = [];
-            this.publishUpdateEvent();
-            console.log('err_get_storage_house', err);
-          })
+      })
+      .then(() => {
+        this.publishUpdateEvent();
       })
   }
 

@@ -39,18 +39,20 @@ const VARIABLE = {
         FOOD: 'food',
         MEDICINE: 'medicine'
     },
-    SECTION_TYPE:[
-      {id:'0',value:'0',name:'Chưa xác định'},
-      {id:'1',value:'1',name:'Khu cách ly'},
-      {id:'2',value:'2',name:'Khu nọc'},  
-      {id:'3',value:'3',name:'Khu phối'},  
-      {id:'4',value:'4',name:'Khu mang thai'},  
-      {id:'5',value:'5',name:'Khu đẻ'},  
-      {id:'6',value:'6',name:'Khu cai sữa'},  
-      {id:'7',value:'7',name:'Khu hậu bị'},
-      {id:'8',value:'8',name:'Khu 8'}  
-    ]
-    ,
+    SECTION_TYPE: [
+        { id: '0', value: '0', name: 'Chưa xác định' },
+        { id: '1', value: '1', name: 'Khu cách ly' },
+        { id: '2', value: '2', name: 'Khu nọc' },
+        { id: '3', value: '3', name: 'Khu phối' },
+        { id: '4', value: '4', name: 'Khu mang thai' },
+        { id: '5', value: '5', name: 'Khu đẻ' },
+        { id: '6', value: '6', name: 'Khu cai sữa' },
+        { id: '7', value: '7', name: 'Khu hậu bị' },
+        { id: '8', value: '8', name: 'Khu 8' }
+    ],
+    STATUS_PIG: {
+        WAIT_FOR_SALE: "8"
+    },
     section_type: [
         {
             id: 1,

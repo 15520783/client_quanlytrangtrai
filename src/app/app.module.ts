@@ -43,7 +43,7 @@ import { MedicineInvoiceDetailPage } from '../pages/medicine-invoice-detail/medi
 import { MedicineWarehouseInputPage } from '../pages/medicine-warehouse-input/medicine-warehouse-input';
 import { InternalPigInvoiceDetailPage } from '../pages/internal-pig-invoice-detail/internal-pig-invoice-detail';
 import { InputPigToInternalInvoicePage } from '../pages/input-pig-to-internal-invoice/input-pig-to-internal-invoice';
-import { PigOutPage } from '../pages/pig-out/pig-out';
+import { PigListSectionPage } from '../pages/pig-list-section/pig-list-section';
 
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
@@ -62,6 +62,8 @@ import { ExternalPigInvoicesComponent } from '../components/external-pig-invoice
 import { InvoiceInputUtilComponent } from '../components/invoice-input-util/invoice-input-util';
 import { FoodInvoicesComponent } from '../components/food-invoices/food-invoices';
 import { MedicineInvoicesComponent } from '../components/medicine-invoices/medicine-invoices';
+import { BackdropComponent } from '../components/backdrop/backdrop';
+import { OptionListPigSectionComponent } from '../components/option-list-pig-section/option-list-pig-section';
 
 import { HideHeaderDirective } from '../directives/hide-header/hide-header';
 
@@ -132,7 +134,7 @@ const Pages = [
   MedicineInvoiceDetailPage,
   MedicineWarehouseInputPage,
   InputPigToInternalInvoicePage,
-  PigOutPage
+  PigListSectionPage
 ]
 
 const Components = [
@@ -152,7 +154,9 @@ const Components = [
   InternalPigInvoicesComponent,
   ExternalPigInvoicesComponent,
   FoodInvoicesComponent,
-  MedicineInvoicesComponent
+  MedicineInvoicesComponent,
+  BackdropComponent,
+  OptionListPigSectionComponent
 ]
 
 const Providers = [

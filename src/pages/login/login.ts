@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Content, ToastController, MenuController, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Content, ToastController, MenuController, Events, Backdrop, ModalController } from 'ionic-angular';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MyApp } from '../../app/app.component';
 import { Utils } from '../../common/utils';
@@ -11,6 +11,7 @@ import { EmployeesProvider } from '../../providers/employees/employees';
 import { HousesProvider } from '../../providers/houses/houses';
 import { UserProvider } from '../../providers/user/user';
 import { KEY } from '../../common/const';
+import { BackdropComponent } from '../../components/backdrop/backdrop';
 
 @IonicPage()
 @Component({
@@ -36,7 +37,8 @@ export class LoginPage {
     public sectionProvider: SectionsProvider,
     public employeeProvider: EmployeesProvider,
     public houseProvider: HousesProvider,
-    public userProvider: UserProvider
+    public userProvider: UserProvider,
+    public modalCtrl: ModalController
   ) {
     this.menuCtrl.enable(false);
     this.credentialsForm = this.formBuilder.group({
@@ -55,15 +57,16 @@ export class LoginPage {
 
   onSubmit() {
     this.scrollToBottom();
-    this.navCtrl.setRoot(MyApp);
+    // this.navCtrl.setRoot(MyApp);
   }
 
 
   public wait: boolean = false;
 
   login() {
-
     if (this.credentialsForm.valid) {
+      let backdrop = this.modalCtrl.create(BackdropComponent, {}, { cssClass: 'ion-modal' });
+      backdrop.present();
       this.wait = true;
       let params = {
         username: this.credentialsForm.get('username').value,
@@ -74,31 +77,18 @@ export class LoginPage {
           if (res) {
             this.util.setKey(KEY.ACCESSTOKEN, res.accessToken)
               .then(() => {
-                this.util.setKey(KEY.TOKENTYPE, res.tokenType).then(() => {
-                  this.events.publish('app_begin');
-                })
-              })
-              .catch((err: Error) => {
-                console.log(err);
+                this.util.setKey(KEY.TOKENTYPE, res.tokenType)
               })
           }
         })
         .catch((err: any) => {
           this.wait = false;
         })
+        .then(() => {
+          backdrop.dismiss();
+          this.events.publish('app_begin');
+        })
     }
-
-
-    // console.log(this.credentialsForm.controls.username);
-    // console.log(this.credentialsForm.controls.password);
-
-    // this.util.showToast('Username/Password is wrong. Try again.')
-    //   .then((res) => {
-    //     this.wait = false;
-    //     setTimeout(() => {
-    //       this.events.publish('app_begin');
-    //     }, 1000);
-    //   })
   }
 
 }

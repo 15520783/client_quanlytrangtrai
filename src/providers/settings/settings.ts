@@ -64,12 +64,6 @@ export class SettingsProvider {
           this.util.setKey(KEY.SETTINGS, data)
             .then(() => {
               this.setting = data;
-              this.publishUpdateEvent();
-            })
-            .catch((err) => {
-              this.setting = data;
-              this.publishUpdateEvent();
-              console.log('err_storage_setting', err);
             })
         }
       })
@@ -79,12 +73,10 @@ export class SettingsProvider {
         this.util.getKey(KEY.SETTINGS)
           .then((data: setting) => {
             this.setting = data;
-            this.publishUpdateEvent();
           })
-          .catch((err) => {
-            this.publishUpdateEvent();
-            console.log('err_get_setting', err);
-          })
+      })
+      .then(() => {
+        this.publishUpdateEvent();
       })
   }
 

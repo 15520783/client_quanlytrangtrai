@@ -107,12 +107,6 @@ export class PigsProvider {
           this.util.setKey(KEY.PIGS, data)
             .then(() => {
               this.pigs = data;
-              this.publishUpdateEvent();
-            })
-            .catch((err) => {
-              this.pigs = data;
-              this.publishUpdateEvent();
-              console.log('err_storage_pigs', err);
             })
         }
       })
@@ -121,13 +115,11 @@ export class PigsProvider {
         this.util.getKey(KEY.PIGS)
           .then((data: Array<pig>) => {
             this.pigs = data;
-            this.publishUpdateEvent();
-          })
-          .catch((err) => {
-            this.publishUpdateEvent();
-            console.log('err_get_storage_pig', err);
           })
         this.util.showToast('Danh sách heo chưa được cập nhật. Vui lòng kiểm tra kết nối.');
+      })
+      .then(() => {
+        this.publishUpdateEvent();
       })
   }
 

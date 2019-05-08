@@ -301,6 +301,19 @@ export class DeployDataProvider {
   }
 
   /**
+   * Lấy các đối tượng giống với Object key  là id
+   */
+  get_object_list_key_of_breeds(){
+    let breeds = {};
+    this.settingProvider.setting.breeds.forEach((breed)=>{
+      breeds[breed.id] = breed;
+    })
+    return breeds;
+  }
+  
+
+
+  /**
    * Lấy thông tin nhà thông qua id
    * @param houseId 
    */
@@ -534,7 +547,12 @@ export class DeployDataProvider {
     })
   }
 
-  get_pigs_pig_of_section(sectionTypeId:string) {
+
+  /**
+   * Lấy danh sách heo thuộc khu
+   * @param sectionTypeId 
+   */
+  get_pigs_of_section(sectionTypeId:string) {
     let housesId: any = [];
     this.houseProvider.houses.filter((house) => {
       return (house.section.typeId == sectionTypeId) ? true : false;
@@ -555,4 +573,5 @@ export class DeployDataProvider {
       return pig.pigCode == pigCode ? true : false;
     })[0];
   }
+
 }

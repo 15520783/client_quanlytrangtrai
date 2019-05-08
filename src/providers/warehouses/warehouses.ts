@@ -36,12 +36,6 @@ export class WarehousesProvider {
           this.util.setKey(KEY.WAREHOUSES, data)
             .then(() => {
               this.warehouses = data;
-              this.publishUpdateEvent();
-            })
-            .catch((err) => {
-              this.warehouses = data;
-              this.publishUpdateEvent();
-              console.log('err_storage_warehouse', err);
             })
         }
       })
@@ -51,13 +45,10 @@ export class WarehousesProvider {
         this.util.getKey(KEY.WAREHOUSES)
           .then((data: Array<warehouse>) => {
             this.warehouses = data;
-            this.publishUpdateEvent();
           })
-          .catch((err) => {
-            this.warehouses = [];
-            this.publishUpdateEvent();
-            console.log('err_get_storage_warehouse', err);
-          })
+      })
+      .then(() => {
+        this.publishUpdateEvent();
       })
   }
 
