@@ -16,7 +16,7 @@ export class ActivitiesPage {
   public section_type: any;
   public pages: any = [];
   public components: any = {};
-  public rootParam:any;
+  public rootParam: any;
 
   constructor(
     public navCtrl: NavController,
@@ -26,70 +26,77 @@ export class ActivitiesPage {
     public events: Events
   ) {
     this.components = {
-      list_pig_khu_cach_ly:{
+      list_pig_khu_cach_ly: {
         name: 'Danh sách heo tại khu', component: PigListSectionPage, active: false,
-        data:{
-          sectionType:VARIABLE.SECTION_TYPE[1],
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[1],
+          getPigs(deployData: DeployDataProvider) {
+            return deployData.get_pigs_of_section(VARIABLE.SECTION_TYPE[1].id)
+          },
         }
       },
       list_pig_for_sale_khu_cach_ly: {
         name: 'Danh sách heo chờ bán', component: PigListSectionPage, active: false,
-        data:{
-          sectionType:VARIABLE.SECTION_TYPE[1]
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[1],
+          getPigs(deployData: DeployDataProvider) {
+            return deployData.get_pigs_sale_waiting_of_section(VARIABLE.SECTION_TYPE[1].id)
+          },
+          statusFilter: [VARIABLE.STATUS_PIG.WAIT_FOR_SALE]
         }
       },
       list_pig_move_khu_cach_ly: {
         name: 'Danh sách heo chờ chuyển trại', component: PigListSectionPage, active: false,
-        data:{
-          sectionType:VARIABLE.SECTION_TYPE[1]
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[1]
         }
       },
       list_pig_breeding_khu_cach_ly: {
         name: 'Danh sách heo lên giống', component: PigListSectionPage, active: false,
-        data:{
-          sectionType:VARIABLE.SECTION_TYPE[1]
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[1]
         }
       },
       move_pig_khu_noc: {
         name: 'Chuyển(xuất) heo', component: PigListSectionPage, active: false,
-        data:{
-          sectionType:VARIABLE.SECTION_TYPE[2]
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[2]
         }
       },
       move_pig_khu_phoi: {
         name: 'Chuyển(xuất) heo', component: PigListSectionPage, active: false,
-        data:{
-          sectionType:VARIABLE.SECTION_TYPE[3]
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[3]
         }
       },
       move_pig_khu_mang_thai: {
         name: 'Chuyển(xuất) heo', component: PigListSectionPage, active: false,
-        data:{
-          sectionType:VARIABLE.SECTION_TYPE[4]
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[4]
         }
       },
       move_pig_khu_de: {
         name: 'Chuyển(xuất) heo', component: PigListSectionPage, active: false,
-        data:{
-          sectionType:VARIABLE.SECTION_TYPE[5]
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[5]
         }
       },
       move_pig_khu_cai_sua: {
         name: 'Chuyển(xuất) heo', component: PigListSectionPage, active: false,
-        data:{
-          sectionType:VARIABLE.SECTION_TYPE[6]
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[6]
         }
       },
       move_pig_khu_hau_bi: {
         name: 'Chuyển(xuất) heo', component: PigListSectionPage, active: false,
-        data:{
-          sectionType:VARIABLE.SECTION_TYPE[7]
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[7]
         }
       },
-      move_pig_khu_8:{
+      move_pig_khu_8: {
         name: 'Chuyển(xuất) heo', component: PigListSectionPage, active: false,
-        data:{
-          sectionType:VARIABLE.SECTION_TYPE[8]
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[8]
         }
       },
       breeding_pig_khu_cach_ly: {
@@ -179,6 +186,7 @@ export class ActivitiesPage {
     this.pages[0].active = true;
     this.pages[0].components[0].active = true;
     this.rootPage = this.pages[0].components[0].component;
+    this.pages[0].components[0].data['pigs'] = this.pages[0].components[0].data.getPigs(this.deployData);
     this.rootParam = this.pages[0].components[0].data;
   }
 
@@ -216,6 +224,7 @@ export class ActivitiesPage {
       })
     }
     componentObj.active = true;
-    this.nav.setRoot(componentObj.component,componentObj.data)
+    componentObj.data['pigs'] = componentObj.data.getPigs(this.deployData);
+    this.nav.setRoot(componentObj.component, componentObj.data)
   }
 } 

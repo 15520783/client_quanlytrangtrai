@@ -15,22 +15,26 @@
   <div id="content">
     <ion-item-divider custom-diviver sticky="true" showWhen="core">{{title}}</ion-item-divider>
     <ion-list>
-      <ion-item-sliding *ngFor="let item of visible_items;let idx= index">
-        <ion-item>
-          <h2 *ngIf="mainAttribute"><b>{{item[mainAttribute]}}</b></h2>
-          <ion-row>
-            <ion-col *ngFor="let attr of attributes" col-xl-3 col-lg-3 col-md-4 col-sm-6 text-wrap>
-              <p style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
-            </ion-col>
-            <option-list-pig-section  
-              *ngIf="sectionTypeId" 
-              [(sectionTypeId)]="sectionTypeId" 
-              [pig]="visible_items[idx]"
-              (pigChange)="changePig($event,item)">
-            </option-list-pig-section>
-          </ion-row>
-        </ion-item>
-      </ion-item-sliding>
+      <span *ngFor="let item of visible_items;let idx= index">
+        <ion-item-sliding *ngIf="statusFilter.length?(statusFilter.includes(item.statusCode)):true">
+          <ion-item>
+            <h2 *ngIf="mainAttribute"><b>{{item[mainAttribute]}}</b></h2>
+            <ion-row>
+              <ion-col *ngFor="let attr of attributes" col-xl-3 col-lg-3 col-md-4 col-sm-6 text-wrap>
+                <p style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+                <option-list-pig-section  
+                *ngIf="sectionTypeId" 
+                [(sectionTypeId)]="sectionTypeId" 
+                [pig]="visible_items[idx]"
+                (pigChange)="changePig($event,item)">
+              </option-list-pig-section>
+            </ion-row>
+          </ion-item>
+        </ion-item-sliding>
+      </span>
     </ion-list>
     <ion-infinite-scroll (ionInfinite)="loadData($event)" *ngIf="page_Idx!==page_Total">
       <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Đang tải dữ liệu...">

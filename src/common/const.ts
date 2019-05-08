@@ -179,8 +179,11 @@ const API = {
 
     CREATE_PIG: '/api/pigs/',
     UPDATE_PIG: '/api/pigs/',
-    DELETE_PIG: '/api/pigs/'
+    DELETE_PIG: '/api/pigs/',
 
+    CREATE_BREEDING:'/api/breedings/',
+    UPDATE_BREEDING:'/api/breedings/',
+    DELETE_BREEDING:'/api/breedings/'
 }
 
 const ERROR_NAME = {
@@ -190,12 +193,13 @@ const ERROR_NAME = {
 
 const MESSAGE = {
     vi: {
-        TIMEOUT_REQUEST: 'Không có phản hồi từ máy chủ. Vui lòng kiểm tra kết nối',
-        PROCESS_DATA: 'Đang xử lí dữ liệu',
-        LOGIN_INVALID: 'Tên đăng nhập hoặc mật khẩu không đúng. Vui lòng thử lại',
+        TIMEOUT_REQUEST: 'Không có phản hồi từ máy chủ. Vui lòng kiểm tra kết nối.',
+        PROCESS_DATA: 'Đang xử lí dữ liệu.',
+        LOGIN_INVALID: 'Tên đăng nhập hoặc mật khẩu không đúng. Vui lòng thử lại.',
         SESSIONS_NOT_EXPIRE: 'Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại',
         ERROR_OCCUR: 'Có lỗi xảy ra. Vui lòng kiểm tra lại.',
-        UPDATE_SUCCESS: 'Dữ liệu cập nhật thành công',
+        UPDATE_SUCCESS: 'Dữ liệu cập nhật thành công.',
+        UPDATE_FAILED:'Dữ liệu cập nhật thất bại. Vui lòng thử lại.'
     }
 }
 

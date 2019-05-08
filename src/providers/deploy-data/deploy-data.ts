@@ -9,6 +9,7 @@ import { SectionsProvider } from '../sections/sections';
 import { SettingsProvider } from '../settings/settings';
 import { pig, house, foodWareHouse, medicineWarehouse, section, status } from '../../common/entity';
 import { WarehousesProvider } from '../warehouses/warehouses';
+import { VARIABLE } from '../../common/const';
 
 
 @Injectable()
@@ -172,6 +173,19 @@ export class DeployDataProvider {
     return foodUnit_select;
   }
 
+  /**
+   * Lấy danh sách loại lên giống cho ion-select
+   */
+  get_breedingType_list_for_select() {
+    let breedingTypes_select = [];
+    this.settingProvider.setting.breedingType.forEach((breedingType) => {
+      breedingTypes_select.push({
+        name: breedingType.name,
+        value: breedingType.id
+      })
+    })
+    return breedingTypes_select;
+  }
 
   /**
    * Lấy trạng trại bằng Id
@@ -298,6 +312,17 @@ export class DeployDataProvider {
       healthStatus[health.id] = health;
     })
     return healthStatus;
+  }
+
+  /**
+   * Lấy các đối tượng trạng thái heo với Object key  là id
+   */
+  get_object_list_key_of_status() {
+    let Status = {};
+    this.settingProvider.setting.status.forEach((status) => {
+      Status[status.id] = status;
+    })
+    return Status;
   }
 
   /**
@@ -562,6 +587,20 @@ export class DeployDataProvider {
 
     return this.pigsProvider.pigs.filter((pig) => {
       return housesId.includes(pig.houseId) ? true : false;
+    })
+  }
+
+
+  get_pigs_sale_waiting_of_section(sectionTypeId: string) {
+    let housesId: any = [];
+    this.houseProvider.houses.filter((house) => {
+      return (house.section.typeId == sectionTypeId) ? true : false;
+    }).forEach((house) => {
+      housesId.push(house.id);
+    })
+    let statusObjectKeyList = this.get_object_list_key_of_status();
+    return this.pigsProvider.pigs.filter((pig) => {
+      return housesId.includes(pig.houseId) && statusObjectKeyList[pig.statusId].code == VARIABLE.STATUS_PIG.WAIT_FOR_SALE ? true : false;
     })
   }
 

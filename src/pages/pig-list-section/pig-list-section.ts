@@ -19,21 +19,24 @@ export class PigListSectionPage {
   @Input() title: string = 'Danh sách heo trong khu';
   @Input() pigs: Array<pig> = [];
   @Input() sectionTypeId: string = '';
+  @Input() statusFilter: any = [];
 
   public breed: any = {};
   public gender: any = {};
   public houses: any = {};
+  public status: any = {};
 
   public mainAttribute = "pigCode";
   public attributes = [
     { name: "breedName", label: 'Giống' },
     { name: "houseName", label: 'Nhà' },
     { name: "genderName", label: 'Giới tính' },
-    { name: "birthdayDisplay", label: 'Ngày sinh' }
+    { name: "birthdayDisplay", label: 'Ngày sinh' },
+    { name: "statusName", label: 'Trạng thái' }
   ];
 
   public placeholderSearch: string = 'Tìm kiếm heo'
-  public filter_default: Array<string> = ["pigCode", "breedName", "houseName", "genderName", "birthdayDisplay"];
+  public filter_default: Array<string> = ["pigCode", "breedName", "houseName", "genderName", "birthdayDisplay", "statusName"];
 
   public page_Idx: number = 1;
   public page_Total: number = 0;
@@ -56,6 +59,8 @@ export class PigListSectionPage {
 
     this.breed = this.deployData.get_object_list_key_of_breeds();
     this.houses = this.deployData.get_object_list_key_of_house();
+    this.status = this.deployData.get_object_list_key_of_status();
+
     VARIABLE.gender.forEach(gender => {
       this.gender[gender.value] = gender;
     })
@@ -70,7 +75,13 @@ export class PigListSectionPage {
   ionViewDidLoad() {
 
     this.sectionTypeId = this.navParams.data.sectionType.id;
-    this.pigs = this.deployData.get_pigs_of_section(this.sectionTypeId);
+    if (this.navParams.data) {
+      this.pigs = this.navParams.data.getPigs(this.deployData);
+      if (this.navParams.data.statusFilter) {
+        this.statusFilter = this.navParams.data.statusFilter;
+      }
+    }
+    // this.pigs = this.deployData.get_pigs_of_section(this.sectionTypeId);
     this.setFilteredItems();
   }
 
@@ -89,13 +100,14 @@ export class PigListSectionPage {
     this.pigs.forEach((pig) => {
       pig['breedName'] = this.breed[pig.breedId] ? this.breed[pig.breedId].name : '';
       pig['houseName'] = this.houses[pig.houseId] ? this.houses[pig.houseId].name : '';
+      pig['statusName'] = this.status[pig.statusId] ? this.status[pig.statusId].name : '';
+      pig['statusCode'] = this.status[pig.statusId] ? (this.status[pig.statusId].code).toString() : '';
       pig['birthdayDisplay'] = this.util.convertDate(pig.birthday);
       pig['genderName'] = this.gender[pig.gender] ? this.gender[pig.gender].name : '';
     })
     this.filterProvider.input = this.pigs;
     this.filterProvider.searchText = searchItem;
     this.filterProvider.searchWithText = this.filter_default;
-
     this.filterProvider.searchWithRange = {}
     return this.filterProvider.filter();
   }
@@ -111,11 +123,11 @@ export class PigListSectionPage {
     }, 800);
   }
 
-  viewDetail(pig){
-    this.navCtrl.push(PigViewPage,pig);
+  viewDetail(pig) {
+    this.navCtrl.push(PigViewPage, pig);
   }
 
-  changePig(NewVersPig,OldVersPig){
+  changePig(NewVersPig, OldVersPig) {
     OldVersPig = NewVersPig;
   }
 }

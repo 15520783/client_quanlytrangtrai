@@ -7,25 +7,26 @@
 
   <button 
   showWhen="core" 
-  *ngIf="add_to_sale_list.includes(sectionTypeId) && pig.statusId != statusPig.WAIT_FOR_SALE"
+  *ngIf="add_to_sale_list.includes(sectionTypeId) && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE"
   small ion-button item-end mode='ios' color="secondary"
   (tap)="forwardToSaleWaiting()">Thêm vào danh sách chờ bán</button>
   
  <button 
   showWhen="core" 
-  *ngIf="add_to_sale_list.includes(sectionTypeId) && pig.statusId == statusPig.WAIT_FOR_SALE"
+  *ngIf="add_to_sale_list.includes(sectionTypeId) && statusObjectKey[pig.statusId].code == statusPig.WAIT_FOR_SALE"
   small ion-button item-end mode='ios' color="secondary"
   (tap)="cancelSaleWaiting()">Hủy chờ bán</button>
   
   <button 
   showWhen="core" 
-  *ngIf="move_local.includes(sectionTypeId)"
-  small ion-button item-end mode='ios' color="secondary">Chuyển nội bộ</button>
+  *ngIf="breeding.includes(sectionTypeId) && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE && pig.gender == gender.FEMALE"
+  small ion-button item-end mode='ios' color="secondary"
+  (tap)="breeding_input()">Lên giống</button>
 
   <button 
   showWhen="core" 
-  *ngIf="breeding.includes(sectionTypeId)"
-  small ion-button item-end mode='ios' color="secondary">Lên giống</button>
+  *ngIf="move_local.includes(sectionTypeId)"
+  small ion-button item-end mode='ios' color="secondary">Chuyển nội bộ</button>
 
   <!-- <button showWhen="core" small ion-button item-end mode='ios' color="secondary">Thí tình</button> -->
 </span>

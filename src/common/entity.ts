@@ -36,6 +36,7 @@ export { invoicePigDetail }
 export { foodWareHouse }
 export { medicineWarehouse }
 export { status }
+export {breedings}
 
 class base {
 	id: string;
@@ -408,6 +409,7 @@ class roles extends base {
 class status extends base {
 	name: string = '';
 	description: string = '';
+	code:string  = '';
 	previousStatus: string = '0';
 }
 
@@ -506,6 +508,18 @@ class medicineWarehouse extends base {
 	mfgDate: any = '';
 	expiryDate: any = '';
 	typeUse: string = '';
+}
+
+class breedings extends base{
+	pig = new pig();
+	date:any = '';
+	logId:string = '';	/** TODO: có thể là không dùng do có thuộc tính createdAt */
+	typeId:string = '';
+	description:string = '';
+	breedingCount:number = 0;
+	breedingNext:any = '';
+	matingEstimate:any ='';
+	matingReal:any = '';
 }
 
 class InputObject {

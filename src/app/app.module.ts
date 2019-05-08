@@ -90,6 +90,8 @@ import { DeployDataProvider } from '../providers/deploy-data/deploy-data';
 import { PartnerProvider } from '../providers/partner/partner';
 import { InvoicesProvider } from '../providers/invoices/invoices';
 import { TokenInterceptor } from './interceptor';
+import { BreedingInputPage } from '../pages/breeding-input/breeding-input';
+import { ActivitiesProvider } from '../providers/activities/activities';
 
 
 const Pages = [
@@ -134,7 +136,8 @@ const Pages = [
   MedicineInvoiceDetailPage,
   MedicineWarehouseInputPage,
   InputPigToInternalInvoicePage,
-  PigListSectionPage
+  PigListSectionPage,
+  BreedingInputPage
 ]
 
 const Components = [
@@ -173,7 +176,8 @@ const Providers = [
   UserProvider,
   DeployDataProvider,
   PartnerProvider,
-  InvoicesProvider
+  InvoicesProvider,
+  ActivitiesProvider
 ]
 
 const Directives = [
@@ -224,7 +228,8 @@ const Directives = [
     DatePipe,
     DeployDataProvider,
     PartnerProvider,
-    InvoicesProvider
+    InvoicesProvider,
+    ActivitiesProvider
   ]
 })
 export class AppModule {}

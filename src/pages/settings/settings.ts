@@ -235,7 +235,8 @@ export class SettingsPage {
         filter_default: ["name", "description", "previousStatus"],
         attributes: [
           { name: "description", label: 'Mô tả' },
-          { name: "previousStatus", label: 'Trạng thái trước' }
+          { name: "previousStatus", label: 'Trạng thái trước' },
+          { name: "code", label: 'Status code' },
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.status,

@@ -1,0 +1,59 @@
+
+<ion-header>
+    <ion-navbar>
+        <ion-toolbar toolbar-transparent no-border class="custom-toolbar" >
+          <ion-title style="padding: 0px!important">Nhập thông tin lên giống</ion-title>
+        </ion-toolbar>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+    <form action="" (ngSubmit)="onSubmit()" style="padding-bottom: 10vH">
+      <ion-list >
+        <input-date [(validControl)] = "credentialsForm.controls.date"
+                    [errorMessage_Required]  ="'Ngày lên giống là hạng mục bắt buộc.'"
+                    [label] = "'Ngày lên giống'"
+                    [placeholder]="'dd/mm/yyyy'"
+                    [active]= "submitAttempt">
+        </input-date>
+        <input-date [(validControl)] = "credentialsForm.controls.breedingNext"
+                    [errorMessage_Required]  ="'Ngày lên giống tiếp theo là hạng mục bắt buộc.'"
+                    [label] = "'Ngày lên giống tiếp theo'"
+                    [placeholder]="'dd/mm/yyyy'"
+                    [active]= "submitAttempt">
+        </input-date>
+        <input-select [(validControl)] = "credentialsForm.controls.typeId"
+                    [errorMessage_Required]  ="'Loại lên giống là hạng mục bắt buộc.'"
+                    [label] = "'Loại lên giống'"
+                    [active]= "submitAttempt"
+                    [placeholder]="'Chọn loại lên giống'"
+                    [(data)]="breedingTypes">
+        </input-select>
+        <input-date [(validControl)] = "credentialsForm.controls.matingEstimate"
+                    [errorMessage_Required]  ="'Ngày phối dự kiến là hạng mục bắt buộc.'"
+                    [label] = "'Ngày phối dự kiến'"
+                    [placeholder]="'dd/mm/yyyy'"
+                    [active]= "submitAttempt">
+        </input-date>
+        <input-text [(validControl)] = "credentialsForm.controls.description"
+                    [errorMessage_Required]  = "'Ghi chú là hạng mục bắt buộc'"
+                    [label] = "'Ghi chú'"
+                    [placeholder]="'Nhập thông tin ghi chú'"
+                    [active]= "submitAttempt">
+        </input-text>
+        
+      </ion-list>
+    </form>
+  </ion-content>
+  
+  <ion-footer no-border showWhen="core">
+    <ion-toolbar toolbar-transparent text-right showWhen="core">
+        <button type="submit"  ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
+        <button ion-button   mode='ios' color="danger">Hủy</button>
+    </ion-toolbar>
+  </ion-footer>
+  
+  <ion-footer no-border no-padding showWhen="ios,android">
+    <button type="submit" no-margin full block ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
+  </ion-footer>
+  
