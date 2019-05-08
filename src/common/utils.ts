@@ -107,4 +107,8 @@ export class Utils {
     return this.modal.present();
   }
 
+  
+  deepClone(obj){
+    return JSON.parse(JSON.stringify(obj));
+  }
 }

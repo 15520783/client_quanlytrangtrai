@@ -25,7 +25,7 @@
             <option-list-pig-section  
               *ngIf="sectionTypeId" 
               [(sectionTypeId)]="sectionTypeId" 
-              [(pig)]="visible_items[idx]"
+              [pig]="visible_items[idx]"
               (pigChange)="changePig($event,item)">
             </option-list-pig-section>
           </ion-row>

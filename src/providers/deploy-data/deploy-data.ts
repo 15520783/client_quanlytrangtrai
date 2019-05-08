@@ -7,7 +7,7 @@ import { PartnerProvider } from '../partner/partner';
 import { EmployeesProvider } from '../employees/employees';
 import { SectionsProvider } from '../sections/sections';
 import { SettingsProvider } from '../settings/settings';
-import { pig, house, foodWareHouse, medicineWarehouse, section } from '../../common/entity';
+import { pig, house, foodWareHouse, medicineWarehouse, section, status } from '../../common/entity';
 import { WarehousesProvider } from '../warehouses/warehouses';
 
 
@@ -303,14 +303,14 @@ export class DeployDataProvider {
   /**
    * Lấy các đối tượng giống với Object key  là id
    */
-  get_object_list_key_of_breeds(){
+  get_object_list_key_of_breeds() {
     let breeds = {};
-    this.settingProvider.setting.breeds.forEach((breed)=>{
+    this.settingProvider.setting.breeds.forEach((breed) => {
       breeds[breed.id] = breed;
     })
     return breeds;
   }
-  
+
 
 
   /**
@@ -552,7 +552,7 @@ export class DeployDataProvider {
    * Lấy danh sách heo thuộc khu
    * @param sectionTypeId 
    */
-  get_pigs_of_section(sectionTypeId:string) {
+  get_pigs_of_section(sectionTypeId: string) {
     let housesId: any = [];
     this.houseProvider.houses.filter((house) => {
       return (house.section.typeId == sectionTypeId) ? true : false;
@@ -561,7 +561,7 @@ export class DeployDataProvider {
     })
 
     return this.pigsProvider.pigs.filter((pig) => {
-      return housesId.includes(pig.houseId)? true : false;
+      return housesId.includes(pig.houseId) ? true : false;
     })
   }
 
@@ -574,4 +574,13 @@ export class DeployDataProvider {
     })[0];
   }
 
+  /**
+   * Lấy trạng thái heo chờ bán dựa vào trạng thái hiện tại
+   * @param statusId 
+   */
+  get_status_saleWaiting_of_pig(statusId): status {
+    return this.settingProvider.setting.status.filter((status) => {
+      return status.previousStatus == statusId ? true : false;
+    })[0];
+  }
 }

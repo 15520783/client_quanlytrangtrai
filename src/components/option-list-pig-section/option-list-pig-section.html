@@ -4,12 +4,19 @@
   *ngIf="view_info.includes(sectionTypeId)"
   small ion-button item-end mode='ios' color="main"
   (tap)="viewDetail()">Xem thông tin</button>
-  <button 
 
+  <button 
   showWhen="core" 
   *ngIf="add_to_sale_list.includes(sectionTypeId) && pig.statusId != statusPig.WAIT_FOR_SALE"
   small ion-button item-end mode='ios' color="secondary"
-  (tap)="forwardToSaleWaiting()">Xuất</button>
+  (tap)="forwardToSaleWaiting()">Thêm vào danh sách chờ bán</button>
+  
+ <button 
+  showWhen="core" 
+  *ngIf="add_to_sale_list.includes(sectionTypeId) && pig.statusId == statusPig.WAIT_FOR_SALE"
+  small ion-button item-end mode='ios' color="secondary"
+  (tap)="cancelSaleWaiting()">Hủy chờ bán</button>
+  
   <button 
   showWhen="core" 
   *ngIf="move_local.includes(sectionTypeId)"
