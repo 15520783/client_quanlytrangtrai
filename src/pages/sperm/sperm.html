@@ -1,0 +1,54 @@
+<ion-header>
+    <ion-navbar>
+      <ion-toolbar no-border class="custom-toolbar">
+        <ion-buttons left showWhen="platform.is('core')">
+          <button navPop ion-button icon-only>
+            <ion-icon name="arrow-back"></ion-icon>
+          </button>
+        </ion-buttons>
+        <ion-title style="padding: 0px!important">Nhập thông tin tinh heo khai thác</ion-title>
+      </ion-toolbar>
+    </ion-navbar>
+  </ion-header>
+  <ion-content no-padding style>
+      <form style="padding-bottom: 10vH">
+          <ion-item>
+            <ion-select placeholder="Chọn heo">
+              <ion-option value ="Heo 1" >Heo 1</ion-option>
+              <ion-option value ="Heo 2" >Heo 2</ion-option>
+              <ion-option value ="Heo 3" >Heo 3</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-datetime placeholder="Ngày lấy" displayFormat="h:mm A" pickerFormat="h mm A" ></ion-datetime>
+          </ion-item>
+          <ion-item>
+          <ion-input type="number" placeholder="Lượng lấy(ml)" ></ion-input>
+          </ion-item>
+          <ion-item>
+          <ion-input type="number" placeholder="Số liều pha (liều)" ></ion-input>
+          </ion-item>
+          <ion-item>
+          <ion-input type="number" placeholder="Hoạt lực (%)" ></ion-input>
+          </ion-item>
+          <ion-item>
+          <ion-input type="number" placeholder="Mật độ (Triệu/ml)" ></ion-input>
+          </ion-item>
+          <ion-item>
+          <ion-input type="number" placeholder="Tỉ lệ sống trung bình(%)" ></ion-input>
+          </ion-item>
+          <ion-item>
+          <ion-input type="number" placeholder="Tỉ lệ chết trung bình(%)" ></ion-input>
+          </ion-item>
+          <ion-item>
+          <ion-input type="number" placeholder="Tỉ lệ bất thường(%)" ></ion-input>
+        </ion-item>
+      </form>
+  
+  </ion-content>
+  <ion-footer>
+      <ion-toolbar toolbar-transparent text-right>
+        <button type="submit" ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
+        <button ion-button mode='ios' color="danger">Hủy</button>
+      </ion-toolbar>
+    </ion-footer>
