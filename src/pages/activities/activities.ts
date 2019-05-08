@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, Platform, Events, Nav } from 'ioni
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { VARIABLE } from '../../common/const';
 import { PigListSectionPage } from '../pig-list-section/pig-list-section';
+import { SpermPage } from '../sperm/sperm';
 
 @IonicPage()
 @Component({
@@ -103,7 +104,10 @@ export class ActivitiesPage {
         name: 'Lên giống', component: PigListSectionPage, active: false
       },
       sperm_pig_khu_noc: {
-        name: 'Khai thác tinh heo', component: PigListSectionPage, active: false
+        name: 'Khai thác tinh heo', component: SpermPage, active: false
+      },
+      list_sperm_pig_khu_noc: {
+        name: 'Danh sách tinh heo', component: SpermPage, active: false
       },
       mating_pig_khu_phoi: {
         name: 'Phối giống', component: PigListSectionPage, active: false
@@ -131,7 +135,8 @@ export class ActivitiesPage {
         title: 'Khu nọc',
         components: [
           this.components.move_pig_khu_noc,
-          this.components.sperm_pig_khu_noc
+          this.components.sperm_pig_khu_noc,
+          this.components.list_sperm_pig_khu_noc
         ],
         icon: 'app-activities', active: false, expand: false
       },
