@@ -109,19 +109,20 @@ export class OptionListPigSectionComponent {
   }
 
   sperm_input() {
-    this.navCtrl.push(SpermInputPage, { pig: this.pig });
+    let eventTag = Date.now().toString();
+    this.navCtrl.push(SpermInputPage, { pig: this.pig, eventTag: eventTag });
 
-    this.events.unsubscribe('sperm-input:CreateSperm', this.sperm);
-    this.events.subscribe('sperm-input:CreateSperm', (sperm) => {
-      if (sperm) {
-        this.activitiesProvider.createSperm(sperm)
+    // this.events.unsubscribe('sperm-input:CreateSperm', this.sperm);
+    this.events.subscribe(eventTag, (eventData) => {
+      if (eventData.sperm) {
+        this.activitiesProvider.createSperm(eventData.sperm)
           .then((newSperm) => {
             if (newSperm) {
-              this.events.publish('sperm-input:CreateSperm:OK', true);
-              this.events.unsubscribe('sperm-input:CreateSperm', this.sperm);
+              this.events.publish(eventData.eventTag, true);
+              this.events.unsubscribe(eventTag);
             }
             else {
-              this.events.publish('sperm-input:CreateSperm:OK', false);
+              this.events.publish(eventData.eventTag, false);
             }
           })
           .catch((err: Error) => {

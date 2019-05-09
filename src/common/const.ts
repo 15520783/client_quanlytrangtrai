@@ -27,7 +27,9 @@ const CONFIG = {
     // SERVER_API: 'http://192.168.1.45:8080',
     DEFAULT_TIMEOUT: 30000,
     LANGUAGE_DEFAULT: 'vi',
-    ACCESS_KEY: ''
+    ACCESS_KEY: '',
+    PAGE_SITE: 50,
+    LOADING_MORE_TIME: 800
 }
 
 const VARIABLE = {
@@ -161,6 +163,7 @@ const API = {
     GET_ALL_SETTINGS: '/api/settings/list',
     GET_ALL_PARTNERS: '/api/partners/list',
     GET_ALL_INVOICES: '/api/invoices/list',
+    GET_ALL_SPERMS: '/api/sperm/list',
 
     GET_PIG_INVOICE_DETAIL_FROM_INVOICE: '/api/invoicepigdetail/invoice/',
     GET_FOOD_WAREHOUSE_FROM_INVOICE: '/api/foodwarehouse/invoice/',
@@ -224,7 +227,8 @@ const MESSAGE = {
         SESSIONS_NOT_EXPIRE: 'Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại',
         ERROR_OCCUR: 'Có lỗi xảy ra. Vui lòng kiểm tra lại.',
         UPDATE_SUCCESS: 'Dữ liệu cập nhật thành công.',
-        UPDATE_FAILED: 'Dữ liệu cập nhật thất bại. Vui lòng thử lại.'
+        UPDATE_FAILED: 'Dữ liệu cập nhật thất bại. Vui lòng thử lại.',
+        LOADING_DATA: 'Đang tải dữ liệu'
     }
 }
 

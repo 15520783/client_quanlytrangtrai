@@ -3,7 +3,8 @@ import { IonicPage, NavController, NavParams, Platform, Events, Nav } from 'ioni
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { VARIABLE } from '../../common/const';
 import { PigListSectionPage } from '../pig-list-section/pig-list-section';
-import { SpermInputPage } from '../sperm_input/sperm_input';
+import { Utils } from '../../common/utils';
+import { SpermListPage } from '../sperm-list/sperm-list';
 
 @IonicPage()
 @Component({
@@ -20,11 +21,12 @@ export class ActivitiesPage {
   public rootParam: any;
 
   constructor(
+    public util: Utils,
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
     public deployData: DeployDataProvider,
-    public events: Events
+    public events: Events,
   ) {
     this.components = {
       list_pig_khu_cach_ly: {
@@ -34,6 +36,7 @@ export class ActivitiesPage {
           getPigs(deployData: DeployDataProvider) {
             return deployData.get_pigs_of_section(VARIABLE.SECTION_TYPE[1].id)
           },
+          pigs: []
         }
       },
       list_pig_for_sale_khu_cach_ly: {
@@ -43,6 +46,7 @@ export class ActivitiesPage {
           getPigs(deployData: DeployDataProvider) {
             return deployData.get_pigs_sale_waiting_of_section(VARIABLE.SECTION_TYPE[1].id)
           },
+          pigs: [],
           statusFilter: [VARIABLE.STATUS_PIG.WAIT_FOR_SALE]
         }
       },
@@ -64,8 +68,13 @@ export class ActivitiesPage {
           sectionType: VARIABLE.SECTION_TYPE[2],
           getPigs(deployData: DeployDataProvider) {
             return deployData.get_pigs_of_section(VARIABLE.SECTION_TYPE[2].id)
-          }
+          },
+          pigs: []
         }
+      },
+      list_sperm_pig_khu_noc: {
+        name: 'Danh sách tinh heo', component: SpermListPage, active: false,
+        data:{}
       },
       move_pig_khu_phoi: {
         name: 'Chuyển(xuất) heo', component: PigListSectionPage, active: false,
@@ -109,12 +118,7 @@ export class ActivitiesPage {
       breeding_pig_khu_cach_ly: {
         name: 'Lên giống', component: PigListSectionPage, active: false
       },
-      sperm_pig_khu_noc: {
-        name: 'Khai thác tinh heo', component: SpermInputPage, active: false
-      },
-      list_sperm_pig_khu_noc: {
-        name: 'Danh sách tinh heo', component: SpermInputPage, active: false
-      },
+
       mating_pig_khu_phoi: {
         name: 'Phối giống', component: PigListSectionPage, active: false
       },
@@ -141,7 +145,6 @@ export class ActivitiesPage {
         title: 'Khu nọc',
         components: [
           this.components.list_pig_khu_noc,
-          this.components.sperm_pig_khu_noc,
           this.components.list_sperm_pig_khu_noc
         ],
         icon: 'app-activities', active: false, expand: false
@@ -197,7 +200,9 @@ export class ActivitiesPage {
     this.pages[0].active = true;
     this.pages[0].components[0].active = true;
     this.rootPage = this.pages[0].components[0].component;
-    this.pages[0].components[0].data['pigs'] = this.pages[0].components[0].data.getPigs(this.deployData);
+    if (this.pages[0].components[0].data.hasOwnProperty('getPigs')) {
+      this.pages[0].components[0].data['pigs'] = this.pages[0].components[0].data.getPigs(this.deployData);
+    }
     this.rootParam = this.pages[0].components[0].data;
   }
 
@@ -235,7 +240,9 @@ export class ActivitiesPage {
       })
     }
     componentObj.active = true;
-    componentObj.data['pigs'] = componentObj.data.getPigs(this.deployData);
+    if (componentObj.data.hasOwnProperty('getPigs')) {
+      componentObj.data['pigs'] = componentObj.data.getPigs(this.deployData);
+    }
     this.nav.setRoot(componentObj.component, componentObj.data)
   }
 } 

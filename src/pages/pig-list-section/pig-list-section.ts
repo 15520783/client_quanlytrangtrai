@@ -73,7 +73,6 @@ export class PigListSectionPage {
   }
 
   ionViewDidLoad() {
-
     this.sectionTypeId = this.navParams.data.sectionType.id;
     if (this.navParams.data) {
       this.pigs = this.navParams.data.getPigs(this.deployData);
@@ -81,7 +80,6 @@ export class PigListSectionPage {
         this.statusFilter = this.navParams.data.statusFilter;
       }
     }
-    // this.pigs = this.deployData.get_pigs_of_section(this.sectionTypeId);
     this.setFilteredItems();
   }
 

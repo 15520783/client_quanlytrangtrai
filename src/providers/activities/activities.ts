@@ -9,6 +9,20 @@ export class ActivitiesProvider {
   constructor(public http: HttpClient) {
   }
 
+  /**
+   * Lấy danh sách tinh heo
+   */
+  getAllSperms(){
+    return this.http
+    .get(API.GET_ALL_SPERMS)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  /**
+   * Tạo một hành động lên giống heo nái
+   * @param objBody 
+   */
   createBreeding(objBody: breedings) {
     return this.http
       .post(API.CREATE_BREEDING, objBody)
@@ -16,6 +30,10 @@ export class ActivitiesProvider {
       .toPromise();
   }
 
+  /**
+   * Tạo một hành động lấy tinh heo nọc
+   * @param objBody 
+   */
   createSperm(objBody: sperms) {
     return this.http
       .post(API.CREATE_SPERM, objBody)

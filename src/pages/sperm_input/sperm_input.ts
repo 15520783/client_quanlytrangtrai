@@ -47,7 +47,6 @@ export class SpermInputPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad BreedingInputPage');
   }
 
   onSubmit() {
@@ -58,15 +57,16 @@ export class SpermInputPage {
         this.sperm[attr] = this.credentialsForm.value[attr];
       });
 
-      this.events.publish('sperm-input:CreateSperm', this.sperm);
-      this.events.unsubscribe('sperm-input:CreateSperm:OK');
-      this.events.subscribe('sperm-input:CreateSperm:OK', (OK) => {
+      let eventTag = Date.now().toString();
+      this.events.publish(this.navParams.data.eventTag, { eventTag: eventTag, sperm: this.sperm });
+      // this.events.unsubscribe('sperm-input:CreateSperm:OK');
+      this.events.subscribe(eventTag, (OK) => {
         if (OK) {
           this.navCtrl.pop();
-          this.events.unsubscribe('sperm-input:CreateSperm:OK');
+          this.events.unsubscribe(eventTag);
         } else {
           this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].UPDATE_FAILED);
-          this.events.unsubscribe('sperm-input:CreateSperm:OK');
+          this.events.unsubscribe(eventTag);
         }
       });
     }
