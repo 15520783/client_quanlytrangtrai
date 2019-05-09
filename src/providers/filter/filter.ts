@@ -35,6 +35,8 @@ export class FilterProvider {
     // origin_avg_weight: { min: null, max: null }
   }
 
+  public sortBy: string = '';
+  public typeSort: "DESC" | "ASC";
 
   filter() {
     let result = this.input.filter((item) => {
@@ -58,10 +60,17 @@ export class FilterProvider {
     Object.keys(this.searchWithRange).forEach((e) => {
       result = result.filter((value) => {
         // if (value[e] !== undefined)
-          return (this.searchWithRange[e].min <= value[e] && this.searchWithRange[e].max >= value[e]) ? true : false;
+        return (this.searchWithRange[e].min <= value[e] && this.searchWithRange[e].max >= value[e]) ? true : false;
         // else return true;
       })
     })
+
+    // if (this.sortBy) {
+    //   if (this.typeSort == "DESC")
+    //     result = result.sort((a, b) => (a[this.sortBy] > b[this.sortBy]) ? 1 : -1);
+    //   else
+    //     result = result.sort((a, b) => (a[this.sortBy] < b[this.sortBy]) ? 1 : -1);
+    // }
 
     return result;
   }

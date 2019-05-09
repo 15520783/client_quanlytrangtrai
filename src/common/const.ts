@@ -15,7 +15,8 @@ const KEY = {
 const SETTING_STORAGE_KEY = {
     PREGNANCY_STATUS: 'pregnancyStatus',
     BREEDS: 'breeds',
-    BREEDING_TYPE: 'breedingType'
+    BREEDING_TYPE: 'breedingType',
+    STATUS_PIG: 'status'
 }
 
 const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -51,7 +52,25 @@ const VARIABLE = {
         { id: '8', value: '8', name: 'Khu 8' }
     ],
     STATUS_PIG: {
+        UNKNOW: "0",
+        REPLACEMENT: "1",
+        MATING: "2",
+        RETURN: "3",
+        ABORTION: "4",
+        FARROWING: "5",
+        WEANING: "6",
+        GROWING: "7",
         WAIT_FOR_SALE: "8"
+    },
+    INVOICE_PIG_TYPE: {
+        INTERNAL_IMPORT: 'internal-import',
+        EXTERNAL_IMPORT: 'external-import',
+        INTERNAL_EXPORT: 'internal-export',
+        SALING_EXPORT: 'sale'
+    },
+    INVOICE_STATUS: {
+        PROCCESSING: 'processing',
+        COMPLETE: 'complete'
     },
     section_type: [
         {
@@ -152,6 +171,10 @@ const API = {
     DELETE_PREGNANCY_STATUS: '/api/pregnancystatus/',
     UPDATE_PREGNANCY_STATUS: '/api/pregnancystatus/',
 
+    CREATE_PIG_STATUS: '/api/status/',
+    DELETE_PIG_STATUS: '/api/status/',
+    UPDATE_PIG_STATUS: '/api/status/',
+
     CREATE_BREED: '/api/breeds/',
     UPDATE_BREED: '/api/breeds/',
     DELETE_BREED: '/api/breeds/',
@@ -167,12 +190,9 @@ const API = {
 
     CREATE_PRODUCT_INVOICE: '/api/invoicesproduct/',
     DELETE_PRODUCT_INVOICE: '/api/invoicesproduct/',
-    // CREATE_PIG_INVOICE:'/api/invoicepigdetail/pigsinvoicepigdetail/',
 
-    // CREATE_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/',
     CREATE_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/pigsinvoicepigdetail/',
     DELETE_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/',
-
 
     CREATE_FOOD_WAREHOUSE: '/api/foodwarehouse/',
     CREATE_MEDICINE_WAREHOUSE: '/api/medicinewarehouse/',
@@ -181,9 +201,14 @@ const API = {
     UPDATE_PIG: '/api/pigs/',
     DELETE_PIG: '/api/pigs/',
 
-    CREATE_BREEDING:'/api/breedings/',
-    UPDATE_BREEDING:'/api/breedings/',
-    DELETE_BREEDING:'/api/breedings/'
+    CREATE_BREEDING: '/api/breedings/',
+    UPDATE_BREEDING: '/api/breedings/',
+    DELETE_BREEDING: '/api/breedings/',
+
+    CREATE_SPERM: '/api/sperm/',
+    UPDATE_SPERM: '/api/sperm/',
+    DELETE_SPERM: '/api/sperm/',
+
 }
 
 const ERROR_NAME = {
@@ -199,7 +224,7 @@ const MESSAGE = {
         SESSIONS_NOT_EXPIRE: 'Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại',
         ERROR_OCCUR: 'Có lỗi xảy ra. Vui lòng kiểm tra lại.',
         UPDATE_SUCCESS: 'Dữ liệu cập nhật thành công.',
-        UPDATE_FAILED:'Dữ liệu cập nhật thất bại. Vui lòng thử lại.'
+        UPDATE_FAILED: 'Dữ liệu cập nhật thất bại. Vui lòng thử lại.'
     }
 }
 

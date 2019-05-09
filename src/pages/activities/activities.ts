@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, Platform, Events, Nav } from 'ioni
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { VARIABLE } from '../../common/const';
 import { PigListSectionPage } from '../pig-list-section/pig-list-section';
-import { SpermPage } from '../sperm/sperm';
+import { SpermInputPage } from '../sperm_input/sperm_input';
 
 @IonicPage()
 @Component({
@@ -58,10 +58,13 @@ export class ActivitiesPage {
           sectionType: VARIABLE.SECTION_TYPE[1]
         }
       },
-      move_pig_khu_noc: {
-        name: 'Chuyển(xuất) heo', component: PigListSectionPage, active: false,
+      list_pig_khu_noc: {
+        name: 'Danh sách heo', component: PigListSectionPage, active: false,
         data: {
-          sectionType: VARIABLE.SECTION_TYPE[2]
+          sectionType: VARIABLE.SECTION_TYPE[2],
+          getPigs(deployData: DeployDataProvider) {
+            return deployData.get_pigs_of_section(VARIABLE.SECTION_TYPE[2].id)
+          }
         }
       },
       move_pig_khu_phoi: {
@@ -88,10 +91,13 @@ export class ActivitiesPage {
           sectionType: VARIABLE.SECTION_TYPE[6]
         }
       },
-      move_pig_khu_hau_bi: {
+      list_pig_khu_hau_bi: {
         name: 'Chuyển(xuất) heo', component: PigListSectionPage, active: false,
         data: {
-          sectionType: VARIABLE.SECTION_TYPE[7]
+          sectionType: VARIABLE.SECTION_TYPE[7],
+          getPigs(deployData: DeployDataProvider) {
+            return deployData.get_pigs_of_section(VARIABLE.SECTION_TYPE[7].id)
+          },
         }
       },
       move_pig_khu_8: {
@@ -104,10 +110,10 @@ export class ActivitiesPage {
         name: 'Lên giống', component: PigListSectionPage, active: false
       },
       sperm_pig_khu_noc: {
-        name: 'Khai thác tinh heo', component: SpermPage, active: false
+        name: 'Khai thác tinh heo', component: SpermInputPage, active: false
       },
       list_sperm_pig_khu_noc: {
-        name: 'Danh sách tinh heo', component: SpermPage, active: false
+        name: 'Danh sách tinh heo', component: SpermInputPage, active: false
       },
       mating_pig_khu_phoi: {
         name: 'Phối giống', component: PigListSectionPage, active: false
@@ -134,7 +140,7 @@ export class ActivitiesPage {
       {
         title: 'Khu nọc',
         components: [
-          this.components.move_pig_khu_noc,
+          this.components.list_pig_khu_noc,
           this.components.sperm_pig_khu_noc,
           this.components.list_sperm_pig_khu_noc
         ],
@@ -174,7 +180,7 @@ export class ActivitiesPage {
       {
         title: 'Khu hậu bị',
         components: [
-          this.components.move_pig_khu_hau_bi,
+          this.components.list_pig_khu_hau_bi,
         ],
         icon: 'app-activities', active: false
       },

@@ -8,6 +8,7 @@ import { PigViewPage } from '../../tabs/pig-view/pig-view';
 import { Utils } from '../../common/utils';
 import { BreedingInputPage } from '../../pages/breeding-input/breeding-input';
 import { ActivitiesProvider } from '../../providers/activities/activities';
+import { SpermInputPage } from '../../pages/sperm_input/sperm_input';
 
 @Component({
   selector: 'option-list-pig-section',
@@ -24,6 +25,7 @@ export class OptionListPigSectionComponent {
   public add_to_sale_list;
   public view_info;
   public breeding;
+  public sperm;
   public gender;
   public statusObjectKey: any = {};
 
@@ -60,6 +62,10 @@ export class OptionListPigSectionComponent {
       VARIABLE.SECTION_TYPE[7].id,
     ];
 
+    this.sperm = [
+      VARIABLE.SECTION_TYPE[2].id
+    ]
+
     this.sectionTypeId = VARIABLE.SECTION_TYPE[this.sectionTypeId];
   }
 
@@ -89,7 +95,6 @@ export class OptionListPigSectionComponent {
         this.activitiesProvider.createBreeding(breeding)
           .then((newBreeding) => {
             if (newBreeding) {
-              console.log(newBreeding);
               this.events.publish('option-list-pig-section:OK', true);
               this.events.unsubscribe('breeding-input:CreateBreeding');
             }
@@ -101,6 +106,30 @@ export class OptionListPigSectionComponent {
           })
       }
     })
+  }
+
+  sperm_input() {
+    this.navCtrl.push(SpermInputPage, { pig: this.pig });
+
+    this.events.unsubscribe('sperm-input:CreateSperm', this.sperm);
+    this.events.subscribe('sperm-input:CreateSperm', (sperm) => {
+      if (sperm) {
+        this.activitiesProvider.createSperm(sperm)
+          .then((newSperm) => {
+            if (newSperm) {
+              this.events.publish('sperm-input:CreateSperm:OK', true);
+              this.events.unsubscribe('sperm-input:CreateSperm', this.sperm);
+            }
+            else {
+              this.events.publish('sperm-input:CreateSperm:OK', false);
+            }
+          })
+          .catch((err: Error) => {
+            return err;
+          })
+      }
+    });
+
   }
 
   forwardToSaleWaiting() {

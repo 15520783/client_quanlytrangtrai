@@ -187,6 +187,17 @@ export class DeployDataProvider {
     return breedingTypes_select;
   }
 
+  get_statusCode_list_for_select(){
+    let statusCode_select = [];
+    Object.keys(VARIABLE.STATUS_PIG).forEach((statusKey)=>{
+      statusCode_select.push({
+        name:statusKey,
+        value:VARIABLE.STATUS_PIG[statusKey]
+      })
+    })
+    return statusCode_select;
+  }
+
   /**
    * Lấy trạng trại bằng Id
    * @param farmId 

@@ -6,6 +6,8 @@ import { SettingsProvider } from '../../providers/settings/settings';
 import { BreedsRole } from '../../role-input/breeds';
 import { BreedingTypesRole } from '../../role-input/breeding_type';
 import { SettingUtilComponent } from '../../components/setting-util/setting-util';
+import { StatusPigRole } from '../../role-input/statusPig';
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 
 @IonicPage()
 @Component({
@@ -29,7 +31,8 @@ export class SettingsPage {
     public events: Events,
     public renderer: Renderer,
     public settingProvider: SettingsProvider,
-    public platform: Platform
+    public platform: Platform,
+    public deployData:DeployDataProvider
   ) {
     this.settingProvider.setting.foods.forEach((food, idx) => {
       this.foods_temp.push(food);
@@ -240,6 +243,7 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.status,
+        roleInput: new StatusPigRole(this.settingProvider,this.deployData),
       },
       rounds: {
         title: 'Danh sách lứa',

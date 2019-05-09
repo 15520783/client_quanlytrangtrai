@@ -1,6 +1,7 @@
 import { InputObject, invoicesPig } from "../common/entity";
 import { DeployDataProvider } from "../providers/deploy-data/deploy-data";
 import { InvoicesProvider } from "../providers/invoices/invoices";
+import { VARIABLE } from "../common/const";
 
 export class InternalPigInvoiceRole {
     public object = new invoicesPig();
@@ -158,7 +159,7 @@ export class InternalPigInvoiceRole {
 
 
     insert() {
-        this.object.invoiceType = 1;
+        this.object.invoiceType = VARIABLE.INVOICE_PIG_TYPE.INTERNAL_IMPORT;
         let destination = this.deployData.get_farm_by_id(this.object.destinationId);
         let des_manager = this.deployData.get_employee_by_id(this.object.destinationManager);
         if(destination){

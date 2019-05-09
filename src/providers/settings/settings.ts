@@ -155,4 +155,26 @@ export class SettingsProvider {
     .timeout(CONFIG.DEFAULT_TIMEOUT)
     .toPromise();
   }
+
+  createNewPigStatus(objBody:status){
+    return this.http.post(API.CREATE_PIG_STATUS,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  deletePigStatus(objBody:status){
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http.delete(API.DELETE_PIG_STATUS,options)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  updatePigStatus(objBody:status){
+    return this.http.put(API.UPDATE_PIG_STATUS,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
 }

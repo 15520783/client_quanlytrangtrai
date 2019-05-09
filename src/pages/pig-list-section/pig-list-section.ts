@@ -127,7 +127,4 @@ export class PigListSectionPage {
     this.navCtrl.push(PigViewPage, pig);
   }
 
-  changePig(NewVersPig, OldVersPig) {
-    OldVersPig = NewVersPig;
-  }
 }

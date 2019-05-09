@@ -6,7 +6,9 @@ import { Utils } from '../../common/utils';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { PigInputPage } from '../pig-input/pig-input';
 import { PigsProvider } from '../../providers/pigs/pigs';
-import { KEY } from '../../common/const';
+import { KEY, VARIABLE } from '../../common/const';
+import { ExternalPigInvoiceRole } from '../../role-input/externalPigInvoice';
+import { InvoiceInputUtilComponent } from '../../components/invoice-input-util/invoice-input-util';
 
 
 @IonicPage()
@@ -27,6 +29,10 @@ export class ExternalPigInvoiceDetailPage {
   public foots: any;
   public healStatus: any;
 
+  canCheckComplete: boolean = false;
+  canEditInvoice:boolean = false;
+  canDelete: boolean = false;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -39,8 +45,6 @@ export class ExternalPigInvoiceDetailPage {
   ) {
     if (this.navParams.data.invoice) {
       this.invoice = this.navParams.data.invoice;
-      // this.invoice.importDate = this.util.convertDate(this.invoice.importDate);
-      // this.invoice.updatedAt = this.util.convertDate(this.invoice.updatedAt);
       this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
       this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.sourceId);
     }
@@ -50,6 +54,10 @@ export class ExternalPigInvoiceDetailPage {
     this.healStatus = this.deployData.get_object_list_key_of_healthStatus();
     this.foots = this.deployData.get_object_list_key_of_foot();
 
+    if (this.invoice.status == VARIABLE.INVOICE_STATUS.PROCCESSING) {
+      this.canCheckComplete = true;
+      this.canEditInvoice = true;
+    }
   }
 
   ionViewDidLoad() {
@@ -62,7 +70,6 @@ export class ExternalPigInvoiceDetailPage {
         this.util.closeLoading();
       })
       .catch((err: Error) => {
-        console.log(err);
         this.util.closeLoading().then(() => {
           this.util.showToast('Dữ liệu chưa được tải về. Vui lòng kiểm tra kết nối');
         })
@@ -82,7 +89,6 @@ export class ExternalPigInvoiceDetailPage {
   selectedTab(index) {
     this.slider.slideTo(index);
   }
-
 
   input_pig() {
     this.navCtrl.push(PigInputPage);
@@ -109,20 +115,6 @@ export class ExternalPigInvoiceDetailPage {
     this.navCtrl.push(PigInputPage, { pigId: item.objectId });
     this.events.unsubscribe('pig-inputs:updatePig');
     this.events.subscribe('pig-inputs:updatePig', (pig: pig) => {
-      // this.invoiceProvider.createPigInvoiceDetail({
-      //   pigs: this.deployData.get_pig_object_to_send_request(pig),
-      //   invoicesPig: this.invoice
-      // })
-      //   .then((response) => {
-      //     if (response && response.pigs && response.invoicePigDetail) {
-      //       this.pigs[response.pigs.id] = response.pigs;
-      //       this.pigProvider.pigs.push(response.pigs);
-      //       this.details.push(response.invoicePigDetail);
-      //       this.events.unsubscribe('pig-inputs:updatePig');
-      //       this.events.publish('OK');
-      //     }
-      //   })
-      //   .catch((err: Error) => { })
       pig = this.deployData.get_pig_object_to_send_request(pig);
       this.pigProvider.updatePig(pig)
         .then((pig) => {
@@ -162,6 +154,46 @@ export class ExternalPigInvoiceDetailPage {
           this.viewCtrl.dismiss().then(() => {
             this.events.publish('removeInvoiceEvent', this.invoice);
           });
+        }
+      })
+      .catch((err: Error) => { })
+  }
+
+
+  editInvoice() {
+    let roleInput = new ExternalPigInvoiceRole(this.deployData, this.invoiceProvider);
+    roleInput.object = this.util.deepClone(this.invoice);
+    roleInput.object.importDate = new Date(roleInput.object.importDate).toISOString();
+    this.navCtrl.push(InvoiceInputUtilComponent,
+      {
+        insertMode: true,
+        roleInput: roleInput
+      }
+    )
+
+    this.events.unsubscribe('callback');
+    this.events.subscribe('callback', (data) => {
+      if (data) {
+        this.invoice = data;
+        this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
+        this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.sourceId);
+        this.events.publish('external-pig-invoice-detail:updateInvoice', data);
+        this.events.unsubscribe('callback');
+      }
+    })
+  }
+
+  completeInvoice() {
+    let invoice: invoicesPig = this.util.deepClone(this.invoice);
+    invoice.status = VARIABLE.INVOICE_STATUS.COMPLETE;
+    this.invoiceProvider.updatePigInvoice(invoice)
+      .then((updatedInvoice:invoicesPig) => {
+        if (updatedInvoice) {
+          this.invoice = updatedInvoice;
+          this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
+          this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.sourceId);
+          this.canCheckComplete = false;
+          this.canEditInvoice = false;
         }
       })
       .catch((err: Error) => { })

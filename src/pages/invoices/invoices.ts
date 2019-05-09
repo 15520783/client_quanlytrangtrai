@@ -93,7 +93,7 @@ export class InvoicesPage {
               return invoices.invoiceType == 1 ? true : false;
             });
             this.externalPigInvoices = data.invoicesPigs.filter((invoices) => {
-              return invoices.invoiceType == 2 ? true : false;
+              return invoices.invoiceType == VARIABLE.INVOICE_PIG_TYPE.EXTERNAL_IMPORT ? true : false;
             })
             this.foodInvoices = data.invoicesProducts.filter((invoices) => {
               return invoices.invoiceType === VARIABLE.INVOICE_PRODUCT_TYPE.FOOD ? true : false;

@@ -6,7 +6,9 @@
   </ion-navbar>
   <ion-toolbar showWhen="core" class="pl-10">
     <button ion-button mode='ios' color="secondary" (tap)="input_pig()">Nhập heo</button>
-    <button *ngIf="!details.length" ion-button mode='ios' color="danger" (tap)="removeInvoice()">Xóa chứng từ</button>
+    <button *ngIf="canEditInvoice" ion-button mode='ios' color="secondary" (tap)="editInvoice()">Chỉnh sửa chứng từ</button>
+    <button *ngIf="canCheckComplete" ion-button mode='ios' color="secondary" (tap)="completeInvoice()">Xác nhận hoàn tất</button>
+    <button *ngIf="!details.length"ion-button mode='ios' color="danger" (tap)="removeInvoice()">Xóa chứng từ</button>
   </ion-toolbar>
   <ion-toolbar showWhen='ios,android'>
     <ion-segment [(ngModel)]="tab" scrollable >
@@ -34,6 +36,10 @@
               <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.sourceManagerName"></ion-input>
             </ion-item>
             <ion-item>
+              <ion-label stacked>Số xe vận chuyển:</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.vehicleNumber"></ion-input>
+            </ion-item>
+            <ion-item>
               <ion-label stacked>Nơi nhận:</ion-label>
               <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.destination.name"></ion-input>
             </ion-item>
@@ -52,6 +58,10 @@
             <ion-item>
               <ion-label stacked>Tổng số heo theo chứng từ:</ion-label>
               <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.quantity"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Tổng số heo đã nhập:</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="details.length"></ion-input>
             </ion-item>
           </ion-list>
         </ion-card-content>

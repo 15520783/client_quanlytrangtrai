@@ -16,7 +16,7 @@ export { farmTypes }
 export { foodType }
 export { foods }
 export { medicineType }
-export { medicineUnits , foodUnits}
+export { medicineUnits, foodUnits }
 export { medicines }
 export { priceCodes }
 export { footType }
@@ -36,7 +36,8 @@ export { invoicePigDetail }
 export { foodWareHouse }
 export { medicineWarehouse }
 export { status }
-export {breedings}
+export { breedings }
+export { sperms }
 
 class base {
 	id: string;
@@ -99,7 +100,7 @@ class pig extends base {
 	pregnancyStatusId: string = '0';
 	point_review: string = '0';
 	status = new status();
-	statusId:string = '0';
+	statusId: string = '0';
 	priceCodeId: string = '0';
 	overviewStatus: string = '0';
 
@@ -409,7 +410,7 @@ class roles extends base {
 class status extends base {
 	name: string = '';
 	description: string = '';
-	code:string  = '';
+	code: string = '0';
 	previousStatus: string = '0';
 }
 
@@ -430,7 +431,7 @@ class partners extends base {
 
 class invoicesPig extends base {
 	invoiceNo: string = '';
-	invoiceType: number = null;
+	invoiceType: string = '';
 	sourceId: string = '';
 	sourceManager: number = null;
 	sourceManagerName: string = '';
@@ -446,7 +447,7 @@ class invoicesPig extends base {
 	totalPrice: number = null;
 	importDate: any = '';
 	exportDate: any = '';
-	status:string = '';
+	status: string = '';
 	description: string = '';
 }
 
@@ -479,7 +480,7 @@ class foodWareHouse extends base {
 	invoice = new invoicesProduct();
 	parentId: string = '';
 	unit = new foodUnits();
-	unit_id:string = '';
+	unit_id: string = '';
 	quantity: string = '0';
 	total: string = '0';
 	used: string = '0';
@@ -510,16 +511,31 @@ class medicineWarehouse extends base {
 	typeUse: string = '';
 }
 
-class breedings extends base{
+class breedings extends base {
 	pig = new pig();
-	date:any = '';
-	logId:string = '';	/** TODO: có thể là không dùng do có thuộc tính createdAt */
-	typeId:string = '';
-	description:string = '';
-	breedingCount:number = 0;
-	breedingNext:any = '';
-	matingEstimate:any ='';
-	matingReal:any = '';
+	date: any = '';
+	logId: string = '';	/** TODO: có thể là không dùng do có thuộc tính createdAt */
+	typeId: string = '';
+	description: string = '';
+	breedingCount: number = 0;
+	breedingNext: any = '';
+	matingEstimate: any = '';
+	matingReal: any = '';
+}
+
+class sperms extends base {
+	pig = new pig();
+	spermCount: number = null;
+	date: any = '';
+	volume: number = 0;
+	doses: number = 0;
+	used: number = 0;
+	activity: number = 0;
+	c: number = 0;
+	lifeAvg: number = 0;
+	dieAvg: number = 0;
+	faddiness: number = 0;
+	status: string = '';
 }
 
 class InputObject {

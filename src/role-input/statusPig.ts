@@ -1,10 +1,13 @@
 import { InputObject, status } from "../common/entity";
 import { SettingsProvider } from "../providers/settings/settings";
 import { SETTING_STORAGE_KEY } from "../common/const";
+import { DeployDataProvider } from "../providers/deploy-data/deploy-data";
 
 export class StatusPigRole {
     public object = new status();
-    public keySettingStorage = SETTING_STORAGE_KEY.PREGNANCY_STATUS;
+    public keySettingStorage = SETTING_STORAGE_KEY.STATUS_PIG;
+
+
 
     public headerTitle = {
         insertMode: 'Nhập thông tin trạng thái heo',
@@ -32,6 +35,44 @@ export class StatusPigRole {
             data: null
         },
         {
+            name: 'code',
+            label: 'Status code',
+            placeholder: 'Nhập status code',
+            isRequire: true,
+            isMaxlength: false,
+            isMailFormat: false,
+            isNumber: false,
+            maxlength: 1000,
+            message: {
+                isMailFormat: '',
+                isRequire: 'Status code là hạng mục bắt buộc',
+                isNumber: '',
+                isMaxlength: ''
+            },
+            type: "input-text",
+            value: this.object.code,
+            data: null
+        },
+        {
+            name: 'previousStatus',
+            label: 'Trạng thái trước',
+            placeholder: 'Chọn trạng thái trước',
+            isRequire: true,
+            isMaxlength: false,
+            isMailFormat: false,
+            isNumber: false,
+            maxlength: 1000,
+            message: {
+                isMailFormat: '',
+                isRequire: 'Trạng thái trước là hạng mục bắt buộc',
+                isNumber: '',
+                isMaxlength: ''
+            },
+            type: "input-select",
+            value: this.object.code,
+            data: this.deployData.get_statusCode_list_for_select()
+        },
+        {
             name: 'description',
             label: 'Mô tả',
             placeholder: 'Nhập thông tin mô tả',
@@ -53,21 +94,22 @@ export class StatusPigRole {
     ];
 
     constructor(
-        public settingProvider: SettingsProvider
+        public settingProvider: SettingsProvider,
+        public deployData: DeployDataProvider
     ) {
     }
 
 
     insert() {
-        return this.settingProvider.createNewPregnancyStatus(this.object)
+        return this.settingProvider.createNewPigStatus(this.object)
     }
 
     delete(object){
-        return this.settingProvider.deletePregnancyStatus(object);
+        return this.settingProvider.deletePigStatus(object);
     }
 
     update(){
-        return this.settingProvider.updatePregnancyStatus(this.object);
+        return this.settingProvider.updatePigStatus(this.object);
     }
 
     clear(){

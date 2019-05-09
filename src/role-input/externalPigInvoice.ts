@@ -1,6 +1,7 @@
 import { invoicesPig } from "../common/entity";
 import { DeployDataProvider } from "../providers/deploy-data/deploy-data";
 import { InvoicesProvider } from "../providers/invoices/invoices";
+import { VARIABLE } from "../common/const";
 
 export class ExternalPigInvoiceRole {
     public object = new invoicesPig();
@@ -160,7 +161,8 @@ export class ExternalPigInvoiceRole {
     }
 
     insert() {
-        this.object.invoiceType = 2;
+        this.object.invoiceType = VARIABLE.INVOICE_PIG_TYPE.EXTERNAL_IMPORT;
+        this.object.status = VARIABLE.INVOICE_STATUS.PROCCESSING;
         let source = this.deployData.get_partner_by_id(this.object.sourceId);
         let destination = this.deployData.get_farm_by_id(this.object.destinationId);
         let des_manager = this.deployData.get_employee_by_id(this.object.destinationManager);
@@ -176,6 +178,26 @@ export class ExternalPigInvoiceRole {
             this.object.destinationManagerName = des_manager.name;
         }
         return this.invoiceProvider.createPigInvoice(this.object);
+    }
+
+    update(){
+        this.object.invoiceType = VARIABLE.INVOICE_PIG_TYPE.EXTERNAL_IMPORT;
+        this.object.status = VARIABLE.INVOICE_STATUS.PROCCESSING;
+        let source = this.deployData.get_partner_by_id(this.object.sourceId);
+        let destination = this.deployData.get_farm_by_id(this.object.destinationId);
+        let des_manager = this.deployData.get_employee_by_id(this.object.destinationManager);
+        if (source) {
+            this.object.sourceAddress = source.address;
+            this.object.sourceManager = null;
+        }
+        if(destination){
+            this.object.destinationAddress = destination.address;
+            this.object.destinationManager = destination.manager;
+        }
+        if(des_manager){
+            this.object.destinationManagerName = des_manager.name;
+        } 
+        return this.invoiceProvider.updatePigInvoice(this.object);
     }
 
     clear() {

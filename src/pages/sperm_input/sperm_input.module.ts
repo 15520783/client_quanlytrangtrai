@@ -6,4 +6,4 @@ import { NgModule } from '@angular/core';
   imports: [
   ],
 })
-export class SpermPageModule {}
+export class SpermInputPageModule {}

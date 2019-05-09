@@ -61,6 +61,16 @@ export class InvoicesProvider {
   }
 
   /**
+   * Cập nhật chứng từ heo
+   * @param objBody 
+   */
+  updatePigInvoice(objBody: invoicesPig){
+    return this.http
+    .put(API.UPDATE_PIG_INVOICE,objBody)
+    .toPromise();
+  }
+
+  /**
    * Tạo mới một chứng từ cám,thuốc
    * @param objBody 
    */

@@ -25,6 +25,12 @@
 
   <button 
   showWhen="core" 
+  *ngIf="sperm.includes(sectionTypeId) && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE && pig.gender == gender.MALE"
+  small ion-button item-end mode='ios' color="secondary"
+  (tap)="sperm_input()">Khai thác tinh heo</button>
+
+  <button 
+  showWhen="core" 
   *ngIf="move_local.includes(sectionTypeId)"
   small ion-button item-end mode='ios' color="secondary">Chuyển nội bộ</button>
 

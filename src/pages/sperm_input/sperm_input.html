@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-navbar>
+    <ion-toolbar toolbar-transparent no-border class="custom-toolbar">
+      <ion-title style="padding: 0px!important">Nhập thông tin tinh heo khai thác</ion-title>
+    </ion-toolbar>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form action="" (ngSubmit)="onSubmit()" style="padding-bottom: 10vH">
+    <ion-list >
+      <input-date [(validControl)] = "credentialsForm.controls.date"
+                  [errorMessage_Required]  ="'Ngày lấy tinh là hạng mục bắt buộc.'"
+                  [label] = "'Ngày lấy tinh'"
+                  [placeholder]="'dd/mm/yyyy'"
+                  [active]= "submitAttempt">
+      </input-date>
+      <input-text [(validControl)] = "credentialsForm.controls.volume"
+                  [errorMessage_Required]  = "'Lượng lấy là hạng mục bắt buộc'"
+                  [label] = "'Lượng lấy(ml)'"
+                  [placeholder]="'Nhập lượng lấy'"
+                  [active]= "submitAttempt">
+      </input-text>
+      <input-text [(validControl)] = "credentialsForm.controls.doses"
+                  [errorMessage_Required]  = "'Số liều pha (liều) là hạng mục bắt buộc'"
+                  [label] = "'Số liều pha (liều)'"
+                  [placeholder]="'Nhập số liều pha (liều)'"
+                  [active]= "submitAttempt">
+      </input-text>
+      <input-text [(validControl)] = "credentialsForm.controls.activity"
+                  [errorMessage_Required]  = "'Hoạt lực là hạng mục bắt buộc'"
+                  [label] = "'Hoạt lực (%)'"
+                  [placeholder]="'Nhập hoạt lực'"
+                  [active]= "submitAttempt">
+      </input-text>
+      <input-text [(validControl)] = "credentialsForm.controls.c"
+                  [errorMessage_Required]  = "'Mật độ là hạng mục bắt buộc'"
+                  [label] = "'Mật độ (Triệu/ml)'"
+                  [placeholder]="'Nhập mật độ'"
+                  [active]= "submitAttempt">
+      </input-text>
+      <input-text [(validControl)] = "credentialsForm.controls.lifeAvg"
+                  [errorMessage_Required]  = "'Tỉ lệ sống trung bình là hạng mục bắt buộc'"
+                  [label] = "'Tỉ lệ sống trung bình(%)'"
+                  [placeholder]="'Nhập tỉ lệ sống trung bình'"
+                  [active]= "submitAttempt">
+      </input-text>
+      <input-text [(validControl)] = "credentialsForm.controls.dieAvg"
+                  [errorMessage_Required]  = "'Tỉ lệ chết trung bình(%) là hạng mục bắt buộc'"
+                  [label] = "'Tỉ lệ chết trung bình(%)'"
+                  [placeholder]="'Nhập tỉ lệ chết trung bình(%)'"
+                  [active]= "submitAttempt">
+      </input-text>
+      <input-text [(validControl)] = "credentialsForm.controls.faddiness"
+                  [errorMessage_Required]  = "'Tỉ lệ bất thường(%) là hạng mục bắt buộc'"
+                  [label] = "'Tỉ lệ bất thường'"
+                  [placeholder]="'Nhập tỉ lệ bất thường(%)'"
+                  [active]= "submitAttempt">
+      </input-text>
+    </ion-list>
+  </form>
+</ion-content>
+
+<ion-footer no-border showWhen="core">
+  <ion-toolbar toolbar-transparent text-right showWhen="core">
+      <button type="submit"  ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
+      <button ion-button   mode='ios' color="danger">Hủy</button>
+  </ion-toolbar>
+</ion-footer>
+
+<ion-footer no-border no-padding showWhen="ios,android">
+  <button type="submit" no-margin full block ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
+</ion-footer>
