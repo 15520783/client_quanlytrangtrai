@@ -38,7 +38,7 @@ export { medicineWarehouse }
 export { status }
 export { breedings }
 export { sperms }
-
+export { matingRole }
 class base {
 	id: string;
 	createdAt: any = '';
@@ -104,7 +104,7 @@ class pig extends base {
 	priceCodeId: string = '0';
 	overviewStatus: string = '0';
 
-	house:house = new house();
+	house: house = new house();
 	constructor() {
 		super();
 	}
@@ -537,6 +537,14 @@ class sperms extends base {
 	dieAvg: number = 0;
 	faddiness: number = 0;
 	status: string = '';
+}
+
+class matingRole extends base {
+	fatherId: breeds = new breeds();
+	motherId: breeds = new breeds();
+	childId: breeds = new breeds();
+	birthStatusEstimate: string = '';
+	description: string = '';
 }
 
 class InputObject {

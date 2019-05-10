@@ -75,7 +75,9 @@ export class ActivitiesPage {
       },
       list_sperm_pig_khu_noc: {
         name: 'Danh sách tinh heo', component: SpermListPage, active: false,
-        data:{}
+        data:{
+          sectionType: VARIABLE.SECTION_TYPE[2],
+        }
       },
       list_pig_for_sale_khu_noc: {
         name: 'Danh sách heo chờ bán', component: PigListSectionPage, active: false,

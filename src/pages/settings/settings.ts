@@ -8,6 +8,7 @@ import { BreedingTypesRole } from '../../role-input/breeding_type';
 import { SettingUtilComponent } from '../../components/setting-util/setting-util';
 import { StatusPigRole } from '../../role-input/statusPig';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { matingRole } from '../../common/entity';
 
 @IonicPage()
 @Component({
@@ -264,6 +265,26 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.roles,
+      },
+      matingRole: {
+        title: 'Danh sách luật phối',
+        placeholderSearch: 'Tìm kiếm luật phối',
+        filter_default: ["fatherBreedName", "motherBreedName","childBreedName","birthStatusEstimate"],
+        attributes: [
+          { name: "fatherBreedName", label: 'Giống đực' },
+          { name: "motherBreedName", label: 'Giống cái' },
+          { name: "childBreedName", label: 'Kết quả phối' },
+          { name: "birthStatusEstimate", label: 'Trạng thái sinh dự kiến' },
+        ],
+        mainAttribute: 'name',
+        data: this.settingProvider.setting.matingRoles ,
+        customData(matingRoles:Array<matingRole>) {
+            matingRoles.forEach((role)=>{
+            role['fatherBreedName'] = role.fatherId.name.concat('-').concat(role.fatherId.symbol);
+            role['motherBreedName'] = role.fatherId.name.concat('-').concat(role.motherId.symbol);
+            role['childBreedName' ]  = role.fatherId.name.concat('-').concat(role.childId.symbol);
+          })
+        }
       },
     }
 

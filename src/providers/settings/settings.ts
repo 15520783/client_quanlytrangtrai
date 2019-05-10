@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { breeds, issues, medicines, pregnancyStatus, breedingType, healthStatus, diseases, farmTypes, foodType, foods, medicineType, medicineUnits, priceCodes, footType, gentialType, markTypes, roles, status, round, foodUnits } from '../../common/entity';
+import { breeds, issues, medicines, pregnancyStatus, breedingType, healthStatus, diseases, farmTypes, foodType, foods, medicineType, medicineUnits, priceCodes, footType, gentialType, markTypes, roles, status, round, foodUnits, matingRole } from '../../common/entity';
 import { CONFIG, API, KEY } from '../../common/const';
 import { Utils } from '../../common/utils';
 import { Events } from 'ionic-angular';
@@ -26,6 +26,8 @@ export class setting {
   roles: Array<roles> = [];
   status: Array<status> = [];
   rounds: Array<round> = [];
+  matingRoles:Array<matingRole> = [];
+
   constructor() {
 
   }

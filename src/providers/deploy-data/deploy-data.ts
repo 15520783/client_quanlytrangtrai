@@ -7,7 +7,7 @@ import { PartnerProvider } from '../partner/partner';
 import { EmployeesProvider } from '../employees/employees';
 import { SectionsProvider } from '../sections/sections';
 import { SettingsProvider } from '../settings/settings';
-import { pig, house, foodWareHouse, medicineWarehouse, section, status, breedings } from '../../common/entity';
+import { pig, house, foodWareHouse, medicineWarehouse, section, status, breedings, sperms } from '../../common/entity';
 import { WarehousesProvider } from '../warehouses/warehouses';
 import { VARIABLE } from '../../common/const';
 
@@ -667,9 +667,27 @@ export class DeployDataProvider {
       (new Date(a.date) > new Date(b.date)) ? -1 : 1);
   }
 
+  /**
+   * Lấy danh sách lên giống của 1 khu
+   */
   get_breedings_of_section(sectionTypeId: string, breedings: Array<breedings>) {
     return breedings.filter((breeding) => {
       return breeding.pig.house.section.typeId == sectionTypeId ? true : false;
     })
+  }
+
+  /**
+   * Lấy danh sách lấy tinh heo của 1 khu
+   * @param sectionTypeId 
+   * @param sperms 
+   */
+  get_sperms_of_section(sectionTypeId: string, sperms: Array<sperms>) {
+    return sperms.filter((sperm) => {
+      return sperm.pig.house.section.typeId == sectionTypeId ? true : false;
+    })
+  }
+
+  get_mating_role_from_target(fatherId,motherId){
+    
   }
 }

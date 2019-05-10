@@ -72,18 +72,6 @@ export class BreedingInputPage {
         this.breeding[attr] = this.credentialsForm.value[attr];
       });
       if(!this.updateMode){
-        // this.events.publish('breeding-input:CreateBreeding', this.breeding);
-        // this.events.unsubscribe('option-list-pig-section:OK');
-        // this.events.subscribe('option-list-pig-section:OK', (OK) => {
-        //   if (OK) {
-        //     this.navCtrl.pop();
-        //     this.events.unsubscribe('option-list-pig-section:OK');
-        //   }
-        //   else {
-        //     this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].UPDATE_FAILED);
-        //     this.events.unsubscribe('option-list-pig-section:OK');
-        //   }
-        // });
         this.navParams.get('callback')(this.breeding);
       }
       else{

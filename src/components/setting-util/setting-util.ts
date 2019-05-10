@@ -26,16 +26,17 @@ export class SettingUtilComponent {
   @Input() removeButtonLabel: string = 'Xóa';
   @Input() roleInput: any;
 
-  @Input() options: {
-    data: Array<any>,
-    selectMode: boolean,
-    mainAttribute: string,
-    attributes: Array<{ name: string, label: string }>,
-    placeholderSearch: string,
-    filter_default: Array<string>,
-    addButtonLabel: string,
-    roleInput: any;
-  }
+  // @Input() options: {
+  //   data: Array<any>,
+  //   selectMode: boolean,
+  //   mainAttribute: string,
+  //   attributes: Array<{ name: string, label: string }>,
+  //   placeholderSearch: string,
+  //   filter_default: Array<string>,
+  //   addButtonLabel: string,
+  //   roleInput: any;
+  // }
+  @Input() options: any = {};
 
   @Output() clickAddButton = new EventEmitter();
   @Output() clickEditButton = new EventEmitter();
@@ -58,7 +59,7 @@ export class SettingUtilComponent {
     public util: Utils,
     public settingProvider: SettingsProvider
   ) {
-    if(this.navParams.data.options){
+    if (this.navParams.data.options) {
       this.options = this.navParams.data.options;
     }
   }
@@ -70,6 +71,7 @@ export class SettingUtilComponent {
   init() {
     this.options.mainAttribute ? this.mainAttribute = this.options.mainAttribute : this.mainAttribute;
     this.options.data.length ? this.data = this.options.data : this.data;
+    this.options.hasOwnProperty('customData') ? this.options.customData(this.data) : null;
     this.options.placeholderSearch ? this.placeholderSearch = this.options.placeholderSearch : this.placeholderSearch;
     this.options.attributes.length ? this.attributes = this.options.attributes : this.attributes;
     this.options.filter_default.length ? this.filter_default = this.options.filter_default : this.filter_default;
@@ -120,11 +122,12 @@ export class SettingUtilComponent {
         roleInput: this.roleInput
       }
     )
-    
+
     this.events.unsubscribe('callback');
     this.events.subscribe('callback', (data) => {
       if (data) {
         this.data = data;
+        this.options.hasOwnProperty('customData') ? this.options.customData(this.data) : null;
         this.setFilteredItems();
         this.events.unsubscribe('callback');
       }
@@ -167,6 +170,6 @@ export class SettingUtilComponent {
           })
         }
       })
-      .catch((err:Error)=>{})
+      .catch((err: Error) => { })
   }
 }

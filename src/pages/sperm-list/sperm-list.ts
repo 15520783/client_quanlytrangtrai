@@ -17,6 +17,8 @@ import { SpermInputPage } from '../sperm_input/sperm_input';
 export class SpermListPage {
 
   public sperms: Array<sperms> = [];
+  public sectionType: any = {};
+
   public breed: any = {};
   public houses: any = {};
 
@@ -56,8 +58,9 @@ export class SpermListPage {
     public activitiesProvider: ActivitiesProvider,
     public util: Utils
   ) {
-    // this.breed = this.deployData.get_object_list_key_of_breeds();
-    // this.houses = this.deployData.get_object_list_key_of_house();
+    if (this.navParams.data.sectionType) {
+      this.sectionType = this.navParams.data.sectionType;
+    }
 
     this.getSpermList()
       .then((data) => {
@@ -104,18 +107,19 @@ export class SpermListPage {
   }
 
   getSpermList() {
-    // this.util.showLoading(MESSAGE[CONFIG.LANGUAGE_DEFAULT].LOADING_DATA);
     this.util.openBackDrop();
     return this.activitiesProvider.getAllSperms()
       .then((sperms: Array<sperms>) => {
         if (sperms && sperms.length) {
-          this.sperms = sperms;
+          this.sperms = this.deployData.get_sperms_of_section(this.sectionType.id,sperms);
           this.initialSperms();
         }
         this.util.closeBackDrop();
+        return sperms;
       })
       .catch((err: Error) => {
         this.util.closeBackDrop();
+        console.log(err);
       })
   }
 
