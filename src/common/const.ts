@@ -164,6 +164,7 @@ const API = {
     GET_ALL_PARTNERS: '/api/partners/list',
     GET_ALL_INVOICES: '/api/invoices/list',
     GET_ALL_SPERMS: '/api/sperm/list',
+    GET_ALL_BREEDINGS: '/api/breedings/list',
 
     GET_PIG_INVOICE_DETAIL_FROM_INVOICE: '/api/invoicepigdetail/invoice/',
     GET_FOOD_WAREHOUSE_FROM_INVOICE: '/api/foodwarehouse/invoice/',

@@ -87,50 +87,38 @@ export class OptionListPigSectionComponent {
   }
 
   breeding_input() {
-    this.navCtrl.push(BreedingInputPage, { pig: this.pig });
-
-    this.events.unsubscribe('breeding-input:CreateBreeding');
-    this.events.subscribe('breeding-input:CreateBreeding', (breeding) => {
-      if (breeding) {
-        this.activitiesProvider.createBreeding(breeding)
-          .then((newBreeding) => {
-            if (newBreeding) {
-              this.events.publish('option-list-pig-section:OK', true);
-              this.events.unsubscribe('breeding-input:CreateBreeding');
-            }
-            else {
-              this.events.publish('option-list-pig-section:OK', false);
-            }
-          })
-          .catch((err: Error) => {
-          })
+    let callback = data => {
+      if(data){
+        this.activitiesProvider.createBreeding(data)
+        .then((newBreeding) => {
+          if (newBreeding) {
+            console.log(newBreeding);
+          }
+          this.navCtrl.pop();
+        })
+        .catch((err: Error) => {
+        })
       }
-    })
+    }
+    this.navCtrl.push(BreedingInputPage, { pig: this.pig ,callback:callback});
   }
 
+
+
   sperm_input() {
-    let eventTag = Date.now().toString();
-    this.navCtrl.push(SpermInputPage, { pig: this.pig, eventTag: eventTag });
-
-    // this.events.unsubscribe('sperm-input:CreateSperm', this.sperm);
-    this.events.subscribe(eventTag, (eventData) => {
-      if (eventData.sperm) {
-        this.activitiesProvider.createSperm(eventData.sperm)
-          .then((newSperm) => {
-            if (newSperm) {
-              this.events.publish(eventData.eventTag, true);
-              this.events.unsubscribe(eventTag);
-            }
-            else {
-              this.events.publish(eventData.eventTag, false);
-            }
-          })
-          .catch((err: Error) => {
-            return err;
-          })
-      }
-    });
-
+    let callback = data => {
+      this.activitiesProvider.createSperm(data)
+        .then((newSperm) => {
+          if (newSperm) {
+            console.log(newSperm);
+          }
+          this.navCtrl.pop();
+        })
+        .catch((err: Error) => {
+          return err;
+        })
+    }
+    this.navCtrl.push(SpermInputPage, { pig: this.pig, callback: callback });
   }
 
   forwardToSaleWaiting() {

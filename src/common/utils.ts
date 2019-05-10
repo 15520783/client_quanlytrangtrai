@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastController, AlertController, LoadingController, Loading, Platform, ModalController, Modal } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { BackdropComponent } from '../components/backdrop/backdrop';
 
 @Injectable()
 export class Utils {
@@ -107,8 +108,21 @@ export class Utils {
     return this.modal.present();
   }
 
+  closeModal(){
+    return this.modal.dismiss();
+  }
+
   
   deepClone(obj){
     return JSON.parse(JSON.stringify(obj));
+  }
+
+  openBackDrop(){
+    this.modal = this.modalCtrl.create(BackdropComponent, {}, { cssClass: 'ion-modal' });
+    return this.modal.present();
+  }
+
+  closeBackDrop(){
+    return this.modal.dismiss();
   }
 }

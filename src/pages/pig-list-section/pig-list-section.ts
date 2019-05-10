@@ -125,4 +125,13 @@ export class PigListSectionPage {
     this.navCtrl.push(PigViewPage, pig);
   }
 
+  pigChange(new_vers: pig, old_vers: pig) {
+    old_vers = new_vers;
+    old_vers['breedName'] = this.breed[old_vers.breedId] ? this.breed[old_vers.breedId].name : '';
+    old_vers['houseName'] = this.houses[old_vers.houseId] ? this.houses[old_vers.houseId].name : '';
+    old_vers['statusName'] = this.status[old_vers.statusId] ? this.status[old_vers.statusId].name : '';
+    old_vers['statusCode'] = this.status[old_vers.statusId] ? (this.status[old_vers.statusId].code).toString() : '';
+    old_vers['birthdayDisplay'] = this.util.convertDate(old_vers.birthday);
+    old_vers['genderName'] = this.gender[old_vers.gender] ? this.gender[old_vers.gender].name : '';
+  }
 }

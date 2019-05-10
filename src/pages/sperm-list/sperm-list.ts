@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Backdrop } from 'ionic-angular';
 import { sperms } from '../../common/entity';
 import { FormControl } from '@angular/forms';
 import { FilterProvider } from '../../providers/filter/filter';
-import { CONFIG, MESSAGE } from '../../common/const';
+import { CONFIG } from '../../common/const';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { Utils } from '../../common/utils';
 import { ActivitiesProvider } from '../../providers/activities/activities';
+import { SpermInputPage } from '../sperm_input/sperm_input';
 
 @IonicPage()
 @Component({
@@ -55,8 +56,8 @@ export class SpermListPage {
     public activitiesProvider: ActivitiesProvider,
     public util: Utils
   ) {
-    this.breed = this.deployData.get_object_list_key_of_breeds();
-    this.houses = this.deployData.get_object_list_key_of_house();
+    // this.breed = this.deployData.get_object_list_key_of_breeds();
+    // this.houses = this.deployData.get_object_list_key_of_house();
 
     this.getSpermList()
       .then((data) => {
@@ -81,12 +82,7 @@ export class SpermListPage {
 
 
   public filterItems(searchItem) {
-    this.sperms.forEach((sperm) => {
-      sperm['breedName'] = sperm.pig['breed'].name;
-      sperm['pigCode'] = sperm.pig.pigCode;
-      sperm['houseName'] = sperm.pig['house'].name;
-      sperm['dateDisplay'] = this.util.convertDate(sperm.date);
-    })
+
     this.filterProvider.input = this.sperms;
     this.filterProvider.searchText = searchItem;
     this.filterProvider.searchWithText = this.filter_default;
@@ -108,16 +104,65 @@ export class SpermListPage {
   }
 
   getSpermList() {
-    this.util.showLoading(MESSAGE[CONFIG.LANGUAGE_DEFAULT].LOADING_DATA);
+    // this.util.showLoading(MESSAGE[CONFIG.LANGUAGE_DEFAULT].LOADING_DATA);
+    this.util.openBackDrop();
     return this.activitiesProvider.getAllSperms()
       .then((sperms: Array<sperms>) => {
         if (sperms && sperms.length) {
           this.sperms = sperms;
+          this.initialSperms();
         }
-        this.util.closeLoading();
+        this.util.closeBackDrop();
       })
       .catch((err: Error) => {
-        this.util.closeLoading();
+        this.util.closeBackDrop();
       })
+  }
+
+  initialSperms() {
+    this.sperms.forEach((sperm) => {
+      sperm['breedName'] = sperm.pig['breed'].name;
+      sperm['pigCode'] = sperm.pig.pigCode;
+      sperm['houseName'] = sperm.pig['house'].name;
+      sperm['dateDisplay'] = this.util.convertDate(sperm.date);
+    })
+  };
+
+
+  callback = data => {
+    this.activitiesProvider.updateSperm(data)
+      .then((updatedSperm: sperms) => {
+        if (updatedSperm) {
+          let idx = this.sperms.findIndex(_breeding => _breeding.id == updatedSperm.id);
+          if (idx > -1) {
+            this.sperms[idx] = updatedSperm;
+            this.initialSperms();
+            this.setFilteredItems();
+          }
+        }
+        this.navCtrl.pop();
+      })
+      .catch((err: Error) => { })
+  };
+
+  edit(sperm: sperms) {
+    this.navCtrl.push(SpermInputPage, {
+      updateMode: true,
+      sperm: sperm,
+      callback: this.callback
+    })
+  }
+
+  remove(sperm: sperms) {
+    this.activitiesProvider.deleteSperm(sperm)
+      .then((isOK) => {
+        if (isOK) {
+          this.sperms.splice(
+            this.sperms.findIndex(_breeding => _breeding.id == sperm.id), 1
+          );
+          this.setFilteredItems();
+        }
+      })
+      .catch((err: Error) => { })
   }
 }

@@ -48,6 +48,7 @@ import { SpermInputPage } from '../pages/sperm_input/sperm_input';
 import { SpermListPage } from '../pages/sperm-list/sperm-list';
 import { MatingInputPage } from '../pages/mating-input/mating-input';
 
+import { BreedingListPage } from '../pages/breeding-list/breeding-list';
 
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
@@ -144,7 +145,8 @@ const Pages = [
   BreedingInputPage,
   PigListSectionPage,
   SpermListPage,
-  MatingInputPage
+  MatingInputPage,
+  BreedingListPage
 ]
 
 const Components = [
