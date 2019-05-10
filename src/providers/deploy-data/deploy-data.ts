@@ -7,7 +7,7 @@ import { PartnerProvider } from '../partner/partner';
 import { EmployeesProvider } from '../employees/employees';
 import { SectionsProvider } from '../sections/sections';
 import { SettingsProvider } from '../settings/settings';
-import { pig, house, foodWareHouse, medicineWarehouse, section, status } from '../../common/entity';
+import { pig, house, foodWareHouse, medicineWarehouse, section, status, breedings } from '../../common/entity';
 import { WarehousesProvider } from '../warehouses/warehouses';
 import { VARIABLE } from '../../common/const';
 
@@ -187,12 +187,12 @@ export class DeployDataProvider {
     return breedingTypes_select;
   }
 
-  get_statusCode_list_for_select(){
+  get_statusCode_list_for_select() {
     let statusCode_select = [];
-    Object.keys(VARIABLE.STATUS_PIG).forEach((statusKey)=>{
+    Object.keys(VARIABLE.STATUS_PIG).forEach((statusKey) => {
       statusCode_select.push({
-        name:statusKey,
-        value:VARIABLE.STATUS_PIG[statusKey]
+        name: statusKey,
+        value: VARIABLE.STATUS_PIG[statusKey]
       })
     })
     return statusCode_select;
@@ -347,7 +347,16 @@ export class DeployDataProvider {
     return breeds;
   }
 
-
+  /**
+   * Lấy các đối tượng loại lên giống với Object key là id
+   */
+  get_object_list_key_of_breedingTypes() {
+    let breedingType = {}
+    this.settingProvider.setting.breedingType.forEach((value) => {
+      breedingType[value.id] = value;
+    })
+    return breedingType;
+  }
 
   /**
    * Lấy thông tin nhà thông qua id
@@ -632,5 +641,35 @@ export class DeployDataProvider {
     return this.settingProvider.setting.status.filter((status) => {
       return status.previousStatus == statusId ? true : false;
     })[0];
+  }
+
+
+  /**
+   * Lấy danh sách heo lên giống trong khu
+   * @param sectionId 
+   * @param breedings 
+   */
+  get_breeding_pig_in_section(sectionId: string, breedings: Array<breedings>) {
+    return this.get_pigs_of_section(sectionId).forEach(pig => {
+      pig['breedings'] = this.get_breeding_of_pig(pig.id, breedings);
+    });
+  }
+
+  /**
+   * Lấy lịch sử lên giống của heo
+   * @param pigId 
+   * @param breedings 
+   */
+  get_breeding_of_pig(pigId, breedings: Array<breedings>) {
+    return breedings.filter((breeding) => {
+      return breeding.pig.id == pigId ? true : false;
+    }).sort((a: breedings, b: breedings) =>
+      (new Date(a.date) > new Date(b.date)) ? -1 : 1);
+  }
+
+  get_breedings_of_section(sectionTypeId: string, breedings: Array<breedings>) {
+    return breedings.filter((breeding) => {
+      return breeding.pig.house.section.typeId == sectionTypeId ? true : false;
+    })
   }
 }

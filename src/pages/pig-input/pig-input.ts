@@ -36,9 +36,6 @@ export class PigInputPage {
     public util: Utils
   ) {
     this.init();
-
-    
-
     this.credentialsForm = this.formBuilder.group({
       id: this.pig.id,
       pigCode: [this.pig.pigCode, Validators.compose([Validators.required, Validators.maxLength(1000)])],

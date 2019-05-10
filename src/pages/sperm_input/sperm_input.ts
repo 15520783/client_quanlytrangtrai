@@ -15,6 +15,7 @@ import { MESSAGE, CONFIG } from '../../common/const';
 export class SpermInputPage {
   public credentialsForm: FormGroup;
   public submitAttempt: boolean = false;
+  public updateMode: boolean = false;
 
   public sperm = new sperms();
 
@@ -44,6 +45,15 @@ export class SpermInputPage {
       faddiness: [this.sperm.faddiness, Validators.compose([Validators.required, Validators.maxLength(1000), ValidateNumber])],
       status: this.sperm.status
     });
+
+    if (this.navParams.data.updateMode) {
+      this.updateMode = true;
+      this.sperm = this.navParams.data.sperm;
+      this.sperm.date = this.sperm.date ? new Date(this.sperm.date).toISOString() : '';
+      Object.keys(this.credentialsForm.value).forEach((attr) => {
+        this.credentialsForm.controls[attr].setValue(this.sperm[attr]);
+      })
+    }
   }
 
   ionViewDidLoad() {
@@ -56,19 +66,12 @@ export class SpermInputPage {
       Object.keys(this.credentialsForm.value).forEach((attr) => {
         this.sperm[attr] = this.credentialsForm.value[attr];
       });
-
-      let eventTag = Date.now().toString();
-      this.events.publish(this.navParams.data.eventTag, { eventTag: eventTag, sperm: this.sperm });
-      // this.events.unsubscribe('sperm-input:CreateSperm:OK');
-      this.events.subscribe(eventTag, (OK) => {
-        if (OK) {
-          this.navCtrl.pop();
-          this.events.unsubscribe(eventTag);
-        } else {
-          this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].UPDATE_FAILED);
-          this.events.unsubscribe(eventTag);
-        }
-      });
+      if (!this.updateMode) {
+        this.navParams.get('callback')(this.sperm);
+      }
+      else {
+        this.navParams.get('callback')(this.sperm);
+      }
     }
   }
 

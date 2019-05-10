@@ -104,6 +104,7 @@ class pig extends base {
 	priceCodeId: string = '0';
 	overviewStatus: string = '0';
 
+	house:house = new house();
 	constructor() {
 		super();
 	}

@@ -25,11 +25,10 @@
               </ion-col>
             </ion-row>
             <ion-row>
-                <option-list-pig-section  
-                *ngIf="sectionTypeId" 
-                [(sectionTypeId)]="sectionTypeId" 
-                [(pig)]="visible_items[idx]">
-              </option-list-pig-section>
+              <button showWhen="core" small ion-button item-end mode='ios' color="main"
+                (tap)="edit(item)">Sửa</button>
+              <button showWhen="core" small ion-button item-end mode='ios' color="danger"
+                (tap)="remove(item)">Xóa</button>
             </ion-row>
           </ion-item>
         </ion-item-sliding>

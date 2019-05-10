@@ -26,7 +26,8 @@ export class TokenInterceptor implements HttpInterceptor {
 
     if (request.method === 'POST' || request.method === 'PUT' || request.method === 'DELETE') {
       if (request.url !== CONFIG.SERVER_API.concat(API.LOGIN))
-        this.util.showLoading(MESSAGE[CONFIG.LANGUAGE_DEFAULT].PROCESS_DATA);
+        // this.util.showLoading(MESSAGE[CONFIG.LANGUAGE_DEFAULT].PROCESS_DATA);
+        this.util.openBackDrop();
     }
 
     return next.handle(request).pipe(
@@ -36,7 +37,8 @@ export class TokenInterceptor implements HttpInterceptor {
 
         if (request.method === 'POST' || request.method === 'PUT' || request.method === 'DELETE') {
           if (request.url !== CONFIG.SERVER_API.concat(API.LOGIN))
-            this.util.closeLoading();
+            // this.util.closeLoading();
+            this.util.closeBackDrop();
         }
 
         if (error.status === 401) {
@@ -61,7 +63,7 @@ export class TokenInterceptor implements HttpInterceptor {
       }, () => {
         if (request.method === 'POST' || request.method === 'PUT' || request.method === 'DELETE') {
           if (request.url !== CONFIG.SERVER_API.concat(API.LOGIN))
-            this.util.closeLoading().then(() => {
+            this.util.closeBackDrop().then(() => {
               this.util.showToastSuccess(MESSAGE[CONFIG.LANGUAGE_DEFAULT].UPDATE_SUCCESS);
             });
         }

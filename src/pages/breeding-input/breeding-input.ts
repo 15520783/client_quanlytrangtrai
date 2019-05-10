@@ -16,6 +16,7 @@ export class BreedingInputPage {
 
   public credentialsForm: FormGroup;
   public submitAttempt: boolean = false;
+  public updateMode: boolean = false;
 
   public breeding = new breedings();
 
@@ -25,7 +26,7 @@ export class BreedingInputPage {
     private formBuilder: FormBuilder,
     public deployData: DeployDataProvider,
     public events: Events,
-    public util:Utils
+    public util: Utils
   ) {
     if (this.navParams.data.pig) {
       this.breeding.pig = this.navParams.data.pig;
@@ -45,10 +46,22 @@ export class BreedingInputPage {
       matingEstimate: [this.breeding.matingEstimate, Validators.compose([Validators.required])],
       matingReal: this.breeding.matingReal
     });
+
+    if (this.navParams.data.updateMode) {
+      this.updateMode = true;
+      this.breeding = this.navParams.data.breeding;
+      this.breeding.date = this.breeding.date ? new Date(this.breeding.date).toISOString() : '';
+      this.breeding.breedingNext = this.breeding.breedingNext ? new Date(this.breeding.breedingNext).toISOString() : '';
+      this.breeding.matingEstimate = this.breeding.matingEstimate ? new Date(this.breeding.matingEstimate).toISOString() : '';
+      this.breeding.matingReal = this.breeding.matingReal ? new Date(this.breeding.matingReal).toISOString() : '';
+      Object.keys(this.credentialsForm.value).forEach((attr) => {
+        this.credentialsForm.controls[attr].setValue(this.breeding[attr]);
+      })
+    }
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad BreedingInputPage');
+    
   }
 
   onSubmit() {
@@ -58,19 +71,24 @@ export class BreedingInputPage {
       Object.keys(this.credentialsForm.value).forEach((attr) => {
         this.breeding[attr] = this.credentialsForm.value[attr];
       });
-
-      this.events.publish('breeding-input:CreateBreeding', this.breeding);
-      this.events.unsubscribe('option-list-pig-section:OK');
-      this.events.subscribe('option-list-pig-section:OK', (OK) => {
-        if (OK) {
-          this.navCtrl.pop();
-          this.events.unsubscribe('option-list-pig-section:OK');
-        }
-        else{
-          this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].UPDATE_FAILED);
-          this.events.unsubscribe('option-list-pig-section:OK');
-        }
-      });
+      if(!this.updateMode){
+        // this.events.publish('breeding-input:CreateBreeding', this.breeding);
+        // this.events.unsubscribe('option-list-pig-section:OK');
+        // this.events.subscribe('option-list-pig-section:OK', (OK) => {
+        //   if (OK) {
+        //     this.navCtrl.pop();
+        //     this.events.unsubscribe('option-list-pig-section:OK');
+        //   }
+        //   else {
+        //     this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].UPDATE_FAILED);
+        //     this.events.unsubscribe('option-list-pig-section:OK');
+        //   }
+        // });
+        this.navParams.get('callback')(this.breeding);
+      }
+      else{
+        this.navParams.get('callback')(this.breeding);
+      }
     }
   }
 
@@ -78,6 +96,5 @@ export class BreedingInputPage {
 
   init() {
     this.breedingTypes = this.deployData.get_breedingType_list_for_select();
-
   }
 }

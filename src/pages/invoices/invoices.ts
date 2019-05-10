@@ -83,7 +83,7 @@ export class InvoicesPage {
 
 
   getInvoices() {
-    this.util.showLoading('Đang tải dữ liệu');
+    this.util.openBackDrop();
     this.invoicesProvider.getAllInvoices()
       .then((data: any) => {
         if (data) {
@@ -107,13 +107,13 @@ export class InvoicesPage {
         this.list_invoice_type.internalPigInvoice.invoices = this.internalPigInvoices;
         this.list_invoice_type.foodInvoice.invoices = this.foodInvoices;
         this.list_invoice_type.medicineInvoice.invoices = this.medicineInvoices;
-        this.util.closeLoading();
+        this.util.closeBackDrop();
       }).then(()=>{
         this.events.publish('invoicesReload');
       })
       .catch((err: Error) => {
         console.log(err);
-        this.util.closeLoading().then(() => {
+        this.util.closeBackDrop().then(() => {
           this.util.showToast('Dữ liệu chưa được tải về. Vui lòng kiểm tra lại kết nối.')
         })
       })
