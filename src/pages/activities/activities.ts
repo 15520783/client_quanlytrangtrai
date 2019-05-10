@@ -5,6 +5,7 @@ import { VARIABLE } from '../../common/const';
 import { PigListSectionPage } from '../pig-list-section/pig-list-section';
 import { Utils } from '../../common/utils';
 import { SpermListPage } from '../sperm-list/sperm-list';
+import { MatingInputPage } from '../mating-input/mating-input';
 import { BreedingListPage } from '../breeding-list/breeding-list';
 
 @IonicPage()
@@ -140,7 +141,10 @@ export class ActivitiesPage {
       },
 
       mating_pig_khu_phoi: {
-        name: 'Phối giống', component: PigListSectionPage, active: false
+        name: 'Phối giống', component: MatingInputPage, active: false,
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[8]//bỏ
+        }
       },
       pregnancy_pig_khu_mang_thai: {
         name: 'Danh sách heo mang thai', component: PigListSectionPage, active: false
