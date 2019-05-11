@@ -280,9 +280,9 @@ export class SettingsPage {
         data: this.settingProvider.setting.matingRoles ,
         customData(matingRoles:Array<matingRole>) {
             matingRoles.forEach((role)=>{
-            role['fatherBreedName'] = role.fatherId.name.concat('-').concat(role.fatherId.symbol);
-            role['motherBreedName'] = role.fatherId.name.concat('-').concat(role.motherId.symbol);
-            role['childBreedName' ]  = role.fatherId.name.concat('-').concat(role.childId.symbol);
+            role['fatherBreedName'] = role.father.name.concat('-').concat(role.father.symbol);
+            role['motherBreedName'] = role.mother.name.concat('-').concat(role.mother.symbol);
+            role['childBreedName' ]  = role.child.name.concat('-').concat(role.child.symbol);
           })
         }
       },

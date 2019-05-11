@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { breedings, sperms } from '../../common/entity';
+import { breedings, sperms, mating } from '../../common/entity';
 import { CONFIG, API } from '../../common/const';
 
 @Injectable()
@@ -100,7 +100,14 @@ export class ActivitiesProvider {
     return this.http
       .delete(API.DELETE_SPERM, options)
       .timeout(CONFIG.DEFAULT_TIMEOUT)
-      .toPromise()
+      .toPromise();
+  }
+
+  createMating(objBody:mating){
+    return this.http
+    .post(API.CREATE_MATING,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
   }
 
 }

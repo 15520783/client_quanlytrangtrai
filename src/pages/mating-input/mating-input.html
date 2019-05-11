@@ -8,31 +8,120 @@
 
 <ion-content padding>
   <form action="" (ngSubmit)="onSubmit()" style="padding-bottom: 10vH">
-    <ion-list >
+    <ion-list>
+      <input-select-target [(validControl)]="credentialsForm.controls.motherId" [disabled]="true"
+        [errorMessage_Required]="'Heo nái là hạng mục bắt buộc.'" [active]="submitAttempt"
+        [placeholder]="'Chọn heo nái'" [label]="'Heo nái'" [targertCmp]="'pigs'">
+      </input-select-target>
+
+      <input-select-target [(validControl)]="credentialsForm.controls.fatherId"
+        [errorMessage_Required]="'Heo nọc là hạng mục bắt buộc.'" [active]="submitAttempt"
+        [placeholder]="'Chọn heo nọc'" [label]="'Heo nọc'" [targertCmp]="'pigs'" [data]="male_pigs"
+        (valueChange)="changeFatherBreed($event)">
+      </input-select-target>
+
+      <input-date [(validControl)]="credentialsForm.controls.date"
+        [errorMessage_Required]="'Ngày phối là hạng mục bắt buộc.'" [label]="'Ngày phối giống'"
+        [placeholder]="'dd/mm/yyyy'" [active]="submitAttempt">
+      </input-date>
       <ion-item>
-        <ion-select placeholder="Chọn heo nái" >
-          <ion-option value="" >Heo A</ion-option>
-          <ion-option value="" >Heo B</ion-option>          
-        </ion-select>
+        <ion-row>
+          <ion-col>
+            <b>Công thức phối</b>
+            <p>
+              <b>Giống đực:</b>
+              <span
+                *ngIf="fatherBreed">{{fatherBreed.name?fatherBreed.name + ' ' + fatherBreed.symbol:'Chưa xác định'}}</span>
+            </p>
+            <p>
+              <b>Giống cái</b>
+              <span *ngIf="motherBreed">
+                {{motherBreed.name?motherBreed.name + ' ' + motherBreed.symbol:'Chưa xác định'}}
+              </span>
+            </p>
+            <p>
+              <b>Kết quả phối</b>
+              <span *ngIf="resultMating.child">
+                {{resultMating.child.name}} {{resultMating.child.symbol}}
+              </span>
+            </p>
+          </ion-col>
+        </ion-row>
+        <span *ngIf="sperms.length">
+          <ion-row>
+            <b>Gieo tinh lần thứ nhất</b>
+          </ion-row>
+
+          <input-select-target  
+              [(validControl)]="credentialsForm.controls.sperm1"
+              [errorMessage_Required]="'Liều tinh là hạng mục bắt buộc.'" [active]="submitAttempt"
+              [placeholder]="'Chọn liều tinh'" [label]="'Liều tinh'" 
+              [targertCmp]="'sperms'" [data]="sperms">
+          </input-select-target>
+          <input-date 
+              [(validControl)]="credentialsForm.controls.date1"
+              [errorMessage_Required]="'Ngày phối là hạng mục bắt buộc.'" [label]="'Ngày phối giống'"
+              [placeholder]="'dd/mm/yyyy'" [active]="submitAttempt">
+          </input-date>
+          <input-select [(validControl)]="credentialsForm.controls.insemination1"
+              [errorMessage_Required]="'Biểu hiện chịu đực là hạng mục bắt buộc'  " [label]="'Biểu hiện chịu đực'" 
+              [active]="submitAttempt"
+              [placeholder]="'Chọn biểu hiện chịu đực'" [(data)]="insemination">
+          </input-select>
+          <ion-row>
+            <b>Gieo tinh lần thứ hai</b>
+          </ion-row>
+          <input-select-target  
+            [(validControl)]="credentialsForm.controls.sperm2"
+            [errorMessage_Required]="'Liều tinh là hạng mục bắt buộc.'" [active]="submitAttempt"
+            [placeholder]="'Chọn liều tinh'" [label]="'Liều tinh'" 
+            [targertCmp]="'sperms'" [data]="sperms">
+          </input-select-target>
+          <input-date 
+            [(validControl)]="credentialsForm.controls.date2"
+            [errorMessage_Required]="'Ngày phối là hạng mục bắt buộc.'" [label]="'Ngày phối giống'"
+            [placeholder]="'dd/mm/yyyy'" [active]="submitAttempt">
+          </input-date>
+          <input-select [(validControl)]="credentialsForm.controls.insemination2"
+            [errorMessage_Required]="'Biểu hiện chịu đực là hạng mục bắt buộc'" [label]="'Biểu hiện chịu đực'" 
+            [active]="submitAttempt"
+            [placeholder]="'Chọn biểu hiện chịu đực'" [(data)]="insemination">
+          </input-select>
+        </span>
       </ion-item>
-      <ion-item>
-        <ion-select placeholder="Chọn loại phối">
-          <ion-option value="immediate" >Trực tiếp</ion-option>
-          <ion-option value="sperm" >Tinh heo</ion-option>
-        </ion-select>
-      </ion-item>
-      <ion-item>
-        <ion-input type="number" placeholder="Lần phối hiện tại(tự động tính)"></ion-input>
-      </ion-item>
-      
+      <!-- <ion-label>Công thức phối</ion-label> -->
+      <!-- <p>Giống đực: {{fatherBreed?fatherBreed.name:''}} - {{fatherBreed?fatherBreed.symbol:''}}</p>
+        <p>Giống nái: {{motherBreed?motherBreed.name:''}} - {{motherBreed?motherBreed.symbol:''}}</p>
+        <p>Giống con: {{resultMating?resultMating.name:''}} - {{resultMating?resultMating.symbol:''}}</p> -->
+      <!-- </ion-item> -->
+      <!-- <input-date [(validControl)] = "credentialsForm.controls.breedingNext"
+                  [errorMessage_Required]  ="'Ngày lên giống tiếp theo là hạng mục bắt buộc.'"
+                  [label] = "'Ngày lên giống tiếp theo'"
+                  [placeholder]="'dd/mm/yyyy'"
+                  [active]= "submitAttempt">
+      </input-date>
+
+      <input-date [(validControl)] = "credentialsForm.controls.matingEstimate"
+                  [errorMessage_Required]  ="'Ngày phối dự kiến là hạng mục bắt buộc.'"
+                  [label] = "'Ngày phối dự kiến'"
+                  [placeholder]="'dd/mm/yyyy'"
+                  [active]= "submitAttempt">
+      </input-date>
+      <input-text [(validControl)] = "credentialsForm.controls.description"
+                  [errorMessage_Required]  = "'Ghi chú là hạng mục bắt buộc'"
+                  [label] = "'Ghi chú'"
+                  [placeholder]="'Nhập thông tin ghi chú'"
+                  [active]= "submitAttempt">
+      </input-text> -->
+
     </ion-list>
   </form>
 </ion-content>
 
 <ion-footer no-border showWhen="core">
   <ion-toolbar toolbar-transparent text-right showWhen="core">
-      <button type="submit"  ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
-      <button ion-button   mode='ios' color="danger">Hủy</button>
+    <button type="submit" ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
+    <button ion-button mode='ios' color="danger">Hủy</button>
   </ion-toolbar>
 </ion-footer>
 

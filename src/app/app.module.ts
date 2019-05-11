@@ -146,7 +146,7 @@ const Pages = [
   PigListSectionPage,
   SpermListPage,
   MatingInputPage,
-  BreedingListPage
+  BreedingListPage,
 ]
 
 const Components = [

@@ -29,7 +29,9 @@ export class PigListSectionPage {
   public mainAttribute = "pigCode";
   public attributes = [
     { name: "breedName", label: 'Giống' },
+    { name: "farmName", label: 'Trang trại' },
     { name: "houseName", label: 'Nhà' },
+    { name: "sectionName", label: 'Khu' },
     { name: "genderName", label: 'Giới tính' },
     { name: "birthdayDisplay", label: 'Ngày sinh' },
     { name: "statusName", label: 'Trạng thái' }
@@ -97,7 +99,9 @@ export class PigListSectionPage {
   public filterItems(searchItem) {
     this.pigs.forEach((pig) => {
       pig['breedName'] = this.breed[pig.breedId] ? this.breed[pig.breedId].name : '';
+      pig['sectionName'] = this.houses[pig.houseId] ? this.houses[pig.houseId].section.name : '';
       pig['houseName'] = this.houses[pig.houseId] ? this.houses[pig.houseId].name : '';
+      pig['farmName'] = this.houses[pig.houseId].section.farm ? this.houses[pig.houseId].section.farm.name : '';
       pig['statusName'] = this.status[pig.statusId] ? this.status[pig.statusId].name : '';
       pig['statusCode'] = this.status[pig.statusId] ? (this.status[pig.statusId].code).toString() : '';
       pig['birthdayDisplay'] = this.util.convertDate(pig.birthday);
@@ -128,7 +132,9 @@ export class PigListSectionPage {
   pigChange(new_vers: pig, old_vers: pig) {
     old_vers = new_vers;
     old_vers['breedName'] = this.breed[old_vers.breedId] ? this.breed[old_vers.breedId].name : '';
+    old_vers['sectionName'] = this.houses[old_vers.houseId] ? this.houses[old_vers.houseId].section.name : '';
     old_vers['houseName'] = this.houses[old_vers.houseId] ? this.houses[old_vers.houseId].name : '';
+    old_vers['farmName'] = this.houses[old_vers.houseId].section.farm ? this.houses[old_vers.houseId].section.farm.name : '';    
     old_vers['statusName'] = this.status[old_vers.statusId] ? this.status[old_vers.statusId].name : '';
     old_vers['statusCode'] = this.status[old_vers.statusId] ? (this.status[old_vers.statusId].code).toString() : '';
     old_vers['birthdayDisplay'] = this.util.convertDate(old_vers.birthday);

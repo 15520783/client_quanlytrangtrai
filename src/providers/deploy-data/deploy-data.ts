@@ -7,7 +7,7 @@ import { PartnerProvider } from '../partner/partner';
 import { EmployeesProvider } from '../employees/employees';
 import { SectionsProvider } from '../sections/sections';
 import { SettingsProvider } from '../settings/settings';
-import { pig, house, foodWareHouse, medicineWarehouse, section, status, breedings, sperms } from '../../common/entity';
+import { pig, house, foodWareHouse, medicineWarehouse, section, status, breedings, sperms, matingRole } from '../../common/entity';
 import { WarehousesProvider } from '../warehouses/warehouses';
 import { VARIABLE } from '../../common/const';
 
@@ -687,7 +687,42 @@ export class DeployDataProvider {
     })
   }
 
-  get_mating_role_from_target(fatherId,motherId){
-    
+  /**
+   * Lấy danh sách heo thuộc khu theo giới tính
+   * @param sectionTypeId 
+   * @param gender 
+   */
+  get_pigs_of_sections_with_gender(sectionTypeId: string, gender: number) {
+    let housesId: any = [];
+    this.houseProvider.houses.filter((house) => {
+      return (house.section.typeId == sectionTypeId) ? true : false;
+    }).forEach((house) => {
+      housesId.push(house.id);
+    })
+    return this.pigsProvider.pigs.filter((pig) => {
+      return housesId.includes(pig.houseId) && pig.gender == gender ? true : false;
+    })
+  }
+
+  /**
+   * Lấy danh sách heo nộc có thể phối với heo nái đã chọn
+   * @param pig 
+   */
+  get_male_mating_pig_for_female_pig(pig: pig) {
+    let houses = this.get_object_list_key_of_house();
+    return this.pigsProvider.pigs.filter((pig_element) => {
+      return houses[pig_element.houseId].section.id == houses[pig.houseId].section.id && pig_element.gender == VARIABLE.GENDER[1].id ? true : false;
+    })
+  }
+
+  /**
+   * Lấy danh sách công thức phối giống
+   */
+  get_mating_role_of_mating() {
+    let roles: any = {};
+    this.settingProvider.setting.matingRoles.forEach((role: matingRole) => {
+      roles[role.father.id +'-'+(role.mother.id)] = role;
+    })
+    return roles;
   }
 }

@@ -5,6 +5,8 @@ import { HousesProvider } from '../../providers/houses/houses';
 import { NavParams, Content, ModalController, ViewController, NavController } from 'ionic-angular';
 import { FilterProvider } from '../../providers/filter/filter';
 import { PigViewPage } from '../../tabs/pig-view/pig-view';
+import { VARIABLE } from '../../common/const';
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 
 
 @Component({
@@ -31,6 +33,9 @@ export class PigListComponent {
   public genderFilter = [];
   public houseFilter = [];
 
+  public genders:any;
+  public breeds:any = {};
+
   customAlertOptions: any = {
     translucent: true,
     cssClass: 'ion-alert'
@@ -47,9 +52,11 @@ export class PigListComponent {
     public filterProvider: FilterProvider,
     public modalCtrl: ModalController,
     public viewCtrl: ViewController,
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    public deployData:DeployDataProvider
   ) {
-    console.log('Hello PigListComponent Component');
+    this.genders = VARIABLE.GENDER;
+    this.breeds = this.deployData.get_object_list_key_of_breeds();
 
     if(this.navParams.data){
       this.data = this.navParams.data.pigs;

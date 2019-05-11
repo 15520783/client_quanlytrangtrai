@@ -1,3 +1,4 @@
+
 export { base }
 export { user }
 export { farm }
@@ -39,6 +40,8 @@ export { status }
 export { breedings }
 export { sperms }
 export { matingRole }
+export { mating, matingDetails }
+
 class base {
 	id: string;
 	createdAt: any = '';
@@ -540,11 +543,31 @@ class sperms extends base {
 }
 
 class matingRole extends base {
-	fatherId: breeds = new breeds();
-	motherId: breeds = new breeds();
-	childId: breeds = new breeds();
+	father: breeds = new breeds();
+	mother: breeds = new breeds();
+	child: breeds = new breeds();
 	birthStatusEstimate: string = '';
 	description: string = '';
+}
+
+class mating extends base {
+	mother = new pig();
+	motherId: string = '';
+	father = new pig();
+	fatherId: string = '';
+	child: pig = null;
+	date: any = '';
+	birthEstimate: any = '';
+	// birthStatusEstimate: any = '';
+	employeeId: string = '';
+}
+
+class matingDetails extends base {
+	mating = new mating();
+	sperm = new sperms();
+	date: any = '';
+	insemination: string = '';
+
 }
 
 class InputObject {

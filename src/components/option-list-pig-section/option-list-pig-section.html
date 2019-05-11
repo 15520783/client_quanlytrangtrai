@@ -31,6 +31,14 @@
 
   <button 
   showWhen="core" 
+  *ngIf="mating.includes(sectionTypeId) 
+  && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE && pig.gender == gender.FEMALE
+  && statusObjectKey[pig.statusId].code == statusPig.WAIT_FOR_MATING"
+  small ion-button item-end mode='ios' color="secondary"
+  (tap)="mating_input()">Phối giống</button>
+
+  <button 
+  showWhen="core" 
   *ngIf="move_local.includes(sectionTypeId)"
   small ion-button item-end mode='ios' color="secondary">Chuyển nội bộ</button>
 

@@ -16,7 +16,7 @@
     <ion-item-divider custom-diviver sticky="true" showWhen="core">Danh sách tinh heo</ion-item-divider>
     <ion-list>
       <span *ngFor="let item of visible_items;let idx= index">
-        <ion-item-sliding >
+        <ion-item-sliding (tap)="select(item)">
           <ion-item>
             <h2 *ngIf="mainAttribute"><b>{{item[mainAttribute]}}</b></h2>
             <ion-row>
@@ -24,7 +24,7 @@
                 <p style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}} <span *ngIf="attr.unit">{{attr.unit}}</span></p>
               </ion-col>
             </ion-row>
-            <ion-row>
+            <ion-row *ngIf="!isSelectMode">
               <button showWhen="core" small ion-button item-end mode='ios' color="main"
                 (tap)="edit(item)">Sửa</button>
               <button showWhen="core" small ion-button item-end mode='ios' color="danger"

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Backdrop } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Backdrop, ViewController } from 'ionic-angular';
 import { sperms } from '../../common/entity';
 import { FormControl } from '@angular/forms';
 import { FilterProvider } from '../../providers/filter/filter';
@@ -15,6 +15,7 @@ import { SpermInputPage } from '../sperm_input/sperm_input';
   templateUrl: 'sperm-list.html',
 })
 export class SpermListPage {
+  public isSelectMode: boolean = false;
 
   public sperms: Array<sperms> = [];
   public sectionType: any = {};
@@ -56,16 +57,31 @@ export class SpermListPage {
     public filterProvider: FilterProvider,
     public deployData: DeployDataProvider,
     public activitiesProvider: ActivitiesProvider,
-    public util: Utils
+    public util: Utils,
+    public viewCtrl: ViewController
   ) {
     if (this.navParams.data.sectionType) {
       this.sectionType = this.navParams.data.sectionType;
     }
+    if (this.navParams.data.selectMode) {
+      this.isSelectMode = true;
+    }
+    if (this.navParams.data.sperms) {
+      this.sperms = this.navParams.data.sperms;
+      this.initialSperms();
+      this.setFilteredItems();
+    } else {
+      this.getSpermList()
+        .then((data) => {
+          this.setFilteredItems();
+        });
+    }
+  }
 
-    this.getSpermList()
-      .then((data) => {
-        this.setFilteredItems();
-      });
+  select(item) {
+    if (this.isSelectMode) {
+      this.viewCtrl.dismiss(item);
+    }
   }
 
   ionViewDidLoad() {
@@ -85,7 +101,6 @@ export class SpermListPage {
 
 
   public filterItems(searchItem) {
-
     this.filterProvider.input = this.sperms;
     this.filterProvider.searchText = searchItem;
     this.filterProvider.searchWithText = this.filter_default;
@@ -111,7 +126,7 @@ export class SpermListPage {
     return this.activitiesProvider.getAllSperms()
       .then((sperms: Array<sperms>) => {
         if (sperms && sperms.length) {
-          this.sperms = this.deployData.get_sperms_of_section(this.sectionType.id,sperms);
+          this.sperms = this.deployData.get_sperms_of_section(this.sectionType.id, sperms);
           this.initialSperms();
         }
         this.util.closeBackDrop();

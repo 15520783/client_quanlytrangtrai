@@ -9,6 +9,7 @@ import { Utils } from '../../common/utils';
 import { BreedingInputPage } from '../../pages/breeding-input/breeding-input';
 import { ActivitiesProvider } from '../../providers/activities/activities';
 import { SpermInputPage } from '../../pages/sperm_input/sperm_input';
+import { MatingInputPage } from '../../pages/mating-input/mating-input';
 
 @Component({
   selector: 'option-list-pig-section',
@@ -26,6 +27,7 @@ export class OptionListPigSectionComponent {
   public view_info;
   public breeding;
   public sperm;
+  public mating;
   public gender;
   public statusObjectKey: any = {};
 
@@ -38,7 +40,8 @@ export class OptionListPigSectionComponent {
     public activitiesProvider: ActivitiesProvider
   ) {
     this.statusPig = {
-      WAIT_FOR_SALE: VARIABLE.STATUS_PIG.WAIT_FOR_SALE
+      WAIT_FOR_SALE: VARIABLE.STATUS_PIG.WAIT_FOR_SALE,
+      WAIT_FOR_MATING: VARIABLE.STATUS_PIG.WAIT_FOR_MATING
     }
 
     this.add_to_sale_list = this.view_info = [
@@ -61,6 +64,10 @@ export class OptionListPigSectionComponent {
       VARIABLE.SECTION_TYPE[1].id,
       VARIABLE.SECTION_TYPE[7].id,
     ];
+
+    this.mating = [
+      VARIABLE.SECTION_TYPE[3].id
+    ]
 
     this.sperm = [
       VARIABLE.SECTION_TYPE[2].id
@@ -88,19 +95,19 @@ export class OptionListPigSectionComponent {
 
   breeding_input() {
     let callback = data => {
-      if(data){
+      if (data) {
         this.activitiesProvider.createBreeding(data)
-        .then((newBreeding) => {
-          if (newBreeding) {
-            console.log(newBreeding);
-          }
-          this.navCtrl.pop();
-        })
-        .catch((err: Error) => {
-        })
+          .then((newBreeding) => {
+            if (newBreeding) {
+              console.log(newBreeding);
+            }
+            this.navCtrl.pop();
+          })
+          .catch((err: Error) => {
+          })
       }
     }
-    this.navCtrl.push(BreedingInputPage, { pig: this.pig ,callback:callback});
+    this.navCtrl.push(BreedingInputPage, { pig: this.pig, callback: callback });
   }
 
 
@@ -119,6 +126,13 @@ export class OptionListPigSectionComponent {
         })
     }
     this.navCtrl.push(SpermInputPage, { pig: this.pig, callback: callback });
+  }
+
+  mating_input() {
+    let callback = data => {
+      console.log(data);
+    }
+    this.navCtrl.push(MatingInputPage, { pig: this.pig, callback: callback });
   }
 
   forwardToSaleWaiting() {

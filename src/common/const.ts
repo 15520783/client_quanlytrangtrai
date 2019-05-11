@@ -9,7 +9,8 @@ const KEY = {
     EMPLOYEES: 'employees',
     WAREHOUSES: 'warehouses',
     SETTINGS: 'settings',
-    PARTNERS: 'partners'
+    PARTNERS: 'partners',
+    EMPID:'employeeId'
 }
 
 const SETTING_STORAGE_KEY = {
@@ -38,6 +39,10 @@ const VARIABLE = {
         { value: '2', name: 'Nái' },
         { value: '3', name: 'Đực hiến' }
     ],
+    GENDER:{
+        1:{id:1,name:"Đực"},
+        2:{id:2,name:"Nái"}
+    },
     INVOICE_PRODUCT_TYPE: {
         FOOD: 'food',
         MEDICINE: 'medicine'
@@ -62,7 +67,9 @@ const VARIABLE = {
         FARROWING: "5",
         WEANING: "6",
         GROWING: "7",
-        WAIT_FOR_SALE: "8"
+        WAIT_FOR_SALE: "8",
+        WAIT_FOR_MATING:"9",
+        SOLD:"10"
     },
     INVOICE_PIG_TYPE: {
         INTERNAL_IMPORT: 'internal-import',
@@ -74,6 +81,14 @@ const VARIABLE = {
         PROCCESSING: 'processing',
         COMPLETE: 'complete'
     },
+    MATING_TYPE: {
+        IMMEDIATE: 'immediate',
+        SPERM: 'SPERM'
+    },
+    INSEMINATION:[
+        {id:0,value:"A",name:"A"},
+        {id:1,value:"B",name:"B"}
+    ],
     section_type: [
         {
             id: 1,
@@ -212,6 +227,8 @@ const API = {
     CREATE_SPERM: '/api/sperm/',
     UPDATE_SPERM: '/api/sperm/',
     DELETE_SPERM: '/api/sperm/',
+
+    CREATE_MATING:'/api/matings/',
 
 }
 

@@ -79,6 +79,9 @@
       <h2>{{item.pigCode}}</h2>
       <ion-row>
         <ion-col>
+          <p><b>Giống:</b>{{breeds[item.breedId]?breeds[item.breedId].name:''}}</p>
+        </ion-col>
+        <ion-col>
           <p><b>Nhà:</b> {{item.houseId}}</p>
         </ion-col>
         <ion-col>
@@ -88,7 +91,7 @@
           <p><b>Ngày sinh:</b> {{item.birthday|date:'dd/MM/yyyy'}}</p>
         </ion-col>
         <ion-col>
-          <p><b>Giới tính:</b> {{item.gender}}</p>
+          <p><b>Giới tính:</b> {{genders[item.gender].name}}</p>
         </ion-col>
         <ion-col>
           <p><b>Điểm thể trạng:</b> {{item.healthPoint}}</p>

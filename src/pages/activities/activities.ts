@@ -91,8 +91,18 @@ export class ActivitiesPage {
           statusFilter: [VARIABLE.STATUS_PIG.WAIT_FOR_SALE]
         }
       },
-      move_pig_khu_phoi: {
-        name: 'Chuyển(xuất) heo', component: PigListSectionPage, active: false,
+      list_pig_khu_phoi: {
+        name: 'Danh sách heo tại khu', component: PigListSectionPage, active: false,
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[3],
+          getPigs(deployData: DeployDataProvider) {
+            return deployData.get_pigs_of_section(VARIABLE.SECTION_TYPE[3].id)
+          },
+          pigs: []
+        }
+      },
+      mating_pig_khu_phoi: {
+        name: 'Phối giống', component: MatingInputPage, active: false,
         data: {
           sectionType: VARIABLE.SECTION_TYPE[3]
         }
@@ -140,12 +150,6 @@ export class ActivitiesPage {
         name: 'Lên giống', component: PigListSectionPage, active: false
       },
 
-      mating_pig_khu_phoi: {
-        name: 'Phối giống', component: MatingInputPage, active: false,
-        data: {
-          sectionType: VARIABLE.SECTION_TYPE[8]//bỏ
-        }
-      },
       pregnancy_pig_khu_mang_thai: {
         name: 'Danh sách heo mang thai', component: PigListSectionPage, active: false
       },
@@ -177,7 +181,7 @@ export class ActivitiesPage {
       {
         title: 'Khu phối',
         components: [
-          this.components.move_pig_khu_phoi,
+          this.components.list_pig_khu_phoi,
           this.components.mating_pig_khu_phoi
         ],
         icon: 'app-activities', active: false

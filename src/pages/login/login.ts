@@ -78,6 +78,8 @@ export class LoginPage {
             this.util.setKey(KEY.ACCESSTOKEN, res.accessToken)
               .then(() => {
                 this.util.setKey(KEY.TOKENTYPE, res.tokenType)
+              }).then(() => {
+                this.util.setKey(KEY.EMPID, res.employeeId)
               })
           }
         })
