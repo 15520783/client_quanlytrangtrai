@@ -26,7 +26,7 @@ export class MatingInputPage {
   public male_pigs: Array<pig> = [];
   public breeds: any = {};
   public matingRole: any = {};
-  public insemination:any;
+  public insemination: any;
 
   public fatherBreed: breeds = new breeds();
   public motherBreed: breeds = new breeds();
@@ -59,11 +59,11 @@ export class MatingInputPage {
       mating1_id: this.detailMating[0].id,
       sperm1: [null, Validators.compose([Validators.required])],
       date1: [this.detailMating[0].date, Validators.compose([Validators.required])],
-      insemination1:[this.detailMating[0].insemination, Validators.compose([Validators.required])],
+      insemination1: [this.detailMating[0].insemination, Validators.compose([Validators.required])],
       mating2_id: this.detailMating[1].id,
       sperm2: [null, Validators.compose([Validators.required])],
       date2: [this.detailMating[1].date, Validators.compose([Validators.required])],
-      insemination2:[this.detailMating[0].insemination, Validators.compose([Validators.required])],
+      insemination2: [this.detailMating[0].insemination, Validators.compose([Validators.required])],
     });
   }
 
@@ -74,35 +74,48 @@ export class MatingInputPage {
   public sperms: Array<sperms> = [];
 
   getSperms() {
+    this.sperms = [];
     this.util.openBackDrop();
     this.activitiesProvider.getAllSperms()
       .then((sperms: Array<sperms>) => {
-        if (sperms && sperms.length) {
+        if (sperms) {
           this.sperms = sperms.filter((sperm: sperms) => {
             return sperm.pig.id == this.credentialsForm.value.fatherId ? true : false;
           })
+          if (!this.sperms.length) {
+            this.util.showToastInform('Không tìm thấy liều tinh của heo nọc được chọn.');
+          }
         }
         this.util.closeBackDrop();
       })
-      .catch((err)=>{
+      .catch((err) => {
         this.util.closeBackDrop();
       })
   }
 
   onSubmit() {
     this.submitAttempt = true;
-    console.log(this.credentialsForm.value);
-    // if (this.credentialsForm.valid) {
-    //   Object.keys(this.credentialsForm.value).forEach((attr) => {
-    //     this.breeding[attr] = this.credentialsForm.value[attr];
-    //   });
-    //   if(!this.updateMode){
-    //     this.navParams.get('callback')(this.breeding);
-    //   }
-    //   else{
-    //     this.navParams.get('callback')(this.breeding);
-    //   }
-    // }
+    if (this.credentialsForm.valid) {
+      Object.keys(this.mating).forEach((attr) => {
+        this.mating[attr] = this.credentialsForm.value[attr] ? this.credentialsForm.value[attr] : this.mating[attr];
+      });
+
+      this.detailMating[0].sperm = this.credentialsForm.value.sperm1;
+      this.detailMating[0].date = this.credentialsForm.value.date1;
+      this.detailMating[0].insemination = this.credentialsForm.value.insemination1;
+
+      this.detailMating[1].sperm = this.credentialsForm.value.sperm1;
+      this.detailMating[1].date = this.credentialsForm.value.date1;
+      this.detailMating[1].insemination = this.credentialsForm.value.insemination1;
+      console.log(this.mating);
+      console.log(this.detailMating);
+      // if(!this.updateMode){
+      //   this.navParams.get('callback')(this.breeding);
+      // }
+      // else{
+      //   this.navParams.get('callback')(this.breeding);
+      // }
+    }
   }
 
 
@@ -112,4 +125,18 @@ export class MatingInputPage {
     this.getSperms();
   }
 
+  public Sperm1: sperms;
+  public Sperm2: sperms;
+
+  showSperm1(e) {
+    setTimeout(() => {
+      this.Sperm1 = e;
+    }, 200);
+  }
+
+  showSperm2(e) {
+    setTimeout(() => {
+      this.Sperm2 = e;
+    }, 200);
+  }
 }

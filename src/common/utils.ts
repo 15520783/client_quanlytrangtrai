@@ -48,6 +48,19 @@ export class Utils {
     return this.toast.present();
   }
 
+  showToastInform(message:string){
+    this.toastOptions = {
+      message: message,
+      duration: 5000,
+      position: 'bottom',
+      closeButtonText: 'Close',
+      cssClass: 'ion-toast-inform',
+      showCloseButton: true,
+    }
+    this.toast = this.toastCtrl.create(this.toastOptions)
+    return this.toast.present();
+  }
+
   showToastSuccess(message) {
     this.toastOptions = {
       message: message,
