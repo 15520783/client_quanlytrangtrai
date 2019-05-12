@@ -101,11 +101,12 @@ export class ActivitiesPage {
           pigs: []
         }
       },
-      mating_pig_khu_phoi: {
-        name: 'Phối giống', component: MatingInputPage, active: false,
+      list_mating_pig_khu_phoi: {
+        name: 'Danh sach heo nái đã phối', component: MatingInputPage, active: false,
         data: {
           sectionType: VARIABLE.SECTION_TYPE[3]
-        }
+        },
+        pigs:[]
       },
       move_pig_khu_mang_thai: {
         name: 'Chuyển(xuất) heo', component: PigListSectionPage, active: false,
@@ -182,7 +183,7 @@ export class ActivitiesPage {
         title: 'Khu phối',
         components: [
           this.components.list_pig_khu_phoi,
-          this.components.mating_pig_khu_phoi
+          this.components.list_mating_pig_khu_phoi
         ],
         icon: 'app-activities', active: false
       },

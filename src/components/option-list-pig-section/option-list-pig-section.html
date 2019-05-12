@@ -7,13 +7,16 @@
 
   <button 
   showWhen="core" 
-  *ngIf="add_to_sale_list.includes(sectionTypeId) && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE"
+  *ngIf="add_to_sale_list.includes(sectionTypeId) 
+  && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE
+  && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_MATING"
   small ion-button item-end mode='ios' color="secondary"
   (tap)="forwardToSaleWaiting()">Thêm vào danh sách chờ bán</button>
   
  <button 
   showWhen="core" 
-  *ngIf="add_to_sale_list.includes(sectionTypeId) && statusObjectKey[pig.statusId].code == statusPig.WAIT_FOR_SALE"
+  *ngIf="add_to_sale_list.includes(sectionTypeId) 
+  && statusObjectKey[pig.statusId].code == statusPig.WAIT_FOR_SALE"
   small ion-button item-end mode='ios' color="secondary"
   (tap)="cancelSaleWaiting()">Hủy chờ bán</button>
   
@@ -28,14 +31,17 @@
 
   <button 
   showWhen="core" 
-  *ngIf="sperm.includes(sectionTypeId) && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE && pig.gender == gender.MALE"
+  *ngIf="sperm.includes(sectionTypeId) 
+  && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE 
+  && pig.gender == gender.MALE"
   small ion-button item-end mode='ios' color="secondary"
   (tap)="sperm_input()">Khai thác tinh heo</button>
 
   <button 
   showWhen="core" 
   *ngIf="mating.includes(sectionTypeId) 
-  && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE && pig.gender == gender.FEMALE
+  && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE 
+  && pig.gender == gender.FEMALE
   && statusObjectKey[pig.statusId].code == statusPig.WAIT_FOR_MATING"
   small ion-button item-end mode='ios' color="secondary"
   (tap)="mating_input()">Phối giống</button>

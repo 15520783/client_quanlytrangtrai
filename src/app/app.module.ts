@@ -69,6 +69,7 @@ import { FoodInvoicesComponent } from '../components/food-invoices/food-invoices
 import { MedicineInvoicesComponent } from '../components/medicine-invoices/medicine-invoices';
 import { BackdropComponent } from '../components/backdrop/backdrop';
 import { OptionListPigSectionComponent } from '../components/option-list-pig-section/option-list-pig-section';
+import { SalePigInvoicesComponent } from '../components/sale-pig-invoices/sale-pig-invoices';
 
 import { HideHeaderDirective } from '../directives/hide-header/hide-header';
 
@@ -165,6 +166,7 @@ const Components = [
   InvoiceInputUtilComponent,
   InternalPigInvoicesComponent,
   ExternalPigInvoicesComponent,
+  SalePigInvoicesComponent,
   FoodInvoicesComponent,
   MedicineInvoicesComponent,
   BackdropComponent,

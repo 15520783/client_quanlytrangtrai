@@ -30,7 +30,6 @@ export class FoodWarehouseInputPage {
     public viewCtrl: ViewController
   ) {
     if (this.navParams.data.invoice) {
-      console.log(this.navParams.data.invoice);
       this.foodWarehouse.invoice = this.navParams.data.invoice;
       this.foodWarehouse['farmId'] = this.navParams.data.invoice.destination.id;
     }
@@ -50,6 +49,20 @@ export class FoodWarehouseInputPage {
       mfgDate: [this.foodWarehouse.mfgDate, Validators.compose([Validators.required])],
       expiryDate: [this.foodWarehouse.expiryDate, Validators.compose([Validators.required])],
     });
+
+    if(this.navParams.data.foodWarehouse){
+      this.foodWarehouse = this.navParams.data.foodWarehouse;
+      this.foodWarehouse['farmId'] = this.navParams.data.foodWarehouse.warehouse.manager.farm.id;
+      this.foodWarehouse.warehouse_id = this.foodWarehouse.warehouse.id;
+      this.foodWarehouse.food_id = this.foodWarehouse.food.id;
+      this.foodWarehouse.unit_id = this.foodWarehouse.unit.id;
+      this.foodWarehouse.mfgDate = new Date (this.foodWarehouse.mfgDate).toISOString();
+      this.foodWarehouse.expiryDate = new Date (this.foodWarehouse.expiryDate).toISOString();
+
+      Object.keys(this.credentialsForm.value).forEach((attr) => {
+        this.credentialsForm.controls[attr].setValue(this.foodWarehouse[attr]);
+      });
+    }
   }
 
   ionViewDidLoad() {
@@ -59,17 +72,18 @@ export class FoodWarehouseInputPage {
 
   onSubmit() {
     this.submitAttempt = true;
-    console.log(this.credentialsForm.value);
     if(this.credentialsForm.valid){
       Object.keys(this.credentialsForm.value).forEach((attr)=>{
         this.foodWarehouse[attr] = this.credentialsForm.value[attr];
       });
 
-      this.events.publish('createFoodWarehouse',this.foodWarehouse);
-      this.events.subscribe('OK',()=>{
-        this.viewCtrl.dismiss();
-        this.events.unsubscribe('OK');
-      })
+      // this.events.publish('createFoodWarehouse',this.foodWarehouse);
+      // this.events.subscribe('OK',()=>{
+      //   this.viewCtrl.dismiss();
+      //   this.events.unsubscribe('OK');
+      // })
+
+      this.navParams.get('callback')(this.foodWarehouse);
     }
   }
 

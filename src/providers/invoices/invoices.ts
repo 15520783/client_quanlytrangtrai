@@ -180,6 +180,18 @@ export class InvoicesProvider {
       .toPromise();
   }
 
+
+  /**
+   * Cập nhật một chi tiết cho chứng từ cám
+   * @param objBody 
+   */
+  updateFoodWareHouse(objBody: foodWareHouse) {
+    return this.http
+      .put(API.UPDATE_FOOD_WAREHOUSE, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
   /**
    * Tạo mới một chi tiết cho chứng từ thuốc
    * @param objBody 

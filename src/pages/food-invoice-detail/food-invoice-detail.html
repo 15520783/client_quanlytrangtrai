@@ -98,7 +98,9 @@
                     </ion-row>
                   </ion-col>
                   <ion-col col-lg-2 col-md-3 col-sm-3>
-                    <button ion-button mode='ios' block color="danger" text-wrap
+                    <button small ion-button mode='ios' block color="main" text-wrap
+                      (tap)="edit(item)">Sửa</button>
+                    <button small ion-button mode='ios' block color="danger" text-wrap
                       (tap)="removePigInvoicesDetail(item)">Xóa</button>
                   </ion-col>
                 </ion-row>
@@ -180,7 +182,7 @@
                   </ion-col>
                 </ion-row>
               </ion-col>
-             
+
             </ion-row>
           </ion-item>
           <ion-item-options side="right" showWhen="ios,android">

@@ -67,20 +67,32 @@ export class FoodInvoiceDetailPage {
   }
 
   input_food() {
-    this.navCtrl.push(FoodWarehouseInputPage, { invoice: this.invoice });
-    this.events.unsubscribe('createFoodWarehouse');
-    this.events.subscribe('createFoodWarehouse', (foodWarehouse) => {
+
+    let callback = (foodWarehouse: foodWareHouse) => {
       foodWarehouse = this.deployData.get_foodWarehouse_object_to_send_request(foodWarehouse);
       this.invoiceProvider.createFoodWareHouse(foodWarehouse)
         .then((foodhouse: foodWareHouse) => {
           if (foodhouse) {
             this.details.push(foodhouse);
-            this.events.unsubscribe('createFoodWarehouse');
-            this.events.publish('OK');
           }
+          this.navCtrl.pop();
         })
         .catch((err: Error) => { })
-    })
+    }
+    this.navCtrl.push(FoodWarehouseInputPage, { invoice: this.invoice, callback: callback });
+    // this.events.unsubscribe('createFoodWarehouse');
+    // this.events.subscribe('createFoodWarehouse', (foodWarehouse) => {
+    //   foodWarehouse = this.deployData.get_foodWarehouse_object_to_send_request(foodWarehouse);
+    //   this.invoiceProvider.createFoodWareHouse(foodWarehouse)
+    //     .then((foodhouse: foodWareHouse) => {
+    //       if (foodhouse) {
+    //         this.details.push(foodhouse);
+    //         this.events.unsubscribe('createFoodWarehouse');
+    //         this.events.publish('OK');
+    //       }
+    //     })
+    //     .catch((err: Error) => { })
+    // })
   }
 
   removeInvoice() {
@@ -93,5 +105,20 @@ export class FoodInvoiceDetailPage {
         }
       })
       .catch((err: Error) => { })
+  }
+
+  edit(item) {
+    let callback = (foodWarehouse: foodWareHouse) => {
+      foodWarehouse = this.deployData.get_foodWarehouse_object_to_send_request(foodWarehouse);
+      this.invoiceProvider.updateFoodWareHouse(foodWarehouse)
+        .then((foodhouse: foodWareHouse) => {
+          if (foodhouse) {
+            item = foodhouse;
+          }
+          this.navCtrl.pop();
+        })
+        .catch((err: Error) => { })
+    }
+    this.navCtrl.push(FoodWarehouseInputPage, { foodWarehouse: item, callback: callback });
   }
 }

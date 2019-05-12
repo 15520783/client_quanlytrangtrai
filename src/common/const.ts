@@ -69,7 +69,8 @@ const VARIABLE = {
         GROWING: "7",
         WAIT_FOR_SALE: "8",
         WAIT_FOR_MATING:"9",
-        SOLD:"10"
+        SOLD:"10",
+        MATED:"11"
     },
     INVOICE_PIG_TYPE: {
         INTERNAL_IMPORT: 'internal-import',
@@ -218,6 +219,7 @@ const API = {
     DELETE_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/',
 
     CREATE_FOOD_WAREHOUSE: '/api/foodwarehouse/',
+    UPDATE_FOOD_WAREHOUSE: '/api/foodwarehouse/',
     CREATE_MEDICINE_WAREHOUSE: '/api/medicinewarehouse/',
 
     CREATE_PIG: '/api/pigs/',

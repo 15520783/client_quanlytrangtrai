@@ -108,7 +108,8 @@ export class MyApp {
             }
           })
       })
-
+      
+      this.listener_logout();
     })
   }
 
@@ -166,7 +167,7 @@ export class MyApp {
 
       setTimeout(() => {
         this.splash = false;
-        this.listener_logout();
+        
       }, 2000);
     }
   }

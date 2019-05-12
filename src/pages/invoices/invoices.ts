@@ -47,6 +47,11 @@ export class InvoicesPage {
         invoices:[],
         component:ExternalPigInvoicesComponent
       },
+      salePigInvoice: {
+        title: 'Chứng từ xuất bán heo',
+        invoices:[],
+        component:ExternalPigInvoicesComponent
+      },
       foodInvoice: {
         title: 'Chứng từ nhập cám',
         invoices:[],
