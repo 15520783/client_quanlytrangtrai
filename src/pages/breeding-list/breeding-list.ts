@@ -2,11 +2,12 @@ import { Component, Input } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { FormControl } from '@angular/forms';
 import { FilterProvider } from '../../providers/filter/filter';
-import { breedings } from '../../common/entity';
+import { breedings, pig } from '../../common/entity';
 import { Utils } from '../../common/utils';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { ActivitiesProvider } from '../../providers/activities/activities';
 import { BreedingInputPage } from '../breeding-input/breeding-input';
+import { PigsProvider } from '../../providers/pigs/pigs';
 
 @IonicPage()
 @Component({
@@ -53,6 +54,7 @@ export class BreedingListPage {
     public deployData: DeployDataProvider,
     public activitiesProvider: ActivitiesProvider,
     public events: Events,
+    public pigProvider: PigsProvider,
     public util: Utils) {
 
     if (this.navParams.data.sectionType) {
@@ -148,7 +150,7 @@ export class BreedingListPage {
         }
         this.navCtrl.pop();
       })
-      .catch((err:Error)=>{})
+      .catch((err: Error) => { })
   };
 
   edit(breeding: breedings) {
@@ -160,6 +162,7 @@ export class BreedingListPage {
   }
 
   remove(breeding: breedings) {
+
     this.activitiesProvider.deleteBreeding(breeding)
       .then((isOK) => {
         if (isOK) {
@@ -168,7 +171,14 @@ export class BreedingListPage {
           );
           this.setFilteredItems();
         }
+      }).then((isOK)=>{
+        let pig = this.deployData.get_pig_by_id(breeding.pig.id);
+        let statusPig = this.deployData.get_status_by_id(pig.statusId);
+        pig.statusId = statusPig.previousStatus;
+        this.pigProvider.updatedPig(pig);
       })
       .catch((err: Error) => { })
   }
+
+
 }

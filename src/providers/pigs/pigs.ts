@@ -26,6 +26,34 @@ export class PigsProvider {
       })
   }
 
+  public updatedPig = (pig: pig) => {
+    console.log(pig);
+    if (pig) {
+      let idx = this.pigs.findIndex(_pig => _pig.id == pig.id);
+      if (idx > -1) {
+        this.util.getKey(KEY.PIGS).then((pigs) => {
+          let idx = pigs.findIndex(_pig => _pig.id == pig.id);
+          if (idx > -1) {
+            pigs[idx] = pig;
+          } else {
+            pigs.push(pig);
+          }
+          this.util.setKey(KEY.PIGS, pigs).then(() => {
+            this.pigs = pigs;
+          })
+        })
+      }
+      else {
+        this.util.getKey(KEY.PIGS).then((pigs: Array<pig>) => {
+          pigs.push(pig);
+          this.util.setKey(KEY.PIGS, pigs).then(() => {
+            this.pigs = pigs;
+          })
+        })
+      }
+    }
+  }
+
   getPigs() {
     return this.http
       .get(API.GET_ALL_PIGS)
@@ -54,24 +82,25 @@ export class PigsProvider {
       .put<pig>(API.UPDATE_PIG, objBody)
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise().then((pig: pig) => {
-        if (pig) {
-          this.util.getKey(KEY.PIGS).then((pigs) => {
-            let idx = pigs.findIndex(_pig => _pig.id == pig.id);
-            if (idx > -1) {
-              pigs[idx] = pig;
-            } else {
-              pigs.push(pig);
-            }
-            this.util.setKey(KEY.PIGS, pigs).then(() => {
-              this.pigs = pigs;
-            })
-          })
-        }
+        // if (pig) {
+        //   this.util.getKey(KEY.PIGS).then((pigs) => {
+        //     let idx = pigs.findIndex(_pig => _pig.id == pig.id);
+        //     if (idx > -1) {
+        //       pigs[idx] = pig;
+        //     } else {
+        //       pigs.push(pig);
+        //     }
+        //     this.util.setKey(KEY.PIGS, pigs).then(() => {
+        //       this.pigs = pigs;
+        //     })
+        //   })
+        // }
+        this.updatedPig(pig);
         return pig;
       })
   }
 
-  
+
 
   removePig(objBody: pig) {
     const options = {
@@ -129,8 +158,6 @@ export class PigsProvider {
     this.updated_flag = true;
     this.events.publish('updated');
   }
-
-
 
   ViewIndexChart(pig: pig, element: any) {
     Highcharts.chart(element, {

@@ -639,7 +639,17 @@ export class DeployDataProvider {
    */
   get_status_saleWaiting_of_pig(statusId): status {
     return this.settingProvider.setting.status.filter((status) => {
-      return status.previousStatus == statusId ? true : false;
+      return status.previousStatus == statusId && VARIABLE.STATUS_PIG.WAIT_FOR_SALE == status.code? true : false ;
+    })[0];
+  }
+
+  /**
+   * Lấy trạng thái heo chờ phối dựa vào trạng thái hiện tại
+   * @param statusId 
+   */
+  get_status_matingWait_of_pig(statusId):status {
+    return this.settingProvider.setting.status.filter((status) => {
+      return status.previousStatus == statusId && VARIABLE.STATUS_PIG.WAIT_FOR_MATING == status.code ? true : false;
     })[0];
   }
 

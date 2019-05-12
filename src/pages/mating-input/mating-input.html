@@ -24,6 +24,12 @@
         [errorMessage_Required]="'Ngày phối là hạng mục bắt buộc.'" [label]="'Ngày phối giống'"
         [placeholder]="'dd/mm/yyyy'" [active]="submitAttempt">
       </input-date>
+
+      <input-date [(validControl)]="credentialsForm.controls.birthEstimate"
+        [errorMessage_Required]="'Ngày sinh dự kiến là hạng mục bắt buộc.'" [label]="'Ngày sinh dự kiên'"
+        [placeholder]="'dd/mm/yyyy'" [active]="submitAttempt">
+      </input-date>
+      
       <ion-item>
         <ion-row>
           <ion-col>

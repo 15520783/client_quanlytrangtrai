@@ -19,7 +19,10 @@
   
   <button 
   showWhen="core" 
-  *ngIf="breeding.includes(sectionTypeId) && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE && pig.gender == gender.FEMALE"
+  *ngIf="breeding.includes(sectionTypeId) 
+  && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE 
+  && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_MATING 
+  && pig.gender == gender.FEMALE"
   small ion-button item-end mode='ios' color="secondary"
   (tap)="breeding_input()">Lên giống</button>
 

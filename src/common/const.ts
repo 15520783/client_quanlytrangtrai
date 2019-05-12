@@ -86,9 +86,13 @@ const VARIABLE = {
         SPERM: 'SPERM'
     },
     INSEMINATION:[
-        {id:0,value:"A",name:"A"},
-        {id:1,value:"B",name:"B"}
+        {id:0,value:"ĐẠT",name:"ĐẠT"},
+        {id:1,value:"KHÔNG ĐẠT",name:"KHÔNG ĐẠT"}
     ],
+    MATING_STATUS:{
+        PROCCESSING:{id:0,name:'Đang chờ lấy tinh lần 2'},
+        COMPLETE:{id:0,name:'Hoàn tất'}
+    },
     section_type: [
         {
             id: 1,
@@ -228,7 +232,7 @@ const API = {
     UPDATE_SPERM: '/api/sperm/',
     DELETE_SPERM: '/api/sperm/',
 
-    CREATE_MATING:'/api/matings/',
+    CREATE_MATING:'/api/matings/matingsmatingdetails/',
 
 }
 

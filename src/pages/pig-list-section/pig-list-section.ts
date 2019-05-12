@@ -136,7 +136,8 @@ export class PigListSectionPage {
     old_vers['houseName'] = this.houses[old_vers.houseId] ? this.houses[old_vers.houseId].name : '';
     old_vers['farmName'] = this.houses[old_vers.houseId].section.farm ? this.houses[old_vers.houseId].section.farm.name : '';    
     old_vers['statusName'] = this.status[old_vers.statusId] ? this.status[old_vers.statusId].name : '';
-    old_vers['statusCode'] = this.status[old_vers.statusId] ? (this.status[old_vers.statusId].code).toString() : '';
+    // old_vers['statusCode'] = this.status[old_vers.statusId] ? (this.status[old_vers.statusId].code).toString() : '';
+    old_vers['statusCode'] = this.status[old_vers.statusId] ? this.status[old_vers.statusId].code : '';
     old_vers['birthdayDisplay'] = this.util.convertDate(old_vers.birthday);
     old_vers['genderName'] = this.gender[old_vers.gender] ? this.gender[old_vers.gender].name : '';
   }

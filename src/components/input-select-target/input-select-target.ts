@@ -50,7 +50,10 @@ export class InputSelectTargetComponent {
 
         case "sperms": {
           this.value = this.validControl.value;
-          this.value_visible = this.validControl.value.date?'Liều tinh ngày ' + this.validControl.value.date : '';
+          if (this.validControl.value.id == 0) {
+            this.value_visible = "Giao phối trực tiếp";
+          } else
+            this.value_visible = this.validControl.value.date ? 'Liều tinh ngày ' + this.validControl.value.date : '';
           break;
         }
 
@@ -139,7 +142,11 @@ export class InputSelectTargetComponent {
               if (sperm) {
                 this.valueChange.emit(sperm);
                 this.value = JSON.parse(JSON.stringify(sperm));
-                this.value_visible = 'Liều tinh ngày ' + sperm.date;
+                if (sperm.id == '0') {
+                  this.value_visible = "Giao phối trực tiếp";
+                } else
+                  this.value_visible = 'Liều tinh ngày ' + sperm.date;
+
                 this.validControl.setErrors(null);
               }
             })

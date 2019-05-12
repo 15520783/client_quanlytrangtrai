@@ -556,9 +556,10 @@ class mating extends base {
 	father = new pig();
 	fatherId: string = '';
 	child: pig = null;
+	childId:string ='';
 	date: any = '';
 	birthEstimate: any = '';
-	// birthStatusEstimate: any = '';
+	status:number = null;
 	employeeId: string = '';
 }
 

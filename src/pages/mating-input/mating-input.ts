@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { mating, pig, breeds, matingDetails, sperms } from '../../common/entity';
+import { mating, pig, breeds, matingDetails, sperms, employee } from '../../common/entity';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { ActivitiesProvider } from '../../providers/activities/activities';
 import { Utils } from '../../common/utils';
-import { VARIABLE } from '../../common/const';
+import { VARIABLE, KEY } from '../../common/const';
 
 @IonicPage()
 @Component({
@@ -19,7 +19,7 @@ export class MatingInputPage {
   public updateMode: boolean = false;
 
   public mating = new mating();
-  public detailMating: Array<matingDetails> = [
+  public matingDetail: Array<matingDetails> = [
     new matingDetails(),
     new matingDetails()
   ];
@@ -49,21 +49,28 @@ export class MatingInputPage {
     this.motherBreed = this.breeds[this.mating.mother.breedId];
     this.insemination = VARIABLE.INSEMINATION;
 
+    this.util.getKey(KEY.EMPID).then((employeeId) => {
+      console.log(employeeId);
+      this.mating.employeeId = employeeId;
+    })
+
     this.credentialsForm = this.formBuilder.group({
       id: this.mating.id,
       motherId: this.mating.mother.id,
       fatherId: [this.mating.fatherId, Validators.compose([Validators.required])],
-      child: this.mating.child,
+      childId: this.mating.childId,
       date: [this.mating.date, Validators.compose([Validators.required])],
+      birthEstimate: [this.mating.birthEstimate, Validators.compose([Validators.required])],
+      status: this.mating.status,
       employeeId: this.mating.employeeId,
-      mating1_id: this.detailMating[0].id,
+      mating1_id: this.matingDetail[0].id,
       sperm1: [null, Validators.compose([Validators.required])],
-      date1: [this.detailMating[0].date, Validators.compose([Validators.required])],
-      insemination1: [this.detailMating[0].insemination, Validators.compose([Validators.required])],
-      mating2_id: this.detailMating[1].id,
-      sperm2: [null, Validators.compose([Validators.required])],
-      date2: [this.detailMating[1].date, Validators.compose([Validators.required])],
-      insemination2: [this.detailMating[0].insemination, Validators.compose([Validators.required])],
+      date1: [this.matingDetail[0].date, Validators.compose([Validators.required])],
+      insemination1: [this.matingDetail[0].insemination, Validators.compose([Validators.required])],
+      mating2_id: this.matingDetail[1].id,
+      sperm2: [null],
+      date2: [this.matingDetail[1].date],
+      insemination2: [this.matingDetail[0].insemination],
     });
   }
 
@@ -80,7 +87,7 @@ export class MatingInputPage {
       .then((sperms: Array<sperms>) => {
         if (sperms) {
           this.sperms = sperms.filter((sperm: sperms) => {
-            return sperm.pig.id == this.credentialsForm.value.fatherId ? true : false;
+            return sperm.pig.id == this.credentialsForm.value.fatherId || sperm.id == "0" ? true : false;
           })
           if (!this.sperms.length) {
             this.util.showToastInform('Không tìm thấy liều tinh của heo nọc được chọn.');
@@ -100,15 +107,18 @@ export class MatingInputPage {
         this.mating[attr] = this.credentialsForm.value[attr] ? this.credentialsForm.value[attr] : this.mating[attr];
       });
 
-      this.detailMating[0].sperm = this.credentialsForm.value.sperm1;
-      this.detailMating[0].date = this.credentialsForm.value.date1;
-      this.detailMating[0].insemination = this.credentialsForm.value.insemination1;
+      this.matingDetail[0].sperm = this.credentialsForm.value.sperm1;
+      this.matingDetail[0].date = this.credentialsForm.value.date1;
+      this.matingDetail[0].insemination = this.credentialsForm.value.insemination1;
 
-      this.detailMating[1].sperm = this.credentialsForm.value.sperm1;
-      this.detailMating[1].date = this.credentialsForm.value.date1;
-      this.detailMating[1].insemination = this.credentialsForm.value.insemination1;
-      console.log(this.mating);
-      console.log(this.detailMating);
+      this.matingDetail[1].sperm = this.credentialsForm.value.sperm2;
+      this.matingDetail[1].date = this.credentialsForm.value.date2;
+      this.matingDetail[1].insemination = this.credentialsForm.value.insemination2;
+
+      this.navParams.get('callback')({
+        mating: this.mating,
+        matingDetail: this.matingDetail
+      })
       // if(!this.updateMode){
       //   this.navParams.get('callback')(this.breeding);
       // }

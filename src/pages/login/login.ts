@@ -74,6 +74,7 @@ export class LoginPage {
       }
       this.userProvider.login(params)
         .then((res: any) => {
+          console.log(res);
           if (res) {
             this.util.setKey(KEY.ACCESSTOKEN, res.accessToken)
               .then(() => {

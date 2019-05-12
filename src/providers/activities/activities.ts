@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { breedings, sperms, mating } from '../../common/entity';
+import { breedings, sperms, mating, matingDetails } from '../../common/entity';
 import { CONFIG, API } from '../../common/const';
 
 @Injectable()
@@ -103,7 +103,7 @@ export class ActivitiesProvider {
       .toPromise();
   }
 
-  createMating(objBody:mating){
+  createMating(objBody:{mating:mating,matingDetail:Array<matingDetails>}){
     return this.http
     .post(API.CREATE_MATING,objBody)
     .timeout(CONFIG.DEFAULT_TIMEOUT)

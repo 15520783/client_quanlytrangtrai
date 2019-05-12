@@ -187,6 +187,13 @@
             [placeholder]="'Nhập chiều cài thân'" 
             [active]="submitAttempt">
           </input-text>
+          <input-select [(validControl)]="credentialsForm.controls.statusId"
+            [errorMessage_Required]="'Trạng thái  là hạng mục bắt buộc.'" 
+            [label]="'Trạng thái'"
+            [active]="submitAttempt" 
+            [placeholder]="'Chọn trạng thái'" 
+            [(data)]="status">
+          </input-select>
           <!-- <input-text [(validControl)]="credentialsForm.controls.index"
             [errorMessage_Required]="'Chỉ số duy truyền là hạng mục bắt buộc'" [label]="'Chỉ số duy truyền'"
             [placeholder]="'Nhập chỉ số duy truyền'" [active]="submitAttempt">
@@ -195,7 +202,7 @@
             [errorMessage_Required]="'Loại lên giống là hạng mục bắt buộc.'" [label]="'Loại lên giống'"
             [active]="submitAttempt" [placeholder]="'Chọn loại lên giống'" [(data)]="breeding_types">
           </input-select> -->
-          <input-select [(validControl)]="credentialsForm.controls.priceCodeId"
+          <input-select [(validControl)]="credentialsForm.controls.pregnancyStatusId"
             [errorMessage_Required]="'Trạng thái mang thai là hạng mục bắt buộc.'" 
             [label]="'Trạng thái mang thai'"
             [active]="submitAttempt" 

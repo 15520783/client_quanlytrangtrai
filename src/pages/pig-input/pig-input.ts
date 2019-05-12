@@ -48,24 +48,24 @@ export class PigInputPage {
       originFatherId: [this.pig.originFatherId, Validators.compose([])],
       originMotherId: [this.pig.originMotherId, Validators.compose([])],
       birthday: [this.pig.birthday, Validators.compose([Validators.required])],
-      originWeight: [this.pig.originWeight, Validators.compose([Validators.required,ValidateNumber])],
-      receiveWeight: [this.pig.receiveWeight, Validators.compose([Validators.required,ValidateNumber])],
+      originWeight: [this.pig.originWeight, Validators.compose([Validators.required, ValidateNumber])],
+      receiveWeight: [this.pig.receiveWeight, Validators.compose([Validators.required, ValidateNumber])],
       description: [this.pig.description, Validators.compose([Validators.maxLength(1000)])],
       healthPoint: [this.pig.healthPoint, Validators.compose([Validators.required])],
       healthStatusId: [this.pig.healthStatusId, Validators.compose([Validators.required])],
       footTypeId: [this.pig.footTypeId, Validators.compose([Validators.required])],
-      functionUdder: [this.pig.functionUdder, Validators.compose([Validators.required,ValidateNumber])],
-      totalUdder: [this.pig.totalUdder, Validators.compose([Validators.required,ValidateNumber])],
+      functionUdder: [this.pig.functionUdder, Validators.compose([Validators.required, ValidateNumber])],
+      totalUdder: [this.pig.totalUdder, Validators.compose([Validators.required, ValidateNumber])],
       gentialTypeId: [this.pig.gentialTypeId, Validators.compose([Validators.required])],
-      adg: [this.pig.adg, Validators.compose([Validators.required,ValidateNumber])],
-      fcr: [this.pig.fcr, Validators.compose([Validators.required,ValidateNumber])],
-      bf: [this.pig.bf, Validators.compose([Validators.required,ValidateNumber])],
-      filet: [this.pig.filet, Validators.compose([Validators.required,ValidateNumber])],
-      longBack: [this.pig.longBack, Validators.compose([Validators.required,ValidateNumber])],
-      longBody: [this.pig.longBody, Validators.compose([Validators.required,ValidateNumber])],
+      adg: [this.pig.adg, Validators.compose([Validators.required, ValidateNumber])],
+      fcr: [this.pig.fcr, Validators.compose([Validators.required, ValidateNumber])],
+      bf: [this.pig.bf, Validators.compose([Validators.required, ValidateNumber])],
+      filet: [this.pig.filet, Validators.compose([Validators.required, ValidateNumber])],
+      longBack: [this.pig.longBack, Validators.compose([Validators.required, ValidateNumber])],
+      longBody: [this.pig.longBody, Validators.compose([Validators.required, ValidateNumber])],
       pregnancyStatusId: [this.pig.pregnancyStatusId, Validators.compose([Validators.required])],
       priceCodeId: [this.pig.priceCodeId, Validators.compose([Validators.required])],
-      statusId: this.pig.statusId
+      statusId: [this.pig.statusId, Validators.compose([Validators.required])],
 
       // born_weight: [this.pig.born_weight, Validators.compose([Validators.required])],
       // born_status:[this.pig.born_status,Validators.compose([Validators.required])],
@@ -83,25 +83,25 @@ export class PigInputPage {
       this.UpdateMode = true;
       this.pig = this.deployData.get_pig_by_id(this.navParams.data.pigId);
       let house: house = this.deployData.get_house_by_id(this.pig.houseId);
-      
-      this.deployData.get_sections_of_farm(house.section.farm.id).forEach((section)=>{
+
+      this.deployData.get_sections_of_farm(house.section.farm.id).forEach((section) => {
         this.sections.push({
-          name:section.name,
-          value:section.id
+          name: section.name,
+          value: section.id
         })
       })
 
-      this.deployData.get_houses_of_section(house.section.id).forEach((house)=>{
+      this.deployData.get_houses_of_section(house.section.id).forEach((house) => {
         this.houses.push({
-          name:house.name,
-          value:house.id
+          name: house.name,
+          value: house.id
         })
       })
 
       let mother = this.deployData.get_pig_by_pig_code(this.pig.originMother);
       let father = this.deployData.get_pig_by_pig_code(this.pig.originFather);
       this.pig['farmId'] = house.section.farm.id;
-      this. pig['sectionId'] = house.section.id;
+      this.pig['sectionId'] = house.section.id;
       this.pig['originFatherId'] = mother ? father.id : '';
       this.pig['originMotherId'] = father ? mother.id : '';
       this.pig['birthday'] = new Date(this.pig.birthday).toISOString();
@@ -113,7 +113,7 @@ export class PigInputPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PigInputPage');
-   
+
   }
 
 
@@ -154,6 +154,8 @@ export class PigInputPage {
   public pregnancyStatus: Array<{ name: string, value: string }> = [];
   public priceCodes: Array<{ name: string, value: string }> = [];
   public genders: Array<{ name: string, value: string }> = [];
+  public status: Array<{ name: string, value: string }> = [];
+
   init() {
     this.farms = this.deployData.get_farm_list_for_select();
     this.settingProvider.setting.breeds.forEach((breed) => {
@@ -187,6 +189,14 @@ export class PigInputPage {
         name: healthStatus.name,
         value: healthStatus.id
       })
+    })
+    this.settingProvider.setting.status.forEach((status) => {
+      if(status.id in ["1","2","3","4","5","6","7"]){
+        this.status.push({
+          name:status.name,
+          value:status.id
+        })
+      }
     })
 
     this.rounds.push({
