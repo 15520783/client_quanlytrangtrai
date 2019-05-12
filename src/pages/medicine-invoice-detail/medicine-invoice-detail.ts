@@ -15,13 +15,13 @@ import { MedicineWarehouseInputPage } from '../medicine-warehouse-input/medicine
   templateUrl: 'medicine-invoice-detail.html',
 })
 export class MedicineInvoiceDetailPage {
-  @ViewChild('slider') slider : Slides;
+  @ViewChild('slider') slider: Slides;
 
   public tab = "0";
 
   public invoice: invoicesProduct;
   public details: Array<medicineWarehouse> = [];
-  
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -39,7 +39,7 @@ export class MedicineInvoiceDetailPage {
   }
 
   ngAfterViewInit() {
-    if (this.slider){
+    if (this.slider) {
       this.slider.autoHeight = true;
     }
   }
@@ -70,20 +70,18 @@ export class MedicineInvoiceDetailPage {
   }
 
   input_medicine() {
-    this.navCtrl.push(MedicineWarehouseInputPage, { invoice: this.invoice });
-    this.events.unsubscribe('createMedicineWarehouse');
-    this.events.subscribe('createMedicineWarehouse', (medicineWarehouse) => {
+    let callback = (medicineWarehouse: medicineWarehouse) => {
       medicineWarehouse = this.deployData.get_medicine_object_to_send_request(medicineWarehouse);
       this.invoiceProvider.createMedicineWarehouse(medicineWarehouse)
         .then((new_medicineWarehouse: medicineWarehouse) => {
           if (new_medicineWarehouse) {
             this.details.push(new_medicineWarehouse);
-            this.events.unsubscribe('createMedicineWarehouse');
-            this.events.publish('OK');
           }
+          this.navCtrl.pop();
         })
         .catch((err: Error) => { })
-    })
+    }
+    this.navCtrl.push(MedicineWarehouseInputPage, { invoice: this.invoice, callback: callback });
   }
 
   removeInvoice() {
@@ -98,4 +96,19 @@ export class MedicineInvoiceDetailPage {
       .catch((err: Error) => { })
   }
 
+
+  edit(item) {
+    let callback = (medicineWarehouse: medicineWarehouse) => {
+      medicineWarehouse = this.deployData.get_medicine_object_to_send_request(medicineWarehouse);
+      this.invoiceProvider.updateMedicineWarehouse(medicineWarehouse)
+        .then((updated_medicineWarehouse: medicineWarehouse) => {
+          if (updated_medicineWarehouse) {
+            item = updated_medicineWarehouse;
+          }
+          this.navCtrl.pop();
+        })
+        .catch((err: Error) => { })
+    }
+    this.navCtrl.push(MedicineWarehouseInputPage, { medicineWarehouse: item, callback: callback })
+  }
 }

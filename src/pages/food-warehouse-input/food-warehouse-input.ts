@@ -76,13 +76,6 @@ export class FoodWarehouseInputPage {
       Object.keys(this.credentialsForm.value).forEach((attr)=>{
         this.foodWarehouse[attr] = this.credentialsForm.value[attr];
       });
-
-      // this.events.publish('createFoodWarehouse',this.foodWarehouse);
-      // this.events.subscribe('OK',()=>{
-      //   this.viewCtrl.dismiss();
-      //   this.events.unsubscribe('OK');
-      // })
-
       this.navParams.get('callback')(this.foodWarehouse);
     }
   }

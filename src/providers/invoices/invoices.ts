@@ -203,6 +203,17 @@ export class InvoicesProvider {
       .toPromise();
   }
 
+  /**
+   * Cập nhật một chi tiết cho chứng từ thuốc
+   * @param objBody 
+   */
+  updateMedicineWarehouse(objBody: medicineWarehouse) {
+    return this.http
+      .put(API.UPDATE_MEDICINE_WAREHOUSE,objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
 
   sync() {
     this.getAllInvoices()

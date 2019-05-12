@@ -50,6 +50,20 @@ export class MedicineWarehouseInputPage {
       mfgDate: [this.medicineWarehouse.mfgDate, Validators.compose([Validators.required])],
       expiryDate: [this.medicineWarehouse.expiryDate, Validators.compose([Validators.required])],
     });
+
+    if(this.navParams.data.medicineWarehouse){
+      this.medicineWarehouse = this.navParams.data.medicineWarehouse;
+      this.medicineWarehouse['farmId'] = this.medicineWarehouse.warehouse.manager.farm.id;
+      this.medicineWarehouse.warehouse_id = this.medicineWarehouse.warehouse.id;
+      this.medicineWarehouse.medicine_id = this.medicineWarehouse.medicine.id;
+      this.medicineWarehouse.unit_id = this.medicineWarehouse.unit.id;
+      this.medicineWarehouse.mfgDate = new Date (this.medicineWarehouse.mfgDate).toISOString();
+      this.medicineWarehouse.expiryDate = new Date (this.medicineWarehouse.expiryDate).toISOString();
+
+      Object.keys(this.credentialsForm.value).forEach((attr) => {
+        this.credentialsForm.controls[attr].setValue(this.medicineWarehouse[attr]);
+      });
+    }
   }
 
   ionViewDidLoad() {
@@ -63,12 +77,7 @@ export class MedicineWarehouseInputPage {
       Object.keys(this.credentialsForm.value).forEach((attr)=>{
         this.medicineWarehouse[attr] = this.credentialsForm.value[attr];
       });
-
-      this.events.publish('createMedicineWarehouse',this.medicineWarehouse);
-      this.events.subscribe('OK',()=>{
-        this.viewCtrl.dismiss();
-        this.events.unsubscribe('OK');
-      })
+      this.navParams.get('callback')(this.medicineWarehouse);
     }
   }
 

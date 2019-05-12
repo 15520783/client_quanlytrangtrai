@@ -220,7 +220,9 @@ const API = {
 
     CREATE_FOOD_WAREHOUSE: '/api/foodwarehouse/',
     UPDATE_FOOD_WAREHOUSE: '/api/foodwarehouse/',
+
     CREATE_MEDICINE_WAREHOUSE: '/api/medicinewarehouse/',
+    UPDATE_MEDICINE_WAREHOUSE: '/api/medicinewarehouse/',
 
     CREATE_PIG: '/api/pigs/',
     UPDATE_PIG: '/api/pigs/',
