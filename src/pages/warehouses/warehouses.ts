@@ -5,6 +5,7 @@ import { WarehousesProvider } from '../../providers/warehouses/warehouses';
 import { FarmsProvider } from '../../providers/farms/farms';
 import { WarehouseInformationPage } from '../warehouse-information/warehouse-information';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { MedicineWarehouseInformationPage } from '../medicine-warehouse-information/medicine-warehouse-information';
 
 @IonicPage()
 @Component({
@@ -56,8 +57,12 @@ export class WarehousesPage {
     this.slider.slideTo(index);
   }
 
-  viewDeltail(warehouse){
+  viewDeltailFoodWarehouse(warehouse){
     this.navCtrl.push(WarehouseInformationPage,{warehouse:warehouse});
+  }
+
+  viewDeltailMedicineWarehouse(warehouse){
+    this.navCtrl.push(MedicineWarehouseInformationPage,{warehouse:warehouse});
   }
 
   changeFarm(e){

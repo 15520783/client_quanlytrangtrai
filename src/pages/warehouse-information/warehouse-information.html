@@ -7,6 +7,10 @@
   <ion-toolbar showWhen="core" class="pl-10">
     <button ion-button mode='ios' color="secondary">Lịch sử xuất, sử dụng</button>
   </ion-toolbar>
+  <ion-segment [(ngModel)]="type" scrollable showWhen='ios,android'>
+    <ion-segment-button value="0" (tap)="selectedTab(0)">Thông tin kho</ion-segment-button>
+    <ion-segment-button value="1" (tap)="selectedTab(1)">Danh sách cám</ion-segment-button>
+  </ion-segment>
 </ion-header>
 
 <ion-content no-padding showWhen="core">
@@ -26,10 +30,10 @@
               <ion-label stacked>Loại kho</ion-label>
               <ion-input text-wrap type="text" readonly [(ngModel)]="warehouse.type_id"></ion-input>
             </ion-item>
-            <ion-item>
+            <!-- <ion-item>
               <ion-label stacked>Trực thuộc</ion-label>
               <ion-input text-wrap type="text" readonly [(ngModel)]="warehouse.unit_id"></ion-input>
-            </ion-item>
+            </ion-item> -->
             <ion-item>
               <ion-label stacked>Phụ trách kho</ion-label>
               <ion-input text-wrap type="text" readonly [(ngModel)]="warehouse.manager.name"></ion-input>
@@ -63,13 +67,16 @@
                 <ion-col>
                   <ion-row>
                     <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>Mã cám:</b>{{item.food_code}}</p>
+                      <p text-wrap><b>Mã cám:</b>{{item.food.foodCode}}</p>
                     </ion-col>
                     <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>Ngày nhập:</b> {{item.import_date}}</p>
+                      <p text-wrap><b>Ngày nhập:</b> {{item.invoice.importDate}}</p>
                     </ion-col>
                     <ion-col col-3 col-md-6 col-sm-12>
                       <p text-wrap><b>Số lượng nhập:</b> {{item.quantity}}</p>
+                    </ion-col>
+                    <ion-col col-3 col-md-6 col-sm-12>
+                      <p text-wrap><b>Đơn vị:</b> {{item.unit.name}}</p>
                     </ion-col>
                     <ion-col col-3 col-md-6 col-sm-12>
                       <p text-wrap><b>Tổng:</b> {{item.total}}</p>
@@ -81,10 +88,13 @@
                       <p text-wrap><b>Tồn:</b> {{item.remain}}</p>
                     </ion-col>
                     <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>Ngày sản xuất:</b> {{item.mfg_date}}</p>
+                      <p text-wrap><b>Nhà sản xuất:</b> {{item.manufacturer}}</p>
                     </ion-col>
                     <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>Hạn sử dụng:</b> {{item.expiry_date}}</p>
+                      <p text-wrap><b>Ngày sản xuất:</b> {{item.mfgDate}}</p>
+                    </ion-col>
+                    <ion-col col-3 col-md-6 col-sm-12>
+                      <p text-wrap><b>Hạn sử dụng:</b> {{item.expiryDate}}</p>
                     </ion-col>
                   </ion-row>
                 </ion-col>
@@ -102,12 +112,7 @@
 
 
 <ion-content no-padding showWhen="ios,android">
-  <ion-item-divider text-wrap sticky="true">
-    <ion-row no-padding>
-      {{header[slider.realIndex]}}
-    </ion-row>
-  </ion-item-divider>
-  <ion-slides #slider>
+  <ion-slides #slider (ionSlideDidChange)="slideChange()">
     <ion-slide>
       <ion-list>
         <ion-item>
@@ -145,10 +150,7 @@
           </ion-avatar>
           <ion-row>
             <ion-col col-7>
-              <h2><b>{{item.food_name}}</b></h2>
-            </ion-col>
-            <ion-col >
-              <p><b>Mã cám:</b>{{item.food_code}}</p>
+              <h2><b>{{item.food.name}}</b></h2>
             </ion-col>
             <ion-col col-7>
               <p><b>Số lượng nhập:</b> {{item.quantity}}</p>
@@ -163,13 +165,13 @@
               <p><b>Tồn:</b> {{item.remain}}</p>
             </ion-col>
             <ion-col col-12>
-              <p><b>Ngày nhập:</b> {{item.import_date}}</p>
+              <p><b>Ngày nhập:</b> {{item.invoice.importDate | date:'dd/MM/yyyy'}}</p>
             </ion-col>
             <ion-col col-12>
-              <p><b>Ngày sản xuất:</b> {{item.mfg_date}}</p>
+              <p><b>Ngày sản xuất:</b> {{item.mfgDate | date:'dd/MM/yyyy'}}</p>
             </ion-col>
             <ion-col col-12>
-              <p><b>Hạn sử dụng:</b> {{item.expiry_date}}</p>
+              <p><b>Hạn sử dụng:</b> {{item.expiryDate | date:'dd/MM/yyyy'}}</p>
             </ion-col>
           </ion-row>
         </ion-item>

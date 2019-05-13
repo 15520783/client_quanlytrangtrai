@@ -6,6 +6,11 @@
   (tap)="viewDetail()">Xem thông tin</button>
 
   <button 
+  showWhen="core" 
+  small ion-button item-end mode='ios' color="secondary"
+  (tap)="health_input()">Nhập vấn đề</button>
+
+  <button 
   showWhen="core"
   small ion-button item-end mode='ios' color="secondary"
   (tap)="transferSection()">Đánh giá & chuyển khu</button>
@@ -50,11 +55,6 @@
   && statusObjectKey[pig.statusId].code == statusPig.WAIT_FOR_MATING"
   small ion-button item-end mode='ios' color="secondary"
   (tap)="mating_input()">Phối giống</button>
-
-  <button 
-  showWhen="core" 
-  *ngIf="move_local.includes(sectionTypeId)"
-  small ion-button item-end mode='ios' color="secondary">Chuyển nội bộ</button>
 
   <!-- <button showWhen="core" small ion-button item-end mode='ios' color="secondary">Thí tình</button> -->
 </span>

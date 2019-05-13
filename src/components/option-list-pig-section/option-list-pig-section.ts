@@ -11,6 +11,7 @@ import { ActivitiesProvider } from '../../providers/activities/activities';
 import { SpermInputPage } from '../../pages/sperm_input/sperm_input';
 import { MatingInputPage } from '../../pages/mating-input/mating-input';
 import { PigInputPage } from '../../pages/pig-input/pig-input';
+import { HealthInputPage } from '../../pages/health-input/health-input';
 
 @Component({
   selector: 'option-list-pig-section',
@@ -100,7 +101,6 @@ export class OptionListPigSectionComponent {
         this.activitiesProvider.createBreeding(data)
           .then((newBreeding: breedings) => {
             if (newBreeding) {
-              // this.pig = newBreeding.pig;
               let statusPig = this.deployData.get_status_matingWait_of_pig(this.pig.statusId);
               this.pig.statusId = statusPig.id;
               this.pigProvider.updatedPig(this.pig);
@@ -207,6 +207,15 @@ export class OptionListPigSectionComponent {
         .catch((err: Error) => { })
     }
     this.navCtrl.push(PigInputPage, { pigId: this.pig.id, isTransferSection: true, callback: callback })
+  }
+
+  health_input() {
+    let callback = healthInput => {
+      if (healthInput) {
+        console.log(healthInput);
+      }
+    }
+    this.navCtrl.push(HealthInputPage, { pig: this.pig, callback: callback });
   }
 
   publishPigChangeEvent(pig) {

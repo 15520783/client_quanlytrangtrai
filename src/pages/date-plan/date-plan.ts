@@ -10,7 +10,7 @@ import { CalendarComponent } from 'ng-fullcalendar';
 import { breedings, mating } from '../../common/entity';
 import { ActivitiesProvider } from '../../providers/activities/activities';
 import { Utils } from '../../common/utils';
-import { e } from '@angular/core/src/render3';
+import { UserProvider } from '../../providers/user/user';
 
 export class Schedule {
   breedings: Array<breedings> = [];
@@ -43,6 +43,7 @@ export class DatePlanPage {
     public navParams: NavParams,
     public platform: Platform,
     public activitiesProvider: ActivitiesProvider,
+    public userProvider: UserProvider,
     public util: Utils
   ) {
     this.getBreeding().then((data) => {
@@ -50,10 +51,10 @@ export class DatePlanPage {
       this.options = {
         schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
         selectable: true,
-        defaultView: "dayGridMonth",
+        defaultView: this.platform.is('core') ? "dayGridMonth" : "listWeek",
         header: {
           left: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+          right: 'dayGridMonth,listWeek'
         },
         footer: {
           right: 'today prev,next'
@@ -128,10 +129,10 @@ export class DatePlanPage {
 
   getBreeding() {
     this.util.openBackDrop();
-    return this.activitiesProvider.getAllBreedings()
-      .then((breedings: Array<breedings>) => {
+    return this.userProvider.getSchedule()
+      .then((data: Schedule) => {
         if (breedings) {
-          this.schedule.breedings = breedings;
+          this.schedule.breedings = data.breedings;
         }
         this.util.closeBackDrop();
       })

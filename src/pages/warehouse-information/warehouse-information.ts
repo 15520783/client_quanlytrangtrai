@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
-import { warehouse } from '../../common/entity';
+import { warehouse, foodWareHouse } from '../../common/entity';
+import { Utils } from '../../common/utils';
+import { WarehousesProvider } from '../../providers/warehouses/warehouses';
 
 
 @IonicPage()
@@ -11,40 +13,54 @@ import { warehouse } from '../../common/entity';
 export class WarehouseInformationPage {
   @ViewChild('slider') slider: Slides;
   
+  public type = "0";
   public warehouse = new warehouse();
-  public food_warehouses: any = []
-  public food_warehouse: any =
-    {
-      food_code: '562PSL',
-      food_name: 'Cám 562PSL',
-      import_date: '2014-11-10 00:00:00',
-      quantity: '5000',
-      total: '5000',
-      used: '150',
-      remain: '4850',
-      mfg_date: '2014-11-10 00:00:00',
-      expiry_date: '2015-01-10 00:00:00'
-    }
-  public header = ["Thông tin chi tiết", "Danh sách cám chi tiết"];
+  public food_warehouses: Array<foodWareHouse> = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    for (let i = 0; i <= 10; i++) {
-      this.food_warehouses.push(this.food_warehouse);
-    }
-
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public warehouseProvider: WarehousesProvider,
+    public util: Utils
+  ) {
     if (this.navParams.data.warehouse) {
       this.warehouse = this.navParams.data.warehouse;
     }
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad WarehouseInformationPage');
+    this.getAllFoodWarehouse();
   }
 
   ngAfterViewInit() {
-    if (this.slider){
+    if (this.slider) {
       this.slider.autoHeight = true;
     }
     console.log('ngAfterViewInit FarmInfomationPage');
+  }
+
+  getAllFoodWarehouse() {
+    this.util.openBackDrop();
+    this.warehouseProvider.getFoodWarehouseByWarehousId(this.warehouse.id)
+      .then((data: Array<foodWareHouse>) => {
+        if (data) {
+          this.food_warehouses = data.filter((foodwarehouse) => {
+            return foodwarehouse.warehouse.id == this.warehouse.id;
+          })
+        }
+        this.util.closeBackDrop();
+      })
+      .catch((err: Error) => {
+        console.log(err);
+        this.util.closeBackDrop();
+      })
+  }
+
+  slideChange() {
+    this.type = this.slider.realIndex.toString();
+  }
+
+  selectedTab(index) {
+    this.slider.slideTo(index);
   }
 }

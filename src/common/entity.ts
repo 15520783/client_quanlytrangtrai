@@ -41,6 +41,7 @@ export { breedings }
 export { sperms }
 export { matingRole }
 export { mating, matingDetails }
+export { issuesPigs }
 
 class base {
 	id: string;
@@ -50,6 +51,10 @@ class base {
 
 	constructor() {
 
+	}
+
+	setID(id: string) {
+		this.id = id;
 	}
 }
 
@@ -556,10 +561,10 @@ class mating extends base {
 	father = new pig();
 	fatherId: string = '';
 	child: pig = null;
-	childId:string ='';
+	childId: string = '';
 	date: any = '';
 	birthEstimate: any = '';
-	status:number = null;
+	status: number = null;
 	employeeId: string = '';
 }
 
@@ -568,7 +573,17 @@ class matingDetails extends base {
 	sperm = new sperms();
 	date: any = '';
 	insemination: string = '';
+}
 
+class issuesPigs extends base {
+	date: any = '';
+	pig: pig = new pig();
+	pigId: string = '';
+	issue: issues = new issues();
+	employee: employee = new employee();
+	description: string = ''
+	images: string = '';
+	status: string = '';
 }
 
 class InputObject {

@@ -185,11 +185,12 @@ const API = {
     GET_ALL_INVOICES: '/api/invoices/list',
     GET_ALL_SPERMS: '/api/sperm/list',
     GET_ALL_BREEDINGS: '/api/breedings/list',
-
+    GET_FOOD_WAREHOUSE_OF_WAREHOUSE:'/api/foodwarehouse/warehouse/',
+    GET_MEDICINE_WAREHOUSE_OF_WAREHOUSE:'/api/medicinewarehouse/warehouse/',
     GET_PIG_INVOICE_DETAIL_FROM_INVOICE: '/api/invoicepigdetail/invoice/',
     GET_FOOD_WAREHOUSE_FROM_INVOICE: '/api/foodwarehouse/invoice/',
     GET_MEDICINE_WAREHOUSE_FROM_INVOICE: '/api/medicinewarehouse/invoice/',
-
+    GET_SCHEDULE:'/api/schedule/list',
 
     CREATE_PREGNANCY_STATUS: '/api/pregnancystatus/',
     DELETE_PREGNANCY_STATUS: '/api/pregnancystatus/',

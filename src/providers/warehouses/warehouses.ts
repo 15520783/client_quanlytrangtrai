@@ -18,15 +18,15 @@ export class WarehousesProvider {
     public events: Events
   ) {
     this.util.getKey(KEY.WAREHOUSES)
-    .then((data)=>{
-      this.warehouses = data;
-    })
+      .then((data) => {
+        this.warehouses = data;
+      })
   }
 
   public getWarehouses() {
     return this.http
-    .get(API.GET_ALL_WAREHOUSES)
-    .timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
+      .get(API.GET_ALL_WAREHOUSES)
+      .timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
   }
 
   sync() {
@@ -67,5 +67,27 @@ export class WarehousesProvider {
     return this.warehouses.filter((warehouse: warehouse) => {
       return warehouse.type.id == "2" ? true : false;
     })
+  }
+
+  /**
+  * Lấy danh sách chi tiết cám thuộc nhà kho
+  * @param warehouseId 
+  */
+  getFoodWarehouseByWarehousId(warehouseId: string) {
+    return this.http
+      .get(API.GET_FOOD_WAREHOUSE_OF_WAREHOUSE.concat(warehouseId))
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Lấy danh sách chi tiết thuốc thuộc nhà kho
+   * @param warehouseId 
+   */
+  getMedicineWarehouseByWarehouseId(warehouseId: string) {
+    return this.http
+      .get(API.GET_MEDICINE_WAREHOUSE_OF_WAREHOUSE.concat(warehouseId))
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 }

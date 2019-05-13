@@ -65,7 +65,7 @@ export class ActivitiesPage {
         }
       },
       list_pig_khu_noc: {
-        name: 'Danh sách heo', component: PigListSectionPage, active: false,
+        name: 'Danh sách heo tại khu', component: PigListSectionPage, active: false,
         data: {
           sectionType: VARIABLE.SECTION_TYPE[2],
           getPigs(deployData: DeployDataProvider) {
@@ -114,22 +114,34 @@ export class ActivitiesPage {
         },
         pigs:[]
       },
-      move_pig_khu_mang_thai: {
-        name: 'Chuyển(xuất) heo', component: PigListSectionPage, active: false,
+      list_pig_khu_mang_thai: {
+        name: 'Danh sách heo tại khu', component: PigListSectionPage, active: false,
         data: {
-          sectionType: VARIABLE.SECTION_TYPE[4]
+          sectionType: VARIABLE.SECTION_TYPE[4],
+          getPigs(deployData: DeployDataProvider) {
+            return deployData.get_pigs_of_section(VARIABLE.SECTION_TYPE[4].id)
+          },
+          pigs: []
         }
       },
-      move_pig_khu_de: {
-        name: 'Chuyển(xuất) heo', component: PigListSectionPage, active: false,
+      list_pig_khu_de: {
+        name: 'Danh sách heo tại khu', component: PigListSectionPage, active: false,
         data: {
-          sectionType: VARIABLE.SECTION_TYPE[5]
+          sectionType: VARIABLE.SECTION_TYPE[5],
+          getPigs(deployData: DeployDataProvider) {
+            return deployData.get_pigs_of_section(VARIABLE.SECTION_TYPE[5].id)
+          },
+          pigs: []
         }
       },
-      move_pig_khu_cai_sua: {
-        name: 'Chuyển(xuất) heo', component: PigListSectionPage, active: false,
+      list_pig_khu_cai_sua: {
+        name: 'Danh sách heo tại khu', component: PigListSectionPage, active: false,
         data: {
-          sectionType: VARIABLE.SECTION_TYPE[6]
+          sectionType: VARIABLE.SECTION_TYPE[6],
+          getPigs(deployData: DeployDataProvider) {
+            return deployData.get_pigs_of_section(VARIABLE.SECTION_TYPE[6].id)
+          },
+          pigs: []
         }
       },
       list_pig_khu_hau_bi: {
@@ -197,7 +209,7 @@ export class ActivitiesPage {
       {
         title: 'Khu mang thai',
         components: [
-          this.components.move_pig_khu_mang_thai,
+          this.components.list_pig_khu_mang_thai,
           this.components.pregnancy_pig_khu_mang_thai
         ],
         icon: 'app-activities', active: false
@@ -205,14 +217,14 @@ export class ActivitiesPage {
       {
         title: 'Khu đẻ ',
         components: [
-          this.components.move_pig_khu_de,
+          this.components.list_pig_khu_de,
         ],
         icon: 'app-activities', active: false
       },
       {
         title: 'Khu cai sữa',
         components: [
-          this.components.move_pig_khu_cai_sua,
+          this.components.list_pig_khu_cai_sua,
           this.components.chuyen_heo_nen_khu_cai_sua
         ],
         icon: 'app-activities', active: false

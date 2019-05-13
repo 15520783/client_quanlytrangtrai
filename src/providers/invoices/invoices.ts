@@ -64,10 +64,10 @@ export class InvoicesProvider {
    * Cập nhật chứng từ heo
    * @param objBody 
    */
-  updatePigInvoice(objBody: invoicesPig){
+  updatePigInvoice(objBody: invoicesPig) {
     return this.http
-    .put(API.UPDATE_PIG_INVOICE,objBody)
-    .toPromise();
+      .put(API.UPDATE_PIG_INVOICE, objBody)
+      .toPromise();
   }
 
   /**
@@ -118,13 +118,13 @@ export class InvoicesProvider {
       .toPromise();
   }
 
-  getMedicineWarehouse(invoiceId:string){
+  getMedicineWarehouse(invoiceId: string) {
     return this.http
-    .get(API.GET_MEDICINE_WAREHOUSE_FROM_INVOICE.concat(invoiceId))
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+      .get(API.GET_MEDICINE_WAREHOUSE_FROM_INVOICE.concat(invoiceId))
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
-  
+
   /**
    * Xóa chi tiết của chứng từ heo
    * @param objBody 
@@ -150,20 +150,20 @@ export class InvoicesProvider {
   //     .timeout(CONFIG.DEFAULT_TIMEOUT)
   //     .toPromise();
   // }
-  createPigInvoiceDetail(objBody:{pigs:any,invoicesPig:invoicesPig}){
+  createPigInvoiceDetail(objBody: { pigs: any, invoicesPig: invoicesPig }) {
     return this.http
-    .post<{invoicePigDetail:invoicePigDetail,pigs:pig}>(API.CREATE_PIG_INVOICE_DETAIL,objBody)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise()
-    .then((response)=>{
-      if(response && response.pigs && response.invoicePigDetail){
-        this.util.getKey(KEY.PIGS).then((pigs: Array<pig>) => {
-          pigs.push(response.pigs);
-          this.util.setKey(KEY.PIGS, pigs);
-        })
-      }
-      return response;
-    })
+      .post<{ invoicePigDetail: invoicePigDetail, pigs: pig }>(API.CREATE_PIG_INVOICE_DETAIL, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise()
+      .then((response) => {
+        if (response && response.pigs && response.invoicePigDetail) {
+          this.util.getKey(KEY.PIGS).then((pigs: Array<pig>) => {
+            pigs.push(response.pigs);
+            this.util.setKey(KEY.PIGS, pigs);
+          })
+        }
+        return response;
+      })
   }
 
 
@@ -198,7 +198,7 @@ export class InvoicesProvider {
    */
   createMedicineWarehouse(objBody: medicineWarehouse) {
     return this.http
-      .post(API.CREATE_MEDICINE_WAREHOUSE,objBody)
+      .post(API.CREATE_MEDICINE_WAREHOUSE, objBody)
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise();
   }
@@ -209,7 +209,7 @@ export class InvoicesProvider {
    */
   updateMedicineWarehouse(objBody: medicineWarehouse) {
     return this.http
-      .put(API.UPDATE_MEDICINE_WAREHOUSE,objBody)
+      .put(API.UPDATE_MEDICINE_WAREHOUSE, objBody)
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise();
   }

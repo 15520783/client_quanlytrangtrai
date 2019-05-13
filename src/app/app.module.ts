@@ -47,7 +47,7 @@ import { SpermInputPage } from '../pages/sperm_input/sperm_input';
 import { SpermListPage } from '../pages/sperm-list/sperm-list';
 import { MatingInputPage } from '../pages/mating-input/mating-input';
 import { DatePlanPage } from '../pages/date-plan/date-plan';
-
+import { HealthInputPage } from '../pages/health-input/health-input';
 import { BreedingListPage } from '../pages/breeding-list/breeding-list';
 
 import { HeaderComponent } from '../components/header/header';
@@ -98,6 +98,7 @@ import { InvoicesProvider } from '../providers/invoices/invoices';
 import { TokenInterceptor } from './interceptor';
 import { BreedingInputPage } from '../pages/breeding-input/breeding-input';
 import { ActivitiesProvider } from '../providers/activities/activities';
+import { MedicineWarehouseInformationPage } from '../pages/medicine-warehouse-information/medicine-warehouse-information';
 
 
 const Pages = [
@@ -147,7 +148,9 @@ const Pages = [
   SpermListPage,
   MatingInputPage,
   BreedingListPage,
-  DatePlanPage
+  DatePlanPage,
+  HealthInputPage,
+  MedicineWarehouseInformationPage
 ]
 
 const Components = [

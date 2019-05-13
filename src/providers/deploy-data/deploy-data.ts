@@ -187,6 +187,20 @@ export class DeployDataProvider {
     return breedingTypes_select;
   }
 
+  /**
+   * Lấy danh sách vấn đề heo cho ion-select
+   */
+  get_issues_list_for_select(){
+    let issues = [];
+    this.settingProvider.setting.issues.forEach((issue) => {
+      issues.push({
+        name: issue.symptom,
+        value: issue.id
+      })
+    })
+    return issues;
+  }
+
   get_statusCode_list_for_select() {
     let statusCode_select = [];
     Object.keys(VARIABLE.STATUS_PIG).forEach((statusKey) => {

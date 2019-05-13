@@ -28,13 +28,13 @@
   <ion-row>
     <ion-col col-lg-6 col-md-6 col-sm-12 col-xs-12>
       <ion-card mode='ios'>
-        <ion-card-header>Kho cám
+        <ion-card-header>Kho cám ({{food_warehouses.length}} kho)
         </ion-card-header>
         <ion-card-content no-padding>
           <ion-scroll scrollY="true" class="scroll-custom">
             <ion-item-group>
               <ion-list>
-                <button ion-item *ngFor="let warehouse of food_warehouses" (tap)="viewDeltail(warehouse)">
+                <button ion-item *ngFor="let warehouse of food_warehouses" (tap)="viewDeltailFoodWarehouse(warehouse)">
                   <ion-avatar item-start>
                     <ion-icon name="app-warehouse" font28></ion-icon>
                   </ion-avatar>
@@ -56,13 +56,13 @@
     </ion-col>
     <ion-col col-lg-6 col-md-6 col-sm-12 col-xs-12>
       <ion-card mode='ios'>
-        <ion-card-header>Kho thuốc
+        <ion-card-header>Kho thuốc ({{medicine_warehouses.length}} kho)
         </ion-card-header>
         <ion-card-content no-padding>
           <ion-scroll scrollY="true" class="scroll-custom">
             <ion-item-group>
               <ion-list>
-                <button ion-item *ngFor="let warehouse of medicine_warehouses" (tap)="viewDeltail(warehouse)">
+                <button ion-item *ngFor="let warehouse of medicine_warehouses" (tap)="viewDeltailMedicineWarehouse(warehouse)">
                   <ion-avatar item-start>
                     <ion-icon name="app-warehouse" font28></ion-icon>
                   </ion-avatar>
@@ -90,7 +90,7 @@
     <ion-slide>
       <ion-scroll scrollY="true" class="modal-scroll">
         <ion-list>
-          <button ion-item *ngFor="let warehouse of food_warehouses" (tap)="viewDeltail(warehouse)">
+          <button ion-item *ngFor="let warehouse of food_warehouses" (tap)="viewDeltailFoodWarehouse(warehouse)">
             <ion-avatar item-start>
               <ion-icon name="app-warehouse" font28></ion-icon>
             </ion-avatar>
@@ -110,7 +110,7 @@
     <ion-slide>
       <ion-scroll scrollY="true" class="modal-scroll">
         <ion-list>
-          <button ion-item *ngFor="let warehouse of medicine_warehouses" (tap)="viewDeltail(warehouse)">
+          <button ion-item *ngFor="let warehouse of medicine_warehouses" (tap)="viewDeltailMedicineWarehouse(warehouse)">
             <ion-avatar item-start>
               <ion-icon name="app-warehouse" font28></ion-icon>
             </ion-avatar>

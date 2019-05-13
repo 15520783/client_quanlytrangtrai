@@ -31,4 +31,11 @@ export class UserProvider {
     .toPromise();
   }
 
+  getSchedule(){
+    return this.http
+    .get(API.GET_SCHEDULE)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
 }
