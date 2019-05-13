@@ -23,6 +23,7 @@
         [attr.col-12]="!platform.is('core')?'':null">
           <input-select 
             [(validControl)]="credentialsForm.controls.farmId"
+            [disabled]="isTransferSection"
             [label]="'Trang trại'" 
             [active]="submitAttempt"
             [placeholder]="'Chọn trang trại'" [(data)]="farms"
@@ -43,35 +44,41 @@
           </input-select>
           <input-text 
             [(validControl)]="credentialsForm.controls.pigCode"
+            [disabled]="isTransferSection"
             [errorMessage_Required]="'Số tai heo là hạng mục bắt buộc.'"
             [errorMessage_Maxlength]="'Số tai heo không được vượt quá 1000 kí tự.'" 
             [label]="'Số tai heo'"
             [placeholder]="'Nhập số tai heo'" [active]="submitAttempt">
           </input-text>
           <input-select [(validControl)]="credentialsForm.controls.breedId"
+            [disabled]="isTransferSection"
             [errorMessage_Required]="'Giống heo là hạng mục bắt buộc.'" [label]="'Giống'" 
             [active]="submitAttempt"
             [placeholder]="'Chọn giống heo'" 
             [(data)]="breeds">
           </input-select>
           <input-select [(validControl)]="credentialsForm.controls.gender"
+            [disabled]="isTransferSection"
             [errorMessage_Required]="'Giới tính là hạng mục bắt buộc.'" [label]="'Giới tính'" 
             [active]="submitAttempt"
             [placeholder]="'Chọn giới tính'" 
             [(data)]="genders">
           </input-select>
           <input-select-target [(validControl)]="credentialsForm.controls.originFatherId"
+            [disabled]="isTransferSection"
             [errorMessage_Required]="'Heo cha là hạng mục bắt buộc.'" 
             [active]="submitAttempt"
             [placeholder]="'Chọn heo cha'" [label]="'Heo cha'" 
             [targertCmp]="'pigs'">
           </input-select-target>
           <input-select-target [(validControl)]="credentialsForm.controls.originMotherId"
+            [disabled]="isTransferSection"
             [errorMessage_Required]="'Heo mẹ là hạng mục bắt buộc.'" [active]="submitAttempt"
             [placeholder]="'Chọn heo mẹ'" [label]="'Heo mẹ'" 
             [targertCmp]="'pigs'">
           </input-select-target>
           <input-date [(validControl)]="credentialsForm.controls.birthday"
+            [disabled]="isTransferSection"
             [errorMessage_Required]="'Ngày sinh là hạng mục bắt buộc.'" [label]="'Ngày sinh'"
             [placeholder]="'dd/mm/yyyy'" 
             [active]="submitAttempt">
@@ -85,11 +92,13 @@
             [attr.col-sm-12]="platform.is('core')?'':null"
             [attr.col-12]="!platform.is('core')?'':null">
           <input-select [(validControl)]="credentialsForm.controls.roundId"
+            [disabled]="isTransferSection"
             [errorMessage_Required]="'Lứa là hạng mục bắt buộc.'" [label]="'Lứa'" 
             [active]="submitAttempt"
             [placeholder]="'Chọn lứa'" [(data)]="rounds">
           </input-select>
           <input-text [(validControl)]="credentialsForm.controls.originWeight"
+            [disabled]="isTransferSection"
             [errorMessage_Required]="'Trọng lượng NCC là hạng mục bắt buộc.'" 
             [label]="'Trọng lượng NCC'"
             [placeholder]="'Nhập Trọng lượng NCC'" 
@@ -188,10 +197,12 @@
             [active]="submitAttempt">
           </input-text>
           <input-select [(validControl)]="credentialsForm.controls.statusId"
-            [errorMessage_Required]="'Trạng thái  là hạng mục bắt buộc.'" 
+            [disabled]="isTransferSection"
+            [errorMessage_Required]="'Trạng thái là hạng mục bắt buộc.'" 
             [label]="'Trạng thái'"
             [active]="submitAttempt" 
             [placeholder]="'Chọn trạng thái'" 
+            [selectOptions]="{cssClass:'ion-popover'}"
             [(data)]="status">
           </input-select>
           <!-- <input-text [(validControl)]="credentialsForm.controls.index"
@@ -210,6 +221,7 @@
             [(data)]="pregnancyStatus">
           </input-select>
           <input-select [(validControl)]="credentialsForm.controls.priceCodeId"
+            [disabled]="isTransferSection"
             [errorMessage_Required]="'Loại sản phẩm là hạng mục bắt buộc.'" 
             [label]="'Loại sản phẩm'"
             [active]="submitAttempt" 

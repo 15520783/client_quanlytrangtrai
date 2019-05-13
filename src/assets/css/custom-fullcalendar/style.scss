@@ -24,14 +24,15 @@
   }
 
   .fc-day-grid-event{
-    background: transparent!important;
-    border:none;
+    // background: transparent!important;
+    // border:none;
+    margin: 5px!important;
   }
 
-  .fc-time-grid-event{
-    background: linear-gradient(to right, #01C2FA, #d7d8da);
-    border-color: aliceblue;
-  }
+  // .fc-time-grid-event{
+  //   background: linear-gradient(to right, #01C2FA, #d7d8da);
+  //   border-color: aliceblue;
+  // }
 
   .fc-button{
     background: #01C2FA!important;

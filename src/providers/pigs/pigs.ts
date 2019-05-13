@@ -65,14 +65,7 @@ export class PigsProvider {
       .post<pig>(API.CREATE_PIG, objBody)
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise().then((pig: pig) => {
-        if (pig) {
-          this.util.getKey(KEY.PIGS).then((pigs: Array<pig>) => {
-            pigs.push(pig);
-            this.util.setKey(KEY.PIGS, pigs).then(() => {
-              this.pigs = pigs;
-            })
-          })
-        }
+        this.updatedPig(pig);
         return pig;
       });
   }
@@ -82,19 +75,6 @@ export class PigsProvider {
       .put<pig>(API.UPDATE_PIG, objBody)
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise().then((pig: pig) => {
-        // if (pig) {
-        //   this.util.getKey(KEY.PIGS).then((pigs) => {
-        //     let idx = pigs.findIndex(_pig => _pig.id == pig.id);
-        //     if (idx > -1) {
-        //       pigs[idx] = pig;
-        //     } else {
-        //       pigs.push(pig);
-        //     }
-        //     this.util.setKey(KEY.PIGS, pigs).then(() => {
-        //       this.pigs = pigs;
-        //     })
-        //   })
-        // }
         this.updatedPig(pig);
         return pig;
       })

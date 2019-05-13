@@ -22,7 +22,6 @@ import { HouseInfomationPage } from '../pages/house-infomation/house-infomation'
 import { PigGroupsPage } from '../pages/pig-groups/pig-groups';
 import { EmployeePage } from '../pages/employee/employee';
 import { PigGroupInformationPage } from '../pages/pig-group-information/pig-group-information';
-import { DatePlanPage } from '../pages/date-plan/date-plan';
 import { EmployeeInformationPage } from '../pages/employee-information/employee-information';
 import { TestInputPage } from '../pages/test-input/test-input';
 import { FarmInputPage } from '../pages/farm-input/farm-input';
@@ -47,6 +46,7 @@ import { PigListSectionPage } from '../pages/pig-list-section/pig-list-section';
 import { SpermInputPage } from '../pages/sperm_input/sperm_input';
 import { SpermListPage } from '../pages/sperm-list/sperm-list';
 import { MatingInputPage } from '../pages/mating-input/mating-input';
+import { DatePlanPage } from '../pages/date-plan/date-plan';
 
 import { BreedingListPage } from '../pages/breeding-list/breeding-list';
 
@@ -120,7 +120,6 @@ const Pages = [
   WarehouseInformationPage,
   PigGroupsPage,
   EmployeePage,
-  DatePlanPage,
   TestInputPage,
   FarmInputPage,
   HouseInputPage,
@@ -148,6 +147,7 @@ const Pages = [
   SpermListPage,
   MatingInputPage,
   BreedingListPage,
+  DatePlanPage
 ]
 
 const Components = [

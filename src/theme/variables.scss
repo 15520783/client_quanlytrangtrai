@@ -5,15 +5,12 @@
 // roboto, and noto sans fonts
 $font-path: "../assets/fonts";
 
-
 // The app direction is used to include
 // rtl styles in your app. For more info, please see:
 // http://ionicframework.com/docs/theming/rtl-support/
 $app-direction: ltr;
 
-
 @import "ionic.globals";
-
 
 // Shared Variables
 // --------------------------------------------------
@@ -22,9 +19,6 @@ $app-direction: ltr;
 // To view all the possible Ionic variables, see:
 // http://ionicframework.com/docs/theming/overriding-ionic-variables/
 
-
-
-
 // Named Color Variables
 // --------------------------------------------------
 // Named colors makes it easy to reuse colors on various components.
@@ -32,56 +26,46 @@ $app-direction: ltr;
 // to match your app's branding. Ionic uses a Sass map of
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
-@import '../assets/css/balloon/main.scss';
-@import '../assets/css/fullcalendar/style.scss';
-@import '../assets/css/fullcalendar/resource-timeline.scss';
-@import '../assets/css/fullcalendar/timegrid.scss';
-@import '../assets/css/fullcalendar/timeline.scss';
-@import '../assets/css/custom-fullcalendar/style.scss';
-@import '../assets/css/balloon/balloon-visible.scss';
-@import '../assets/css/my-icon/my-icon.scss';
-@import '../assets/css/splash-animation/splash-animation.scss';
-
+@import "../assets/css/balloon/main.scss";
+@import "../assets/css/fullcalendar/style.scss";
+@import "../assets/css/fullcalendar/resource-timeline.scss";
+@import "../assets/css/fullcalendar/timegrid.scss";
+@import "../assets/css/fullcalendar/timeline.scss";
+@import "../assets/css/custom-fullcalendar/style.scss";
+@import "../assets/css/balloon/balloon-visible.scss";
+@import "../assets/css/my-icon/my-icon.scss";
+@import "../assets/css/splash-animation/splash-animation.scss";
 
 $colors: (
-  primary:      #005bea,
-  primary-custome:  #005bea,
-  secondary:      #32db64,
-  danger:         #f53d3d,
-  light:          #f4f4f4,
-  dark:           #222,
-  main:           #01C2FA,
-  medium:         #989aa2
+  primary: #005bea,
+  primary-custome: #005bea,
+  secondary: #32db64,
+  danger: #f53d3d,
+  light: #f4f4f4,
+  dark: #222,
+  main: #01c2fa,
+  medium: #989aa2
 );
 
-$themeColor1:(#d7d8da,#f5f6f9);
+$themeColor1: (#d7d8da, #f5f6f9);
 // $themeColor2:(#01C2FA,#2dcfff);
-$themeColor2:(#01C2FA);
+$themeColor2: (#01c2fa);
 
-$main:#32D398;
-$dark:#232123;
-$light-tint:#d7d8da;
+$main: #32d398;
+$dark: #232123;
+$light-tint: #d7d8da;
 
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
 
-
-
-
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 
-
-
-
 // App Windows Variables
 // --------------------------------------------------
 // Windows only Sass variables can go here
-
-
-
 
 // App Theme
 // --------------------------------------------------
@@ -92,7 +76,6 @@ $light-tint:#d7d8da;
 
 @import "ionic.theme.default";
 
-
 // Ionicons
 // --------------------------------------------------
 // The premium icon font for Ionic. For more info, please see:
@@ -100,24 +83,43 @@ $light-tint:#d7d8da;
 
 @import "ionic.ionicons";
 
-
 // Fonts
 // --------------------------------------------------
 
 @import "roboto";
 @import "noto-sans";
 
+// .event-fullcalendar {
+//   .fc-content {
+//     padding: 5px;
+//     font-weight: bold;
+//     color: white;
+//     background: linear-gradient(to right, $themeColor2, $light-tint);
+//     border-color: #01c2fa;
+//     border-radius: 15px;
+//   }
+// }
 
-.event-fullcalendar { 
-  .fc-content{
-    padding: 5px;
-    font-weight: bold;
-    color: white;
-    background:linear-gradient(to right,$themeColor2,$light-tint);
-    border-color:#01C2FA;
-    border-radius: 15px;
-  }
-}
+// .event-coming-up {
+//   .fc-content {
+//     padding: 5px;
+//     font-weight: bold;
+//     color: white;
+//     background: linear-gradient(to right, $themeColor2, $light-tint);
+//     border-color: #32db64!important;
+//     border-radius: 15px;
+//   }
+// }
 
+// .event-over-due {
+//   .fc-content {
+//     padding: 5px;
+//     font-weight: bold;
+//     color: white;
+//     background: linear-gradient(to right, $themeColor2, $light-tint);
+//     border-color: #f53d3d!important;
+//     border-radius: 15px;
+//   }
+// }
 
-$text-input-highlight-color-invalid:#dedede;
+$text-input-highlight-color-invalid: #dedede;

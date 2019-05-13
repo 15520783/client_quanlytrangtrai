@@ -13,7 +13,9 @@ import { KEY } from '../../common/const';
 import { PartnersPage } from '../partners/partners';
 import { ActivitiesPage } from '../activities/activities';
 import { InvoicesPage } from '../invoices/invoices';
-import { LoginPage } from '../login/login';
+import { DatePlanPage } from '../date-plan/date-plan';
+import { ActivitiesProvider } from '../../providers/activities/activities';
+import { breedings } from '../../common/entity';
 
 @Component({
   selector: 'page-home',
@@ -34,6 +36,7 @@ export class HomePage {
     public util: Utils,
     public farmProvider: FarmsProvider,
     public sectionProvider: SectionsProvider,
+    public activitiesProvider: ActivitiesProvider,
     public events: Events
   ) {
     this.pages = [
@@ -46,7 +49,7 @@ export class HomePage {
       { title: 'Chứng từ', component: InvoicesPage, icon: 'app-file', active: false },
       { title: 'Hoạt động', component: ActivitiesPage, icon: 'app-activities', active: false },
       { title: 'Thiết lập', component: SettingsPage, icon: 'app-settings', active: false },
-      // { title: 'Lịch biểu', component: DatePlanPage, icon: 'app-schedule', active: false },
+      { title: 'Bảng kế hoạch', component: DatePlanPage, icon: 'app-schedule', active: false, isSchedule: true },
     ];
   }
 
@@ -65,7 +68,33 @@ export class HomePage {
         element.active = false;
       });
       page.active = true;
+      // if (page.isSchedule) {
+      //   let schedule: any = {};
+      //   this.util.openBackDrop();
+      //   return this.activitiesProvider.getAllBreedings()
+      //     .then((breedings: Array<breedings>) => {
+      //       if (breedings) {
+      //         schedule.events = [];
+      //         breedings.forEach((breeding) => {
+      //           schedule.events.push({
+      //             title: 'Thực hiện lên giống cho heo có mã '.concat(breeding.pig.pigCode),
+      //             object: breeding,
+      //             start: this.GetFormattedDate(breeding.breedingNext),
+      //             classNames: (new Date(breeding.breedingNext) > new Date()) ? 'event-coming-up' : 'event-over-due'
+      //           })
+      //         })
+      //         this.nav.setRoot(page.component, { schedule: schedule });
+      //       }
+      //       this.util.closeBackDrop();
+      //     })
+      //     .catch((err) => {
+      //       console.log(err);
+      //       this.util.closeBackDrop();
+      //     })
+      // }
+      // else {
       this.nav.setRoot(page.component);
+      // }
     }
   }
 
@@ -80,5 +109,10 @@ export class HomePage {
       .catch((err: any) => {
         console.log(err);
       })
+  }
+
+  GetFormattedDate(value) {
+    let date = new Date(value);
+    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
   }
 }

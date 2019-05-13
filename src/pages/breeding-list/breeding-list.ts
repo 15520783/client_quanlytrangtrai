@@ -23,6 +23,8 @@ export class BreedingListPage {
   public mainAttribute = "breedName";
   public attributes = [
     { name: "pigCode", label: 'Mã heo' },
+    { name: "farmName", label: 'Trang trại' },
+    { name: "sectionName", label: 'Khu' },
     { name: "houseName", label: 'Nhà' },
     { name: "dateDisplay", label: 'Ngày lên giống' },
     { name: "birthdayDisplay", label: 'Ngày sinh' },
@@ -36,7 +38,7 @@ export class BreedingListPage {
   ];
 
   public placeholderSearch: string = 'Tìm kiếm ghi nhận lên giống'
-  public filter_default: Array<string> = ["pigCode", "breedName", "houseName", "statusName", "birthdayDisplay", "description"];
+  public filter_default: Array<string> = ["pigCode","breedName","farmName","sectionName", "houseName", "statusName", "birthdayDisplay", "description"];
 
   public page_Idx: number = 1;
   public page_Total: number = 0;
@@ -126,6 +128,8 @@ export class BreedingListPage {
     this.breedings.forEach((breeding) => {
       breeding['breedName'] = breeding.pig['breed'].name;
       breeding['pigCode'] = breeding.pig.pigCode;
+      breeding['farmName'] = breeding.pig.house.section.farm.name;
+      breeding['sectionName'] = breeding.pig.house.section.name;
       breeding['houseName'] = breeding.pig['house'].name;
       breeding['dateDisplay'] = this.util.convertDate(breeding.date);
       breeding['birthdayDisplay'] = this.util.convertDate(breeding.pig.birthday);

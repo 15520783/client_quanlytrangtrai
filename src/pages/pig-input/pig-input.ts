@@ -20,6 +20,9 @@ export class PigInputPage {
   public submitAttempt: boolean = false;
   public UpdateMode: boolean = false;
 
+  /**using to check implement in option-list-pig-section*/
+  public isTransferSection:boolean = false;
+
 
   public pig = new pig();
 
@@ -109,6 +112,9 @@ export class PigInputPage {
         this.credentialsForm.controls[attr].setValue(this.pig[attr]);
       });
     }
+    if(this.navParams.data.isTransferSection){
+      this.isTransferSection = this.navParams.data.isTransferSection;
+    }
   }
 
   ionViewDidLoad() {
@@ -139,6 +145,8 @@ export class PigInputPage {
           this.events.unsubscribe('OK');
         })
       }
+
+      this.navParams.get('callback')(this.pig);
     }
   }
 
@@ -190,14 +198,27 @@ export class PigInputPage {
         value: healthStatus.id
       })
     })
-    this.settingProvider.setting.status.forEach((status) => {
-      if(status.id in ["1","2","3","4","5","6","7"]){
+
+
+    if (this.navParams.data.statusPigValiable) {
+      this.navParams.data.statusPigValiable.forEach((status) => {
         this.status.push({
-          name:status.name,
-          value:status.id
+          name: status.name,
+          value: status.id
         })
-      }
-    })
+      })
+    } else {
+      let statusCode = {}
+      Object.keys(VARIABLE.STATUS_PIG).forEach((key)=>{
+        statusCode[VARIABLE.STATUS_PIG[key]] = key;
+      })
+      this.settingProvider.setting.status.forEach((status) => {
+          this.status.push({
+            name: status.name + " - Trạng thái trước " + statusCode[status.previousStatus],
+            value: status.id
+          })
+      })
+    }
 
     this.rounds.push({
       name: "Không xác định",

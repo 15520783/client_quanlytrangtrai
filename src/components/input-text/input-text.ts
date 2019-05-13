@@ -15,6 +15,7 @@ export class InputTextComponent {
   @Input() errorMessage_ValidNumber: string;
   @Input() label: string = '';
   @Input() placeholder: string = '';
+  @Input() disabled:boolean = false;
   // @Input() value:string = '';
   @Input() active :boolean = false;
 

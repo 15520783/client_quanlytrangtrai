@@ -9,6 +9,7 @@ import { PigsProvider } from '../../providers/pigs/pigs';
 import { KEY, VARIABLE } from '../../common/const';
 import { ExternalPigInvoiceRole } from '../../role-input/externalPigInvoice';
 import { InvoiceInputUtilComponent } from '../../components/invoice-input-util/invoice-input-util';
+import { SettingsProvider } from '../../providers/settings/settings';
 
 
 @IonicPage()
@@ -30,7 +31,7 @@ export class ExternalPigInvoiceDetailPage {
   public healStatus: any;
 
   canCheckComplete: boolean = false;
-  canEditInvoice:boolean = false;
+  canEditInvoice: boolean = false;
   canDelete: boolean = false;
 
   constructor(
@@ -41,7 +42,8 @@ export class ExternalPigInvoiceDetailPage {
     public util: Utils,
     public events: Events,
     public pigProvider: PigsProvider,
-    public viewCtrl: ViewController
+    public viewCtrl: ViewController,
+    public settingProvider: SettingsProvider
   ) {
     if (this.navParams.data.invoice) {
       this.invoice = this.navParams.data.invoice;
@@ -91,7 +93,11 @@ export class ExternalPigInvoiceDetailPage {
   }
 
   input_pig() {
-    this.navCtrl.push(PigInputPage);
+    let statusPigValiable = this.settingProvider.setting.status.filter((status) => {
+      return status.previousStatus == '0' ? true : false;
+    })
+    
+    this.navCtrl.push(PigInputPage, { statusPigValiable: statusPigValiable });
     this.events.unsubscribe('pig-inputs:createPig');
     this.events.subscribe('pig-inputs:createPig', (pig: pig) => {
       this.invoiceProvider.createPigInvoiceDetail({
@@ -187,7 +193,7 @@ export class ExternalPigInvoiceDetailPage {
     let invoice: invoicesPig = this.util.deepClone(this.invoice);
     invoice.status = VARIABLE.INVOICE_STATUS.COMPLETE;
     this.invoiceProvider.updatePigInvoice(invoice)
-      .then((updatedInvoice:invoicesPig) => {
+      .then((updatedInvoice: invoicesPig) => {
         if (updatedInvoice) {
           this.invoice = updatedInvoice;
           this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);

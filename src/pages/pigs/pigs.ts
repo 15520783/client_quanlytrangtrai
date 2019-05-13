@@ -10,6 +10,7 @@ import { VARIABLE } from '../../common/const'
 import { PigViewPage } from '../../tabs/pig-view/pig-view';
 import { FilterProvider } from '../../providers/filter/filter';
 import { PigInputPage } from '../pig-input/pig-input';
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 
 
 @IonicPage()
@@ -22,55 +23,11 @@ export class PigsPage {
   @ViewChild('menuFilter') menuFilter: Menu;
   @ViewChild('content') content: Content;
 
-  public breeds = {
-    1:{name:'Landrace'},
-    2:{name:'Landrace'},
-    3:{name:'Yorkshire'},
-    4:{name:'Yorkshire'},
-    5:{name:'Duroc'},
-    6:{name:'Duroc'},
-    7:{name:'Pietrain'},
-    8:{name:'Pietrain'},
-    9:{name:'Berkshire'},
-    10:{name:'Berkshire'},
-    11:{name:'Hamshire'},
-    12:{name:'Hamshire'},
-    13:{name:'Heo nái VT75'},
-    14:{name:'Heo nái VT76'},
-    15:{name:'Heo nái VT77'},
-    16:{name:'Heo nái VT78'},
-    17:{name:'Heo nái VT89'},
-    18:{name:'Heo nọc VT37'},
-    19:{name:'Heo thịt VT92'},
-    20:{name:'CP909'},
-    22:{name:'Heo nọc VT47'},
-    23:{name:'Heo nọc VT57'},
-    24:{name:'Heo nọc VT67'},
-  }
+  public house = {};
+  public breeds = {};
+  public health_status = {};
+  public status = {};
 
-  public health_status = {
-    1:{name:'Tốt'},
-    2:{name:'Vấn đề(chưa rõ)'},
-    3:{name:'Vấn đề(chưa rõ)'},
-    4:{name:'Vấn đề(chưa rõ)'},
-    5:{name:'Ốm'},
-    6:{name:'Tái viêm'},
-    7:{name:'Xù lông, thở bụng.'},
-    8:{name:'Đau chân'},
-    9:{name:'Viêm khớp'},
-    10:{name:'Ké chân'},
-    11:{name:'Đau mắt'},
-    12:{name:'Viêm rốn'},
-    13:{name:'Sa ruột (Hernia cà)'},
-    14:{name:'Thiến sót'},
-    15:{name:'Năm móng'},
-    16:{name:'không đạt trọng lượng'},
-    17:{name:'Ghẻ'},
-    19:{name:'Ho'},
-    20:{name:'Tiêu chảy'},
-    21:{name:'Còi cọc'},
-  }
-  
 
   public page_Idx: number = 1;
   public page_Total: number = 0;
@@ -97,14 +54,23 @@ export class PigsPage {
     public menuCtrl: MenuController,
     public modalCtrl: ModalController,
     public platform: Platform,
-    public util: Utils
+    public util: Utils,
+    public deployData:DeployDataProvider
   ) {
+    this.init();
     this.houseProvider.getAllHouses()
-    .then((data: any) => {
-      this.houses = data;
-    })
-    .catch((err)=>{console.log(err)});
+      .then((data: any) => {
+        this.houses = data;
+      })
+      .catch((err) => { console.log(err) });
+  }
 
+  init(){
+    this.breeds = this.deployData.get_object_list_key_of_breeds();
+    this.health_status = this.deployData.get_object_list_key_of_healthStatus();
+    this.house = this.deployData.get_object_list_key_of_house();
+    console.log(house);
+    this.status = this.deployData.get_object_list_key_of_status();
   }
 
   getRender(idx) {
@@ -186,7 +152,7 @@ export class PigsPage {
     this.filterProvider.searchText = searchItem;
     this.filterProvider.searchWithText = this.filter_default;
     this.filterProvider.searchWithRange = {
-      originWeight : { min: this.dualValue2.lower, max: this.dualValue2.upper }
+      originWeight: { min: this.dualValue2.lower, max: this.dualValue2.upper }
     }
     return this.filterProvider.filter();
   }
@@ -227,7 +193,7 @@ export class PigsPage {
     modal.present();
   }
 
-  addNewPig(){
+  addNewPig() {
     this.navCtrl.push(PigInputPage);
   }
 

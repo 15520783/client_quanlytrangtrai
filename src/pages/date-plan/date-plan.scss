@@ -1,12 +1,19 @@
 page-date-plan {
-      .app-top {
-        margin: 0 0 3em;
-      }
-      
-      .app-calendar {
-        // margin: 0 auto;
-        // max-width: 900px;
-      }
+  .app-top {
+    margin: 0 0 3em;
+  }
 
-    
+  .app-calendar {
+    // margin: 0 auto;
+    // max-width: 900px;
+  }
+  .fc-event-time,
+  .fc-event-title {
+    padding: 0 1px;
+    white-space: nowrap;
+  }
+
+  .fc-title {
+    white-space: normal;
+  }
 }

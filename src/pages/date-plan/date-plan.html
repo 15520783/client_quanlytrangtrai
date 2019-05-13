@@ -1,5 +1,5 @@
 <ion-header>
-  <header [title]="'Quản lý lịch biểu'"></header>
+  <header [title]="'Bảng kế hoạch công việc'"></header>
 </ion-header>
 
 <ion-content padding>
@@ -7,9 +7,10 @@
         <div *ngIf="options">
             <ng-fullcalendar 
                 #fullcalendar 
-                [options]="options"  
+                [(options)]="options"
                 (eventClick)="handleEventClick($event)"
-                (dateClick)="handleDayClick($event)">
+                (dateClick)="handleDayClick($event)"
+                [(eventsModel)]="events">
             </ng-fullcalendar>
         </div>
         <!-- <full-calendar 

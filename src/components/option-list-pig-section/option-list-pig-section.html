@@ -6,6 +6,11 @@
   (tap)="viewDetail()">Xem thông tin</button>
 
   <button 
+  showWhen="core"
+  small ion-button item-end mode='ios' color="secondary"
+  (tap)="transferSection()">Đánh giá & chuyển khu</button>
+
+  <button 
   showWhen="core" 
   *ngIf="add_to_sale_list.includes(sectionTypeId) 
   && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE

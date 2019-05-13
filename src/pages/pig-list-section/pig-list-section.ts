@@ -131,14 +131,22 @@ export class PigListSectionPage {
 
   pigChange(new_vers: pig, old_vers: pig) {
     old_vers = new_vers;
-    old_vers['breedName'] = this.breed[old_vers.breedId] ? this.breed[old_vers.breedId].name : '';
-    old_vers['sectionName'] = this.houses[old_vers.houseId] ? this.houses[old_vers.houseId].section.name : '';
-    old_vers['houseName'] = this.houses[old_vers.houseId] ? this.houses[old_vers.houseId].name : '';
-    old_vers['farmName'] = this.houses[old_vers.houseId].section.farm ? this.houses[old_vers.houseId].section.farm.name : '';    
-    old_vers['statusName'] = this.status[old_vers.statusId] ? this.status[old_vers.statusId].name : '';
-    // old_vers['statusCode'] = this.status[old_vers.statusId] ? (this.status[old_vers.statusId].code).toString() : '';
-    old_vers['statusCode'] = this.status[old_vers.statusId] ? this.status[old_vers.statusId].code : '';
-    old_vers['birthdayDisplay'] = this.util.convertDate(old_vers.birthday);
-    old_vers['genderName'] = this.gender[old_vers.gender] ? this.gender[old_vers.gender].name : '';
+    if(this.houses[old_vers.houseId].section.typeId == this.sectionTypeId){
+      old_vers['breedName'] = this.breed[old_vers.breedId] ? this.breed[old_vers.breedId].name : '';
+      old_vers['sectionName'] = this.houses[old_vers.houseId] ? this.houses[old_vers.houseId].section.name : '';
+      old_vers['houseName'] = this.houses[old_vers.houseId] ? this.houses[old_vers.houseId].name : '';
+      old_vers['farmName'] = this.houses[old_vers.houseId].section.farm ? this.houses[old_vers.houseId].section.farm.name : '';    
+      old_vers['statusName'] = this.status[old_vers.statusId] ? this.status[old_vers.statusId].name : '';
+      // old_vers['statusCode'] = this.status[old_vers.statusId] ? (this.status[old_vers.statusId].code).toString() : '';
+      old_vers['statusCode'] = this.status[old_vers.statusId] ? this.status[old_vers.statusId].code : '';
+      old_vers['birthdayDisplay'] = this.util.convertDate(old_vers.birthday);
+      old_vers['genderName'] = this.gender[old_vers.gender] ? this.gender[old_vers.gender].name : '';
+    }
+    else{
+      this.pigs.splice(
+        this.pigs.findIndex(_pig => _pig.id == old_vers.id) , 1
+      );
+     this.setFilteredItems();
+    }
   }
 }

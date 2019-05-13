@@ -2,6 +2,7 @@
   <ion-item  (tap)="scrollTo()"   pl-0 [attr.err-mode]="(!validControl.valid && active)?'':null">
       <ion-label stacked>{{label}}</ion-label>
         <ion-input 
+            [attr.readonly] = "disabled?'':null"
             [type]="type" 
             [formControl]="validControl"
             [placeholder]="placeholder">

@@ -17,6 +17,7 @@ export class InputDateComponent {
   @Input() displayFormat: string = 'DD/MM/YYYY';
   @Input() pickerFormat: string = 'DD-MM-YYYY';
   @Input() value: any = null;
+  @Input() disabled:boolean = false;
   public limit: any;
 
   constructor() {

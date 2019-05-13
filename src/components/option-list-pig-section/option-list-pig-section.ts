@@ -10,6 +10,7 @@ import { BreedingInputPage } from '../../pages/breeding-input/breeding-input';
 import { ActivitiesProvider } from '../../providers/activities/activities';
 import { SpermInputPage } from '../../pages/sperm_input/sperm_input';
 import { MatingInputPage } from '../../pages/mating-input/mating-input';
+import { PigInputPage } from '../../pages/pig-input/pig-input';
 
 @Component({
   selector: 'option-list-pig-section',
@@ -97,7 +98,7 @@ export class OptionListPigSectionComponent {
     let callback = data => {
       if (data) {
         this.activitiesProvider.createBreeding(data)
-          .then((newBreeding:breedings) => {
+          .then((newBreeding: breedings) => {
             if (newBreeding) {
               // this.pig = newBreeding.pig;
               let statusPig = this.deployData.get_status_matingWait_of_pig(this.pig.statusId);
@@ -107,7 +108,7 @@ export class OptionListPigSectionComponent {
             }
             this.navCtrl.pop();
           })
-          .catch((err: Error) => {})
+          .catch((err: Error) => { })
       }
     }
     this.navCtrl.push(BreedingInputPage, { pig: this.pig, callback: callback });
@@ -116,11 +117,11 @@ export class OptionListPigSectionComponent {
 
 
   sperm_input() {
-    let callback = (data:sperms) => {
+    let callback = (data: sperms) => {
       this.activitiesProvider.createSperm(data)
-        .then((newSperm:sperms) => {
+        .then((newSperm: sperms) => {
           if (newSperm) {
-            
+
             this.pig.status
             this.publishPigChangeEvent(this.pig);
             console.log(newSperm);
@@ -135,21 +136,21 @@ export class OptionListPigSectionComponent {
   }
 
   mating_input() {
-    let callback = (data:{mating:mating,matingDetail:Array<matingDetails>}) => {
+    let callback = (data: { mating: mating, matingDetail: Array<matingDetails> }) => {
       data.mating.mother = this.deployData.get_pig_by_id(data.mating.motherId);
       data.mating.father = this.deployData.get_pig_by_id(data.mating.fatherId);
-      if(data.matingDetail[0].sperm.id == '0'){
+      if (data.matingDetail[0].sperm.id == '0') {
         data.mating.status = VARIABLE.MATING_STATUS.COMPLETE.id;
-        data.matingDetail.splice(1,1);
-      }else{
-        if(data.matingDetail[1].sperm){
+        data.matingDetail.splice(1, 1);
+      } else {
+        if (data.matingDetail[1].sperm) {
           data.mating.status = VARIABLE.MATING_STATUS.PROCCESSING.id;
-        }else{
-          data.matingDetail.splice(1,1);
+        } else {
+          data.matingDetail.splice(1, 1);
         }
       }
       this.activitiesProvider.createMating(data)
-        .then((newMating:any) => {
+        .then((newMating: any) => {
           if (newMating) {
             console.log(newMating);
           }
@@ -174,7 +175,7 @@ export class OptionListPigSectionComponent {
           this.publishPigChangeEvent(this.pig);
         }
       })
-      .catch((err: Error) => {})
+      .catch((err: Error) => { })
   }
 
   cancelSaleWaiting() {
@@ -189,7 +190,23 @@ export class OptionListPigSectionComponent {
           this.publishPigChangeEvent(this.pig);
         }
       })
-      .catch((err: Error) => {})
+      .catch((err: Error) => { })
+  }
+
+  transferSection() {
+    let callback = (pig: pig) => {
+      pig = this.deployData.get_pig_object_to_send_request(pig);
+      this.pigProvider.updatePig(pig)
+        .then((updatedPig: pig) => {
+          if (updatedPig && updatedPig.id) {
+            this.pig = updatedPig;
+            this.publishPigChangeEvent(this.pig);
+          }
+          this.navCtrl.pop();
+        })
+        .catch((err: Error) => { })
+    }
+    this.navCtrl.push(PigInputPage, { pigId: this.pig.id, isTransferSection: true, callback: callback })
   }
 
   publishPigChangeEvent(pig) {

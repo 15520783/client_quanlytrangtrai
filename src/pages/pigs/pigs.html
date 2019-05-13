@@ -44,11 +44,20 @@
         <ion-col col-lg-2 [attr.col-12]="!platform.is('core')?'':null">
           <p><b>Ngày sinh:</b> {{item.birthday|date:'yyyy-MM-dd'}}</p>
         </ion-col>
-        <!-- <ion-col col-2  [attr.col-6]="!platform.is('core')?'':null">
-          <p ><b>House_ID:</b> {{item.house_id}}</p>
-        </ion-col> -->
+        <ion-col col-2  [attr.col-6]="!platform.is('core')?'':null">
+          <p ><b>Trang trại:</b> {{house[item.houseId].section.farm.name}}</p>
+        </ion-col>
+        <ion-col col-2  [attr.col-6]="!platform.is('core')?'':null">
+          <p ><b>Khu:</b> {{house[item.houseId].section.name}}</p>
+        </ion-col>
+        <ion-col col-2  [attr.col-6]="!platform.is('core')?'':null">
+          <p ><b>Nhà:</b> {{house[item.houseId].name}}</p>
+        </ion-col>
         <ion-col col-lg-2 [attr.col-6]="!platform.is('core')?'':null" >
           <p><b>Giống</b>: {{breeds[item.breedId].name}}</p>
+        </ion-col>
+        <ion-col col-2  [attr.col-6]="!platform.is('core')?'':null">
+          <p ><b>Trạng thái:</b> {{status[item.statusId].name}}</p>
         </ion-col>
         <ion-col  [attr.col-6]="!platform.is('core')?'':null">
           <p><b>Cân nặng:</b>
@@ -79,9 +88,9 @@
             <ion-badge style="padding: 5px" color="secondary">{{item.healthPoint}}</ion-badge>
           </p>
         </ion-col>
-        <ion-col text-wrap *ngIf="health_status[item.heath_point]" col-lg-2 [attr.col-12]="!platform.is('core')?'':null">
+        <ion-col text-wrap *ngIf="health_status[item.healthStatusId]" col-lg-2 [attr.col-12]="!platform.is('core')?'':null">
           <p><b>Trạng thái sức khỏe:</b>
-            {{health_status[item.healthStatusId].name}}
+            <ion-badge style="padding: 5px" color="main">{{health_status[item.healthStatusId].name}}</ion-badge>
           </p>
         </ion-col>
       </ion-row>

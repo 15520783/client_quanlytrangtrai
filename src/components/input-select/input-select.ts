@@ -21,6 +21,7 @@ export class InputSelectComponent {
   @Input() active: boolean = false;
   @Input() data: any = [];
   @Input() title: string = '';
+  @Input() disabled:boolean = false;
 
   @Input() selectOptions: any = [];
   @Output() changeValue = new EventEmitter();
