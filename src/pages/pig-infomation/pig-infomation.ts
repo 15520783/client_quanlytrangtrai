@@ -4,6 +4,7 @@ import { pig, breeds, house, healthStatus, footType } from '../../common/entity'
 import { PigsProvider } from '../../providers/pigs/pigs';
 import { Utils } from '../../common/utils';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { VARIABLE } from '../../common/const';
 
 
 @IonicPage()
@@ -23,13 +24,12 @@ export class PigInfomationPage {
     public deployData: DeployDataProvider
   ) {
     this.pig = this.navParams.data;
+    this.init();
     this.pig['birthdayDisplay'] = this.util.convertDate(this.pig.birthday);
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PigInfomationPage');
     this.pigProvider.ViewIndexChart(this.pig, this.chart.nativeElement);
-    this.init();
   }
 
 
@@ -39,6 +39,7 @@ export class PigInfomationPage {
   public father = new pig();
   public healthStatus = new healthStatus();
   public foot = new footType();
+  public gender:any;
 
   init() {
     this.breed = this.deployData.get_breed_by_id(this.pig.breedId);
@@ -46,7 +47,8 @@ export class PigInfomationPage {
     this.healthStatus = this.deployData.get_healthstatus_by_id(this.pig.healthStatusId);
     this.foot = this.deployData.get_foot_by_id(this.pig.footTypeId);
     let parent = this.deployData.get_parent_of_pig(this.pig);
-    console.log(parent);
+    this.gender = VARIABLE.GENDER;
+
     if (parent.mother) this.mother = parent.mother;
     if (parent.father) this.father = parent.father;
   }

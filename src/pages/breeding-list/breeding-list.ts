@@ -166,7 +166,6 @@ export class BreedingListPage {
   }
 
   remove(breeding: breedings) {
-
     this.activitiesProvider.deleteBreeding(breeding)
       .then((isOK) => {
         if (isOK) {

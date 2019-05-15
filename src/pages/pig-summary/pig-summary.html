@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Thông tin tổng quát của heo</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content *ngIf="platform.is('core')">
+  <ion-row>
+    <ion-col col-lg-3 col-md-4>
+      <ion-card mode='ios'>
+        <ion-card-header>Danh sách tùy chọn</ion-card-header>
+        <ion-card-content class="ion-card-content-list-setting" no-padding>
+          <ion-list *ngFor="let p of pages" no-lines no-margin>
+            <button ion-item (click)="openPage(p);" [attr.active]="p.active?'':null" no-lines>
+              <ion-icon item-start [name]="p.icon"></ion-icon>
+              {{p.title}}
+            </button>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+
+    <ion-col col-lg-9 col-md-8 no-padding>
+      <ion-nav [root]="rootPage" #activities [rootParams]="rootParam"></ion-nav>
+    </ion-col>
+  </ion-row>
+</ion-content>

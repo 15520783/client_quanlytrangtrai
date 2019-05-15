@@ -10,7 +10,7 @@ const KEY = {
     WAREHOUSES: 'warehouses',
     SETTINGS: 'settings',
     PARTNERS: 'partners',
-    EMPID:'employeeId'
+    EMPID: 'employeeId'
 }
 
 const SETTING_STORAGE_KEY = {
@@ -39,9 +39,9 @@ const VARIABLE = {
         { value: '2', name: 'Nái' },
         { value: '3', name: 'Đực hiến' }
     ],
-    GENDER:{
-        1:{id:1,name:"Đực"},
-        2:{id:2,name:"Nái"}
+    GENDER: {
+        1: { id: 1, name: "Đực" },
+        2: { id: 2, name: "Nái" }
     },
     INVOICE_PRODUCT_TYPE: {
         FOOD: 'food',
@@ -61,16 +61,16 @@ const VARIABLE = {
     STATUS_PIG: {
         UNKNOW: "0",
         REPLACEMENT: "1",
-        MATING: "2",
+        MATED: "2",
         RETURN: "3",
         ABORTION: "4",
         FARROWING: "5",
         WEANING: "6",
         GROWING: "7",
         WAIT_FOR_SALE: "8",
-        WAIT_FOR_MATING:"9",
-        SOLD:"10",
-        MATED:"11"
+        WAIT_FOR_MATING: "9",
+        SOLD: "10",
+        MATING: "11",
     },
     INVOICE_PIG_TYPE: {
         INTERNAL_IMPORT: 'internal-import',
@@ -86,13 +86,18 @@ const VARIABLE = {
         IMMEDIATE: 'immediate',
         SPERM: 'SPERM'
     },
-    INSEMINATION:[
-        {id:0,value:"ĐẠT",name:"ĐẠT"},
-        {id:1,value:"KHÔNG ĐẠT",name:"KHÔNG ĐẠT"}
+    INSEMINATION: [
+        { id: 0, value: "ĐẠT", name: "ĐẠT" },
+        { id: 1, value: "KHÔNG ĐẠT", name: "KHÔNG ĐẠT" }
     ],
-    MATING_STATUS:{
-        PROCCESSING:{id:0,name:'Đang chờ lấy tinh lần 2'},
-        COMPLETE:{id:0,name:'Hoàn tất'}
+    MATING_STATUS: {
+        PROCCESSING: { id: 0, codeName: 'processing', name: 'Đang chờ lấy tinh lần 2' },
+        COMPLETE: { id: 1, codeName: 'finish', name: 'Hoàn tất' }
+    },
+    ISSUE_PIG_STATUS: {
+        DECTECTION: { id: 0, name: 'Mới phát hiện' },
+        PROCESSING: { id: 1, name: 'Đang xử lý' },
+        RESOLVE: { id: 2, name: 'Đã xử lý' }
     },
     section_type: [
         {
@@ -185,12 +190,13 @@ const API = {
     GET_ALL_INVOICES: '/api/invoices/list',
     GET_ALL_SPERMS: '/api/sperm/list',
     GET_ALL_BREEDINGS: '/api/breedings/list',
-    GET_FOOD_WAREHOUSE_OF_WAREHOUSE:'/api/foodwarehouse/warehouse/',
-    GET_MEDICINE_WAREHOUSE_OF_WAREHOUSE:'/api/medicinewarehouse/warehouse/',
+    GET_ALL_MATING:'/api/matings/list',
+    GET_FOOD_WAREHOUSE_OF_WAREHOUSE: '/api/foodwarehouse/warehouse/',
+    GET_MEDICINE_WAREHOUSE_OF_WAREHOUSE: '/api/medicinewarehouse/warehouse/',
     GET_PIG_INVOICE_DETAIL_FROM_INVOICE: '/api/invoicepigdetail/invoice/',
     GET_FOOD_WAREHOUSE_FROM_INVOICE: '/api/foodwarehouse/invoice/',
     GET_MEDICINE_WAREHOUSE_FROM_INVOICE: '/api/medicinewarehouse/invoice/',
-    GET_SCHEDULE:'/api/schedule/list',
+    GET_SCHEDULE: '/api/schedule/list',
 
     CREATE_PREGNANCY_STATUS: '/api/pregnancystatus/',
     DELETE_PREGNANCY_STATUS: '/api/pregnancystatus/',
@@ -237,7 +243,9 @@ const API = {
     UPDATE_SPERM: '/api/sperm/',
     DELETE_SPERM: '/api/sperm/',
 
-    CREATE_MATING:'/api/matings/matingsmatingdetails/',
+    CREATE_MATING: '/api/matings/matingsmatingdetails/',
+
+    CREATE_ISSUES_PIG: '/api/issuespigs/'
 
 }
 

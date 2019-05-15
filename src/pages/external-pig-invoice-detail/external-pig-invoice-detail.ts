@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, ViewController, Slides } from 'ionic-angular';
-import { invoicesPig, invoicePigDetail, pig } from '../../common/entity';
+import { invoicesPig, invoicePigDetail, pig, invoicesProduct } from '../../common/entity';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { Utils } from '../../common/utils';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
@@ -63,16 +63,16 @@ export class ExternalPigInvoiceDetailPage {
   }
 
   ionViewDidLoad() {
-    this.util.showLoading('Đang tải dữ liệu');
+    this.util.openBackDrop();
     this.invoiceProvider.getPigInvoiceDetail(this.navParams.data.invoice.id)
       .then((details: any) => {
         if (details.length) {
           this.details = details;
         }
-        this.util.closeLoading();
+        this.util.closeBackDrop()
       })
       .catch((err: Error) => {
-        this.util.closeLoading().then(() => {
+        this.util.closeBackDrop().then(() => {
           this.util.showToast('Dữ liệu chưa được tải về. Vui lòng kiểm tra kết nối');
         })
       })
@@ -96,7 +96,8 @@ export class ExternalPigInvoiceDetailPage {
     let statusPigValiable = this.settingProvider.setting.status.filter((status) => {
       return status.previousStatus == '0' ? true : false;
     })
-    
+
+
     this.navCtrl.push(PigInputPage, { statusPigValiable: statusPigValiable });
     this.events.unsubscribe('pig-inputs:createPig');
     this.events.subscribe('pig-inputs:createPig', (pig: pig) => {
@@ -183,7 +184,7 @@ export class ExternalPigInvoiceDetailPage {
         this.invoice = data;
         this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
         this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.sourceId);
-        this.events.publish('external-pig-invoice-detail:updateInvoice', data);
+        this.navParams.get('callback')(this.invoice);
         this.events.unsubscribe('callback');
       }
     })
@@ -200,6 +201,7 @@ export class ExternalPigInvoiceDetailPage {
           this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.sourceId);
           this.canCheckComplete = false;
           this.canEditInvoice = false;
+          this.navParams.get('callback')(this.invoice);
         }
       })
       .catch((err: Error) => { })

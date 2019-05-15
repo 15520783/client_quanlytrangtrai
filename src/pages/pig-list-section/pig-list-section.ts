@@ -67,14 +67,6 @@ export class PigListSectionPage {
       this.gender[gender.value] = gender;
     })
 
-    // this.events.subscribe('activities:PigOut', () => {
-    //   this.pigs = this.deployData.get_pigs_of_section(this.sectionTypeId);
-    //   console.log(this.pigs);
-    //   this.setFilteredItems();
-    // })
-  }
-
-  ionViewDidLoad() {
     this.sectionTypeId = this.navParams.data.sectionType.id;
     if (this.navParams.data) {
       this.pigs = this.navParams.data.getPigs(this.deployData);
@@ -83,6 +75,10 @@ export class PigListSectionPage {
       }
     }
     this.setFilteredItems();
+  }
+
+  ionViewDidLoad() {
+
   }
 
   public setFilteredItems() {

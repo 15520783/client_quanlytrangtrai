@@ -49,6 +49,8 @@ import { MatingInputPage } from '../pages/mating-input/mating-input';
 import { DatePlanPage } from '../pages/date-plan/date-plan';
 import { HealthInputPage } from '../pages/health-input/health-input';
 import { BreedingListPage } from '../pages/breeding-list/breeding-list';
+import { PigSummaryPage } from '../pages/pig-summary/pig-summary';
+import { MatingListPage } from '../pages/mating-list/mating-list';
 
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
@@ -150,7 +152,9 @@ const Pages = [
   BreedingListPage,
   DatePlanPage,
   HealthInputPage,
-  MedicineWarehouseInformationPage
+  MedicineWarehouseInformationPage,
+  PigSummaryPage,
+  MatingListPage
 ]
 
 const Components = [

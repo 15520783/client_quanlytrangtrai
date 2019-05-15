@@ -7,25 +7,25 @@ import { Component, Input, ViewChild } from '@angular/core';
 export class InputTextComponent {
   @ViewChild('input') input: any;
 
-  @Input() type:string = 'text';
-  @Input() validControl: any; 
+  @Input() type: string = 'text';
+  @Input() validControl: any;
   @Input() errorMessage_Required: string;
   @Input() errorMessage_Maxlength: string;
   @Input() errorMessage_ValidEmail: string;
   @Input() errorMessage_ValidNumber: string;
   @Input() label: string = '';
   @Input() placeholder: string = '';
-  @Input() disabled:boolean = false;
+  @Input() disabled: boolean = false;
   // @Input() value:string = '';
-  @Input() active :boolean = false;
+  @Input() active: boolean = false;
 
   constructor() {
-    
-    console.log('Hello InputTextComponent Component');
+    if (this.disabled)
+      this.validControl.disable();
   }
 
-  scrollTo(){
+  scrollTo() {
     // document.getElementById(this.id).scrollIntoView();
-    this.input.nativeElement.scrollIntoView({behavior:'smooth'});
+    this.input.nativeElement.scrollIntoView({ behavior: 'smooth' });
   }
 }

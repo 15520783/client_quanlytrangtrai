@@ -11,6 +11,7 @@ import { PigViewPage } from '../../tabs/pig-view/pig-view';
 import { FilterProvider } from '../../providers/filter/filter';
 import { PigInputPage } from '../pig-input/pig-input';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { PigSummaryPage } from '../pig-summary/pig-summary';
 
 
 @IonicPage()
@@ -184,13 +185,13 @@ export class PigsPage {
 
 
   viewDeltail(pig) {
-    // this.navCtrl.push(PigViewPage,{data:pig});
-    const modal = this.modalCtrl.create(
-      PigViewPage, pig, {
-        cssClass: 'ion-modal'
-      }
-    )
-    modal.present();
+    this.navCtrl.push(PigSummaryPage,{pig:pig});
+    // const modal = this.modalCtrl.create(
+    //   PigViewPage, pig, {
+    //     cssClass: 'ion-modal'
+    //   }
+    // )
+    // modal.present();
   }
 
   addNewPig() {

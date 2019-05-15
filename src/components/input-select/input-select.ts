@@ -27,7 +27,8 @@ export class InputSelectComponent {
   @Output() changeValue = new EventEmitter();
 
   constructor() {
-    console.log('Hello InputSelectComponent Component');
+    if (this.disabled)
+      this.validControl.disable();
   }
 
   ngAfterViewInit(): void {

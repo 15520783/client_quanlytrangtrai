@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { breedings, sperms, mating, matingDetails } from '../../common/entity';
+import { breedings, sperms, mating, matingDetails, issuesPigs } from '../../common/entity';
 import { CONFIG, API } from '../../common/const';
 
 @Injectable()
@@ -27,6 +27,16 @@ export class ActivitiesProvider {
       .get(API.GET_ALL_BREEDINGS)
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise();
+  }
+
+  /**
+   * Lấy danh sách phối giống
+   */
+  getAllMatings(){
+    return this.http
+    .get(API.GET_ALL_MATING)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
   }
 
   /**
@@ -103,11 +113,22 @@ export class ActivitiesProvider {
       .toPromise();
   }
 
-  createMating(objBody:{mating:mating,matingDetail:Array<matingDetails>}){
+  /**
+   * Tạo hành động phối giống cho heo
+   * @param objBody 
+   */
+  createMating(objBody: { mating: mating, matingDetail: Array<matingDetails> }) {
     return this.http
-    .post(API.CREATE_MATING,objBody)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+      .post(API.CREATE_MATING, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
+
+  createIssuePig(objBody: Array<issuesPigs>) {
+    return this.http
+      .post(API.CREATE_ISSUES_PIG, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
 }

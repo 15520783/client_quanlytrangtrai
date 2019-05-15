@@ -1,7 +1,8 @@
 <ion-header>
   <ion-navbar>
-    <ion-toolbar>
-      <ion-buttons left>
+    <ion-title>Thông tin chi tiết</ion-title>
+    <!-- <ion-toolbar>
+      <ion-buttons left >
         <button ion-button icon-only (tap)="dismiss()">
           <ion-icon name="arrow-back"></ion-icon>
         </button>
@@ -9,7 +10,7 @@
       <ion-title>
         Thông tin chi tiết
       </ion-title>
-    </ion-toolbar>
+    </ion-toolbar> -->
   </ion-navbar>
 </ion-header>
 
@@ -28,22 +29,14 @@
                 <ion-label stacked>Giống :</ion-label>
                 <ion-input text-wrap type="text" readonly [(ngModel)]="breed.name"></ion-input>
               </ion-item>
-              <!-- <ion-item>
-                <ion-label stacked>Cấp giống :</ion-label>
-                <ion-input text-wrap type="text" readonly [(ngModel)]="pig.breed_type"></ion-input>
-              </ion-item> -->
               <ion-item>
                 <ion-label stacked>Giới tính :</ion-label>
-                <ion-input text-wrap type="text" readonly [(ngModel)]="pig.gender"></ion-input>
+                <ion-input text-wrap type="text" readonly [(ngModel)]="gender[pig.gender].name"></ion-input>
               </ion-item>
               <ion-item>
                 <ion-label stacked>Ngày sinh :</ion-label>
                 <ion-input text-wrap type="text" readonly [(ngModel)]="pig.birthdayDisplay"></ion-input>
               </ion-item>
-              <!-- <ion-item>
-                <ion-label stacked>Tuần tuổi :</ion-label>
-                <ion-input text-wrap type="text" readonly [(ngModel)]="pig.week_age"></ion-input>
-              </ion-item> -->
               <ion-item>
                 <ion-label stacked>Trang trại :</ion-label>
                 <ion-input text-wrap type="text" readonly [(ngModel)]="house.section.farm.name"></ion-input>
@@ -69,18 +62,6 @@
                 <ion-label stacked>Số tai cha :</ion-label>
                 <ion-input text-wrap type="text" readonly [(ngModel)]="father.pigCode"></ion-input>
               </ion-item>
-              <!-- <ion-item>
-                <ion-label stacked>Trọng lượng :</ion-label>
-                <ion-input text-wrap type="text" readonly [(ngModel)]="pig.originWeight"></ion-input>
-              </ion-item> -->
-              <!-- <ion-item>
-                <ion-label stacked>Hiện trạng :</ion-label>
-                <ion-input text-wrap type="text" readonly [(ngModel)]="pig.status"></ion-input>
-              </ion-item> -->
-              <!-- <ion-item>
-                <ion-label stacked>Chỉ số duy trì :</ion-label>
-                <ion-input text-wrap type="text" readonly [(ngModel)]="pig.index"></ion-input>
-              </ion-item> -->
               <ion-item>
                 <ion-label stacked>Sức khỏe :</ion-label>
                 <ion-input text-wrap type="text" readonly [(ngModel)]="healthStatus.name"></ion-input>
@@ -90,10 +71,6 @@
 
           <ion-col col-sm-6 col-md-2>
             <ion-list no-padding>
-              <!-- <ion-item>
-                <ion-label stacked>Index :</ion-label>
-                <ion-input text-wrap type="text" readonly [(ngModel)]="pig.index"></ion-input>
-              </ion-item> -->
               <ion-item>
                 <ion-label stacked>Trọng lượng :</ion-label>
                 <ion-input text-wrap type="text" readonly [(ngModel)]="pig.originWeight"></ion-input>
@@ -129,8 +106,6 @@
   </ion-list>
 </ion-content>
 
-
-
 <ion-content showWhen="ios,android">
   <ion-list no-padding>
     <ion-item>
@@ -141,22 +116,14 @@
       <ion-label stacked>Giống :</ion-label>
       <ion-input text-wrap type="text" readonly [(ngModel)]="pig.breedId"></ion-input>
     </ion-item>
-    <!-- <ion-item>
-      <ion-label stacked>Cấp giống :</ion-label>
-      <ion-input text-wrap type="text" readonly [(ngModel)]="pig.breed_type"></ion-input>
-    </ion-item> -->
     <ion-item>
       <ion-label stacked>Giới tính :</ion-label>
-      <ion-input text-wrap type="text" readonly [(ngModel)]="pig.gender"></ion-input>
+      <ion-input text-wrap type="text" readonly [(ngModel)]="gender[pig.gender].name"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Ngày sinh :</ion-label>
       <ion-input text-wrap type="text" readonly [(ngModel)]="pig.birthdayDisplay"></ion-input>
     </ion-item>
-    <!-- <ion-item>
-      <ion-label stacked>Tuần tuổi :</ion-label>
-      <ion-input text-wrap type="text" readonly [(ngModel)]="pig.week_age"></ion-input>
-    </ion-item> -->
     <ion-item>
       <ion-label stacked>Trang trại :</ion-label>
       <ion-input text-wrap type="text" readonly ></ion-input>
@@ -169,10 +136,6 @@
       <ion-label stacked>Nhà :</ion-label>
       <ion-input text-wrap type="text" readonly [(ngModel)]="pig.houseId"></ion-input>
     </ion-item>
-    <!-- <ion-item>
-      <ion-label stacked>Số tai :</ion-label>
-      <ion-input text-wrap type="text" readonly [(ngModel)]="pig.pig_code"></ion-input>
-    </ion-item> -->
     <ion-item>
       <ion-label stacked>Số tai heo mẹ :</ion-label>
       <ion-input text-wrap type="text" readonly [(ngModel)]="pig.originMother"></ion-input>
@@ -185,14 +148,6 @@
       <ion-label stacked>Trọng lượng :</ion-label>
       <ion-input text-wrap type="text" readonly [(ngModel)]="pig.originWeight"></ion-input>
     </ion-item>
-    <!-- <ion-item>
-      <ion-label stacked>Hiện trạng :</ion-label>
-      <ion-input text-wrap type="text" readonly [(ngModel)]="pig.status"></ion-input>
-    </ion-item> -->
-    <!-- <ion-item>
-      <ion-label stacked>Điểm TT :</ion-label>
-      <ion-input text-wrap type="text" readonly [(ngModel)]="pig.index"></ion-input>
-    </ion-item> -->
     <ion-item>
       <ion-label stacked>Sức khỏe :</ion-label>
       <ion-input text-wrap type="text" readonly [(ngModel)]="pig.healthStatusId"></ion-input>

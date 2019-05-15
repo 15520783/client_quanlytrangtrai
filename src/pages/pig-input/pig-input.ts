@@ -38,6 +38,7 @@ export class PigInputPage {
     public viewCtrl: ViewController,
     public util: Utils
   ) {
+    
     this.init();
     this.credentialsForm = this.formBuilder.group({
       id: this.pig.id,
@@ -69,7 +70,7 @@ export class PigInputPage {
       pregnancyStatusId: [this.pig.pregnancyStatusId, Validators.compose([Validators.required])],
       priceCodeId: [this.pig.priceCodeId, Validators.compose([Validators.required])],
       statusId: [this.pig.statusId, Validators.compose([Validators.required])],
-
+      
       // born_weight: [this.pig.born_weight, Validators.compose([Validators.required])],
       // born_status:[this.pig.born_status,Validators.compose([Validators.required])],
       // index: [this.pig.index, Validators.compose([Validators.required])],
@@ -81,6 +82,7 @@ export class PigInputPage {
       // point_review:[this.pig.point_review,Validators.compose([Validators.required])],
       // status:[this.pig.status,Validators.compose([Validators.required])],
     });
+   
 
     if (this.navParams.data.pigId) {
       this.UpdateMode = true;
@@ -112,14 +114,23 @@ export class PigInputPage {
         this.credentialsForm.controls[attr].setValue(this.pig[attr]);
       });
     }
+
     if(this.navParams.data.isTransferSection){
-      this.isTransferSection = this.navParams.data.isTransferSection;
+      this.credentialsForm.controls.pigCode.disable();
+      this.credentialsForm.controls.farmId.disable();
+      this.credentialsForm.controls.roundId.disable();
+      this.credentialsForm.controls.breedId.disable();
+      this.credentialsForm.controls.originFatherId.disable();
+      this.credentialsForm.controls.originMotherId.disable();
+      this.credentialsForm.controls.gender.disable();
+      this.credentialsForm.controls.birthday.disable();
+      this.credentialsForm.controls.priceCodeId.disable();
+      // this.credentialsForm.controls.statusId.disable();
     }
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad PigInputPage');
-
+  ngAfterViewChecked(): void {
+    
   }
 
 

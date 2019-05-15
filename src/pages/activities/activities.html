@@ -8,38 +8,6 @@
       <ion-card mode='ios'>
         <ion-card-header>Danh sách hoạt động</ion-card-header>
         <ion-card-content class="ion-card-content-list-setting" no-padding>
-          <!-- <span *ngFor="let item of section_type;let idx= index">
-            <ion-list>
-              <button (click)="item.expand=!item.expand" ion-item>
-                <ion-row>
-                  <ion-col align-self-center col-2>
-                    <ion-icon name="app-activities" font28></ion-icon>
-                  </ion-col>
-                  <ion-col col-10>
-                    <h2 text-wrap>{{item.name}}</h2>
-                  </ion-col>
-                </ion-row>
-              </button>
-              <expandable [expanded]="item.expand">
-                <ion-item>
-
-                  <ion-list>
-                    <button *ngFor="let funct of item.function" ion-item>
-                      <ion-row>
-                        <ion-col align-self-center col-2>
-                          <ion-icon name="app-item-setting" font28></ion-icon>
-                        </ion-col>
-                        <ion-col col-10>
-                          <h2 text-wrap>{{funct.name}}</h2>
-                        </ion-col>
-                      </ion-row>
-                    </button>
-                  </ion-list>
-                </ion-item>
-
-              </expandable>
-            </ion-list>
-          </span> -->
           <ion-list *ngFor="let p of pages" no-lines no-margin>
             <button ion-item (click)="openPage(p);p.expand=!p.expand;" [attr.active]="p.active?'':null" no-lines>
               <ion-icon item-start [name]="p.icon"></ion-icon>
@@ -63,24 +31,7 @@
     </ion-col>
 
     <ion-col col-lg-9 col-md-8 no-padding>
-      <!-- <page-pig-out [(sectionTypeId)]="sectionId"></page-pig-out> -->
       <ion-nav [root]="rootPage" #activities [rootParams]="rootParam"></ion-nav>
     </ion-col>
   </ion-row>
 </ion-content>
-
-
-<!-- 
-<ion-split-pane>
-  <ion-menu persistent="true" [content]="activities" type="reveal" side="left">
-    <ion-content>
-
-    </ion-content>
-
-    <ion-footer padding no-border style="padding:0px!important;">
-      <button (tap)="logOut()" mode='ios' ion-button no-margin full color="dark">Đăng xuất</button>
-    </ion-footer>
-
-  </ion-menu>
-
-</ion-split-pane> -->

@@ -4,7 +4,6 @@
               [attr.err-mode]="(!validControl.valid && active)?'':null" >
       <ion-label stacked>{{label}}</ion-label>
       <ion-datetime [placeholder]="placeholder" 
-      [attr.disabled]="disabled?'':null"
       (ionChange)="datetimeChange($event)" 
       [formControl]="validControl" 
       [displayFormat]="displayFormat"

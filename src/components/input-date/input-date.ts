@@ -21,6 +21,8 @@ export class InputDateComponent {
   public limit: any;
 
   constructor() {
+    if (this.disabled)
+      this.validControl.disable();
     let now = new Date();
     this.limit = new Date(now.getFullYear() + 2, now.getMonth(), now.getDay()).toISOString();
   }

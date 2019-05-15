@@ -1,7 +1,7 @@
 import { Component, ViewChild, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Content, NavController, Events, NavParams, Platform } from 'ionic-angular';
-import { invoicesPig } from '../../common/entity';
+import { invoicesPig, invoicesProduct } from '../../common/entity';
 import { FilterProvider } from '../../providers/filter/filter';
 import { Utils } from '../../common/utils';
 import { ExternalPigInvoiceRole } from '../../role-input/externalPigInvoice';
@@ -32,10 +32,10 @@ export class ExternalPigInvoicesComponent {
     { name: "totalWeight", label: 'Tổng trọng lượng' },
     { name: "statusName", label: 'Trạng thái' },
   ];
-  
+
 
   public placeholderSearch: string = 'Tìm kiếm chứng từ'
-  public filter_default: Array<string> = ["invoiceNo", "sourceName", "destinationName", "importDateDisplay", "quantity","totalWeight","statusName"];
+  public filter_default: Array<string> = ["invoiceNo", "sourceName", "destinationName", "importDateDisplay", "quantity", "totalWeight", "statusName"];
 
   public page_Idx: number = 1;
   public page_Total: number = 0;
@@ -71,21 +71,10 @@ export class ExternalPigInvoicesComponent {
     this.events.subscribe('invoicesReload', () => {
       this.setFilteredItems();
     })
-
-    this.events.subscribe('external-pig-invoice-detail:updateInvoice',(data:invoicesPig)=>{
-      if(data){
-        let idx = this.invoices.findIndex(invoice => invoice.id == data.id);
-        if(idx > -1){
-          this.invoices[idx] = data;
-          this.setFilteredItems();
-        }
-      }
-    });
   }
 
 
   public setFilteredItems() {
-    // this.content.scrollToTop().then(() => {
     setTimeout(() => {
       this.rows = this.filterItems(this.searchTerm);
       this.page_Total = this.rows.length % 50 === 0 ? parseInt(this.rows.length / 50 + '') : parseInt(this.rows.length / 50 + 1 + '');
@@ -94,7 +83,6 @@ export class ExternalPigInvoicesComponent {
       if (document.getElementById('content'))
         document.getElementById('content').scrollTop = 0;
     }, 200);
-    // })
   }
 
   public filterItems(searchItem) {
@@ -102,16 +90,16 @@ export class ExternalPigInvoicesComponent {
       invoice['sourceName'] = this.partners_util[invoice.sourceId].name;
       invoice['destinationName'] = this.farms_util[invoice.destinationId].name;
       invoice['importDateDisplay'] = this.util.convertDate(invoice.importDate);
-      invoice['statusName'] = VARIABLE.INVOICE_STATUS.PROCCESSING == invoice.status 
-      ? 'Đang xử lí' : (VARIABLE.INVOICE_STATUS.COMPLETE == invoice.status? 'Hoàn tất' : 'Chưa xác định'); 
+      invoice['statusName'] = VARIABLE.INVOICE_STATUS.PROCCESSING == invoice.status
+        ? 'Đang xử lí' : (VARIABLE.INVOICE_STATUS.COMPLETE == invoice.status ? 'Hoàn tất' : 'Chưa xác định');
     })
-;
+      ;
     this.filterProvider.input = this.invoices;
     this.filterProvider.searchText = searchItem;
     this.filterProvider.searchWithText = this.filter_default;
 
     this.filterProvider.searchWithRange = {}
-    return this.filterProvider.filter().sort((a:invoicesPig,b:invoicesPig)=>
+    return this.filterProvider.filter().sort((a: invoicesPig, b: invoicesPig) =>
       (new Date(a.importDate) > new Date(b.importDate)) ? -1 : 1
     );
   }
@@ -148,7 +136,18 @@ export class ExternalPigInvoicesComponent {
   }
 
   input_pig(item) {
-    this.navCtrl.push(ExternalPigInvoiceDetailPage, { invoice: item });
+
+    let callback = (invoice: invoicesPig) => {
+      if (invoice) {
+        let idx = this.invoices.findIndex(_invoice => _invoice.id == invoice.id);
+        if (idx > -1) {
+          this.invoices[idx] = invoice;
+          this.setFilteredItems();
+        }
+      }
+    }
+
+    this.navCtrl.push(ExternalPigInvoiceDetailPage, { invoice: item, callback: callback });
 
     this.events.subscribe('removeInvoiceEvent', (invoice) => {
       if (invoice) {

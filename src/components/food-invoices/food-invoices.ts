@@ -9,6 +9,7 @@ import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { InvoiceInputUtilComponent } from '../invoice-input-util/invoice-input-util';
 import { FoodInvoiceRole } from '../../role-input/foodInvoice';
 import { FoodInvoiceDetailPage } from '../../pages/food-invoice-detail/food-invoice-detail';
+import { VARIABLE } from '../../common/const';
 
 @Component({
   selector: 'food-invoices',
@@ -49,7 +50,7 @@ export class FoodInvoicesComponent {
     public invoiceProvider: InvoicesProvider,
     public navParams: NavParams
   ) {
-    if(this.navParams.data.invoice){
+    if (this.navParams.data.invoice) {
       this.invoices = this.navParams.data.invoice;
       this.setFilteredItems();
     }
@@ -65,7 +66,6 @@ export class FoodInvoicesComponent {
 
 
   public setFilteredItems() {
-    // this.content.scrollToTop().then(() => {
     setTimeout(() => {
       this.rows = this.filterItems(this.searchTerm);
       this.page_Total = this.rows.length % 50 === 0 ? parseInt(this.rows.length / 50 + '') : parseInt(this.rows.length / 50 + 1 + '');
@@ -73,7 +73,6 @@ export class FoodInvoicesComponent {
       this.visible_items = this.rows.slice(0, 50);
       document.getElementById('content').scrollTop = 0;
     }, 200);
-    // });
   }
 
   public filterItems(searchItem) {
@@ -120,8 +119,18 @@ export class FoodInvoicesComponent {
     })
   }
 
-  input_food(item){
-    this.navCtrl.push(FoodInvoiceDetailPage,{invoice:item});
+  input_food(item) {
+    let callback = (invoice: invoicesProduct) => {
+      if (invoice) {
+        let idx = this.invoices.findIndex(_invoice => _invoice.id == invoice.id);
+        if (idx > -1) {
+          this.invoices[idx] = invoice;
+          this.setFilteredItems();
+        }
+      }
+    }
+
+    this.navCtrl.push(FoodInvoiceDetailPage, { invoice: item, callback: callback });
 
     this.events.subscribe('removeInvoiceEvent', (invoice) => {
       if (invoice) {

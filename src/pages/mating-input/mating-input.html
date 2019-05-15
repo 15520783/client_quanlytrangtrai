@@ -47,8 +47,11 @@
             </p>
             <p>
               <b>Kết quả phối</b>
-              <span *ngIf="resultMating.child">
+              <span *ngIf="resultMating && resultMating.child">
                 {{resultMating.child.name}} {{resultMating.child.symbol}}
+              </span>
+              <span *ngIf="!resultMating || !resultMating.child">
+                Không xác định
               </span>
             </p>
           </ion-col>

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Backdrop, ViewController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Backdrop, ViewController, Menu, Content, MenuController } from 'ionic-angular';
 import { sperms } from '../../common/entity';
 import { FormControl } from '@angular/forms';
 import { FilterProvider } from '../../providers/filter/filter';
@@ -15,6 +15,9 @@ import { SpermInputPage } from '../sperm_input/sperm_input';
   templateUrl: 'sperm-list.html',
 })
 export class SpermListPage {
+  @ViewChild('menuFilter') menuFilter: Menu;
+  @ViewChild('content') content: Content;
+
   public isSelectMode: boolean = false;
 
   public sperms: Array<sperms> = [];
@@ -22,6 +25,12 @@ export class SpermListPage {
 
   public breed: any = {};
   public houses: any = {};
+  public breedFilter: any = [];
+
+  customAlertOptions: any = {
+    translucent: true,
+    cssClass: 'ion-alert'
+  };
 
   public mainAttribute = "breedName";
   public attributes = [
@@ -58,6 +67,7 @@ export class SpermListPage {
     public deployData: DeployDataProvider,
     public activitiesProvider: ActivitiesProvider,
     public util: Utils,
+    public menuCtrl: MenuController,
     public viewCtrl: ViewController
   ) {
     if (this.navParams.data.sectionType) {
@@ -66,6 +76,9 @@ export class SpermListPage {
     if (this.navParams.data.selectMode) {
       this.isSelectMode = true;
     }
+    this.breed = this.deployData.get_object_list_key_of_breeds();
+    this.breedFilter = this.deployData.get_breed_list_for_select();
+
     if (this.navParams.data.sperms) {
       this.sperms = this.navParams.data.sperms;
       this.initialSperms();
@@ -140,10 +153,11 @@ export class SpermListPage {
 
   initialSperms() {
     this.sperms.forEach((sperm) => {
-      sperm['breedName'] = sperm.pig['breed'].name;
+      sperm['breedName'] = sperm.pig.breed.name + ' ' + sperm.pig.breed.symbol;
       sperm['pigCode'] = sperm.pig.pigCode;
       sperm['houseName'] = sperm.pig['house'].name;
       sperm['dateDisplay'] = this.util.convertDate(sperm.date);
+      sperm['breedId'] = sperm.pig.breed.id;
     })
   };
 
@@ -183,5 +197,23 @@ export class SpermListPage {
         }
       })
       .catch((err: Error) => { })
+  }
+
+  openFilter() {
+    this.menuFilter.enable(true);
+    this.menuFilter.open();
+  }
+
+  closeFilter() {
+    this.menuCtrl.close();
+  }
+
+  filterBreed(breedId) {
+    console.log(breedId);
+    if (breedId)
+      this.filterProvider.searchWithInclude.breedId = [breedId];
+    else
+      this.filterProvider.searchWithInclude.breedId = [];
+    this.setFilteredItems();
   }
 }

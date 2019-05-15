@@ -72,8 +72,11 @@ class user extends base {
 class pig extends base {
 	pigCode: string = '';
 	farm_id: string = '';
+	farm:farm = new farm();
 	houseId: string = '';
+	house:house = new house();
 	roundId: string = '';
+	breed:breeds = new breeds();
 	breedId: string = '';
 	gender: number = null;
 	birthday: any = '';
@@ -91,6 +94,7 @@ class pig extends base {
 	functionUdder: number = 0;
 	totalUdder: number = 0;
 	gentialTypeId: string = '';
+	gential:gentialType = new gentialType();
 	// gentialTypeId: number = null;
 	description: string = '';
 	fcr: number = 0;
@@ -111,8 +115,6 @@ class pig extends base {
 	statusId: string = '0';
 	priceCodeId: string = '0';
 	overviewStatus: string = '0';
-
-	house: house = new house();
 	constructor() {
 		super();
 	}
@@ -564,7 +566,7 @@ class mating extends base {
 	childId: string = '';
 	date: any = '';
 	birthEstimate: any = '';
-	status: number = null;
+	status: string = '';
 	employeeId: string = '';
 }
 
@@ -583,7 +585,7 @@ class issuesPigs extends base {
 	employee: employee = new employee();
 	description: string = ''
 	images: string = '';
-	status: string = '';
+	status: number = null;
 }
 
 class InputObject {

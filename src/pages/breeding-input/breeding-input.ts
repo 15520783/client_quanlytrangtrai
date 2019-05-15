@@ -61,7 +61,7 @@ export class BreedingInputPage {
   }
 
   ionViewDidLoad() {
-    
+
   }
 
   onSubmit() {
@@ -71,11 +71,8 @@ export class BreedingInputPage {
       Object.keys(this.credentialsForm.value).forEach((attr) => {
         this.breeding[attr] = this.credentialsForm.value[attr];
       });
-      if(!this.updateMode){
-        this.navParams.get('callback')(this.breeding);
-      }
-      else{
-        this.navParams.get('callback')(this.breeding);
+      if(this.checkValidate()){
+          this.navParams.get('callback')(this.breeding);
       }
     }
   }
@@ -84,5 +81,16 @@ export class BreedingInputPage {
 
   init() {
     this.breedingTypes = this.deployData.get_breedingType_list_for_select();
+  }
+
+  checkValidate() {
+    if (new Date(this.breeding.date) >= new Date(this.breeding.breedingNext)) {
+      this.util.showToastInform('Ngày lên giống tiếp theo không thể trước hoặc trùng ngày lên giống hiện tại.')
+      return false;
+    }
+    else if (new Date(this.breeding.date) >= new Date(this.breeding.matingEstimate)) {
+      this.util.showToastInform('Ngày phối giống dự kiến không thể trước hoặc trùng ngày lên giống hiện tại')
+    } else
+      return true;
   }
 }

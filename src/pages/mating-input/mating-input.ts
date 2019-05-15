@@ -72,6 +72,11 @@ export class MatingInputPage {
       date2: [this.matingDetail[1].date],
       insemination2: [this.matingDetail[0].insemination],
     });
+
+
+    // if(this.navParams.data.mating){
+
+    // }
   }
 
   ionViewDidLoad() {

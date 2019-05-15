@@ -140,55 +140,125 @@ export class PigsProvider {
   }
 
   ViewIndexChart(pig: pig, element: any) {
-    Highcharts.chart(element, {
 
+    let point = this.get_point_review_of_pig(pig);
+
+    Highcharts.chart(element, {
       chart: {
         polar: true,
         type: 'area'
       },
-
       title: {
         text: '',
         // x: -80
       },
-
       pane: {
         size: '80%'
       },
-
       xAxis: {
         categories: ['Index', 'Trọng lượng', 'Chân', 'Số vú', 'BPSD', 'ADG'],
         tickmarkPlacement: 'on',
         lineWidth: 0
       },
-
       yAxis: {
         gridLineInterpolation: 'polygon',
         lineWidth: 0,
         min: 0,
-        max: 6,
-        tickInterval: 2
+        // max: 6,
+        // tickInterval: 2
       },
-
       tooltip: {
         shared: true,
-        valuePrefix: '$'
+        pointFormat: '<span style="color:{series.color}">{series.name}: <b>{point.y:,.0f}</b><br/>'
       },
-
       legend: {
         align: 'center',
         verticalAlign: 'top',
         y: 70,
         layout: 'vertical'
       },
-
       series: <any>[{
         name: 'Chỉ số heo',
-        data: [pig.index / 200 * 5, pig.originWeight / 300 * 5, parseInt(pig.footTypeId) / 6 * 5, pig.totalUdder / 30 * 5, pig.bf / 16 * 5, pig.adg / 3000 * 5],
-        pointPlacement: 'off',
+        data: [point.index, point.weight, point.foot, point.udder, point.gential, point.adg],
+        pointPlacement: 'on',
       }]
-
     });
   }
 
+
+  get_point_review_of_pig(pig: pig) {
+    let review: { index: number, weight: number, udder: number, foot: number, gential: number, adg: number };
+
+    review = {index:0,weight:0,udder:0,foot:0,gential:0,adg:0};
+
+    //Index
+    if (pig.index > 105) {
+      review.index = 1;
+    } else if (pig.index > 95 && pig.index <= 105) {
+      review.index = 2;
+    } else if (pig.index > 85 && pig.index <= 95) {
+      review.index = 3;
+    } else {
+      review.index = 4;
+    }
+
+    //Trong luong
+    if (pig.originWeight > 150) {
+      review.weight = 1;
+    } else if (pig.originWeight > 110 && pig.originWeight <= 150) {
+      review.weight = 2;
+    } else if (pig.originWeight > 90 && pig.originWeight <= 110) {
+      review.weight = 3;
+    } else {
+      review.weight = 4;
+    }
+
+    //Vu
+    if (pig.totalUdder >= 16) {
+      review.udder = 1;
+    } else if (pig.totalUdder >= 14 && pig.totalUdder <= 15) {
+      review.udder = 2;
+    } else if (pig.totalUdder >= 12 && pig.totalUdder <= 13) {
+      review.udder = 3;
+    } else {
+      review.udder = 4;
+    }
+
+    //BPSD
+    if (parseInt(pig.gentialTypeId) == 4 || parseInt(pig.gentialTypeId) == 5) {
+      review.gential = 1;
+    } else if (parseInt(pig.gentialTypeId) == 3) {
+      review.gential = 2;
+    } else if (parseInt(pig.gentialTypeId) == 2) {
+      review.gential = 3;
+    } else {
+      review.gential = 4;
+    }
+
+
+    //Chân
+    if (parseInt(pig.footTypeId) == 4 || parseInt(pig.footTypeId) == 5) {
+      review.foot = 1;
+    } else if (parseInt(pig.footTypeId) == 3) {
+      review.foot = 2;
+    } else if (parseInt(pig.footTypeId) == 2) {
+      review.foot = 3;
+    } else {
+      review.foot = 4;
+    }
+
+    //ADG
+    if (pig.adg > 900) {
+      review.adg = 1;
+    } else if (pig.adg > 800 && pig.adg <= 900) {
+      review.adg = 2;
+    } else if (pig.adg > 700 && pig.adg <= 800) {
+      review.adg = 3;
+    } else {
+      review.adg = 4;
+    }
+
+    console.log(review);
+    return review;
+  }
 }

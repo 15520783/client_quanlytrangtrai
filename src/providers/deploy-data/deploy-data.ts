@@ -7,7 +7,7 @@ import { PartnerProvider } from '../partner/partner';
 import { EmployeesProvider } from '../employees/employees';
 import { SectionsProvider } from '../sections/sections';
 import { SettingsProvider } from '../settings/settings';
-import { pig, house, foodWareHouse, medicineWarehouse, section, status, breedings, sperms, matingRole } from '../../common/entity';
+import { pig, house, foodWareHouse, medicineWarehouse, section, status, breedings, sperms, matingRole, issues, mating } from '../../common/entity';
 import { WarehousesProvider } from '../warehouses/warehouses';
 import { VARIABLE } from '../../common/const';
 
@@ -188,9 +188,23 @@ export class DeployDataProvider {
   }
 
   /**
+   * Lấy danh sách giống cho ion-select
+   */
+  get_breed_list_for_select() {
+    let breed_select = [];
+    this.settingProvider.setting.breeds.forEach((breed) => {
+      breed_select.push({
+        name: breed.name + ' ' + breed.symbol,
+        value: breed.id
+      })
+    })
+    return breed_select;
+  }
+
+  /**
    * Lấy danh sách vấn đề heo cho ion-select
    */
-  get_issues_list_for_select(){
+  get_issues_list_for_select() {
     let issues = [];
     this.settingProvider.setting.issues.forEach((issue) => {
       issues.push({
@@ -204,12 +218,12 @@ export class DeployDataProvider {
   get_statusCode_list_for_select() {
     let statusCode_select = [];
     Object.keys(VARIABLE.STATUS_PIG).forEach((statusKey) => {
-      if(parseInt(VARIABLE.STATUS_PIG[statusKey]) <= 7){
-        statusCode_select.push({
-          name: statusKey,
-          value: VARIABLE.STATUS_PIG[statusKey]
-        })
-      }
+      // if (parseInt(VARIABLE.STATUS_PIG[statusKey]) <= 7) {
+      statusCode_select.push({
+        name: statusKey,
+        value: VARIABLE.STATUS_PIG[statusKey]
+      })
+      // }
     })
     return statusCode_select;
   }
@@ -339,6 +353,17 @@ export class DeployDataProvider {
       healthStatus[health.id] = health;
     })
     return healthStatus;
+  }
+
+  /**
+   * Lấy các đối tượng vấn đề heo dưới dạng key-value
+   */
+  get_object_list_key_of_issues() {
+    let issue = {};
+    this.settingProvider.setting.issues.forEach((issue) => {
+      issue[issue.id] = issue;
+    })
+    return issue;
   }
 
   /**
@@ -627,6 +652,10 @@ export class DeployDataProvider {
   }
 
 
+  /**
+   * Lấy danh sách heo bán ở từng khu 
+   * @param sectionTypeId 
+   */
   get_pigs_sale_waiting_of_section(sectionTypeId: string) {
     let housesId: any = [];
     this.houseProvider.houses.filter((house) => {
@@ -637,6 +666,67 @@ export class DeployDataProvider {
     let statusObjectKeyList = this.get_object_list_key_of_status();
     return this.pigsProvider.pigs.filter((pig) => {
       return housesId.includes(pig.houseId) && statusObjectKeyList[pig.statusId].code == VARIABLE.STATUS_PIG.WAIT_FOR_SALE ? true : false;
+    })
+  }
+
+  /**
+   * Lấy danh sách heo nái đã phối ở khu
+   * @param sectionTypeId 
+   */
+  get_mated_pig_of_section(sectionTypeId: string) {
+    let housesId: any = [];
+    this.houseProvider.houses.filter((house) => {
+      return (house.section.typeId == sectionTypeId) ? true : false;
+    }).forEach((house) => {
+      housesId.push(house.id);
+    })
+    let statusObjectKeyList = this.get_object_list_key_of_status();
+    return this.pigsProvider.pigs.filter((pig) => {
+      return housesId.includes(pig.houseId) && statusObjectKeyList[pig.statusId].code == VARIABLE.STATUS_PIG.MATED ? true : false;
+    })
+  }
+
+  /**
+  * Lấy danh sách heo nái mang thai ở khu
+  * @param sectionTypeId 
+  */
+  get_farrowing_pig_of_section(sectionTypeId: string) {
+    let housesId: any = [];
+    this.houseProvider.houses.filter((house) => {
+      return (house.section.typeId == sectionTypeId) ? true : false;
+    }).forEach((house) => {
+      housesId.push(house.id);
+    })
+    let statusObjectKeyList = this.get_object_list_key_of_status();
+    return this.pigsProvider.pigs.filter((pig) => {
+      return housesId.includes(pig.houseId) && statusObjectKeyList[pig.statusId].code == VARIABLE.STATUS_PIG.FARROWING ? true : false;
+    })
+  }
+
+  /**
+   * Lấy danh sách heo nái sẩy thai ở khu
+   * @param sectionTypeId 
+   */
+  get_abortion_pig_of_section(sectionTypeId: string) {
+    let housesId: any = [];
+    this.houseProvider.houses.filter((house) => {
+      return (house.section.typeId == sectionTypeId) ? true : false;
+    }).forEach((house) => {
+      housesId.push(house.id);
+    })
+    let statusObjectKeyList = this.get_object_list_key_of_status();
+    return this.pigsProvider.pigs.filter((pig) => {
+      return housesId.includes(pig.houseId) && statusObjectKeyList[pig.statusId].code == VARIABLE.STATUS_PIG.ABORTION ? true : false;
+    })
+  }
+
+  /**
+   * Lấy toàn bộ heo đang chờ bán ( ở khu 8)
+   */
+  get_all_sale_pig() {
+    let status = this.get_object_list_key_of_status();
+    return this.pigsProvider.pigs.filter((pig) => {
+      return status[pig.statusId].code == VARIABLE.STATUS_PIG.WAIT_FOR_SALE ? true : false;
     })
   }
 
@@ -655,7 +745,7 @@ export class DeployDataProvider {
    */
   get_status_saleWaiting_of_pig(statusId): status {
     return this.settingProvider.setting.status.filter((status) => {
-      return status.previousStatus == statusId && VARIABLE.STATUS_PIG.WAIT_FOR_SALE == status.code? true : false ;
+      return status.previousStatus == statusId && VARIABLE.STATUS_PIG.WAIT_FOR_SALE == status.code ? true : false;
     })[0];
   }
 
@@ -663,9 +753,29 @@ export class DeployDataProvider {
    * Lấy trạng thái heo chờ phối dựa vào trạng thái hiện tại
    * @param statusId 
    */
-  get_status_matingWait_of_pig(statusId):status {
-    return this.settingProvider.setting.status.filter((status) => {
-      return status.previousStatus == statusId && VARIABLE.STATUS_PIG.WAIT_FOR_MATING == status.code ? true : false;
+  get_status_matingWait_of_pig(status: status): status {
+    return this.settingProvider.setting.status.filter((_status) => {
+      return _status.previousStatus == status.code && VARIABLE.STATUS_PIG.WAIT_FOR_MATING == _status.code ? true : false;
+    })[0];
+  }
+
+  /**
+ * Lấy trạng thái đã phối dựa vào trạng thái hiện tại
+ * @param statusId 
+ */
+  get_status_mated_of_pig(status: status): status {
+    return this.settingProvider.setting.status.filter((_status) => {
+      return status.code == _status.previousStatus && VARIABLE.STATUS_PIG.MATED == _status.code ? true : false;
+    })[0];
+  }
+
+  /**
+   * Lấy trạng thái heo dựa vào statusCode
+   * @param statusCode 
+   */
+  get_status_pig_by_status_code(statusCode: string) {
+    return this.settingProvider.setting.status.filter((_status) => {
+      return _status.code == statusCode ? true : false;
     })[0];
   }
 
@@ -699,6 +809,17 @@ export class DeployDataProvider {
   get_breedings_of_section(sectionTypeId: string, breedings: Array<breedings>) {
     return breedings.filter((breeding) => {
       return breeding.pig.house.section.typeId == sectionTypeId ? true : false;
+    })
+  }
+
+  /**
+   * Lấy danh sách phối của 1 khu
+   * @param sectionTypeId 
+   * @param matings 
+   */
+  get_matings_of_section(sectionTypeId: string, matings: Array<mating>) {
+    return matings.filter((mating) => {
+      return mating.mother.house.section.typeId == sectionTypeId ? true : false;
     })
   }
 
@@ -747,7 +868,7 @@ export class DeployDataProvider {
   get_mating_role_of_mating() {
     let roles: any = {};
     this.settingProvider.setting.matingRoles.forEach((role: matingRole) => {
-      roles[role.father.id +'-'+(role.mother.id)] = role;
+      roles[role.father.id + '-' + (role.mother.id)] = role;
     })
     return roles;
   }
