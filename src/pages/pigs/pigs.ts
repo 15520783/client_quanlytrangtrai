@@ -7,7 +7,6 @@ import { pig, house } from '../../common/entity';
 import { Utils } from '../../common/utils';
 import { KEY } from '../../common/const';
 import { VARIABLE } from '../../common/const'
-import { PigViewPage } from '../../tabs/pig-view/pig-view';
 import { FilterProvider } from '../../providers/filter/filter';
 import { PigInputPage } from '../pig-input/pig-input';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';

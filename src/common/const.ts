@@ -99,6 +99,10 @@ const VARIABLE = {
         PROCESSING: { id: 1, name: 'Đang xử lý' },
         RESOLVE: { id: 2, name: 'Đã xử lý' }
     },
+    OBJECT_BARCODE_TYPE: {
+        PIG: 'pig',
+        HOUSE: 'house'
+    },
     section_type: [
         {
             id: 1,

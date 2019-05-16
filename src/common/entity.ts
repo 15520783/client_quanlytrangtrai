@@ -569,8 +569,8 @@ class mating extends base {
 	birthEstimate: any = '';
 	status: string = '';
 	employeeId: string = '';
-	type:string = '';
-	typeId:number =  0;
+	type: string = '';
+	typeId: number = 0;
 }
 
 class matingDetails extends base {
@@ -595,7 +595,7 @@ class births extends base {
 	mating: mating = new mating();
 	date: any = '';
 	logId: string = '';  // bỏ
-	parities: number = 0;	
+	parities: number = 0;
 	borning: number = 0;
 	fetalWeight: number = 0;
 	selected: number = 0;
@@ -622,4 +622,10 @@ class InputObject {
 	data: any;
 }
 
+class ObjectScanner {
+	id: string = '';
+	typeObject: string  = '';
+}
+
+export { ObjectScanner }
 export { InputObject }

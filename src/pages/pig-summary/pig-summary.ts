@@ -78,6 +78,9 @@ export class PigSummaryPage {
   }
 
   slideChange() {
+    if (this.tab == "2" || this.slider.realIndex == 2) {
+      this.getActivities();
+    }
     this.tab = this.slider.realIndex.toString();
   }
 
@@ -102,6 +105,10 @@ export class PigSummaryPage {
         this.nav.setRoot(page.component, this.data);
       }
     }
+  }
+
+  openOptions(page) {
+    this.navCtrl.push(page, this.data);
   }
 
   getActivities() {

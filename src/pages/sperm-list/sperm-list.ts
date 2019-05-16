@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Backdrop, ViewController, Menu, Content, MenuController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Backdrop, ViewController, Menu, Content, MenuController, Platform } from 'ionic-angular';
 import { sperms } from '../../common/entity';
 import { FormControl } from '@angular/forms';
 import { FilterProvider } from '../../providers/filter/filter';
@@ -68,7 +68,8 @@ export class SpermListPage {
     public activitiesProvider: ActivitiesProvider,
     public util: Utils,
     public menuCtrl: MenuController,
-    public viewCtrl: ViewController
+    public viewCtrl: ViewController,
+    public platform: Platform
   ) {
     if (this.navParams.data.sectionType) {
       this.sectionType = this.navParams.data.sectionType;

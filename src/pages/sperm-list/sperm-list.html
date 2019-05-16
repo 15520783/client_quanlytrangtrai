@@ -23,15 +23,18 @@
   <div id="content">
     <ion-item-divider custom-diviver sticky="true" showWhen="core">Danh sách tinh heo</ion-item-divider>
     <ion-list>
-      <!-- <ion-item *ngIf="isSelectMode" (tap)="select(sperms[0])">
-        <h2 *ngIf="mainAttribute"><b>Giao phối trực tiếp</b></h2>
-      </ion-item> -->
       <span *ngFor="let item of visible_items;let idx= index">
         <ion-item-sliding (tap)="select(item)">
           <ion-item >
             <h2 *ngIf="mainAttribute"><b>{{item[mainAttribute]}}</b></h2>
             <ion-row>
-              <ion-col *ngFor="let attr of attributes" col-xl-3 col-lg-3 col-md-4 col-sm-6 text-wrap>
+              <ion-col *ngFor="let attr of attributes"
+                [attr.col-6]    ="!platform.is('core')"
+                [attr.col-xl-3] ="platform.is('core')" 
+                [attr.col-lg-3] ="platform.is('core')"
+                [attr.col-md-4] ="platform.is('core')"
+                [attr.col-sm-6] ="platform.is('core')"
+                [attr.text-wrap]="platform.is('core')">
                 <p style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}} <span
                     *ngIf="attr.unit">{{attr.unit}}</span></p>
               </ion-col>

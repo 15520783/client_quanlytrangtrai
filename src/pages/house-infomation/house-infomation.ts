@@ -37,9 +37,11 @@ export class HouseInfomationPage {
     public util: Utils,
     public renderer: Renderer
   ) {
-    this.house = this.navParams.data.house;
-    this.pigs = this.deployData.get_pigs_of_house(this.navParams.data.house.id);
-    this.house.founding = this.util.convertDate(this.house.founding);
+    if (this.navParams.data.house) {
+      this.house = this.navParams.data.house;
+      this.pigs = this.deployData.get_pigs_of_house(this.navParams.data.house.id);
+      this.house.founding = this.util.convertDate(this.house.founding);
+    }
   }
 
   ngAfterViewInit() {

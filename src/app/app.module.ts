@@ -74,6 +74,8 @@ import { MedicineInvoicesComponent } from '../components/medicine-invoices/medic
 import { BackdropComponent } from '../components/backdrop/backdrop';
 import { OptionListPigSectionComponent } from '../components/option-list-pig-section/option-list-pig-section';
 import { SalePigInvoicesComponent } from '../components/sale-pig-invoices/sale-pig-invoices';
+import { NotFoundDataComponent } from '../components/not-found-data/not-found-data';
+import { SchelduleDetailComponent } from '../components/scheldule-detail/scheldule-detail';
 
 import { HideHeaderDirective } from '../directives/hide-header/hide-header';
 
@@ -82,6 +84,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HeaderColor } from '@ionic-native/header-color';
 import { Toast } from '@ionic-native/toast';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { Utils} from '../common/utils';
 import { PigsProvider } from '../providers/pigs/pigs';
@@ -179,7 +182,9 @@ const Components = [
   FoodInvoicesComponent,
   MedicineInvoicesComponent,
   BackdropComponent,
-  OptionListPigSectionComponent
+  OptionListPigSectionComponent,
+  NotFoundDataComponent,
+  SchelduleDetailComponent,
 ]
 
 const Providers = [
@@ -235,6 +240,7 @@ const Directives = [
     StatusBar,
     SplashScreen,
     HeaderColor ,
+    BarcodeScanner, 
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     {
       provide: HTTP_INTERCEPTORS,
