@@ -51,6 +51,8 @@ import { HealthInputPage } from '../pages/health-input/health-input';
 import { BreedingListPage } from '../pages/breeding-list/breeding-list';
 import { PigSummaryPage } from '../pages/pig-summary/pig-summary';
 import { MatingListPage } from '../pages/mating-list/mating-list';
+import { MedicineWarehouseInformationPage } from '../pages/medicine-warehouse-information/medicine-warehouse-information';
+import { BirthInputPage } from '../pages/birth-input/birth-input';
 
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
@@ -100,7 +102,6 @@ import { InvoicesProvider } from '../providers/invoices/invoices';
 import { TokenInterceptor } from './interceptor';
 import { BreedingInputPage } from '../pages/breeding-input/breeding-input';
 import { ActivitiesProvider } from '../providers/activities/activities';
-import { MedicineWarehouseInformationPage } from '../pages/medicine-warehouse-information/medicine-warehouse-information';
 
 
 const Pages = [
@@ -154,7 +155,8 @@ const Pages = [
   HealthInputPage,
   MedicineWarehouseInformationPage,
   PigSummaryPage,
-  MatingListPage
+  MatingListPage,
+  BirthInputPage
 ]
 
 const Components = [

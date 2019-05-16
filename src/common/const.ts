@@ -83,15 +83,15 @@ const VARIABLE = {
         COMPLETE: 'complete'
     },
     MATING_TYPE: {
-        IMMEDIATE: 'immediate',
-        SPERM: 'SPERM'
+        IMMEDIATE: { value: 0, codeName: 'immediate', name: 'Phối trực tiếp' },
+        SPERM: { value: 1, codeName: 'bySperm', name: 'Phối gián tiếp' }
     },
     INSEMINATION: [
         { id: 0, value: "ĐẠT", name: "ĐẠT" },
         { id: 1, value: "KHÔNG ĐẠT", name: "KHÔNG ĐẠT" }
     ],
     MATING_STATUS: {
-        PROCCESSING: { id: 0, codeName: 'processing', name: 'Đang chờ lấy tinh lần 2' },
+        PROCESSING: { id: 0, codeName: 'processing', name: 'Đang chờ lấy tinh lần 2' },
         COMPLETE: { id: 1, codeName: 'finish', name: 'Hoàn tất' }
     },
     ISSUE_PIG_STATUS: {
@@ -190,7 +190,7 @@ const API = {
     GET_ALL_INVOICES: '/api/invoices/list',
     GET_ALL_SPERMS: '/api/sperm/list',
     GET_ALL_BREEDINGS: '/api/breedings/list',
-    GET_ALL_MATING:'/api/matings/list',
+    GET_ALL_MATING: '/api/matings/matingsmatingdetails/list',
     GET_FOOD_WAREHOUSE_OF_WAREHOUSE: '/api/foodwarehouse/warehouse/',
     GET_MEDICINE_WAREHOUSE_OF_WAREHOUSE: '/api/medicinewarehouse/warehouse/',
     GET_PIG_INVOICE_DETAIL_FROM_INVOICE: '/api/invoicepigdetail/invoice/',
@@ -244,6 +244,7 @@ const API = {
     DELETE_SPERM: '/api/sperm/',
 
     CREATE_MATING: '/api/matings/matingsmatingdetails/',
+    UPDATE_MATING: '/api/matings/matingsmatingdetails/',
 
     CREATE_ISSUES_PIG: '/api/issuespigs/'
 

@@ -9,16 +9,43 @@
 <ion-content padding>
   <form action="" (ngSubmit)="onSubmit()" style="padding-bottom: 10vH">
     <ion-list>
-      <input-select-target [(validControl)]="credentialsForm.controls.motherId" [disabled]="true"
-        [errorMessage_Required]="'Heo nái là hạng mục bắt buộc.'" [active]="submitAttempt"
-        [placeholder]="'Chọn heo nái'" [label]="'Heo nái'" [targertCmp]="'pigs'">
+      <input-select-target 
+        [(validControl)]="credentialsForm.controls.motherId" 
+        [disabled]="true"
+        [errorMessage_Required]="'Heo nái là hạng mục bắt buộc.'" 
+        [active]="submitAttempt"
+        [placeholder]="'Chọn heo nái'" 
+        [label]="'Heo nái'" [targertCmp]="'pigs'">
       </input-select-target>
 
-      <input-select-target [(validControl)]="credentialsForm.controls.fatherId"
-        [errorMessage_Required]="'Heo nọc là hạng mục bắt buộc.'" [active]="submitAttempt"
-        [placeholder]="'Chọn heo nọc'" [label]="'Heo nọc'" [targertCmp]="'pigs'" [data]="male_pigs"
+      <input-select 
+        [(validControl)]="credentialsForm.controls.typeId"
+        [errorMessage_Required]="'Cách thức phối giống là hạng mục bắt buộc'" 
+        [label]="'Cách thức phối giống'"
+        [active]="submitAttempt" 
+        [placeholder]="'Chọn cách thức phối giống'" 
+        (changeValue)="typeChange($event)"
+        [(data)]="types">
+      </input-select>
+
+      <input-select-target *ngIf="credentialsForm.value.typeId == 0"
+        [(validControl)]="credentialsForm.controls.fatherId"
+        [errorMessage_Required]="'Heo nọc là hạng mục bắt buộc.'" 
+        [active]="submitAttempt"
+        [placeholder]="'Chọn heo nọc'" [label]="'Heo nọc'" 
+        [targertCmp]="'pigs'" [data]="male_pigs"
         (valueChange)="changeFatherBreed($event)">
       </input-select-target>
+
+      <input-select *ngIf="credentialsForm.value.typeId == 1"
+        [(validControl)]="credentialsForm.controls.fatherId"
+        [errorMessage_Required]="'Giống là hạng mục bắt buộc'" 
+        [label]="'Chọn giống'"
+        [active]="submitAttempt" 
+        [placeholder]="'Chọn giống'" 
+        [(data)]="breedList"
+        (changeValue)="changeFatherBreed($event)">
+      </input-select>
 
       <input-date [(validControl)]="credentialsForm.controls.date"
         [errorMessage_Required]="'Ngày phối là hạng mục bắt buộc.'" [label]="'Ngày phối giống'"
@@ -57,35 +84,36 @@
           </ion-col>
         </ion-row>
       </ion-item>
-      <span *ngIf="sperms.length">
+      <span *ngIf="sperms.length && credentialsForm.value.typeId == 1">
         <ion-item>
           <ion-row>
             <b>Gieo tinh lần thứ nhất</b>
           </ion-row>
         </ion-item>
-        <input-select-target [(validControl)]="credentialsForm.controls.sperm1"
+        <input-select-target [(validControl)]="credentialsFormExtra.controls.sperm1"
           [errorMessage_Required]="'Liều tinh là hạng mục bắt buộc.'" [active]="submitAttempt"
           [placeholder]="'Chọn liều tinh'" [label]="'Liều tinh'" [targertCmp]="'sperms'" [data]="sperms"
           (valueChange)="showSperm1($event)">
         </input-select-target>
         <ion-item *ngIf="Sperm1">
           <ion-row><b>Thông tin liều tinh</b></ion-row>
+          <ion-row><b>Ngày lấy tinh:</b>{{Sperm1.date}}</ion-row>
           <ion-row>
-            <ion-col col-3><b>Lượng tinh:</b>{{Sperm1.volume}} (ml)</ion-col>
-            <ion-col col-3><b>Số liều:</b>{{Sperm1.doses}}</ion-col>
-            <ion-col col-3><b>Đã dùng:</b>{{Sperm1.used}} </ion-col>
-            <ion-col col-3><b>Hoạt lực:</b>{{Sperm1.activity}} %</ion-col>
-            <ion-col col-3><b>Nồng độ:</b>{{Sperm1.c}} (Triệu/ml)</ion-col>
-            <ion-col col-3><b>Tỷ lệ sống trung bình:</b>{{Sperm1.lifeAvg}} %</ion-col>
-            <ion-col col-3><b>Tỷ lệ chết trung bình:</b>{{Sperm1.dieAvg}} %</ion-col>
-            <ion-col col-3><b>Tỷ lệ bất thường:</b>{{Sperm1.faddiness}} %</ion-col>
+            <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Lượng tinh:</b>{{Sperm1.volume}} (ml)</ion-col>
+            <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Số liều:</b>{{Sperm1.doses}}</ion-col>
+            <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Đã dùng:</b>{{Sperm1.used}} </ion-col>
+            <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Hoạt lực:</b>{{Sperm1.activity}} %</ion-col>
+            <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Nồng độ:</b>{{Sperm1.c}} (Triệu/ml)</ion-col>
+            <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Tỷ lệ sống trung bình:</b>{{Sperm1.lifeAvg}} %</ion-col>
+            <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Tỷ lệ chết trung bình:</b>{{Sperm1.dieAvg}} %</ion-col>
+            <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Tỷ lệ bất thường:</b>{{Sperm1.faddiness}} %</ion-col>
           </ion-row>
         </ion-item>
-        <input-date [(validControl)]="credentialsForm.controls.date1"
+        <input-date [(validControl)]="credentialsFormExtra.controls.date1"
           [errorMessage_Required]="'Ngày phối là hạng mục bắt buộc.'" [label]="'Ngày phối giống'"
           [placeholder]="'dd/mm/yyyy'" [active]="submitAttempt">
         </input-date>
-        <input-select [(validControl)]="credentialsForm.controls.insemination1"
+        <input-select [(validControl)]="credentialsFormExtra.controls.insemination1"
           [errorMessage_Required]="'Biểu hiện chịu đực là hạng mục bắt buộc'  " [label]="'Biểu hiện chịu đực'"
           [active]="submitAttempt" [placeholder]="'Chọn biểu hiện chịu đực'" [(data)]="insemination">
         </input-select>
@@ -94,29 +122,30 @@
             <b>Gieo tinh lần thứ hai</b>
           </ion-row>
         </ion-item>
-        <input-select-target [(validControl)]="credentialsForm.controls.sperm2"
+        <input-select-target [(validControl)]="credentialsFormExtra.controls.sperm2"
           [errorMessage_Required]="'Liều tinh là hạng mục bắt buộc.'" [active]="submitAttempt"
           [placeholder]="'Chọn liều tinh'" [label]="'Liều tinh'" [targertCmp]="'sperms'" [data]="sperms"
           (valueChange)="showSperm2($event)">
         </input-select-target>
         <ion-item *ngIf="Sperm2">
             <ion-row><b>Thông tin liều tinh</b></ion-row>
+            <ion-row><b>Ngày lấy tinh:</b>{{Sperm2.date}}</ion-row>
             <ion-row>
-                <ion-col col-3><b>Lượng tinh:</b>{{Sperm2.volume}} (ml)</ion-col>
-                <ion-col col-3><b>Số liều:</b>{{Sperm2.doses}}</ion-col>
-                <ion-col col-3><b>Đã dùng:</b>{{Sperm2.used}} </ion-col>
-                <ion-col col-3><b>Hoạt lực:</b>{{Sperm2.activity}} %</ion-col>
-                <ion-col col-3><b>Nồng độ:</b>{{Sperm2.c}} (Triệu/ml)</ion-col>
-                <ion-col col-3><b>Tỷ lệ sống trung bình:</b>{{Sperm2.lifeAvg}} %</ion-col>
-                <ion-col col-3><b>Tỷ lệ chết trung bình:</b>{{Sperm2.dieAvg}} %</ion-col>
-                <ion-col col-3><b>Tỷ lệ bất thường:</b>{{Sperm2.faddiness}} %</ion-col>
+                <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Lượng tinh:</b>{{Sperm2.volume}} (ml)</ion-col>
+                <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Số liều:</b>{{Sperm2.doses}}</ion-col>
+                <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Đã dùng:</b>{{Sperm2.used}} </ion-col>
+                <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Hoạt lực:</b>{{Sperm2.activity}} %</ion-col>
+                <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Nồng độ:</b>{{Sperm2.c}} (Triệu/ml)</ion-col>
+                <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Tỷ lệ sống trung bình:</b>{{Sperm2.lifeAvg}} %</ion-col>
+                <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Tỷ lệ chết trung bình:</b>{{Sperm2.dieAvg}} %</ion-col>
+                <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Tỷ lệ bất thường:</b>{{Sperm2.faddiness}} %</ion-col>
             </ion-row>
           </ion-item>
-        <input-date [(validControl)]="credentialsForm.controls.date2"
+        <input-date [(validControl)]="credentialsFormExtra.controls.date2"
           [errorMessage_Required]="'Ngày phối là hạng mục bắt buộc.'" [label]="'Ngày phối giống'"
           [placeholder]="'dd/mm/yyyy'" [active]="submitAttempt">
         </input-date>
-        <input-select [(validControl)]="credentialsForm.controls.insemination2"
+        <input-select [(validControl)]="credentialsFormExtra.controls.insemination2"
           [errorMessage_Required]="'Biểu hiện chịu đực là hạng mục bắt buộc'" [label]="'Biểu hiện chịu đực'"
           [active]="submitAttempt" [placeholder]="'Chọn biểu hiện chịu đực'" [(data)]="insemination">
         </input-select>

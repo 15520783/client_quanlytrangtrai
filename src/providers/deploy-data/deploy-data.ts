@@ -857,9 +857,15 @@ export class DeployDataProvider {
    */
   get_male_mating_pig_for_female_pig(pig: pig) {
     let houses = this.get_object_list_key_of_house();
-    return this.pigsProvider.pigs.filter((pig_element) => {
-      return houses[pig_element.houseId].section.id == houses[pig.houseId].section.id && pig_element.gender == VARIABLE.GENDER[1].id ? true : false;
-    })
+    if (pig.house) {
+      return this.pigsProvider.pigs.filter((pig_element) => {
+        return houses[pig_element.houseId].section.id == houses[pig.house.id].section.id && pig_element.gender == VARIABLE.GENDER[1].id ? true : false;
+      })
+    } else {
+      return this.pigsProvider.pigs.filter((pig_element) => {
+        return houses[pig_element.houseId].section.id == houses[pig.houseId].section.id && pig_element.gender == VARIABLE.GENDER[1].id ? true : false;
+      })
+    }
   }
 
   /**
@@ -868,7 +874,7 @@ export class DeployDataProvider {
   get_mating_role_of_mating() {
     let roles: any = {};
     this.settingProvider.setting.matingRoles.forEach((role: matingRole) => {
-      roles[role.father.id + '-' + (role.mother.id)] = role;
+      roles[(role.father.id) + '-' + (role.mother.id)] = role;
     })
     return roles;
   }

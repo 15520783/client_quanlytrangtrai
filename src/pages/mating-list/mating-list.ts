@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { mating } from '../../common/entity';
+import { mating, matingDetails } from '../../common/entity';
 import { FormControl } from '@angular/forms';
 import { FilterProvider } from '../../providers/filter/filter';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { ActivitiesProvider } from '../../providers/activities/activities';
 import { PigsProvider } from '../../providers/pigs/pigs';
 import { Utils } from '../../common/utils';
+import { MatingInputPage } from '../mating-input/mating-input';
+import { VARIABLE } from '../../common/const';
 
 @IonicPage()
 @Component({
@@ -16,7 +18,10 @@ import { Utils } from '../../common/utils';
 export class MatingListPage {
 
   public matings: Array<mating> = [];
+  public matingDetails: any = {};
   public sectionType: any;
+  public statusMating: any;
+  public breeds: any = {};
 
   public mainAttribute = "dateDisplay";
   public attributes = [
@@ -56,9 +61,17 @@ export class MatingListPage {
     if (this.navParams.data.sectionType) {
       this.sectionType = this.navParams.data.sectionType;
     }
-
+    this.init();
     this.getMatingList()
-      .then((data) => {
+      .then((data: any) => {
+        if (data) {
+          data.matingDetails.forEach(matingDetail => {
+            if (!this.matingDetails[matingDetail.mating.id]) {
+              this.matingDetails[matingDetail.mating.id] = [];
+            }
+            this.matingDetails[matingDetail.mating.id].push(matingDetail);
+          });
+        }
         this.setFilteredItems();
       });
   }
@@ -79,13 +92,13 @@ export class MatingListPage {
   }
 
   public filterItems(searchItem) {
-
+    this.initialMatings();
     this.filterProvider.input = this.matings;
     this.filterProvider.searchText = searchItem;
     this.filterProvider.searchWithText = this.filter_default;
     this.filterProvider.searchWithRange = {}
     return this.filterProvider.filter().sort((a: mating, b: mating) =>
-      (new Date(a.date) > new Date(b.date)) ? -1 : 1
+      (a.id > b.id) ? -1 : 1
     );;
   }
 
@@ -101,28 +114,36 @@ export class MatingListPage {
   }
 
 
-  getMatingList(){
+  getMatingList() {
     this.util.openBackDrop();
     return this.activitiesProvider.getAllMatings()
-      .then((matings: Array<mating>) => {
-        if (matings && matings.length) {
-          this.matings = this.deployData.get_matings_of_section(this.sectionType.id, matings);
-          this.initialMatings();
+      .then((data: ({ matings: Array<mating>, matingDetails: Array<matingDetails> })) => {
+        if (data.matings && data.matings.length) {
+          this.matings = data.matings;
+          // this.initialMatings();
         }
         this.util.closeBackDrop();
-        return matings;
+        return data;
       })
       .catch((err: Error) => {
         this.util.closeBackDrop();
       })
   }
 
-  initialMatings(){
+  initialMatings() {
     this.matings.forEach((mating) => {
       mating['pigCodeMother'] = mating.mother.pigCode;
       mating['breedMotherName'] = mating.mother.breed.name;
-      mating['pigCodeFather'] = mating.father.pigCode;
-      mating['breedFatherName'] = mating.father.breed.name;
+      if (mating.type == VARIABLE.MATING_TYPE.IMMEDIATE.codeName) {
+        let pigFather = this.deployData.get_pig_by_id(mating.fatherId);
+        mating['pigCodeFather'] = pigFather.pigCode;
+        mating['breedFatherName'] = this.breeds[pigFather.breedId].name;
+      }
+      else if (mating.type == VARIABLE.MATING_TYPE.SPERM.codeName) {
+        mating['pigCodeFather'] = '';
+        mating['breedFatherName'] = this.breeds[mating.fatherId].name;
+      }
+
       mating['farmName'] = mating.mother.house.section.farm.name;
       mating['sectionName'] = mating.mother.house.section.name;
       mating['houseName'] = mating.mother['house'].name;
@@ -130,5 +151,52 @@ export class MatingListPage {
       mating['birthEstimateDisplay'] = mating.birthEstimate ? this.util.convertDate(mating.birthEstimate) : 'Chưa xác định';
       mating['statusName'] = mating.status;
     })
+  }
+
+  init() {
+    this.statusMating = VARIABLE.MATING_STATUS;
+    this.breeds = this.deployData.get_object_list_key_of_breeds();
+  }
+
+  edit(item) {
+    let callback = (data: { mating: mating, matingDetail: Array<matingDetails> }) => {
+
+      data.mating.mother = this.deployData.get_pig_by_id(data.mating.motherId);
+      if (data.mating.typeId == VARIABLE.MATING_TYPE.SPERM.value) {
+        if (data.matingDetail[1].sperm) {
+          data.mating.status = VARIABLE.MATING_STATUS.COMPLETE.codeName;
+        } else {
+          data.matingDetail.splice(1, 1);
+          data.mating.status = VARIABLE.MATING_STATUS.PROCESSING.codeName;
+        }
+      } else {
+        data.mating.status = VARIABLE.MATING_STATUS.COMPLETE.codeName;
+        data.mating.fatherId = this.deployData.get_pig_by_id(data.mating.fatherId).id;
+        data.matingDetail = [];
+      }
+
+      this.activitiesProvider.updateMating(data)
+        .then((newMating: { mating: mating, matingDetail: Array<matingDetails> }) => {
+          if (newMating) {
+            this.navCtrl.pop();
+            /**Update pig in local storage */
+            let pig = this.deployData.get_pig_by_id(newMating.mating.mother.id)
+            pig.statusId = newMating.mating.mother.status.id;
+            this.pigProvider.updatedPig(pig);
+            /**Renew in mating list */
+            let idx = this.matings.findIndex(_mating => _mating.id == newMating.mating.id);
+            if (idx > -1) {
+              this.matings[idx] = newMating.mating;
+              this.matingDetails[item.id] = newMating.matingDetail;
+              this.setFilteredItems();
+            }
+          }
+        })
+        .catch((err: Error) => {
+          console.log(err);
+          return err;
+        })
+    }
+    this.navCtrl.push(MatingInputPage, { pig: item.mother, mating: item, matingDetails: this.matingDetails[item.id], callback: callback });
   }
 }

@@ -114,7 +114,7 @@
     </ion-item>
     <ion-item>
       <ion-label stacked>Giống :</ion-label>
-      <ion-input text-wrap type="text" readonly [(ngModel)]="pig.breedId"></ion-input>
+      <ion-input text-wrap type="text" readonly [(ngModel)]="breed.name"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Giới tính :</ion-label>
@@ -126,23 +126,23 @@
     </ion-item>
     <ion-item>
       <ion-label stacked>Trang trại :</ion-label>
-      <ion-input text-wrap type="text" readonly ></ion-input>
+      <ion-input text-wrap type="text" readonly [(ngModel)]="house.section.farm.name"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Khu :</ion-label>
-      <ion-input text-wrap type="text" readonly ></ion-input>
+      <ion-input text-wrap type="text" readonly  [(ngModel)]="house.section.name"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Nhà :</ion-label>
-      <ion-input text-wrap type="text" readonly [(ngModel)]="pig.houseId"></ion-input>
+      <ion-input text-wrap type="text" readonly [(ngModel)]="house.name"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Số tai heo mẹ :</ion-label>
-      <ion-input text-wrap type="text" readonly [(ngModel)]="pig.originMother"></ion-input>
+      <ion-input text-wrap type="text" readonly [(ngModel)]="mother.pigCode"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Số tai heo cha :</ion-label>
-      <ion-input text-wrap type="text" readonly [(ngModel)]="pig.originFather"></ion-input>
+      <ion-input text-wrap type="text" readonly (ngModel)]="father.pigCode"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Trọng lượng :</ion-label>
@@ -150,7 +150,7 @@
     </ion-item>
     <ion-item>
       <ion-label stacked>Sức khỏe :</ion-label>
-      <ion-input text-wrap type="text" readonly [(ngModel)]="pig.healthStatusId"></ion-input>
+      <ion-input text-wrap type="text" readonly [(ngModel)]="healthStatus.name"></ion-input>
     </ion-item>
   </ion-list>
 </ion-content>

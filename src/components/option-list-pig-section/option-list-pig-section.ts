@@ -12,6 +12,7 @@ import { SpermInputPage } from '../../pages/sperm_input/sperm_input';
 import { MatingInputPage } from '../../pages/mating-input/mating-input';
 import { PigInputPage } from '../../pages/pig-input/pig-input';
 import { HealthInputPage } from '../../pages/health-input/health-input';
+import { BirthInputPage } from '../../pages/birth-input/birth-input';
 
 @Component({
   selector: 'option-list-pig-section',
@@ -159,29 +160,29 @@ export class OptionListPigSectionComponent {
    */
   mating_input() {
     let callback = (data: { mating: mating, matingDetail: Array<matingDetails> }) => {
+
       data.mating.mother = this.deployData.get_pig_by_id(data.mating.motherId);
-      data.mating.father = this.deployData.get_pig_by_id(data.mating.fatherId);
-      if (data.matingDetail[0].sperm.id == '0') {
-        data.mating.status = VARIABLE.MATING_STATUS.COMPLETE.codeName;
-        data.matingDetail.splice(1, 1);
-      } else {
+      if (data.mating.typeId == VARIABLE.MATING_TYPE.SPERM.value) {
         if (data.matingDetail[1].sperm) {
           data.mating.status = VARIABLE.MATING_STATUS.COMPLETE.codeName;
         } else {
           data.matingDetail.splice(1, 1);
-          data.mating.status = VARIABLE.MATING_STATUS.PROCCESSING.codeName;
+          data.mating.status = VARIABLE.MATING_STATUS.PROCESSING.codeName;
         }
+      } else {
+        data.mating.status = VARIABLE.MATING_STATUS.COMPLETE.codeName;
+        data.mating.fatherId = this.deployData.get_pig_by_id(data.mating.fatherId).id;
+        data.matingDetail = [];
       }
+
       this.activitiesProvider.createMating(data)
         .then((newMating: { mating: mating, matingDetail: Array<matingDetails> }) => {
           if (newMating) {
+            this.navCtrl.pop();
             this.pig.statusId = newMating.mating.mother.status.id;
-            // let statusPig = this.deployData.get_status_mated_of_pig(this.statusTarget);
-            // this.pig.statusId = statusPig.id;
             this.pigProvider.updatedPig(this.pig);
-            this.publishPigChangeEvent(this.pig);;
+            this.publishPigChangeEvent(this.pig);
           }
-          this.navCtrl.pop();
         })
         .catch((err: Error) => {
           console.log(err);
@@ -316,6 +317,11 @@ export class OptionListPigSectionComponent {
       })
       .catch((err: Error) => { })
   }
+
+  birth_input() {
+    this.navCtrl.push(BirthInputPage, { pig: this.pig });
+  }
+
 
   publishPigChangeEvent(pig) {
     this.pigChange.emit(pig);

@@ -94,7 +94,7 @@ export class PigListSectionPage {
 
   public filterItems(searchItem) {
     this.pigs.forEach((pig) => {
-      pig['breedName'] = this.breed[pig.breedId] ? this.breed[pig.breedId].name : '';
+      pig['breedName'] = this.breed[pig.breedId] ? this.breed[pig.breedId].name + ' ' + this.breed[pig.breedId].symbol: '';
       pig['sectionName'] = this.houses[pig.houseId] ? this.houses[pig.houseId].section.name : '';
       pig['houseName'] = this.houses[pig.houseId] ? this.houses[pig.houseId].name : '';
       pig['farmName'] = this.houses[pig.houseId].section.farm ? this.houses[pig.houseId].section.farm.name : '';
@@ -128,7 +128,7 @@ export class PigListSectionPage {
   pigChange(new_vers: pig, old_vers: pig) {
     old_vers = new_vers;
     if(this.houses[old_vers.houseId].section.typeId == this.sectionTypeId){
-      old_vers['breedName'] = this.breed[old_vers.breedId] ? this.breed[old_vers.breedId].name : '';
+      old_vers['breedName'] = this.breed[old_vers.breedId] ? this.breed[old_vers.breedId].name + ' ' + this.breed[old_vers.breedId].symbol: '';
       old_vers['sectionName'] = this.houses[old_vers.houseId] ? this.houses[old_vers.houseId].section.name : '';
       old_vers['houseName'] = this.houses[old_vers.houseId] ? this.houses[old_vers.houseId].name : '';
       old_vers['farmName'] = this.houses[old_vers.houseId].section.farm ? this.houses[old_vers.houseId].section.farm.name : '';    

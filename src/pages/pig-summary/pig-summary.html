@@ -2,6 +2,13 @@
   <ion-navbar>
     <ion-title>Thông tin tổng quát của heo</ion-title>
   </ion-navbar>
+  <ion-toolbar showWhen='ios,android'>
+    <ion-segment [(ngModel)]="tab" scrollable>
+      <ion-segment-button value="0" (tap)="selectedTab(0)">Thông tin heo</ion-segment-button>
+      <ion-segment-button value="1" (tap)="selectedTab(1)">Chỉ số heo</ion-segment-button>
+      <ion-segment-button value="2" (tap)="selectedTab(1)">Hoạt động</ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 <ion-content *ngIf="platform.is('core')">
   <ion-row>
@@ -18,9 +25,16 @@
         </ion-card-content>
       </ion-card>
     </ion-col>
-
     <ion-col col-lg-9 col-md-8 no-padding>
       <ion-nav [root]="rootPage" #activities [rootParams]="rootParam"></ion-nav>
     </ion-col>
   </ion-row>
+</ion-content>
+
+<ion-content *ngIf="!platform.is('core')">
+  <ion-slides #slider (ionSlideDidChange)="slideChange()">
+    <ion-slide *ngIf="pig">
+      <page-pig-infomation [(pig)]="pig"></page-pig-infomation>
+    </ion-slide>
+  </ion-slides>
 </ion-content>

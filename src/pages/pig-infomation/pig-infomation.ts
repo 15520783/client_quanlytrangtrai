@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Input } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { pig, breeds, house, healthStatus, footType } from '../../common/entity';
 import { PigsProvider } from '../../providers/pigs/pigs';
@@ -14,7 +14,7 @@ import { VARIABLE } from '../../common/const';
 })
 export class PigInfomationPage {
   @ViewChild('chart') chart;
-  public pig: pig;
+  @Input() public pig: pig;
 
   constructor(
     public navCtrl: NavController,
@@ -23,7 +23,10 @@ export class PigInfomationPage {
     public util: Utils,
     public deployData: DeployDataProvider
   ) {
-    this.pig = this.navParams.data;
+    if(this.navParams.data){
+      this.pig = this.navParams.data;
+    }
+    
     this.init();
     this.pig['birthdayDisplay'] = this.util.convertDate(this.pig.birthday);
   }

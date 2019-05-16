@@ -42,6 +42,7 @@ export { sperms }
 export { matingRole }
 export { mating, matingDetails }
 export { issuesPigs }
+export { births }
 
 class base {
 	id: string;
@@ -72,11 +73,11 @@ class user extends base {
 class pig extends base {
 	pigCode: string = '';
 	farm_id: string = '';
-	farm:farm = new farm();
+	farm: farm = new farm();
 	houseId: string = '';
-	house:house = new house();
+	house: house = new house();
 	roundId: string = '';
-	breed:breeds = new breeds();
+	breed: breeds = new breeds();
 	breedId: string = '';
 	gender: number = null;
 	birthday: any = '';
@@ -94,7 +95,7 @@ class pig extends base {
 	functionUdder: number = 0;
 	totalUdder: number = 0;
 	gentialTypeId: string = '';
-	gential:gentialType = new gentialType();
+	gential: gentialType = new gentialType();
 	// gentialTypeId: number = null;
 	description: string = '';
 	fcr: number = 0;
@@ -560,7 +561,7 @@ class matingRole extends base {
 class mating extends base {
 	mother = new pig();
 	motherId: string = '';
-	father = new pig();
+	// father = new pig();
 	fatherId: string = '';
 	child: pig = null;
 	childId: string = '';
@@ -568,6 +569,8 @@ class mating extends base {
 	birthEstimate: any = '';
 	status: string = '';
 	employeeId: string = '';
+	type:string = '';
+	typeId:number =  0;
 }
 
 class matingDetails extends base {
@@ -586,6 +589,22 @@ class issuesPigs extends base {
 	description: string = ''
 	images: string = '';
 	status: number = null;
+}
+
+class births extends base {
+	mating: mating = new mating();
+	date: any = '';
+	logId: string = '';  // bỏ
+	parities: number = 0;	
+	borning: number = 0;
+	fetalWeight: number = 0;
+	selected: number = 0;
+	dieBeforeBorning: number = 0;
+	dieBorning: number = 0;
+	dieBlack: number = 0;
+	defect: number = 0;
+	smallReview: number = 0;
+	remain: number = 0; // bỏ
 }
 
 class InputObject {

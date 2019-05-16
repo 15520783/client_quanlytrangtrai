@@ -25,9 +25,11 @@
                 </ion-col>
               </ion-row>
               <ion-row>
-                <button showWhen="core" small ion-button item-end mode='ios' color="main"
+                <button showWhen="core" small ion-button item-end mode='ios' color="secondary" *ngIf="item.status == statusMating.PROCESSING.codeName"
+                (tap)="edit(item)">Gieo tinh cho lần tiếp theo</button>
+                <button showWhen="core" small ion-button item-end mode='ios' color="main" *ngIf="item.status == statusMating.PROCESSING.codeName"
                   (tap)="edit(item)">Sửa</button>
-                <button showWhen="core" small ion-button item-end mode='ios' color="danger"
+                <button showWhen="core" small ion-button item-end mode='ios' color="danger" *ngIf="item.status == statusMating.PROCESSING.codeName"
                   (tap)="remove(item)">Xóa</button>
               </ion-row>
             </ion-item>

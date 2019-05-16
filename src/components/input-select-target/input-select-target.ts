@@ -29,7 +29,7 @@ export class InputSelectTargetComponent {
   @Input() targertCmp: 'pigGroup' | 'employee' | 'pigs' | 'sperms' = 'pigGroup';
   public value_visible: any = '';
 
-  public value: string = '';
+  public value:any = '';
 
   @Output() valueChange = new EventEmitter();
 
@@ -50,10 +50,7 @@ export class InputSelectTargetComponent {
 
         case "sperms": {
           this.value = this.validControl.value;
-          if (this.validControl.value.id == 0) {
-            this.value_visible = "Giao phối trực tiếp";
-          } else
-            this.value_visible = this.validControl.value.date ? 'Liều tinh ngày ' + this.validControl.value.date : '';
+          this.value_visible = this.validControl.value ? 'Liều tinh của heo ' + this.value.pig.pigCode : '';
           break;
         }
 
@@ -142,11 +139,7 @@ export class InputSelectTargetComponent {
               if (sperm) {
                 this.valueChange.emit(sperm);
                 this.value = JSON.parse(JSON.stringify(sperm));
-                if (sperm.id == '0') {
-                  this.value_visible = "Giao phối trực tiếp";
-                } else
-                  this.value_visible = 'Liều tinh ngày ' + sperm.date;
-
+                this.value_visible = 'Liều tinh của heo ' + sperm.pig.pigCode;
                 this.validControl.setErrors(null);
               }
             })

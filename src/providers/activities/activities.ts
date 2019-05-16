@@ -124,6 +124,17 @@ export class ActivitiesProvider {
       .toPromise();
   }
 
+  /**
+   * Cập nhật hành động phối giống cho heo
+   * @param objBody 
+   */
+  updateMating(objBody:{ mating: mating, matingDetail: Array<matingDetails> }){
+    return this.http
+    .post(API.UPDATE_MATING,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
 
   createIssuePig(objBody: Array<issuesPigs>) {
     return this.http
