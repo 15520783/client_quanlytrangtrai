@@ -38,7 +38,7 @@ export class BreedingListPage {
   ];
 
   public placeholderSearch: string = 'Tìm kiếm ghi nhận lên giống'
-  public filter_default: Array<string> = ["pigCode","breedName","farmName","sectionName", "houseName", "statusName", "birthdayDisplay", "description"];
+  public filter_default: Array<string> = ["pigCode", "breedName", "farmName", "sectionName", "houseName", "statusName", "birthdayDisplay", "description"];
 
   public page_Idx: number = 1;
   public page_Total: number = 0;
@@ -58,16 +58,21 @@ export class BreedingListPage {
     public events: Events,
     public pigProvider: PigsProvider,
     public util: Utils) {
-
+    this.breedingTypes = this.deployData.get_object_list_key_of_breedingTypes();
     if (this.navParams.data.sectionType) {
       this.sectionType = this.navParams.data.sectionType;
     }
 
+    if (this.navParams.data.breedings) {
+      this.breedings = this.navParams.data.breedings;
+      this.setFilteredItems();
+    } else {
+      this.getBreedingList()
+        .then((data) => {
+          this.setFilteredItems();
+        });
+    }
 
-    this.getBreedingList()
-      .then((data) => {
-        this.setFilteredItems();
-      });
   }
 
   ionViewDidLoad() {
@@ -86,7 +91,7 @@ export class BreedingListPage {
   }
 
   public filterItems(searchItem) {
-
+    this.initialBreedings();
     this.filterProvider.input = this.breedings;
     this.filterProvider.searchText = searchItem;
     this.filterProvider.searchWithText = this.filter_default;
@@ -112,9 +117,7 @@ export class BreedingListPage {
     return this.activitiesProvider.getAllBreedings()
       .then((breedings: Array<breedings>) => {
         if (breedings && breedings.length) {
-          this.breedingTypes = this.deployData.get_object_list_key_of_breedingTypes();
           this.breedings = this.deployData.get_breedings_of_section(this.sectionType.id, breedings);
-          this.initialBreedings();
         }
         this.util.closeBackDrop();
         return breedings;
@@ -148,7 +151,6 @@ export class BreedingListPage {
           let idx = this.breedings.findIndex(_breeding => _breeding.id == updatedBreeding.id);
           if (idx > -1) {
             this.breedings[idx] = updatedBreeding;
-            this.initialBreedings();
             this.setFilteredItems();
           }
         }
@@ -174,7 +176,7 @@ export class BreedingListPage {
           );
           this.setFilteredItems();
         }
-      }).then((isOK)=>{
+      }).then((isOK) => {
         let pig = this.deployData.get_pig_by_id(breeding.pig.id);
         let statusPig = this.deployData.get_status_by_id(pig.statusId);
         pig.statusId = statusPig.previousStatus;

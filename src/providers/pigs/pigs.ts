@@ -60,6 +60,21 @@ export class PigsProvider {
       .timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
   }
 
+  /**
+   * Gửi request lấy thông tin tổng quát của heo
+   * @param pigId 
+   */
+  getInformationPig(pigId: string) {
+    return this.http
+      .get(API.GET_INFORMATION_PIG.concat(pigId))
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Gửi request tạo mới heo
+   * @param objBody 
+   */
   createPig(objBody: pig) {
     return this.http
       .post<pig>(API.CREATE_PIG, objBody)
@@ -70,6 +85,10 @@ export class PigsProvider {
       });
   }
 
+  /**
+   * Gửi request cập nhật heo
+   * @param objBody 
+   */
   updatePig(objBody: pig) {
     return this.http
       .put<pig>(API.UPDATE_PIG, objBody)
@@ -80,8 +99,10 @@ export class PigsProvider {
       })
   }
 
-
-
+  /**
+   * Gửi request xóa heo
+   * @param objBody 
+   */
   removePig(objBody: pig) {
     const options = {
       headers: new HttpHeaders(),
@@ -103,7 +124,7 @@ export class PigsProvider {
         return isOK;
       });
   }
-
+  
   getPigByID(id: string) {
     let pig: Array<pig> = this.pigs.filter((pig: pig) => {
       return pig.id === id ? true : false;
@@ -189,7 +210,7 @@ export class PigsProvider {
   get_point_review_of_pig(pig: pig) {
     let review: { index: number, weight: number, udder: number, foot: number, gential: number, adg: number };
 
-    review = {index:0,weight:0,udder:0,foot:0,gential:0,adg:0};
+    review = { index: 0, weight: 0, udder: 0, foot: 0, gential: 0, adg: 0 };
 
     //Index
     if (pig.index > 105) {

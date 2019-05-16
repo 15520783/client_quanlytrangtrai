@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header showWhen="core">
   <header [title]="'Review'"></header>
 </ion-header>
 <ion-content>
@@ -13,19 +13,19 @@
     </ion-item>
     <ion-item>
       <ion-label stacked>Trọng lượng :</ion-label>
-      <ion-input text-wrap type="text" readonly [(ngModel)]="pig.origin_weight"></ion-input>
+      <ion-input text-wrap type="text" readonly [(ngModel)]="pig.originWeight"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Chân :</ion-label>
-      <ion-input text-wrap type="text" readonly [(ngModel)]="pig.foot"></ion-input>
+      <ion-input text-wrap type="text" readonly [(ngModel)]="pig.footTypeId"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Số vú :</ion-label>
-      <ion-input text-wrap type="text" readonly [(ngModel)]="pig.total_udder"></ion-input>
+      <ion-input text-wrap type="text" readonly [(ngModel)]="pig.totalUdder"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>BPSD :</ion-label>
-      <ion-input text-wrap type="text" readonly [(ngModel)]="pig.bf"></ion-input>
+      <ion-input text-wrap type="text" readonly [(ngModel)]="pig.gentialTypeId"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>ADG :</ion-label>

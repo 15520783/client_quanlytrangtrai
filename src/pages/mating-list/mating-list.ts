@@ -62,18 +62,25 @@ export class MatingListPage {
       this.sectionType = this.navParams.data.sectionType;
     }
     this.init();
-    this.getMatingList()
-      .then((data: any) => {
-        if (data) {
-          data.matingDetails.forEach(matingDetail => {
-            if (!this.matingDetails[matingDetail.mating.id]) {
-              this.matingDetails[matingDetail.mating.id] = [];
-            }
-            this.matingDetails[matingDetail.mating.id].push(matingDetail);
-          });
-        }
-        this.setFilteredItems();
-      });
+
+    if (this.navParams.data.matings) {
+      this.matings = this.navParams.data.matings;
+      this.setFilteredItems();
+    } else {
+      this.getMatingList()
+        .then((data: any) => {
+          if (data) {
+            data.matingDetails.forEach(matingDetail => {
+              if (!this.matingDetails[matingDetail.mating.id]) {
+                this.matingDetails[matingDetail.mating.id] = [];
+              }
+              this.matingDetails[matingDetail.mating.id].push(matingDetail);
+            });
+          }
+          this.setFilteredItems();
+        });
+    }
+
   }
 
   ionViewDidLoad() {

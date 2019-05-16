@@ -1,5 +1,5 @@
 import { Component, ViewChild, Input } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { pig, breeds, house, healthStatus, footType } from '../../common/entity';
 import { PigsProvider } from '../../providers/pigs/pigs';
 import { Utils } from '../../common/utils';
@@ -17,22 +17,29 @@ export class PigInfomationPage {
   @Input() public pig: pig;
 
   constructor(
+    public platform: Platform,
     public navCtrl: NavController,
     public navParams: NavParams,
     public pigProvider: PigsProvider,
     public util: Utils,
     public deployData: DeployDataProvider
   ) {
-    if(this.navParams.data){
-      this.pig = this.navParams.data;
+    if (this.navParams.data.pig) {
+      this.pig = this.navParams.data.pig;
     }
-    
+
     this.init();
     this.pig['birthdayDisplay'] = this.util.convertDate(this.pig.birthday);
   }
 
   ionViewDidLoad() {
     this.pigProvider.ViewIndexChart(this.pig, this.chart.nativeElement);
+  }
+
+  ngAfterContentInit(): void {
+    //Called after ngOnInit when the component's or directive's content has been initialized.
+    //Add 'implements AfterContentInit' to the class.
+    this.init();
   }
 
 
@@ -42,7 +49,7 @@ export class PigInfomationPage {
   public father = new pig();
   public healthStatus = new healthStatus();
   public foot = new footType();
-  public gender:any;
+  public gender: any;
 
   init() {
     this.breed = this.deployData.get_breed_by_id(this.pig.breedId);

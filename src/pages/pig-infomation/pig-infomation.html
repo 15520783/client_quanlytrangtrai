@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header showWhen="core">
   <ion-navbar>
     <ion-title>Thông tin chi tiết</ion-title>
     <!-- <ion-toolbar>
@@ -103,7 +103,7 @@
       </ion-list>
 
     </ion-item-group>
-  </ion-list>
+  </ion-list> 
 </ion-content>
 
 <ion-content showWhen="ios,android">
@@ -112,11 +112,11 @@
       <ion-label stacked>Số tai heo :</ion-label>
       <ion-input text-wrap type="text" readonly [(ngModel)]="pig.pigCode"></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="breed">
       <ion-label stacked>Giống :</ion-label>
       <ion-input text-wrap type="text" readonly [(ngModel)]="breed.name"></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="gender">
       <ion-label stacked>Giới tính :</ion-label>
       <ion-input text-wrap type="text" readonly [(ngModel)]="gender[pig.gender].name"></ion-input>
     </ion-item>
@@ -124,15 +124,15 @@
       <ion-label stacked>Ngày sinh :</ion-label>
       <ion-input text-wrap type="text" readonly [(ngModel)]="pig.birthdayDisplay"></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="house">
       <ion-label stacked>Trang trại :</ion-label>
       <ion-input text-wrap type="text" readonly [(ngModel)]="house.section.farm.name"></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="house">
       <ion-label stacked>Khu :</ion-label>
-      <ion-input text-wrap type="text" readonly  [(ngModel)]="house.section.name"></ion-input>
+      <ion-input text-wrap type="text" readonly [(ngModel)]="house.section.name"></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="house">
       <ion-label stacked>Nhà :</ion-label>
       <ion-input text-wrap type="text" readonly [(ngModel)]="house.name"></ion-input>
     </ion-item>
@@ -142,13 +142,13 @@
     </ion-item>
     <ion-item>
       <ion-label stacked>Số tai heo cha :</ion-label>
-      <ion-input text-wrap type="text" readonly (ngModel)]="father.pigCode"></ion-input>
+      <ion-input text-wrap type="text" readonly [(ngModel)]="father.pigCode"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Trọng lượng :</ion-label>
       <ion-input text-wrap type="text" readonly [(ngModel)]="pig.originWeight"></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="healthStatus">
       <ion-label stacked>Sức khỏe :</ion-label>
       <ion-input text-wrap type="text" readonly [(ngModel)]="healthStatus.name"></ion-input>
     </ion-item>

@@ -17,10 +17,26 @@
         <ion-card-header>Danh sách tùy chọn</ion-card-header>
         <ion-card-content class="ion-card-content-list-setting" no-padding>
           <ion-list *ngFor="let p of pages" no-lines no-margin>
-            <button ion-item (click)="openPage(p);" [attr.active]="p.active?'':null" no-lines>
-              <ion-icon item-start [name]="p.icon"></ion-icon>
-              {{p.title}}
-            </button>
+            <span *ngIf="p.component">
+              <button ion-item (click)="openPage(p);" [attr.active]="p.active?'':null" no-lines>
+                <ion-icon item-start [name]="p.icon"></ion-icon>
+                {{p.title}}
+              </button>
+            </span>
+            <span *ngIf="p.components">
+              <button ion-item (click)="p.expand = !p.expand;getActivities()" [attr.active]="p.active?'':null" no-lines>
+                <ion-icon item-start [name]="p.icon"></ion-icon>
+                {{p.title}}
+              </button>
+              <expandable [expanded]="p.expand" *ngIf="p.components">
+                <ion-list>
+                  <span *ngFor="let component of p.components">
+                    <button *ngIf="!component.notShow" ion-item (click)="openPage(component);"
+                      [attr.active]="component.active?'':null">{{component.title}}</button>
+                  </span>
+                </ion-list>
+              </expandable>
+            </span>
           </ion-list>
         </ion-card-content>
       </ion-card>
@@ -31,10 +47,13 @@
   </ion-row>
 </ion-content>
 
-<ion-content *ngIf="!platform.is('core')">
+<ion-content *ngIf="!platform.is('core')" class="mobile">
   <ion-slides #slider (ionSlideDidChange)="slideChange()">
     <ion-slide *ngIf="pig">
-      <page-pig-infomation [(pig)]="pig"></page-pig-infomation>
+      <page-pig-infomation [pig]="pig"></page-pig-infomation>
+    </ion-slide>
+    <ion-slide *ngIf="pig">
+      <page-pig-review-index [pig]="pig"></page-pig-review-index>
     </ion-slide>
   </ion-slides>
 </ion-content>

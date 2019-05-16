@@ -178,6 +178,7 @@ const API = {
     LOGIN: '/auth/login',
     CHECK_SERVER: '/auth/check_login',
 
+    GET_INFORMATION_PIG: '/api/piginfoextend/',
     GET_ALL_FARMS: '/api/farms/list',
     GET_ALL_SECTIONS: '/api/sections/list',
     GET_ALL_HOUSES: '/api/houses/list',
