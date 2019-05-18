@@ -11,6 +11,7 @@ import { FilterProvider } from '../../providers/filter/filter';
 import { PigInputPage } from '../pig-input/pig-input';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { PigSummaryPage } from '../pig-summary/pig-summary';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 
 @IonicPage()
@@ -55,7 +56,8 @@ export class PigsPage {
     public modalCtrl: ModalController,
     public platform: Platform,
     public util: Utils,
-    public deployData:DeployDataProvider
+    public deployData: DeployDataProvider,
+    public scanner: BarcodeScanner
   ) {
     this.init();
     this.houseProvider.getAllHouses()
@@ -65,7 +67,7 @@ export class PigsPage {
       .catch((err) => { console.log(err) });
   }
 
-  init(){
+  init() {
     this.breeds = this.deployData.get_object_list_key_of_breeds();
     this.health_status = this.deployData.get_object_list_key_of_healthStatus();
     this.house = this.deployData.get_object_list_key_of_house();
@@ -184,7 +186,7 @@ export class PigsPage {
 
 
   viewDeltail(pig) {
-    this.navCtrl.push(PigSummaryPage,{pig:pig});
+    this.navCtrl.push(PigSummaryPage, { pig: pig });
     // const modal = this.modalCtrl.create(
     //   PigViewPage, pig, {
     //     cssClass: 'ion-modal'
@@ -198,19 +200,36 @@ export class PigsPage {
   }
 
 
-  // scan() {
-  //   this.scanner.scan()
-  //     .then((result: any) => {
-  //       console.log(result);
-  //       if (result) {
-  //         console.log('result', result);
-  //         let idx = this.pigs.findIndex(object => object.pig_code === result.text);
-  //         if (idx > -1)
-  //           this.viewDeltail(this.pigs[idx]);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log('err scan', err)
-  //     })
-  // }
+  scan() {
+    if (this.platform.is('android') || this.platform.is('ios')) {
+      this.scanner.scan()
+        .then((result: any) => {
+          if (result.text) {
+            this.util.openBackDrop();
+            let target = JSON.parse(result.text);
+            if (target.type == VARIABLE.OBJECT_BARCODE_TYPE.PIG) {
+              this.util.getKey(KEY.PIGS).then((pigs: Array<pig>) => {
+                let idx = pigs.findIndex(pig => pig.pigCode == target.id);
+                if (idx > -1) {
+                  this.navCtrl.push(PigSummaryPage, { pig: pigs[idx] }).then(() => {
+                    this.util.closeBackDrop();
+                  });
+                } else {
+                  this.util.showToastInform('Không tìm thấy đối tượng');
+                }
+              })
+            } else {
+              this.util.showToastInform('Không tìm thấy đối tượng');
+            }
+          } else {
+            this.util.showToastInform('Không tìm thấy đối tượng');
+          }
+        })
+        .catch((err: Error) => {
+          console.log(err);
+          this.util.closeBackDrop();
+          this.util.showToastInform('Không tìm thấy đối tượng');
+        })
+    }
+  }
 }

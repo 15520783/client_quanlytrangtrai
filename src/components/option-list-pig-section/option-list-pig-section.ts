@@ -31,6 +31,7 @@ export class OptionListPigSectionComponent {
   public breeding;
   public sperm;
   public mating;
+  public weaning;
   public mated;
   public farrow;
   public gender;
@@ -89,6 +90,10 @@ export class OptionListPigSectionComponent {
       VARIABLE.SECTION_TYPE[5].id
     ]
 
+    this.weaning = [
+      VARIABLE.SECTION_TYPE[5].id
+    ]
+
     this.sectionTypeId = VARIABLE.SECTION_TYPE[this.sectionTypeId];
   }
 
@@ -106,7 +111,7 @@ export class OptionListPigSectionComponent {
   @Output() pigChange = new EventEmitter();
 
   viewDetail() {
-    this.navCtrl.push(PigViewPage, this.pig);
+    this.navCtrl.push(PigViewPage, { pig: this.pig });
   }
 
   /**
@@ -244,6 +249,7 @@ export class OptionListPigSectionComponent {
         })
         .catch((err: Error) => { })
     }
+    
     this.navCtrl.push(PigInputPage, { pigId: this.pig.id, isTransferSection: true, callback: callback })
   }
 
@@ -303,10 +309,33 @@ export class OptionListPigSectionComponent {
   /**
    * Thêm vào danh sách heo sẩy thai
    */
-  markedAbortion() {
-    let abortionStatus = this.deployData.get_status_pig_by_status_code(VARIABLE.STATUS_PIG.ABORTION);
+  // markedAbortion() {
+  //   let abortionStatus = this.deployData.get_status_pig_by_status_code(VARIABLE.STATUS_PIG.ABORTION);
+  //   let pigUpdate: pig = this.util.deepClone(this.pig);
+  //   pigUpdate.statusId = abortionStatus.id;
+  //   pigUpdate = this.deployData.get_pig_object_to_send_request(pigUpdate);
+  //   this.pigProvider.updatePig(pigUpdate)
+  //     .then((pig: pig) => {
+  //       if (pig && pig.id) {
+  //         this.pig = pig;
+  //         this.publishPigChangeEvent(this.pig);
+  //       }
+  //     })
+  //     .catch((err: Error) => { })
+  // }
+
+  // birth_input() {
+  //   this.navCtrl.push(BirthInputPage, { pig: this.pig });
+  // }
+
+
+  /**
+   * Thêm vào danh sách heo sẩy thai
+   */
+  weaningMarked() {
+    let weaningStatus = this.deployData.get_status_pig_by_status_code(VARIABLE.STATUS_PIG.WEANING);
     let pigUpdate: pig = this.util.deepClone(this.pig);
-    pigUpdate.statusId = abortionStatus.id;
+    pigUpdate.statusId = weaningStatus.id;
     pigUpdate = this.deployData.get_pig_object_to_send_request(pigUpdate);
     this.pigProvider.updatePig(pigUpdate)
       .then((pig: pig) => {

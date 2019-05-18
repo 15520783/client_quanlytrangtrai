@@ -13,6 +13,7 @@
   <button 
   showWhen="core"
   small ion-button item-end mode='ios' color="secondary"
+  *ngIf="statusObjectKey[pig.statusId].code != statusPig.MATING"
   (tap)="transferSection()">Đánh giá & chuyển nội bộ</button>
 
   <button 
@@ -57,14 +58,14 @@
   (tap)="mating_input()">Phối giống</button>
 
 
-  <button 
+  <!-- <button 
   showWhen="core" 
   *ngIf="mating.includes(sectionTypeId) 
   && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE 
   && pig.gender == gender.FEMALE
   && statusObjectKey[pig.statusId].code == statusPig.MATING"
   small ion-button item-end mode='ios' color="secondary"
-  (tap)="matingNext_input()">Thực hiện gieo tinh lần kế tiếp</button>
+  (tap)="matingNext_input()">Thực hiện gieo tinh lần kế tiếp</button> -->
 
 
   <button 
@@ -75,21 +76,30 @@
   small ion-button item-end mode='ios' color="secondary"
   (tap)="markedFarrow()">Thêm vào danh sách mang thai</button>
 
-  <button 
+   <button 
+  showWhen="core" 
+  *ngIf="weaning.includes(sectionTypeId) 
+  && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE 
+  && pig.gender == gender.FEMALE
+  && statusObjectKey[pig.statusId].code == statusPig.FARROWING"
+  small ion-button item-end mode='ios' color="secondary"
+  (tap)="weaningMarked()">Thêm vào danh sách cai sữa</button>
+
+  <!-- <button 
   showWhen="core" 
   *ngIf="mated.includes(sectionTypeId)
   && statusObjectKey[pig.statusId].code == statusPig.FARROWING
   && pig.gender == gender.FEMALE"
   small ion-button item-end mode='ios' color="secondary"
-  (tap)="markedAbortion()">Thêm vào danh sách sẩy thai</button>
+  (tap)="markedAbortion()">Thêm vào danh sách sẩy thai</button> -->
 
-  <button 
+  <!-- <button 
   showWhen="core" 
   *ngIf="farrow.includes(sectionTypeId)
   && statusObjectKey[pig.statusId].code == statusPig.FARROWING
   && pig.gender == gender.FEMALE"
   small ion-button item-end mode='ios' color="secondary"
-  (tap)="birth_input()">Nhập thông tin heo đẻ</button>
+  (tap)="birth_input()">Nhập thông tin heo đẻ</button> -->
 
 
   <!-- <button showWhen="core" small ion-button item-end mode='ios' color="secondary">Thí tình</button> -->

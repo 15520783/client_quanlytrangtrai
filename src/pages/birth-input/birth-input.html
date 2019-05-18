@@ -1,0 +1,88 @@
+
+<ion-header>
+  <ion-navbar>
+      <ion-toolbar toolbar-transparent no-border class="custom-toolbar" >
+        <ion-title style="padding: 0px!important">Nhập thông tin đẻ</ion-title>
+      </ion-toolbar>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form action="" (ngSubmit)="onSubmit()" style="padding-bottom: 10vH">
+    <ion-list >
+      <input-date [(validControl)] = "credentialsForm.controls.date"
+                  [errorMessage_Required]  ="'Ngày đẻ là hạng mục bắt buộc.'"
+                  [label] = "'Ngày đẻ'"
+                  [placeholder]="'dd/mm/yyyy'"
+                  [active]= "submitAttempt">
+      </input-date>
+      <input-text [(validControl)] = "credentialsForm.controls.borning"
+                  [errorMessage_ValidNumber]  = "'Tổng số con là hạng mục nhập số'"
+                  [errorMessage_Required]  ="'Tổng số là hạng mục bắt buộc.'"
+                  [label] = "'Tổng số con'"
+                  [placeholder]="'Nhập tổng số con'"
+                  [active]= "submitAttempt">
+      </input-text>
+      <input-text [(validControl)] = "credentialsForm.controls.fetalWeight"
+                  [errorMessage_Required]  = "'Trọng lượng bào thai là hạng mục bắt buộc'"
+                  [errorMessage_ValidNumber]  = "'Trọng lượng bào thai là hạng mục nhập số'"
+                  [label] = "'Trọng lượng bào thai'"
+                  [placeholder]="'Nhập trọng lượng bào thai'"
+                  [active]= "submitAttempt">
+      </input-text>
+      <input-text [(validControl)] = "credentialsForm.controls.selected"
+                  [errorMessage_Required]  = "'Tổng số con được chọn là hạng mục bắt buộc'"
+                  [errorMessage_ValidNumber]  = "'Tổng số con được chọn là hạng mục nhập số'"
+                  [label] = "'Tổng số con được chọn'"
+                  [placeholder]="'Nhập tổng số con được chọn'"
+                  [active]= "submitAttempt">
+      </input-text>
+      <input-text [(validControl)] = "credentialsForm.controls.dieBeforeBorning"
+                  [errorMessage_ValidNumber]  = "'Số con chết trước khi sinh là hạng mục nhập số'"
+                  [errorMessage_Required]  = "'Số con chết trước khi sinh là hạng mục bắt buộc'"
+                  [label] = "'Số con chết trước khi sinh'"
+                  [placeholder]="'Nhập số con chết trước khi sinh'"
+                  [active]= "submitAttempt">
+      </input-text>
+      <input-text [(validControl)] = "credentialsForm.controls.dieBorning"
+                  [errorMessage_ValidNumber]  = "'Số con chết khi sinh là hạng mục nhập số'"
+                  [errorMessage_Required]  = "'Số con chết khi sinh là hạng mục bắt buộc'"
+                  [label] = "'Số con chết khi sinh'"
+                  [placeholder]="'Nhập số con chết khi sinh'"
+                  [active]= "submitAttempt">
+      </input-text>
+      <input-text [(validControl)] = "credentialsForm.controls.dieBlack"
+                  [errorMessage_ValidNumber]  = "'Số con chết đen là hạng mục nhập số'"
+                  [errorMessage_Required]  = "'Số con chết đen là hạng mục bắt buộc'"
+                  [label] = "'Số con chết đen'"
+                  [placeholder]="'Nhập số con chết đen'"
+                  [active]= "submitAttempt">
+      </input-text>
+      <input-text [(validControl)] = "credentialsForm.controls.defect"
+                  [errorMessage_ValidNumber]  = "'Số con dị tật là hạng mục nhập số'"
+                  [errorMessage_Required]  = "'Số con dị tật là hạng mục bắt buộc'"
+                  [label] = "'Số con dị tật'"
+                  [placeholder]="'Nhập số con dị tật'"
+                  [active]= "submitAttempt">
+      </input-text>
+      <input-text [(validControl)] = "credentialsForm.controls.smallReview"
+                  [errorMessage_ValidNumber]  = "'Số con nhỏ loại là hạng mục nhập số'"
+                  [errorMessage_Required]  = "'Số con nhỏ loại là hạng mục bắt buộc'"
+                  [label] = "'Số con nhỏ loại'"
+                  [placeholder]="'Nhập số con nhỏ loại'"
+                  [active]= "submitAttempt">
+      </input-text>
+    </ion-list>
+  </form>
+</ion-content>
+
+<ion-footer no-border showWhen="core">
+  <ion-toolbar toolbar-transparent text-right showWhen="core">
+      <button type="submit"  ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
+      <button ion-button   mode='ios' color="danger">Hủy</button>
+  </ion-toolbar>
+</ion-footer>
+
+<ion-footer no-border no-padding showWhen="ios,android">
+  <button type="submit" no-margin full block ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
+</ion-footer>

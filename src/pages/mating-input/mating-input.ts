@@ -165,8 +165,10 @@ export class MatingInputPage {
       Object.keys(this.mating).forEach((attr) => {
         this.mating[attr] = this.credentialsForm.value[attr] ? this.credentialsForm.value[attr] : this.mating[attr];
       });
+      this.mating.type = (this.mating.typeId == VARIABLE.MATING_TYPE.IMMEDIATE.value) ?
+        VARIABLE.MATING_TYPE.IMMEDIATE.codeName : VARIABLE.MATING_TYPE.SPERM.codeName;
 
-      if (this.mating.typeId == VARIABLE.MATING_TYPE.SPERM.value && this.credentialsFormExtra.valid) {
+      if (this.mating.typeId == VARIABLE.MATING_TYPE.SPERM.value) {
         this.matingDetail[0].sperm = this.credentialsFormExtra.value.sperm1;
         this.matingDetail[0].date = this.credentialsFormExtra.value.date1;
         this.matingDetail[0].insemination = this.credentialsFormExtra.value.insemination1;
@@ -174,15 +176,18 @@ export class MatingInputPage {
         this.matingDetail[1].sperm = this.credentialsFormExtra.value.sperm2;
         this.matingDetail[1].date = this.credentialsFormExtra.value.date2;
         this.matingDetail[1].insemination = this.credentialsFormExtra.value.insemination2;
+        if (this.credentialsFormExtra.valid) {
+          this.navParams.get('callback')({
+            mating: this.mating,
+            matingDetail: this.matingDetail
+          })
+        }
+      } else {
+        this.navParams.get('callback')({
+          mating: this.mating,
+          matingDetail: this.matingDetail
+        })
       }
-
-      this.mating.type = (this.mating.typeId == VARIABLE.MATING_TYPE.IMMEDIATE.value) ?
-        VARIABLE.MATING_TYPE.IMMEDIATE.codeName : VARIABLE.MATING_TYPE.SPERM.codeName;
-
-      this.navParams.get('callback')({
-        mating: this.mating,
-        matingDetail: this.matingDetail
-      })
     }
   }
 

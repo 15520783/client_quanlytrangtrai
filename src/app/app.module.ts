@@ -53,6 +53,8 @@ import { PigSummaryPage } from '../pages/pig-summary/pig-summary';
 import { MatingListPage } from '../pages/mating-list/mating-list';
 import { MedicineWarehouseInformationPage } from '../pages/medicine-warehouse-information/medicine-warehouse-information';
 import { BirthInputPage } from '../pages/birth-input/birth-input';
+import { BirthListPage } from '../pages/birth-list/birth-list';
+import { BirthChildDetailPage } from '../pages/birth-child-detail/birth-child-detail';
 
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
@@ -159,7 +161,9 @@ const Pages = [
   MedicineWarehouseInformationPage,
   PigSummaryPage,
   MatingListPage,
-  BirthInputPage
+  BirthInputPage,
+  BirthListPage,
+  BirthChildDetailPage,
 ]
 
 const Components = [

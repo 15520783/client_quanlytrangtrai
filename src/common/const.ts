@@ -92,7 +92,9 @@ const VARIABLE = {
     ],
     MATING_STATUS: {
         PROCESSING: { id: 0, codeName: 'processing', name: 'Đang chờ lấy tinh lần 2' },
-        COMPLETE: { id: 1, codeName: 'finish', name: 'Hoàn tất' }
+        COMPLETE: { id: 1, codeName: 'finish', name: 'Hoàn tất' },
+        ABORTION: { id: 2, codeName: 'abort', name: 'Sẩy thai' },
+        BORNED: { id: 3, codeName: 'borned', name: 'Đã sinh' }
     },
     ISSUE_PIG_STATUS: {
         DECTECTION: { id: 0, name: 'Mới phát hiện' },
@@ -103,79 +105,6 @@ const VARIABLE = {
         PIG: 'pig',
         HOUSE: 'house'
     },
-    section_type: [
-        {
-            id: 1,
-            name: "Khu cách ly",
-            function: {
-                inputPig: "Nhập heo",
-                breeding: "Lên giống",
-                transfer: "Chuyển(xuất) heo"
-            }
-        },
-        {
-            id: 2,
-            name: "Khu nọc",
-            function: {
-                inputPig: "Nhập heo",
-                sperm: "Khai thác tinh heo",
-                transfer: "Chuyển(xuất) heo"
-            }
-        },
-        {
-            id: 3,
-            name: "Khu phối",
-            function: {
-                inputPig: "Nhập heo",
-                mating: "Phối giống",
-                transfer: "Chuyển(xuất) heo"
-            }
-        },
-        {
-            id: 4,
-            name: "Khu mang thai",
-            function: {
-                inputPig: "Nhập heo",
-                pregnancyFollow: "Phối giống",
-                transfer: "Chuyển(xuất) heo"
-            }
-        },
-        {
-            id: 5,
-            name: "Khu đẻ",
-            function: {
-                inputPig: "Nhập heo",
-                bornFollow: "Phối giống",
-                weaning: "Cai sữa heo nái",
-                transfer: "Chuyển(xuất) heo"
-            }
-        },
-        {
-            id: 6,
-            name: "Khu cai sữa",
-            function: {
-                inputPig: "Nhập heo",
-                transfer: "Chuyển(xuất) heo"
-            }
-        },
-        {
-            id: 7,
-            name: "Khu hậu bị",
-            function: {
-                inputPig: "Nhập heo",
-                reviewOfftest: "Đánh giá Offtest heo con",
-                transfer: "Chuyển(xuất) heo"
-            }
-        },
-        {
-            id: 8,
-            name: "Khu chờ bán",
-            function: {
-                prepareToSale: "Lên danh sách chờ bán",
-                exportSale: "Xuất bán heo"
-            }
-        },
-    ]
 }
 
 const API = {
@@ -196,6 +125,7 @@ const API = {
     GET_ALL_SPERMS: '/api/sperm/list',
     GET_ALL_BREEDINGS: '/api/breedings/list',
     GET_ALL_MATING: '/api/matings/matingsmatingdetails/list',
+    GET_ALL_BIRTHS: '/api/births/list',
     GET_FOOD_WAREHOUSE_OF_WAREHOUSE: '/api/foodwarehouse/warehouse/',
     GET_MEDICINE_WAREHOUSE_OF_WAREHOUSE: '/api/medicinewarehouse/warehouse/',
     GET_PIG_INVOICE_DETAIL_FROM_INVOICE: '/api/invoicepigdetail/invoice/',
@@ -250,8 +180,12 @@ const API = {
 
     CREATE_MATING: '/api/matings/matingsmatingdetails/',
     UPDATE_MATING: '/api/matings/matingsmatingdetails/',
+    UPDATE_MATING_OBJ: '/api/matings/',
+    DELETE_MATING: '/api/matings/',
 
-    CREATE_ISSUES_PIG: '/api/issuespigs/'
+    CREATE_ISSUES_PIG: '/api/issuespigs/',
+
+    CREATE_BIRTH: '/api/births/'
 
 }
 

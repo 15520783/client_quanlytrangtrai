@@ -5,9 +5,9 @@ import { VARIABLE } from '../../common/const';
 import { PigListSectionPage } from '../pig-list-section/pig-list-section';
 import { Utils } from '../../common/utils';
 import { SpermListPage } from '../sperm-list/sperm-list';
-import { MatingInputPage } from '../mating-input/mating-input';
 import { BreedingListPage } from '../breeding-list/breeding-list';
 import { MatingListPage } from '../mating-list/mating-list';
+import { BirthListPage } from '../birth-list/birth-list';
 
 @IonicPage()
 @Component({
@@ -119,7 +119,7 @@ export class ActivitiesPage {
         },
         pigs:[]
       },
-      list_mating_khu_noc: {
+      list_mating_khu_phoi: {
         name: 'Danh sách giao phối', component: MatingListPage, active: false,
         data:{
           sectionType: VARIABLE.SECTION_TYPE[3],
@@ -155,12 +155,41 @@ export class ActivitiesPage {
           pigs: []
         }
       },
+      list_mating_khu_mang_thai: {
+        name: 'Danh sách giao phối', component: MatingListPage, active: false,
+        data:{
+          sectionType: VARIABLE.SECTION_TYPE[4],
+        }
+      },
       list_pig_khu_de: {
         name: 'Danh sách heo tại khu', component: PigListSectionPage, active: false,
         data: {
           sectionType: VARIABLE.SECTION_TYPE[5],
           getPigs(deployData: DeployDataProvider) {
             return deployData.get_pigs_of_section(VARIABLE.SECTION_TYPE[5].id)
+          },
+          pigs: []
+        }
+      },
+      list_mating_khu_de: {
+        name: 'Danh sách giao phối', component: MatingListPage, active: false,
+        data:{
+          sectionType: VARIABLE.SECTION_TYPE[5],
+        }
+      },
+      list_birth_khu_de: {
+        name: 'Danh sách đẻ', component: BirthListPage, active: false,
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[5],
+          pigs: []
+        }
+      },
+      list_weaning_pig_khu_de: {
+        name: 'Danh sách heo cai sữa', component: PigListSectionPage, active: false,
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[5],
+          getPigs(deployData: DeployDataProvider) {
+            return deployData.get_weaning_pig_of_section(VARIABLE.SECTION_TYPE[5].id)
           },
           pigs: []
         }
@@ -238,7 +267,7 @@ export class ActivitiesPage {
           this.components.list_pig_khu_phoi,
           this.components.list_pig_breeding_khu_phoi,
           this.components.list_mating_pig_khu_phoi,
-          this.components.list_mating_khu_noc
+          this.components.list_mating_khu_phoi
         ],
         icon: 'app-activities', active: false
       },
@@ -247,7 +276,8 @@ export class ActivitiesPage {
         components: [
           this.components.list_pig_khu_mang_thai,
           this.components.list_farrowing_pig_khu_mang_thai,
-          this.components.list_abortion_pig_khu_mang_thai
+          this.components.list_abortion_pig_khu_mang_thai,
+          this.components.list_mating_khu_mang_thai
         ],
         icon: 'app-activities', active: false
       },
@@ -255,6 +285,9 @@ export class ActivitiesPage {
         title: 'Khu đẻ ',
         components: [
           this.components.list_pig_khu_de,
+          this.components.list_birth_khu_de,
+          this.components.list_mating_khu_de,
+          this.components.list_weaning_pig_khu_de
         ],
         icon: 'app-activities', active: false
       },

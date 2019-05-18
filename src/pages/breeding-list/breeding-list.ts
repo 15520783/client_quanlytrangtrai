@@ -97,7 +97,7 @@ export class BreedingListPage {
     this.filterProvider.searchWithText = this.filter_default;
     this.filterProvider.searchWithRange = {}
     return this.filterProvider.filter().sort((a: breedings, b: breedings) =>
-      (new Date(a.date) > new Date(b.date)) ? -1 : 1
+      (new Date(a.createdAt) > new Date(b.createdAt)) ? -1 : 1
     );;
   }
 

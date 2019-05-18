@@ -106,7 +106,7 @@
       <ion-icon name="ios-arrow-up"></ion-icon>
     </button>
     <ion-fab-list side="top" style="right:0px">
-      <button data-balloon-visible data-balloon-length="medium" data-balloon="Quét mã QR" data-balloon-pos="left"
+      <button (tap)="scan()" data-balloon-visible data-balloon-length="medium" data-balloon="Quét mã QR" data-balloon-pos="left"
         ion-fab color="main">
         <ion-icon name="app-qr-scanner"></ion-icon>
       </button>

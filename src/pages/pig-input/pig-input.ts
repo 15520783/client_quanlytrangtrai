@@ -21,7 +21,7 @@ export class PigInputPage {
   public UpdateMode: boolean = false;
 
   /**using to check implement in option-list-pig-section*/
-  public isTransferSection:boolean = false;
+  public isTransferSection: boolean = false;
 
 
   public pig = new pig();
@@ -38,7 +38,7 @@ export class PigInputPage {
     public viewCtrl: ViewController,
     public util: Utils
   ) {
-    
+
     this.init();
     this.credentialsForm = this.formBuilder.group({
       id: this.pig.id,
@@ -70,7 +70,7 @@ export class PigInputPage {
       pregnancyStatusId: [this.pig.pregnancyStatusId, Validators.compose([Validators.required])],
       priceCodeId: [this.pig.priceCodeId, Validators.compose([Validators.required])],
       statusId: [this.pig.statusId, Validators.compose([Validators.required])],
-      
+
       // born_weight: [this.pig.born_weight, Validators.compose([Validators.required])],
       // born_status:[this.pig.born_status,Validators.compose([Validators.required])],
       // index: [this.pig.index, Validators.compose([Validators.required])],
@@ -82,7 +82,7 @@ export class PigInputPage {
       // point_review:[this.pig.point_review,Validators.compose([Validators.required])],
       // status:[this.pig.status,Validators.compose([Validators.required])],
     });
-   
+
 
     if (this.navParams.data.pigId) {
       this.UpdateMode = true;
@@ -115,7 +115,7 @@ export class PigInputPage {
       });
     }
 
-    if(this.navParams.data.isTransferSection){
+    if (this.navParams.data.isTransferSection) {
       this.credentialsForm.controls.pigCode.disable();
       this.credentialsForm.controls.farmId.disable();
       this.credentialsForm.controls.roundId.disable();
@@ -130,7 +130,7 @@ export class PigInputPage {
   }
 
   ngAfterViewChecked(): void {
-    
+
   }
 
 
@@ -142,20 +142,20 @@ export class PigInputPage {
         this.pig[attr] = this.credentialsForm.value[attr];
       });
 
-      if (!this.UpdateMode) {
-        this.events.publish('pig-inputs:createPig', this.pig);
-        this.events.subscribe('OK', () => {
-          this.viewCtrl.dismiss();
-          this.events.unsubscribe('OK');
-        })
-      }
-      else {
-        this.events.publish('pig-inputs:updatePig', this.pig);
-        this.events.subscribe('OK', () => {
-          this.viewCtrl.dismiss();
-          this.events.unsubscribe('OK');
-        })
-      }
+      // if (!this.UpdateMode) {
+      //   this.events.publish('pig-inputs:createPig', this.pig);
+      //   this.events.subscribe('OK', () => {
+      //     this.viewCtrl.dismiss();
+      //     this.events.unsubscribe('OK');
+      //   })
+      // }
+      // else {
+      //   this.events.publish('pig-inputs:updatePig', this.pig);
+      //   this.events.subscribe('OK', () => {
+      //     this.viewCtrl.dismiss();
+      //     this.events.unsubscribe('OK');
+      //   })
+      // }
 
       this.navParams.get('callback')(this.pig);
     }
@@ -220,14 +220,14 @@ export class PigInputPage {
       })
     } else {
       let statusCode = {}
-      Object.keys(VARIABLE.STATUS_PIG).forEach((key)=>{
+      Object.keys(VARIABLE.STATUS_PIG).forEach((key) => {
         statusCode[VARIABLE.STATUS_PIG[key]] = key;
       })
       this.settingProvider.setting.status.forEach((status) => {
-          this.status.push({
-            name: status.name + " - Trạng thái trước " + statusCode[status.previousStatus],
-            value: status.id
-          })
+        this.status.push({
+          name: status.name + " - Trạng thái trước " + statusCode[status.previousStatus],
+          value: status.id
+        })
       })
     }
 

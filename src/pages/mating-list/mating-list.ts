@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { mating, matingDetails } from '../../common/entity';
+import { mating, matingDetails, pig, births } from '../../common/entity';
 import { FormControl } from '@angular/forms';
 import { FilterProvider } from '../../providers/filter/filter';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
@@ -9,6 +9,7 @@ import { PigsProvider } from '../../providers/pigs/pigs';
 import { Utils } from '../../common/utils';
 import { MatingInputPage } from '../mating-input/mating-input';
 import { VARIABLE } from '../../common/const';
+import { BirthInputPage } from '../birth-input/birth-input';
 
 @IonicPage()
 @Component({
@@ -22,6 +23,7 @@ export class MatingListPage {
   public sectionType: any;
   public statusMating: any;
   public breeds: any = {};
+  public section: any;
 
   public mainAttribute = "dateDisplay";
   public attributes = [
@@ -32,7 +34,7 @@ export class MatingListPage {
     { name: "farmName", label: 'Trang trại' },
     { name: "sectionName", label: 'Khu' },
     { name: "houseName", label: 'Nhà' },
-    { name: "statusName", label: 'Hiện trạng' },
+    { name: "statusName", label: 'Hiện trạng', usingBadge: true },
     { name: "birthEstimateDisplay", label: 'Dự kiến sinh' },
     { name: "description", label: 'Ghi chú' },
   ];
@@ -126,7 +128,13 @@ export class MatingListPage {
     return this.activitiesProvider.getAllMatings()
       .then((data: ({ matings: Array<mating>, matingDetails: Array<matingDetails> })) => {
         if (data.matings && data.matings.length) {
-          this.matings = data.matings;
+          if (this.sectionType.id == VARIABLE.SECTION_TYPE[3].id) {
+            this.matings = data.matings;
+          } else {
+            this.matings = data.matings.filter((mating) => {
+              return mating.mother.house.section.typeId == this.sectionType.id ? true : false;
+            })
+          }
           // this.initialMatings();
         }
         this.util.closeBackDrop();
@@ -162,6 +170,7 @@ export class MatingListPage {
 
   init() {
     this.statusMating = VARIABLE.MATING_STATUS;
+    this.section = VARIABLE.SECTION_TYPE;
     this.breeds = this.deployData.get_object_list_key_of_breeds();
   }
 
@@ -205,5 +214,49 @@ export class MatingListPage {
         })
     }
     this.navCtrl.push(MatingInputPage, { pig: item.mother, mating: item, matingDetails: this.matingDetails[item.id], callback: callback });
+  }
+
+
+  birth_input(item: mating) {
+    let callback = (newBirth: births) => {
+      if (newBirth) {
+        console.log(newBirth);
+        item.status = VARIABLE.MATING_STATUS.BORNED.codeName;
+      }
+    };
+    this.navCtrl.push(BirthInputPage, { mating: item, callback: callback });
+  }
+
+
+  markedAbortion(item: mating) {
+    let mating: mating = this.util.deepClone(item);
+    mating.status = VARIABLE.MATING_STATUS.ABORTION.codeName;
+    this.activitiesProvider.updateMatingObj(mating)
+      .then((updateMating: mating) => {
+        if (updateMating) {
+          item.status = updateMating.status;
+          let pigUpdate: pig = this.util.deepClone(item.mother);
+          let abortionStatus = this.deployData.get_status_pig_by_status_code(VARIABLE.STATUS_PIG.ABORTION);
+          pigUpdate.statusId = abortionStatus.id;
+          this.pigProvider.updatedPig(pigUpdate);
+        }
+      })
+      .catch((err: Error) => { })
+  }
+
+  remove(item) {
+    this.activitiesProvider.deleteMating(item)
+      .then((isOk) => {
+        if (isOk) {
+          let idx = this.matings.findIndex(_mating => _mating.id == item.id);
+          if (idx > -1) {
+            this.matings.splice(idx, 1);
+            this.setFilteredItems();
+          }
+        }
+      })
+      .catch((err: Error) => {
+        console.log(err);
+      })
   }
 }

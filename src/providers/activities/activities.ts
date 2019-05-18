@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { breedings, sperms, mating, matingDetails, issuesPigs } from '../../common/entity';
+import { breedings, sperms, mating, matingDetails, issuesPigs, births } from '../../common/entity';
 import { CONFIG, API } from '../../common/const';
 
 @Injectable()
@@ -32,11 +32,21 @@ export class ActivitiesProvider {
   /**
    * Lấy danh sách phối giống
    */
-  getAllMatings(){
+  getAllMatings() {
     return this.http
-    .get(API.GET_ALL_MATING)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+      .get(API.GET_ALL_MATING)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Lấy danh sách ghi nhận heo đẻ
+   */
+  getAllBirths() {
+    return this.http
+      .get(API.GET_ALL_BIRTHS)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
   /**
@@ -128,14 +138,55 @@ export class ActivitiesProvider {
    * Cập nhật hành động phối giống cho heo
    * @param objBody 
    */
-  updateMating(objBody:{ mating: mating, matingDetail: Array<matingDetails> }){
+  updateMating(objBody: { mating: mating, matingDetail: Array<matingDetails> }) {
     return this.http
-    .post(API.UPDATE_MATING,objBody)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+      .post(API.UPDATE_MATING, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Cập nhật hành động phối giống của heo
+   * @param objBody 
+   */
+  updateMatingObj(objBody: mating) {
+    return this.http
+      .post(API.UPDATE_MATING_OBJ, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
 
+  /**
+   * Xóa hành động phối giống cho heo
+   * @param objBody 
+   */
+  deleteMating(objBody: mating) {
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http
+      .delete(API.DELETE_MATING, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Tạo ghi nhận heo nái đẻ
+   * @param objBody 
+   */
+  createBirth(objBody: births) {
+    return this.http
+      .post(API.CREATE_BIRTH, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Thêm mới vấn đề của heo
+   * @param objBody 
+   */
   createIssuePig(objBody: Array<issuesPigs>) {
     return this.http
       .post(API.CREATE_ISSUES_PIG, objBody)

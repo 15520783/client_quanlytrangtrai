@@ -69,8 +69,8 @@
                     <ion-col col-3 col-md-6 col-sm-12>
                       <p text-wrap><b>Mã cám:</b>{{item.food.foodCode}}</p>
                     </ion-col>
-                    <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>Ngày nhập:</b> {{item.invoice.importDate}}</p>
+                    <ion-col col-3 col-md-6 col-sm-12 *ngIf="item.invoice">
+                      <p text-wrap><b>Ngày nhập:</b> {{item.invoice.importDate| date:'dd/MM/yyyy'}}</p>
                     </ion-col>
                     <ion-col col-3 col-md-6 col-sm-12>
                       <p text-wrap><b>Số lượng nhập:</b> {{item.quantity}}</p>
