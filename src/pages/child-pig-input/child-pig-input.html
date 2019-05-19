@@ -1,0 +1,106 @@
+<ion-header>
+  <ion-navbar>
+    <ion-toolbar no-border class="custom-toolbar">
+      <ion-buttons left showWhen="platform.is('core')">
+        <button navPop ion-button icon-only>
+          <ion-icon name="arrow-back"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-title style="padding: 0px!important">Nhập thông tin heo con</ion-title>
+    </ion-toolbar>
+  </ion-navbar>
+</ion-header>
+
+<ion-content no-padding style>
+  <form action="" (ngSubmit)="onSubmit()" style="padding-bottom: 10vH">
+    <ion-list>
+      <ion-row>
+        <ion-col 
+        [attr.col-xl-4]="platform.is('core')?'':null" 
+        [attr.col-lg-12]="platform.is('core')?'':null"
+        [attr.col-md-12]="platform.is('core')?'':null"
+        [attr.col-sm-12]="platform.is('core')?'':null"
+        [attr.col-12]="!platform.is('core')?'':null">
+          <input-text 
+            [(validControl)]="credentialsForm.controls.pigCode"
+            [errorMessage_Required]="'Số tai heo là hạng mục bắt buộc.'"
+            [errorMessage_Maxlength]="'Số tai heo không được vượt quá 1000 kí tự.'" 
+            [label]="'Số tai heo'"
+            [placeholder]="'Nhập số tai heo'" [active]="submitAttempt">
+          </input-text>
+
+          <input-select [(validControl)]="credentialsForm.controls.breedId"
+            [errorMessage_Required]="'Giống heo là hạng mục bắt buộc.'" [label]="'Giống'" 
+            [active]="submitAttempt"
+            [placeholder]="'Chọn giống heo'" 
+            [(data)]="breeds">
+          </input-select>
+
+          <input-select [(validControl)]="credentialsForm.controls.gender"
+            [errorMessage_Required]="'Giới tính là hạng mục bắt buộc.'" [label]="'Giới tính'" 
+            [active]="submitAttempt"
+            [placeholder]="'Chọn giới tính'" 
+            [(data)]="genders">
+          </input-select>
+
+          <input-select-target [(validControl)]="credentialsForm.controls.originFatherId"
+            [errorMessage_Required]="'Heo cha là hạng mục bắt buộc.'" 
+            [active]="submitAttempt"
+            [placeholder]="'Chọn heo cha'" [label]="'Heo cha'" 
+            [targertCmp]="'pigs'">
+          </input-select-target>
+
+          <input-select-target [(validControl)]="credentialsForm.controls.originMotherId"
+            [errorMessage_Required]="'Heo mẹ là hạng mục bắt buộc.'" [active]="submitAttempt"
+            [placeholder]="'Chọn heo mẹ'" [label]="'Heo mẹ'" 
+            [targertCmp]="'pigs'">
+          </input-select-target>
+
+          <input-date [(validControl)]="credentialsForm.controls.birthday"
+            [errorMessage_Required]="'Ngày sinh là hạng mục bắt buộc.'" [label]="'Ngày sinh'"
+            [placeholder]="'dd/mm/yyyy'" 
+            [active]="submitAttempt">
+          </input-date>
+          
+        </ion-col>
+        <ion-col 
+            [attr.col-xl-4]="platform.is('core')?'':null" 
+            [attr.col-lg-12]="platform.is('core')?'':null"
+            [attr.col-md-12]="platform.is('core')?'':null"
+            [attr.col-sm-12]="platform.is('core')?'':null"
+            [attr.col-12]="!platform.is('core')?'':null">
+
+          <input-text [(validControl)]="credentialsForm.controls.originWeight"
+            [errorMessage_Required]="'Trọng lượng  là hạng mục bắt buộc.'" 
+            [label]="'Trọng lượng'"
+            [placeholder]="'Nhập trọng lượng '" 
+            [active]="submitAttempt">
+          </input-text>
+
+          <input-text [(validControl)]="credentialsForm.controls.totalUdder"
+            [errorMessage_Required]="'Tổng số vú là hạng mục bắt buộc.'"
+            [errorMessage_ValidNumber]="'Tổng số vú chức năng là hạng mục nhập số.'"
+            [label]="'Tổng số vú'"
+            [placeholder]="'Nhập tổng số vú'" [active]="submitAttempt">
+          </input-text>
+
+          <input-text [(validControl)]="credentialsForm.controls.description"
+            [errorMessage_Required]="'Ghi chú là hạng mục bắt buộc'"
+            [errorMessage_Maxlength]="'Ghi chú không được vượt quá 1000 kí tự.'" [label]="'Ghi chú'"
+            [placeholder]="'Nhập thông tin mô tả'" [active]="submitAttempt">
+          </input-text>
+        </ion-col>
+      </ion-row>
+    </ion-list>
+  </form>
+</ion-content>
+<ion-footer no-border showWhen="core">
+  <ion-toolbar toolbar-transparent text-right>
+    <button type="submit" ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
+    <button ion-button mode='ios' color="danger">Hủy</button>
+  </ion-toolbar>
+</ion-footer>
+
+<ion-footer no-border no-padding showWhen="ios,android">
+  <button type="submit" no-margin full block ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
+</ion-footer>

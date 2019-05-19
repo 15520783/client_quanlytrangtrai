@@ -28,6 +28,7 @@ export class PigsPage {
   public breeds = {};
   public health_status = {};
   public status = {};
+  public gender:any = [];
 
 
   public page_Idx: number = 1;
@@ -71,23 +72,17 @@ export class PigsPage {
     this.breeds = this.deployData.get_object_list_key_of_breeds();
     this.health_status = this.deployData.get_object_list_key_of_healthStatus();
     this.house = this.deployData.get_object_list_key_of_house();
-    console.log(house);
     this.status = this.deployData.get_object_list_key_of_status();
+    this.gender = VARIABLE.gender;
   }
 
   getRender(idx) {
     return VARIABLE.gender[idx].name;
   }
 
-  ionViewWillEnter() {
-    console.log('ionViewWillEnter PigsPage');
-  }
-
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PigsPage');
     this.getAllPigs();
   }
-
 
   convertDate(date: any) {
     return this.util.convertDate(date);
@@ -148,7 +143,8 @@ export class PigsPage {
   }
 
   public filterItems(searchItem) {
-    this.filterProvider.input = this.pigProvider.pigs;
+    let pigs = this.util.deepClone(this.pigProvider.pigs);
+    this.filterProvider.input = pigs;
     this.filterProvider.searchWithInclude.gender = this.genderFilter;
     this.filterProvider.searchWithInclude.house_id = this.houseFilter;
     this.filterProvider.searchText = searchItem;
@@ -187,12 +183,6 @@ export class PigsPage {
 
   viewDeltail(pig) {
     this.navCtrl.push(PigSummaryPage, { pig: pig });
-    // const modal = this.modalCtrl.create(
-    //   PigViewPage, pig, {
-    //     cssClass: 'ion-modal'
-    //   }
-    // )
-    // modal.present();
   }
 
   addNewPig() {

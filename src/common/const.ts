@@ -41,7 +41,8 @@ const VARIABLE = {
     ],
     GENDER: {
         1: { id: 1, name: "Đực" },
-        2: { id: 2, name: "Nái" }
+        2: { id: 2, name: "Nái" },
+        3: { id: 3, name: 'Đực thiến' }
     },
     INVOICE_PRODUCT_TYPE: {
         FOOD: 'food',
@@ -71,12 +72,22 @@ const VARIABLE = {
         WAIT_FOR_MATING: "9",
         SOLD: "10",
         MATING: "11",
+        NEWBORN: "12"
+    },
+    INVOICE_ID: {
+        '31': '4',
+        '32': '5',
+        '33': '6',
+        '97': '7',
+        '98': '8',
+        '99': '9',
     },
     INVOICE_PIG_TYPE: {
         INTERNAL_IMPORT: 'internal-import',
         EXTERNAL_IMPORT: 'external-import',
         INTERNAL_EXPORT: 'internal-export',
-        SALING_EXPORT: 'sale'
+        SALING_EXPORT: 'sale',
+        ROOT: 'root'
     },
     INVOICE_STATUS: {
         PROCCESSING: 'processing',

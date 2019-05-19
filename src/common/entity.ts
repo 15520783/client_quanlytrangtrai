@@ -107,7 +107,7 @@ class pig extends base {
 	index: number = 0;
 	parities: number = 0;
 	images: string = '';
-	healthStatusId: number = null;
+	healthStatusId: number = 0;
 	breedingType: string = '0';
 	breedStatus: string = '0';
 	pregnancyStatusId: string = '0';
@@ -116,6 +116,7 @@ class pig extends base {
 	statusId: string = '0';
 	priceCodeId: string = '0';
 	overviewStatus: string = '0';
+	birthId:string = '';
 	constructor() {
 		super();
 	}

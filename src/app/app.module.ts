@@ -55,6 +55,7 @@ import { MedicineWarehouseInformationPage } from '../pages/medicine-warehouse-in
 import { BirthInputPage } from '../pages/birth-input/birth-input';
 import { BirthListPage } from '../pages/birth-list/birth-list';
 import { BirthChildDetailPage } from '../pages/birth-child-detail/birth-child-detail';
+import { ChildPigInputPage } from '../pages/child-pig-input/child-pig-input';
 
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
@@ -164,6 +165,7 @@ const Pages = [
   BirthInputPage,
   BirthListPage,
   BirthChildDetailPage,
+  ChildPigInputPage
 ]
 
 const Components = [

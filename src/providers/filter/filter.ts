@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Utils } from '../../common/utils';
 
@@ -6,7 +5,6 @@ import { Utils } from '../../common/utils';
 export class FilterProvider {
 
   constructor(
-    public http: HttpClient,
     public util: Utils
   ) {
     console.log('Hello FilterProvider Provider');
@@ -52,7 +50,7 @@ export class FilterProvider {
     Object.keys(this.searchWithInclude).forEach((e) => {
       result = result.filter((value) => {
         if (this.searchWithInclude[e].length > 0)
-          return this.searchWithInclude[e].map(String).includes((value[e]).toString()) === true;
+          return ((value[e]) && this.searchWithInclude[e].map(String).includes((value[e]).toString()) === true);
         else return true;
       })
     })

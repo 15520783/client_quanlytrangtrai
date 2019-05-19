@@ -7,7 +7,7 @@ import { PartnerProvider } from '../partner/partner';
 import { EmployeesProvider } from '../employees/employees';
 import { SectionsProvider } from '../sections/sections';
 import { SettingsProvider } from '../settings/settings';
-import { pig, house, foodWareHouse, medicineWarehouse, section, status, breedings, sperms, matingRole, issues, mating } from '../../common/entity';
+import { pig, house, foodWareHouse, medicineWarehouse, section, status, breedings, sperms, matingRole, issues, mating, births } from '../../common/entity';
 import { WarehousesProvider } from '../warehouses/warehouses';
 import { VARIABLE } from '../../common/const';
 
@@ -245,6 +245,16 @@ export class DeployDataProvider {
   get_sections_of_farm(farmId: string) {
     return this.sectionProvider.sections.filter((section) => {
       return section.farm.id == farmId ? true : false;
+    })
+  }
+
+  /**
+   * Lấy danh sách khu thuộc 1 loại khu của 1 trang trại
+   * @param farmId 
+   */
+  get_sections_by_sectionType_of_farm(farmId: string , sectionTypeId:string) {
+    return this.sectionProvider.sections.filter((section) => {
+      return (section.farm.id == farmId && section.typeId == sectionTypeId) ? true : false;
     })
   }
 
@@ -896,5 +906,22 @@ export class DeployDataProvider {
       roles[(role.father.id) + '-' + (role.mother.id)] = role;
     })
     return roles;
+  }
+
+  get_child_breed_of_mating_role(motherId, fatherId) {
+    return this.settingProvider.setting.matingRoles.filter((role: matingRole) => {
+      return role.father.id == fatherId && role.mother.id == motherId ? true : false;
+    })[0];
+  }
+
+
+  /**
+   * Lấy danh sách heo con của 1 đợt sinh
+   * @param birth 
+   */
+  get_child_pig_of_birth(birth: births) {
+    return this.pigsProvider.pigs.filter((pig) => {
+      return pig.birthId == birth.id ? true : false;
+    })
   }
 }

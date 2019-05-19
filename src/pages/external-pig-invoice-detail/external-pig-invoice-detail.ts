@@ -114,23 +114,6 @@ export class ExternalPigInvoiceDetailPage {
     }
 
     this.navCtrl.push(PigInputPage, { statusPigValiable: statusPigValiable, callback: callback });
-    // this.events.unsubscribe('pig-inputs:createPig');
-    // this.events.subscribe('pig-inputs:createPig', (pig: pig) => {
-    //   this.invoiceProvider.createPigInvoiceDetail({
-    //     pigs: this.deployData.get_pig_object_to_send_request(pig),
-    //     invoicesPig: this.invoice
-    //   })
-    //     .then((response) => {
-    //       if (response && response.pigs && response.invoicePigDetail) {
-    //         this.pigs[response.pigs.id] = response.pigs;
-    //         this.pigProvider.pigs.push(response.pigs);
-    //         this.details.push(response.invoicePigDetail);
-    //         this.events.unsubscribe('pig-inputs:createPig');
-    //         this.events.publish('OK');
-    //       }
-    //     })
-    //     .catch((err: Error) => { })
-    // })
   }
 
   edit(item: invoicePigDetail) {
@@ -144,17 +127,6 @@ export class ExternalPigInvoiceDetailPage {
     }
 
     this.navCtrl.push(PigInputPage, { pigId: item.objectId, callback: callback });
-    // this.events.unsubscribe('pig-inputs:updatePig');
-    // this.events.subscribe('pig-inputs:updatePig', (pig: pig) => {
-    //   pig = this.deployData.get_pig_object_to_send_request(pig);
-    //   this.pigProvider.updatePig(pig)
-    //     .then((pig) => {
-    //       this.pigs[pig.id] = pig;
-    //       this.events.unsubscribe('pig-inputs:updatePig');
-    //       this.events.publish('OK');
-    //     })
-    //     .catch((err: Error) => { })
-    // })
   }
 
   removePigInvoicesDetail(invoiceDetail: invoicePigDetail) {

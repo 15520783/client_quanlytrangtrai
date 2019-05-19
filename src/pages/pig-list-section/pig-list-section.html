@@ -8,6 +8,14 @@
     <ion-searchbar col-md-7 mode="ios" animated="true" debounce="500" [placeholder]="placeholderSearch"
       [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="setFilteredItems()">
     </ion-searchbar>
+    <ion-buttons right>
+      <button ion-button font20 (tap)="openFilter()">
+        <ion-icon name="funnel"></ion-icon>
+      </button>
+      <button item-end ion-button font20 showWhen='core'>
+        <ion-icon name="sync"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -47,3 +55,71 @@
     </button>
   </ion-fab> -->
 </ion-content>
+
+<ion-menu [content]="mycontent" side="right" #menuFilter sticky="true" type="overlay" width="500">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons start>
+        <button ion-button font20 (tap)="closeFilter()">
+          <ion-icon name="ios-arrow-forward"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-title>Lọc theo tùy chọn</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>
+        <ion-label stacked>Giống</ion-label>
+        <ion-select interface="popover" title="Giống" mode="ios" okText="Chọn" cancelText="Hủy"
+          [selectOptions]="customAlertOptions" (ionChange)="filterBreed($event)" placeholder="Tất cả">
+          <ion-option [value]="''">Tất cả</ion-option>
+          <ion-option *ngFor="let item of breedFilter" [value]="item.value">{{item.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Trang trại</ion-label>
+        <ion-select interface="popover" title="Giống" mode="ios" [selectOptions]="customAlertOptions"
+          (ionChange)="filterFarm($event)" placeholder="Tất cả">
+          <ion-option [value]="''">Tất cả</ion-option>
+          <ion-option *ngFor="let item of farmFilter" [value]="item.value">{{item.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Khu</ion-label>
+        <ion-select interface="popover" title="Giống" mode="ios" [selectOptions]="customAlertOptions"
+          (ionChange)="filterSection($event)" placeholder="Tất cả">
+          <ion-option [value]="''">Tất cả</ion-option>
+          <ion-option *ngFor="let item of sectionFilter" [value]="item.value">{{item.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Khu</ion-label>
+        <ion-select interface="popover" title="Giống" mode="ios" [selectOptions]="customAlertOptions"
+          (ionChange)="filterHouse($event)" placeholder="Tất cả">
+          <ion-option [value]="''">Tất cả</ion-option>
+          <ion-option *ngFor="let item of houseFilter" [value]="item.value">{{item.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <!-- <ion-item>
+        <ion-label stacked>Nhà</ion-label>
+        <ion-select [(ngModel)]="houseFilter" multiple="true" interface="alert" title="Giới tính" mode="ios"
+          okText="Duyệt" cancelText="Hủy" [selectOptions]="customAlertOptions" placeholder="Tất cả"
+          (ionChange)="setFilteredItems()">
+          <ion-option *ngFor="let house of houses" [value]="house.id">{{house.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>
+          Khối lượng gốc
+          <ion-badge color="danger">{{dualValue2.lower}}</ion-badge>
+          <ion-badge color="danger">{{dualValue2.upper}}</ion-badge>
+        </ion-label>
+        <ion-range mode="ios" pin="true" dualKnobs="true" [(ngModel)]="dualValue2" min="0" max="500" snaps="true"
+          debounce="500" (ionChange)="setFilteredItems()">
+        </ion-range>
+      </ion-item> -->
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<ion-nav #mycontent></ion-nav>

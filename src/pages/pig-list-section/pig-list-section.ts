@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, Platform } from 'ionic-angular';
+import { Component, Input, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Events, Platform, Menu, MenuController } from 'ionic-angular';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { FormControl } from '@angular/forms';
 import { FilterProvider } from '../../providers/filter/filter';
@@ -15,6 +15,7 @@ import { pig } from '../../common/entity';
   templateUrl: 'pig-list-section.html',
 })
 export class PigListSectionPage {
+  @ViewChild('menuFilter') menuFilter: Menu;
 
   @Input() title: string = 'Danh sách heo trong khu';
   @Input() pigs: Array<pig> = [];
@@ -22,6 +23,10 @@ export class PigListSectionPage {
   @Input() statusFilter: any = [];
 
   public breed: any = {};
+  public breedFilter: any = [];
+  public farmFilter: any = [];
+  public sectionFilter: any = [];
+  public houseFilter: any = [];
   public gender: any = {};
   public houses: any = {};
   public status: any = {};
@@ -43,6 +48,7 @@ export class PigListSectionPage {
   public page_Idx: number = 1;
   public page_Total: number = 0;
   public rows: Array<any> = [];
+  public filterProvider =  new FilterProvider(this.util);
 
   protected searchControl: FormControl = new FormControl();
   protected searchTerm: string = '';
@@ -54,7 +60,7 @@ export class PigListSectionPage {
     public navParams: NavParams,
     public deployData: DeployDataProvider,
     public events: Events,
-    public filterProvider: FilterProvider,
+    public menuCtrl: MenuController,
     public util: Utils,
     public platform: Platform
   ) {
@@ -62,6 +68,8 @@ export class PigListSectionPage {
     this.breed = this.deployData.get_object_list_key_of_breeds();
     this.houses = this.deployData.get_object_list_key_of_house();
     this.status = this.deployData.get_object_list_key_of_status();
+    this.breedFilter = this.deployData.get_breed_list_for_select();
+    this.farmFilter = this.deployData.get_farm_list_for_select();
 
     VARIABLE.gender.forEach(gender => {
       this.gender[gender.value] = gender;
@@ -94,7 +102,7 @@ export class PigListSectionPage {
 
   public filterItems(searchItem) {
     this.pigs.forEach((pig) => {
-      pig['breedName'] = this.breed[pig.breedId] ? this.breed[pig.breedId].name + ' ' + this.breed[pig.breedId].symbol: '';
+      pig['breedName'] = this.breed[pig.breedId] ? this.breed[pig.breedId].name + ' ' + this.breed[pig.breedId].symbol : '';
       pig['sectionName'] = this.houses[pig.houseId] ? this.houses[pig.houseId].section.name : '';
       pig['houseName'] = this.houses[pig.houseId] ? this.houses[pig.houseId].name : '';
       pig['farmName'] = this.houses[pig.houseId].section.farm ? this.houses[pig.houseId].section.farm.name : '';
@@ -102,6 +110,10 @@ export class PigListSectionPage {
       pig['statusCode'] = this.status[pig.statusId] ? (this.status[pig.statusId].code).toString() : '';
       pig['birthdayDisplay'] = this.util.convertDate(pig.birthday);
       pig['genderName'] = this.gender[pig.gender] ? this.gender[pig.gender].name : '';
+      pig['farmId'] = this.houses[pig.houseId].section.farm ? this.houses[pig.houseId].section.farm.id : '';
+      pig['sectionId'] = this.houses[pig.houseId].section ? this.houses[pig.houseId].section.id : '';
+      pig['houseId'] = this.houses[pig.houseId] ? this.houses[pig.houseId].id : '';
+
     })
     this.filterProvider.input = this.pigs;
     this.filterProvider.searchText = searchItem;
@@ -127,22 +139,80 @@ export class PigListSectionPage {
 
   pigChange(new_vers: pig, old_vers: pig) {
     old_vers = new_vers;
-    if(this.houses[old_vers.houseId].section.typeId == this.sectionTypeId){
-      old_vers['breedName'] = this.breed[old_vers.breedId] ? this.breed[old_vers.breedId].name + ' ' + this.breed[old_vers.breedId].symbol: '';
+    if (this.houses[old_vers.houseId].section.typeId == this.sectionTypeId) {
+      old_vers['breedName'] = this.breed[old_vers.breedId] ? this.breed[old_vers.breedId].name + ' ' + this.breed[old_vers.breedId].symbol : '';
       old_vers['sectionName'] = this.houses[old_vers.houseId] ? this.houses[old_vers.houseId].section.name : '';
       old_vers['houseName'] = this.houses[old_vers.houseId] ? this.houses[old_vers.houseId].name : '';
-      old_vers['farmName'] = this.houses[old_vers.houseId].section.farm ? this.houses[old_vers.houseId].section.farm.name : '';    
+      old_vers['farmName'] = this.houses[old_vers.houseId].section.farm ? this.houses[old_vers.houseId].section.farm.name : '';
       old_vers['statusName'] = this.status[old_vers.statusId] ? this.status[old_vers.statusId].name : '';
-      // old_vers['statusCode'] = this.status[old_vers.statusId] ? (this.status[old_vers.statusId].code).toString() : '';
       old_vers['statusCode'] = this.status[old_vers.statusId] ? this.status[old_vers.statusId].code : '';
       old_vers['birthdayDisplay'] = this.util.convertDate(old_vers.birthday);
       old_vers['genderName'] = this.gender[old_vers.gender] ? this.gender[old_vers.gender].name : '';
     }
-    else{
+    else {
       this.pigs.splice(
-        this.pigs.findIndex(_pig => _pig.id == old_vers.id) , 1
+        this.pigs.findIndex(_pig => _pig.id == old_vers.id), 1
       );
-     this.setFilteredItems();
+      this.setFilteredItems();
     }
+  }
+
+  openFilter() {
+    this.menuFilter.enable(true);
+    this.menuFilter.open();
+  }
+
+  closeFilter() {
+    this.menuCtrl.close();
+  }
+
+  customAlertOptions: any = {
+    translucent: true,
+    cssClass: 'ion-alert'
+  };
+
+
+  filterBreed(breedId) {
+    if (breedId)
+      this.filterProvider.searchWithInclude.breedId = [breedId];
+    else
+      this.filterProvider.searchWithInclude.breedId = [];
+    this.setFilteredItems();
+  }
+
+  filterFarm(farmId) {
+    if (farmId) {
+      this.filterProvider.searchWithInclude.farmId = [farmId];
+      this.sectionFilter = this.deployData.get_sections_by_sectionType_of_farm(farmId, this.sectionTypeId);
+      this.sectionFilter.forEach(section => {
+        section.value = section.id;
+      })
+      console.log(this.sectionFilter);
+    }
+    else
+      this.filterProvider.searchWithInclude.farmId = [];
+    this.setFilteredItems();
+  }
+
+  filterSection(sectionId) {
+    if (sectionId){
+      this.filterProvider.searchWithInclude.sectionId = [sectionId];
+      this.houseFilter = this.deployData.get_houses_of_section(sectionId);
+      this.houseFilter.forEach(house => {
+        house.value = house.id;
+      });
+    }
+    else
+      this.filterProvider.searchWithInclude.sectionId = [];
+    this.setFilteredItems();
+  }
+
+  filterHouse(houseId){
+    if (houseId){
+      this.filterProvider.searchWithInclude.houseId = [houseId];
+    }
+    else
+      this.filterProvider.searchWithInclude.houseId = [];
+    this.setFilteredItems();
   }
 }

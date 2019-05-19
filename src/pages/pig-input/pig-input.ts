@@ -70,17 +70,7 @@ export class PigInputPage {
       pregnancyStatusId: [this.pig.pregnancyStatusId, Validators.compose([Validators.required])],
       priceCodeId: [this.pig.priceCodeId, Validators.compose([Validators.required])],
       statusId: [this.pig.statusId, Validators.compose([Validators.required])],
-
-      // born_weight: [this.pig.born_weight, Validators.compose([Validators.required])],
-      // born_status:[this.pig.born_status,Validators.compose([Validators.required])],
-      // index: [this.pig.index, Validators.compose([Validators.required])],
-      // parities:[this.pig.parities,Validators.compose([Validators.required])],
-      // breedingType: [this.pig.breedingType, Validators.compose([Validators.required])],
-      // breed_status:[this.pig.breed_status,Validators.compose([Validators.required])],
-      // pregnancy_status:[this.pig.pregnancy_status,Validators.compose([Validators.required])],
-      // overview_status:[this.pig.overview_status,Validators.compose([Validators.required])],
-      // point_review:[this.pig.point_review,Validators.compose([Validators.required])],
-      // status:[this.pig.status,Validators.compose([Validators.required])],
+      birthId:this.pig.birthId
     });
 
 

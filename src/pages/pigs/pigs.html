@@ -140,9 +140,7 @@
         <ion-select [(ngModel)]="genderFilter" multiple="true" interface="alert" title="Giới tính" mode="ios"
           okText="Chọn" cancelText="Hủy" [selectOptions]="customAlertOptions" (ionChange)="setFilteredItems()"
           placeholder="Tất cả">
-          <ion-option value="1">Cái</ion-option>
-          <ion-option value="2">Đực</ion-option>
-          <ion-option value="3">Đực hiến</ion-option>
+          <ion-option *ngFor="let item of gender" [value]="item.value">{{item.name}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item>

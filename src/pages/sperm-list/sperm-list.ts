@@ -210,7 +210,6 @@ export class SpermListPage {
   }
 
   filterBreed(breedId) {
-    console.log(breedId);
     if (breedId)
       this.filterProvider.searchWithInclude.breedId = [breedId];
     else

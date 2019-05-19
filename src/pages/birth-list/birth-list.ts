@@ -26,7 +26,7 @@ export class BirthListPage {
     { name: "dateMating", label: 'Ngày phối' },
     { name: "dateBirth", label: 'Ngày sinh' },
     { name: "parities", label: 'Lứa đẻ' },
-    { name: "fetalWeight", label: 'Trọng lượng bào thai' },
+    { name: "fetalWeight", label: 'Trọng lượng bào thai',unit:'(kg)' },
     { name: "borning", label: 'Số con sinh ra' },
     { name: "dieBeforeBorning", label: 'Chết trong khi sinh' },
     { name: "dieBorning", label: 'Chết khi sinh' },
