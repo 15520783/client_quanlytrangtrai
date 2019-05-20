@@ -79,6 +79,7 @@ import { OptionListPigSectionComponent } from '../components/option-list-pig-sec
 import { SalePigInvoicesComponent } from '../components/sale-pig-invoices/sale-pig-invoices';
 import { NotFoundDataComponent } from '../components/not-found-data/not-found-data';
 import { SchelduleDetailComponent } from '../components/scheldule-detail/scheldule-detail';
+import { ListFabButtonPigComponent } from '../components/list-fab-button-pig/list-fab-button-pig';
 
 import { HideHeaderDirective } from '../directives/hide-header/hide-header';
 
@@ -108,7 +109,6 @@ import { InvoicesProvider } from '../providers/invoices/invoices';
 import { TokenInterceptor } from './interceptor';
 import { BreedingInputPage } from '../pages/breeding-input/breeding-input';
 import { ActivitiesProvider } from '../providers/activities/activities';
-
 
 const Pages = [
   LoginPage,
@@ -191,6 +191,7 @@ const Components = [
   OptionListPigSectionComponent,
   NotFoundDataComponent,
   SchelduleDetailComponent,
+  ListFabButtonPigComponent
 ]
 
 const Providers = [

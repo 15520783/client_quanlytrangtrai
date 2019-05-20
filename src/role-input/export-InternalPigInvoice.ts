@@ -3,23 +3,21 @@ import { DeployDataProvider } from "../providers/deploy-data/deploy-data";
 import { InvoicesProvider } from "../providers/invoices/invoices";
 import { VARIABLE } from "../common/const";
 
-export class ExternalPigInvoiceRole {
+export class ExportInternalPigInvoiceRole {
     public object = new invoicesPig();
 
-
     public headerTitle = {
-        insertMode: 'Nhập thông tin chứng từ nhập heo ngoài hệ thống',
-        updateMode: 'Cập nhật thông tin chứng từ nhập heo ngoài hệ thống'
+        insertMode: 'Nhập thông tin chứng từ xuất heo trong hệ thống',
+        updateMode: 'Cập nhật thông tin chứng từ xuất heo trong hệ thống'
     }
 
     public inputRole: Array<any>
 
 
     constructor(
-        public deployData:DeployDataProvider,
+        public deployData: DeployDataProvider,
         public invoiceProvider: InvoicesProvider
     ) {
-
         this.inputRole = [
             {
                 name: 'sourceId',
@@ -38,7 +36,7 @@ export class ExternalPigInvoiceRole {
                 },
                 type: "input-select",
                 value: this.object.sourceId,
-                data: this.deployData.get_partner_list_for_select(),
+                data: this.deployData.get_farm_list_for_select(),
                 selectOptions: {
                     cssClass: 'ion-popover'
                 }
@@ -82,9 +80,9 @@ export class ExternalPigInvoiceRole {
                 data: [{ name: "Chọn đơn vị nguồn", value: "" }]
             },
             {
-                name: 'importDate',
-                label: 'Ngày nhập',
-                placeholder: 'Chọn ngày nhập',
+                name: 'exportDate',
+                label: 'Ngày xuất',
+                placeholder: 'Chọn ngày xuất',
                 isRequire: true,
                 isMaxlength: false,
                 isMailFormat: false,
@@ -92,12 +90,12 @@ export class ExternalPigInvoiceRole {
                 maxlength: 1000,
                 message: {
                     isMailFormat: '',
-                    isRequire: 'Ngày nhập là hạng mục bắt buộc',
+                    isRequire: 'Ngày xuất là hạng mục bắt buộc',
                     isNumber: '',
                     isMaxlength: ''
                 },
                 type: "input-date",
-                value: this.object.importDate,
+                value: this.object.exportDate,
                 data: null
             },
             {
@@ -142,43 +140,43 @@ export class ExternalPigInvoiceRole {
     }
 
     insert() {
-        this.object.invoiceType = VARIABLE.INVOICE_PIG_TYPE.EXTERNAL_IMPORT;
-        this.object.status = VARIABLE.INVOICE_STATUS.PROCCESSING;
-        let source = this.deployData.get_partner_by_id(this.object.sourceId);
-        let destination = this.deployData.get_farm_by_id(this.object.destinationId);
-        let des_manager = this.deployData.get_employee_by_id(this.object.destinationManager);
-        if (source) {
-            this.object.sourceAddress = source.address;
-            this.object.sourceManager = null;
-        }
-        if(destination){
-            this.object.destinationAddress = destination.address;
-            this.object.destinationManager = destination.manager;
-        }
-        if(des_manager){
-            this.object.destinationManagerName = des_manager.name;
-        }
-        return this.invoiceProvider.createPigInvoice(this.object);
+        // this.object.invoiceType = VARIABLE.INVOICE_PIG_TYPE.EXTERNAL_IMPORT;
+        // this.object.status = VARIABLE.INVOICE_STATUS.PROCCESSING;
+        // let source = this.deployData.get_partner_by_id(this.object.sourceId);
+        // let destination = this.deployData.get_farm_by_id(this.object.destinationId);
+        // let des_manager = this.deployData.get_employee_by_id(this.object.destinationManager);
+        // if (source) {
+        //     this.object.sourceAddress = source.address;
+        //     this.object.sourceManager = null;
+        // }
+        // if (destination) {
+        //     this.object.destinationAddress = destination.address;
+        //     this.object.destinationManager = destination.manager;
+        // }
+        // if (des_manager) {
+        //     this.object.destinationManagerName = des_manager.name;
+        // }
+        // return this.invoiceProvider.createPigInvoice(this.object);
     }
 
-    update(){
-        this.object.invoiceType = VARIABLE.INVOICE_PIG_TYPE.EXTERNAL_IMPORT;
-        this.object.status = VARIABLE.INVOICE_STATUS.PROCCESSING;
-        let source = this.deployData.get_partner_by_id(this.object.sourceId);
-        let destination = this.deployData.get_farm_by_id(this.object.destinationId);
-        let des_manager = this.deployData.get_employee_by_id(this.object.destinationManager);
-        if (source) {
-            this.object.sourceAddress = source.address;
-            this.object.sourceManager = null;
-        }
-        if(destination){
-            this.object.destinationAddress = destination.address;
-            this.object.destinationManager = destination.manager;
-        }
-        if(des_manager){
-            this.object.destinationManagerName = des_manager.name;
-        } 
-        return this.invoiceProvider.updatePigInvoice(this.object);
+    update() {
+        // this.object.invoiceType = VARIABLE.INVOICE_PIG_TYPE.EXTERNAL_IMPORT;
+        // this.object.status = VARIABLE.INVOICE_STATUS.PROCCESSING;
+        // let source = this.deployData.get_partner_by_id(this.object.sourceId);
+        // let destination = this.deployData.get_farm_by_id(this.object.destinationId);
+        // let des_manager = this.deployData.get_employee_by_id(this.object.destinationManager);
+        // if (source) {
+        //     this.object.sourceAddress = source.address;
+        //     this.object.sourceManager = null;
+        // }
+        // if (destination) {
+        //     this.object.destinationAddress = destination.address;
+        //     this.object.destinationManager = destination.manager;
+        // }
+        // if (des_manager) {
+        //     this.object.destinationManagerName = des_manager.name;
+        // }
+        // return this.invoiceProvider.updatePigInvoice(this.object);
     }
 
     clear() {

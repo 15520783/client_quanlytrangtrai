@@ -151,7 +151,7 @@ export class ActivitiesProvider {
    */
   updateMatingObj(objBody: mating) {
     return this.http
-      .post(API.UPDATE_MATING_OBJ, objBody)
+      .put(API.UPDATE_MATING_OBJ, objBody)
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise();
   }

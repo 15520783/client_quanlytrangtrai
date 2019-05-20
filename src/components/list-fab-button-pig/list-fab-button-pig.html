@@ -1,0 +1,86 @@
+<ion-fab bottom right showWhen="android,windows,ios" *ngIf="pig && sectionTypeId" #fab>
+  <button ion-fab>
+    <ion-icon name="ios-arrow-up"></ion-icon>
+  </button>
+  <ion-fab-list side="top" style="right:0px">
+
+
+    <button (tap)="health_input()"
+      data-balloon-visible data-balloon-length="medium" 
+      data-balloon="Nhập vấn đề"
+      data-balloon-pos="left" ion-fab color="main">
+      <ion-icon name="app-hand"></ion-icon>
+    </button>
+
+    <button (tap)="transferSection()"
+      *ngIf="statusObjectKey[pig.statusId].code != statusPig.MATING"
+      data-balloon-visible data-balloon-length="medium" 
+      data-balloon="Đánh giá & chuyển nội bộ"
+      data-balloon-pos="left" ion-fab color="main">
+      <ion-icon name="app-hand"></ion-icon>
+    </button>
+    
+
+    <button (tap)="forwardToSaleWaiting()"
+      *ngIf="add_to_sale_list.includes((sectionTypeId).toString()) 
+      && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE
+      && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_MATING"
+      data-balloon-visible data-balloon-length="medium" 
+      data-balloon="Thêm vào danh sách chờ bán"
+      data-balloon-pos="left" ion-fab color="main">
+      <ion-icon name="app-hand"></ion-icon>
+    </button>
+
+    <button (tap)="cancelSaleWaiting()"
+      *ngIf="add_to_sale_list.includes((sectionTypeId).toString()) 
+      && statusObjectKey[pig.statusId].code == statusPig.WAIT_FOR_SALE"
+      data-balloon-visible data-balloon-length="medium" 
+      data-balloon="Hủy chờ bán"
+      data-balloon-pos="left" ion-fab color="main">
+      <ion-icon name="app-hand"></ion-icon>
+    </button>
+
+    <button (tap)="mating_input()"
+      *ngIf="mating.includes((sectionTypeId).toString()) 
+      && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE 
+      && pig.gender == gender.FEMALE
+      && statusObjectKey[pig.statusId].code == statusPig.WAIT_FOR_MATING"
+      data-balloon-visible data-balloon-length="medium" 
+      data-balloon="Phối giống"
+      data-balloon-pos="left" ion-fab color="main">
+      <ion-icon name="app-hand"></ion-icon>
+    </button>
+
+    <button (tap)="breeding_input()"
+      *ngIf="breeding.includes((sectionTypeId).toString()) 
+      && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE 
+      && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_MATING 
+      && pig.gender == gender.FEMALE"
+      data-balloon-visible data-balloon-length="medium" 
+      data-balloon="Lên giống"
+      data-balloon-pos="left" ion-fab color="main">
+      <ion-icon name="app-hand"></ion-icon>
+    </button>
+
+    <button (tap)="sperm_input()"
+      *ngIf="sperm.includes((sectionTypeId).toString()) 
+      && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE 
+      && pig.gender == gender.MALE"
+      data-balloon-visible data-balloon-length="medium" 
+      data-balloon="Khai thác tinh heo"
+      data-balloon-pos="left" ion-fab color="main">
+      <ion-icon name="app-hand"></ion-icon>
+    </button>
+
+
+    <!-- <button data-balloon-visible data-balloon-length="medium" data-balloon="Cập nhật dữ liệu" data-balloon-pos="left"
+      ion-fab color="main">
+      <ion-icon name="sync"></ion-icon>
+    </button>
+
+    <button data-balloon-visible data-balloon-length="medium" data-balloon="Thêm heo mới" data-balloon-pos="left"
+      ion-fab color="main" (tap)="addNewPig()">
+      <ion-icon name="add"></ion-icon>
+    </button> -->
+  </ion-fab-list>
+</ion-fab>

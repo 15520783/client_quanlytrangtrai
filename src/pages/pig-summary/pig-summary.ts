@@ -8,6 +8,7 @@ import { Utils } from '../../common/utils';
 import { BreedingListPage } from '../breeding-list/breeding-list';
 import { SpermListPage } from '../sperm-list/sperm-list';
 import { MatingListPage } from '../mating-list/mating-list';
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 
 @IonicPage()
 @Component({
@@ -22,11 +23,8 @@ export class PigSummaryPage {
   public rootParam: any;
   public tab = "0";
 
-  // public pig: pig;
-  public data: any = {
-
-  }
-  // public dataActivities: any = {};
+  public data: any = { }
+  public sectionTypeId:string;
   public pages: any = [];
 
   constructor(
@@ -34,10 +32,12 @@ export class PigSummaryPage {
     public pigProvider: PigsProvider,
     public navParams: NavParams,
     public platform: Platform,
-    public util: Utils
+    public util: Utils,
+    public deployData:DeployDataProvider
   ) {
     if (this.navParams.data.pig) {
       this.data.pig = this.navParams.data.pig;
+      this.data.pig.house = this.deployData.get_house_by_id(this.data.pig.houseId);
     }
 
     this.pages = [

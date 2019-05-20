@@ -18,6 +18,7 @@ import { KEY, CONFIG, MESSAGE, ERROR_NAME } from '../common/const';
 import { SettingsProvider } from '../providers/settings/settings';
 import { UserProvider } from '../providers/user/user';
 import { PartnerProvider } from '../providers/partner/partner';
+import { DeployDataProvider } from '../providers/deploy-data/deploy-data';
 
 @Component({
   templateUrl: 'app.html'
@@ -45,6 +46,7 @@ export class MyApp {
     public warehouseProvider: WarehousesProvider,
     public settingProvider: SettingsProvider,
     public partnerProvider: PartnerProvider,
+    public deployData:DeployDataProvider,
     public util: Utils,
     public userProvider: UserProvider,
   ) {
@@ -108,7 +110,6 @@ export class MyApp {
             }
           })
       })
-      
       this.listener_logout();
     })
   }

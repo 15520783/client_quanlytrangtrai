@@ -70,4 +70,7 @@ ion-icon {
     &[class*="file"] {
         mask-image: url(../../../assets/imgs/file-alt-solid.svg);
     }
+    &[class*="hand"] {
+        mask-image: url(../../../assets/imgs/hand-paper-solid.svg);
+    }
 }

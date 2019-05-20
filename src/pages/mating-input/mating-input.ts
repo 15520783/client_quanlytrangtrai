@@ -59,7 +59,6 @@ export class MatingInputPage {
     })
 
     this.util.getKey(KEY.EMPID).then((employeeId) => {
-      console.log(employeeId);
       this.mating.employeeId = employeeId;
     })
 
@@ -68,7 +67,7 @@ export class MatingInputPage {
       motherId: this.mating.mother.id,
       fatherId: [this.mating.fatherId, Validators.compose([Validators.required])],
       childId: this.mating.childId,
-      typeId: [this.mating.type, Validators.compose([Validators.required])],
+      typeId: [this.mating.typeId, Validators.compose([Validators.required])],
       type: this.mating.type,
       date: [this.mating.date, Validators.compose([Validators.required])],
       birthEstimate: [this.mating.birthEstimate, Validators.compose([Validators.required])],

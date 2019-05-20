@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, ModalController } from 'ionic-angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
@@ -11,6 +11,8 @@ import { breedings, mating } from '../../common/entity';
 import { ActivitiesProvider } from '../../providers/activities/activities';
 import { Utils } from '../../common/utils';
 import { UserProvider } from '../../providers/user/user';
+import { MESSAGE, CONFIG } from '../../common/const';
+import { SchelduleDetailComponent } from '../../components/scheldule-detail/scheldule-detail';
 
 export class Schedule {
   breedings: Array<breedings> = [];
@@ -25,6 +27,8 @@ export class Schedule {
 
 export class DatePlanPage {
   @ViewChild('calendar') calendar: any;
+  @ViewChild('fullcalendar') fullcalendar: CalendarComponent;
+
   options: OptionsInput;
   eventsModel: any;
 
@@ -44,9 +48,10 @@ export class DatePlanPage {
     public platform: Platform,
     public activitiesProvider: ActivitiesProvider,
     public userProvider: UserProvider,
-    public util: Utils
+    public util: Utils,
+    public modalCtrl: ModalController
   ) {
-    this.getBreeding().then((data) => {
+    this.getSchedule().then((data) => {
       this.initSchedule();
       this.options = {
         schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
@@ -54,7 +59,7 @@ export class DatePlanPage {
         defaultView: this.platform.is('core') ? "dayGridMonth" : "listWeek",
         header: {
           left: 'title',
-          right: 'dayGridMonth,listWeek'
+          right: this.platform.is('core') ?'dayGridMonth,listWeek':'dayGridWeek,listWeek'
         },
         footer: {
           right: 'today prev,next'
@@ -71,7 +76,7 @@ export class DatePlanPage {
         displayEventTime: false,
         views: {
           timeGrid: {
-            eventLimit: 4
+            eventLimit: this.platform.is('core') ? 4 : 0,
           }
         },
         events: []
@@ -127,7 +132,7 @@ export class DatePlanPage {
 
   }
 
-  getBreeding() {
+  getSchedule() {
     this.util.openBackDrop();
     return this.userProvider.getSchedule()
       .then((data: Schedule) => {
@@ -139,6 +144,7 @@ export class DatePlanPage {
       .catch((err) => {
         console.log(err);
         this.util.closeBackDrop();
+        this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].TIMEOUT_REQUEST)
       })
   }
 
@@ -157,8 +163,8 @@ export class DatePlanPage {
           object: breeding,
           start: this.GetFormattedDate(breeding.breedingNext),
           end: this.GetFormattedDate(breeding.breedingNext),
-          backgroundColor: (new Date(breeding.breedingNext) > new Date()) ? '#32db64' : '#f53d3d',
-          borderColor: (new Date(breeding.breedingNext) > new Date()) ? '#32db64' : '#f53d3d'
+          backgroundColor: (new Date(breeding.breedingNext) > new Date()) ? '#01c2fa' : '#f53d3d',
+          borderColor: (new Date(breeding.breedingNext) > new Date()) ? '#01c2fa' : '#f53d3d'
         })
       }
       if (breeding.matingEstimate) {
@@ -179,6 +185,18 @@ export class DatePlanPage {
 
   handleEventClick(model) { // handler method
     console.log(model.event.extendedProps);
+    let modal = this.modalCtrl.create(SchelduleDetailComponent, {
+      schedule: {
+        name: model.event.title,
+        date: model.event.start,
+        employee: '',
+        status: 'Chưa phân công',
+        object: model.event.extendedProps.object,
+        type: model.event.extendedProps.type
+      }
+    });
+
+    modal.present();
   }
 
   handleDayClick(event) {
@@ -188,9 +206,5 @@ export class DatePlanPage {
 
 
 
-  @ViewChild('fullcalendar') fullcalendar: CalendarComponent;
 
-  ngOnInit() {
-
-  }
 }

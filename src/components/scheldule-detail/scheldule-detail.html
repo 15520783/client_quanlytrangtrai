@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons left showWhen="ios,android">
+      <button navPop ion-button icon-only>
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Thông tin công việc</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label stacked>Tên công việc</ion-label>
+      <ion-input text-wrap type="text" readonly [(ngModel)]="schedule.name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Ngày thực hiện</ion-label>
+      <ion-input type="text" readonly [(ngModel)]="schedule.date"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Người thực hiện</ion-label>
+      <ion-input type="text" readonly [(ngModel)]="schedule.employee"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Trạng thái</ion-label>
+      <ion-input type="text" readonly [(ngModel)]="schedule.status"></ion-input>
+    </ion-item>
+  </ion-list>
+</ion-content>
+<ion-footer no-border showWhen="core">
+  <ion-toolbar toolbar-transparent text-right showWhen="core">
+    <button type="submit" ion-button mode='ios' color="secondary" (tap)="onSubmit()">Phân công</button>
+  </ion-toolbar>
+</ion-footer>

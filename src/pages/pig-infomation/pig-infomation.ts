@@ -1,6 +1,6 @@
 import { Component, ViewChild, Input } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { pig, breeds, house, healthStatus, footType } from '../../common/entity';
+import { pig, breeds, house, healthStatus, footType, gentialType, pregnancyStatus, priceCodes } from '../../common/entity';
 import { PigsProvider } from '../../providers/pigs/pigs';
 import { Utils } from '../../common/utils';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
@@ -48,13 +48,22 @@ export class PigInfomationPage {
   public mother = new pig();
   public father = new pig();
   public healthStatus = new healthStatus();
+  public gentitalType = new gentialType();
+  public pregnancyStatus = new pregnancyStatus();
+  public priceCode = new priceCodes();
   public foot = new footType();
   public gender: any;
+  public status:any = {};
+
 
   init() {
     this.breed = this.deployData.get_breed_by_id(this.pig.breedId);
     this.house = this.deployData.get_house_by_id(this.pig.houseId);
     this.healthStatus = this.deployData.get_healthstatus_by_id(this.pig.healthStatusId);
+    this.gentitalType = this.deployData.get_gentialtype_by_id(this.pig.gentialTypeId);
+    this.pregnancyStatus = this.deployData.get_pregnancystatus_by_id(this.pig.pregnancyStatusId);
+    this.priceCode = this.deployData.get_pricecode_by_id(this.pig.priceCodeId);
+    this.status = this.deployData.get_object_list_key_of_status();
     this.foot = this.deployData.get_foot_by_id(this.pig.footTypeId);
     let parent = this.deployData.get_parent_of_pig(this.pig);
     this.gender = VARIABLE.GENDER;

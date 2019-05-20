@@ -1,6 +1,5 @@
 // http://ionicframework.com/docs/theming/
 
-
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -15,228 +14,222 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
-.toolbar-title{
-    color:#f4f4f4;
+.toolbar-title {
+  color: #f4f4f4;
 }
 
-.main-bg{
-    background:linear-gradient(to right,$themeColor2,$light-tint)!important;
+.main-bg {
+  background: linear-gradient(to right, $themeColor2, $light-tint) !important;
 }
 
-.toolbar-background{
-    background:linear-gradient(to right,$themeColor2,$light-tint);
+.toolbar-background {
+  background: linear-gradient(to right, $themeColor2, $light-tint);
 }
 
-
-.tabbar{
-    background:linear-gradient(to right,$themeColor2,$light-tint)!important;
+.tabbar {
+  background: linear-gradient(to right, $themeColor2, $light-tint) !important;
 }
 
-ion-content{
-    .scroll-content{
-        // overflow: hidden!important;
-        -ms-overflow-style: none;  // IE 10+
-        overflow: -moz-scrollbars-none;  // Firefox   
-    }
-
-    
-    // .scroll-content::-webkit-scrollbar{
-    //     display: none;// Safari and Chrome
-    // }
+ion-navbar{
+    padding:0px!important;
 }
 
+ion-content {
+  .scroll-content {
+    // overflow: hidden!important;
+    -ms-overflow-style: none; // IE 10+
+    overflow: -moz-scrollbars-none; // Firefox
+  }
+
+  // .scroll-content::-webkit-scrollbar{
+  //     display: none;// Safari and Chrome
+  // }
+}
 
 ion-menu {
-
-    ion-content{
-        
-        .item{
-            background: transparent!important;
-            font-weight: 500!important;
-            font-size: 14px;
-            color: black!important;
-        }
-    
-        [active]{
-            color:#005bea!important;
-            background:linear-gradient(to right,$themeColor1)!important;
-        }
+  ion-content {
+    .item {
+      background: transparent !important;
+      font-weight: 500 !important;
+      font-size: 14px;
+      color: black !important;
     }
 
-    ion-footer{
-        button{
-            background: linear-gradient(to right,$themeColor2);
-        }
+    [active] {
+      color: #005bea !important;
+      background: linear-gradient(to right, $themeColor1) !important;
     }
+  }
 
-}
-
-[mt-5]{
-    margin-top: 5px!important;
-}
-
-.pd-5{
-    padding:5px!important;
-}
-
-.pt-5{
-    padding-top:5px!important;
-}
-
-.pb-10{
-    padding-bottom: 10px!important;
-}
-
-.pl-10{
-    padding-left:10px!important;
-}
-
-[font10]{
-   font-size: 10px!important;
-}
-
-[font15]{
-    font-size:15px!important;
-}
-
-[font20]{
-    font-size: 20px!important;
-}
-
-[font28]{
-    font-size: 28px!important;
-}
-
-[vertical-alight-bottom]{
-    vertical-align: bottom;
-}
-
-[vertical-center]{
-    justify-content: center;
-    align-self: center;
-}
-
-[text-weight]{
-    font-weight: bold!important;
-}
-
-[white]{
-    color:white!important;
-}
-
-
-[black]{
-    color:black!important;
-}
-
-[toolbar-transparent]{
-    .toolbar-background{
-        background:transparent;
+  ion-footer {
+    button {
+      background: linear-gradient(to right, $themeColor2);
     }
+  }
 }
 
+[mt-5] {
+  margin-top: 5px !important;
+}
 
-.ion-modal{
-   .modal-wrapper {
-       position: absolute;
-       top: 0;
-       left: 0;
-       display: block;
-       width: 100%;
-       height: 100%;
-   }
+.pd-5 {
+  padding: 5px !important;
+}
+
+.pt-5 {
+  padding-top: 5px !important;
+}
+
+.pb-10 {
+  padding-bottom: 10px !important;
+}
+
+.pl-10 {
+  padding-left: 10px !important;
+}
+
+[font10] {
+  font-size: 10px !important;
+}
+
+[font15] {
+  font-size: 15px !important;
+}
+
+[font20] {
+  font-size: 20px !important;
+}
+
+[font28] {
+  font-size: 28px !important;
+}
+
+[vertical-alight-bottom] {
+  vertical-align: bottom;
+}
+
+[vertical-center] {
+  justify-content: center;
+  align-self: center;
+}
+
+[text-weight] {
+  font-weight: bold !important;
+}
+
+[white] {
+  color: white !important;
+}
+
+[black] {
+  color: black !important;
+}
+
+[toolbar-transparent] {
+  .toolbar-background {
+    background: transparent;
+  }
+}
+
+.ion-modal {
+  .modal-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .ion-loading {
-   .loading-wrapper{
+  .loading-wrapper {
     //    background: rgba(255, 255, 255,0.7)!important;
-       background: rgb(255, 255, 255)!important;
-       font-weight: bold;
-       border-radius: 10px;
-   }
+    background: rgb(255, 255, 255) !important;
+    font-weight: bold;
+    border-radius: 10px;
+  }
 }
 
 .ion-alert {
-    .alert-wrapper{
-       border-radius: 10px;
+  .alert-wrapper {
+    border-radius: 10px;
     //    background: rgba(255, 255, 255,0.7)!important;
-    }
+  }
 }
 
 .ion-toast {
-    .toast-wrapper{
-       background: rgb(245, 61, 61)!important;
-    }
+  .toast-wrapper {
+    background: rgb(245, 61, 61) !important;
+  }
 }
 
 .ion-toast-success {
-    .toast-wrapper{
-       background: #32db64!important;
-    }
+  .toast-wrapper {
+    background: #32db64 !important;
+  }
 }
 
 .ion-toast-inform {
-    .toast-wrapper{
-        background:color($colors,main)!important;
-    }
+  .toast-wrapper {
+    background: color($colors, main) !important;
+  }
 }
 
-.ion-actionsheet{
-    .action-sheet-group {
-        // background: linear-gradient(to right, #01C2FA, #d7d8da)!important;
-        padding-bottom:0px!important;
-    }
+.ion-actionsheet {
+  .action-sheet-group {
+    // background: linear-gradient(to right, #01C2FA, #d7d8da)!important;
+    padding-bottom: 0px !important;
+  }
 
-    .action-sheet-group:first-child{
-        margin: 5px!important;
-        border-radius: 10px!important;
-    }
+  .action-sheet-group:first-child {
+    margin: 5px !important;
+    border-radius: 10px !important;
+  }
 
-    .action-sheet-group:last-child{
-        margin: 5px!important;
-        border-radius: 10px!important;
-    }
+  .action-sheet-group:last-child {
+    margin: 5px !important;
+    border-radius: 10px !important;
+  }
 
-    .action-sheet-title {
-        font-weight: bold;
-        color:black;
-    }
+  .action-sheet-title {
+    font-weight: bold;
+    color: black;
+  }
 }
 
-.cancel-button-actionsheet{
-    background:#f53d3d!important;
+.cancel-button-actionsheet {
+  background: #f53d3d !important;
 }
 
+.ion-popover {
+  .popover-content {
+    // top: 4vW!important;
+    // left: 52vW!important;
+    width: 70vw;
+    // height: 80vH;
+    // display: table!important;
+  }
 
-.ion-popover{
-    
-    .popover-content{
-        // top: 4vW!important;
-        // left: 52vW!important;
-        width: 70vW;
-        // height: 80vH;
-        // display: table!important;
-    }
-
-    // .scroll-content{
-    //     max-height: 80vH;
-    //     display: inline-block!important;
-    // }
+  // .scroll-content{
+  //     max-height: 80vH;
+  //     display: inline-block!important;
+  // }
 }
 
-
-
-
-
+.ion-popover-mobile {
+  .popover-content {
+    width: 90vw;
+  }
+}
 
 .splash {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: 999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: color($colors,main);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color($colors, main);
 }
-  

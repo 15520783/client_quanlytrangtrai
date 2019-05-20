@@ -27,14 +27,13 @@
                 <p *ngIf="attr.usingBadge" style="padding:5px!important"><b>{{attr.label}}:</b>
                   <ion-badge *ngIf="item.status == statusMating.PROCESSING.codeName" style="padding: 5px" color="main">
                     {{item[attr.name]}}</ion-badge>
-                  <ion-badge *ngIf="item.status == statusMating.COMPLETE.codeName" style="padding: 5px"
-                    color="secondary">
+                  <ion-badge *ngIf="item.status == statusMating.COMPLETE.codeName" style="padding: 5px" color="secondary">
                     {{item[attr.name]}}</ion-badge>
-                  <ion-badge *ngIf="item.status == statusMating.ABORTION.codeName" style="padding: 5px"
-                    color="danger">
+                  <ion-badge *ngIf="item.status == statusMating.FARROW.codeName" style="padding: 5px" color="main">
                     {{item[attr.name]}}</ion-badge>
-                  <ion-badge *ngIf="item.status == statusMating.BORNED.codeName" style="padding: 5px"
-                    color="secondary">
+                  <ion-badge *ngIf="item.status == statusMating.ABORTION.codeName" style="padding: 5px" color="danger">
+                    {{item[attr.name]}}</ion-badge>
+                  <ion-badge *ngIf="item.status == statusMating.BORNED.codeName" style="padding: 5px" color="secondary">
                     {{item[attr.name]}}</ion-badge>
                 </p>
               </ion-col>
@@ -48,8 +47,10 @@
               <button showWhen="core" small ion-button item-end mode='ios' color="danger"
                 *ngIf="item.status == statusMating.PROCESSING.codeName" (tap)="remove(item)">Xóa</button>
               <button showWhen="core" small ion-button item-end mode='ios' color="secondary" *ngIf="item.status == statusMating.COMPLETE.codeName &&
+                sectionType.id == section[3].id" (tap)="markedFarrow(item)">Xác nhận heo mang thai</button>
+              <button showWhen="core" small ion-button item-end mode='ios' color="secondary" *ngIf="item.status == statusMating.FARROW.codeName &&
                 sectionType.id == section[4].id" (tap)="markedAbortion(item)">Xác nhận heo sẩy thai</button>
-              <button showWhen="core" small ion-button item-end mode='ios' color="secondary" *ngIf="item.status == statusMating.COMPLETE.codeName && 
+              <button showWhen="core" small ion-button item-end mode='ios' color="secondary" *ngIf="item.status == statusMating.FARROW.codeName && 
                 sectionType.id == section[5].id" (tap)="birth_input(item)">Nhập thông tin heo đẻ</button>
             </ion-row>
           </ion-item>

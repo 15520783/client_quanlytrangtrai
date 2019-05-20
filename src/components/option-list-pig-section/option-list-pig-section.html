@@ -1,4 +1,4 @@
-<span #options >
+<span #options>
   <button 
   showWhen="core" 
   *ngIf="view_info.includes(sectionTypeId)"
@@ -68,20 +68,19 @@
   (tap)="matingNext_input()">Thực hiện gieo tinh lần kế tiếp</button> -->
 
 
-  <button 
+  <!-- <button 
   showWhen="core" 
   *ngIf="mated.includes(sectionTypeId) 
   && statusObjectKey[pig.statusId].code == statusPig.MATED 
   && pig.gender == gender.FEMALE"
   small ion-button item-end mode='ios' color="secondary"
-  (tap)="markedFarrow()">Thêm vào danh sách mang thai</button>
+  (tap)="markedFarrow()">Thêm vào danh sách mang thai</button> -->
 
    <button 
   showWhen="core" 
   *ngIf="weaning.includes(sectionTypeId) 
   && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE 
-  && pig.gender == gender.FEMALE
-  && statusObjectKey[pig.statusId].code == statusPig.FARROWING"
+  && (statusObjectKey[pig.statusId].code == statusPig.FARROWING || statusObjectKey[pig.statusId].code == statusPig.NEWBORN)"
   small ion-button item-end mode='ios' color="secondary"
   (tap)="weaningMarked()">Thêm vào danh sách cai sữa</button>
 

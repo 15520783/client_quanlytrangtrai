@@ -217,6 +217,60 @@ export class MatingListPage {
   }
 
 
+
+  /**
+   * Đánh dấu heo nái phối mang thai
+   * @param item 
+   */
+  markedFarrow(item: mating) {
+    let mating: mating = this.util.deepClone(item);
+    mating.status = VARIABLE.MATING_STATUS.FARROW.codeName;
+    this.activitiesProvider.updateMatingObj(mating)
+      .then((updateMating: mating) => {
+        if (updateMating) {
+          // item.status = updateMating.status;
+          let idx = this.matings.findIndex(_mating => _mating.id == updateMating.id);
+          if (idx > -1) {
+            this.matings[idx] = updateMating;
+            this.setFilteredItems();
+          }
+          let pig = this.deployData.get_pig_by_id(updateMating.mother.id);
+          let farrowStatus = this.deployData.get_status_pig_by_status_code(VARIABLE.STATUS_PIG.FARROWING);
+          pig.statusId = farrowStatus.id;
+          this.pigProvider.updatedPig(pig);
+        }
+      })
+      .catch((err: Error) => { })
+  }
+
+  /**
+   * Đánh dấu heo nái phối bị sẩy thai
+   */
+  markedAbortion(item: mating) {
+    let mating: mating = this.util.deepClone(item);
+    mating.status = VARIABLE.MATING_STATUS.ABORTION.codeName;
+    this.activitiesProvider.updateMatingObj(mating)
+      .then((updateMating: mating) => {
+        if (updateMating) {
+          // item.status = updateMating.status;
+          let idx = this.matings.findIndex(_mating => _mating.id == updateMating.id);
+          if (idx > -1) {
+            this.matings[idx] = updateMating;
+            this.setFilteredItems();
+          }
+          let pig = this.deployData.get_pig_by_id(updateMating.mother.id);
+          let farrowStatus = this.deployData.get_status_pig_by_status_code(VARIABLE.STATUS_PIG.ABORTION);
+          pig.statusId = farrowStatus.id;
+          this.pigProvider.updatedPig(pig);
+        }
+      })
+      .catch((err: Error) => { })
+  }
+
+  /**
+   * Nhập thông tin heo nái phối đẻ
+   * @param item 
+   */
   birth_input(item: mating) {
     let callback = (newBirth: births) => {
       if (newBirth) {
@@ -227,23 +281,10 @@ export class MatingListPage {
     this.navCtrl.push(BirthInputPage, { mating: item, callback: callback });
   }
 
-
-  markedAbortion(item: mating) {
-    let mating: mating = this.util.deepClone(item);
-    mating.status = VARIABLE.MATING_STATUS.ABORTION.codeName;
-    this.activitiesProvider.updateMatingObj(mating)
-      .then((updateMating: mating) => {
-        if (updateMating) {
-          item.status = updateMating.status;
-          let pigUpdate: pig = this.util.deepClone(item.mother);
-          let abortionStatus = this.deployData.get_status_pig_by_status_code(VARIABLE.STATUS_PIG.ABORTION);
-          pigUpdate.statusId = abortionStatus.id;
-          this.pigProvider.updatedPig(pigUpdate);
-        }
-      })
-      .catch((err: Error) => { })
-  }
-
+  /**
+   * Xóa ghi nhận phối giống
+   * @param item 
+   */
   remove(item) {
     this.activitiesProvider.deleteMating(item)
       .then((isOk) => {

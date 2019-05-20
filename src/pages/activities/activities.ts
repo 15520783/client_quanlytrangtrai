@@ -125,6 +125,16 @@ export class ActivitiesPage {
           sectionType: VARIABLE.SECTION_TYPE[3],
         }
       },
+      // list_farrowing_pig_khu_phoi: {
+      //   name: 'Danh sách heo mang thai', component: PigListSectionPage, active: false,
+      //   data: {
+      //     sectionType: VARIABLE.SECTION_TYPE[3],
+      //     getPigs(deployData: DeployDataProvider) {
+      //       return deployData.get_farrowing_pig_of_section(VARIABLE.SECTION_TYPE[3].id)
+      //     },
+      //     pigs: []
+      //   }
+      // },
       list_pig_khu_mang_thai: {
         name: 'Danh sách heo tại khu', component: PigListSectionPage, active: false,
         data: {
@@ -185,11 +195,21 @@ export class ActivitiesPage {
         }
       },
       list_weaning_pig_khu_de: {
-        name: 'Danh sách heo cai sữa', component: PigListSectionPage, active: false,
+        name: 'Danh sách heo nái cai sữa', component: PigListSectionPage, active: false,
         data: {
           sectionType: VARIABLE.SECTION_TYPE[5],
           getPigs(deployData: DeployDataProvider) {
             return deployData.get_weaning_pig_of_section(VARIABLE.SECTION_TYPE[5].id)
+          },
+          pigs: []
+        }
+      },
+      list_growing_child_pig_khu_de: {
+        name: 'Danh sách heo con cai sữa', component: PigListSectionPage, active: false,
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[5],
+          getPigs(deployData: DeployDataProvider) {
+            return deployData.get_growing_child_pig_of_section(VARIABLE.SECTION_TYPE[5].id)
           },
           pigs: []
         }
@@ -267,7 +287,8 @@ export class ActivitiesPage {
           this.components.list_pig_khu_phoi,
           this.components.list_pig_breeding_khu_phoi,
           this.components.list_mating_pig_khu_phoi,
-          this.components.list_mating_khu_phoi
+          this.components.list_mating_khu_phoi,
+          // this.components.list_farrowing_pig_khu_phoi
         ],
         icon: 'app-activities', active: false
       },
@@ -285,9 +306,10 @@ export class ActivitiesPage {
         title: 'Khu đẻ ',
         components: [
           this.components.list_pig_khu_de,
-          this.components.list_birth_khu_de,
           this.components.list_mating_khu_de,
-          this.components.list_weaning_pig_khu_de
+          this.components.list_birth_khu_de,
+          this.components.list_weaning_pig_khu_de,
+          this.components.list_growing_child_pig_khu_de
         ],
         icon: 'app-activities', active: false
       },

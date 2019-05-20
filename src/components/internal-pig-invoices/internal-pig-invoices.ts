@@ -60,19 +60,6 @@ export class InternalPigInvoicesComponent {
     this.farms_util = this.deployData.get_object_list_key_of_farm()
   }
 
-  // ngAfterViewInit(): void {
-  //   let partners_util = this.deployData.get_object_list_key_of_partner();
-  //   let farms_util = this.deployData.get_object_list_key_of_farm();
-  //   if (this.invoices.length) {
-  //     this.invoices.forEach((invoice) => {
-  //       invoice['sourceName'] = partners_util[invoice.sourceId].name;
-  //       invoice['destinationName'] = farms_util[invoice.destinationId].name;
-  //       invoice['importDateDisplay'] = this.util.convertDate(invoice.importDate);
-  //     })
-  //   }
-  //   this.setFilteredItems();
-  // }
-
   ngAfterContentInit(): void {
     this.events.subscribe('invoicesReload', () => {
       this.setFilteredItems();
@@ -92,7 +79,6 @@ export class InternalPigInvoicesComponent {
 
   public filterItems(searchItem) {
     this.invoices.forEach((invoice) => {
-      // invoice['sourceName'] = this.partners_util[invoice.sourceId].name;
       invoice['destinationName'] = this.farms_util[invoice.destinationId] ? this.farms_util[invoice.destinationId].name : '';
       invoice['importDateDisplay'] = this.util.convertDate(invoice.importDate);
     })

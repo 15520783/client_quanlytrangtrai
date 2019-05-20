@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { issuesPigs, issues } from '../../common/entity';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
@@ -29,6 +29,7 @@ export class HealthInputPage {
     private formBuilder: FormBuilder,
     public util: Utils,
     public deployData: DeployDataProvider,
+    public platform: Platform
   ) {
     if (this.navParams.data.pig) {
       this.issuePig.pig = this.navParams.data.pig;
@@ -44,7 +45,7 @@ export class HealthInputPage {
       images: this.issuePig.images,
       status: this.issuePig.status
     });
-    
+
     this.credentialsForm2 = this.formBuilder.group({});
 
     this.issuesList.forEach((e, idx) => {
@@ -60,7 +61,7 @@ export class HealthInputPage {
   public issues: Array<{ name: string, value: string }> = [];
 
   init() {
-    this.util.getKey(KEY.EMPID).then((employeeId)=>{
+    this.util.getKey(KEY.EMPID).then((employeeId) => {
       this.issuePig.employee.setID(employeeId);
     })
     this.issues = this.deployData.get_issues_list_for_select();
@@ -74,9 +75,9 @@ export class HealthInputPage {
         'issueId' + (this.issuesList.length - 1), this.formBuilder.control(new_issue.id, Validators.compose([Validators.required])));
   }
 
-  remove_issue(idx){
-    this.issuesList.splice(idx,1);
-    this.credentialsForm2.removeControl('issueId'+idx);
+  remove_issue(idx) {
+    this.issuesList.splice(idx, 1);
+    this.credentialsForm2.removeControl('issueId' + idx);
   }
 
   onSubmit() {
@@ -87,13 +88,13 @@ export class HealthInputPage {
         this.issuePig[attr] = this.credentialsForm1.value[attr];
       });
 
-      Object.keys(this.credentialsForm2.value).forEach((attr,idx)=>{
+      Object.keys(this.credentialsForm2.value).forEach((attr, idx) => {
         this.issuesList[idx].id = this.credentialsForm2.value[attr];
       })
 
       this.navParams.get('callback')({
-        issuePig:this.issuePig,
-        issueList:this.issuesList
+        issuePig: this.issuePig,
+        issueList: this.issuesList
       })
     }
   }

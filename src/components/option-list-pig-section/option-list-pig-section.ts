@@ -51,6 +51,7 @@ export class OptionListPigSectionComponent {
       MATING: VARIABLE.STATUS_PIG.MATING,
       MATED: VARIABLE.STATUS_PIG.MATED,
       FARROWING: VARIABLE.STATUS_PIG.FARROWING,
+      NEWBORN:VARIABLE.STATUS_PIG.NEWBORN
     }
 
     this.add_to_sale_list = this.view_info = [
@@ -330,12 +331,18 @@ export class OptionListPigSectionComponent {
 
 
   /**
-   * Thêm vào danh sách heo sẩy thai
+   * Thêm vào danh sách heo cai sữa
    */
   weaningMarked() {
-    let weaningStatus = this.deployData.get_status_pig_by_status_code(VARIABLE.STATUS_PIG.WEANING);
     let pigUpdate: pig = this.util.deepClone(this.pig);
-    pigUpdate.statusId = weaningStatus.id;
+    let currentStatus = this.deployData.get_status_by_id(this.pig.statusId);
+    if(currentStatus.code == VARIABLE.STATUS_PIG.FARROWING){
+      let weaningStatus = this.deployData.get_status_pig_by_status_code(VARIABLE.STATUS_PIG.WEANING);
+      pigUpdate.statusId = weaningStatus.id;
+    }else if(currentStatus.code == VARIABLE.STATUS_PIG.NEWBORN){
+      let growingStatus = this.deployData.get_status_pig_by_status_code(VARIABLE.STATUS_PIG.GROWING);
+      pigUpdate.statusId = growingStatus.id;
+    }
     pigUpdate = this.deployData.get_pig_object_to_send_request(pigUpdate);
     this.pigProvider.updatePig(pigUpdate)
       .then((pig: pig) => {

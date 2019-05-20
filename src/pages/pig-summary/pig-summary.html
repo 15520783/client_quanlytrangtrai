@@ -50,10 +50,10 @@
 <ion-content showWhen="ios,android" class="mobile">
   <ion-slides #slider (ionSlideDidChange)="slideChange()">
     <ion-slide *ngIf="data.pig">
-      <page-pig-infomation [pig]="data.pig"></page-pig-infomation>
+      <page-pig-infomation [(pig)]="data.pig"></page-pig-infomation>
     </ion-slide>
     <ion-slide *ngIf="data.pig">
-      <page-pig-review-index [pig]="data.pig"></page-pig-review-index>
+      <page-pig-review-index [(pig)]="data.pig"></page-pig-review-index>
     </ion-slide>
     <ion-slide *ngIf="data.pig">
       <ion-infinite-scroll>
@@ -68,4 +68,7 @@
       </ion-infinite-scroll>
     </ion-slide>
   </ion-slides>
+  <span *ngIf="data.pig && data.pig.house">
+    <list-fab-button-pig [(pig)]="data.pig" [sectionTypeId]="data.pig.house.section.typeId"></list-fab-button-pig>
+  </span>
 </ion-content>

@@ -104,8 +104,9 @@ const VARIABLE = {
     MATING_STATUS: {
         PROCESSING: { id: 0, codeName: 'processing', name: 'Đang chờ lấy tinh lần 2' },
         COMPLETE: { id: 1, codeName: 'finish', name: 'Hoàn tất' },
-        ABORTION: { id: 2, codeName: 'abort', name: 'Sẩy thai' },
-        BORNED: { id: 3, codeName: 'borned', name: 'Đã sinh' }
+        FARROW: { id: 2, codeName: 'farrow', name: 'Mang thai' },
+        ABORTION: { id: 3, codeName: 'abort', name: 'Sẩy thai' },
+        BORNED: { id: 4, codeName: 'borned', name: 'Đã sinh' }
     },
     ISSUE_PIG_STATUS: {
         DECTECTION: { id: 0, name: 'Mới phát hiện' },

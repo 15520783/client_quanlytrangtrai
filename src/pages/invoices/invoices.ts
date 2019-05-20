@@ -17,13 +17,14 @@ import { MedicineInvoicesComponent } from '../../components/medicine-invoices/me
 export class InvoicesPage {
   @ViewChild('slider') slider: Slides;
 
-  public list_invoice_type:any = {};
+  public list_invoice_type: any = {};
   public list_keys;
 
   public internalPigInvoices: any = [];
   public externalPigInvoices: any = [];
   public foodInvoices: any = [];
   public medicineInvoices: any = [];
+  public exportInternalPigInvoice: any = [];
 
   constructor(
     public navCtrl: NavController,
@@ -39,28 +40,33 @@ export class InvoicesPage {
     this.list_invoice_type = {
       internalPigInvoice: {
         title: 'Chứng từ nhập heo trong hệ thống',
-        invoices:[],
-        component:InternalPigInvoicesComponent
+        invoices: [],
+        component: InternalPigInvoicesComponent
       },
       externalPigInvoice: {
         title: 'Chứng từ nhập heo ngoài hệ thống',
-        invoices:[],
-        component:ExternalPigInvoicesComponent
+        invoices: [],
+        component: ExternalPigInvoicesComponent
       },
       salePigInvoice: {
         title: 'Chứng từ xuất bán heo',
-        invoices:[],
-        component:ExternalPigInvoicesComponent
+        invoices: [],
+        component: ExternalPigInvoicesComponent
+      },
+      exportInternalPigInvoice: {
+        title: 'Chứng từ xuất heo trong hệ thống',
+        invoices: [],
+        component: InternalPigInvoicesComponent
       },
       foodInvoice: {
         title: 'Chứng từ nhập cám',
-        invoices:[],
-        component:FoodInvoicesComponent
+        invoices: [],
+        component: FoodInvoicesComponent
       },
       medicineInvoice: {
         title: 'Chứng từ nhập thuốc',
-        invoices:[],
-        component:MedicineInvoicesComponent
+        invoices: [],
+        component: MedicineInvoicesComponent
       }
     }
 
@@ -100,6 +106,9 @@ export class InvoicesPage {
             this.externalPigInvoices = data.invoicesPigs.filter((invoices) => {
               return invoices.invoiceType == VARIABLE.INVOICE_PIG_TYPE.EXTERNAL_IMPORT ? true : false;
             })
+            this.exportInternalPigInvoice = data.invoicesPigs.filter((invoices) => {
+              return invoices.invoiceType == VARIABLE.INVOICE_PIG_TYPE.INTERNAL_EXPORT ? true : false;
+            })
             this.foodInvoices = data.invoicesProducts.filter((invoices) => {
               return invoices.invoiceType === VARIABLE.INVOICE_PRODUCT_TYPE.FOOD ? true : false;
             })
@@ -110,10 +119,11 @@ export class InvoicesPage {
         }
         this.list_invoice_type.externalPigInvoice.invoices = this.externalPigInvoices;
         this.list_invoice_type.internalPigInvoice.invoices = this.internalPigInvoices;
+        this.list_invoice_type.exportInternalPigInvoice.invoices = this.exportInternalPigInvoice;
         this.list_invoice_type.foodInvoice.invoices = this.foodInvoices;
         this.list_invoice_type.medicineInvoice.invoices = this.medicineInvoices;
         this.util.closeBackDrop();
-      }).then(()=>{
+      }).then(() => {
         this.events.publish('invoicesReload');
       })
       .catch((err: Error) => {
@@ -125,7 +135,7 @@ export class InvoicesPage {
   }
 
 
-  openPage(item){
-    this.navCtrl.push(item.component,{invoice:item.invoices});
+  openPage(item) {
+    this.navCtrl.push(item.component, { invoice: item.invoices });
   }
 }

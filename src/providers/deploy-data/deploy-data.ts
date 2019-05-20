@@ -9,7 +9,8 @@ import { SectionsProvider } from '../sections/sections';
 import { SettingsProvider } from '../settings/settings';
 import { pig, house, foodWareHouse, medicineWarehouse, section, status, breedings, sperms, matingRole, issues, mating, births } from '../../common/entity';
 import { WarehousesProvider } from '../warehouses/warehouses';
-import { VARIABLE } from '../../common/const';
+import { VARIABLE, KEY } from '../../common/const';
+import { Utils } from '../../common/utils';
 
 
 @Injectable()
@@ -24,7 +25,8 @@ export class DeployDataProvider {
     public employeeProvider: EmployeesProvider,
     public sectionProvider: SectionsProvider,
     public settingProvider: SettingsProvider,
-    public warehouseProvider: WarehousesProvider
+    public warehouseProvider: WarehousesProvider,
+    public util: Utils
   ) {
   }
 
@@ -252,7 +254,7 @@ export class DeployDataProvider {
    * Lấy danh sách khu thuộc 1 loại khu của 1 trang trại
    * @param farmId 
    */
-  get_sections_by_sectionType_of_farm(farmId: string , sectionTypeId:string) {
+  get_sections_by_sectionType_of_farm(farmId: string, sectionTypeId: string) {
     return this.sectionProvider.sections.filter((section) => {
       return (section.farm.id == farmId && section.typeId == sectionTypeId) ? true : false;
     })
@@ -733,6 +735,23 @@ export class DeployDataProvider {
   }
 
   /**
+   * Lấy danh sách heo con cai sữa tại khu
+   * @param sectionTypeId 
+   */
+  get_growing_child_pig_of_section(sectionTypeId: string) {
+    let housesId: any = [];
+    this.houseProvider.houses.filter((house) => {
+      return (house.section.typeId == sectionTypeId) ? true : false;
+    }).forEach((house) => {
+      housesId.push(house.id);
+    })
+    let statusObjectKeyList = this.get_object_list_key_of_status();
+    return this.pigsProvider.pigs.filter((pig) => {
+      return housesId.includes(pig.houseId) && statusObjectKeyList[pig.statusId].code == VARIABLE.STATUS_PIG.GROWING ? true : false;
+    })
+  }
+
+  /**
    * Lấy danh sách heo nái sẩy thai ở khu
    * @param sectionTypeId 
    */
@@ -923,5 +942,19 @@ export class DeployDataProvider {
     return this.pigsProvider.pigs.filter((pig) => {
       return pig.birthId == birth.id ? true : false;
     })
+  }
+
+
+  get_farm_to_transfer_internal(employeeId) {
+    return this.farmProvider.farms.filter((farm) => {
+      return farm.manager != employeeId ? true : false;
+    })
+  }
+
+  get_employee_id(temp) {
+    this.util.getKey(KEY.EMPID)
+      .then((empId: string) => {
+        temp = empId;
+      })
   }
 }
