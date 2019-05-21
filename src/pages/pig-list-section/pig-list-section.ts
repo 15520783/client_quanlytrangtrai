@@ -7,6 +7,7 @@ import { Utils } from '../../common/utils';
 import { VARIABLE } from '../../common/const';
 import { PigViewPage } from '../../tabs/pig-view/pig-view';
 import { pig } from '../../common/entity';
+import { PigSummaryPage } from '../pig-summary/pig-summary';
 
 
 @IonicPage()
@@ -48,7 +49,7 @@ export class PigListSectionPage {
   public page_Idx: number = 1;
   public page_Total: number = 0;
   public rows: Array<any> = [];
-  public filterProvider =  new FilterProvider(this.util);
+  public filterProvider = new FilterProvider(this.util);
 
   protected searchControl: FormControl = new FormControl();
   protected searchTerm: string = '';
@@ -140,14 +141,19 @@ export class PigListSectionPage {
   pigChange(new_vers: pig, old_vers: pig) {
     old_vers = new_vers;
     if (this.houses[old_vers.houseId].section.typeId == this.sectionTypeId) {
-      old_vers['breedName'] = this.breed[old_vers.breedId] ? this.breed[old_vers.breedId].name + ' ' + this.breed[old_vers.breedId].symbol : '';
-      old_vers['sectionName'] = this.houses[old_vers.houseId] ? this.houses[old_vers.houseId].section.name : '';
-      old_vers['houseName'] = this.houses[old_vers.houseId] ? this.houses[old_vers.houseId].name : '';
-      old_vers['farmName'] = this.houses[old_vers.houseId].section.farm ? this.houses[old_vers.houseId].section.farm.name : '';
-      old_vers['statusName'] = this.status[old_vers.statusId] ? this.status[old_vers.statusId].name : '';
-      old_vers['statusCode'] = this.status[old_vers.statusId] ? this.status[old_vers.statusId].code : '';
-      old_vers['birthdayDisplay'] = this.util.convertDate(old_vers.birthday);
-      old_vers['genderName'] = this.gender[old_vers.gender] ? this.gender[old_vers.gender].name : '';
+      let idx = this.pigs.findIndex(_pig => _pig.id == old_vers.id);
+      if(idx > -1){
+        this.pigs[idx] = old_vers;
+        this.setFilteredItems();
+      }
+      // old_vers['breedName'] = this.breed[old_vers.breedId] ? this.breed[old_vers.breedId].name + ' ' + this.breed[old_vers.breedId].symbol : '';
+      // old_vers['sectionName'] = this.houses[old_vers.houseId] ? this.houses[old_vers.houseId].section.name : '';
+      // old_vers['houseName'] = this.houses[old_vers.houseId] ? this.houses[old_vers.houseId].name : '';
+      // old_vers['farmName'] = this.houses[old_vers.houseId].section.farm ? this.houses[old_vers.houseId].section.farm.name : '';
+      // old_vers['statusName'] = this.status[old_vers.statusId] ? this.status[old_vers.statusId].name : '';
+      // old_vers['statusCode'] = this.status[old_vers.statusId] ? this.status[old_vers.statusId].code : '';
+      // old_vers['birthdayDisplay'] = this.util.convertDate(old_vers.birthday);
+      // old_vers['genderName'] = this.gender[old_vers.gender] ? this.gender[old_vers.gender].name : '';
     }
     else {
       this.pigs.splice(
@@ -195,7 +201,7 @@ export class PigListSectionPage {
   }
 
   filterSection(sectionId) {
-    if (sectionId){
+    if (sectionId) {
       this.filterProvider.searchWithInclude.sectionId = [sectionId];
       this.houseFilter = this.deployData.get_houses_of_section(sectionId);
       this.houseFilter.forEach(house => {
@@ -207,12 +213,25 @@ export class PigListSectionPage {
     this.setFilteredItems();
   }
 
-  filterHouse(houseId){
-    if (houseId){
+  filterHouse(houseId) {
+    if (houseId) {
       this.filterProvider.searchWithInclude.houseId = [houseId];
     }
     else
       this.filterProvider.searchWithInclude.houseId = [];
     this.setFilteredItems();
+  }
+
+
+  viewInfo(item) {
+
+    this.events.subscribe('pig-list-section:PigChange', (pig: pig) => {
+      if (pig) {
+        // let EditPig = this.deployData.get_pig_by_id(pig.id);
+        this.pigChange(pig, item);
+      }
+    })
+
+    this.navCtrl.push(PigSummaryPage, { pig: item });
   }
 }

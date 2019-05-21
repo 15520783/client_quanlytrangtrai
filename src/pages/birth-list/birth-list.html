@@ -12,7 +12,8 @@
 </ion-header>
 
 <ion-content #contentExternalInvoice class="setting-util-component">
-  <div id="content">
+  <not-found-data *ngIf="!visible_items.length"></not-found-data>
+  <div id="content" *ngIf="visible_items.length">
     <ion-item-divider custom-diviver sticky="true" showWhen="core">Danh sách ghi nhận heo đẻ</ion-item-divider>
     <ion-list>
       <span *ngFor="let item of visible_items;let idx= index">

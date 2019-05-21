@@ -22,16 +22,22 @@
 <ion-content #contentExternalInvoice class="setting-util-component">
   <div id="content">
     <ion-item-divider custom-diviver sticky="true" showWhen="core">{{title}}</ion-item-divider>
-    <ion-list>
+    <ion-list *ngIf="platform.is('core')">
       <span *ngFor="let item of visible_items;let idx= index">
-        <ion-item-sliding *ngIf="statusFilter.length?(statusFilter.includes(item.statusCode)):true">
+        <ion-item-sliding *ngIf="statusFilter.length?(statusFilter.includes(item.statusCode)):true" >
           <ion-item>
             <ion-avatar item-start>
               <ion-icon name="app-pig-outline" font28></ion-icon>
             </ion-avatar>
             <h2 *ngIf="mainAttribute"><b>{{item[mainAttribute]}}</b></h2>
             <ion-row>
-              <ion-col *ngFor="let attr of attributes" col-xl-3 col-lg-3 col-md-4 col-sm-6 text-wrap>
+              <ion-col *ngFor="let attr of attributes" 
+                  [attr.col-6]    ="!platform.is('core')"
+                  [attr.col-xl-3] ="platform.is('core')" 
+                  [attr.col-lg-3] ="platform.is('core')"
+                  [attr.col-md-4] ="platform.is('core')"
+                  [attr.col-sm-6] ="platform.is('core')"
+                  [attr.text-wrap]="platform.is('core')">
                 <p style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
               </ion-col>
             </ion-row>
@@ -43,6 +49,25 @@
           </ion-item>
         </ion-item-sliding>
       </span>
+    </ion-list>
+    <ion-list *ngIf="!platform.is('core')">
+      <button *ngFor="let item of visible_items;let idx= index" ion-item (tap)="viewInfo(item)">
+        <ion-avatar item-start>
+          <ion-icon name="app-pig-outline" font28></ion-icon>
+        </ion-avatar>
+        <h2 *ngIf="mainAttribute"><b>{{item[mainAttribute]}}</b></h2>
+        <ion-row>
+          <ion-col *ngFor="let attr of attributes" 
+              [attr.col-6]    ="!platform.is('core')"
+              [attr.col-xl-3] ="platform.is('core')" 
+              [attr.col-lg-3] ="platform.is('core')"
+              [attr.col-md-4] ="platform.is('core')"
+              [attr.col-sm-6] ="platform.is('core')"
+              [attr.text-wrap]="platform.is('core')">
+            <p style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
+          </ion-col>
+        </ion-row>
+      </button>
     </ion-list>
     <ion-infinite-scroll (ionInfinite)="loadData($event)" *ngIf="page_Idx!==page_Total">
       <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Đang tải dữ liệu...">

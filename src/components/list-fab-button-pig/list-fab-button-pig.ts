@@ -1,9 +1,9 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { pig, issuesPigs, issues, breedings, sperms, mating, matingDetails } from '../../common/entity';
 import { VARIABLE } from '../../common/const';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { ActivitiesProvider } from '../../providers/activities/activities';
-import { NavController, FabContainer } from 'ionic-angular';
+import { NavController, FabContainer, Events } from 'ionic-angular';
 import { HealthInputPage } from '../../pages/health-input/health-input';
 import { PigsProvider } from '../../providers/pigs/pigs';
 import { BreedingInputPage } from '../../pages/breeding-input/breeding-input';
@@ -36,7 +36,8 @@ export class ListFabButtonPigComponent {
     public activitiesProvider:ActivitiesProvider,
     public navCtrl: NavController,
     public pigProvider:PigsProvider,
-    public util:Utils
+    public util:Utils,
+    public event: Events
   ) {
     this.statusPig = {
       WAIT_FOR_SALE: VARIABLE.STATUS_PIG.WAIT_FOR_SALE,
@@ -110,7 +111,7 @@ export class ListFabButtonPigComponent {
         this.activitiesProvider.createIssuePig(issuesPig)
           .then((newIssuesPig: Array<issuesPigs>) => {
             if (newIssuesPig) {
-              console.log(newIssuesPig);
+              this.publishEvenPigChange(this.pig);
             }
             this.navCtrl.pop();
           })
@@ -135,6 +136,7 @@ export class ListFabButtonPigComponent {
             if (newBreeding) {
               this.pig.statusId = newBreeding.pig.status.id;
               this.pigProvider.updatedPig(this.pig);
+              this.publishEvenPigChange(this.pig);
             }
             this.navCtrl.pop();
           })
@@ -155,6 +157,7 @@ export class ListFabButtonPigComponent {
         .then((newSperm: sperms) => {
           if (newSperm) {
             console.log(newSperm);
+            this.publishEvenPigChange(this.pig);
           }
           this.navCtrl.pop();
         })
@@ -192,6 +195,7 @@ export class ListFabButtonPigComponent {
             this.navCtrl.pop();
             this.pig.statusId = newMating.mating.mother.status.id;
             this.pigProvider.updatedPig(this.pig);
+            this.publishEvenPigChange(this.pig);
           }
         })
         .catch((err: Error) => {
@@ -215,6 +219,7 @@ export class ListFabButtonPigComponent {
         .then((updatedPig: pig) => {
           if (updatedPig && updatedPig.id) {
             this.pig = updatedPig;
+            this.publishEvenPigChange(this.pig);
           }
           this.navCtrl.pop();
         })
@@ -237,6 +242,7 @@ export class ListFabButtonPigComponent {
         if (pig && pig.id) {
           this.pig.statusId = pig.statusId;
           this.closeFabList();
+          this.publishEvenPigChange(this.pig);
         }
       })
       .catch((err: Error) => { })
@@ -255,6 +261,7 @@ export class ListFabButtonPigComponent {
         if (updatedPig && updatedPig.id) {
           this.pig.statusId = updatedPig.statusId;
           this.closeFabList();
+          this.publishEvenPigChange(this.pig);
         }
       })
       .catch((err: Error) => { })
@@ -263,5 +270,9 @@ export class ListFabButtonPigComponent {
 
   closeFabList(){
     this.fab.close();
+  }
+
+  publishEvenPigChange(pig){
+    this.event.publish('pig-list-section:PigChange',pig);
   }
 }

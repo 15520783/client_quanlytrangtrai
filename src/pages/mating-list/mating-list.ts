@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { mating, matingDetails, pig, births } from '../../common/entity';
 import { FormControl } from '@angular/forms';
 import { FilterProvider } from '../../providers/filter/filter';
@@ -58,6 +58,7 @@ export class MatingListPage {
     public deployData: DeployDataProvider,
     public activitiesProvider: ActivitiesProvider,
     public pigProvider: PigsProvider,
+    public platform:Platform,
     public util: Utils
   ) {
     if (this.navParams.data.sectionType) {

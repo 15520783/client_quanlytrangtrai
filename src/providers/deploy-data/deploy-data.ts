@@ -792,10 +792,19 @@ export class DeployDataProvider {
    * @param statusId 
    */
   get_status_saleWaiting_of_pig(statusId): status {
+    let currentStatus = this.get_status_by_id(statusId);
     return this.settingProvider.setting.status.filter((status) => {
-      return status.previousStatus == statusId && VARIABLE.STATUS_PIG.WAIT_FOR_SALE == status.code ? true : false;
+      return status.previousStatus == currentStatus.code && VARIABLE.STATUS_PIG.WAIT_FOR_SALE == status.code ? true : false;
     })[0];
   }
+
+  get_status_farm_transferWaiting_of_pig(statusId): status {
+    let currentStatus = this.get_status_by_id(statusId);
+    return this.settingProvider.setting.status.filter((status) => {
+      return status.previousStatus == currentStatus.code && VARIABLE.STATUS_PIG.WAIT_FOR_TRANSFER == status.code ? true : false;
+    })[0];
+  }
+
 
   /**
    * Lấy trạng thái heo chờ phối dựa vào trạng thái hiện tại

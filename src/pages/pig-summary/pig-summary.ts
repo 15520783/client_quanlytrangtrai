@@ -23,8 +23,8 @@ export class PigSummaryPage {
   public rootParam: any;
   public tab = "0";
 
-  public data: any = { }
-  public sectionTypeId:string;
+  public data: any = {}
+  public sectionTypeId: string;
   public pages: any = [];
 
   constructor(
@@ -33,11 +33,12 @@ export class PigSummaryPage {
     public navParams: NavParams,
     public platform: Platform,
     public util: Utils,
-    public deployData:DeployDataProvider
+    public deployData: DeployDataProvider
   ) {
     if (this.navParams.data.pig) {
       this.data.pig = this.navParams.data.pig;
       this.data.pig.house = this.deployData.get_house_by_id(this.data.pig.houseId);
+      this.data.sectionType = { id: this.data.pig.house.section.typeId };
     }
 
     this.pages = [

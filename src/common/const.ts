@@ -72,7 +72,8 @@ const VARIABLE = {
         WAIT_FOR_MATING: "9",
         SOLD: "10",
         MATING: "11",
-        NEWBORN: "12"
+        NEWBORN: "12",
+        WAIT_FOR_TRANSFER:"13"
     },
     INVOICE_ID: {
         '31': '4',

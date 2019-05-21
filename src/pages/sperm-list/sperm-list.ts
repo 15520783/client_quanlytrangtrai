@@ -142,7 +142,7 @@ export class SpermListPage {
         if (sperms && sperms.length) {
           this.sperms = this.deployData.get_sperms_of_section(this.sectionType.id, sperms);
           this.initialSperms();
-        }
+        } 
         this.util.closeBackDrop();
         return sperms;
       })

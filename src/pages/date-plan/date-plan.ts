@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, ModalController, PopoverController } from 'ionic-angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
@@ -13,6 +13,7 @@ import { Utils } from '../../common/utils';
 import { UserProvider } from '../../providers/user/user';
 import { MESSAGE, CONFIG } from '../../common/const';
 import { SchelduleDetailComponent } from '../../components/scheldule-detail/scheldule-detail';
+import { BackdropComponent } from '../../components/backdrop/backdrop';
 
 export class Schedule {
   breedings: Array<breedings> = [];
@@ -49,7 +50,8 @@ export class DatePlanPage {
     public activitiesProvider: ActivitiesProvider,
     public userProvider: UserProvider,
     public util: Utils,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    public popoverCtrl:PopoverController
   ) {
     this.getSchedule().then((data) => {
       this.initSchedule();

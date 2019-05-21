@@ -4,7 +4,6 @@ import { pig, status, sperms, breedings, mating, matingDetails, issuesPigs, issu
 import { PigsProvider } from '../../providers/pigs/pigs';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { NavController, Events } from 'ionic-angular';
-import { PigViewPage } from '../../tabs/pig-view/pig-view';
 import { Utils } from '../../common/utils';
 import { BreedingInputPage } from '../../pages/breeding-input/breeding-input';
 import { ActivitiesProvider } from '../../providers/activities/activities';
@@ -13,6 +12,7 @@ import { MatingInputPage } from '../../pages/mating-input/mating-input';
 import { PigInputPage } from '../../pages/pig-input/pig-input';
 import { HealthInputPage } from '../../pages/health-input/health-input';
 import { BirthInputPage } from '../../pages/birth-input/birth-input';
+import { PigSummaryPage } from '../../pages/pig-summary/pig-summary';
 
 @Component({
   selector: 'option-list-pig-section',
@@ -27,6 +27,7 @@ export class OptionListPigSectionComponent {
 
   public statusPig: any = {};
   public add_to_sale_list;
+  public add_to_farm_transfer_list;
   public view_info;
   public breeding;
   public sperm;
@@ -51,10 +52,11 @@ export class OptionListPigSectionComponent {
       MATING: VARIABLE.STATUS_PIG.MATING,
       MATED: VARIABLE.STATUS_PIG.MATED,
       FARROWING: VARIABLE.STATUS_PIG.FARROWING,
-      NEWBORN:VARIABLE.STATUS_PIG.NEWBORN
+      NEWBORN:VARIABLE.STATUS_PIG.NEWBORN,
+      WAIT_FOR_TRANSFER:VARIABLE.STATUS_PIG.WAIT_FOR_TRANSFER
     }
 
-    this.add_to_sale_list = this.view_info = [
+    this.add_to_sale_list = this.add_to_farm_transfer_list = this.view_info = [
       VARIABLE.SECTION_TYPE[1].id,
       VARIABLE.SECTION_TYPE[2].id,
       VARIABLE.SECTION_TYPE[3].id,
@@ -112,7 +114,7 @@ export class OptionListPigSectionComponent {
   @Output() pigChange = new EventEmitter();
 
   viewDetail() {
-    this.navCtrl.push(PigViewPage, { pig: this.pig });
+    this.navCtrl.push(PigSummaryPage, { pig: this.pig });
   }
 
   /**
@@ -233,6 +235,45 @@ export class OptionListPigSectionComponent {
       })
       .catch((err: Error) => { })
   }
+
+  /**
+   * Thêm vào danh sách chờ chuyển sang trang trại khác
+   */
+  forwardToFarmTransferWating() {
+    let statusTransferWaiting = this.deployData.get_status_farm_transferWaiting_of_pig(this.pig.statusId);
+    let pigUpdate: pig = this.util.deepClone(this.pig);
+    pigUpdate.statusId = statusTransferWaiting.id;
+    pigUpdate = this.deployData.get_pig_object_to_send_request(pigUpdate);
+    this.pigProvider.updatePig(pigUpdate)
+      .then((pig: pig) => {
+        if (pig && pig.id) {
+          this.pig = pig;
+          this.publishPigChangeEvent(this.pig);
+        }
+      })
+      .catch((err: Error) => { })
+  }
+
+
+  /**
+   * Thực hiện hủy trạng thái chờ chuyển trại
+   */
+  cancelFarmTransferWating() {
+    let statusFarmTransferWaiting = this.deployData.get_status_by_id(this.pig.statusId);
+    let pig = this.util.deepClone(this.pig);
+    pig.statusId = statusFarmTransferWaiting.previousStatus;
+    pig = this.deployData.get_pig_object_to_send_request(pig);
+    this.pigProvider.updatePig(pig)
+      .then((updatedPig: pig) => {
+        if (updatedPig && updatedPig.id) {
+          this.pig = updatedPig;
+          this.publishPigChangeEvent(this.pig);
+        }
+      })
+      .catch((err: Error) => { })
+  }
+
+
 
   /**
    * Thực hiện cập nhật heo và chuyển khu

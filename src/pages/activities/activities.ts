@@ -77,7 +77,7 @@ export class ActivitiesPage {
       },
       list_sperm_pig_khu_noc: {
         name: 'Danh sách tinh heo', component: SpermListPage, active: false,
-        data:{
+        data: {
           sectionType: VARIABLE.SECTION_TYPE[2],
         }
       },
@@ -117,11 +117,11 @@ export class ActivitiesPage {
           },
           pigs: []
         },
-        pigs:[]
+        pigs: []
       },
       list_mating_khu_phoi: {
         name: 'Danh sách giao phối', component: MatingListPage, active: false,
-        data:{
+        data: {
           sectionType: VARIABLE.SECTION_TYPE[3],
         }
       },
@@ -167,7 +167,7 @@ export class ActivitiesPage {
       },
       list_mating_khu_mang_thai: {
         name: 'Danh sách giao phối', component: MatingListPage, active: false,
-        data:{
+        data: {
           sectionType: VARIABLE.SECTION_TYPE[4],
         }
       },
@@ -183,7 +183,7 @@ export class ActivitiesPage {
       },
       list_mating_khu_de: {
         name: 'Danh sách giao phối', component: MatingListPage, active: false,
-        data:{
+        data: {
           sectionType: VARIABLE.SECTION_TYPE[5],
         }
       },
@@ -246,7 +246,7 @@ export class ActivitiesPage {
           getPigs(deployData: DeployDataProvider) {
             return deployData.get_all_sale_pig();
           },
-          pigs : []
+          pigs: []
         }
       },
       breeding_pig_khu_cach_ly: {
@@ -366,25 +366,29 @@ export class ActivitiesPage {
       this.pages.forEach((element: any) => {
         element.active = false;
       });
-      // Object.keys(this.components).forEach(key => {
-      //   this.components[key].active = false;
-      // })
       page.active = true;
-      // if (page.component)
-      //   this.nav.setRoot(page.component);
     }
   }
 
   openComponent(componentObj) {
-    if (!componentObj.active) {
-      Object.keys(this.components).forEach(key => {
-        this.components[key].active = false;
-      })
+    if (this.platform.is('core')) {
+      if (!componentObj.active) {
+        Object.keys(this.components).forEach(key => {
+          this.components[key].active = false;
+        })
+      }
+      componentObj.active = true;
+      if (componentObj.data.hasOwnProperty('getPigs')) {
+        componentObj.data['pigs'] = componentObj.data.getPigs(this.deployData);
+      }
+      this.nav.setRoot(componentObj.component, componentObj.data)
+    } 
+    else {
+      if (componentObj.data.hasOwnProperty('getPigs')) {
+        componentObj.data['pigs'] = componentObj.data.getPigs(this.deployData);
+      }
+      this.navCtrl.push(componentObj.component, componentObj.data)
     }
-    componentObj.active = true;
-    if (componentObj.data.hasOwnProperty('getPigs')) {
-      componentObj.data['pigs'] = componentObj.data.getPigs(this.deployData);
-    }
-    this.nav.setRoot(componentObj.component, componentObj.data)
   }
+
 } 
