@@ -9,6 +9,7 @@ import { FormControl } from '@angular/forms';
 import { ExportInternalPigInvoiceRole } from '../../role-input/export-InternalPigInvoice';
 import { VARIABLE } from '../../common/const';
 import { InvoiceInputUtilComponent } from '../invoice-input-util/invoice-input-util';
+import { ExportInternalPigInvoiceDetailPage } from '../../pages/export-internal-pig-invoice-detail/export-internal-pig-invoice-detail';
 
 
 @Component({
@@ -138,5 +139,29 @@ export class ExportInternalPigInvoiceComponent {
     //     this.events.unsubscribe('callback');
     //   }
     // })
+  }
+
+  input_pig(item) {
+
+    let callback = (invoice: invoicesPig) => {
+      if (invoice) {
+        let idx = this.invoices.findIndex(_invoice => _invoice.id == invoice.id);
+        if (idx > -1) {
+          this.invoices[idx] = invoice;
+          this.setFilteredItems();
+        }
+      }
+    }
+
+    let callbackRemove = invoice => {
+      if (invoice) {
+        let idx = this.invoices.findIndex(Obj => Obj.id == invoice.id);
+        if (idx > -1)
+          this.invoices.splice(idx, 1);
+        this.setFilteredItems();
+      }
+    }
+
+    this.navCtrl.push(ExportInternalPigInvoiceDetailPage, { invoice: item, callback: callback, callbackRemove: callbackRemove });
   }
 }

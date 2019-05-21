@@ -92,6 +92,9 @@ export class ExternalPigInvoiceDetailPage {
     this.slider.slideTo(index);
   }
 
+  /**
+   * Nhập heo vào chứng từ
+   */
   input_pig() {
     let statusPigValiable = this.settingProvider.setting.status.filter((status) => {
       return status.previousStatus == '0' ? true : false;
@@ -116,6 +119,9 @@ export class ExternalPigInvoiceDetailPage {
     this.navCtrl.push(PigInputPage, { statusPigValiable: statusPigValiable, callback: callback });
   }
 
+  /**
+   * Đánh giá lại heo thuộc chứng từ
+   */
   edit(item: invoicePigDetail) {
     let callback = (pig: pig) => {
       pig = this.deployData.get_pig_object_to_send_request(pig);
@@ -129,6 +135,10 @@ export class ExternalPigInvoiceDetailPage {
     this.navCtrl.push(PigInputPage, { pigId: item.objectId, callback: callback });
   }
 
+  /**
+   * Xóa heo khỏi chứng từ
+   * @param invoiceDetail 
+   */
   removePigInvoicesDetail(invoiceDetail: invoicePigDetail) {
     this.invoiceProvider.removePigInvoiceDetail(invoiceDetail)
       .then((isOK_detail) => {
@@ -149,7 +159,9 @@ export class ExternalPigInvoiceDetailPage {
       .catch((err: Error) => { })
   }
 
-
+  /**
+   * Xóa chứng từ
+   */
   removeInvoice() {
     this.invoiceProvider.removePigInvoice(this.invoice)
       .then((isOK) => {
@@ -162,7 +174,9 @@ export class ExternalPigInvoiceDetailPage {
       .catch((err: Error) => { })
   }
 
-
+  /**
+   * Chỉnh sửa chứng từ
+   */
   editInvoice() {
 
     let callback = data =>{
@@ -171,6 +185,7 @@ export class ExternalPigInvoiceDetailPage {
         this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
         this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.sourceId);
         this.navParams.get('callback')(this.invoice);
+        this.navCtrl.pop();
       }
     }
 
@@ -179,24 +194,16 @@ export class ExternalPigInvoiceDetailPage {
     roleInput.object.importDate = new Date(roleInput.object.importDate).toISOString();
     this.navCtrl.push(InvoiceInputUtilComponent,
       {
-        insertMode: true,
+        editMode: true,
         roleInput: roleInput,
         callback:callback
       }
     )
-
-    // this.events.unsubscribe('callback');
-    // this.events.subscribe('callback', (data) => {
-    //   if (data) {
-    //     this.invoice = data;
-    //     this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
-    //     this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.sourceId);
-    //     this.navParams.get('callback')(this.invoice);
-    //     this.events.unsubscribe('callback');
-    //   }
-    // })
   }
 
+  /**
+   * Xác nhận chứng từ đã hoàn tất
+   */
   completeInvoice() {
     let invoice: invoicesPig = this.util.deepClone(this.invoice);
     invoice.status = VARIABLE.INVOICE_STATUS.COMPLETE;

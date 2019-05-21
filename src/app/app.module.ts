@@ -56,6 +56,7 @@ import { BirthInputPage } from '../pages/birth-input/birth-input';
 import { BirthListPage } from '../pages/birth-list/birth-list';
 import { BirthChildDetailPage } from '../pages/birth-child-detail/birth-child-detail';
 import { ChildPigInputPage } from '../pages/child-pig-input/child-pig-input';
+import { ExportInternalPigInvoiceDetailPage } from '../pages/export-internal-pig-invoice-detail/export-internal-pig-invoice-detail';
 
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
@@ -166,7 +167,8 @@ const Pages = [
   BirthInputPage,
   BirthListPage,
   BirthChildDetailPage,
-  ChildPigInputPage
+  ChildPigInputPage,
+  ExportInternalPigInvoiceDetailPage
 ]
 
 const Components = [

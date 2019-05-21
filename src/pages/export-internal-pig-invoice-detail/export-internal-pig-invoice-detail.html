@@ -1,0 +1,249 @@
+<ion-header>
+  <ion-navbar no-padding>
+    <ion-toolbar toolbar-transparent>
+      <ion-title>Chứng từ : {{invoice.invoiceNo}}</ion-title>
+    </ion-toolbar>
+  </ion-navbar>
+  <ion-toolbar showWhen="core" class="pl-10">
+    <button ion-button mode='ios' color="secondary" (tap)="input_pig()">Nhập heo</button>
+    <button *ngIf="canEditInvoice" ion-button mode='ios' color="secondary" (tap)="editInvoice()">Chỉnh sửa chứng
+      từ</button>
+    <button *ngIf="canCheckComplete" ion-button mode='ios' color="secondary" (tap)="completeInvoice()">Xác nhận hoàn
+      tất</button>
+    <button *ngIf="!details.length" ion-button mode='ios' color="danger" (tap)="removeInvoice()">Xóa chứng từ</button>
+  </ion-toolbar>
+  <ion-toolbar showWhen='ios,android'>
+    <ion-segment [(ngModel)]="tab" scrollable>
+      <ion-segment-button value="0" (tap)="selectedTab(0)">Thông tin chứng từ</ion-segment-button>
+      <ion-segment-button value="1" (tap)="selectedTab(1)">Chi tiết</ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content no-padding showWhen="core">
+  <ion-row>
+    <ion-col col-lg-4 col-md-4 col-sm-12 col-xs-12>
+      <ion-card mode='ios'>
+        <ion-card-header>
+          <ion-card-title>Thông tin chứng từ</ion-card-title>
+        </ion-card-header>
+        <ion-card-content class="card-content-custom">
+          <ion-list *ngIf="invoice">
+            <ion-item>
+              <ion-label stacked>Nơi cung cấp:</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.source.name"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Người đại diện:</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.sourceManagerName"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Số xe vận chuyển:</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.vehicleNumber"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Nơi nhận:</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.destination.name"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Người đại diện</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.destinationManagerName"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Ngày xuất:</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.exportDate"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Ngày cập nhật:</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.updatedAt"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Tổng số heo theo chứng từ:</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.quantity"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Tổng số heo đã nhập:</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="details.length"></ion-input>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+
+    <ion-col col-lg-8 col-md-8 col-sm-12 col-xs-12>
+      <ion-card mode='ios'>
+        <ion-card-header>
+          <ion-card-title>Danh sách heo theo chứng từ</ion-card-title>
+        </ion-card-header>
+        <ion-card-content class="card-content-custom">
+          <ion-list>
+            <span *ngFor="let item of details">
+              <ion-item *ngIf="pigs[item.objectId]">
+                <ion-avatar item-start>
+                  <ion-icon name="app-pig-outline" font28></ion-icon>
+                </ion-avatar>
+                <h2>Mã heo:<b>{{pigs[item.objectId].pigCode}}</b></h2>
+                <ion-row>
+                  <ion-col>
+                    <ion-row>
+                      <ion-col col-lg-3 col-md-6 col-sm-12>
+                        <p text-wrap><b>Giống:</b>{{pigs[item.objectId].breedId}}</p>
+                      </ion-col>
+                      <ion-col col-lg-3 col-md-6 col-sm-12>
+                        <p text-wrap><b>Giới tính:</b>{{pigs[item.objectId].gender}}</p>
+                      </ion-col>
+                      <ion-col col-lg-3 col-md-6 col-sm-12>
+                        <p text-wrap><b>Ngày sinh:</b>{{pigs[item.objectId].birthday|date:'dd/MM/yyyy'}}</p>
+                      </ion-col>
+                      <ion-col col-lg-3 col-md-6 col-sm-12>
+                        <p text-wrap><b>Nhà:</b>{{house[pigs[item.objectId].houseId].name}}</p>
+                      </ion-col>
+                      <ion-col col-lg-3 col-md-6 col-sm-12>
+                        <p text-wrap><b>Khu:</b>{{house[pigs[item.objectId].houseId].section.name}}</p>
+                      </ion-col>
+                      <ion-col col-lg-3 col-md-6 col-sm-12>
+                        <p text-wrap><b>BPSD:</b>{{gentials[pigs[item.objectId].gentialTypeId].name}}</p>
+                      </ion-col>
+                      <ion-col col-lg-3 col-md-6 col-sm-12>
+                        <p text-wrap><b>Chân:</b>{{foots[pigs[item.objectId].footTypeId].name}}</p>
+                      </ion-col>
+                      <ion-col col-lg-3 col-md-6 col-sm-12>
+                        <p text-wrap><b>Điểm TT:</b>{{pigs[item.objectId].healthPoint}}</p>
+                      </ion-col>
+                      <ion-col col-lg-3 col-md-6 col-sm-12>
+                        <p text-wrap><b>Sức khỏe:</b>{{healStatus[pigs[item.objectId].healthStatusId].name}}</p>
+                      </ion-col>
+                      <ion-col col-lg-3 col-md-6 col-sm-12>
+                        <p text-wrap><b>TL từ NCC:</b>{{pigs[item.objectId].originWeight}}</p>
+                      </ion-col>
+                      <ion-col col-lg-3 col-md-6 col-sm-12>
+                        <p text-wrap><b>TL tại trại:</b>{{pigs[item.objectId].receiveWeight}}</p>
+                      </ion-col>
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+                <button showWhen="core" ion-button item-end mode='ios' color="main" (tap)="edit(item)">Đánh giá
+                  lại</button>
+                <button showWhen="core" ion-button item-end mode='ios' color="danger"
+                  (tap)="removePigInvoicesDetail(item)">Xóa</button>
+              </ion-item>
+            </span>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-content>
+
+
+<!-- <ion-content no-padding showWhen="ios,android">
+    <ion-slides #slider (ionSlideDidChange)="slideChange()">
+      <ion-slide>
+        <ion-list *ngIf="invoice">
+          <ion-item>
+            <ion-label stacked>Nơi cung cấp:</ion-label>
+            <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.source.name"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Người đại diện:</ion-label>
+            <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.sourceManagerName"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Nơi nhận:</ion-label>
+            <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.destination.name"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Người đại diện</ion-label>
+            <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.destinationManagerName"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Ngày nhập:</ion-label>
+            <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.importDate"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Ngày cập nhật:</ion-label>
+            <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.updatedAt"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Tổng số heo theo chứng từ:</ion-label>
+            <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.quantity"></ion-input>
+          </ion-item>
+        </ion-list>
+      </ion-slide>
+  
+      <ion-slide>
+        <ion-list>
+          <ion-item-sliding *ngFor="let item of details">
+            <ion-item *ngIf="pigs[item.objectId]">
+              <h2><b>{{item.food_name}}</b></h2>
+              <ion-row>
+                <ion-col>
+                  <ion-row>
+                    <ion-col col-lg-3 col-md-6 col-sm-12>
+                      <p><b>Mã heo:</b>{{pigs[item.objectId].pigCode}}</p>
+                    </ion-col>
+                    <ion-col col-lg-3 col-md-6 col-sm-12>
+                      <p><b>Giống:</b>{{pigs[item.objectId].breedId}}</p>
+                    </ion-col>
+                    <ion-col col-lg-3 col-md-6 col-sm-12>
+                      <p><b>Giới tính:</b>{{pigs[item.objectId].gender}}</p>
+                    </ion-col>
+                    <ion-col col-lg-3 col-md-6 col-sm-12>
+                      <p><b>Ngày sinh:</b>{{pigs[item.objectId].birthday|date:'dd/MM/yyyy'}}</p>
+                    </ion-col>
+                    <ion-col col-lg-3 col-md-6 col-sm-12>
+                      <p><b>Nhà:</b>{{house[pigs[item.objectId].houseId].name}}</p>
+                    </ion-col>
+                    <ion-col col-lg-3 col-md-6 col-sm-12>
+                      <p><b>Khu:</b>{{house[pigs[item.objectId].houseId].section.name}}</p>
+                    </ion-col>
+                    <ion-col col-lg-3 col-md-6 col-sm-12>
+                      <p><b>BPSD:</b>{{gentials[pigs[item.objectId].gentialTypeId].name}}</p>
+                    </ion-col>
+                    <ion-col col-lg-3 col-md-6 col-sm-12>
+                      <p><b>Chân:</b>{{foots[pigs[item.objectId].footTypeId].name}}</p>
+                    </ion-col>
+                    <ion-col col-lg-3 col-md-6 col-sm-12>
+                      <p><b>Điểm TT:</b>{{pigs[item.objectId].healthPoint}}</p>
+                    </ion-col>
+                    <ion-col col-lg-3 col-md-6 col-sm-12>
+                      <p><b>Sức khỏe:</b>{{healStatus[pigs[item.objectId].healthStatusId].name}}</p>
+                    </ion-col>
+                    <ion-col col-lg-3 col-md-6 col-sm-12>
+                      <p><b>TL từ NCC:</b>{{pigs[item.objectId].originWeight}}</p>
+                    </ion-col>
+                    <ion-col col-lg-3 col-md-6 col-sm-12>
+                      <p><b>TL tại trại:</b>{{pigs[item.objectId].receiveWeight}}</p>
+                    </ion-col>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+            </ion-item>
+            <ion-item-options side="right" showWhen="ios,android">
+              <button ion-button color="danger" (tap)="removePigInvoicesDetail(item)">Xóa</button>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+      </ion-slide>
+    </ion-slides>
+  
+    <ion-fab bottom right showWhen="android,windows,ios">
+      <button ion-fab>
+        <ion-icon name="ios-arrow-up"></ion-icon>
+      </button>
+      <ion-fab-list side="top" style="right:0px">
+        <button *ngIf="!details.length"  (tap)="removeInvoice()" data-balloon-visible data-balloon-length="medium" data-balloon="Xóa chứng từ" data-balloon-pos="left"
+          ion-fab color="danger">
+          <ion-icon name="md-trash"></ion-icon>
+        </button>
+        <button data-balloon-visible data-balloon-length="medium" data-balloon="Chỉnh sửa chứng từ" data-balloon-pos="left"
+          ion-fab color="main">
+          <ion-icon name="md-create"></ion-icon>
+        </button>
+        <button data-balloon-visible data-balloon-length="medium" data-balloon="Nhập heo" data-balloon-pos="left"
+          ion-fab color="main" (tap)="input_pig()">
+          <ion-icon name="add"></ion-icon>
+        </button>
+      </ion-fab-list>
+    </ion-fab>
+  </ion-content> -->
