@@ -36,7 +36,7 @@
 
 
 <ion-content *ngIf="!platform.is('core')">
-  <ion-item-divider>Danh sách hoạt động</ion-item-divider>
+  <ion-item-divider sticky="true">Danh sách hoạt động</ion-item-divider>
   <ion-list *ngFor="let p of pages" no-lines no-margin>
     <button ion-item (click)="openPage(p);p.expand=!p.expand;" [attr.active]="p.active?'':null" no-lines>
       <ion-icon item-start [name]="p.icon"></ion-icon>

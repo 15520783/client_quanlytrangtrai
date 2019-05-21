@@ -16,10 +16,10 @@ export class InternalPigInvoiceRole {
 
 
     constructor(
-        public deployData:DeployDataProvider,
+        public deployData: DeployDataProvider,
         public invoiceProvider: InvoicesProvider
     ) {
-
+        this.object.invoiceNo = VARIABLE.GENERNAL_INVOICE_ID.INTERNAL_IMPORT + Date.now();
         this.inputRole = [
             // {
             //     name: 'invoiceType',
@@ -162,11 +162,11 @@ export class InternalPigInvoiceRole {
         this.object.invoiceType = VARIABLE.INVOICE_PIG_TYPE.INTERNAL_IMPORT;
         let destination = this.deployData.get_farm_by_id(this.object.destinationId);
         let des_manager = this.deployData.get_employee_by_id(this.object.destinationManager);
-        if(destination){
+        if (destination) {
             this.object.destinationAddress = destination.address;
             this.object.destinationManager = destination.manager;
         }
-        if(des_manager){
+        if (des_manager) {
             this.object.destinationManagerName = des_manager.name;
         }
         return this.invoiceProvider.createPigInvoice(this.object);

@@ -2,6 +2,7 @@ import { invoicesPig } from "../common/entity";
 import { DeployDataProvider } from "../providers/deploy-data/deploy-data";
 import { InvoicesProvider } from "../providers/invoices/invoices";
 import { VARIABLE } from "../common/const";
+import { Utils } from "../common/utils";
 
 export class ExportInternalPigInvoiceRole {
     public object = new invoicesPig();
@@ -16,8 +17,9 @@ export class ExportInternalPigInvoiceRole {
 
     constructor(
         public deployData: DeployDataProvider,
-        public invoiceProvider: InvoicesProvider
+        public invoiceProvider: InvoicesProvider,
     ) {
+        this.object.invoiceNo = VARIABLE.GENERNAL_INVOICE_ID.INTERNAL_EXPORT + Date.now();
         this.inputRole = [
             {
                 name: 'sourceId',
@@ -76,8 +78,8 @@ export class ExportInternalPigInvoiceRole {
                     isMaxlength: 'Số chứng từ không được vượt quá 1000 ký tự'
                 },
                 type: "input-text",
-                value: this.object.invoiceNo,
-                data: [{ name: "Chọn đơn vị nguồn", value: "" }]
+                value: VARIABLE.GENERNAL_INVOICE_ID.INTERNAL_EXPORT + Date.now(),
+                notEdit: true
             },
             {
                 name: 'exportDate',
@@ -140,23 +142,23 @@ export class ExportInternalPigInvoiceRole {
     }
 
     insert() {
-        // this.object.invoiceType = VARIABLE.INVOICE_PIG_TYPE.EXTERNAL_IMPORT;
-        // this.object.status = VARIABLE.INVOICE_STATUS.PROCCESSING;
-        // let source = this.deployData.get_partner_by_id(this.object.sourceId);
-        // let destination = this.deployData.get_farm_by_id(this.object.destinationId);
-        // let des_manager = this.deployData.get_employee_by_id(this.object.destinationManager);
-        // if (source) {
-        //     this.object.sourceAddress = source.address;
-        //     this.object.sourceManager = null;
-        // }
-        // if (destination) {
-        //     this.object.destinationAddress = destination.address;
-        //     this.object.destinationManager = destination.manager;
-        // }
-        // if (des_manager) {
-        //     this.object.destinationManagerName = des_manager.name;
-        // }
-        // return this.invoiceProvider.createPigInvoice(this.object);
+        this.object.invoiceType = VARIABLE.INVOICE_PIG_TYPE.INTERNAL_EXPORT;
+        this.object.status = VARIABLE.INVOICE_STATUS.PROCCESSING;
+        let source = this.deployData.get_farm_by_id(this.object.sourceId);
+        let destination = this.deployData.get_farm_by_id(this.object.destinationId);
+        let des_manager = this.deployData.get_employee_by_id(this.object.destinationManager);
+        if (source) {
+            this.object.sourceAddress = source.address;
+            this.object.sourceManager = source.manager;
+        }
+        if (destination) {
+            this.object.destinationAddress = destination.address;
+            this.object.destinationManager = destination.manager;
+        }
+        if (des_manager) {
+            this.object.destinationManagerName = des_manager.name;
+        }
+        return this.invoiceProvider.createPigInvoice(this.object);
     }
 
     update() {

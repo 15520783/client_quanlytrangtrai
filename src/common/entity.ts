@@ -446,7 +446,7 @@ class invoicesPig extends base {
 	invoiceNo: string = '';
 	invoiceType: string = '';
 	sourceId: string = '';
-	sourceManager: number = null;
+	sourceManager: string = '';
 	sourceManagerName: string = '';
 	sourceAddress: string = '';
 	destinationId: string = '';

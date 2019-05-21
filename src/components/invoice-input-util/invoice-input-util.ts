@@ -12,7 +12,7 @@ import { ValidateNumber } from '../../validators/number.validator';
 export class InvoiceInputUtilComponent {
 
   public title: string = 'Nhập thông tin';
-  public roleInput: { inputRole: any, object: any, headerTitle: any, keySettingStorage: string, insert(),update() };
+  public roleInput: { inputRole: any, object: any, headerTitle: any, keySettingStorage: string, insert(), update() };
   public groupFormBuild: any = {};
   public submitAttempt: boolean = false;
   credentialsForm: FormGroup;
@@ -48,6 +48,13 @@ export class InvoiceInputUtilComponent {
     })
 
     this.credentialsForm = this.formBuilder.group(this.groupFormBuild);
+
+    this.navParams.data.roleInput.inputRole.forEach(e => {
+      if (e.notEdit) {
+        this.credentialsForm.controls[e.name].disable();
+        this.credentialsForm.controls[e.name].setErrors(null);
+      }
+    })
   }
 
   ngAfterContentInit(): void {
@@ -63,14 +70,15 @@ export class InvoiceInputUtilComponent {
       this.roleInput.inputRole.forEach(e => {
         this.roleInput.object[e.name] = this.credentialsForm.controls[e.name].value;
       });
-      
+
 
       if (this.navParams.data.insertMode) {
         this.roleInput.insert()
           .then((data: any) => {
             if (data) {
-              this.events.publish('callback', data);
-              this.navCtrl.pop();
+              this.navParams.get('callback')(data);
+              // this.events.publish('callback', data);
+              // this.navCtrl.pop();
             }
           })
           .catch((err: Error) => {})
@@ -80,8 +88,9 @@ export class InvoiceInputUtilComponent {
         this.roleInput.update()
           .then((data: any) => {
             if (data) {
-              this.events.publish('callback',data);
-              this.navCtrl.pop();
+              this.navParams.get('callback')(data);
+              // this.events.publish('callback',data);
+              // this.navCtrl.pop();
             }
           })
           .catch((err: Error) => {

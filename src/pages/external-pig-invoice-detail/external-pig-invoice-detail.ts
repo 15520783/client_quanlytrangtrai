@@ -164,26 +164,37 @@ export class ExternalPigInvoiceDetailPage {
 
 
   editInvoice() {
+
+    let callback = data =>{
+      if (data) {
+        this.invoice = data;
+        this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
+        this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.sourceId);
+        this.navParams.get('callback')(this.invoice);
+      }
+    }
+
     let roleInput = new ExternalPigInvoiceRole(this.deployData, this.invoiceProvider);
     roleInput.object = this.util.deepClone(this.invoice);
     roleInput.object.importDate = new Date(roleInput.object.importDate).toISOString();
     this.navCtrl.push(InvoiceInputUtilComponent,
       {
         insertMode: true,
-        roleInput: roleInput
+        roleInput: roleInput,
+        callback:callback
       }
     )
 
-    this.events.unsubscribe('callback');
-    this.events.subscribe('callback', (data) => {
-      if (data) {
-        this.invoice = data;
-        this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
-        this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.sourceId);
-        this.navParams.get('callback')(this.invoice);
-        this.events.unsubscribe('callback');
-      }
-    })
+    // this.events.unsubscribe('callback');
+    // this.events.subscribe('callback', (data) => {
+    //   if (data) {
+    //     this.invoice = data;
+    //     this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
+    //     this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.sourceId);
+    //     this.navParams.get('callback')(this.invoice);
+    //     this.events.unsubscribe('callback');
+    //   }
+    // })
   }
 
   completeInvoice() {

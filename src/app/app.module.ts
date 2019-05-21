@@ -80,6 +80,7 @@ import { SalePigInvoicesComponent } from '../components/sale-pig-invoices/sale-p
 import { NotFoundDataComponent } from '../components/not-found-data/not-found-data';
 import { SchelduleDetailComponent } from '../components/scheldule-detail/scheldule-detail';
 import { ListFabButtonPigComponent } from '../components/list-fab-button-pig/list-fab-button-pig';
+import { ExportInternalPigInvoiceComponent } from '../components/export-internal-pig-invoice/export-internal-pig-invoice';
 
 import { HideHeaderDirective } from '../directives/hide-header/hide-header';
 
@@ -191,7 +192,8 @@ const Components = [
   OptionListPigSectionComponent,
   NotFoundDataComponent,
   SchelduleDetailComponent,
-  ListFabButtonPigComponent
+  ListFabButtonPigComponent,
+  ExportInternalPigInvoiceComponent
 ]
 
 const Providers = [

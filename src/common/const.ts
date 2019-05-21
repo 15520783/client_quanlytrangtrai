@@ -73,7 +73,7 @@ const VARIABLE = {
         SOLD: "10",
         MATING: "11",
         NEWBORN: "12",
-        WAIT_FOR_TRANSFER:"13"
+        WAIT_FOR_TRANSFER: "13"
     },
     INVOICE_ID: {
         '31': '4',
@@ -118,6 +118,12 @@ const VARIABLE = {
         PIG: 'pig',
         HOUSE: 'house'
     },
+    GENERNAL_INVOICE_ID: {
+        INTERNAL_IMPORT: 'INT-IMP',
+        EXTERNAL_IMPORT: 'EXT-IMP',
+        INTERNAL_EXPORT: 'EXT-EX',
+        SALING_EXPORT: 'SAL-EX',
+    }
 }
 
 const API = {

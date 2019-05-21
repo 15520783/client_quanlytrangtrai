@@ -116,23 +116,34 @@ export class ExternalPigInvoicesComponent {
   }
 
   add() {
-    this.roleInput.clear();
-    this.navCtrl.push(InvoiceInputUtilComponent,
-      {
-        insertMode: true,
-        roleInput: this.roleInput
-      }
-    )
 
-    this.events.unsubscribe('callback');
-    this.events.subscribe('callback', (data) => {
-      console.log('TEST', data);
+    let callback = data => {
       if (data) {
         this.invoices.push(data);
         this.setFilteredItems();
-        this.events.unsubscribe('callback');
+        this.navCtrl.pop();
       }
-    })
+    }
+
+    this.roleInput.clear();
+    this.roleInput.object.invoiceNo = VARIABLE.GENERNAL_INVOICE_ID.EXTERNAL_IMPORT + Date.now();
+    this.navCtrl.push(InvoiceInputUtilComponent,
+      {
+        insertMode: true,
+        roleInput: this.roleInput,
+        callback: callback
+      }
+    )
+
+    // this.events.unsubscribe('callback');
+    // this.events.subscribe('callback', (data) => {
+    //   console.log('TEST', data);
+    //   if (data) {
+    //     this.invoices.push(data);
+    //     this.setFilteredItems();
+    //     this.events.unsubscribe('callback');
+    //   }
+    // })
   }
 
   input_pig(item) {

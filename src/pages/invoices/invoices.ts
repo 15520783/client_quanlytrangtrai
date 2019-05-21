@@ -7,6 +7,7 @@ import { InternalPigInvoicesComponent } from '../../components/internal-pig-invo
 import { ExternalPigInvoicesComponent } from '../../components/external-pig-invoices/external-pig-invoices';
 import { FoodInvoicesComponent } from '../../components/food-invoices/food-invoices';
 import { MedicineInvoicesComponent } from '../../components/medicine-invoices/medicine-invoices';
+import { ExportInternalPigInvoiceComponent } from '../../components/export-internal-pig-invoice/export-internal-pig-invoice';
 
 
 @IonicPage()
@@ -56,7 +57,7 @@ export class InvoicesPage {
       exportInternalPigInvoice: {
         title: 'Chứng từ xuất heo trong hệ thống',
         invoices: [],
-        component: InternalPigInvoicesComponent
+        component: ExportInternalPigInvoiceComponent
       },
       foodInvoice: {
         title: 'Chứng từ nhập cám',

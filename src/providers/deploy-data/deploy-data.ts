@@ -681,6 +681,23 @@ export class DeployDataProvider {
     })
   }
 
+   /**
+   * Lấy danh sách heo chờ chuyển trại ở từng khu 
+   * @param sectionTypeId 
+   */
+  get_pigs_transfer_waiting_of_section(sectionTypeId: string) {
+    let housesId: any = [];
+    this.houseProvider.houses.filter((house) => {
+      return (house.section.typeId == sectionTypeId) ? true : false;
+    }).forEach((house) => {
+      housesId.push(house.id);
+    })
+    let statusObjectKeyList = this.get_object_list_key_of_status();
+    return this.pigsProvider.pigs.filter((pig) => {
+      return housesId.includes(pig.houseId) && statusObjectKeyList[pig.statusId].code == VARIABLE.STATUS_PIG.WAIT_FOR_TRANSFER ? true : false;
+    })
+  }
+
   /**
    * Lấy danh sách heo nái đã phối ở khu
    * @param sectionTypeId 

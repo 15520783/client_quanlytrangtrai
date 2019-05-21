@@ -53,6 +53,17 @@ export class ActivitiesPage {
           statusFilter: [VARIABLE.STATUS_PIG.WAIT_FOR_SALE]
         }
       },
+      list_pig_for_transfer_cach_ly: {
+        name: 'Danh sách heo chờ chuyển trại', component: PigListSectionPage, active: false,
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[1],
+          getPigs(deployData: DeployDataProvider) {
+            return deployData.get_pigs_transfer_waiting_of_section(VARIABLE.SECTION_TYPE[1].id)
+          },
+          pigs: [],
+          statusFilter: [VARIABLE.STATUS_PIG.WAIT_FOR_TRANSFER]
+        }
+      },
       list_pig_move_khu_cach_ly: {
         name: 'Danh sách heo chờ chuyển trại', component: PigListSectionPage, active: false,
         data: {
@@ -92,6 +103,17 @@ export class ActivitiesPage {
           statusFilter: [VARIABLE.STATUS_PIG.WAIT_FOR_SALE]
         }
       },
+      list_pig_for_transfer_khu_noc: {
+        name: 'Danh sách heo chờ chuyển trại', component: PigListSectionPage, active: false,
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[2],
+          getPigs(deployData: DeployDataProvider) {
+            return deployData.get_pigs_transfer_waiting_of_section(VARIABLE.SECTION_TYPE[2].id)
+          },
+          pigs: [],
+          statusFilter: [VARIABLE.STATUS_PIG.WAIT_FOR_TRANSFER]
+        }
+      },
       list_pig_khu_phoi: {
         name: 'Danh sách heo tại khu', component: PigListSectionPage, active: false,
         data: {
@@ -125,16 +147,28 @@ export class ActivitiesPage {
           sectionType: VARIABLE.SECTION_TYPE[3],
         }
       },
-      // list_farrowing_pig_khu_phoi: {
-      //   name: 'Danh sách heo mang thai', component: PigListSectionPage, active: false,
-      //   data: {
-      //     sectionType: VARIABLE.SECTION_TYPE[3],
-      //     getPigs(deployData: DeployDataProvider) {
-      //       return deployData.get_farrowing_pig_of_section(VARIABLE.SECTION_TYPE[3].id)
-      //     },
-      //     pigs: []
-      //   }
-      // },
+      list_pig_for_sale_khu_phoi: {
+        name: 'Danh sách heo chờ bán', component: PigListSectionPage, active: false,
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[3],
+          getPigs(deployData: DeployDataProvider) {
+            return deployData.get_pigs_sale_waiting_of_section(VARIABLE.SECTION_TYPE[3].id)
+          },
+          pigs: [],
+          statusFilter: [VARIABLE.STATUS_PIG.WAIT_FOR_SALE]
+        }
+      },
+      list_pig_for_transfer_khu_phoi: {
+        name: 'Danh sách heo chờ chuyển trại', component: PigListSectionPage, active: false,
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[3],
+          getPigs(deployData: DeployDataProvider) {
+            return deployData.get_pigs_transfer_waiting_of_section(VARIABLE.SECTION_TYPE[3].id)
+          },
+          pigs: [],
+          statusFilter: [VARIABLE.STATUS_PIG.WAIT_FOR_TRANSFER]
+        }
+      },
       list_pig_khu_mang_thai: {
         name: 'Danh sách heo tại khu', component: PigListSectionPage, active: false,
         data: {
@@ -169,6 +203,28 @@ export class ActivitiesPage {
         name: 'Danh sách giao phối', component: MatingListPage, active: false,
         data: {
           sectionType: VARIABLE.SECTION_TYPE[4],
+        }
+      },
+      list_pig_for_sale_khu_mang_thai: {
+        name: 'Danh sách heo chờ bán', component: PigListSectionPage, active: false,
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[4],
+          getPigs(deployData: DeployDataProvider) {
+            return deployData.get_pigs_sale_waiting_of_section(VARIABLE.SECTION_TYPE[4].id)
+          },
+          pigs: [],
+          statusFilter: [VARIABLE.STATUS_PIG.WAIT_FOR_SALE]
+        }
+      },
+      list_pig_for_transfer_khu_mang_thai: {
+        name: 'Danh sách heo chờ chuyển trại', component: PigListSectionPage, active: false,
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[4],
+          getPigs(deployData: DeployDataProvider) {
+            return deployData.get_pigs_transfer_waiting_of_section(VARIABLE.SECTION_TYPE[4].id)
+          },
+          pigs: [],
+          statusFilter: [VARIABLE.STATUS_PIG.WAIT_FOR_TRANSFER]
         }
       },
       list_pig_khu_de: {
@@ -214,6 +270,28 @@ export class ActivitiesPage {
           pigs: []
         }
       },
+      list_pig_for_sale_khu_de: {
+        name: 'Danh sách heo chờ bán', component: PigListSectionPage, active: false,
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[5],
+          getPigs(deployData: DeployDataProvider) {
+            return deployData.get_pigs_sale_waiting_of_section(VARIABLE.SECTION_TYPE[5].id)
+          },
+          pigs: [],
+          statusFilter: [VARIABLE.STATUS_PIG.WAIT_FOR_SALE]
+        }
+      },
+      list_pig_for_transfer_khu_de: {
+        name: 'Danh sách heo chờ chuyển trại', component: PigListSectionPage, active: false,
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[5],
+          getPigs(deployData: DeployDataProvider) {
+            return deployData.get_pigs_transfer_waiting_of_section(VARIABLE.SECTION_TYPE[5].id)
+          },
+          pigs: [],
+          statusFilter: [VARIABLE.STATUS_PIG.WAIT_FOR_TRANSFER]
+        }
+      },
       list_pig_khu_cai_sua: {
         name: 'Danh sách heo tại khu', component: PigListSectionPage, active: false,
         data: {
@@ -222,6 +300,28 @@ export class ActivitiesPage {
             return deployData.get_pigs_of_section(VARIABLE.SECTION_TYPE[6].id)
           },
           pigs: []
+        }
+      },
+      list_pig_for_sale_khu_cai_sua: {
+        name: 'Danh sách heo chờ bán', component: PigListSectionPage, active: false,
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[6],
+          getPigs(deployData: DeployDataProvider) {
+            return deployData.get_pigs_sale_waiting_of_section(VARIABLE.SECTION_TYPE[6].id)
+          },
+          pigs: [],
+          statusFilter: [VARIABLE.STATUS_PIG.WAIT_FOR_SALE]
+        }
+      },
+      list_pig_for_transfer_khu_cai_sua: {
+        name: 'Danh sách heo chờ chuyển trại', component: PigListSectionPage, active: false,
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[6],
+          getPigs(deployData: DeployDataProvider) {
+            return deployData.get_pigs_transfer_waiting_of_section(VARIABLE.SECTION_TYPE[6].id)
+          },
+          pigs: [],
+          statusFilter: [VARIABLE.STATUS_PIG.WAIT_FOR_TRANSFER]
         }
       },
       list_pig_khu_hau_bi: {
@@ -237,6 +337,28 @@ export class ActivitiesPage {
         name: 'Danh sách lên giống heo', component: BreedingListPage, active: false,
         data: {
           sectionType: VARIABLE.SECTION_TYPE[7]
+        }
+      },
+      list_pig_for_sale_khu_hau_bi: {
+        name: 'Danh sách heo chờ bán', component: PigListSectionPage, active: false,
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[7],
+          getPigs(deployData: DeployDataProvider) {
+            return deployData.get_pigs_sale_waiting_of_section(VARIABLE.SECTION_TYPE[7].id)
+          },
+          pigs: [],
+          statusFilter: [VARIABLE.STATUS_PIG.WAIT_FOR_SALE]
+        }
+      },
+      list_pig_for_transfer_khu_hau_bi: {
+        name: 'Danh sách heo chờ chuyển trại', component: PigListSectionPage, active: false,
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[6],
+          getPigs(deployData: DeployDataProvider) {
+            return deployData.get_pigs_transfer_waiting_of_section(VARIABLE.SECTION_TYPE[6].id)
+          },
+          pigs: [],
+          statusFilter: [VARIABLE.STATUS_PIG.WAIT_FOR_TRANSFER]
         }
       },
       list_pig_khu_8: {
@@ -267,6 +389,7 @@ export class ActivitiesPage {
         components: [
           this.components.list_pig_khu_cach_ly,
           this.components.list_pig_for_sale_khu_cach_ly,
+          this.components.list_pig_for_transfer_cach_ly,
           this.components.list_pig_breeding_khu_cach_ly,
           this.components.list_pig_move_khu_cach_ly,
         ],
@@ -277,6 +400,7 @@ export class ActivitiesPage {
         components: [
           this.components.list_pig_khu_noc,
           this.components.list_pig_for_sale_khu_noc,
+          this.components.list_pig_for_transfer_khu_noc,
           this.components.list_sperm_pig_khu_noc
         ],
         icon: 'app-activities', active: false, expand: false
@@ -288,7 +412,8 @@ export class ActivitiesPage {
           this.components.list_pig_breeding_khu_phoi,
           this.components.list_mating_pig_khu_phoi,
           this.components.list_mating_khu_phoi,
-          // this.components.list_farrowing_pig_khu_phoi
+          this.components.list_pig_for_sale_khu_phoi,
+          this.components.list_pig_for_transfer_khu_phoi
         ],
         icon: 'app-activities', active: false
       },
@@ -298,7 +423,9 @@ export class ActivitiesPage {
           this.components.list_pig_khu_mang_thai,
           this.components.list_farrowing_pig_khu_mang_thai,
           this.components.list_abortion_pig_khu_mang_thai,
-          this.components.list_mating_khu_mang_thai
+          this.components.list_mating_khu_mang_thai,
+          this.components.list_pig_for_sale_khu_mang_thai,
+          this.components.list_pig_for_transfer_khu_mang_thai
         ],
         icon: 'app-activities', active: false
       },
@@ -309,7 +436,9 @@ export class ActivitiesPage {
           this.components.list_mating_khu_de,
           this.components.list_birth_khu_de,
           this.components.list_weaning_pig_khu_de,
-          this.components.list_growing_child_pig_khu_de
+          this.components.list_growing_child_pig_khu_de,
+          this.components.list_pig_for_sale_khu_de,
+          this.components.list_pig_for_transfer_khu_de
         ],
         icon: 'app-activities', active: false
       },
@@ -317,7 +446,9 @@ export class ActivitiesPage {
         title: 'Khu cai sữa',
         components: [
           this.components.list_pig_khu_cai_sua,
-          this.components.chuyen_heo_nen_khu_cai_sua
+          this.components.chuyen_heo_nen_khu_cai_sua,
+          this.components.list_pig_for_sale_khu_cai_sua,
+          this.components.list_pig_for_transfer_khu_cai_sua,
         ],
         icon: 'app-activities', active: false
       },
@@ -325,7 +456,9 @@ export class ActivitiesPage {
         title: 'Khu hậu bị',
         components: [
           this.components.list_pig_khu_hau_bi,
-          this.components.list_pig_breeding_khu_hau_bi
+          this.components.list_pig_breeding_khu_hau_bi,
+          this.components.list_pig_for_sale_khu_hau_bi,
+          this.components.list_pig_for_transfer_khu_hau_bi,
         ],
         icon: 'app-activities', active: false
       },

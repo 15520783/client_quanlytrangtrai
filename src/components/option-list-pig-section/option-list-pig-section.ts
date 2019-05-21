@@ -47,6 +47,7 @@ export class OptionListPigSectionComponent {
     public activitiesProvider: ActivitiesProvider
   ) {
     this.statusPig = {
+      UNKNOW:VARIABLE.STATUS_PIG.UNKNOW,
       WAIT_FOR_SALE: VARIABLE.STATUS_PIG.WAIT_FOR_SALE,
       WAIT_FOR_MATING: VARIABLE.STATUS_PIG.WAIT_FOR_MATING,
       MATING: VARIABLE.STATUS_PIG.MATING,
