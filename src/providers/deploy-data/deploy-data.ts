@@ -681,10 +681,10 @@ export class DeployDataProvider {
     })
   }
 
-   /**
-   * Lấy danh sách heo chờ chuyển trại ở từng khu 
-   * @param sectionTypeId 
-   */
+  /**
+  * Lấy danh sách heo chờ chuyển trại ở từng khu 
+  * @param sectionTypeId 
+  */
   get_pigs_transfer_waiting_of_section(sectionTypeId: string) {
     let housesId: any = [];
     this.houseProvider.houses.filter((house) => {
@@ -792,6 +792,16 @@ export class DeployDataProvider {
     let status = this.get_object_list_key_of_status();
     return this.pigsProvider.pigs.filter((pig) => {
       return status[pig.statusId].code == VARIABLE.STATUS_PIG.WAIT_FOR_SALE ? true : false;
+    })
+  }
+
+  /**
+   * Lấy toàn bộ heo đang chờ chuyển trại
+   */
+  get_all_transfer_waiting_pig() {
+    let status = this.get_object_list_key_of_status();
+    return this.pigsProvider.pigs.filter((pig) => {
+      return status[pig.statusId].code == VARIABLE.STATUS_PIG.WAIT_FOR_TRANSFER ? true : false;
     })
   }
 

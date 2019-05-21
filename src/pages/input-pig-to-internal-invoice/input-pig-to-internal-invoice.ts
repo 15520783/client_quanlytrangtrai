@@ -4,7 +4,7 @@ import { VARIABLE } from '../../common/const';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
-import { pig } from '../../common/entity';
+import { pig, house } from '../../common/entity';
 
 @IonicPage()
 @Component({
@@ -32,6 +32,9 @@ export class InputPigToInternalInvoicePage {
     public viewCtrl: ViewController
   ) {
     this.init();
+
+    
+
     this.credentialsForm = this.formBuilder.group({
       id: ['', Validators.compose([Validators.required])],
       // id: this.pig.id,
@@ -65,6 +68,32 @@ export class InputPigToInternalInvoicePage {
       // pregnancyStatusId:[this.pig.pregnancyStatusId, Validators.compose([Validators.required])],
       // priceCodeId: [this.pig.priceCodeId, Validators.compose([Validators.required])],
     });
+
+    if(this.navParams.data.pig){
+      this.pig = this.navParams.data.pig;
+
+      let house: house = this.deployData.get_house_by_id(this.pig.houseId);
+
+      this.deployData.get_sections_of_farm(house.section.farm.id).forEach((section) => {
+        this.sections.push({
+          name: section.name,
+          value: section.id
+        })
+      })
+
+      this.deployData.get_houses_of_section(house.section.id).forEach((house) => {
+        this.houses.push({
+          name: house.name,
+          value: house.id
+        })
+      })
+      this.pig['farmId'] = house.section.farm.id;
+      this.pig['sectionId'] = house.section.id;
+      Object.keys(this.credentialsForm.value).forEach(attr=>{
+        this.credentialsForm.controls[attr].setValue(this.pig[attr]);
+      })
+    }
+    
   }
 
   ionViewDidLoad() {
@@ -78,14 +107,18 @@ export class InputPigToInternalInvoicePage {
       Object.keys(this.credentialsForm.value).forEach((attr) => {
         this.pig[attr] = this.credentialsForm.value[attr];
       });
-      this.events.publish('updatePig', this.pig);
-      this.events.subscribe('OK', () => {
-        this.viewCtrl.dismiss();
-        this.events.unsubscribe('OK');
-      })
+
+      this.navParams.get('callback')(this.pig);
+
+      // this.events.publish('updatePig', this.pig);
+      // this.events.subscribe('OK', () => {
+      //   this.viewCtrl.dismiss();
+      //   this.events.unsubscribe('OK');
+      // })
     }
   }
 
+  public pigs:Array<pig> = [];
   public farms: Array<{ name: string, value: string }> = [];
   public sections: Array<{ name: string, value: string }> = [];
   public houses: Array<{ name: string, value: string }> = [];
@@ -100,6 +133,12 @@ export class InputPigToInternalInvoicePage {
   public genders: Array<{ name: string, value: string }> = [];
   public status: Array<{ name: string, value: string }> = [];
   init() {
+
+    if(this.navParams.data.pigs){
+      this.pigs = this.navParams.data.pigs;
+      
+    }
+
     this.farms = this.deployData.get_farm_list_for_select();
     this.settingProvider.setting.breeds.forEach((breed) => {
       this.breeds.push({

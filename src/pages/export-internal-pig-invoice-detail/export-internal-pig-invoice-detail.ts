@@ -5,10 +5,11 @@ import { Utils } from '../../common/utils';
 import { PigsProvider } from '../../providers/pigs/pigs';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
-import { invoicePigDetail, invoicesPig } from '../../common/entity';
+import { invoicePigDetail, invoicesPig, pig } from '../../common/entity';
 import { VARIABLE, MESSAGE } from '../../common/const';
 import { ExportInternalPigInvoiceRole } from '../../role-input/export-InternalPigInvoice';
 import { InvoiceInputUtilComponent } from '../../components/invoice-input-util/invoice-input-util';
+import { InputPigToInternalInvoicePage } from '../input-pig-to-internal-invoice/input-pig-to-internal-invoice';
 
 @IonicPage()
 @Component({
@@ -98,7 +99,7 @@ export class ExportInternalPigInvoiceDetailPage {
    */
   editInvoice() {
 
-    let callback = data =>{
+    let callback = data => {
       if (data) {
         this.invoice = data;
         this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
@@ -116,7 +117,7 @@ export class ExportInternalPigInvoiceDetailPage {
       {
         editMode: true,
         roleInput: roleInput,
-        callback:callback
+        callback: callback
       }
     )
   }
@@ -135,5 +136,61 @@ export class ExportInternalPigInvoiceDetailPage {
         }
       })
       .catch((err: Error) => { })
+  }
+
+
+  /**
+   * Nhập heo vào chứng từ
+   */
+  input_pig() {
+    let statusPigValiable = this.settingProvider.setting.status.filter((status) => {
+      return status.previousStatus == '0' ? true : false;
+    })
+
+    let callback = (pig: pig) => {
+      this.invoiceProvider.createPigInvoiceDetail({
+        pigs: this.deployData.get_pig_object_to_send_request(pig),
+        invoicesPig: this.invoice
+      })
+        .then((response) => {
+          if (response && response.pigs && response.invoicePigDetail) {
+            this.pigs[response.pigs.id] = response.pigs;
+            this.pigProvider.pigs.push(response.pigs);
+            this.details.push(response.invoicePigDetail);
+          }
+          this.navCtrl.pop();
+        })
+        .catch((err: Error) => { })
+    }
+
+    let transferPigs = this.deployData.get_all_transfer_waiting_pig();
+
+    this.details.forEach((detail) => {
+      let idx = transferPigs.findIndex(_pig => _pig.id == detail.objectId);
+      if (idx > -1) {
+        transferPigs.splice(idx, 1);
+      }
+    })
+
+    this.navCtrl.push(InputPigToInternalInvoicePage, { pigs: transferPigs, statusPigValiable: statusPigValiable, callback: callback });
+  }
+
+  /**
+   * Đánh giá lại heo thuộc chứng từ
+   */
+  edit(item: invoicePigDetail) {
+    let callback = (pig: pig) => {
+      pig = this.deployData.get_pig_object_to_send_request(pig);
+      this.pigProvider.updatePig(pig)
+        .then((pig) => {
+          this.pigs[pig.id] = pig;
+          this.navCtrl.pop();
+        })
+        .catch((err: Error) => { })
+    }
+
+    let pig = this.deployData.get_pig_by_id(item.objectId);
+    let pigs = [pig];
+    this.navCtrl.push(InputPigToInternalInvoicePage, { pigs: pigs, pig: pig, callback: callback });
   }
 }
