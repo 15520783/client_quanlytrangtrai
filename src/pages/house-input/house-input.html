@@ -22,14 +22,14 @@
                     [placeholder]="'Nhập tên nhà'"
                     [active]= "submitAttempt">
         </input-text>
-        <input-select [(validControl)] = "credentialsForm.controls.type_id"
+        <!-- <input-select [(validControl)] = "credentialsForm.controls.type_id"
                     [errorMessage_Required]  ="'Loại nhà là hạng mục bắt buộc.'"
                     [label] = "'Loại nhà'"
                     [active]= "submitAttempt"
                     [placeholder]="'Chọn loại nhà'"
                     [(data)]="HouseTypes">
-        </input-select>
-        <input-text [(validControl)] = "credentialsForm.controls.house_code"
+        </input-select> -->
+        <input-text [(validControl)] = "credentialsForm.controls.houseCode"
                     [errorMessage_Required]  = "'Mã nhà là hạng mục bắt buộc'"
                     [errorMessage_Maxlength]  = "'Mã nhà không được vượt quá 1000 kí tự.'"
                     [label] = "'Mã nhà'"
@@ -48,14 +48,14 @@
                     [placeholder]="'dd/mm/yyyy'"
                     [active]= "submitAttempt">
         </input-date>
-        <input-select-target
+        <!-- <input-select-target
                     [(validControl)] = "credentialsForm.controls.manager"
                     [errorMessage_Required]  ="'Nhân viên quản lý là hạng mục bắt buộc.'"
                     [active]= "submitAttempt"
                     [placeholder]="'Chọn nhân viên'"
                     [label]="'Nhân viên quản lý'"
                     [targertCmp]="'employee'">
-        </input-select-target>
+        </input-select-target> -->
         <input-text [(validControl)] = "credentialsForm.controls.description"
                     [errorMessage_Required]  = "'Mô tả là hạng mục bắt buộc'"
                     [label] = "'Mô tả'"

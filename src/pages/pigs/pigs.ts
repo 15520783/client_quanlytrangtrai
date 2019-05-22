@@ -1,11 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Menu, Content, LoadingController, MenuController, Platform, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Menu, Content, LoadingController, MenuController, Platform, ModalController, Events } from 'ionic-angular';
 import { FormControl } from '@angular/forms';
 import { PigsProvider } from '../../providers/pigs/pigs';
 import { HousesProvider } from '../../providers/houses/houses';
 import { pig, house } from '../../common/entity';
 import { Utils } from '../../common/utils';
-import { KEY } from '../../common/const';
+import { KEY, MESSAGE, CONFIG } from '../../common/const';
 import { VARIABLE } from '../../common/const'
 import { FilterProvider } from '../../providers/filter/filter';
 import { PigInputPage } from '../pig-input/pig-input';
@@ -28,7 +28,7 @@ export class PigsPage {
   public breeds = {};
   public health_status = {};
   public status = {};
-  public gender:any = [];
+  public gender: any = [];
 
 
   public page_Idx: number = 1;
@@ -58,7 +58,8 @@ export class PigsPage {
     public platform: Platform,
     public util: Utils,
     public deployData: DeployDataProvider,
-    public scanner: BarcodeScanner
+    public scanner: BarcodeScanner,
+    public events: Events
   ) {
     this.init();
     this.houseProvider.getAllHouses()
@@ -89,48 +90,40 @@ export class PigsPage {
   }
 
   public getAllPigs() {
-    if (!this.pigProvider.pigs.length) {
-      this.util.showLoading('Đang tải dữ liệu');
-      this.pigProvider.getPigs()
-        .then((data: Array<pig>) => {
-          if (data.length) {
-            this.util.setKey(KEY.PIGS, data)
-              .then(() => {
-                this.pigProvider.pigs = data;
-                this.util.closeLoading().then(() => {
-                  this.setFilteredItems();
-                });
-              })
-              .catch((err) => {
-                this.pigProvider.pigs = data;
-                console.log('err_storage_pigs', err);
-                this.util.closeLoading().then(() => {
-                  this.setFilteredItems();
-                });
-              })
-          }
-        })
-        .catch((err) => {
-          console.log('err_pig_provider', err);
-          this.util.getKey(KEY.PIGS)
-            .then((data: Array<pig>) => {
+    // if (!this.pigProvider.pigs.length) {
+    this.util.openBackDrop();
+    this.pigProvider.getPigs()
+      .then((data: Array<pig>) => {
+        if (data.length) {
+          this.util.setKey(KEY.PIGS, data)
+            .then(() => {
               this.pigProvider.pigs = data;
-              this.util.closeLoading().then(() => {
-                this.setFilteredItems();
-              });
+              this.setFilteredItems();
+              this.util.closeBackDrop();
             })
-            .catch((err) => {
-              console.log('err_get_storage_pig', err);
+        }
+      })
+      .catch((err) => {
+        console.log('err_pig_provider', err);
+        this.util.getKey(KEY.PIGS)
+          .then((data: Array<pig>) => {
+            if (data) {
+              this.pigProvider.pigs = data;
+            } else {
               this.pigProvider.pigs = [];
-            })
-          this.util.showToast('Dữ liệu chưa được cập nhật. Vui lòng kiểm tra kết nối.');
-        })
-    } else {
-      this.rows = this.filterItems(this.searchTerm);
-      this.page_Total = this.rows.length % 50 === 0 ? parseInt(this.rows.length / 50 + '') : parseInt(this.rows.length / 50 + 1 + '');
-      this.page_Idx = 1;
-      this.visible_items = this.rows.slice(0, 50);
-    }
+            }
+            this.util.closeBackDrop().then(() => {
+              this.setFilteredItems();
+            });
+          })
+        this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].ERROR_OCCUR);
+      })
+    // } else {
+    //   this.rows = this.filterItems(this.searchTerm);
+    //   this.page_Total = this.rows.length % 50 === 0 ? parseInt(this.rows.length / 50 + '') : parseInt(this.rows.length / 50 + 1 + '');
+    //   this.page_Idx = 1;
+    //   this.visible_items = this.rows.slice(0, 50);
+    // }
   }
 
   public setFilteredItems() {
@@ -221,5 +214,9 @@ export class PigsPage {
           this.util.showToastInform('Không tìm thấy đối tượng');
         })
     }
+  }
+
+  sync() {
+    this.events.publish('sync', true);
   }
 }

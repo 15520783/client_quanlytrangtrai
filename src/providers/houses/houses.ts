@@ -63,4 +63,38 @@ export class HousesProvider {
     this.updated_flag = true;
     this.events.publish('updated');
   }
+
+
+  createNewHouse(objBody: house) {
+    return this.http
+      .post(API.CREATE_HOUSE, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise()
+      .then((house: house) => {
+        this.util.getKey(KEY.HOUSES)
+          .then((houses: Array<house>) => {
+            houses.push(house);
+            this.util.setKey(KEY.HOUSES, houses);
+          })
+        return house;
+      });
+  }
+
+  updateHouse(objBody: house) {
+    return this.http
+      .put(API.UPDATE_HOUSE, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise()
+      .then((house: house) => {
+        this.util.getKey(KEY.HOUSES)
+          .then((houses: Array<house>) => {
+            let idx = houses.findIndex(_house => _house.id == house.id);
+            if (idx > -1) {
+              houses[idx] = house;
+              this.util.setKey(KEY.HOUSES, houses);
+            }
+          })
+        return house;
+      })
+  }
 }

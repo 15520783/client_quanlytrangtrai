@@ -126,10 +126,25 @@ export class InvoicesProvider {
   }
 
   /**
-   * Xóa chi tiết của chứng từ heo
+   * Xóa chi tiết của chứng từ nhập heo ngoài hệ thống
    * @param objBody 
    */
-  removePigInvoiceDetail(objBody: invoicePigDetail) {
+  removeExternalImportPigInvoiceDetail(objBody: invoicePigDetail) {
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http
+      .delete(API.DELETE_EXTERNAL_IMPORT_PIG_INVOICE_DETAIL, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Xóa chi tiết chừng từ heo
+   * @param objBody 
+   */
+  removePigInvoiceDetail(objBody:invoicePigDetail){
     const options = {
       headers: new HttpHeaders(),
       body: objBody
@@ -139,6 +154,7 @@ export class InvoicesProvider {
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise();
   }
+
 
   /**
    * Tạo mới chi tiết của chứng từ heo

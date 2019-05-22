@@ -9,7 +9,6 @@ import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { InvoiceInputUtilComponent } from '../invoice-input-util/invoice-input-util';
 import { FoodInvoiceRole } from '../../role-input/foodInvoice';
 import { FoodInvoiceDetailPage } from '../../pages/food-invoice-detail/food-invoice-detail';
-import { VARIABLE } from '../../common/const';
 
 @Component({
   selector: 'food-invoices',

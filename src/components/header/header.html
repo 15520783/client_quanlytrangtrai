@@ -7,13 +7,10 @@
       {{title}}
     </ion-title>
     <ion-buttons start>
-      <!-- <button ion-button font20 (tap)="openSeacrhModal()">
-          <ion-icon name="search" ></ion-icon>
-      </button> -->
       <button ion-button font20 *ngIf="platform.is('ios') || platform.is('android')" (tap)="scan()">
         <ion-icon name="app-qr-scanner"></ion-icon>
       </button>
-      <button item-end ion-button font20>
+      <button item-end ion-button font20 (tap)="sync()"> 
         <ion-icon name="sync"></ion-icon>
       </button>
     </ion-buttons>

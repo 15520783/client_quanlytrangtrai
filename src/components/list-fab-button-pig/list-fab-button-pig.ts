@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { pig, issuesPigs, issues, breedings, sperms, mating, matingDetails } from '../../common/entity';
 import { VARIABLE } from '../../common/const';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';

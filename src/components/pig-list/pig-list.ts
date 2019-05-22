@@ -2,7 +2,7 @@ import { Component, ViewChild, Output, Input, EventEmitter } from '@angular/core
 import { FormControl } from '@angular/forms';
 import { pig, house } from '../../common/entity';
 import { HousesProvider } from '../../providers/houses/houses';
-import { NavParams, Content, ModalController, ViewController, NavController } from 'ionic-angular';
+import { NavParams, Content, ModalController, ViewController, NavController, Platform } from 'ionic-angular';
 import { FilterProvider } from '../../providers/filter/filter';
 import { PigViewPage } from '../../tabs/pig-view/pig-view';
 import { VARIABLE } from '../../common/const';
@@ -45,8 +45,10 @@ export class PigListComponent {
   protected searchTerm: string = '';
   protected visible_items: Array<pig> = [];
   protected houses: Array<house> = [];
+  protected statusPig:any = {};
 
   constructor(
+    public platform:Platform,
     public houseProvider: HousesProvider,
     public navParams: NavParams,
     public filterProvider: FilterProvider,
@@ -57,6 +59,7 @@ export class PigListComponent {
   ) {
     this.genders = VARIABLE.GENDER;
     this.breeds = this.deployData.get_object_list_key_of_breeds();
+    this.statusPig = this.deployData.get_object_list_key_of_status();
 
     if(this.navParams.data){
       this.data = this.navParams.data.pigs;

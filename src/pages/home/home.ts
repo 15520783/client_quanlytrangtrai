@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, Nav, LoadingController, Events } from 'ionic-angular';
+import { NavController, Nav, LoadingController, Events, Platform } from 'ionic-angular';
 import { FarmsPage } from '../farms/farms';
 import { SectionsPage } from '../sections/sections';
 import { PigsPage } from '../pigs/pigs';
@@ -9,13 +9,25 @@ import { SectionsProvider } from '../../providers/sections/sections';
 import { EmployeePage } from '../employee/employee';
 import { WarehousesPage } from '../warehouses/warehouses';
 import { SettingsPage } from '../settings/settings';
-import { KEY } from '../../common/const';
+import { KEY, ERROR_NAME, MESSAGE, CONFIG, VARIABLE } from '../../common/const';
 import { PartnersPage } from '../partners/partners';
 import { ActivitiesPage } from '../activities/activities';
 import { InvoicesPage } from '../invoices/invoices';
 import { DatePlanPage } from '../date-plan/date-plan';
 import { ActivitiesProvider } from '../../providers/activities/activities';
-import { breedings } from '../../common/entity';
+import { PigsProvider } from '../../providers/pigs/pigs';
+import { PigGroupsProvider } from '../../providers/pig-groups/pig-groups';
+import { EmployeesProvider } from '../../providers/employees/employees';
+import { HousesProvider } from '../../providers/houses/houses';
+import { WarehousesProvider } from '../../providers/warehouses/warehouses';
+import { SettingsProvider } from '../../providers/settings/settings';
+import { UserProvider } from '../../providers/user/user';
+import { PartnerProvider } from '../../providers/partner/partner';
+import { pig } from '../../common/entity';
+import { PigSummaryPage } from '../pig-summary/pig-summary';
+import { house } from '../../common/entity';
+import { HouseInfomationPage } from '../house-infomation/house-infomation';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 @Component({
   selector: 'page-home',
@@ -37,7 +49,17 @@ export class HomePage {
     public farmProvider: FarmsProvider,
     public sectionProvider: SectionsProvider,
     public activitiesProvider: ActivitiesProvider,
-    public events: Events
+    public pigProvider: PigsProvider,
+    public pigGroupProvider: PigGroupsProvider,
+    public employeeProvider: EmployeesProvider,
+    public houseProvider: HousesProvider,
+    public warehouseProvider: WarehousesProvider,
+    public settingProvider: SettingsProvider,
+    public userProvider: UserProvider,
+    public partnerProvider: PartnerProvider,
+    public events: Events,
+    public platform: Platform,
+    public scanner: BarcodeScanner
   ) {
     this.pages = [
       { title: 'Trang trại', component: FarmsPage, icon: 'app-farm', active: true },
@@ -51,6 +73,16 @@ export class HomePage {
       { title: 'Thiết lập', component: SettingsPage, icon: 'app-settings', active: false },
       { title: 'Bảng kế hoạch', component: DatePlanPage, icon: 'app-schedule', active: false, isSchedule: true },
     ];
+
+    this.events.subscribe('sync', (something) => {
+      this.sync();
+    })
+
+    if (this.platform.is('android') || this.platform.is('ios')) {
+      this.events.subscribe('scan', (something) => {
+        this.scan();
+      })
+    }
   }
 
   ionViewDidLoad() {
@@ -68,33 +100,7 @@ export class HomePage {
         element.active = false;
       });
       page.active = true;
-      // if (page.isSchedule) {
-      //   let schedule: any = {};
-      //   this.util.openBackDrop();
-      //   return this.activitiesProvider.getAllBreedings()
-      //     .then((breedings: Array<breedings>) => {
-      //       if (breedings) {
-      //         schedule.events = [];
-      //         breedings.forEach((breeding) => {
-      //           schedule.events.push({
-      //             title: 'Thực hiện lên giống cho heo có mã '.concat(breeding.pig.pigCode),
-      //             object: breeding,
-      //             start: this.GetFormattedDate(breeding.breedingNext),
-      //             classNames: (new Date(breeding.breedingNext) > new Date()) ? 'event-coming-up' : 'event-over-due'
-      //           })
-      //         })
-      //         this.nav.setRoot(page.component, { schedule: schedule });
-      //       }
-      //       this.util.closeBackDrop();
-      //     })
-      //     .catch((err) => {
-      //       console.log(err);
-      //       this.util.closeBackDrop();
-      //     })
-      // }
-      // else {
       this.nav.setRoot(page.component);
-      // }
     }
   }
 
@@ -114,5 +120,111 @@ export class HomePage {
   GetFormattedDate(value) {
     let date = new Date(value);
     return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+  }
+
+
+  sync() {
+    this.farmProvider.updated_flag =
+      this.pigProvider.updated_flag =
+      this.employeeProvider.updated_flag =
+      this.sectionProvider.updated_flag =
+      this.houseProvider.updated_flag =
+      this.warehouseProvider.updated_flag =
+      this.settingProvider.updated_flag =
+      this.partnerProvider.updated_flag = false;
+    this.intinial_sync();
+  }
+
+  intinial_sync() {
+    this.util.openBackDrop();
+    this.subscribeEventUpdate();
+    this.userProvider.checkServer()
+      .then((res: any) => {
+        if (res.success) {
+          this.farmProvider.sync();
+          this.pigProvider.sync();
+          this.employeeProvider.sync();
+          this.partnerProvider.sync();
+          this.sectionProvider.sync();
+          this.houseProvider.sync();
+          this.warehouseProvider.sync();
+          this.settingProvider.sync();
+          this.sectionProvider.sync();
+        }
+      })
+      .catch((err: any) => {
+        if (err.status != 401) {
+          if (err.name == ERROR_NAME.TIMEMOUT_ERROR || err.name == ERROR_NAME.ERROR_RESPONSE) {
+            this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].TIMEOUT_REQUEST);
+            this.events.unsubscribe('updated');
+            this.util.closeBackDrop();
+          }
+        }
+      })
+  }
+
+  checkUpdate() {
+    if (
+      this.farmProvider.updated_flag &&
+      this.pigProvider.updated_flag &&
+      this.employeeProvider.updated_flag &&
+      this.sectionProvider.updated_flag &&
+      this.houseProvider.updated_flag &&
+      this.warehouseProvider.updated_flag &&
+      this.settingProvider.updated_flag &&
+      this.partnerProvider.updated_flag) {
+      this.events.unsubscribe('updated');
+      this.util.closeBackDrop();
+    }
+  }
+
+  subscribeEventUpdate() {
+    this.events.subscribe('updated', () => {
+      this.checkUpdate();
+    })
+  }
+
+  scan() {
+    if (this.platform.is('android') || this.platform.is('ios')) {
+      this.scanner.scan()
+        .then((result: any) => {
+          if (result.text) {
+            this.util.openBackDrop();
+            let target = JSON.parse(result.text);
+            if (target.type == VARIABLE.OBJECT_BARCODE_TYPE.PIG) {
+              this.util.getKey(KEY.PIGS).then((pigs: Array<pig>) => {
+                let idx = pigs.findIndex(pig => pig.pigCode == target.id);
+                if (idx > -1) {
+                  this.navCtrl.push(PigSummaryPage, { pig: pigs[idx] }).then(() => {
+                    this.util.closeBackDrop();
+                  });
+                } else {
+                  this.util.showToastInform('Không tìm thấy đối tượng');
+                }
+              })
+            } else if (target.type == VARIABLE.OBJECT_BARCODE_TYPE.HOUSE) {
+              this.util.getKey(KEY.HOUSES).then((houses: Array<house>) => {
+                let idx = houses.findIndex(house => house.id == target.id);
+                if (idx > -1) {
+                  this.navCtrl.push(HouseInfomationPage, { house: houses[idx] }).then(() => {
+                    this.util.closeBackDrop();
+                  });
+                } else {
+                  this.util.showToastInform('Không tìm thấy đối tượng');
+                }
+              })
+            } else {
+              this.util.showToastInform('Không tìm thấy đối tượng');
+            }
+          } else {
+            this.util.showToastInform('Không tìm thấy đối tượng');
+          }
+        })
+        .catch((err: Error) => {
+          console.log(err);
+          this.util.closeBackDrop();
+          this.util.showToastInform('Không tìm thấy đối tượng');
+        })
+    }
   }
 }

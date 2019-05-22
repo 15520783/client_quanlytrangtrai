@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, ViewController, Slides } from 'ionic-angular';
-import { invoicesPig, invoicePigDetail, pig, invoicesProduct } from '../../common/entity';
+import { invoicesPig, invoicePigDetail, pig } from '../../common/entity';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { Utils } from '../../common/utils';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
@@ -140,7 +140,7 @@ export class ExternalPigInvoiceDetailPage {
    * @param invoiceDetail 
    */
   removePigInvoicesDetail(invoiceDetail: invoicePigDetail) {
-    this.invoiceProvider.removePigInvoiceDetail(invoiceDetail)
+    this.invoiceProvider.removeExternalImportPigInvoiceDetail(invoiceDetail)
       .then((isOK_detail) => {
         if (isOK_detail) {
           let idx = this.details.findIndex(detail => detail.id == invoiceDetail.id);

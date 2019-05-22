@@ -73,7 +73,6 @@ export class MyApp {
                   CONFIG.ACCESS_KEY = tokenType.concat(' ').concat(accessToken);
                   this.splash = true;
                   this.intinial_sync();
-                  this.subscribeEventUpdate();
                 }
                 else {
                   this.splash = false;
@@ -119,6 +118,7 @@ export class MyApp {
    * Update database by requesting to server and  recieved database will be store in local storage..
    */
   intinial_sync() {
+    this.subscribeEventUpdate();
     this.userProvider.checkServer()
       .then((res: any) => {
         if (res.success) {
@@ -143,6 +143,7 @@ export class MyApp {
             }, 1000);
           }
         }
+        this.events.unsubscribe('updated');
       })
   }
 
@@ -165,7 +166,7 @@ export class MyApp {
       this.settingProvider.updated_flag &&
       this.partnerProvider.updated_flag) {
       this.rootPage = HomePage;
-
+      this.events.unsubscribe('updated');
       setTimeout(() => {
         this.splash = false;
         

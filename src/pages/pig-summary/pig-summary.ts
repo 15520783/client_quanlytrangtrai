@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Nav, Platform, Slides } from 'ionic-angular';
 import { PigInfomationPage } from '../pig-infomation/pig-infomation';
-import { pig } from '../../common/entity';
 import { VARIABLE } from '../../common/const';
 import { PigsProvider } from '../../providers/pigs/pigs';
 import { Utils } from '../../common/utils';

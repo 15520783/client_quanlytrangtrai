@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, Menu, Content, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, Menu, Content, ModalController, Events } from 'ionic-angular';
 import { FormControl } from '@angular/forms';
 import { EmployeesProvider } from '../../providers/employees/employees';
 import { Utils } from '../../common/utils';
@@ -18,7 +18,7 @@ import { EmployeeInputPage } from '../employee-input/employee-input';
 export class EmployeePage {
   @ViewChild('menuFilter') menuFilter: Menu;
   @ViewChild('content') content: Content;
-  
+
   public page_Idx: number = 1;
   public page_Total: number = 0;
   public rows: Array<employee> = [];
@@ -29,7 +29,7 @@ export class EmployeePage {
   protected searchControl: FormControl = new FormControl();
   protected searchTerm: string = '';
 
-  
+
 
   constructor(
     public navCtrl: NavController,
@@ -38,7 +38,8 @@ export class EmployeePage {
     public platform: Platform,
     public util: Utils,
     public filterProvider: FilterProvider,
-    public modalCtrl : ModalController
+    public modalCtrl: ModalController,
+    public events: Events
   ) {
   }
 
@@ -91,7 +92,7 @@ export class EmployeePage {
   }
 
   public setFilteredItems() {
-    this.content.scrollToTop().then(()=>{
+    this.content.scrollToTop().then(() => {
       this.rows = this.filterItems(this.searchTerm);
       this.page_Total = this.rows.length % 50 === 0 ? parseInt(this.rows.length / 50 + '') : parseInt(this.rows.length / 50 + 1 + '');
       this.page_Idx = 1;
@@ -118,19 +119,23 @@ export class EmployeePage {
     }, 800);
   }
 
-  viewDeltail(employee){
+  viewDeltail(employee) {
     // const modal = this.modalCtrl.create(
     //   EmployeeInformationPage, employee, {
     //     cssClass: 'ion-modal'
     //   }
     // )
     // modal.present();
-    this.navCtrl.push(EmployeeInformationPage,employee);
+    this.navCtrl.push(EmployeeInformationPage, employee);
   }
 
-  addNewEmployee(){
+  addNewEmployee() {
     this.navCtrl.push(EmployeeInputPage);
     // let modal = this.modalCtrl.create(EmployeeInputPage);
     // modal.present();
+  }
+
+  sync() {
+    this.events.publish('sync', true);
   }
 }

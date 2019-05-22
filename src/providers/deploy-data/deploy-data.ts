@@ -412,6 +412,17 @@ export class DeployDataProvider {
   }
 
   /**
+   * Lấy các đối tượng nhân viên với Object key là id
+   */
+  get_object_list_key_of_employees(){
+    let employees = {};
+    this.employeeProvider.employees.forEach((emp)=>{
+      employees[emp.id] = emp;
+    })
+    return employees;
+  }
+
+  /**
    * Lấy thông tin nhà thông qua id
    * @param houseId 
    */

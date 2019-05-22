@@ -57,7 +57,14 @@ export class PigsProvider {
   getPigs() {
     return this.http
       .get(API.GET_ALL_PIGS)
-      .timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
+      .timeout(CONFIG.DEFAULT_TIMEOUT).toPromise()
+      .then((data: Array<pig>) => {
+        this.pigs = data;
+        if (data.length) {
+          this.util.setKey(KEY.PIGS, data)
+        }
+        return this.pigs;
+      })
   }
 
   /**
@@ -124,7 +131,7 @@ export class PigsProvider {
         return isOK;
       });
   }
-  
+
   getPigByID(id: string) {
     let pig: Array<pig> = this.pigs.filter((pig: pig) => {
       return pig.id === id ? true : false;
@@ -134,13 +141,8 @@ export class PigsProvider {
 
   sync() {
     this.getPigs()
-      .then((data: Array<pig>) => {
-        if (data.length) {
-          this.util.setKey(KEY.PIGS, data)
-            .then(() => {
-              this.pigs = data;
-            })
-        }
+      .then(() => {
+        this.publishUpdateEvent();
       })
       .catch((err) => {
         console.log('err_pig_provider', err);
@@ -150,9 +152,7 @@ export class PigsProvider {
           })
         this.util.showToast('Danh sách heo chưa được cập nhật. Vui lòng kiểm tra kết nối.');
       })
-      .then(() => {
-        this.publishUpdateEvent();
-      })
+
   }
 
   publishUpdateEvent() {

@@ -40,7 +40,7 @@ export class HouseInfomationPage {
     if (this.navParams.data.house) {
       this.house = this.navParams.data.house;
       this.pigs = this.deployData.get_pigs_of_house(this.navParams.data.house.id);
-      this.house.founding = this.util.convertDate(this.house.founding);
+      // this.house.founding = this.util.convertDate(this.house.founding);
     }
   }
 
@@ -144,8 +144,18 @@ export class HouseInfomationPage {
   }
 
   editHouse() {
-    // let modal = this.modalCtrl.create(HouseInputPage,{house:this.house});
-    // return modal.present();
-    this.navCtrl.push(HouseInputPage, { house: this.house });
+    let callback = (house:house) =>{
+      if(house){
+        this.houseProvider.updateHouse(house)
+        .then((house:house)=>{
+          if(house){
+            this.house = house;
+            this.navCtrl.pop();
+          }
+        })
+        .catch((err)=>{console.log(err)})
+      }
+    }
+    this.navCtrl.push(HouseInputPage, { house: this.house ,callback:callback});
   }
 }

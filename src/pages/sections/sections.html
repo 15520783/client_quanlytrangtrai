@@ -57,10 +57,10 @@
                 </ion-row>
               </button>
               <ion-list-header custom-list-header [attr.active_header]="section.active?'':null">
-                <div showWhen='ios,android'>Danh sách nhà</div>
+                <div showWhen='ios,android'>Danh sách chuồng</div>
                 <ion-row showWhen="core">
-                  <ion-title ion-text font15 color="dark">Danh sách nhà</ion-title>
-                  <button ion-button item-end mode='ios' color="secondary" (tap)="addNewHouse(section)">Thêm nhà</button>
+                  <ion-title ion-text font15 color="dark">Danh sách chuồng</ion-title>
+                  <button ion-button item-end mode='ios' color="secondary" (tap)="addNewHouse(section)">Thêm chuồng</button>
                 </ion-row>
               </ion-list-header>
               <button item-end ion-item *ngFor="let house of section.houses" (tap)="viewHouse(house)">
@@ -70,16 +70,13 @@
                 <h2>{{house.name}}</h2>
                 <ion-row>
                   <ion-col>
-                    <p><b>Loại nhà:</b> {{house.typeId}}</p>
-                  </ion-col>
-                  <ion-col>
-                    <p><b>Số nhà:</b> {{house.houseCode}}</p>
+                    <p><b>Số chuồng:</b> {{house.houseCode}}</p>
                   </ion-col>
                   <ion-col>
                     <p><b>Mô tả:</b> {{house.description}}</p>
                   </ion-col>
                   <ion-col>
-                    <p><b>Ngày thành lập:</b> {{house.founding|date:'dd/MM/yyyy'}}</p>
+                    <p><b>Ngày thành lập:</b> {{house.founding}}</p>
                   </ion-col>
                 </ion-row>
               </button>
@@ -87,7 +84,7 @@
                 <ion-buttons item-start>
                   <button ion-button mode='ios' block color="secondary" (tap)="addNewHouse(section)">
                     <ion-icon name='md-add-circle' padding></ion-icon>
-                    Thêm nhà
+                    Thêm chuồng
                   </button>
                 </ion-buttons>
               </ion-toolbar>

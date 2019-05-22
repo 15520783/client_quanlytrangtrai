@@ -1,5 +1,5 @@
 import { Component, ViewChild, Renderer } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, Slides, Slide, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, Slides, Events } from 'ionic-angular';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { Utils } from '../../common/utils';
 import { VARIABLE } from '../../common/const';

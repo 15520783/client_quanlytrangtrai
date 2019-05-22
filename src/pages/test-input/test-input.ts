@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, PopoverController, ModalController
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Utils } from '../../common/utils';
 import { KEY } from '../../common/const';
-import { PigGroupListComponent } from '../../components/pig-group-list/pig-group-list';
 import { group } from '../../common/entity';
 
 @IonicPage()

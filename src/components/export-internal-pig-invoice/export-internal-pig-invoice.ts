@@ -85,8 +85,19 @@ export class ExportInternalPigInvoiceComponent {
       invoice['sourceName'] = this.farms_util[invoice.sourceId].name;
       invoice['destinationName'] = this.farms_util[invoice.destinationId].name;
       invoice['importDateDisplay'] = this.util.convertDate(invoice.importDate);
-      invoice['statusName'] = VARIABLE.INVOICE_STATUS.PROCCESSING == invoice.status
-        ? 'Đang xử lí' : (VARIABLE.INVOICE_STATUS.COMPLETE == invoice.status ? 'Hoàn tất' : 'Chưa xác định');
+      // invoice['statusName'] = VARIABLE.INVOICE_STATUS.PROCCESSING == invoice.status
+      //   ? 'Đang xử lí' : (VARIABLE.INVOICE_STATUS.COMPLETE == invoice.status ? 'Hoàn tất' : 'Chưa xác định');
+      switch (invoice.status) {
+        case VARIABLE.INVOICE_STATUS.PROCCESSING: {
+          invoice['statusName'] = 'Đang xử lí'; break;
+        }
+        case VARIABLE.INVOICE_STATUS.FORWARDING: {
+          invoice['statusName'] = 'Đang chuyển heo'; break;
+        }
+        case VARIABLE.INVOICE_STATUS.COMPLETE: {
+          invoice['statusName'] = 'Đã hoàn tất'; break;
+        }
+      }
     })
       ;
     this.filterProvider.input = this.invoices;

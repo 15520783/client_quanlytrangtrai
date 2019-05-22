@@ -2,7 +2,6 @@ import { invoicesPig } from "../common/entity";
 import { DeployDataProvider } from "../providers/deploy-data/deploy-data";
 import { InvoicesProvider } from "../providers/invoices/invoices";
 import { VARIABLE } from "../common/const";
-import { Utils } from "../common/utils";
 
 export class ExportInternalPigInvoiceRole {
     public object = new invoicesPig();

@@ -224,7 +224,8 @@
             </ion-row>
           </ion-item>
           <ion-item-options side="right" showWhen="ios,android">
-            <button ion-button color="danger" (tap)="removePigInvoicesDetail(item)">Xóa</button>
+            <button ion-button  mode='ios' color="main"   (tap)="edit(item)">Đánh giá lại</button>
+            <button ion-button  mode='ios' color="danger" (tap)="removePigInvoicesDetail(item)">Xóa</button>
           </ion-item-options>
         </ion-item-sliding>
       </ion-list>

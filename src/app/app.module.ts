@@ -195,7 +195,7 @@ const Components = [
   NotFoundDataComponent,
   SchelduleDetailComponent,
   ListFabButtonPigComponent,
-  ExportInternalPigInvoiceComponent
+  ExportInternalPigInvoiceComponent,
 ]
 
 const Providers = [
@@ -213,7 +213,7 @@ const Providers = [
   DeployDataProvider,
   PartnerProvider,
   InvoicesProvider,
-  ActivitiesProvider
+  ActivitiesProvider,
 ]
 
 const Directives = [

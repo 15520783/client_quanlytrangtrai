@@ -13,7 +13,6 @@ import { Utils } from '../../common/utils';
 import { UserProvider } from '../../providers/user/user';
 import { MESSAGE, CONFIG } from '../../common/const';
 import { SchelduleDetailComponent } from '../../components/scheldule-detail/scheldule-detail';
-import { BackdropComponent } from '../../components/backdrop/backdrop';
 
 export class Schedule {
   breedings: Array<breedings> = [];

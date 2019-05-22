@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ToastController, AlertController, LoadingController, Loading, Platform, ModalController, Modal } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { BackdropComponent } from '../components/backdrop/backdrop';
+import { PigsProvider } from '../providers/pigs/pigs';
 
 @Injectable()
 export class Utils {
@@ -18,7 +19,7 @@ export class Utils {
     public loadingCtrl: LoadingController,
     public storage: Storage,
     public platform: Platform,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
   ) {
 
   }

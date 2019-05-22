@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Backdrop, ViewController, Menu, Content, MenuController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, Menu, Content, MenuController, Platform } from 'ionic-angular';
 import { sperms } from '../../common/entity';
 import { FormControl } from '@angular/forms';
 import { FilterProvider } from '../../providers/filter/filter';

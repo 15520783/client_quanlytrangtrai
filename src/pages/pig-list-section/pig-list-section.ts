@@ -4,10 +4,11 @@ import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { FormControl } from '@angular/forms';
 import { FilterProvider } from '../../providers/filter/filter';
 import { Utils } from '../../common/utils';
-import { VARIABLE } from '../../common/const';
+import { VARIABLE, MESSAGE, CONFIG } from '../../common/const';
 import { PigViewPage } from '../../tabs/pig-view/pig-view';
 import { pig } from '../../common/entity';
 import { PigSummaryPage } from '../pig-summary/pig-summary';
+import { PigsProvider } from '../../providers/pigs/pigs';
 
 
 @IonicPage()
@@ -63,7 +64,8 @@ export class PigListSectionPage {
     public events: Events,
     public menuCtrl: MenuController,
     public util: Utils,
-    public platform: Platform
+    public platform: Platform,
+    public pigProvider: PigsProvider
   ) {
 
     this.breed = this.deployData.get_object_list_key_of_breeds();
@@ -77,13 +79,23 @@ export class PigListSectionPage {
     })
 
     this.sectionTypeId = this.navParams.data.sectionType.id;
-    if (this.navParams.data) {
-      this.pigs = this.navParams.data.getPigs(this.deployData);
-      if (this.navParams.data.statusFilter) {
-        this.statusFilter = this.navParams.data.statusFilter;
+    this.util.openBackDrop();
+    this.pigProvider.getPigs().then((data) => {
+      if (this.navParams.data) {
+
+        this.pigs = this.navParams.data.getPigs(this.deployData);
+        if (this.navParams.data.statusFilter) {
+          this.statusFilter = this.navParams.data.statusFilter;
+        }
       }
-    }
-    this.setFilteredItems();
+      this.setFilteredItems();
+      this.util.closeBackDrop();
+    })
+    .catch((err)=>{
+      this.util.closeBackDrop().then((sth)=>{
+        this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].ERROR_OCCUR)
+      })
+    })
   }
 
   ionViewDidLoad() {
@@ -142,7 +154,7 @@ export class PigListSectionPage {
     old_vers = new_vers;
     if (this.houses[old_vers.houseId].section.typeId == this.sectionTypeId) {
       let idx = this.pigs.findIndex(_pig => _pig.id == old_vers.id);
-      if(idx > -1){
+      if (idx > -1) {
         this.pigs[idx] = old_vers;
         this.setFilteredItems();
       }

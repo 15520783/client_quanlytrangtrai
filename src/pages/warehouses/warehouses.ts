@@ -1,8 +1,7 @@
 import { Component, ViewChild, Renderer } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides, Scroll,  } from 'ionic-angular';
-import { warehouse, farm } from '../../common/entity';
+import { warehouse } from '../../common/entity';
 import { WarehousesProvider } from '../../providers/warehouses/warehouses';
-import { FarmsProvider } from '../../providers/farms/farms';
 import { WarehouseInformationPage } from '../warehouse-information/warehouse-information';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { MedicineWarehouseInformationPage } from '../medicine-warehouse-information/medicine-warehouse-information';

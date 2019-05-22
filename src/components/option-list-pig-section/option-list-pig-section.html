@@ -33,7 +33,7 @@
       (tap)="forwardToSaleWaiting()">Thêm vào danh sách chờ bán</button>
     </ion-col>
     
-    <ion-col>
+    <!-- <ion-col>
       <button 
       showWhen="core" 
       *ngIf="add_to_sale_list.includes(sectionTypeId) 
@@ -42,7 +42,7 @@
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_MATING"
       small ion-button item-end mode='ios' color="secondary"
       (tap)="forwardToFarmTransferWating()">Thêm vào danh sách chờ chuyển trại</button>
-    </ion-col>
+    </ion-col> -->
    
 
     <ion-col>
@@ -54,7 +54,7 @@
       (tap)="cancelSaleWaiting()">Hủy chờ bán</button>
     </ion-col>
     
-    <ion-col>
+    <!-- <ion-col>
       <button 
       showWhen="core" 
       *ngIf="add_to_sale_list.includes(sectionTypeId) 
@@ -62,7 +62,7 @@
       small ion-button item-end mode='ios' color="secondary"
       (tap)="cancelFarmTransferWating()">Hủy chuyển trại</button>
     </ion-col>
-    
+     -->
     <ion-col>
       <button 
       showWhen="core" 
@@ -98,26 +98,6 @@
       (tap)="mating_input()">Phối giống</button>
     </ion-col>
     
-
-
-    <!-- <button 
-    showWhen="core" 
-    *ngIf="mating.includes(sectionTypeId) 
-    && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE 
-    && pig.gender == gender.FEMALE
-    && statusObjectKey[pig.statusId].code == statusPig.MATING"
-    small ion-button item-end mode='ios' color="secondary"
-    (tap)="matingNext_input()">Thực hiện gieo tinh lần kế tiếp</button> -->
-
-
-    <!-- <button 
-    showWhen="core" 
-    *ngIf="mated.includes(sectionTypeId) 
-    && statusObjectKey[pig.statusId].code == statusPig.MATED 
-    && pig.gender == gender.FEMALE"
-    small ion-button item-end mode='ios' color="secondary"
-    (tap)="markedFarrow()">Thêm vào danh sách mang thai</button> -->
-
     <ion-col>
       <button 
       showWhen="core" 
@@ -129,25 +109,6 @@
       (tap)="weaningMarked()">Thêm vào danh sách cai sữa</button>
     </ion-col>
     
-
-    <!-- <button 
-    showWhen="core" 
-    *ngIf="mated.includes(sectionTypeId)
-    && statusObjectKey[pig.statusId].code == statusPig.FARROWING
-    && pig.gender == gender.FEMALE"
-    small ion-button item-end mode='ios' color="secondary"
-    (tap)="markedAbortion()">Thêm vào danh sách sẩy thai</button> -->
-
-    <!-- <button 
-    showWhen="core" 
-    *ngIf="farrow.includes(sectionTypeId)
-    && statusObjectKey[pig.statusId].code == statusPig.FARROWING
-    && pig.gender == gender.FEMALE"
-    small ion-button item-end mode='ios' color="secondary"
-    (tap)="birth_input()">Nhập thông tin heo đẻ</button> -->
-
-
-    <!-- <button showWhen="core" small ion-button item-end mode='ios' color="secondary">Thí tình</button> -->
 </ion-row>
 
 </span>

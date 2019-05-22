@@ -8,6 +8,7 @@ import { SectionInfomationPage } from '../section-infomation/section-infomation'
 import { HouseInfomationPage } from '../house-infomation/house-infomation';
 import { HouseInputPage } from '../house-input/house-input';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { HousesProvider } from '../../providers/houses/houses';
 
 @IonicPage()
 @Component({
@@ -17,11 +18,12 @@ import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 export class SectionsPage {
 
   public sections: Array<section> = [];
+  public employees: any = {};
 
   public houses: Array<house> = [];
-  
-  public farms:any = [];
-  public farmSelected:any;
+
+  public farms: any = [];
+  public farmSelected: any;
 
   constructor(
     public navCtrl: NavController,
@@ -30,20 +32,22 @@ export class SectionsPage {
     public loadingCtrl: LoadingController,
     public modalCtrl: ModalController,
     public deployData: DeployDataProvider,
-    public util : Utils,
+    public houseProvider: HousesProvider,
+    public util: Utils,
   ) {
     this.init();
   }
 
-  init(){
+  init() {
     this.farms = this.deployData.get_farm_list_for_select();
     this.sections = this.deployData.get_sections_of_farm(this.farms[0].value);
-    this.sections.forEach((section:any)=>{
+    this.sections.forEach((section: any) => {
       section.houses = this.deployData.get_houses_of_section(section.id);
     })
+    this.employees = this.deployData.get_object_list_key_of_employees();
   }
 
-  
+
 
   ionViewWillEnter() {
     console.log('ionViewWillEnter SectionsPage');
@@ -55,9 +59,9 @@ export class SectionsPage {
     this.farmSelected = this.farms[0].id;
   }
 
-  changeFarm(res){
+  changeFarm(res) {
     this.sections = this.deployData.get_sections_of_farm(res.valueId);
-    this.sections.forEach((section:any)=>{
+    this.sections.forEach((section: any) => {
       section.houses = this.deployData.get_houses_of_section(section.id);
     })
   }
@@ -117,18 +121,31 @@ export class SectionsPage {
 
   viewDetail(section: section) {
     // this.util.openModal(SectionInfomationPage,section);
-    this.navCtrl.push(SectionInfomationPage,section);
+    this.navCtrl.push(SectionInfomationPage, section);
   }
 
-  viewHouse(house:house){
+  viewHouse(house: house) {
     // this.util.openModal(HouseInfomationPage,house);
-    this.navCtrl.push(HouseInfomationPage,{house:house});
+    this.navCtrl.push(HouseInfomationPage, { house: house });
   }
 
 
-  addNewHouse(section){
-    // let modal = this.modalCtrl.create(HouseInputPage,{section:section});
-    // modal.present();
-    this.navCtrl.push(HouseInputPage);
+  addNewHouse(section) {
+    let callback = (house: house) => {
+      if (house) {
+        this.houseProvider.createNewHouse(house)
+          .then((house: house) => {
+            section.houses.push(house);
+            this.navCtrl.pop();
+          })
+          .catch((err)=>{
+            console.log(err);
+          })
+      }
+    }
+    this.navCtrl.push(HouseInputPage, {
+      section: section,
+      callback: callback
+    });
   }
 }

@@ -169,7 +169,7 @@ class house extends base {
 	name: string = '';
 	description: string = '';
 	position: string = '';
-	manager: string = '';
+	// manager: string = '';
 	founding: any = '';
 	status: string = '';
 }

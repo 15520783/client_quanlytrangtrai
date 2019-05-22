@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { mating, pig, breeds, matingDetails, sperms, employee } from '../../common/entity';
+import { mating, pig, breeds, matingDetails, sperms } from '../../common/entity';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { ActivitiesProvider } from '../../providers/activities/activities';
 import { Utils } from '../../common/utils';

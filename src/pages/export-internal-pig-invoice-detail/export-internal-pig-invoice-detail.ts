@@ -1,12 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, ViewController, Slides } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events, ViewController, Slides, Content } from 'ionic-angular';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { Utils } from '../../common/utils';
 import { PigsProvider } from '../../providers/pigs/pigs';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { invoicePigDetail, invoicesPig, pig } from '../../common/entity';
-import { VARIABLE, MESSAGE } from '../../common/const';
+import { VARIABLE, MESSAGE, KEY } from '../../common/const';
 import { ExportInternalPigInvoiceRole } from '../../role-input/export-InternalPigInvoice';
 import { InvoiceInputUtilComponent } from '../../components/invoice-input-util/invoice-input-util';
 import { InputPigToInternalInvoicePage } from '../input-pig-to-internal-invoice/input-pig-to-internal-invoice';
@@ -148,31 +148,45 @@ export class ExportInternalPigInvoiceDetailPage {
     })
 
     let callback = (pig: pig) => {
+      let transferPigsStatus = this.deployData.get_status_farm_transferWaiting_of_pig(pig.statusId);
+      pig.statusId = transferPigsStatus.id;
       this.invoiceProvider.createPigInvoiceDetail({
         pigs: this.deployData.get_pig_object_to_send_request(pig),
         invoicesPig: this.invoice
       })
         .then((response) => {
           if (response && response.pigs && response.invoicePigDetail) {
-            this.pigs[response.pigs.id] = response.pigs;
-            this.pigProvider.pigs.push(response.pigs);
             this.details.push(response.invoicePigDetail);
+            this.pigs[response.pigs.id] = response.pigs;
+            this.pigProvider.updatedPig(response.pigs);
           }
           this.navCtrl.pop();
+        }).then((data)=>{
+          if(this.slider){
+            this.slider.resize();
+          }
         })
         .catch((err: Error) => { })
     }
 
-    let transferPigs = this.deployData.get_all_transfer_waiting_pig();
-
-    this.details.forEach((detail) => {
-      let idx = transferPigs.findIndex(_pig => _pig.id == detail.objectId);
-      if (idx > -1) {
-        transferPigs.splice(idx, 1);
-      }
+    let statusPig = this.deployData.get_object_list_key_of_status();
+    this.util.openBackDrop();
+    this.pigProvider.getPigs()
+    .then(()=>{
+      let transferPigs = this.pigProvider.pigs.filter((pig) => {
+        return (statusPig[pig.statusId].code != VARIABLE.STATUS_PIG.WAIT_FOR_TRANSFER &&
+                statusPig[pig.statusId].code != VARIABLE.STATUS_PIG.WAIT_FOR_SALE &&
+                statusPig[pig.statusId].code != VARIABLE.STATUS_PIG.WAIT_FOR_MATING &&
+                statusPig[pig.statusId].code != VARIABLE.STATUS_PIG.MATING) ? true : false;
+      });
+      this.util.closeBackDrop();
+      this.navCtrl.push(InputPigToInternalInvoicePage, { pigs: transferPigs, statusPigValiable: statusPigValiable, callback: callback });
     })
-
-    this.navCtrl.push(InputPigToInternalInvoicePage, { pigs: transferPigs, statusPigValiable: statusPigValiable, callback: callback });
+    .catch((err)=>{
+      console.log(err);
+      this.util.closeBackDrop();
+    })
+    
   }
 
   /**
@@ -192,5 +206,49 @@ export class ExportInternalPigInvoiceDetailPage {
     let pig = this.deployData.get_pig_by_id(item.objectId);
     let pigs = [pig];
     this.navCtrl.push(InputPigToInternalInvoicePage, { pigs: pigs, pig: pig, callback: callback });
+  }
+
+  /**
+   * Xóa heo khỏi chứng từ
+   * @param invoiceDetail 
+   */
+  removePigInvoicesDetail(invoiceDetail: invoicePigDetail) {
+    this.invoiceProvider.removePigInvoiceDetail(invoiceDetail)
+      .then((isOK_detail) => {
+        if (isOK_detail) {
+          let idx = this.details.findIndex(detail => detail.id == invoiceDetail.id);
+          if (idx > -1){
+            this.details.splice(idx, 1);
+            let statusFarmTransferWaiting = this.deployData.get_status_by_id(this.pigs[invoiceDetail.objectId].statusId);
+            let pig = this.util.deepClone(this.pigs[invoiceDetail.objectId]);
+            pig.statusId= statusFarmTransferWaiting.previousStatus;
+            this.pigs[invoiceDetail.objectId] = pig;
+            this.pigProvider.updatedPig(pig);
+          }
+
+        }
+      })
+      .catch((err: Error) => { })
+  }
+
+  /**
+   * Xác nhận xuất heo cho chứng từ
+   */
+  forwardingModifyInvoice() {
+    let invoice: invoicesPig = this.util.deepClone(this.invoice);
+    invoice.status = VARIABLE.INVOICE_STATUS.FORWARDING;
+    this.invoiceProvider.updatePigInvoice(invoice)
+      .then((updatedInvoice: invoicesPig) => {
+        if (updatedInvoice) {
+          this.invoice = updatedInvoice;
+          this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
+          this.invoice['source'] = this.deployData.get_farm_by_id(this.invoice.sourceId);
+          this.invoice.sourceManagerName = this.deployData.get_employee_by_id(this.invoice.sourceManager).name;
+          this.canCheckComplete = false;
+          this.canEditInvoice = false;
+          this.navParams.get('callback')(this.invoice);
+        }
+      })
+      .catch((err: Error) => { })
   }
 }

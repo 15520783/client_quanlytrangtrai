@@ -92,6 +92,7 @@ const VARIABLE = {
     },
     INVOICE_STATUS: {
         PROCCESSING: 'processing',
+        FORWARDING: 'forwarding',
         COMPLETE: 'complete'
     },
     MATING_TYPE: {
@@ -152,6 +153,9 @@ const API = {
     GET_MEDICINE_WAREHOUSE_FROM_INVOICE: '/api/medicinewarehouse/invoice/',
     GET_SCHEDULE: '/api/schedule/list',
 
+    CREATE_HOUSE: '/api/houses/',
+    UPDATE_HOUSE: '/api/houses/',
+
     CREATE_PREGNANCY_STATUS: '/api/pregnancystatus/',
     DELETE_PREGNANCY_STATUS: '/api/pregnancystatus/',
     UPDATE_PREGNANCY_STATUS: '/api/pregnancystatus/',
@@ -177,7 +181,8 @@ const API = {
     DELETE_PRODUCT_INVOICE: '/api/invoicesproduct/',
 
     CREATE_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/pigsinvoicepigdetail/',
-    DELETE_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/',
+    DELETE_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/onlyinvoicedetail/',
+    DELETE_EXTERNAL_IMPORT_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/',    
 
     CREATE_FOOD_WAREHOUSE: '/api/foodwarehouse/',
     UPDATE_FOOD_WAREHOUSE: '/api/foodwarehouse/',
