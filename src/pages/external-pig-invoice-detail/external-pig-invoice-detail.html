@@ -6,12 +6,14 @@
   </ion-navbar>
   <ion-toolbar showWhen="core" class="pl-10">
     <button ion-button mode='ios' color="secondary" (tap)="input_pig()">Nhập heo</button>
-    <button *ngIf="canEditInvoice" ion-button mode='ios' color="secondary" (tap)="editInvoice()">Chỉnh sửa chứng từ</button>
-    <button *ngIf="canCheckComplete" ion-button mode='ios' color="secondary" (tap)="completeInvoice()">Xác nhận hoàn tất</button>
-    <button *ngIf="!details.length"ion-button mode='ios' color="danger" (tap)="removeInvoice()">Xóa chứng từ</button>
+    <button *ngIf="canEditInvoice" ion-button mode='ios' color="secondary" (tap)="editInvoice()">Chỉnh sửa chứng
+      từ</button>
+    <button *ngIf="canCheckComplete" ion-button mode='ios' color="secondary" (tap)="completeInvoice()">Xác nhận hoàn
+      tất</button>
+    <button *ngIf="!details.length" ion-button mode='ios' color="danger" (tap)="removeInvoice()">Xóa chứng từ</button>
   </ion-toolbar>
   <ion-toolbar showWhen='ios,android'>
-    <ion-segment [(ngModel)]="tab" scrollable >
+    <ion-segment [(ngModel)]="tab" scrollable>
       <ion-segment-button value="0" (tap)="selectedTab(0)">Thông tin chứng từ</ion-segment-button>
       <ion-segment-button value="1" (tap)="selectedTab(1)">Chi tiết</ion-segment-button>
     </ion-segment>
@@ -96,10 +98,10 @@
                       <ion-col col-lg-3 col-md-6 col-sm-12>
                         <p text-wrap><b>Ngày sinh:</b>{{pigs[item.objectId].birthday|date:'dd/MM/yyyy'}}</p>
                       </ion-col>
-                      <ion-col col-lg-3 col-md-6 col-sm-12>
+                      <ion-col col-lg-3 col-md-6 col-sm-12 *ngIf="house[pigs[item.objectId].houseId]">
                         <p text-wrap><b>Nhà:</b>{{house[pigs[item.objectId].houseId].name}}</p>
                       </ion-col>
-                      <ion-col col-lg-3 col-md-6 col-sm-12>
+                      <ion-col col-lg-3 col-md-6 col-sm-12 *ngIf="house[pigs[item.objectId].houseId]">
                         <p text-wrap><b>Khu:</b>{{house[pigs[item.objectId].houseId].section.name}}</p>
                       </ion-col>
                       <ion-col col-lg-3 col-md-6 col-sm-12>
@@ -123,13 +125,15 @@
                     </ion-row>
                   </ion-col>
                   <!-- <ion-col col-lg-2 col-md-3 col-sm-3> -->
-                    <!-- <button ion-button mode='ios' block color="danger" text-wrap
+                  <!-- <button ion-button mode='ios' block color="danger" text-wrap
                       (tap)="removePigInvoicesDetail(item)">Xóa</button> -->
-                      
+
                   <!-- </ion-col> -->
                 </ion-row>
-                <button showWhen="core" ion-button item-end mode='ios' color="main" (tap)="edit(item)">Đánh giá lại</button>
-                <button showWhen="core" ion-button item-end mode='ios' color="danger" (tap)="removePigInvoicesDetail(item)">Xóa</button>
+                <button *ngIf="canEditInvoice" showWhen="core" ion-button item-end mode='ios' color="main"
+                  (tap)="edit(item)">Đánh giá lại</button>
+                <button *ngIf="canEditInvoice" showWhen="core" ion-button item-end mode='ios' color="danger"
+                  (tap)="removePigInvoicesDetail(item)">Xóa</button>
               </ion-item>
             </span>
           </ion-list>
@@ -223,9 +227,9 @@
               </ion-col>
             </ion-row>
           </ion-item>
-          <ion-item-options side="right" showWhen="ios,android">
-            <button ion-button  mode='ios' color="main"   (tap)="edit(item)">Đánh giá lại</button>
-            <button ion-button  mode='ios' color="danger" (tap)="removePigInvoicesDetail(item)">Xóa</button>
+          <ion-item-options side="right" showWhen="ios,android" *ngIf="canEditInvoice">
+            <button ion-button mode='ios' color="main" (tap)="edit(item)">Đánh giá lại</button>
+            <button ion-button mode='ios' color="danger" (tap)="removePigInvoicesDetail(item)">Xóa</button>
           </ion-item-options>
         </ion-item-sliding>
       </ion-list>
@@ -237,16 +241,16 @@
       <ion-icon name="ios-arrow-up"></ion-icon>
     </button>
     <ion-fab-list side="top" style="right:0px">
-      <button *ngIf="!details.length"  (tap)="removeInvoice()" data-balloon-visible data-balloon-length="medium" data-balloon="Xóa chứng từ" data-balloon-pos="left"
-        ion-fab color="danger">
+      <button *ngIf="!details.length" (tap)="removeInvoice()" data-balloon-visible data-balloon-length="medium"
+        data-balloon="Xóa chứng từ" data-balloon-pos="left" ion-fab color="danger">
         <ion-icon name="md-trash"></ion-icon>
       </button>
-      <button data-balloon-visible data-balloon-length="medium" data-balloon="Chỉnh sửa chứng từ" data-balloon-pos="left"
-        ion-fab color="main">
+      <button data-balloon-visible data-balloon-length="medium" data-balloon="Chỉnh sửa chứng từ"
+        data-balloon-pos="left" ion-fab color="main">
         <ion-icon name="md-create"></ion-icon>
       </button>
-      <button data-balloon-visible data-balloon-length="medium" data-balloon="Nhập heo" data-balloon-pos="left"
-        ion-fab color="main" (tap)="input_pig()">
+      <button data-balloon-visible data-balloon-length="medium" data-balloon="Nhập heo" data-balloon-pos="left" ion-fab
+        color="main" (tap)="input_pig()">
         <ion-icon name="add"></ion-icon>
       </button>
     </ion-fab-list>

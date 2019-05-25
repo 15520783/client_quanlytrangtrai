@@ -71,7 +71,7 @@
 </ion-header>
 
 <ion-content #content>
-  <ion-list>
+  <ion-list *ngIf="!viewMode">
     <button ion-item *ngFor="let item of visible_items" (tap)="select(item)">
       <ion-avatar item-start>
         <ion-icon name="app-pig-outline" font28></ion-icon>
@@ -99,12 +99,68 @@
         <ion-col [attr.col-4]="platform.is('core') ? '':null" [attr.col-6]="!platform.is('core')?'':null">
           <p><b>Hiện trạng:</b> {{statusPig[item.statusId].name}}</p>
         </ion-col>
-
       </ion-row>
     </button>
+  </ion-list>
+
+  <ion-list *ngIf="viewMode">
+    <ion-item *ngFor="let item of visible_items">
+      <ion-avatar item-start>
+        <ion-icon name="app-pig-outline" font28></ion-icon>
+      </ion-avatar>
+      <ion-row [attr.disabled-item]="item.notActive?'':null">
+        <h2>{{item.pigCode}}</h2>
+        <ion-row>
+          <ion-col [attr.col-4]="platform.is('core') ? '':null" [attr.col-6]="!platform.is('core')?'':null">
+            <p><b>Giống:</b>{{breeds[item.breedId]?breeds[item.breedId].name + ' ' + breeds[item.breedId].symbol:''}}
+            </p>
+          </ion-col>
+          <ion-col [attr.col-4]="platform.is('core') ? '':null" [attr.col-6]="!platform.is('core')?'':null">
+            <p><b>Nhà:</b> {{item.houseId}}</p>
+          </ion-col>
+          <ion-col [attr.col-4]="platform.is('core') ? '':null" [attr.col-6]="!platform.is('core')?'':null">
+            <p><b>Cân nặng:</b> {{item.originWeight}}</p>
+          </ion-col>
+          <ion-col [attr.col-4]="platform.is('core') ? '':null" [attr.col-6]="!platform.is('core')?'':null">
+            <p><b>Ngày sinh:</b> {{item.birthday|date:'dd/MM/yyyy'}}</p>
+          </ion-col>
+          <ion-col [attr.col-4]="platform.is('core') ? '':null" [attr.col-6]="!platform.is('core')?'':null">
+            <p><b>Giới tính:</b> {{genders[item.gender].name}}</p>
+          </ion-col>
+          <ion-col [attr.col-4]="platform.is('core') ? '':null" [attr.col-6]="!platform.is('core')?'':null">
+            <p><b>Điểm thể trạng:</b> {{item.healthPoint}}</p>
+          </ion-col>
+          <ion-col [attr.col-4]="platform.is('core') ? '':null" [attr.col-6]="!platform.is('core')?'':null">
+            <p><b>Hiện trạng:</b> {{statusPig[item.statusId].name}}</p>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+      <ion-row>
+        <button ion-button small mode="ios" color="danger" *ngIf="!item.notActive"
+          (tap)="changeActivePig(item)">Loại</button>
+        <button ion-button small mode="ios" color="secondary" *ngIf="item.notActive"
+          (tap)="changeActivePig(item)">Duyệt</button>
+      </ion-row>
+    </ion-item>
   </ion-list>
   <ion-infinite-scroll (ionInfinite)="loadData($event)" *ngIf="page_Idx!==page_Total">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Đang tải dữ liệu...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
+
+<ion-footer no-border showWhen="core" *ngIf="FooterButtons.length">
+  <ion-toolbar toolbar-transparent text-right showWhen="core">
+    <span *ngFor="let button of FooterButtons">
+      <button type="submit" ion-button mode='ios' [color]="button.color"
+        (tap)="button.callback(true)">{{button.label}}</button>
+    </span>
+  </ion-toolbar>
+</ion-footer>
+
+<ion-footer showWhen="ios,android" no-border no-padding *ngIf="FooterButtons.length">
+  <span *ngFor="let button of FooterButtons">
+    <button no-margin full block ion-button mode='ios' [color]="button.color"
+      (tap)="button.callback(true)">{{button.label}}</button>
+  </span>
+</ion-footer>

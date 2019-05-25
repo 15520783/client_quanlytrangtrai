@@ -35,6 +35,16 @@ export class InvoicesProvider {
   }
 
   /**
+   * Lấy danh sách chứng từ chuyển heo đến của trang trại
+   */
+  getAllForwardingPigInvoices() {
+    return this.http
+      .get<{ invoicesPig: Array<invoicesPig>, invoicePigDetail: Array<invoicePigDetail>, pigs:Array<pig> }>(API.GET_ALL_FORWARDING_PIG_INVOICE)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
    * Tạo mới một chứng từ heo
    * @param objBody 
    */
@@ -43,6 +53,17 @@ export class InvoicesProvider {
       .post(API.CREATE_PIG_INVOICE, objBody)
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise();
+  }
+
+  /**
+   * Tạo chứng từ nhập heo vào hệ thống
+   * @param objBody 
+   */
+  createImportInternalPigInvoice(objBody:{invoicesPig:invoicesPig,invoicesPigUpdate:invoicesPig,pigsList:Array<pig>}){
+    return this.http
+    .post<{pigsList:Array<pig>,invoicesPig:invoicesPig,invoicePigDetailList:invoicePigDetail}>(API.CREATE_IMPORT_INTERNAL_PIG_INVOICE,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
   }
 
   /**
@@ -144,7 +165,7 @@ export class InvoicesProvider {
    * Xóa chi tiết chừng từ heo
    * @param objBody 
    */
-  removePigInvoiceDetail(objBody:invoicePigDetail){
+  removePigInvoiceDetail(objBody: invoicePigDetail) {
     const options = {
       headers: new HttpHeaders(),
       body: objBody

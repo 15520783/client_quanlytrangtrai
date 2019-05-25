@@ -10,7 +10,10 @@ const KEY = {
     WAREHOUSES: 'warehouses',
     SETTINGS: 'settings',
     PARTNERS: 'partners',
-    EMPID: 'employeeId'
+    EMPID: 'employeeId',
+    USER:'user',
+    USERNAME:'username',
+    PASSWORD:'password'
 }
 
 const SETTING_STORAGE_KEY = {
@@ -24,7 +27,8 @@ const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".
 
 const CONFIG = {
     // SERVER_API: 'http://192.168.0.36:3000',
-    SERVER_API: 'https://quanlytrangtrai-uit.herokuapp.com',
+    // SERVER_API: 'https://quanlytrangtrai-uit.herokuapp.com',
+    SERVER_API: 'https://quanlytrangtrai-uit-eu.herokuapp.com',
     // SERVER_API: 'http://192.168.1.45:8080',
     DEFAULT_TIMEOUT: 30000,
     LANGUAGE_DEFAULT: 'vi',
@@ -151,7 +155,9 @@ const API = {
     GET_PIG_INVOICE_DETAIL_FROM_INVOICE: '/api/invoicepigdetail/invoice/',
     GET_FOOD_WAREHOUSE_FROM_INVOICE: '/api/foodwarehouse/invoice/',
     GET_MEDICINE_WAREHOUSE_FROM_INVOICE: '/api/medicinewarehouse/invoice/',
+    GET_ALL_FORWARDING_PIG_INVOICE:'/api/invoicespig/forwarding/list',
     GET_SCHEDULE: '/api/schedule/list',
+    GET_INFO_EMPLOYEE:'/api/employees/',
 
     CREATE_HOUSE: '/api/houses/',
     UPDATE_HOUSE: '/api/houses/',
@@ -182,7 +188,9 @@ const API = {
 
     CREATE_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/pigsinvoicepigdetail/',
     DELETE_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/onlyinvoicedetail/',
-    DELETE_EXTERNAL_IMPORT_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/',    
+    DELETE_EXTERNAL_IMPORT_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/', 
+    
+    CREATE_IMPORT_INTERNAL_PIG_INVOICE:'/api/invoicespig/pigsinvoicepig/',
 
     CREATE_FOOD_WAREHOUSE: '/api/foodwarehouse/',
     UPDATE_FOOD_WAREHOUSE: '/api/foodwarehouse/',
@@ -238,3 +246,5 @@ export { VARIABLE }
 export { EMAIL_PATTERN }
 export { SETTING_STORAGE_KEY }
 export { MESSAGE, ERROR_NAME }
+
+

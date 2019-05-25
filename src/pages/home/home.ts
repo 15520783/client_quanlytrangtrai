@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, Nav, LoadingController, Events, Platform } from 'ionic-angular';
+import { NavController, Nav, LoadingController, Events, Platform, NavParams } from 'ionic-angular';
 import { FarmsPage } from '../farms/farms';
 import { SectionsPage } from '../sections/sections';
 import { PigsPage } from '../pigs/pigs';
@@ -23,7 +23,7 @@ import { WarehousesProvider } from '../../providers/warehouses/warehouses';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { UserProvider } from '../../providers/user/user';
 import { PartnerProvider } from '../../providers/partner/partner';
-import { pig } from '../../common/entity';
+import { pig, employee } from '../../common/entity';
 import { PigSummaryPage } from '../pig-summary/pig-summary';
 import { house } from '../../common/entity';
 import { HouseInfomationPage } from '../house-infomation/house-infomation';
@@ -37,13 +37,13 @@ export class HomePage {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any;
-
   pages: any;
-
   activeLogOut: boolean = false;
+  public user: any = {};
 
   constructor(
     public navCtrl: NavController,
+    public navParams: NavParams,
     public loadingCtrl: LoadingController,
     public util: Utils,
     public farmProvider: FarmsProvider,
@@ -61,6 +61,15 @@ export class HomePage {
     public platform: Platform,
     public scanner: BarcodeScanner
   ) {
+    this.util.getKey(KEY.USER).then((user)=>{
+      if(user){
+        this.user.name = user.name;
+      }
+    })
+    this.util.getKey(KEY.USERNAME).then((username) => {
+      this.user['username'] = username;
+    })
+    
     this.pages = [
       { title: 'Trang trại', component: FarmsPage, icon: 'app-farm', active: true },
       { title: 'Khu', component: SectionsPage, icon: 'app-sections', active: false, },
@@ -105,12 +114,10 @@ export class HomePage {
   }
 
   logOut() {
-    this.util.removeKey(KEY.ACCESSTOKEN)
-      .then(() => {
-        this.util.removeKey(KEY.TOKENTYPE)
-          .then(() => {
-            this.events.publish('app_logout');
-          })
+    this.util.clearAllKeyStorage()
+      .then((isOK) => {
+        console.log(isOK);
+        this.events.publish('app_logout');
       })
       .catch((err: any) => {
         console.log(err);
@@ -141,6 +148,7 @@ export class HomePage {
     this.userProvider.checkServer()
       .then((res: any) => {
         if (res.success) {
+          this.userProvider.sync();
           this.farmProvider.sync();
           this.pigProvider.sync();
           this.employeeProvider.sync();
@@ -153,11 +161,11 @@ export class HomePage {
         }
       })
       .catch((err: any) => {
+        this.util.closeBackDrop();
         if (err.status != 401) {
           if (err.name == ERROR_NAME.TIMEMOUT_ERROR || err.name == ERROR_NAME.ERROR_RESPONSE) {
             this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].TIMEOUT_REQUEST);
             this.events.unsubscribe('updated');
-            this.util.closeBackDrop();
           }
         }
       })
@@ -165,6 +173,7 @@ export class HomePage {
 
   checkUpdate() {
     if (
+      this.userProvider.updated_flag &&
       this.farmProvider.updated_flag &&
       this.pigProvider.updated_flag &&
       this.employeeProvider.updated_flag &&

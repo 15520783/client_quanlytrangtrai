@@ -32,7 +32,6 @@ export class ExternalPigInvoiceDetailPage {
 
   canCheckComplete: boolean = false;
   canEditInvoice: boolean = false;
-  canDelete: boolean = false;
 
   constructor(
     public navCtrl: NavController,

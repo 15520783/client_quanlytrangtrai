@@ -5,7 +5,10 @@ import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { Utils } from '../../common/utils';
 import { PigsProvider } from '../../providers/pigs/pigs';
-import { InputPigToInternalInvoicePage } from '../input-pig-to-internal-invoice/input-pig-to-internal-invoice';
+import { VARIABLE } from '../../common/const';
+import { InternalPigInvoiceRole } from '../../role-input/internalPigInvoice';
+import { InvoiceInputUtilComponent } from '../../components/invoice-input-util/invoice-input-util';
+import { ImportInternalPigInvoiceInputPage } from '../import-internal-pig-invoice-input/import-internal-pig-invoice-input';
 
 @IonicPage()
 @Component({
@@ -13,10 +16,10 @@ import { InputPigToInternalInvoicePage } from '../input-pig-to-internal-invoice/
   templateUrl: 'internal-pig-invoice-detail.html',
 })
 export class InternalPigInvoiceDetailPage {
-  @ViewChild('slider') slider : Slides;
-  
+  @ViewChild('slider') slider: Slides;
+
   public tab = "0";
-  
+
   public invoice: invoicesPig;
   public details: Array<invoicePigDetail> = [];
   public pigs: any;
@@ -24,6 +27,11 @@ export class InternalPigInvoiceDetailPage {
   public gentials: any;
   public foots: any;
   public healStatus: any;
+  public gender: any;
+  public breeds;
+
+  canCheckComplete: boolean = false;
+  canEditInvoice: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -40,17 +48,24 @@ export class InternalPigInvoiceDetailPage {
       // this.invoice.importDate = this.util.convertDate(this.invoice.importDate);
       // this.invoice.updatedAt = this.util.convertDate(this.invoice.updatedAt);
       this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
-      this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.sourceId);
+      this.invoice['source'] = this.deployData.get_farm_by_id(this.invoice.sourceId);
     }
     this.pigs = this.deployData.get_object_list_key_of_pig();
     this.house = this.deployData.get_object_list_key_of_house();
     this.gentials = this.deployData.get_object_list_key_of_gential();
     this.healStatus = this.deployData.get_object_list_key_of_healthStatus();
     this.foots = this.deployData.get_object_list_key_of_foot();
+    this.breeds = this.deployData.get_object_list_key_of_breeds();
+    this.gender = VARIABLE.GENDER;
+
+    if (this.invoice.status == VARIABLE.INVOICE_STATUS.PROCCESSING) {
+      this.canCheckComplete = true;
+      this.canEditInvoice = true;
+    }
   }
 
   ngAfterViewInit() {
-    if (this.slider){
+    if (this.slider) {
       this.slider.autoHeight = true;
     }
   }
@@ -64,68 +79,21 @@ export class InternalPigInvoiceDetailPage {
   }
 
   ionViewDidLoad() {
-    this.util.showLoading('Đang tải dữ liệu');
+    this.util.openBackDrop();
     this.invoiceProvider.getPigInvoiceDetail(this.navParams.data.invoice.id)
       .then((details: any) => {
         if (details.length) {
           this.details = details;
         }
-        this.util.closeLoading();
+        this.util.closeBackDrop();
       })
       .catch((err: Error) => {
         console.log(err);
-        this.util.closeLoading().then(() => {
+        this.util.closeBackDrop().then(() => {
           this.util.showToast('Dữ liệu chưa được tải về. Vui lòng kiểm tra kết nối');
         })
       })
   }
-
-
-  input_pig() {
-    this.navCtrl.push(InputPigToInternalInvoicePage);
-    this.events.unsubscribe('updatePig');
-    this.events.subscribe('updatePig', (pig: pig) => {
-      pig = this.deployData.get_pig_object_to_send_request(pig);
-      this.pigProvider.updatePig(pig)
-        .then((data) => {
-          if (data) {
-            console.log(data);
-            // this.pigs[data.id] = data;
-            // let invoiceDetail = new invoicePigDetail();
-            // invoiceDetail.objectId = data.id;
-            // invoiceDetail.invoice = this.invoice;
-            // this.invoiceProvider.createPigInvoiceDetail(invoiceDetail)
-            //   .then((invoiceDetail: invoicePigDetail) => {
-            //     if (invoiceDetail) {
-            //       this.details.push(invoiceDetail);
-            //       this.events.unsubscribe('updatePig');
-            //       this.events.publish('OK');
-            //     }
-            //   })
-          }
-        })
-        .catch((err: Error) => {
-        })
-    })
-  }
-
-  removePigInvoicesDetail(invoiceDetail: invoicePigDetail) {
-    // this.invoiceProvider.removePigInvoiceDetail(invoiceDetail)
-    //   .then((isOK_detail) => {
-    //     if (isOK_detail) {
-    //       let pig = this.deployData.get_pig_object_to_send_request(this.pigs[invoiceDetail.objectId]);
-    //       this.pigProvider.removePig(pig)
-    //         .then((isOK_pig) => {
-    //           if (isOK_pig) {
-    //             let idx = this.details.findIndex(detail => detail.id == invoiceDetail.id);
-    //             this.details.splice(idx, 1);
-    //           }
-    //         })
-    //     }
-    //   })
-    //   .catch((err: Error) => {})
-  }
-
 
   removeInvoice() {
     this.invoiceProvider.removePigInvoice(this.invoice)
@@ -136,7 +104,34 @@ export class InternalPigInvoiceDetailPage {
           });
         }
       })
-      .catch((err: Error) => {})
+      .catch((err: Error) => { })
   }
 
+  /**
+   * Chỉnh sửa chứng từ
+   */
+  editInvoice() {
+    let callback = data => {
+      if (data.invoice) {
+        this.invoiceProvider.updatePigInvoice(data.invoice)
+          .then((updatedInvoice: invoicesPig) => {
+            if (updatedInvoice) {
+              updatedInvoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
+              updatedInvoice['source'] = this.deployData.get_farm_by_id(this.invoice.sourceId);
+              this.invoice = updatedInvoice;
+              this.navParams.get('callback')(this.invoice);
+            }
+            this.navCtrl.pop();
+          })
+          .catch((err: Error) => { return err; })
+      }
+    }
+    this.navCtrl.push(ImportInternalPigInvoiceInputPage,
+      {
+        editMode: true,
+        invoice: this.invoice,
+        callback: callback
+      }
+    )
+  }
 }

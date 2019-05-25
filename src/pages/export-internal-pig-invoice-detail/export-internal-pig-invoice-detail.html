@@ -9,7 +9,7 @@
     <button *ngIf="canEditInvoice" ion-button mode='ios' color="secondary" (tap)="editInvoice()">Chỉnh sửa chứng
       từ</button>
     <button *ngIf="canCheckComplete" ion-button mode='ios' color="secondary" (tap)="forwardingModifyInvoice()">Xác nhận xuất heo</button>
-    <button *ngIf="!details.length" ion-button mode='ios' color="danger" (tap)="removeInvoice()">Xóa chứng từ</button>
+    <button  ion-button mode='ios' color="danger" (tap)="removeInvoice()">Xóa chứng từ</button>
   </ion-toolbar>
   <ion-toolbar showWhen='ios,android'>
     <ion-segment [(ngModel)]="tab" scrollable>
@@ -121,9 +121,9 @@
                     </ion-row>
                   </ion-col>
                 </ion-row>
-                <button showWhen="core" ion-button item-end mode='ios' color="main" (tap)="edit(item)">Đánh giá
+                <button *ngIf="canEditInvoice" showWhen="core" ion-button item-end mode='ios' color="main" (tap)="edit(item)">Đánh giá
                   lại</button>
-                <button showWhen="core" ion-button item-end mode='ios' color="danger"
+                <button *ngIf="canEditInvoice" showWhen="core" ion-button item-end mode='ios' color="danger"
                   (tap)="removePigInvoicesDetail(item)">Xóa</button>
               </ion-item>
             </span>

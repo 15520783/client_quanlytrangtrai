@@ -10,6 +10,7 @@ import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { InvoiceInputUtilComponent } from '../invoice-input-util/invoice-input-util';
 import { InternalPigInvoiceDetailPage } from '../../pages/internal-pig-invoice-detail/internal-pig-invoice-detail';
 import { VARIABLE } from '../../common/const';
+import { ForwardingPigInvoiceListPage } from '../../pages/forwarding-pig-invoice-list/forwarding-pig-invoice-list';
 
 @Component({
   selector: 'internal-pig-invoices',
@@ -26,10 +27,11 @@ export class InternalPigInvoicesComponent {
     { name: "sourceName", label: 'Nguồn cung cấp' },
     { name: "destinationName", label: 'Nơi nhận' },
     { name: "importDateDisplay", label: 'Ngày nhập' },
-    { name: "quantity", label: 'Tổng số heo' }
+    { name: "quantity", label: 'Tổng số heo' },
+    { name: "statusName", label: 'Trạng thái' },
   ];
   public placeholderSearch: string = 'Tìm kiếm chứng từ'
-  public filter_default: Array<string> = ["invoiceNo", "sourceName", "destinationName", "importDateDisplay", "quantity"];
+  public filter_default: Array<string> = ["invoiceNo", "sourceName", "destinationName", "importDateDisplay", "statusName", "quantity"];
 
   public page_Idx: number = 1;
   public page_Total: number = 0;
@@ -80,15 +82,20 @@ export class InternalPigInvoicesComponent {
 
   public filterItems(searchItem) {
     this.invoices.forEach((invoice) => {
+      invoice['sourceName'] = this.farms_util[invoice.sourceId] ? this.farms_util[invoice.sourceId].name : '';
       invoice['destinationName'] = this.farms_util[invoice.destinationId] ? this.farms_util[invoice.destinationId].name : '';
       invoice['importDateDisplay'] = this.util.convertDate(invoice.importDate);
+      invoice['statusName'] = VARIABLE.INVOICE_STATUS.PROCCESSING == invoice.status
+        ? 'Đang xử lí' : (VARIABLE.INVOICE_STATUS.COMPLETE == invoice.status ? 'Hoàn tất' : 'Chưa xác định');
     })
     this.filterProvider.input = this.invoices;
     this.filterProvider.searchText = searchItem;
     this.filterProvider.searchWithText = this.filter_default;
 
     this.filterProvider.searchWithRange = {}
-    return this.filterProvider.filter();
+    return this.filterProvider.filter().sort((a: invoicesPig, b: invoicesPig) =>
+      (new Date(a.importDate) > new Date(b.importDate)) ? -1 : 1
+    );
   }
 
   loadData(infiniteScroll) {
@@ -120,19 +127,20 @@ export class InternalPigInvoicesComponent {
         callback: callback
       }
     )
-
-    // this.events.unsubscribe('callback');
-    // this.events.subscribe('callback', (data) => {
-    //   if (data) {
-    //     this.invoices.push(data);
-    //     this.setFilteredItems();
-    //     this.events.unsubscribe('callback');
-    //   }
-    // })
   }
 
   input_pig(item) {
-    this.navCtrl.push(InternalPigInvoiceDetailPage, { invoice: item });
+    let callback = (invoice: invoicesPig) => {
+      if (invoice) {
+        let idx = this.invoices.findIndex(_invoice => _invoice.id == invoice.id);
+        if (idx > -1) {
+          this.invoices[idx] = invoice;
+          this.setFilteredItems();
+        }
+      }
+    }
+
+    this.navCtrl.push(InternalPigInvoiceDetailPage, { invoice: item , callback: callback});
 
     this.events.subscribe('removeInvoiceEvent', (invoice) => {
       if (invoice) {
@@ -143,5 +151,12 @@ export class InternalPigInvoicesComponent {
         this.events.unsubscribe('removeInvoiceEvent');
       }
     })
+  }
+
+  /**
+   * Xem danh sách chứng từ chuyển heo đến trang trại
+   */
+  viewListForwarding() {
+    this.navCtrl.push(ForwardingPigInvoiceListPage);
   }
 }

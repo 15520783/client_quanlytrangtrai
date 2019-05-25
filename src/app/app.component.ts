@@ -27,6 +27,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any;
+  rootParams: any;
   splash: boolean = true;
 
   constructor(
@@ -46,7 +47,7 @@ export class MyApp {
     public warehouseProvider: WarehousesProvider,
     public settingProvider: SettingsProvider,
     public partnerProvider: PartnerProvider,
-    public deployData:DeployDataProvider,
+    public deployData: DeployDataProvider,
     public util: Utils,
     public userProvider: UserProvider,
   ) {
@@ -63,6 +64,7 @@ export class MyApp {
         this.splashScreen.hide();
         this.headerColor.tint('#01C2FA');
       }
+
 
       this.util.getKey(KEY.ACCESSTOKEN)
         .then((accessToken) => {
@@ -95,7 +97,6 @@ export class MyApp {
                     CONFIG.ACCESS_KEY = tokenType.concat(' ').concat(accessToken);
                     this.splash = true;
                     this.intinial_sync();
-                    this.subscribeEventUpdate();
                   }
                   else {
                     this.splash = false;
@@ -118,10 +119,19 @@ export class MyApp {
    * Update database by requesting to server and  recieved database will be store in local storage..
    */
   intinial_sync() {
+    // this.farmProvider.updated_flag = false;
+    // this.pigProvider.updated_flag = false;
+    // this.employeeProvider.updated_flag = false;
+    // this.sectionProvider.updated_flag = false;
+    // this.houseProvider.updated_flag = false;
+    // this.warehouseProvider.updated_flag = false;
+    // this.settingProvider.updated_flag = false;
+    // this.partnerProvider.updated_flag = false;
     this.subscribeEventUpdate();
     this.userProvider.checkServer()
       .then((res: any) => {
         if (res.success) {
+          this.userProvider.sync();
           this.farmProvider.sync();
           this.pigProvider.sync();
           this.employeeProvider.sync();
@@ -147,7 +157,6 @@ export class MyApp {
       })
   }
 
-
   subscribeEventUpdate() {
     this.events.subscribe('updated', () => {
       this.checkUpdate();
@@ -155,10 +164,9 @@ export class MyApp {
   }
 
   checkUpdate() {
-    if (
+    if (this.userProvider.updated_flag &&
       this.farmProvider.updated_flag &&
       this.pigProvider.updated_flag &&
-      // this.pigGroupProvider.updated_flag &&
       this.employeeProvider.updated_flag &&
       this.sectionProvider.updated_flag &&
       this.houseProvider.updated_flag &&
@@ -169,7 +177,6 @@ export class MyApp {
       this.events.unsubscribe('updated');
       setTimeout(() => {
         this.splash = false;
-        
       }, 2000);
     }
   }

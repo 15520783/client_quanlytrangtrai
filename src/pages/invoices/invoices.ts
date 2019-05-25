@@ -37,7 +37,10 @@ export class InvoicesPage {
     public events: Events
   ) {
 
-
+    this.events.subscribe('invoicesPage:sync',()=>{
+      this.getInvoices();
+    });
+    
     this.list_invoice_type = {
       internalPigInvoice: {
         title: 'Chứng từ nhập heo trong hệ thống',
@@ -102,7 +105,7 @@ export class InvoicesPage {
           this.invoicesProvider.invoices = data;
           if (data.invoicesPigs.length) {
             this.internalPigInvoices = data.invoicesPigs.filter((invoices) => {
-              return invoices.invoiceType == 1 ? true : false;
+              return invoices.invoiceType == VARIABLE.INVOICE_PIG_TYPE.INTERNAL_IMPORT ? true : false;
             });
             this.externalPigInvoices = data.invoicesPigs.filter((invoices) => {
               return invoices.invoiceType == VARIABLE.INVOICE_PIG_TYPE.EXTERNAL_IMPORT ? true : false;

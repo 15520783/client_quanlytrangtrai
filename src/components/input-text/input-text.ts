@@ -18,6 +18,7 @@ export class InputTextComponent {
   @Input() disabled: boolean = false;
   // @Input() value:string = '';
   @Input() active: boolean = false;
+  @Input() readonly:boolean = false;
 
   constructor() {
     if (this.disabled)

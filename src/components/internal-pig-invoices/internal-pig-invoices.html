@@ -14,7 +14,8 @@
   <div id="content">
     <ion-item-divider custom-diviver sticky="true" showWhen="core">
       <ion-row>
-        <button no-margin ion-button item-end mode='ios' color="secondary" (tap)="add()">Danh sách chừng từ chuyển heo đến</button>
+        <button no-margin ion-button item-end mode='ios' color="secondary" (tap)="viewListForwarding()">Danh sách chừng
+          từ chuyển heo đến</button>
         <!-- <button no-margin ion-button item-end mode='ios' color="secondary" (tap)="add()">Thêm chứng từ</button> -->
       </ion-row>
     </ion-item-divider>
@@ -36,7 +37,9 @@
     </ion-infinite-scroll>
   </div>
   <ion-fab bottom right showWhen="android,windows,ios" color="secondary">
-    <button ion-fab (tap)="add()">
+    <button ion-fab (tap)="viewListForwarding()" data-balloon-visible data-balloon-length="medium" data-balloon="Danh sách chừng
+    từ chuyển heo đến"
+      data-balloon-pos="left" ion-fab>
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>

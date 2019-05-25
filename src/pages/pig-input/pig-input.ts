@@ -38,7 +38,6 @@ export class PigInputPage {
     public viewCtrl: ViewController,
     public util: Utils
   ) {
-
     this.init();
     this.credentialsForm = this.formBuilder.group({
       id: this.pig.id,

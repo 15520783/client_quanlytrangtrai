@@ -20,6 +20,13 @@ export class PigListComponent {
   @Output() closeMenuEvent = new EventEmitter();
   @Input() data: Array<pig> = [];
   @Input() selectMode: boolean = false;
+  @Input() viewMode: boolean = false;
+  @Input() canEdit:boolean = false;
+  @Input() FooterButtons:Array<{
+    label:string,
+    color:string,
+    callback:any
+  }> = [];
 
 
   showFilter = false;
@@ -33,8 +40,8 @@ export class PigListComponent {
   public genderFilter = [];
   public houseFilter = [];
 
-  public genders:any;
-  public breeds:any = {};
+  public genders: any;
+  public breeds: any = {};
 
   customAlertOptions: any = {
     translucent: true,
@@ -45,32 +52,39 @@ export class PigListComponent {
   protected searchTerm: string = '';
   protected visible_items: Array<pig> = [];
   protected houses: Array<house> = [];
-  protected statusPig:any = {};
+  protected statusPig: any = {};
 
   constructor(
-    public platform:Platform,
+    public platform: Platform,
     public houseProvider: HousesProvider,
     public navParams: NavParams,
     public filterProvider: FilterProvider,
     public modalCtrl: ModalController,
     public viewCtrl: ViewController,
     public navCtrl: NavController,
-    public deployData:DeployDataProvider
+    public deployData: DeployDataProvider
   ) {
     this.genders = VARIABLE.GENDER;
     this.breeds = this.deployData.get_object_list_key_of_breeds();
     this.statusPig = this.deployData.get_object_list_key_of_status();
 
-    if(this.navParams.data){
+    if (this.navParams.data) {
       this.data = this.navParams.data.pigs;
       this.selectMode = this.navParams.data.selectMode;
+      this.viewMode = this.navParams.data.viewMode;
     }
-    
+    if(this.navParams.data.FooterButtons){
+      this.FooterButtons = this.navParams.data.FooterButtons;
+    }
+    if(this.navParams.data.canEdit){
+      this.canEdit = this.navParams.data.canEdit;
+    }
+
     this.houseProvider.getAllHouses()
-    .then((data: any) => {
-      this.houses = data;
-    })
-    .catch((err)=>{console.log(err)});
+      .then((data: any) => {
+        this.houses = data;
+      })
+      .catch((err) => { console.log(err) });
   }
 
   ngAfterViewInit(): void {
@@ -95,7 +109,7 @@ export class PigListComponent {
     this.filterProvider.searchText = searchItem;
     this.filterProvider.searchWithText = this.filter_default;
     this.filterProvider.searchWithRange = {
-      originWeight : { min: this.dualValue2.lower, max: this.dualValue2.upper }
+      originWeight: { min: this.dualValue2.lower, max: this.dualValue2.upper }
     }
     return this.filterProvider.filter();
   }
@@ -110,17 +124,17 @@ export class PigListComponent {
     }, 500);
   }
 
-  select(pig){
-    if(this.selectMode){
+  select(pig) {
+    if (this.selectMode) {
       this.viewCtrl.dismiss(pig);
-    }else{
+    } else if (!this.viewMode) {
       this.viewDeltail(pig);
     }
   }
 
 
   viewDeltail(pig) {
-    this.navCtrl.push(PigViewPage,{data:pig});
+    this.navCtrl.push(PigViewPage, { data: pig });
     // const modal = this.modalCtrl.create(
     //   PigViewPage, pig, {
     //     cssClass: 'ion-modal'
@@ -129,11 +143,20 @@ export class PigListComponent {
     // modal.present();
   }
 
-  scrollToTop(){
+  scrollToTop() {
     this.content.scrollToTop();
   }
 
-  closeMenu(){
-    this.closeMenuEvent.emit({close:true});
+  closeMenu() {
+    this.closeMenuEvent.emit({ close: true });
+  }
+
+
+  changeActivePig(item){
+    item.notActive = !item.notActive;
+    let idx = this.data.findIndex(_pig => _pig.id == item.id);
+    if(idx > -1){
+      this.data['notActive'] = item.notActive;
+    }
   }
 }

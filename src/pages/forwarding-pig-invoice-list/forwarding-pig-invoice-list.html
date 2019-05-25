@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-navbar>
+    <ion-toolbar>
+      <ion-searchbar col-md-7 mode="ios" animated="true" debounce="500" [placeholder]="placeholderSearch"
+        [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="setFilteredItems()">
+      </ion-searchbar>
+    </ion-toolbar>
+  </ion-navbar>
+</ion-header>
+<ion-content #contentExternalInvoice class="setting-util-component">
+  <div id="content">
+    <ion-item-divider custom-diviver sticky="true" showWhen="core">Danh sách chứng từ heo chuyển đến</ion-item-divider>
+    <ion-list>
+      <ion-item-sliding *ngFor="let item of visible_items">
+        <ion-item>
+          <h2 *ngIf="mainAttribute"><b>Số chứng từ: </b>{{item[mainAttribute]}}</h2>
+          <ion-row>
+            <ion-col col-10>
+              <ion-row>
+                <ion-col *ngFor="let attr of attributes" [attr.col-6]="!platform.is('core')?'':null"
+                  [attr.col-3]="platform.is('core')?'':null" text-wrap>
+                  <p style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col col-2>
+              <ion-row>
+                <button small no-margin ion-button item-end mode='ios' color="main"
+                  (tap)="viewAndCreateInvoice(item)">Duyệt danh sách heo & Lập phiếu nhập</button>
+                <!-- <button small no-margin ion-button item-end mode='ios' color="secondary" (tap)="createNewInvoice(item)">Lập phiếu nhập</button> -->
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+      </ion-item-sliding>
+    </ion-list>
+    <ion-infinite-scroll (ionInfinite)="loadData($event)" *ngIf="page_Idx!==page_Total">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Đang tải dữ liệu...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+  <ion-fab bottom right showWhen="android,windows,ios" color="secondary">
+    <button ion-fab (tap)="add()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>

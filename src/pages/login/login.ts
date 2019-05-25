@@ -81,16 +81,23 @@ export class LoginPage {
                 this.util.setKey(KEY.TOKENTYPE, res.tokenType)
               }).then(() => {
                 this.util.setKey(KEY.EMPID, res.employeeId)
+              }).then(() => {
+                this.util.setKey(KEY.USERNAME, params.username)
+              }).then(() => {
+                this.util.setKey(KEY.PASSWORD, params.password);
+              })
+              .catch((err) => {
+                console.log(err);
               })
           }
+        }).then(() => {
+          backdrop.dismiss();
+          this.events.publish('app_begin');
         })
         .catch((err: any) => {
           this.wait = false;
         })
-        .then(() => {
-          backdrop.dismiss();
-          this.events.publish('app_begin');
-        })
+        
     }
   }
 
