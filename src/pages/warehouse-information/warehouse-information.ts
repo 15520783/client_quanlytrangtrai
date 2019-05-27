@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 import { warehouse, foodWareHouse } from '../../common/entity';
 import { Utils } from '../../common/utils';
 import { WarehousesProvider } from '../../providers/warehouses/warehouses';
+import { FeedInputPage } from '../feed-input/feed-input';
 
 
 @IonicPage()
@@ -12,7 +13,7 @@ import { WarehousesProvider } from '../../providers/warehouses/warehouses';
 })
 export class WarehouseInformationPage {
   @ViewChild('slider') slider: Slides;
-  
+
   public type = "0";
   public warehouse = new warehouse();
   public food_warehouses: Array<foodWareHouse> = [];
@@ -62,5 +63,12 @@ export class WarehouseInformationPage {
 
   selectedTab(index) {
     this.slider.slideTo(index);
+  }
+
+  exportFood(item: foodWareHouse) {
+    this.navCtrl.push(FeedInputPage, {
+      farmId: item.warehouse.manager.farm.id,
+      foodWareHouse: item
+    });
   }
 }

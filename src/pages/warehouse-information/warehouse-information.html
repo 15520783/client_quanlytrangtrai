@@ -69,8 +69,8 @@
                     <ion-col col-3 col-md-6 col-sm-12>
                       <p text-wrap><b>Mã cám:</b>{{item.food.foodCode}}</p>
                     </ion-col>
-                    <ion-col col-3 col-md-6 col-sm-12 *ngIf="item.invoice">
-                      <p text-wrap><b>Ngày nhập:</b> {{item.invoice.importDate| date:'dd/MM/yyyy'}}</p>
+                    <ion-col col-3 col-md-6 col-sm-12 >
+                      <p text-wrap><b>Ngày nhập:</b> <span *ngIf="item.invoice">{{item.invoice.importDate| date:'dd/MM/yyyy'}}</span></p>
                     </ion-col>
                     <ion-col col-3 col-md-6 col-sm-12>
                       <p text-wrap><b>Số lượng nhập:</b> {{item.quantity}}</p>
@@ -99,7 +99,7 @@
                   </ion-row>
                 </ion-col>
                 <ion-col col-lg-2 col-md-3 col-sm-3>
-                  <button ion-button mode='ios' block color="secondary" text-wrap>Chuyển cám</button>
+                  <button small ion-button mode='ios' block color="secondary" text-wrap (tap)="exportFood(item)">Xuất cám</button>
                 </ion-col>
               </ion-row>
             </ion-item>
@@ -165,7 +165,7 @@
               <p><b>Tồn:</b> {{item.remain}}</p>
             </ion-col>
             <ion-col col-12>
-              <p><b>Ngày nhập:</b> {{item.invoice.importDate | date:'dd/MM/yyyy'}}</p>
+              <p><b>Ngày nhập:</b> <span *ngIf="item.invoice">{{item.invoice.importDate | date:'dd/MM/yyyy'}}</span> </p>
             </ion-col>
             <ion-col col-12>
               <p><b>Ngày sản xuất:</b> {{item.mfgDate | date:'dd/MM/yyyy'}}</p>

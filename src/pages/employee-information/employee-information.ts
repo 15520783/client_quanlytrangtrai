@@ -78,7 +78,7 @@ export class EmployeeInformationPage {
       height: 'parent',
       fixedWeekCount: false,
       editable: true,
-      contentHeight: this.platform.is('core') ? 500 : 400,
+      contentHeight: this.platform.is('core') ? 400 : 300,
       plugins: this.calendarPlugins,
       weekends: true,
       locale: 'vi',

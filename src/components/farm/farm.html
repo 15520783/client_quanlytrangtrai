@@ -22,7 +22,7 @@
       <ion-item-divider>Thông tin chung</ion-item-divider>
       <ion-row>
         <ion-col class="pd-5" col-6>
-          <h2><b>Số lượng:</b> {{farm.totalPig}} <ion-icon name="app-pig-outline" style="vertical-align: bottom">
+          <h2><b>Số lượng:</b><span *ngIf="summary">{{summary.totalPig + ' '}}</span><ion-icon name="app-pig-outline" style="vertical-align: bottom">
             </ion-icon>
           </h2>
         </ion-col>

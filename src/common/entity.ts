@@ -43,6 +43,7 @@ export { matingRole }
 export { mating, matingDetails }
 export { issuesPigs }
 export { births }
+export { feeds }
 
 class base {
 	id: string;
@@ -116,7 +117,7 @@ class pig extends base {
 	statusId: string = '0';
 	priceCodeId: string = '0';
 	overviewStatus: string = '0';
-	birthId:string = '';
+	birthId: string = '';
 	constructor() {
 		super();
 	}
@@ -301,7 +302,7 @@ class medicineUnits extends base {
 
 class foodUnits extends base {
 	name: string = '';
-	quantity: string = '';
+	quantity: number = null;
 	description: string = '';
 	baseUnit: string = '';
 
@@ -608,6 +609,16 @@ class births extends base {
 	remain: number = 0; // bỏ
 }
 
+class feeds extends base {
+	pig: pig = new pig();
+	foodWarehouse: foodWareHouse = new foodWareHouse();
+	unit: number = null;
+	quantity: number = null;
+	date: any = '';
+	employee: employee = new employee();
+	description: string = '';
+}
+
 class InputObject {
 	name: string;
 	type: "input-text" | "input-select" | "input-date";
@@ -625,7 +636,7 @@ class InputObject {
 
 class ObjectScanner {
 	id: string = '';
-	typeObject: string  = '';
+	typeObject: string = '';
 }
 
 export { ObjectScanner }

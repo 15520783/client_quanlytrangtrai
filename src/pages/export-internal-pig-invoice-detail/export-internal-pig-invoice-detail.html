@@ -8,7 +8,7 @@
     <button *ngIf="canEditInvoice" ion-button mode='ios' color="secondary" (tap)="input_pig()">Nhập heo</button>
     <button *ngIf="canEditInvoice" ion-button mode='ios' color="secondary" (tap)="editInvoice()">Chỉnh sửa chứng
       từ</button>
-    <button *ngIf="canCheckComplete" ion-button mode='ios' color="secondary" (tap)="forwardingModifyInvoice()">Xác nhận xuất heo</button>
+    <button *ngIf="canCheckComplete && details.length" ion-button mode='ios' color="secondary" (tap)="forwardingModifyInvoice()">Xác nhận xuất heo</button>
     <button  ion-button mode='ios' color="danger" (tap)="removeInvoice()">Xóa chứng từ</button>
   </ion-toolbar>
   <ion-toolbar showWhen='ios,android'>

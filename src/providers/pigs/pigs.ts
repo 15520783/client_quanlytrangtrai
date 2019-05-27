@@ -145,6 +145,7 @@ export class PigsProvider {
         this.publishUpdateEvent();
       })
       .catch((err) => {
+        this.publishUpdateEvent();
         console.log('err_pig_provider', err);
         this.util.getKey(KEY.PIGS)
           .then((data: Array<pig>) => {

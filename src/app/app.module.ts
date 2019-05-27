@@ -59,6 +59,7 @@ import { ChildPigInputPage } from '../pages/child-pig-input/child-pig-input';
 import { ExportInternalPigInvoiceDetailPage } from '../pages/export-internal-pig-invoice-detail/export-internal-pig-invoice-detail';
 import { ForwardingPigInvoiceListPage } from '../pages/forwarding-pig-invoice-list/forwarding-pig-invoice-list';
 import { ImportInternalPigInvoiceInputPage } from '../pages/import-internal-pig-invoice-input/import-internal-pig-invoice-input';
+import { FeedInputPage } from '../pages/feed-input/feed-input';
 
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
@@ -172,7 +173,8 @@ const Pages = [
   ChildPigInputPage,
   ExportInternalPigInvoiceDetailPage,
   ForwardingPigInvoiceListPage,
-  ImportInternalPigInvoiceInputPage
+  ImportInternalPigInvoiceInputPage,
+  FeedInputPage
 ]
 
 const Components = [

@@ -5,6 +5,7 @@ import { Utils } from '../../common/utils';
 import { Platform, ModalController, NavController } from 'ionic-angular';
 import { FarmInfomationPage } from '../../pages/farm-infomation/farm-infomation';
 import { HighChartProvider } from '../../providers/high-chart/high-chart';
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 
 @Component({
   selector: 'farm',
@@ -14,16 +15,23 @@ export class FarmComponent {
 
   @Input() farm: farm;
 
+  public summary : {
+    male_pig:number,
+    female_pig:number,
+    child_pig:number
+    totalPig:number
+  }
+
   constructor(
     public navCtrl: NavController,
     public platform: Platform,
     public farmProvider: FarmsProvider,
     public modalCtrl: ModalController,
     public chartProvider: HighChartProvider,
+    public deployData: DeployDataProvider,
     public util: Utils
   ) {
-    console.log('Hello FarmComponent Component');
-
+    
   }
 
   convertDate(date: any) {
@@ -31,23 +39,30 @@ export class FarmComponent {
   }
 
   ngAfterViewInit(): void {
+    
+    this.summary = {
+      male_pig: this.deployData.get_male_pig_of_farm(this.farm.id).length,
+      female_pig:this.deployData.get_female_pig_of_farm(this.farm.id).length,
+      child_pig:this.deployData.get_child_pig_in_farm(this.farm.id).length,
+      totalPig:this.deployData.get_all_pig_of_farm(this.farm.id).length
+    }
 
     let data = [
       {
-        name: 'Đực',
-        y: 400,
+        name: 'Heo nọc',
+        y: this.summary.male_pig,
         unit: 'con',
         sliced: false,
         selected: false
       }, {
-        name: 'Nái',
-        y: 1000,
+        name: 'Heo nái',
+        y: this.summary.female_pig,
         unit: 'con',
         sliced: false,
         selected: false
       }, {
-        name: 'Đực thiến',
-        y: 200,
+        name: 'Heo con',
+        y: this.summary.child_pig,
         unit: 'con',
         sliced: false,
         selected: false

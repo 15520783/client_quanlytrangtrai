@@ -26,14 +26,14 @@ export class ExportInternalPigInvoiceComponent {
   public attributes = [
     { name: "sourceName", label: 'Nguồn cung cấp' },
     { name: "destinationName", label: 'Nơi nhận' },
-    { name: "importDateDisplay", label: 'Ngày nhập' },
+    { name: "exportDateDisplay", label: 'Ngày nhập' },
     { name: "quantity", label: 'Tổng số heo' },
     { name: "totalWeight", label: 'Tổng trọng lượng' },
     { name: "statusName", label: 'Trạng thái' },
   ];
 
   public placeholderSearch: string = 'Tìm kiếm chứng từ'
-  public filter_default: Array<string> = ["invoiceNo", "sourceName", "destinationName", "importDateDisplay", "quantity", "totalWeight", "statusName"];
+  public filter_default: Array<string> = ["invoiceNo", "sourceName", "destinationName", "exportDateDisplay", "quantity", "totalWeight", "statusName"];
 
   public page_Idx: number = 1;
   public page_Total: number = 0;
@@ -62,7 +62,7 @@ export class ExportInternalPigInvoiceComponent {
     }
 
     this.roleInput = new ExportInternalPigInvoiceRole(this.deployData, this.invoiceProvider);
-    this.farms_util = this.deployData.get_object_list_key_of_farm()
+    this.farms_util = this.deployData.get_object_list_key_of_farm();
 
     this.events.subscribe('invoicesReload', () => {
       this.setFilteredItems();
@@ -84,7 +84,7 @@ export class ExportInternalPigInvoiceComponent {
     this.invoices.forEach((invoice) => {
       invoice['sourceName'] = this.farms_util[invoice.sourceId].name;
       invoice['destinationName'] = this.farms_util[invoice.destinationId].name;
-      invoice['importDateDisplay'] = this.util.convertDate(invoice.importDate);
+      invoice['exportDateDisplay'] = this.util.convertDate(invoice.exportDate);
       // invoice['statusName'] = VARIABLE.INVOICE_STATUS.PROCCESSING == invoice.status
       //   ? 'Đang xử lí' : (VARIABLE.INVOICE_STATUS.COMPLETE == invoice.status ? 'Hoàn tất' : 'Chưa xác định');
       switch (invoice.status) {

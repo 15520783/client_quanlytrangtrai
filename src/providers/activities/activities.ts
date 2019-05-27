@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { breedings, sperms, mating, matingDetails, issuesPigs, births } from '../../common/entity';
+import { breedings, sperms, mating, matingDetails, issuesPigs, births, feeds } from '../../common/entity';
 import { CONFIG, API } from '../../common/const';
 
 @Injectable()
@@ -190,6 +190,17 @@ export class ActivitiesProvider {
   createIssuePig(objBody: Array<issuesPigs>) {
     return this.http
       .post(API.CREATE_ISSUES_PIG, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Thêm mới ghi nhận cho heo ăn
+   * @param objBody 
+   */
+  createFeeds(objBody: Array<feeds>) {
+    return this.http
+      .post<Array<feeds>>(API.CREATE_FEEDS, objBody)
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise();
   }

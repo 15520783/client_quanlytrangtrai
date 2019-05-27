@@ -11,9 +11,9 @@ const KEY = {
     SETTINGS: 'settings',
     PARTNERS: 'partners',
     EMPID: 'employeeId',
-    USER:'user',
-    USERNAME:'username',
-    PASSWORD:'password'
+    USER: 'user',
+    USERNAME: 'username',
+    PASSWORD: 'password'
 }
 
 const SETTING_STORAGE_KEY = {
@@ -155,9 +155,9 @@ const API = {
     GET_PIG_INVOICE_DETAIL_FROM_INVOICE: '/api/invoicepigdetail/invoice/',
     GET_FOOD_WAREHOUSE_FROM_INVOICE: '/api/foodwarehouse/invoice/',
     GET_MEDICINE_WAREHOUSE_FROM_INVOICE: '/api/medicinewarehouse/invoice/',
-    GET_ALL_FORWARDING_PIG_INVOICE:'/api/invoicespig/forwarding/list',
+    GET_ALL_FORWARDING_PIG_INVOICE: '/api/invoicespig/forwarding/list',
     GET_SCHEDULE: '/api/schedule/list',
-    GET_INFO_EMPLOYEE:'/api/employees/',
+    GET_INFO_EMPLOYEE: '/api/employees/',
 
     CREATE_HOUSE: '/api/houses/',
     UPDATE_HOUSE: '/api/houses/',
@@ -188,9 +188,9 @@ const API = {
 
     CREATE_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/pigsinvoicepigdetail/',
     DELETE_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/onlyinvoicedetail/',
-    DELETE_EXTERNAL_IMPORT_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/', 
-    
-    CREATE_IMPORT_INTERNAL_PIG_INVOICE:'/api/invoicespig/pigsinvoicepig/',
+    DELETE_EXTERNAL_IMPORT_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/',
+
+    CREATE_IMPORT_INTERNAL_PIG_INVOICE: '/api/invoicespig/pigsinvoicepig/',
 
     CREATE_FOOD_WAREHOUSE: '/api/foodwarehouse/',
     UPDATE_FOOD_WAREHOUSE: '/api/foodwarehouse/',
@@ -217,7 +217,9 @@ const API = {
 
     CREATE_ISSUES_PIG: '/api/issuespigs/',
 
-    CREATE_BIRTH: '/api/births/'
+    CREATE_BIRTH: '/api/births/',
+
+    CREATE_FEEDS: '/api/feeds/feedlist/'
 
 }
 

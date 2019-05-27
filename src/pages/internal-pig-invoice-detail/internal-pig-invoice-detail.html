@@ -9,7 +9,7 @@
       Chỉnh sửa chứng từ</button>
     <button *ngIf="canCheckComplete" ion-button mode='ios' color="secondary" (tap)="completeInvoice()">
       Xác nhận hoàn tất</button>
-    <button *ngIf="!details.length" ion-button mode='ios' color="danger" (tap)="removeInvoice()">Xóa chứng từ</button>
+    <button  ion-button mode='ios' color="danger" (tap)="removeInvoice()">Xóa chứng từ</button>
   </ion-toolbar>
   <ion-toolbar showWhen='ios,android'>
     <ion-segment [(ngModel)]="tab" scrollable>

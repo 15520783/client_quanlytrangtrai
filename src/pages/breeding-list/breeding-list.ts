@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events, Platform } from 'ionic-angular';
 import { FormControl } from '@angular/forms';
 import { FilterProvider } from '../../providers/filter/filter';
 import { breedings, pig } from '../../common/entity';
@@ -50,6 +50,7 @@ export class BreedingListPage {
   public visible_items: Array<any> = [];
 
   constructor(
+    public platform:Platform,
     public navCtrl: NavController,
     public navParams: NavParams,
     public filterProvider: FilterProvider,

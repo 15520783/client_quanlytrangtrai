@@ -40,7 +40,7 @@
                 <ion-col [attr.col-12]="platform.is('core')?null:''">
                   <ion-item>
                     <ion-label stacked>Số lượng</ion-label>
-                    <ion-input text-wrap type="text" readonly [(ngModel)]="farm.total_pig"></ion-input>
+                    <ion-input text-wrap type="text" readonly [(ngModel)]="summary.total_pig.length"></ion-input>
                   </ion-item>
                   <ion-item>
                     <ion-label text-wrap stacked>Địa chỉ</ion-label>
@@ -48,17 +48,17 @@
                   </ion-item>
                   <ion-item>
                     <ion-label stacked>Ngày thành lập</ion-label>
-                    <ion-input type="text" readonly [(ngModel)]="farm.founding"></ion-input>
+                    <ion-input type="text" readonly [(ngModel)]="farm.foundingDisplay"></ion-input>
                   </ion-item>
                   <ion-item>
                     <ion-label stacked>Diện tích</ion-label>
                     <ion-input type="text" readonly [(ngModel)]="farm.area"></ion-input>
                   </ion-item>
-                  <ion-item>
-                    <ion-label stacked>Loại trại</ion-label>
+                  <ion-item *ngIf="farm.type">
+                    <ion-label stacked>Loại trại</ion-label >
                     <ion-input type="text" readonly [(ngModel)]="farm.type.name"></ion-input>
                   </ion-item>
-                  <ion-item>
+                  <ion-item *ngIf="farm.managerEmployee">
                     <ion-label stacked>Người quản lý</ion-label>
                     <ion-input type="text" readonly [(ngModel)]="farm.managerEmployee.name"></ion-input>
                   </ion-item>
@@ -74,34 +74,34 @@
                 <ion-col [attr.col-12]="platform.is('core')?null:''">
                   <ion-item>
                     <ion-label stacked>Tổng đàn</ion-label>
-                    <ion-input type="text" readonly [(ngModel)]="farm.totalPig"></ion-input>
+                    <ion-input type="text" readonly [(ngModel)]="summary.total_pig.length"></ion-input>
                   </ion-item>
                   <ion-item>
                     <ion-label stacked>Khu cách ly</ion-label>
-                    <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+                    <ion-input type="text" readonly ></ion-input>
                   </ion-item>
                   <ion-item>
                     <ion-label stacked>Khu nọc</ion-label>
-                    <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+                    <ion-input type="text" readonly ></ion-input>
                   </ion-item>
                   <ion-item>
                     <ion-label stacked>Khu phối</ion-label>
-                    <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+                    <ion-input type="text" readonly ></ion-input>
                   </ion-item>
                   <ion-item>
                     <ion-label stacked>Khu mang thai</ion-label>
-                    <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+                    <ion-input type="text" readonly></ion-input>
                   </ion-item>
                   <ion-item>
                     <ion-label stacked>Khu đẻ</ion-label>
-                    <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+                    <ion-input type="text" readonly></ion-input>
                   </ion-item>
                   <ion-item>
                     <ion-label stacked>Khu cai sữa</ion-label>
-                    <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+                    <ion-input type="text" readonly></ion-input>
                   </ion-item>
                 </ion-col>
-                <ion-col [attr.col-12]="platform.is('core')?null:''">
+                <ion-col [attr.col-12]="platform.is('core')?null:''" *ngIf="summary">
                   <div *ngIf="platform.is('core')" id="chartMain"></div>
                 </ion-col>
               </ion-row>
@@ -171,7 +171,7 @@
         <ion-infinite-scroll>
           <ion-item>
             <ion-label stacked>Số lượng</ion-label>
-            <ion-input text-wrap type="text" readonly [(ngModel)]="farm.totalPig"></ion-input>
+            <ion-input text-wrap type="text" readonly [(ngModel)]="summary.total_pig.length"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label text-wrap stacked>Địa chỉ</ion-label>
@@ -185,11 +185,11 @@
             <ion-label stacked>Diện tích</ion-label>
             <ion-input type="text" readonly [(ngModel)]="farm.area"></ion-input>
           </ion-item>
-          <ion-item>
+          <ion-item *ngIf="farm.type">
             <ion-label stacked>Loại trại</ion-label>
             <ion-input type="text" readonly [(ngModel)]="farm.type.name"></ion-input>
           </ion-item>
-          <ion-item>
+          <ion-item *ngIf="farm.managerEmployee">
             <ion-label stacked>Người quản lý</ion-label>
             <ion-input type="text" readonly [(ngModel)]="farm.managerEmployee.name"></ion-input>
           </ion-item>
@@ -300,8 +300,8 @@
   <employee-list (closeMenuEvent)="closeViewEmployee()" [data]="employeeProvider.employees"></employee-list>
 </ion-menu>
 <ion-nav #Employee></ion-nav>
-
+<!-- 
 <ion-menu [content]="Pigs" side="right" #menuPigs sticky="true" type="overlay" width="500">
   <pig-group-list (closeMenuEvent)="closeViewPigGroups()" [data]="groupProvider.groups"></pig-group-list>
 </ion-menu>
-<ion-nav #Pigs></ion-nav>
+<ion-nav #Pigs></ion-nav> -->

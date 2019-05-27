@@ -36,13 +36,15 @@ export class DeployDataProvider {
    */
   get_male_pig_of_farm(farmId) {
     let housesId: any = [];
+    let maleSection: any = [VARIABLE.SECTION_TYPE[1].value, VARIABLE.SECTION_TYPE[2].value, VARIABLE.SECTION_TYPE[3].value];
     this.houseProvider.houses.filter((house) => {
-      return (house.section.farm.id == farmId && house.section.typeId !== "6" && house.section.typeId !== "7") ? true : false;
+      return (house.section.farm.id == farmId &&
+        maleSection.includes((house.section.typeId).toString())) ? true : false;
     }).forEach((house) => {
       housesId.push(house.id);
     })
     return this.pigsProvider.pigs.filter((pig) => {
-      return (housesId.includes(pig.houseId) && pig.gender == 1) ? true : false;
+      return (housesId.includes(pig.houseId) && (pig.gender == 1 || pig.gender == 3)) ? true : false;
     })
   }
 
@@ -51,16 +53,85 @@ export class DeployDataProvider {
    * @param farmId 
    */
   get_female_pig_of_farm(farmId) {
-    let housesId: any = [];
-    this.houseProvider.houses.filter((house) => {
-      return (house.section.farm.id == farmId && house.section.typeId !== "6" && house.section.typeId !== "7") ? true : false;
-    }).forEach((house) => {
-      housesId.push(house.id);
+    let houses = this.get_object_list_key_of_house();
+    let formalSection: any = [VARIABLE.SECTION_TYPE[1].value, VARIABLE.SECTION_TYPE[3].value, VARIABLE.SECTION_TYPE[4].value];
+    let female_pig = [];
+
+    let female_pig_in_formal_section = this.pigsProvider.pigs.filter((pig) => {
+      return (houses[pig.houseId].section.farm.id == farmId &&
+        formalSection.includes((houses[pig.houseId].section.typeId).toString())
+        && pig.gender == 2) ? true : false;
     })
+
+    if (female_pig_in_formal_section.length) {
+      female_pig.push.apply(female_pig, female_pig_in_formal_section);
+    }
+
+    let female_pig_in_khu_de = this.pigsProvider.pigs.filter((pig) => {
+      return (houses[pig.houseId].section.farm.id == farmId &&
+        (houses[pig.houseId].section.typeId).toString() == VARIABLE.SECTION_TYPE[5].value
+        && pig.statusId != VARIABLE.STATUS_PIG.NEWBORN
+        && pig.statusId != VARIABLE.STATUS_PIG.GROWING
+        && pig.gender == 2) ? true : false;
+    })
+    if (female_pig_in_khu_de.length) {
+      female_pig.push.apply(female_pig, female_pig_in_khu_de);
+    }
+
+
+    return female_pig;
+  }
+
+  /**
+   * Lấy danh sách heo con của trang trại
+   * @param farmId 
+   */
+  get_child_pig_in_farm(farmId: string) {
+    let houses = this.get_object_list_key_of_house();
+    let formalSection: any = [VARIABLE.SECTION_TYPE[6].value, VARIABLE.SECTION_TYPE[7].value];
+    let child_pig = [];
+
+    let child_pig_in_formal_section = this.pigsProvider.pigs.filter((pig) => {
+      return (houses[pig.houseId].section.farm.id == farmId &&
+        formalSection.includes((houses[pig.houseId].section.typeId).toString())) ? true : false;
+    })
+
+    if (child_pig_in_formal_section.length) {
+      child_pig.push.apply(child_pig, child_pig_in_formal_section);
+    }
+
+    let child_pig_in_khu_de = this.pigsProvider.pigs.filter((pig) => {
+      return (houses[pig.houseId].section.farm.id == farmId &&
+        (houses[pig.houseId].section.typeId).toString() == VARIABLE.SECTION_TYPE[5].value
+        && (pig.statusId == VARIABLE.STATUS_PIG.NEWBORN
+          || pig.statusId == VARIABLE.STATUS_PIG.GROWING)) ? true : false;
+    })
+
+    if (child_pig_in_khu_de.length) {
+      child_pig.push.apply(child_pig, child_pig_in_khu_de);
+    }
+
+    return child_pig;
+  }
+
+  /**
+   * Lấy danh sách heo của 1 trang trại
+   * @param farmId 
+   */
+  get_all_pig_of_farm(farmId: string) {
+    let houses = this.get_object_list_key_of_house();
     return this.pigsProvider.pigs.filter((pig) => {
-      return (housesId.includes(pig.houseId) && pig.gender == 2) ? true : false;
+      return houses[pig.houseId].section.farm.id == farmId ? true : false;
     })
   }
+
+  get_pig_of_section_type(sectionTypeId: string) {
+    let houses = this.get_object_list_key_of_house();
+    return this.pigsProvider.pigs.filter((pig) => {
+      return houses[pig.houseId].section.typeId == sectionTypeId ? true : false;
+    })
+  }
+
 
   /**
    *  Lấy danh sách trang trại cho ion-select
@@ -168,11 +239,13 @@ export class DeployDataProvider {
     let foodUnit_select = [];
     this.settingProvider.setting.foodUnits.forEach(unit => {
       foodUnit_select.push({
-        name: unit.name,
+        name: unit.id == '1' ? unit.name : unit.name + ' ' + unit.quantity + ' kg',
         value: unit.id
       })
     })
-    return foodUnit_select;
+    return foodUnit_select.sort((a, b) => {
+      return a.id > b.id ? 1 : -1
+    });
   }
 
   /**
@@ -414,12 +487,23 @@ export class DeployDataProvider {
   /**
    * Lấy các đối tượng nhân viên với Object key là id
    */
-  get_object_list_key_of_employees(){
+  get_object_list_key_of_employees() {
     let employees = {};
-    this.employeeProvider.employees.forEach((emp)=>{
+    this.employeeProvider.employees.forEach((emp) => {
       employees[emp.id] = emp;
     })
     return employees;
+  }
+
+  /**
+     * Lấy các đối tượng đơn vị cám với Object key là id
+     */
+  get_object_list_key_of_foodUnit() {
+    let units = {};
+    this.settingProvider.setting.foodUnits.forEach((unit) => {
+      units[unit.id] = unit;
+    })
+    return units;
   }
 
   /**

@@ -161,32 +161,34 @@ export class ExportInternalPigInvoiceDetailPage {
             this.pigProvider.updatedPig(response.pigs);
           }
           this.navCtrl.pop();
-        }).then((data)=>{
-          if(this.slider){
+        }).then((data) => {
+          if (this.slider) {
             this.slider.resize();
           }
         })
         .catch((err: Error) => { })
     }
 
+    let houses = this.deployData.get_object_list_key_of_house();
     let statusPig = this.deployData.get_object_list_key_of_status();
     this.util.openBackDrop();
     this.pigProvider.getPigs()
-    .then(()=>{
-      let transferPigs = this.pigProvider.pigs.filter((pig) => {
-        return (statusPig[pig.statusId].code != VARIABLE.STATUS_PIG.WAIT_FOR_TRANSFER &&
-                statusPig[pig.statusId].code != VARIABLE.STATUS_PIG.WAIT_FOR_SALE &&
-                statusPig[pig.statusId].code != VARIABLE.STATUS_PIG.WAIT_FOR_MATING &&
-                statusPig[pig.statusId].code != VARIABLE.STATUS_PIG.MATING) ? true : false;
-      });
-      this.util.closeBackDrop();
-      this.navCtrl.push(InputPigToInternalInvoicePage, { pigs: transferPigs, statusPigValiable: statusPigValiable, callback: callback });
-    })
-    .catch((err)=>{
-      console.log(err);
-      this.util.closeBackDrop();
-    })
-    
+      .then(() => {
+        let transferPigs = this.pigProvider.pigs.filter((pig) => {
+          return (statusPig[pig.statusId].code != VARIABLE.STATUS_PIG.WAIT_FOR_TRANSFER &&
+            statusPig[pig.statusId].code != VARIABLE.STATUS_PIG.WAIT_FOR_SALE &&
+            statusPig[pig.statusId].code != VARIABLE.STATUS_PIG.WAIT_FOR_MATING &&
+            statusPig[pig.statusId].code != VARIABLE.STATUS_PIG.MATING &&
+            houses[pig.houseId].section.farm.id == this.invoice.sourceId) ? true : false;
+        });
+        this.util.closeBackDrop();
+        this.navCtrl.push(InputPigToInternalInvoicePage, { pigs: transferPigs, statusPigValiable: statusPigValiable, callback: callback });
+      })
+      .catch((err) => {
+        console.log(err);
+        this.util.closeBackDrop();
+      })
+
   }
 
   /**
@@ -217,11 +219,11 @@ export class ExportInternalPigInvoiceDetailPage {
       .then((isOK_detail) => {
         if (isOK_detail) {
           let idx = this.details.findIndex(detail => detail.id == invoiceDetail.id);
-          if (idx > -1){
+          if (idx > -1) {
             this.details.splice(idx, 1);
             let statusFarmTransferWaiting = this.deployData.get_status_by_id(this.pigs[invoiceDetail.objectId].statusId);
             let pig = this.util.deepClone(this.pigs[invoiceDetail.objectId]);
-            pig.statusId= statusFarmTransferWaiting.previousStatus;
+            pig.statusId = statusFarmTransferWaiting.previousStatus;
             this.pigs[invoiceDetail.objectId] = pig;
             this.pigProvider.updatedPig(pig);
           }

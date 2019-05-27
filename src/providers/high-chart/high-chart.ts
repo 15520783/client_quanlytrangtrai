@@ -14,7 +14,7 @@ export class HighChartProvider {
   constructor(public http: HttpClient) {
     console.log('Hello HighChartProvider Provider');
   }
-  
+
 
   createPieChart(elementChart: any, data: Array<{ name: String, y: number, unit: String, sliced: boolean, selected: boolean }>, title: string, subtitle: string) {
     Highcharts.chart(elementChart, {
@@ -38,7 +38,7 @@ export class HighChartProvider {
       tooltip: {
         pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b> ({point.y} {point.unit})'
       },
-      
+
       plotOptions: {
         pie: {
           size: '60%',
@@ -88,7 +88,7 @@ export class HighChartProvider {
       tooltip: {
         pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
       },
-      
+
       plotOptions: {
         pie: {
           size: '60%',
@@ -118,7 +118,17 @@ export class HighChartProvider {
     });
   }
 
-  createBarchart(element: any) {
+  createBarchart(
+    element: any,
+    data: {
+      khu_cach_ly: any,
+      khu_noc: any,
+      khu_phoi: any,
+      khu_mang_thai: any,
+      khu_de: any,
+      khu_cai_sua: any,
+      khu_hau_bi: any
+    }) {
     Highcharts.chart(element, {
       chart: {
         type: 'column'
@@ -174,16 +184,39 @@ export class HighChartProvider {
       },
       series: <any>[{
         name: 'Đực',
-        data: [573, 0, 55, 876, 798, 0]
+        data: [
+          data.khu_cach_ly.male_pig.length,
+          data.khu_noc.male_pig.length,
+          data.khu_phoi.male_pig.length,
+          data.khu_mang_thai.male_pig.length,
+          data.khu_de.male_pig.length,
+          data.khu_cai_sua.male_pig.length,
+          data.khu_hau_bi.male_pig.length,
+        ]
 
       }, {
         name: 'Nái',
-        data: [4, 100, 500, 1000, 200, 0]
+        data: [
+          data.khu_cach_ly.female_pig.length,
+          data.khu_noc.female_pig.length,
+          data.khu_phoi.female_pig.length,
+          data.khu_mang_thai.female_pig.length,
+          data.khu_de.female_pig.length,
+          data.khu_cai_sua.female_pig.length,
+          data.khu_hau_bi.female_pig.length,
+        ]
 
       }, {
         name: 'Đực hiến',
-        data: [4, 100, 50, 20, 10, 500]
-
+        data: [
+          data.khu_cach_ly.child_pig.length,
+          data.khu_noc.child_pig.length,
+          data.khu_phoi.child_pig.length,
+          data.khu_mang_thai.child_pig.length,
+          data.khu_de.child_pig.length,
+          data.khu_cai_sua.child_pig.length,
+          data.khu_hau_bi.child_pig.length,
+        ]
       }]
     });
   }

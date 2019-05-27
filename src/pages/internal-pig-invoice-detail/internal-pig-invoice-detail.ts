@@ -134,4 +134,22 @@ export class InternalPigInvoiceDetailPage {
       }
     )
   }
+
+  /**
+   * Xác nhận chứng từ đã hoàn tất
+   */
+  completeInvoice() {
+    let invoice: invoicesPig = this.util.deepClone(this.invoice);
+    invoice.status = VARIABLE.INVOICE_STATUS.COMPLETE;
+    this.invoiceProvider.updatePigInvoice(invoice)
+      .then((updatedInvoice: invoicesPig) => {
+        if (updatedInvoice) {
+          this.invoice.status = updatedInvoice.status;
+          this.canCheckComplete = false;
+          this.canEditInvoice = false;
+          this.navParams.get('callback')(this.invoice);
+        }
+      })
+      .catch((err: Error) => { })
+  }
 }
