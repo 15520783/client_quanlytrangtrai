@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "408745267986",
+    "firebase_url": "https://client-quanlitrangtrai.firebaseio.com",
+    "project_id": "client-quanlitrangtrai",
+    "storage_bucket": "client-quanlitrangtrai.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:408745267986:android:f38c7081ef5d8f45",
+        "android_client_info": {
+          "package_name": "io.ionic.quanlitrangtrai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "408745267986-frmuihhrk06eq6594kvlkub6ork1vjua.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDymgxFMPcCOgw-tXm4DRXyzoK9NKQ0VKI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "408745267986-frmuihhrk06eq6594kvlkub6ork1vjua.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
