@@ -37,39 +37,36 @@ export class FilterProvider {
   public typeSort: "DESC" | "ASC";
 
   filter() {
-    let result = this.input.filter((item) => {
-      let check = 0;
-      this.searchWithText.forEach(e => {
-        if (item[e])
-          check += (item[e].toString().toLowerCase().indexOf(this.searchText.toLowerCase()) > -1) ? 1 : 0;
-        else return false;
-      });
-      return check > 0 ? true : false;
-    })
+    if (this.input && this.input.length) {
 
-    Object.keys(this.searchWithInclude).forEach((e) => {
-      result = result.filter((value) => {
-        if (this.searchWithInclude[e].length > 0)
-          return ((value[e]) && this.searchWithInclude[e].map(String).includes((value[e]).toString()) === true);
-        else return true;
+
+      let result = this.input.filter((item) => {
+        let check = 0;
+        this.searchWithText.forEach(e => {
+          if (item[e])
+            check += (item[e].toString().toLowerCase().indexOf(this.searchText.toLowerCase()) > -1) ? 1 : 0;
+          else return false;
+        });
+        return check > 0 ? true : false;
       })
-    })
 
-    Object.keys(this.searchWithRange).forEach((e) => {
-      result = result.filter((value) => {
-        // if (value[e] !== undefined)
-        return (this.searchWithRange[e].min <= value[e] && this.searchWithRange[e].max >= value[e]) ? true : false;
-        // else return true;
+      Object.keys(this.searchWithInclude).forEach((e) => {
+        result = result.filter((value) => {
+          if (this.searchWithInclude[e].length > 0)
+            return ((value[e]) && this.searchWithInclude[e].map(String).includes((value[e]).toString()) === true);
+          else return true;
+        })
       })
-    })
 
-    // if (this.sortBy) {
-    //   if (this.typeSort == "DESC")
-    //     result = result.sort((a, b) => (a[this.sortBy] > b[this.sortBy]) ? 1 : -1);
-    //   else
-    //     result = result.sort((a, b) => (a[this.sortBy] < b[this.sortBy]) ? 1 : -1);
-    // }
+      Object.keys(this.searchWithRange).forEach((e) => {
+        result = result.filter((value) => {
+          return (this.searchWithRange[e].min <= value[e] && this.searchWithRange[e].max >= value[e]) ? true : false;
+        })
+      })
 
-    return result;
+      return result;
+    }else{
+      return [];
+    }
   }
 }

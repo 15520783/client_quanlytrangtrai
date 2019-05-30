@@ -4,6 +4,9 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FullCalendarModule } from 'ng-fullcalendar';
 import { HttpModule } from '../../node_modules/@angular/http';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { TokenInterceptor } from './interceptor';
 
 import { DatePipe } from '@angular/common';
 
@@ -60,6 +63,7 @@ import { ExportInternalPigInvoiceDetailPage } from '../pages/export-internal-pig
 import { ForwardingPigInvoiceListPage } from '../pages/forwarding-pig-invoice-list/forwarding-pig-invoice-list';
 import { ImportInternalPigInvoiceInputPage } from '../pages/import-internal-pig-invoice-input/import-internal-pig-invoice-input';
 import { FeedInputPage } from '../pages/feed-input/feed-input';
+import { BreedingInputPage } from '../pages/breeding-input/breeding-input';
 
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
@@ -94,8 +98,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HeaderColor } from '@ionic-native/header-color';
 import { Toast } from '@ionic-native/toast';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { Firebase } from '@ionic-native/firebase';
 
-import { Utils} from '../common/utils';
+import { Utils } from '../common/utils';
 import { PigsProvider } from '../providers/pigs/pigs';
 import { FarmsProvider } from '../providers/farms/farms';
 import { IonicStorageModule } from '@ionic/storage';
@@ -111,9 +116,9 @@ import { UserProvider } from '../providers/user/user';
 import { DeployDataProvider } from '../providers/deploy-data/deploy-data';
 import { PartnerProvider } from '../providers/partner/partner';
 import { InvoicesProvider } from '../providers/invoices/invoices';
-import { TokenInterceptor } from './interceptor';
-import { BreedingInputPage } from '../pages/breeding-input/breeding-input';
 import { ActivitiesProvider } from '../providers/activities/activities';
+import { FcmProvider } from '../providers/fcm/fcm';
+import { AngularFirestore, FirestoreSettingsToken } from 'angularfire2/firestore';
 
 const Pages = [
   LoginPage,
@@ -219,12 +224,23 @@ const Providers = [
   DeployDataProvider,
   PartnerProvider,
   InvoicesProvider,
+  FcmProvider,
   ActivitiesProvider,
 ]
 
 const Directives = [
   HideHeaderDirective
 ]
+
+export const firebaseConfig = {
+  apiKey: "AIzaSyAqu86bK9NlWrXtzrcIOkaGhaXrPabnqtk",
+  authDomain: "client-quanlitrangtrai.firebaseapp.com",
+  databaseURL: "https://client-quanlitrangtrai.firebaseio.com",
+  projectId: "client-quanlitrangtrai",
+  storageBucket: "client-quanlitrangtrai.appspot.com",
+  messagingSenderId: "408745267986",
+  appId: "1:408745267986:web:2c72be0dbcb6fe6e"
+};
 
 @NgModule({
   declarations: [
@@ -237,14 +253,17 @@ const Directives = [
     IonicStorageModule.forRoot(),
     HttpClientModule,
     BrowserModule,
-    IonicModule.forRoot(MyApp,{
-      menuType:'push',
+    IonicModule.forRoot(MyApp, {
+      menuType: 'push',
       tabsPlacement: 'top',
       iconMode: 'ios',
-      activator:'ripple'
+      activator: 'ripple'
     }),
     FullCalendarModule,
-    HttpModule
+    HttpModule,
+    AngularFireModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireDatabaseModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -253,12 +272,15 @@ const Directives = [
     MyApp,
   ],
   providers: [
+    AngularFirestore,
+    Firebase,
+    { provide: FirestoreSettingsToken, useValue: {} },
     Toast,
     StatusBar,
     SplashScreen,
-    HeaderColor ,
-    BarcodeScanner, 
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    HeaderColor,
+    BarcodeScanner,
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
@@ -266,13 +288,8 @@ const Directives = [
     },
     Utils,
     ...Providers,
-    SettingsProvider,
-    UserProvider,
     DatePipe,
-    DeployDataProvider,
-    PartnerProvider,
-    InvoicesProvider,
-    ActivitiesProvider
+
   ]
 })
-export class AppModule {}
+export class AppModule { }

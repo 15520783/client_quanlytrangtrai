@@ -19,6 +19,10 @@ import { SettingsProvider } from '../providers/settings/settings';
 import { UserProvider } from '../providers/user/user';
 import { PartnerProvider } from '../providers/partner/partner';
 import { DeployDataProvider } from '../providers/deploy-data/deploy-data';
+import { FcmProvider } from '../providers/fcm/fcm';
+
+import { Subject } from 'rxjs/Subject';
+import { tap } from 'rxjs/operators';
 
 @Component({
   templateUrl: 'app.html'
@@ -35,7 +39,6 @@ export class MyApp {
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     public headerColor: HeaderColor,
-    public toast: ToastController,
     public app: App,
     public events: Events,
     public farmProvider: FarmsProvider,
@@ -50,6 +53,8 @@ export class MyApp {
     public deployData: DeployDataProvider,
     public util: Utils,
     public userProvider: UserProvider,
+    public fcmProvider: FcmProvider,
+    public toastCtrl: ToastController,
   ) {
     this.initializeApp();
   }
@@ -72,6 +77,10 @@ export class MyApp {
             this.util.getKey(KEY.TOKENTYPE)
               .then((tokenType) => {
                 if (tokenType) {
+                  if (this.platform.is('cordova')) {
+                    // Get a FCM token
+                    this.fcmProvider.getToken()
+                  }
                   CONFIG.ACCESS_KEY = tokenType.concat(' ').concat(accessToken);
                   this.splash = true;
                   this.intinial_sync();
@@ -110,6 +119,21 @@ export class MyApp {
             }
           })
       })
+
+      if (this.platform.is('cordova')) {
+        // Listen to incoming messages
+        this.fcmProvider.listenToNotifications().pipe(
+          tap(msg => {
+            // show a toast
+            const toast = this.toastCtrl.create({
+              message: msg.body,
+              duration: 3000
+            });
+            toast.present();
+          })
+        )
+        .subscribe()
+      }
       this.listener_logout();
     })
   }

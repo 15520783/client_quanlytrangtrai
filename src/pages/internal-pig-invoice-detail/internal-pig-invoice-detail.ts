@@ -1,13 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, ViewController, Slides } from 'ionic-angular';
-import { invoicesPig, invoicePigDetail, pig } from '../../common/entity';
+import { invoicesPig, invoicePigDetail,  } from '../../common/entity';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { Utils } from '../../common/utils';
 import { PigsProvider } from '../../providers/pigs/pigs';
 import { VARIABLE } from '../../common/const';
-import { InternalPigInvoiceRole } from '../../role-input/internalPigInvoice';
-import { InvoiceInputUtilComponent } from '../../components/invoice-input-util/invoice-input-util';
 import { ImportInternalPigInvoiceInputPage } from '../import-internal-pig-invoice-input/import-internal-pig-invoice-input';
 
 @IonicPage()

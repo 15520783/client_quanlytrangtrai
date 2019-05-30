@@ -30,7 +30,7 @@ const CONFIG = {
     // SERVER_API: 'https://quanlytrangtrai-uit.herokuapp.com',
     SERVER_API: 'https://quanlytrangtrai-uit-eu.herokuapp.com',
     // SERVER_API: 'http://192.168.1.45:8080',
-    DEFAULT_TIMEOUT: 30000,
+    DEFAULT_TIMEOUT: 50000,
     LANGUAGE_DEFAULT: 'vi',
     ACCESS_KEY: '',
     PAGE_SITE: 50,

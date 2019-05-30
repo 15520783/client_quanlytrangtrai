@@ -7,7 +7,7 @@ import { PartnerProvider } from '../partner/partner';
 import { EmployeesProvider } from '../employees/employees';
 import { SectionsProvider } from '../sections/sections';
 import { SettingsProvider } from '../settings/settings';
-import { pig, house, foodWareHouse, medicineWarehouse, section, status, breedings, sperms, matingRole, issues, mating, births } from '../../common/entity';
+import { pig,  foodWareHouse, medicineWarehouse, status, breedings, sperms, matingRole,  mating, births } from '../../common/entity';
 import { WarehousesProvider } from '../warehouses/warehouses';
 import { VARIABLE, KEY } from '../../common/const';
 import { Utils } from '../../common/utils';
