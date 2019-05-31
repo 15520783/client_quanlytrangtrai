@@ -34,7 +34,9 @@ const CONFIG = {
     LANGUAGE_DEFAULT: 'vi',
     ACCESS_KEY: '',
     PAGE_SITE: 50,
-    LOADING_MORE_TIME: 800
+    LOADING_MORE_TIME: 800,
+    PACKAGE_NAME: 'io.ionic.quanlitrangtrai',
+    FCM_HEADER_KEY: 'AIzaSyBKbuqBrkMtN0Z7lukDQWomLMNO6uDcCZ8'
 }
 
 const VARIABLE = {
@@ -158,6 +160,8 @@ const API = {
     GET_ALL_FORWARDING_PIG_INVOICE: '/api/invoicespig/forwarding/list',
     GET_SCHEDULE: '/api/schedule/list',
     GET_INFO_EMPLOYEE: '/api/employees/',
+
+    PUSH_NOTIFICATION: 'https://fcm.googleapis.com/fcm/send',
 
     CREATE_HOUSE: '/api/houses/',
     UPDATE_HOUSE: '/api/houses/',

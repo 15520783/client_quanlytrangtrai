@@ -639,5 +639,21 @@ class ObjectScanner {
 	typeObject: string = '';
 }
 
+class ObjDataNotification {
+	notification: {
+		title: string,
+		body: string,
+		sound: 'default',
+		icon: "fcm_push_icon"
+	};
+	data: any;
+	to: string;
+	priority: "high";
+	restricted_package_name: 'io.ionic.quanlitrangtrai'
+
+	constructor() { }
+}
+
+export { ObjDataNotification }
 export { ObjectScanner }
 export { InputObject }

@@ -22,7 +22,11 @@ export class TokenInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     let headers = new HttpHeaders().set('Authorization', CONFIG.ACCESS_KEY);
-    request = request.clone({ url: CONFIG.SERVER_API + request.url, headers: headers });
+    if (request.url != API.PUSH_NOTIFICATION) {
+      request = request.clone({ url: CONFIG.SERVER_API + request.url, headers: headers });
+    } else {
+      request = request.clone({ url: request.url });
+    }
 
     if (request.method === 'POST' || request.method === 'PUT' || request.method === 'DELETE') {
       if (request.url !== CONFIG.SERVER_API.concat(API.LOGIN))

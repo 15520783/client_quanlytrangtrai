@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Firebase } from '@ionic-native/firebase';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { Platform } from 'ionic-angular';
+import { Platform, Config } from 'ionic-angular';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { CONFIG, API } from '../../common/const';
+import { ObjDataNotification } from '../../common/entity';
 
 @Injectable()
 export class FcmProvider {
@@ -9,7 +12,8 @@ export class FcmProvider {
   constructor(
     public firebaseNative: Firebase,
     public afs: AngularFirestore,
-    private platform: Platform
+    private platform: Platform,
+    public http: HttpClient
   ) {
   }
 
@@ -48,4 +52,15 @@ export class FcmProvider {
   listenToNotifications() {
     return this.firebaseNative.onNotificationOpen();
   }
+
+
+  /**Push notification using firebase cloud message */
+  pushNotification(dataNoti:ObjDataNotification) {
+    let headers = new HttpHeaders().set('Authorization', ('key = ').concat(CONFIG.FCM_HEADER_KEY));
+    return this.http
+      .post(API.PUSH_NOTIFICATION, dataNoti, { headers: headers })
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
 }
