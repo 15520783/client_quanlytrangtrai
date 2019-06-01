@@ -1,19 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Firebase } from '@ionic-native/firebase';
-import { AngularFirestore } from 'angularfire2/firestore';
-import { Platform, Config } from 'ionic-angular';
+import { Platform, ToastController } from 'ionic-angular';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CONFIG, API } from '../../common/const';
 import { ObjDataNotification } from '../../common/entity';
+import { Firebase } from '@ionic-native/firebase';
+import { AngularFirestore } from 'angularfire2/firestore';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class FcmProvider {
 
   constructor(
-    public firebaseNative: Firebase,
     public afs: AngularFirestore,
     private platform: Platform,
-    public http: HttpClient
+    public http: HttpClient,
+    public toastCtrl: ToastController,
+    public firebaseNative: Firebase,
   ) {
   }
 
@@ -32,7 +34,7 @@ export class FcmProvider {
       await this.firebaseNative.grantPermission();
     }
 
-    return this.saveTokenToFirestore(token)
+    return this.saveTokenToFirestore(token);
   }
 
   // Save the token to firestore
@@ -50,12 +52,21 @@ export class FcmProvider {
 
   // Listen to incoming FCM messages
   listenToNotifications() {
-    return this.firebaseNative.onNotificationOpen();
+    return this.firebaseNative.onNotificationOpen().pipe(
+      tap(msg => {
+        // show a toast
+        const toast = this.toastCtrl.create({
+          message: msg.body,
+          duration: 3000
+        });
+        toast.present();
+      })
+    ).subscribe();
   }
 
 
   /**Push notification using firebase cloud message */
-  pushNotification(dataNoti:ObjDataNotification) {
+  pushNotification(dataNoti: ObjDataNotification) {
     let headers = new HttpHeaders().set('Authorization', ('key = ').concat(CONFIG.FCM_HEADER_KEY));
     return this.http
       .post(API.PUSH_NOTIFICATION, dataNoti, { headers: headers })

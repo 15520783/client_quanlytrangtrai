@@ -21,7 +21,6 @@ import { PartnerProvider } from '../providers/partner/partner';
 import { DeployDataProvider } from '../providers/deploy-data/deploy-data';
 import { FcmProvider } from '../providers/fcm/fcm';
 
-import { Subject } from 'rxjs/Subject';
 import { tap } from 'rxjs/operators';
 
 @Component({
@@ -79,7 +78,7 @@ export class MyApp {
                 if (tokenType) {
                   if (this.platform.is('cordova')) {
                     // Get a FCM token
-                    this.fcmProvider.getToken()
+                    this.fcmProvider.getToken();
                   }
                   CONFIG.ACCESS_KEY = tokenType.concat(' ').concat(accessToken);
                   this.splash = true;
@@ -122,18 +121,9 @@ export class MyApp {
 
       if (this.platform.is('cordova')) {
         // Listen to incoming messages
-        this.fcmProvider.listenToNotifications().pipe(
-          tap(msg => {
-            // show a toast
-            const toast = this.toastCtrl.create({
-              message: msg.body,
-              duration: 3000
-            });
-            toast.present();
-          })
-        )
-        .subscribe()
+        this.fcmProvider.listenToNotifications();
       }
+      
       this.listener_logout();
     })
   }

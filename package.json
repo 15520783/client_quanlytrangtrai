@@ -21,7 +21,7 @@
     "@angular/http": "5.2.11",
     "@angular/platform-browser": "5.2.11",
     "@angular/platform-browser-dynamic": "5.2.11",
-    "@firebase/database": "^0.3.12",
+    "@firebase/database": "^0.4.3",
     "@fullcalendar/core": "^4.0.2",
     "@fullcalendar/daygrid": "^4.0.1",
     "@fullcalendar/interaction": "^4.0.2",
@@ -67,7 +67,7 @@
   "devDependencies": {
     "@ionic/app-scripts": "^3.2.1",
     "@ionic/lab": "1.0.24",
-    "typescript": "^2.7.2"
+    "typescript": "~2.6.2"
   },
   "description": "An Ionic project",
   "cordova": {

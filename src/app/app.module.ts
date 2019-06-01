@@ -5,9 +5,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FullCalendarModule } from 'ng-fullcalendar';
 import { HttpModule } from '../../node_modules/@angular/http';
 import { AngularFireModule } from '@angular/fire';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { TokenInterceptor } from './interceptor';
-
+import { AngularFirestore, FirestoreSettingsToken } from 'angularfire2/firestore';
 import { DatePipe } from '@angular/common';
 
 import { MyApp } from './app.component';
@@ -118,7 +117,8 @@ import { PartnerProvider } from '../providers/partner/partner';
 import { InvoicesProvider } from '../providers/invoices/invoices';
 import { ActivitiesProvider } from '../providers/activities/activities';
 import { FcmProvider } from '../providers/fcm/fcm';
-import { AngularFirestore, FirestoreSettingsToken } from 'angularfire2/firestore';
+import { AngularFireMessaging } from 'angularfire2/messaging';
+
 
 const Pages = [
   LoginPage,
@@ -262,8 +262,9 @@ export const firebaseConfig = {
     FullCalendarModule,
     HttpModule,
     AngularFireModule,
-    AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireDatabaseModule
+    AngularFireModule.initializeApp(
+      firebaseConfig,
+    ),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -272,6 +273,7 @@ export const firebaseConfig = {
     MyApp,
   ],
   providers: [
+    AngularFireMessaging,
     AngularFirestore,
     Firebase,
     { provide: FirestoreSettingsToken, useValue: {} },
