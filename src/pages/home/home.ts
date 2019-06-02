@@ -61,26 +61,58 @@ export class HomePage {
     public platform: Platform,
     public scanner: BarcodeScanner
   ) {
-    this.util.getKey(KEY.USER).then((user)=>{
-      if(user){
+    this.util.getKey(KEY.USER).then((user) => {
+      if (user) {
         this.user.name = user.name;
       }
     })
     this.util.getKey(KEY.USERNAME).then((username) => {
       this.user['username'] = username;
     })
-    
+
+    console.log('TEST',this.userProvider.rolePermission.tong_quan_trang_trai.xem_danh_sach_trang_trai ? true : false);
+
     this.pages = [
-      { title: 'Trang trại', component: FarmsPage, icon: 'app-farm', active: true },
-      { title: 'Khu', component: SectionsPage, icon: 'app-sections', active: false, },
-      { title: 'Heo', component: PigsPage, icon: 'app-pig-outline', active: false },
-      { title: 'Nhân viên', component: EmployeePage, icon: 'app-employees', active: false },
-      { title: 'Kho', component: WarehousesPage, icon: 'app-warehouse', active: false },
-      { title: 'Đối tác', component: PartnersPage, icon: 'app-partner', active: false },
-      { title: 'Chứng từ', component: InvoicesPage, icon: 'app-file', active: false },
-      { title: 'Hoạt động', component: ActivitiesPage, icon: 'app-activities', active: false },
-      { title: 'Thiết lập', component: SettingsPage, icon: 'app-settings', active: false },
-      { title: 'Bảng kế hoạch', component: DatePlanPage, icon: 'app-schedule', active: false, isSchedule: true },
+      {
+        title: 'Trang trại', component: FarmsPage, icon: 'app-farm', active: true,
+        show: Object.keys(this.userProvider.rolePermission.tong_quan_trang_trai).length ? true : false
+      },
+      {
+        title: 'Khu', component: SectionsPage, icon: 'app-sections', active: false,
+        show: Object.keys(this.userProvider.rolePermission.tong_quan_khu).length ? true : false
+      },
+      {
+        title: 'Heo', component: PigsPage, icon: 'app-pig-outline', active: false,
+        show: Object.keys(this.userProvider.rolePermission.quan_ly_danh_sach_heo).length ? true : false
+      },
+      {
+        title: 'Nhân viên', component: EmployeePage, icon: 'app-employees', active: false,
+        show: Object.keys(this.userProvider.rolePermission.quan_ly_danh_sach_nhan_vien).length ? true : false
+      },
+      {
+        title: 'Kho', component: WarehousesPage, icon: 'app-warehouse', active: false,
+        show: Object.keys(this.userProvider.rolePermission.quan_ly_danh_sach_kho).length ? true : false
+      },
+      {
+        title: 'Đối tác', component: PartnersPage, icon: 'app-partner', active: false,
+        show: Object.keys(this.userProvider.rolePermission.quan_ly_danh_sach_doi_tac).length ? true : false
+      },
+      {
+        title: 'Chứng từ', component: InvoicesPage, icon: 'app-file', active: false,
+        show: Object.keys(this.userProvider.rolePermission.quan_ly_danh_sach_chung_tu).length ? true : false
+      },
+      {
+        title: 'Hoạt động', component: ActivitiesPage, icon: 'app-activities', active: false,
+        show: Object.keys(this.userProvider.rolePermission.quan_ly_hoat_dong).length ? true : false
+      },
+      {
+        title: 'Thiết lập', component: SettingsPage, icon: 'app-settings', active: false,
+        show: Object.keys(this.userProvider.rolePermission.quan_ly_thiet_lap).length ? true : false
+      },
+      {
+        title: 'Bảng kế hoạch', component: DatePlanPage, icon: 'app-schedule', active: false, isSchedule: true,
+        show: Object.keys(this.userProvider.rolePermission.quan_ly_bang_ke_hoach).length ? true : false
+      },
     ];
 
     this.events.subscribe('sync', (something) => {

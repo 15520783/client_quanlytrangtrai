@@ -20,7 +20,8 @@ const SETTING_STORAGE_KEY = {
     PREGNANCY_STATUS: 'pregnancyStatus',
     BREEDS: 'breeds',
     BREEDING_TYPE: 'breedingType',
-    STATUS_PIG: 'status'
+    STATUS_PIG: 'status',
+    DISEASES:'diseases'
 }
 
 const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -177,6 +178,11 @@ const API = {
     CREATE_PIG_STATUS: '/api/status/',
     DELETE_PIG_STATUS: '/api/status/',
     UPDATE_PIG_STATUS: '/api/status/',
+
+    CREATE_DISEASE:'/api/diseases/',
+    UPDATE_DISEASE:'/api/diseases/',
+    DELETE_DISEASE:'/api/diseases/',
+
 
     CREATE_BREED: '/api/breeds/',
     UPDATE_BREED: '/api/breeds/',

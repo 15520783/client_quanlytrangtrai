@@ -179,4 +179,41 @@ export class SettingsProvider {
     .timeout(CONFIG.DEFAULT_TIMEOUT)
     .toPromise();
   }
+
+
+  /**
+   * Tạo mới bệnh
+   * @param objBody 
+   */
+  createNewDisease(objBody:diseases){
+    return this.http
+    .post(API.CREATE_DISEASE,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  /**
+   * Cập nhật bệnh
+   * @param objBody 
+   */
+  updateDisease(objBody){
+    return this.http
+    .put(API.UPDATE_DISEASE,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  /**
+   * Xóa bệnh
+   * @param objBody 
+   */
+  deleteDisease(objBody){
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http.delete(API.DELETE_DISEASE,options)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
 }

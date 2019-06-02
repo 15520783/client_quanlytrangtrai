@@ -9,6 +9,7 @@ import { SettingUtilComponent } from '../../components/setting-util/setting-util
 import { StatusPigRole } from '../../role-input/statusPig';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { matingRole } from '../../common/entity';
+import { DiseasesRole } from '../../role-input/diseases';
 
 @IonicPage()
 @Component({
@@ -108,7 +109,7 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.diseases,
-
+        roleInput: new DiseasesRole(this.settingProvider),
       },
       farmTypes: {
         title: 'Danh sách loại trang trại',
