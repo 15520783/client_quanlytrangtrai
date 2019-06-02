@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, LoadingController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, LoadingController, ModalController, Events } from 'ionic-angular';
 import { FarmsProvider } from '../../providers/farms/farms';
 import { Utils } from '../../common/utils';
 import { farm } from '../../common/entity';
@@ -16,7 +16,7 @@ import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 })
 export class FarmsPage {
 
-  public farms = this.farmProvider.farms;
+  public farms = [];
 
   constructor(
     public platform: Platform,
@@ -26,19 +26,31 @@ export class FarmsPage {
     public util: Utils,
     public loadingCtrl: LoadingController,
     public modalCtrl: ModalController,
-    public deployDataProvider: DeployDataProvider
+    public deployDataProvider: DeployDataProvider,
+    public event: Events
   ) {
-    this.farmProvider.farms.forEach((farm:farm)=>{
-      console.log(this.deployDataProvider.get_child_pig_in_farm(farm.id));
+    this.getAllFarms();
+    this.event.subscribe('Farms:update_farm', farm => {
+      let idx = this.farms.findIndex(_farm => _farm.id == farm.id);
+      if(idx > -1){
+        farm.summary = this.farms[idx].summary;
+        this.farms[idx] = farm;
+      }
     })
   }
 
-  ionViewDidEnter() {
-    console.log('ionViewDidEnter FarmsPage');
+  getSummary() {
+    this.farms.forEach((farm: any) => {
+      farm.summary = {
+        male_pig: this.deployDataProvider.get_male_pig_of_farm(farm.id).length,
+        female_pig: this.deployDataProvider.get_female_pig_of_farm(farm.id).length,
+        child_pig: this.deployDataProvider.get_child_pig_in_farm(farm.id).length,
+        totalPig: this.deployDataProvider.get_all_pig_of_farm(farm.id).length
+      }
+    })
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad FarmsPage');
     this.getAllFarms();
   }
 
@@ -48,38 +60,32 @@ export class FarmsPage {
 
   getAllFarms() {
     if (!this.farmProvider.farms.length) {
-      this.util.showLoading('Đang tải dữ liệu');
+      this.util.openBackDrop();
       this.farmProvider.getFarms()
         .then((data: Array<farm>) => {
           if (data.length) {
-            this.util.setKey(KEY.FARMS, data)
-              .then(() => {
-                this.farms = this.farmProvider.farms = data;
-                this.util.closeLoading();
-              })
-              .catch((err) => {
-                console.log('err_storage_farm', err);
-                this.util.closeLoading();
-              })
+            this.farms = data;
+            this.getSummary();
           }
         })
         .catch((err) => {
-          this.util.closeLoading().then(() => {
+          this.util.closeBackDrop().then(() => {
             this.util.showToast('Dữ liệu chưa được cập nhật. Vui lòng kiểm tra kết nối.');
             console.log('err_farm_provider', err);
             this.util.getKey(KEY.FARMS)
               .then((data: Array<farm>) => {
-                this.farms = this.farmProvider.farms = data;
-              })
-              .catch((err) => {
-                this.farms = this.farmProvider.farms = [];
-                console.log('err_get_storage_farm', err);
+                this.farms = data;
+                this.farmProvider.farms = data;
+                this.getSummary();
               })
           });
         })
     } else {
-      console.log(this.farmProvider.farms);
+      this.farms = this.util.deepClone(this.farmProvider.farms);
+      console.log(this.util.deepClone(this.farmProvider.farms));
+      this.getSummary();
     }
+
   }
 
   viewDetail(farm: farm) {

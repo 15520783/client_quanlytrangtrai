@@ -54,26 +54,11 @@ export class HouseInputPage {
 
   onSubmit(){
     this.submitAttempt = true;
-    // let form = this.credentialsForm;
-    // let house:house = {
-    //   id:'',
-    //   section_id:form.get('section_id').value,
-    //   type_id:form.get('type_id').value,
-    //   house_code:form.get('house_code').value,
-    //   name:form.get('name').value,
-    //   description:form.get('description').value,
-    //   position:form.get('position').value,
-    //   manager:form.get('manager').value,
-    //   founding:form.get('founding').value
-    // }; 
     if(this.credentialsForm.valid){
       Object.keys(this.credentialsForm.value).forEach((attr)=>{
         this.house[attr] = this.credentialsForm.value[attr];
       })
     }
-
     this.navParams.get('callback')(this.house);
-    // this.house = this.credentialsForm.value;
-    console.log(this.house);
   }
 }

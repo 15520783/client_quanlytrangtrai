@@ -15,7 +15,7 @@ export class FarmComponent {
 
   @Input() farm: farm;
 
-  public summary : {
+  @Input() public summary : {
     male_pig:number,
     female_pig:number,
     child_pig:number
@@ -40,12 +40,12 @@ export class FarmComponent {
 
   ngAfterViewInit(): void {
     
-    this.summary = {
-      male_pig: this.deployData.get_male_pig_of_farm(this.farm.id).length,
-      female_pig:this.deployData.get_female_pig_of_farm(this.farm.id).length,
-      child_pig:this.deployData.get_child_pig_in_farm(this.farm.id).length,
-      totalPig:this.deployData.get_all_pig_of_farm(this.farm.id).length
-    }
+    // this.summary = {
+    //   male_pig: this.deployData.get_male_pig_of_farm(this.farm.id).length,
+    //   female_pig:this.deployData.get_female_pig_of_farm(this.farm.id).length,
+    //   child_pig:this.deployData.get_child_pig_in_farm(this.farm.id).length,
+    //   totalPig:this.deployData.get_all_pig_of_farm(this.farm.id).length
+    // }
 
     let data = [
       {
@@ -72,12 +72,14 @@ export class FarmComponent {
   }
 
   viewDetail(farm: farm) {
-    // const modal = this.modalCtrl.create(
-    //   FarmInfomationPage, farm, {
-    //     cssClass: 'ion-modal'
-    //   }
-    // )
-    // modal.present();
-    this.navCtrl.push(FarmInfomationPage,{farm:farm});
+    this.navCtrl.push(FarmInfomationPage,{farm:this.util.deepClone(farm)});
+  }
+
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.farm = null;
+    this.summary = null;
   }
 }

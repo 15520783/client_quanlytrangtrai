@@ -6,19 +6,19 @@
         },
         "xem_danh_sach_trang_trai": {
             "name": "Xem danh sách trang trại",
-            "api": ""
+            "api": "/api/farms/list"
         },
         "xem_thong_tin_trang_trai": {
             "name": "Xem thông tin trang trại",
-            "api": ""
+            "api": "/api/farms/{id}"
         },
         "cap_nhat_trang_trai": {
             "name": "Cập nhật trang trại",
-            "api": ""
+            "api": "/api/farms/"
         },
         "xoa_trang_trai": {
             "name": "Xóa trang trại",
-            "api": ""
+            "api": "/api/farms/"
         }
     },
     "tong_quan_khu": {
@@ -163,7 +163,7 @@
             "name":"Xem danh sách chứng từ"
         },
         "them_chung_tu_nhap_heo_trong_he_thong":{
-            "name":"Xem chứng từ nhập heo trong hệ thống"
+            "name":"Thêm chứng từ nhập heo trong hệ thống"
         },
         "xoa_chung_tu_nhap_heo_trong_he_thong":{
             "name":"Xóa chứng từ nhập heo trong hệ thống"
@@ -183,7 +183,7 @@
 
 
         "them_chung_tu_nhap_heo_ngoai_he_thong":{
-            "name":"Xem chứng từ nhập heo ngoài hệ thống"
+            "name":"Thêm chứng từ nhập heo ngoài hệ thống"
         },
         "xoa_chung_tu_nhap_heo_ngoai_he_thong":{
             "name":"Xóa chứng từ nhập heo ngoài hệ thống"
@@ -206,7 +206,7 @@
 
 
         "them_chung_tu_xuat_heo_trong_he_thong":{
-            "name":"Xem chứng từ xuất heo trong hệ thống"
+            "name":"Thêm chứng từ xuất heo trong hệ thống"
         },
         "xoa_chung_tu_xuat_heo_trong_he_thong":{
             "name":"Xóa chứng từ nhập xuất heo trong hệ thống"
@@ -225,6 +225,137 @@
         },
         "xoa_chi_tiet_chung_tu_xuat_heo_trong_he_thong":{
             "name":"Xóa chi tiết chứng từ nhập heo ngoài hệ thống"
+        },
+
+
+        "them_chung_nhap_cam":{
+            "name":"Thêm chứng từ nhập cám"
+        },
+        "xoa_chung_tu_nhap_cam":{
+            "name":"Xóa chứng từ nhập cám"
+        },
+        "cap_nhat_chung_tu_nhap_cam":{
+            "name":"Cập nhật chứng từ nhập cám"
+        },
+        "them_chi_tiet_chung_tu_nhap_cam":{
+            "name":"Thêm chi tiết chứng từ nhập cám"
+        },
+        "cap_nhat_chi_tiet_chung_tu_nhap_cam":{
+            "name":"Cập nhật chi tiết chứng từ nhập cám"
+        },
+        "xoa_chi_tiet_chung_tu_nhap_cam":{
+            "name":"Xóa chi tiết chứng từ nhập cám"
+        },
+
+
+        "them_chung_nhap_thuoc":{
+            "name":"Thêm chứng từ nhập thuốc"
+        },
+        "xoa_chung_tu_nhap_thuoc":{
+            "name":"Xóa chứng từ nhập thuốc"
+        },
+        "cap_nhat_chung_tu_nhap_thuoc":{
+            "name":"Cập nhật chứng từ nhập thuốc"
+        },
+        "them_chi_tiet_chung_tu_nhap_thuoc":{
+            "name":"Thêm chi tiết chứng từ nhập thuốc"
+        },
+        "cap_nhat_chi_tiet_chung_tu_nhap_thuoc":{
+            "name":"Cập nhật chi tiết chứng từ nhập thuốc"
+        },
+        "xoa_chi_tiet_chung_tu_nhap_thuoc":{
+            "name":"Xóa chi tiết chứng từ nhập thuốc"
         }
+    },
+    "quan_ly_hoat_dong":{
+        "xem_danh_sach_heo_khu_cach_ly":{
+            "name":"Xem danh sách heo khu cách ly"
+        },
+        "xem_danh_sach_heo_khu_noc":{
+            "name":"Xem danh sách heo khu noc"
+        },
+        "xem_danh_sach_heo_khu_phoi":{
+            "name":"Xem danh sách heo khu phối"
+        },
+        "xem_danh_sach_heo_khu_mang_thai":{
+            "name":"Xem danh sách heo khu mang thai"
+        },
+        "xem_danh_sach_heo_khu_de":{
+            "name":"Xem danh sách heo khu đẻ"
+        },
+        "xem_danh_sach_heo_khu_cai_sua":{
+            "name":"Xem danh sách heo khu cai sữa"
+        },
+        "xem_danh_sach_heo_khu_hau_bi":{
+            "name":"Xem danh sách heo khu hậu bị"
+        },
+        "xem_danh_sach_heo_khu_8":{
+            "name":"Xem danh sách heo khu 8"
+        },
+
+        "xem_thong_tin_heo":{
+            "name":"Xem thông tin heo"
+        },
+        "nhap_van_de_cua_heo":{
+            "name":"Nhập vấn đề heo"
+        },
+        "danh_gia_chuyen_noi_bo":{
+            "name":"Đánh giá chuyển nội bộ"
+        },
+        "len_giong_heo_nai":{
+            "name":"Lên giống heo nái"
+        },
+        "cap_nhat_thong_tin_len_giong":{
+            "name":"Cập nhật thông tin lên giống"
+        },
+        "xoa_thong_tin_len_giong":{
+            "name":"Xóa thông tin lên giống"
+        },
+        "khai_thac_tinh_heo":{
+            "name":"Khai thác tinh heo"
+        },
+        "cap_nhat_thong_tin_khai_thac_tinh_heo":{
+            "name":"Cập nhật thông tin khai thác tinh heo"
+        },
+        "xoa_thong_tin_khai_thac_tinh_heo":{
+            "name":"Xóa thông tin khai thác tinh heo"
+        },
+        "ghi_nhan_phoi_giong":{
+            "name":"Ghi nhận phối giống"
+        },
+        "gieo_tinh_lan_tiep_theo":{
+            "name":"Gieo tinh lần tiếp theo"
+        },
+        "cap_nhat_thong_tin_phoi_giong":{
+            "name":"Cập nhật thông tin phối giống"
+        },
+        "xoa_thong_tin_phoi_giong":{
+            "name":"Xóa thông tin phối giống"
+        },
+        "xac_nhan_heo_mang_thai":{
+            "name":"Xác nhận heo mang thai"
+        },
+        "xac_nhan_heo_say_thai":{
+            "name":"Xác nhận heo sẩy thai"
+        },
+        "ghi_nhan_thong_tin_heo_de":{
+            "name":"Ghi nhận thông tin heo đẻ"
+        },
+        "xoa_ghi_nhan_thong_tin_heo_de":{
+            "name":"Xóa ghi nhận thông tin heo đẻ"
+        },
+        "nhap_heo_con":{
+            "name":"Nhập thông tin đàn heo con"
+        },
+        "them_vao_danh_sach_cai_sua":{
+            "name":"Thêm heo vào danh sách cai sữa"
+        }
+    },
+
+    "quan_ly_thiet_lap":{
+    },
+
+    "quan_ly_bang_ke_hoach":{
+
     }
 }

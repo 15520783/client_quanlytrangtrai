@@ -7,7 +7,7 @@ import { PartnerProvider } from '../partner/partner';
 import { EmployeesProvider } from '../employees/employees';
 import { SectionsProvider } from '../sections/sections';
 import { SettingsProvider } from '../settings/settings';
-import { pig,  foodWareHouse, medicineWarehouse, status, breedings, sperms, matingRole,  mating, births } from '../../common/entity';
+import { pig, foodWareHouse, medicineWarehouse, status, breedings, sperms, matingRole, mating, births } from '../../common/entity';
 import { WarehousesProvider } from '../warehouses/warehouses';
 import { VARIABLE, KEY } from '../../common/const';
 import { Utils } from '../../common/utils';
@@ -145,6 +145,20 @@ export class DeployDataProvider {
       })
     })
     return options_select;
+  }
+
+  /**
+   *  Lấy danh sách loại trang trại cho ion-select
+   */
+  get_farm_types_list_for_select() {
+    let farm_types = [];
+    this.settingProvider.setting.farmTypes.forEach(farmType => {
+      farm_types.push({
+        name: farmType.name,
+        value: farmType.id
+      })
+    })
+    return farm_types;
   }
 
 
@@ -352,6 +366,17 @@ export class DeployDataProvider {
       return partner.id == partnerId ? true : false;
     })[0];
   }
+
+  /**
+   * Lấy loại trang trại bằng Id
+   * @param typeId 
+   */
+  get_farm_type_by_id(typeId: string) {
+    return this.settingProvider.setting.farmTypes.filter((type) => {
+      return type.id == type.id ? true : false;
+    })[0];
+  }
+
 
   /**
    * Lấy nhân viên bằng Id

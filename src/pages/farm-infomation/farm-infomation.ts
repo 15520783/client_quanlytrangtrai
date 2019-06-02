@@ -134,13 +134,13 @@ export class FarmInfomationPage {
       //   sliced: false,
       //   selected: false
       // },
-       {
+      {
         name: 'Mang thai',
         y: this.summary.co_cau_dan_nai.farrowing.length,
         unit: 'con',
         sliced: false,
         selected: false
-      }, 
+      },
       // {
       //   name: 'Lốc',
       //   y: 0,
@@ -148,7 +148,7 @@ export class FarmInfomationPage {
       //   sliced: false,
       //   selected: false
       // },
-       {
+      {
         name: 'Sẩy thai',
         y: this.summary.co_cau_dan_nai.abort.length,
         unit: 'con',
@@ -229,8 +229,6 @@ export class FarmInfomationPage {
       khu_hau_bi: this.summary.khu_hau_bi
     }
 
-    console.log(dataBarChart);
-
     this.chartProvider.createPieChart(document.getElementById('chartMain'), data, '', '');
     this.chartProvider.createBarchart(document.getElementById('barChart'), dataBarChart);
     this.chartProvider.createPieChart(document.getElementById('chart1'), data1, 'Cơ cấu đàn nái', '');
@@ -239,10 +237,27 @@ export class FarmInfomationPage {
   }
 
   editFarm() {
-    // let modal = this.modalCtrl.create(FarmInputPage,{farm:this.farm});
-    // return modal.present();
-    this.navCtrl.push(FarmInputPage, { farm: this.farm });
+    let callback = (farm: farm) => {
+      if (farm) {
+        this.farmProvider.updateFarm(farm)
+          .then((updatedFarm: farm) => {
+            if (updatedFarm) {
+              this.farm = updatedFarm;
+              this.events.publish('Farms:update_farm', this.farm);
+              this.farm['foundingDisplay'] = this.util.convertDate(this.farm.founding);
+              this.farm['managerEmployee'] = this.employeeProvider.employees.filter((emp) => {
+                return emp.farm.id == this.farm.id ? true : false;
+              })[0];
+              this.navCtrl.pop();
+            }
+          })
+          .catch((err) => { console.log(err) })
+      }
+    }
+
+    this.navCtrl.push(FarmInputPage, { farm: this.farm, callback: callback });
   }
+
 
   viewEmployee() {
     this.menuEmployee.enable(true);

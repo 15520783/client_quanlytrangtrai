@@ -8,9 +8,11 @@
 </ion-header>
 
 <ion-content center no-padding showWhen="core">
-  <ion-row *ngIf="farms">
+  <ion-row *ngIf="farms.length">
     <ion-col col-lg-4 col-md-6 col-sm-12 *ngFor="let farm of farms">
-      <farm [farm]="farm"></farm>
+      <span *ngIf="farm && farm.summary">
+        <farm [farm]="farm" [summary]="farm.summary"></farm>
+      </span>
     </ion-col>
   </ion-row>
 </ion-content>

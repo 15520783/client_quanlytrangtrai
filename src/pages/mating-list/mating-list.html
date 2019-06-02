@@ -14,26 +14,24 @@
 <ion-content #contentExternalInvoice class="setting-util-component">
   <not-found-data *ngIf="!visible_items.length"></not-found-data>
   <div id="content" *ngIf="visible_items.length">
-    <ion-item-divider custom-diviver sticky="true"  >Danh sách ghi nhận phối giống</ion-item-divider>
+    <ion-item-divider custom-diviver sticky="true">Danh sách ghi nhận phối giống</ion-item-divider>
     <ion-list>
       <span *ngFor="let item of visible_items;let idx= index">
         <ion-item-sliding>
           <ion-item>
             <h2 *ngIf="mainAttribute"><b>{{item[mainAttribute]}}</b></h2>
             <ion-row>
-              <ion-col *ngFor="let attr of attributes" 
-                [attr.col-6]    ="!platform.is('core')"
-                [attr.col-xl-3] ="platform.is('core')" 
-                [attr.col-lg-3] ="platform.is('core')"
-                [attr.col-md-4] ="platform.is('core')"
-                [attr.col-sm-6] ="platform.is('core')"
+              <ion-col *ngFor="let attr of attributes" [attr.col-6]="!platform.is('core')"
+                [attr.col-xl-3]="platform.is('core')" [attr.col-lg-3]="platform.is('core')"
+                [attr.col-md-4]="platform.is('core')" [attr.col-sm-6]="platform.is('core')"
                 [attr.text-wrap]="platform.is('core')">
                 <p *ngIf="!attr.usingBadge" style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}
                 </p>
                 <p *ngIf="attr.usingBadge" style="padding:5px!important"><b>{{attr.label}}:</b>
                   <ion-badge *ngIf="item.status == statusMating.PROCESSING.codeName" style="padding: 5px" color="main">
                     {{item[attr.name]}}</ion-badge>
-                  <ion-badge *ngIf="item.status == statusMating.COMPLETE.codeName" style="padding: 5px" color="secondary">
+                  <ion-badge *ngIf="item.status == statusMating.COMPLETE.codeName" style="padding: 5px"
+                    color="secondary">
                     {{item[attr.name]}}</ion-badge>
                   <ion-badge *ngIf="item.status == statusMating.FARROW.codeName" style="padding: 5px" color="main">
                     {{item[attr.name]}}</ion-badge>
@@ -45,18 +43,18 @@
               </ion-col>
             </ion-row>
             <ion-row>
-              <button   small ion-button item-end mode='ios' color="secondary"
+              <button small ion-button item-end mode='ios' color="secondary"
                 *ngIf="item.status == statusMating.PROCESSING.codeName" (tap)="edit(item)">Gieo tinh cho lần tiếp
                 theo</button>
               <button   small ion-button item-end mode='ios' color="main"
                 *ngIf="item.status == statusMating.PROCESSING.codeName" (tap)="edit(item)">Sửa</button>
-              <button   small ion-button item-end mode='ios' color="danger"
+              <button small ion-button item-end mode='ios' color="danger"
                 *ngIf="item.status == statusMating.PROCESSING.codeName" (tap)="remove(item)">Xóa</button>
-              <button   small ion-button item-end mode='ios' color="secondary" *ngIf="item.status == statusMating.COMPLETE.codeName &&
-                sectionType.id == section[3].id" (tap)="markedFarrow(item)">Xác nhận heo mang thai</button>
-              <button   small ion-button item-end mode='ios' color="secondary" *ngIf="item.status == statusMating.FARROW.codeName &&
+              <button small ion-button item-end mode='ios' color="secondary" *ngIf="item.status == statusMating.COMPLETE.codeName &&
+                sectionType.id == section[4].id" (tap)="markedFarrow(item)">Xác nhận heo mang thai</button>
+              <button small ion-button item-end mode='ios' color="secondary" *ngIf="item.status == statusMating.FARROW.codeName &&
                 sectionType.id == section[4].id" (tap)="markedAbortion(item)">Xác nhận heo sẩy thai</button>
-              <button   small ion-button item-end mode='ios' color="secondary" *ngIf="item.status == statusMating.FARROW.codeName && 
+              <button small ion-button item-end mode='ios' color="secondary" *ngIf="item.status == statusMating.FARROW.codeName && 
                 sectionType.id == section[5].id" (tap)="birth_input(item)">Nhập thông tin heo đẻ</button>
             </ion-row>
           </ion-item>

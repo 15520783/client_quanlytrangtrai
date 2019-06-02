@@ -163,6 +163,8 @@ const API = {
 
     PUSH_NOTIFICATION: 'https://fcm.googleapis.com/fcm/send',
 
+    UPDATE_FARM: '/api/farms/',
+
     CREATE_HOUSE: '/api/houses/',
     UPDATE_HOUSE: '/api/houses/',
 
