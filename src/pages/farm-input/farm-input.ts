@@ -44,10 +44,6 @@ export class FarmInputPage {
     });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad FarmInputPage');
-  }
-
   onSubmit() {
     this.submitAttempt = true;
     console.log(this.credentialsForm.value);

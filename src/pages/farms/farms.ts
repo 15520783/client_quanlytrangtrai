@@ -34,7 +34,7 @@ export class FarmsPage {
     this.getAllFarms();
     this.event.subscribe('Farms:update_farm', farm => {
       let idx = this.farms.findIndex(_farm => _farm.id == farm.id);
-      if(idx > -1){
+      if (idx > -1) {
         farm.summary = this.farms[idx].summary;
         this.farms[idx] = farm;
       }
@@ -95,7 +95,26 @@ export class FarmsPage {
   }
 
   addNewFarm() {
-    return this.navCtrl.push(FarmInputPage);
+    let callback = (farm: farm) => {
+      if (farm) {
+        this.farmProvider.createFarm(farm)
+          .then((new_farm: any) => {
+            new_farm.summary = {
+              male_pig: this.deployDataProvider.get_male_pig_of_farm(new_farm.id).length,
+              female_pig: this.deployDataProvider.get_female_pig_of_farm(new_farm.id).length,
+              child_pig: this.deployDataProvider.get_child_pig_in_farm(new_farm.id).length,
+              totalPig: this.deployDataProvider.get_all_pig_of_farm(new_farm.id).length
+            }
+            this.farms.push(new_farm);
+            this.navCtrl.pop();
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      }
+    }
+
+    this.navCtrl.push(FarmInputPage, { callback: callback });
   }
 
 

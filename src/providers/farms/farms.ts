@@ -57,6 +57,30 @@ export class FarmsProvider {
       })
   }
 
+  /**
+   * Thêm mới trang trại
+   * @param objBody 
+   */
+  createFarm(objBody: farm) {
+    return this.http
+      .post(API.CREATE_FARM, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise()
+      .then((new_farm: farm) => {
+        this.util.getKey(KEY.FARMS)
+          .then((farms: Array<farm>) => {
+            farms.push(new_farm);
+            this.util.setKey(KEY.FARMS, farms);
+            this.farms.push(new_farm);
+          })
+        return new_farm;
+      });
+  }
+
+  /**
+   * Cập nhật thông tin trang trại
+   * @param objBody 
+   */
   updateFarm(objBody: farm) {
     return this.http
       .put(API.UPDATE_FARM, objBody)

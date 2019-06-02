@@ -262,9 +262,7 @@ export const firebaseConfig = {
     FullCalendarModule,
     HttpModule,
     AngularFireModule,
-    AngularFireModule.initializeApp(
-      firebaseConfig,
-    ),
+    AngularFireModule.initializeApp( firebaseConfig),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
