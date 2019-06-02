@@ -6,6 +6,7 @@ import { Platform, ModalController, NavController } from 'ionic-angular';
 import { FarmInfomationPage } from '../../pages/farm-infomation/farm-infomation';
 import { HighChartProvider } from '../../providers/high-chart/high-chart';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { UserProvider } from '../../providers/user/user';
 
 @Component({
   selector: 'farm',
@@ -31,6 +32,7 @@ export class FarmComponent {
     public modalCtrl: ModalController,
     public chartProvider: HighChartProvider,
     public deployData: DeployDataProvider,
+    public userProvider:UserProvider,
     public util: Utils
   ) {
     

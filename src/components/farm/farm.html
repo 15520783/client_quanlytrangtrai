@@ -8,8 +8,12 @@
         </ion-card-title>
       </ion-col>
       <ion-col text-right>
-        <button mode='ios' ion-button item-end (tap)="viewDetail(farm)" color="secondary">Xem thông tin</button>
-        <button mode='ios' ion-button item-end (tap)="remove(farm)" color="danger">Xóa</button>
+        <span *ngIf="userProvider.rolePermission.tong_quan_trang_trai.xem_thong_tin_trang_trai">
+          <button mode='ios' ion-button item-end (tap)="viewDetail(farm)" color="secondary">Xem thông tin</button>
+        </span>
+        <span *ngIf="userProvider.rolePermission.tong_quan_trang_trai.xoa_trang_trai">
+          <button mode='ios' ion-button item-end (tap)="remove(farm)" color="danger">Xóa</button>
+        </span>
       </ion-col>
     </ion-row>
   </ion-card-header>
@@ -23,7 +27,8 @@
       <ion-item-divider>Thông tin chung</ion-item-divider>
       <ion-row>
         <ion-col class="pd-5" col-6>
-          <h2><b>Số lượng:</b><span *ngIf="summary">{{summary.totalPig + ' '}}</span><ion-icon name="app-pig-outline" style="vertical-align: bottom">
+          <h2><b>Số lượng:</b><span *ngIf="summary">{{summary.totalPig + ' '}}</span>
+            <ion-icon name="app-pig-outline" style="vertical-align: bottom">
             </ion-icon>
           </h2>
         </ion-col>

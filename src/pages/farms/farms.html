@@ -9,7 +9,7 @@
 
 </ion-header>
 
-<ion-content center no-padding showWhen="core">
+<ion-content center no-padding *ngIf="platform.is('core')">
   <ion-row *ngIf="farms.length">
     <ion-col col-lg-4 col-md-6 col-sm-12 *ngFor="let farm of farms">
       <span *ngIf="farm && farm.summary">
@@ -19,39 +19,43 @@
   </ion-row>
 </ion-content>
 
-<ion-content #content showWhen="ios,android">
+<ion-content #content *ngIf="!platform.is('core')">
   <ion-item-divider sticky="true">Danh sách trang trại</ion-item-divider>
   <ion-list>
-    <button ion-item *ngFor="let farm of farms" (tap)="viewDetail(farm)">
-      <ion-avatar item-start>
-        <ion-icon name="app-farm" font28></ion-icon>
-      </ion-avatar>
-      <h2>{{farm.name}}</h2>
-      <ion-row>
-        <ion-col>
-          <p><b>Tổng số heo:</b> {{farm.totalPig}}</p>
-        </ion-col>
-        <ion-col>
-          <p><b>Diện tích</b>: {{farm.area}}</p>
-        </ion-col>
-        <ion-col>
-          <p><b>Ngày thành lập:</b> {{farm.founding|date:'dd/MM/yyyy'}}</p>
-        </ion-col>
-        <ion-col text-wrap col-12>
-          <p><b>Địa chỉ:</b> {{farm.address}}</p>
-        </ion-col>
-      </ion-row>
-    </button>
+    <ion-item-sliding *ngFor="let farm of farms">
+      <button ion-item (tap)="viewDetail(farm)">
+        <ion-avatar item-start>
+          <ion-icon name="app-farm" font28></ion-icon>
+        </ion-avatar>
+        <h2>{{farm.name}}</h2>
+        <ion-row>
+          <ion-col>
+            <p><b>Tổng số heo:</b> {{farm.totalPig}}</p>
+          </ion-col>
+          <ion-col>
+            <p><b>Diện tích</b>: {{farm.area}}</p>
+          </ion-col>
+          <ion-col>
+            <p><b>Ngày thành lập:</b> {{farm.founding|date:'dd/MM/yyyy'}}</p>
+          </ion-col>
+          <ion-col text-wrap col-12>
+            <p><b>Địa chỉ:</b> {{farm.address}}</p>
+          </ion-col>
+        </ion-row>
+      </button>
+    </ion-item-sliding>
   </ion-list>
   <ion-fab bottom right showWhen="android,windows,ios">
     <button ion-fab>
       <ion-icon name="ios-arrow-up"></ion-icon>
     </button>
     <ion-fab-list side="top" style="right:0px">
-      <button data-balloon-visible data-balloon-length="medium" data-balloon="Thêm trang trại" data-balloon-pos="left"
-        ion-fab color="main" (tap)="addNewFarm()">
-        <ion-icon name="add"></ion-icon>
-      </button>
+      <span *ngIf="userProvider.rolePermission.tong_quan_trang_trai.them_trang_trai">
+        <button data-balloon-visible data-balloon-length="medium" data-balloon="Thêm trang trại" data-balloon-pos="left"
+          ion-fab color="main" (tap)="addNewFarm()">
+          <ion-icon name="add"></ion-icon>
+        </button>
+      </span>
     </ion-fab-list>
   </ion-fab>
 </ion-content>

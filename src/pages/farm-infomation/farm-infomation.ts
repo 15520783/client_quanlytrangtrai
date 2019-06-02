@@ -9,6 +9,7 @@ import { PigGroupsProvider } from '../../providers/pig-groups/pig-groups';
 import { Utils } from '../../common/utils';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { VARIABLE } from '../../common/const';
+import { UserProvider } from '../../providers/user/user';
 
 
 @IonicPage()
@@ -75,14 +76,13 @@ export class FarmInfomationPage {
     public groupProvider: PigGroupsProvider,
     public deployData: DeployDataProvider,
     public events: Events,
-    public util: Utils
+    public util: Utils,
+    public userProvider: UserProvider
   ) {
     if (this.navParams.data.farm) {
       this.farm = this.navParams.data.farm;
       this.farm['foundingDisplay'] = this.util.convertDate(this.farm.founding);
-      this.farm['managerEmployee'] = this.employeeProvider.employees.filter((emp) => {
-        return emp.farm.id == this.farm.id ? true : false;
-      })[0];
+      this.farm['managerEmployee'] = this.deployData.get_employee_by_id(this.farm.manager);
 
       this.getSummary();
 
@@ -245,9 +245,7 @@ export class FarmInfomationPage {
               this.farm = updatedFarm;
               this.events.publish('Farms:update_farm', this.farm);
               this.farm['foundingDisplay'] = this.util.convertDate(this.farm.founding);
-              this.farm['managerEmployee'] = this.employeeProvider.employees.filter((emp) => {
-                return emp.farm.id == this.farm.id ? true : false;
-              })[0];
+              this.farm['managerEmployee'] = this.deployData.get_employee_by_id(this.farm.manager);
               this.navCtrl.pop();
             }
           })
@@ -256,6 +254,15 @@ export class FarmInfomationPage {
     }
 
     this.navCtrl.push(FarmInputPage, { farm: this.farm, callback: callback });
+  }
+
+  removeFarm(){
+    this.farmProvider.removeFarm(this.farm)
+    .then((isOk)=>{
+      if(isOk){
+        this.navParams.get('callbackRemove')(this.farm);
+      }
+    })
   }
 
 

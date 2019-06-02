@@ -91,7 +91,13 @@ export class FarmsPage {
   }
 
   viewDetail(farm: farm) {
-    return this.navCtrl.push(FarmInfomationPage, { farm: farm });
+    let callbackRemove = farm => {
+      if (farm) {
+        this.removeFarm(farm);
+        this.navCtrl.pop();
+      }
+    }
+    return this.navCtrl.push(FarmInfomationPage, { farm: farm, callbackRemove: callbackRemove });
   }
 
   addNewFarm() {
@@ -119,10 +125,10 @@ export class FarmsPage {
 
 
 
-  removeFarm(farm){
+  removeFarm(farm) {
     let idx = this.farms.findIndex(_farm => _farm.id == farm.id);
-    if(idx > -1){
-      this.farms.splice(idx,1);
+    if (idx > -1) {
+      this.farms.splice(idx, 1);
     }
   }
 }
