@@ -165,6 +165,7 @@ const API = {
 
     CREATE_FARM: '/api/farms/',
     UPDATE_FARM: '/api/farms/',
+    DELETE_FARM: '/api/farms/',
 
     CREATE_HOUSE: '/api/houses/',
     UPDATE_HOUSE: '/api/houses/',

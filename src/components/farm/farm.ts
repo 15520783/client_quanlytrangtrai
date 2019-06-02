@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { farm } from '../../common/entity';
 import { FarmsProvider } from '../../providers/farms/farms';
 import { Utils } from '../../common/utils';
@@ -21,6 +21,8 @@ export class FarmComponent {
     child_pig:number
     totalPig:number
   }
+
+  @Output() public removeFarm = new EventEmitter(); 
 
   constructor(
     public navCtrl: NavController,
@@ -73,6 +75,15 @@ export class FarmComponent {
 
   viewDetail(farm: farm) {
     this.navCtrl.push(FarmInfomationPage,{farm:this.util.deepClone(farm)});
+  }
+
+  remove(farm){
+    this.farmProvider.removeFarm(farm)
+    .then((isOK)=>{
+      if(isOK){
+        this.removeFarm.emit(farm);
+      }
+    });
   }
 
 

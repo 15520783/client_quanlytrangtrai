@@ -100,6 +100,34 @@ export class FarmsProvider {
       })
   }
 
+  removeFarm(objBody: farm) {
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http
+      .delete(API.DELETE_FARM, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise()
+      .then((isOK) => {
+        if (isOK) {
+          let idx = this.farms.findIndex(_farm => _farm.id == objBody.id);
+          if (idx > -1) {
+            this.farms.splice(idx, 1);
+            this.util.getKey(KEY.FARMS)
+              .then((farms) => {
+                idx = farms.findIndex(_farm => _farm.id == objBody.id);
+                if (idx > -1) {
+                  farms.splice(idx, 1);
+                  this.util.setKey(KEY.FARMS, farms);
+                }
+              })
+          }
+        }
+        return isOK;
+      });
+  }
+
   publishUpdateEvent() {
     this.updated_flag = true;
     this.events.publish('updated');

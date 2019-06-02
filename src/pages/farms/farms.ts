@@ -118,4 +118,11 @@ export class FarmsPage {
   }
 
 
+
+  removeFarm(farm){
+    let idx = this.farms.findIndex(_farm => _farm.id == farm.id);
+    if(idx > -1){
+      this.farms.splice(idx,1);
+    }
+  }
 }
