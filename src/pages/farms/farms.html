@@ -1,7 +1,9 @@
 <ion-header>
   <header [title]="'Quản lý trang trại'">
     <ion-toolbar showWhen="core">
-      <button ion-button mode='ios' color="secondary" (tap)="addNewFarm()">Thêm trang trại</button>
+      <span *ngIf="userProvider.rolePermission.tong_quan_trang_trai.them_trang_trai">
+        <button ion-button mode='ios' color="secondary" (tap)="addNewFarm()">Thêm trang trại</button>
+      </span>
     </ion-toolbar>
   </header>
 

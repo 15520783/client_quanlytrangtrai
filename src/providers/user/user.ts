@@ -1,6 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { user, employee } from '../../common/entity';
+import { employee } from '../../common/entity';
 import { API, CONFIG, KEY } from '../../common/const';
 import { Utils } from '../../common/utils';
 import { Events } from 'ionic-angular';
@@ -11,6 +11,7 @@ export class UserProvider {
 
   public user: employee;
   public updated_flag = false;
+  public rolePermission: any;
 
   constructor(
     public http: HttpClient,
@@ -75,6 +76,16 @@ export class UserProvider {
       .get(API.GET_SCHEDULE)
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise();
+  }
+
+
+  getRoleUser() {
+    return this.http
+      .get('../../assets/data/role.json').toPromise()
+      .then((role) => {
+        this.rolePermission = role;
+        return role;
+      });
   }
 
 }

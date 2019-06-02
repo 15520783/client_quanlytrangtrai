@@ -21,7 +21,6 @@ import { PartnerProvider } from '../providers/partner/partner';
 import { DeployDataProvider } from '../providers/deploy-data/deploy-data';
 import { FcmProvider } from '../providers/fcm/fcm';
 
-import { tap } from 'rxjs/operators';
 
 @Component({
   templateUrl: 'app.html'
@@ -82,6 +81,13 @@ export class MyApp {
                   }
                   CONFIG.ACCESS_KEY = tokenType.concat(' ').concat(accessToken);
                   this.splash = true;
+                  this.userProvider.getRoleUser()
+                      .then((data) => {
+                        console.log(data);
+                      })
+                      .catch(err => {
+                        console.log(err);
+                      })
                   this.intinial_sync();
                 }
                 else {
@@ -104,6 +110,13 @@ export class MyApp {
                   if (tokenType) {
                     CONFIG.ACCESS_KEY = tokenType.concat(' ').concat(accessToken);
                     this.splash = true;
+                    this.userProvider.getRoleUser()
+                      .then((data) => {
+                        console.log(data);
+                      })
+                      .catch(err => {
+                        console.log(err);
+                      })
                     this.intinial_sync();
                   }
                   else {
@@ -123,7 +136,7 @@ export class MyApp {
         // Listen to incoming messages
         this.fcmProvider.listenToNotifications();
       }
-      
+
       this.listener_logout();
     })
   }

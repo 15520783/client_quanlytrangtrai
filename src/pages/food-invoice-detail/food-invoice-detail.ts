@@ -66,8 +66,10 @@ export class FoodInvoiceDetailPage {
       })
   }
 
+  /**
+   * Nhập cám chi tiết thuộc chứng từ
+   */
   input_food() {
-
     let callback = (foodWarehouse: foodWareHouse) => {
       foodWarehouse = this.deployData.get_foodWarehouse_object_to_send_request(foodWarehouse);
       this.invoiceProvider.createFoodWareHouse(foodWarehouse)
@@ -80,19 +82,6 @@ export class FoodInvoiceDetailPage {
         .catch((err: Error) => { })
     }
     this.navCtrl.push(FoodWarehouseInputPage, { invoice: this.invoice, callback: callback });
-    // this.events.unsubscribe('createFoodWarehouse');
-    // this.events.subscribe('createFoodWarehouse', (foodWarehouse) => {
-    //   foodWarehouse = this.deployData.get_foodWarehouse_object_to_send_request(foodWarehouse);
-    //   this.invoiceProvider.createFoodWareHouse(foodWarehouse)
-    //     .then((foodhouse: foodWareHouse) => {
-    //       if (foodhouse) {
-    //         this.details.push(foodhouse);
-    //         this.events.unsubscribe('createFoodWarehouse');
-    //         this.events.publish('OK');
-    //       }
-    //     })
-    //     .catch((err: Error) => { })
-    // })
   }
 
   removeInvoice() {

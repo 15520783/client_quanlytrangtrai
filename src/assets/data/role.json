@@ -1,0 +1,480 @@
+{
+    "tong_quan_trang_trai": {
+        "them_trang_trai": {
+            "name": "Thêm trang trại",
+            "api": ""
+        },
+        "xem_danh_sach_trang_trai": {
+            "name": "Xem danh sách trang trại",
+            "api": "/api/farms/list"
+        },
+        "xem_thong_tin_trang_trai": {
+            "name": "Xem thông tin trang trại",
+            "api": "/api/farms/{id}"
+        },
+        "cap_nhat_trang_trai": {
+            "name": "Cập nhật trang trại",
+            "api": "/api/farms/"
+        },
+        "xoa_trang_trai": {
+            "name": "Xóa trang trại",
+            "api": "/api/farms/"
+        }
+    },
+    "tong_quan_khu": {
+        "them_khu": {
+            "name": "Thêm khu",
+            "api": "/api/sections/"
+        },
+        "xem_danh_sach_khu": {
+            "name": "Xem danh sách khu",
+            "api": "/api/sections/list"
+        },
+        "xem_thong_tin_khu": {
+            "name": "Xem thông tin khu",
+            "api": "/api/sections/{id}"
+        },
+        "cap_nhat_khu": {
+            "name": "Cập nhật khu",
+            "api": "/api/sections/"
+        },
+        "xoa_khu": {
+            "name": "Xóa khu",
+            "api": "/api/sections/"
+        },
+        "them_chuong": {
+            "name": "Thêm mới chuồng",
+            "api": "/api/houses/"
+        },
+        "xem_danh_sach_chuong": {
+            "name": "Xem danh sách chuồng",
+            "api": "/api/houses/list"
+        },
+        "xem_thong_tin_chuong": {
+            "name": "Xem thông tin chuồng",
+            "api": "/api/houses/{id}"
+        },
+        "xoa_chuong": {
+            "name": "Xóa chuồng",
+            "api": "/api/houses/"
+        }
+    },
+    "quan_ly_danh_sach_heo": {
+        "xem_danh_sach_heo": {
+            "name": "Xem danh sách heo",
+            "api": "/api/pigs/list"
+        },
+        "them_heo": {
+            "name": "Thêm mới heo",
+            "api": "/api/pigs/"
+        },
+        "xem_thong_tin_heo": {
+            "name": "Xem thông tin heo",
+            "api": "/api/pigs/{id}"
+        },
+        "cap_nhat_thong_tin_heo": {
+            "name": "Cập nhật thông tin heo",
+            "api": "/api/pigs/"
+        },
+        "xoa_heo": {
+            "name": "Xóa heo",
+            "api": "/api/pigs/"
+        },
+        "xem_lich_su_hoat_dong": {
+            "name": "Xem lịch sử hoạt động",
+            "api": "/api/piginfoextend/"
+        }
+    },
+    "quan_ly_danh_sach_nhan_vien": {
+        "xem_danh_sach_nhan_vien": {
+            "name": "Xem danh sách nhân viên",
+            "api": "/api/employees/list"
+        },
+        "them_nhan_vien": {
+            "name": "Thêm mới nhân viên",
+            "api": "/api/employees/"
+        },
+        "cap_nhat_nhan_vien": {
+            "name": "Cập nhật nhân viên",
+            "api": "/api/employees/"
+        },
+        "xoa_nhan_vien": {
+            "name": "Xóa nhân viên",
+            "api": "/api/employees/"
+        },
+        "xem_thong_tin_nhan_vien": {
+            "name": "Xem thông tin nhân viên",
+            "api": "/api/employees/{id}"
+        }
+    },
+    "quan_ly_danh_sach_doi_tac": {
+        "xem_danh_sach_doi_tac": {
+            "name": "Xem danh sách đối tác",
+            "api": "/api/partners/list"
+        },
+        "them_doi_tac": {
+            "name": "Thêm mới đối tác",
+            "api": "/api/partners/"
+        },
+        "cap_nhat_doi_tac": {
+            "name": "Cập nhật thông tin đối tác",
+            "api": "/api/partners/"
+        },
+        "xoa_doi_tac": {
+            "name": "Xóa đối tác",
+            "api": "/api/partners/"
+        },
+        "xem_thong_tin_doi_tac": {
+            "name": "Xem thông tin đối tác",
+            "api": "/api/partners/{id}"
+        }
+    },
+    "quan_ly_danh_sach_kho": {
+        "xem_danh_sach_kho": {
+            "name": "Xem danh sách kho",
+            "api": "/api/warehouses/list"
+        },
+        "them_kho": {
+            "name": "Thêm mới kho",
+            "api": "/api/warehouses/"
+        },
+        "cap_nhat_kho": {
+            "name": "Cập nhật thông tin kho",
+            "api": "/api/warehouses/"
+        },
+        "xoa_kho": {
+            "name": "Xóa kho",
+            "api": "/api/warehouses/"
+        },
+        "xem_thong_tin_kho": {
+            "name": "Xem thông tin kho",
+            "api": "/api/warehouses/{id}"
+        },
+        "xuat_cam_cho_heo_an": {
+            "name": "Xuất cám cho heo ăn",
+            "api": "/api/feeds/feedlist/"
+        },
+        "xem_lich_su_xuat_cam": {
+            "name": "Xem lịch sử xuất cám",
+            "api": ""
+        }
+    },
+    "quan_ly_danh_sach_chung_tu": {
+        "xem_danh_sach_chung_tu": {
+            "name": "Xem danh sách chứng từ",
+            "api": "/api/invoices/list"
+        },
+        "them_chung_tu_nhap_heo_trong_he_thong": {
+            "name": "Thêm chứng từ nhập heo trong hệ thống",
+            "api": "/api/invoicespig/"
+        },
+        "xoa_chung_tu_nhap_heo_trong_he_thong": {
+            "name": "Xóa chứng từ nhập heo trong hệ thống",
+            "api": "/api/invoicespig/"
+        },
+        "cap_nhat_chung_tu_nhap_heo_trong_he_thong": {
+            "name": "Cập nhật chứng từ nhập heo trong hệ thống",
+            "api": "/api/invoicespig/"
+        },
+        "xac_nhan_hoan_tat_chung_tu_nhap_heo_trong_he_thong": {
+            "name": "Xác nhận hoàn tất chứng từ nhập heo trong hệ thống",
+            "api": "/api/invoicespig/"
+        },
+        "danh_gia_lai_heo_thuoc_chung_tu_nhap_heo_trong_he_thong": {
+            "name": "Đánh giá lại heo thuộc chứng từ nhập heo trong hệ thống",
+            "api": "/api/pigs/"
+        },
+        "them_chung_tu_nhap_heo_ngoai_he_thong": {
+            "name": "Thêm chứng từ nhập heo ngoài hệ thống",
+            "api": "/api/invoicespig/"
+        },
+        "xoa_chung_tu_nhap_heo_ngoai_he_thong": {
+            "name": "Xóa chứng từ nhập heo ngoài hệ thống",
+            "api": "/api/invoicespig/"
+        },
+        "cap_nhat_chung_tu_nhap_heo_ngoai_he_thong": {
+            "name": "Cập nhật chứng từ nhập heo ngoài hệ thống",
+            "api": "/api/invoicespig/"
+        },
+        "xac_nhan_hoan_tat_chung_tu_nhap_heo_ngoai_he_thong": {
+            "name": "Xác nhận hoàn tất chứng từ nhập heo ngoài hệ thống",
+            "api": "/api/invoicespig/"
+        },
+        "them_chi_tiet_chung_tu_nhap_heo_ngoai_he_thong": {
+            "name": "Thêm chi tiết chứng từ nhập heo ngoài hệ thống",
+            "api": "/api/invoicepigdetail/pigsinvoicepigdetail/"
+        },
+        "danh_gia_lai_heo_thuoc_chung_tu_nhap_heo_ngoai_he_thong": {
+            "name": "Đánh giá lại heo thuộc chứng từ nhập heo ngoài hệ thống",
+            "api": "/api/pigs/"
+        },
+        "xoa_chi_tiet_chung_tu_nhap_heo_ngoai_he_thong": {
+            "name": "Xóa chi tiết chứng từ nhập heo ngoài hệ thống",
+            "api": "/api/invoicepigdetail/"
+        },
+        "them_chung_tu_xuat_heo_trong_he_thong": {
+            "name": "Thêm chứng từ xuất heo trong hệ thống",
+            "api": "/api/invoicespig/"
+        },
+        "xoa_chung_tu_xuat_heo_trong_he_thong": {
+            "name": "Xóa chứng từ nhập xuất heo trong hệ thống",
+            "api": "/api/invoicespig/"
+        },
+        "cap_nhat_chung_tu_xuat_heo_trong_he_thong": {
+            "name": "Cập nhật chứng từ xuất heo trong hệ thống",
+            "api": "/api/invoicespig/"
+        },
+        "xac_nhan_xuat_heo_chung_tu_xuat_heo_trong_he_thong": {
+            "name": "Xác nhận xuất heo chứng từ xuất heo trong hệ thống",
+            "api": "/api/invoicespig/"
+        },
+        "them_chi_tiet_chung_tu_xuat_heo_trong_he_thong": {
+            "name": "Thêm chi tiết chứng từ xuất heo trong hệ thống",
+            "api": "/api/invoicepigdetail/pigsinvoicepigdetail/"
+        },
+        "danh_gia_lai_heo_thuoc_chung_tu_xuat_heo_trong_he_thong": {
+            "name": "Đánh giá lại heo thuộc chứng từ xuất heo trong hệ thống",
+            "api": "/api/pigs/"
+        },
+        "xoa_chi_tiet_chung_tu_xuat_heo_trong_he_thong": {
+            "name": "Xóa chi tiết chứng từ xuất heo trong hệ thống",
+            "api": "/api/invoicepigdetail/onlyinvoicedetail/"
+        },
+        "them_chung_nhap_cam": {
+            "name": "Thêm chứng từ nhập cám",
+            "api": "/api/invoicespig/"
+        },
+        "xoa_chung_tu_nhap_cam": {
+            "name": "Xóa chứng từ nhập cám",
+            "api": "/api/invoicespig/"
+        },
+        "cap_nhat_chung_tu_nhap_cam": {
+            "name": "Cập nhật chứng từ nhập cám",
+            "api": "/api/invoicespig/"
+        },
+        "them_chi_tiet_chung_tu_nhap_cam": {
+            "name": "Thêm chi tiết chứng từ nhập cám",
+            "api": "/api/foodwarehouse/"
+        },
+        "cap_nhat_chi_tiet_chung_tu_nhap_cam": {
+            "name": "Cập nhật chi tiết chứng từ nhập cám",
+            "api": "/api/foodwarehouse/"
+        },
+        "xoa_chi_tiet_chung_tu_nhap_cam": {
+            "name": "Xóa chi tiết chứng từ nhập cám",
+            "api": "/api/foodwarehouse/"
+        },
+        "them_chung_nhap_thuoc": {
+            "name": "Thêm chứng từ nhập thuốc",
+            "api": "/api/invoicespig/"
+        },
+        "xoa_chung_tu_nhap_thuoc": {
+            "name": "Xóa chứng từ nhập thuốc",
+            "api": "/api/invoicespig/"
+        },
+        "cap_nhat_chung_tu_nhap_thuoc": {
+            "name": "Cập nhật chứng từ nhập thuốc",
+            "api": "/api/invoicespig/"
+        },
+        "them_chi_tiet_chung_tu_nhap_thuoc": {
+            "name": "Thêm chi tiết chứng từ nhập thuốc",
+            "api": "/api/medicinewarehouse/"
+        },
+        "cap_nhat_chi_tiet_chung_tu_nhap_thuoc": {
+            "name": "Cập nhật chi tiết chứng từ nhập thuốc",
+            "api": "/api/medicinewarehouse/"
+        },
+        "xoa_chi_tiet_chung_tu_nhap_thuoc": {
+            "name": "Xóa chi tiết chứng từ nhập thuốc",
+            "api": "/api/medicinewarehouse/"
+        }
+    },
+    "quan_ly_hoat_dong": {
+        "quan_ly_heo_khu_cach_ly": {
+            "name": "Quản lý heo khu cách ly",
+            "api": "/api/pigs/list"
+        },
+        "quan_ly_heo_khu_noc": {
+            "name": "Quản lý heo khu noc",
+            "api": "/api/pigs/list"
+        },
+        "quan_ly_heo_khu_phoi": {
+            "name": "Quản lý heo khu phối",
+            "api": "/api/pigs/list"
+        },
+        "quan_ly_heo_khu_mang_thai": {
+            "name": "Quản lý heo khu mang thai",
+            "api": "/api/pigs/list"
+        },
+        "quan_ly_heo_khu_de": {
+            "name": "Quản lý heo khu đẻ",
+            "api": "/api/pigs/list"
+        },
+        "quan_ly_heo_khu_cai_sua": {
+            "name": "Quản lý heo khu cai sữa",
+            "api": "/api/pigs/list"
+        },
+        "quan_ly_heo_khu_hau_bi": {
+            "name": "Quản lý heo khu hậu bị",
+            "api": "/api/pigs/list"
+        },
+        "quan_ly_heo_khu_8": {
+            "name": "Quản lý heo khu 8",
+            "api": "/api/pigs/list"
+        },
+        "xem_thong_tin_heo": {
+            "name": "Xem thông tin heo",
+            "api": "/api/pigs/{id}"
+        },
+        "nhap_van_de_cua_heo": {
+            "name": "Nhập vấn đề heo",
+            "api": "/api/issuespigs/"
+        },
+        "danh_gia_chuyen_noi_bo": {
+            "name": "Đánh giá chuyển nội bộ",
+            "api": "/api/pigs/{id}"
+        },
+        "len_giong_heo_nai": {
+            "name": "Lên giống heo nái",
+            "api": "/api/breedings/"
+        },
+        "cap_nhat_thong_tin_len_giong": {
+            "name": "Cập nhật thông tin lên giống",
+            "api": "/api/breedings/"
+        },
+        "xoa_thong_tin_len_giong": {
+            "name": "Xóa thông tin lên giống",
+            "api": "/api/breedings/"
+        },
+        "xem_danh_sach_len_giong": {
+            "name": "Xem danh sách lên giống",
+            "api": "/api/breedings/list"
+        },
+        "khai_thac_tinh_heo": {
+            "name": "Khai thác tinh heo",
+            "api": "/api/sperm/"
+        },
+        "cap_nhat_thong_tin_khai_thac_tinh_heo": {
+            "name": "Cập nhật thông tin khai thác tinh heo",
+            "api": "/api/sperm/"
+        },
+        "xoa_thong_tin_khai_thac_tinh_heo": {
+            "name": "Xóa thông tin khai thác tinh heo",
+            "api": "/api/sperm/"
+        },
+        "xem_danh_sach_khai_thac_tinh_heo": {
+            "name": "Xem danh sách khai thác tinh heo",
+            "api": "/api/sperm/list"
+        },
+        "ghi_nhan_phoi_giong": {
+            "name": "Ghi nhận phối giống",
+            "api": "/api/matings/matingsmatingdetails/"
+        },
+        "cap_nhat_thong_tin_phoi_giong": {
+            "name": "Cập nhật thông tin phối giống",
+            "api": "/api/matings/matingsmatingdetails/"
+        },
+        "xoa_thong_tin_phoi_giong": {
+            "name": "Xóa thông tin phối giống",
+            "api": "/api/matings/"
+        },
+        "xem_danh_sach_phoi_giong": {
+            "name": "Xem danh sách phối giống",
+            "api": "/api/matings/matingsmatingdetails/list"
+        },
+        "xac_nhan_heo_mang_thai": {
+            "name": "Xác nhận heo mang thai",
+            "api": "/api/matings/"
+        },
+        "xac_nhan_heo_say_thai": {
+            "name": "Xác nhận heo sẩy thai",
+            "api": "/api/matings/"
+        },
+        "ghi_nhan_thong_tin_heo_de": {
+            "name": "Ghi nhận thông tin heo đẻ",
+            "api": "/api/births/"
+        },
+        "cap_nhat_thong_tin_heo_de": {
+            "name": "Cập nhật thông tin heo đẻ",
+            "api": "/api/births/"
+        },
+        "xoa_ghi_nhan_thong_tin_heo_de": {
+            "name": "Xóa ghi nhận thông tin heo đẻ",
+            "api": "/api/births/"
+        },
+        "nhap_heo_con": {
+            "name": "Nhập thông tin đàn heo con",
+            "api": "/api/invoicepigdetail/pigsinvoicepigdetail/"
+        },
+        "them_vao_danh_sach_cai_sua": {
+            "name": "Thêm heo vào danh sách cai sữa",
+            "api": "/api/pigs/"
+        }
+    },
+    "quan_ly_thiet_lap": {
+        "xem_danh_sach_thiet_lap":{
+            "name":"Xem danh sách thiết lap",
+            "api":"/api/settings/list"
+        },
+        "thiet_lap_trang_thai_mang_thai":{
+            "name":"Thiết lập trạng thái mang thai"
+        },
+        "thiet_lap_danh_sach_giong":{
+            "name":"Thiết lập danh sách giống"
+        },
+        "thiet_lap_loai_len_giong":{
+            "name":"Thiết lập loại lên giống"
+        },
+        "thiet_lap_trang_thai_suc_khoe":{
+            "name":"Thiết lập trạng thái sức khỏe"
+        },
+        "thiet_lap_danh_sach_benh":{
+            "name":"Thiết lập danh sách bệnh"
+        },
+        "thiet_lap_danh_sach_loai_trang_trai":{
+            "name":"Thiết lập danh sách loại trang trại"
+        },
+        "thiet_lap_danh_sach_loai_thuc_an":{
+            "name":"Thiết lập danh sách loại thức ăn"
+        },
+        "thiet_lap_don_vi_cam":{
+            "name":"Thiết lập đơn vị cám"
+        },
+        "thiet_lap_danh_sach_cam":{
+            "name":"Thiết lập danh sách cám"
+        },
+        "thiet_lap_nhom_thuoc":{
+            "name":"Thiết lập nhóm thuốc"
+        },
+        "thiet_lap_danh_sach_thuoc":{
+            "name":"Thiết lập danh sách thuốc"
+        },
+        "thiet_lap_danh_sach_ma_san_pham":{
+            "name":"Thiết lập danh sách mã sản phẩm"
+        },
+        "thiet_lap_loai_chan":{
+            "name":"Thiết lập loại chân"
+        },
+        "thiet_lap_loai_bo_phan_sinh_duc":{
+            "name":"Thiết lập loại bộ phận sinh dục"
+        },
+        "thiet_lap_danh_sach_trang_thai_heo":{
+            "name":"Thiết lập danh sách trạng thái heo"
+        },
+        "thiet_lap_danh_sach_lua":{
+            "name":"Thiết lập danh sách lứa"
+        },
+        "thiet_lap_danh_sach_chuc_vu":{
+            "name":"Thiết lập chức vụ"
+        },
+        "thiet_lap_luat_phoi":{
+            "name":"Thiết lập luật phối"
+        }
+    },
+    "quan_ly_bang_ke_hoach": {
+        "xem_bang_ke_hoach":{
+            "name":"Xem bảng kế hoạch",
+            "api":"/api/schedule/list"
+        }
+    }
+}

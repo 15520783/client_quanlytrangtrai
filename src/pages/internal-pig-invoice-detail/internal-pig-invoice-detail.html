@@ -9,7 +9,7 @@
       Chỉnh sửa chứng từ</button>
     <button *ngIf="canCheckComplete" ion-button mode='ios' color="secondary" (tap)="completeInvoice()">
       Xác nhận hoàn tất</button>
-    <button  ion-button mode='ios' color="danger" (tap)="removeInvoice()">Xóa chứng từ</button>
+    <button ion-button mode='ios' color="danger" (tap)="removeInvoice()">Xóa chứng từ</button>
   </ion-toolbar>
   <ion-toolbar showWhen='ios,android'>
     <ion-segment [(ngModel)]="tab" scrollable>
@@ -119,15 +119,11 @@
                       </ion-col>
                     </ion-row>
                   </ion-col>
-                  <!-- <ion-col col-lg-2 col-md-3 col-sm-3>
-                    <button ion-button mode='ios' block color="danger" text-wrap
-                      (tap)="removePigInvoicesDetail(item)">Xóa</button>
-                  </ion-col> -->
                 </ion-row>
                 <button *ngIf="canEditInvoice" showWhen="core" ion-button item-end mode='ios' color="main"
                   (tap)="edit(item)">Đánh giá lại</button>
-                <button *ngIf="canEditInvoice" showWhen="core" ion-button item-end mode='ios' color="danger"
-                  (tap)="removePigInvoicesDetail(item)">Xóa</button>
+                <!-- <button *ngIf="canEditInvoice" showWhen="core" ion-button item-end mode='ios' color="danger"
+                  (tap)="removePigInvoicesDetail(item)">Xóa</button> -->
               </ion-item>
             </span>
           </ion-list>
@@ -224,7 +220,8 @@
             </ion-row>
           </ion-item>
           <ion-item-options side="right" showWhen="ios,android">
-            <button ion-button color="danger" (tap)="removePigInvoicesDetail(item)">Xóa</button>
+            <button ion-button mode='ios' color="main" (tap)="edit(item)">Đánh giá lại</button>
+            <!-- <button ion-button color="danger" (tap)="removePigInvoicesDetail(item)">Xóa</button> -->
           </ion-item-options>
         </ion-item-sliding>
       </ion-list>

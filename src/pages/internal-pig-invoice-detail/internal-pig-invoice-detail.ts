@@ -1,12 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, ViewController, Slides } from 'ionic-angular';
-import { invoicesPig, invoicePigDetail,  } from '../../common/entity';
+import { invoicesPig, invoicePigDetail, pig,  } from '../../common/entity';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { Utils } from '../../common/utils';
 import { PigsProvider } from '../../providers/pigs/pigs';
 import { VARIABLE } from '../../common/const';
 import { ImportInternalPigInvoiceInputPage } from '../import-internal-pig-invoice-input/import-internal-pig-invoice-input';
+import { InputPigToInternalInvoicePage } from '../input-pig-to-internal-invoice/input-pig-to-internal-invoice';
 
 @IonicPage()
 @Component({
@@ -150,4 +151,24 @@ export class InternalPigInvoiceDetailPage {
       })
       .catch((err: Error) => { })
   }
+
+  /**
+   * Đánh giá lại heo thuộc chứng từ
+   */
+  edit(item: invoicePigDetail) {
+    let callback = (pig: pig) => {
+      pig = this.deployData.get_pig_object_to_send_request(pig);
+      this.pigProvider.updatePig(pig)
+        .then((pig) => {
+          this.pigs[pig.id] = pig;
+          this.navCtrl.pop();
+        })
+        .catch((err: Error) => { })
+    }
+
+    let pig = this.deployData.get_pig_by_id(item.objectId);
+    let pigs = [pig];
+    this.navCtrl.push(InputPigToInternalInvoicePage, { pigs: pigs, pig: pig, callback: callback });
+  }
+
 }

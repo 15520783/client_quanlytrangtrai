@@ -7,6 +7,7 @@ import { KEY } from '../../common/const';
 import { FarmInfomationPage } from '../farm-infomation/farm-infomation';
 import { FarmInputPage } from '../farm-input/farm-input';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { UserProvider } from '../../providers/user/user';
 
 
 @IonicPage()
@@ -27,7 +28,8 @@ export class FarmsPage {
     public loadingCtrl: LoadingController,
     public modalCtrl: ModalController,
     public deployDataProvider: DeployDataProvider,
-    public event: Events
+    public event: Events,
+    public userProvider: UserProvider
   ) {
     this.getAllFarms();
     this.event.subscribe('Farms:update_farm', farm => {
