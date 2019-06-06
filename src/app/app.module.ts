@@ -104,7 +104,6 @@ import { HeaderColor } from '@ionic-native/header-color';
 import { Toast } from '@ionic-native/toast';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Firebase } from '@ionic-native/firebase';
-import { EmailComposer } from '@ionic-native/email-composer';
 
 import { Utils } from '../common/utils';
 import { PigsProvider } from '../providers/pigs/pigs';
@@ -293,7 +292,6 @@ export const firebaseConfig = {
     SplashScreen,
     HeaderColor,
     BarcodeScanner,
-    EmailComposer,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     {
       provide: HTTP_INTERCEPTORS,

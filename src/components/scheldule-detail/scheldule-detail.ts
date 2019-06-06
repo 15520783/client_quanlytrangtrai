@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { FcmProvider } from '../../providers/fcm/fcm';
 import { ObjDataNotification } from '../../common/entity';
-import { EmailComposer } from '@ionic-native/email-composer';
-import {nodemailer} from "nodemailer";
 
 export class Schedule {
   name: string = '';
@@ -25,7 +23,6 @@ export class SchelduleDetailComponent {
     public navCtrl: NavController,
     public navParams: NavParams,
     public fcmProvider: FcmProvider,
-    private emailComposer: EmailComposer
   ) {
     if (this.navParams.data.schedule) {
       this.schedule = this.navParams.data.schedule;
@@ -57,13 +54,6 @@ export class SchelduleDetailComponent {
         return err;
       })
 
-      let email = {
-        to: '15520783@gm.uit.edu.vn',
-        subject: 'Product Enquiry',
-        body: 'Hello',
-        isHtml: true
-      };
-      this.emailComposer.open(email);   
   }
 
 }
