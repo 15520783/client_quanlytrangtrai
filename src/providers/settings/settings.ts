@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { breeds, issues, medicines, pregnancyStatus, breedingType, healthStatus, diseases, farmTypes, foodType, foods, medicineType, medicineUnits, priceCodes, footType, gentialType, markTypes, roles, status, round, foodUnits, matingRole } from '../../common/entity';
+import { breeds, issues, medicines, pregnancyStatus, breedingType, healthStatus, diseases, farmTypes, foodType, foods, medicineType, medicineUnits, priceCodes, footType, gentialType, markTypes, roles, status, round, foodUnits, matingRole, section } from '../../common/entity';
 import { CONFIG, API, KEY } from '../../common/const';
 import { Utils } from '../../common/utils';
 import { Events } from 'ionic-angular';
@@ -26,7 +26,7 @@ export class setting {
   roles: Array<roles> = [];
   status: Array<status> = [];
   rounds: Array<round> = [];
-  matingRoles:Array<matingRole> = [];
+  matingRoles: Array<matingRole> = [];
 
   constructor() {
 
@@ -46,9 +46,9 @@ export class SettingsProvider {
     public events: Events
   ) {
     this.util.getKey(KEY.SETTINGS)
-    .then((data)=>{
-      this.setting = data;
-    })
+      .then((data) => {
+        this.setting = data;
+      })
   }
 
 
@@ -88,96 +88,96 @@ export class SettingsProvider {
   }
 
 
-  createNewPregnancyStatus(objBody:pregnancyStatus) {
-    return this.http.post(API.CREATE_PREGNANCY_STATUS,objBody)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+  createNewPregnancyStatus(objBody: pregnancyStatus) {
+    return this.http.post(API.CREATE_PREGNANCY_STATUS, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
-  deletePregnancyStatus(objBody:pregnancyStatus){
+  deletePregnancyStatus(objBody: pregnancyStatus) {
     const options = {
       headers: new HttpHeaders(),
       body: objBody
     };
-    return this.http.delete(API.DELETE_PREGNANCY_STATUS,options)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+    return this.http.delete(API.DELETE_PREGNANCY_STATUS, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
-  updatePregnancyStatus(objBody:pregnancyStatus){
-    return this.http.put(API.UPDATE_PREGNANCY_STATUS,objBody)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+  updatePregnancyStatus(objBody: pregnancyStatus) {
+    return this.http.put(API.UPDATE_PREGNANCY_STATUS, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
 
-  createNewBreed(objBody:breeds){
+  createNewBreed(objBody: breeds) {
     return this.http
-    .post(API.CREATE_BREED,objBody)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+      .post(API.CREATE_BREED, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
-  deleteBreed(objBody:breeds){
+  deleteBreed(objBody: breeds) {
     const options = {
       headers: new HttpHeaders(),
       body: objBody
     };
-    return this.http.delete(API.DELETE_BREED,options)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+    return this.http.delete(API.DELETE_BREED, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
-  updateBreed(objBody:breeds){
-    return this.http.put(API.UPDATE_BREED,objBody)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+  updateBreed(objBody: breeds) {
+    return this.http.put(API.UPDATE_BREED, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
 
-  createNewBreedingType(objBody:breedingType){
+  createNewBreedingType(objBody: breedingType) {
     return this.http
-    .post(API.CREATE_BREEDING_TYPE,objBody)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+      .post(API.CREATE_BREEDING_TYPE, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
-  deleteBreedingType(objBody:breedingType){
+  deleteBreedingType(objBody: breedingType) {
     const options = {
       headers: new HttpHeaders(),
       body: objBody
     };
-    return this.http.delete(API.CREATE_BREEDING_TYPE,options)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+    return this.http.delete(API.CREATE_BREEDING_TYPE, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
-  updateBreedingType(objBody:breedingType){
-    return this.http.put(API.CREATE_BREEDING_TYPE,objBody)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+  updateBreedingType(objBody: breedingType) {
+    return this.http.put(API.CREATE_BREEDING_TYPE, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
-  createNewPigStatus(objBody:status){
-    return this.http.post(API.CREATE_PIG_STATUS,objBody)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+  createNewPigStatus(objBody: status) {
+    return this.http.post(API.CREATE_PIG_STATUS, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
-  deletePigStatus(objBody:status){
+  deletePigStatus(objBody: status) {
     const options = {
       headers: new HttpHeaders(),
       body: objBody
     };
-    return this.http.delete(API.DELETE_PIG_STATUS,options)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+    return this.http.delete(API.DELETE_PIG_STATUS, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
-  updatePigStatus(objBody:status){
-    return this.http.put(API.UPDATE_PIG_STATUS,objBody)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+  updatePigStatus(objBody: status) {
+    return this.http.put(API.UPDATE_PIG_STATUS, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
 
@@ -185,35 +185,59 @@ export class SettingsProvider {
    * Tạo mới bệnh
    * @param objBody 
    */
-  createNewDisease(objBody:diseases){
+  createNewDisease(objBody: diseases) {
     return this.http
-    .post(API.CREATE_DISEASE,objBody)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+      .post(API.CREATE_DISEASE, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
   /**
    * Cập nhật bệnh
    * @param objBody 
    */
-  updateDisease(objBody){
+  updateDisease(objBody) {
     return this.http
-    .put(API.UPDATE_DISEASE,objBody)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+      .put(API.UPDATE_DISEASE, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
   /**
    * Xóa bệnh
    * @param objBody 
    */
-  deleteDisease(objBody){
+  deleteDisease(objBody) {
     const options = {
       headers: new HttpHeaders(),
       body: objBody
     };
-    return this.http.delete(API.DELETE_DISEASE,options)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+    return this.http.delete(API.DELETE_DISEASE, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+
+  /**
+   * Lấy danh sách gợi ý bệnh
+   * @param farmId 
+   * @param sectionId 
+   */
+  getForecastedDiseases(farmId: string, sectionId: string) {
+    return this.http
+      .get<Array<{ disease: diseases, tiLe: number }>>(API.GET_FORECASTED_DISEASES + '/' + farmId + '/' + sectionId)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Lấy danh sách thuốc gợi ý của bệnh
+   * @param diseaseId 
+   */
+  getMedicineOfDiseases(diseaseId) {
+    return this.http
+      .get<Array<medicines>>(API.GET_MEDICINES_OF_DISEASE + '/' + diseaseId)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 }

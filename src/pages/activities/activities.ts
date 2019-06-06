@@ -8,6 +8,7 @@ import { SpermListPage } from '../sperm-list/sperm-list';
 import { BreedingListPage } from '../breeding-list/breeding-list';
 import { MatingListPage } from '../mating-list/mating-list';
 import { BirthListPage } from '../birth-list/birth-list';
+import { IssuePigListPage } from '../issue-pig-list/issue-pig-list';
 
 @IonicPage()
 @Component({
@@ -37,7 +38,7 @@ export class ActivitiesPage {
         data: {
           sectionType: VARIABLE.SECTION_TYPE[1],
           getPigs(deployData: DeployDataProvider) {
-            return deployData.get_pigs_of_section(VARIABLE.SECTION_TYPE[1].id)
+            return deployData.get_pigs_of_sectionType(VARIABLE.SECTION_TYPE[1].id)
           },
           pigs: []
         }
@@ -64,24 +65,30 @@ export class ActivitiesPage {
           statusFilter: [VARIABLE.STATUS_PIG.WAIT_FOR_TRANSFER]
         }
       },
-      list_pig_move_khu_cach_ly: {
-        name: 'Danh sách heo chờ chuyển trại', component: PigListSectionPage, active: false,
-        data: {
-          sectionType: VARIABLE.SECTION_TYPE[1]
-        }
-      },
       list_pig_breeding_khu_cach_ly: {
         name: 'Danh sách lên giống heo', component: BreedingListPage, active: false,
         data: {
           sectionType: VARIABLE.SECTION_TYPE[1]
         }
       },
+      list_issue_pig_khu_cach_ly: {
+        name: 'Danh sách ghi nhận vấn đề', component: IssuePigListPage, active: false,
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[1],
+          getPigs(deployData: DeployDataProvider) {
+            return deployData.get_pigs_of_sectionType(VARIABLE.SECTION_TYPE[1].id)
+          },
+          pigs: [],
+        }
+      },
+
+      
       list_pig_khu_noc: {
         name: 'Danh sách heo tại khu', component: PigListSectionPage, active: false,
         data: {
           sectionType: VARIABLE.SECTION_TYPE[2],
           getPigs(deployData: DeployDataProvider) {
-            return deployData.get_pigs_of_section(VARIABLE.SECTION_TYPE[2].id)
+            return deployData.get_pigs_of_sectionType(VARIABLE.SECTION_TYPE[2].id)
           },
           pigs: []
         }
@@ -119,7 +126,7 @@ export class ActivitiesPage {
         data: {
           sectionType: VARIABLE.SECTION_TYPE[3],
           getPigs(deployData: DeployDataProvider) {
-            return deployData.get_pigs_of_section(VARIABLE.SECTION_TYPE[3].id)
+            return deployData.get_pigs_of_sectionType(VARIABLE.SECTION_TYPE[3].id)
           },
           pigs: []
         }
@@ -174,7 +181,7 @@ export class ActivitiesPage {
         data: {
           sectionType: VARIABLE.SECTION_TYPE[4],
           getPigs(deployData: DeployDataProvider) {
-            return deployData.get_pigs_of_section(VARIABLE.SECTION_TYPE[4].id)
+            return deployData.get_pigs_of_sectionType(VARIABLE.SECTION_TYPE[4].id)
           },
           pigs: []
         }
@@ -232,7 +239,7 @@ export class ActivitiesPage {
         data: {
           sectionType: VARIABLE.SECTION_TYPE[5],
           getPigs(deployData: DeployDataProvider) {
-            return deployData.get_pigs_of_section(VARIABLE.SECTION_TYPE[5].id)
+            return deployData.get_pigs_of_sectionType(VARIABLE.SECTION_TYPE[5].id)
           },
           pigs: []
         }
@@ -297,7 +304,7 @@ export class ActivitiesPage {
         data: {
           sectionType: VARIABLE.SECTION_TYPE[6],
           getPigs(deployData: DeployDataProvider) {
-            return deployData.get_pigs_of_section(VARIABLE.SECTION_TYPE[6].id)
+            return deployData.get_pigs_of_sectionType(VARIABLE.SECTION_TYPE[6].id)
           },
           pigs: []
         }
@@ -329,7 +336,7 @@ export class ActivitiesPage {
         data: {
           sectionType: VARIABLE.SECTION_TYPE[7],
           getPigs(deployData: DeployDataProvider) {
-            return deployData.get_pigs_of_section(VARIABLE.SECTION_TYPE[7].id)
+            return deployData.get_pigs_of_sectionType(VARIABLE.SECTION_TYPE[7].id)
           },
         }
       },
@@ -391,7 +398,7 @@ export class ActivitiesPage {
           this.components.list_pig_for_sale_khu_cach_ly,
           this.components.list_pig_for_transfer_cach_ly,
           this.components.list_pig_breeding_khu_cach_ly,
-          this.components.list_pig_move_khu_cach_ly,
+          this.components.list_issue_pig_khu_cach_ly
         ],
         icon: 'app-activities', active: true, expand: false
       },

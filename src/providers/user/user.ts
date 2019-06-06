@@ -35,7 +35,7 @@ export class UserProvider {
   checkServer() {
     return this.http
       .get(API.CHECK_SERVER)
-      .timeout(10000)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise();
   }
 
@@ -85,6 +85,9 @@ export class UserProvider {
       .then((role) => {
         this.rolePermission = role;
         return role;
+      })
+      .catch((err)=>{
+        return err;
       });
   }
 

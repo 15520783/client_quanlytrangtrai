@@ -63,6 +63,12 @@ import { ForwardingPigInvoiceListPage } from '../pages/forwarding-pig-invoice-li
 import { ImportInternalPigInvoiceInputPage } from '../pages/import-internal-pig-invoice-input/import-internal-pig-invoice-input';
 import { FeedInputPage } from '../pages/feed-input/feed-input';
 import { BreedingInputPage } from '../pages/breeding-input/breeding-input';
+import { IssuePigListPage } from '../pages/issue-pig-list/issue-pig-list';
+import { UsedMedicineInputPage } from '../pages/used-medicine-input/used-medicine-input';
+import { SettingRolePage } from '../pages/setting-role/setting-role';
+import { MedicineListPage } from '../pages/medicine-list/medicine-list';
+import { DiseaseListPage } from '../pages/disease-list/disease-list';
+import { MedicineWarehouseListPage } from '../pages/medicine-warehouse-list/medicine-warehouse-list';
 
 import { HeaderComponent } from '../components/header/header';
 import { ExpandableComponent } from '../components/expandable/expandable';
@@ -98,6 +104,7 @@ import { HeaderColor } from '@ionic-native/header-color';
 import { Toast } from '@ionic-native/toast';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Firebase } from '@ionic-native/firebase';
+import { EmailComposer } from '@ionic-native/email-composer';
 
 import { Utils } from '../common/utils';
 import { PigsProvider } from '../providers/pigs/pigs';
@@ -179,7 +186,13 @@ const Pages = [
   ExportInternalPigInvoiceDetailPage,
   ForwardingPigInvoiceListPage,
   ImportInternalPigInvoiceInputPage,
-  FeedInputPage
+  FeedInputPage,
+  IssuePigListPage,
+  UsedMedicineInputPage,
+  SettingRolePage,
+  DiseaseListPage,
+  MedicineListPage,
+  MedicineWarehouseListPage
 ]
 
 const Components = [
@@ -280,6 +293,7 @@ export const firebaseConfig = {
     SplashScreen,
     HeaderColor,
     BarcodeScanner,
+    EmailComposer,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     {
       provide: HTTP_INTERCEPTORS,

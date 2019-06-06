@@ -1,61 +1,57 @@
-
 <ion-header>
   <ion-navbar>
-      <ion-toolbar toolbar-transparent no-border class="custom-toolbar" >
-        <ion-title style="padding: 0px!important">Nhập thông tin lâm sàn của heo</ion-title>
-      </ion-toolbar>
+    <ion-toolbar toolbar-transparent no-border class="custom-toolbar">
+      <ion-title style="padding: 0px!important">Nhập thông tin lâm sàn của heo</ion-title>
+    </ion-toolbar>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <form action="" style="padding-bottom: 10vH">
-    <ion-list >
-      <input-select-target 
-                  [(validControl)]="credentialsForm1.controls.pigId"  [disabled]="true"
-                  [active]="submitAttempt"
-                  [label]="'Mã heo'" [targertCmp]="'pigs'">
+    <ion-list>
+      <input-select-target [(validControl)]="credentialsForm1.controls.pigId" [disabled]="true" [active]="submitAttempt"
+        [label]="'Mã heo'" [targertCmp]="'pigs'">
       </input-select-target>
 
-      <input-date [(validControl)] = "credentialsForm1.controls.date"
-                  [errorMessage_Required]  ="'Ngày phát hiện là hạng mục bắt buộc.'"
-                  [label] = "'Ngày phát hiện'"
-                  [placeholder]="'dd/mm/yyyy'"
-                  [active]= "submitAttempt">
+      <input-date [(validControl)]="credentialsForm1.controls.date"
+        [errorMessage_Required]="'Ngày phát hiện là hạng mục bắt buộc.'" [label]="'Ngày phát hiện'"
+        [placeholder]="'dd/mm/yyyy'" [active]="submitAttempt">
       </input-date>
 
       <ion-item>
         <p><b>Vấn đề phát hiện</b></p>
       </ion-item>
+      <ion-list>
+        <span *ngFor="let issue of issuesList;let idx = index">
+          <ion-row *ngIf="credentialsForm2.controls['issueId'+idx]">
+            <ion-col col-10>
+              <input-select [(validControl)]="credentialsForm2.controls['issueId'+idx]"
+                [errorMessage_Required]="'Vấn đề là hạng mục bắt buộc.'" [label]="'Vấn đề gặp phải'"
+                [active]="submitAttempt" [placeholder]="'Chọn vấn đề'"
+                [selectOptions]="platform.is('core')?{cssClass:'ion-popover'}:{cssClass:'ion-popover-mobile'}"
+                [(data)]="issues" (changeValue)="changeIssue($event,idx)">
+              </input-select>
+            </ion-col>
+            <ion-col col-2 align-self-center style="display: flex;justify-content: center">
+              <button [attr.small]="platform.is('core')?null:''" ion-button color="danger" (tap)="remove_issue(idx)">
+                Xóa</button>
+            </ion-col>
+          </ion-row>
+        </span>
+      </ion-list>
 
-      <span *ngFor="let issue of issuesList;let idx = index" >
-        <ion-row>
-          <ion-col col-10>
-            <input-select 
-                    [(validControl)] = "credentialsForm2.controls['issueId'+idx]"
-                    [errorMessage_Required]  ="'Vấn đề là hạng mục bắt buộc.'"
-                    [label] = "'Vấn đề gặp phải'"
-                    [active]= "submitAttempt"
-                    [placeholder]="'Chọn vấn đề'"
-                    [selectOptions]="platform.is('core')?{cssClass:'ion-popover'}:{cssClass:'ion-popover-mobile'}"
-                    [(data)]="issues">
-            </input-select>
-          </ion-col>
-          <ion-col col-2 align-self-center style="display: flex;justify-content: center">
-            <button  [attr.small]="platform.is('core')?null:''" ion-button color="danger" (tap)="remove_issue(idx)"> Xóa</button>
-          </ion-col>
-        </ion-row>
-      </span>
+
     </ion-list>
-      <ion-item>
-          <button ion-button color="secondary" small (tap)="add_issue()">Thêm vấn đề</button>
-      </ion-item>
+    <ion-item>
+      <button ion-button color="secondary" small (tap)="add_issue()">Thêm vấn đề</button>
+    </ion-item>
   </form>
 </ion-content>
 
 <ion-footer no-border showWhen="core">
   <ion-toolbar toolbar-transparent text-right showWhen="core">
-      <button type="submit"  ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
-      <button ion-button   mode='ios' color="danger">Hủy</button>
+    <button type="submit" ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
+    <button ion-button mode='ios' color="danger">Hủy</button>
   </ion-toolbar>
 </ion-footer>
 

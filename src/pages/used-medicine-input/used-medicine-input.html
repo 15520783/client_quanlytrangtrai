@@ -1,0 +1,130 @@
+<ion-header>
+  <ion-navbar>
+    <ion-toolbar toolbar-transparent no-border class="custom-toolbar">
+      <ion-title style="padding: 0px!important">Nhập thông tin lâm sàn của heo</ion-title>
+    </ion-toolbar>
+  </ion-navbar>
+</ion-header>
+
+<ion-content no-padding>
+  <ion-row style="height: 100%">
+    <ion-col col-lg-3 col-md-4>
+      <ion-header>
+        <ion-navbar>
+          <ion-toolbar>
+            <ion-title>Danh sách các triệu chứng</ion-title>
+          </ion-toolbar>
+        </ion-navbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          <ion-item *ngFor="let issue of issues">
+            <p ion-text>{{issue.symptom}}</p>
+            <p ion-text color="danger">{{groupByIssues.get(issue.id).length}} trường hợp</p>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+      <ion-footer no-border showWhen="core">
+        <ion-toolbar toolbar-transparent text-right showWhen="core">
+          <button ion-button mode='ios' color="main" (click)="showForecast()">Gợi ý chuẩn đoán</button>
+        </ion-toolbar>
+      </ion-footer>
+    </ion-col>
+    <ion-col col-lg-9 col-md-8 no-padding>
+      <ion-header>
+        <ion-navbar>
+          <ion-title>Nhập thông tin xử lý</ion-title>
+        </ion-navbar>
+      </ion-header>
+      <ion-content>
+        <form action="" style="padding-bottom: 10vH">
+          <ion-list>
+            <input-select-target 
+              [(validControl)]="credentialsForm1.controls.disease" 
+              [active]="submitAttempt"
+              [placeholder]="'Chọn bệnh'" 
+              [label]="'Chuẩn đoán bệnh'" 
+              [errorMessage_Required]="'Bệnh là hạng mục bắt buộc.'"
+              [(data)]="diseases" 
+              [targertCmp]="'diseases'"
+              (valueChange)="diseaseChange($event)">
+            </input-select-target>
+            <input-date [(validControl)]="credentialsForm1.controls.date"
+              [errorMessage_Required]="'Ngày dùng thuốc là hạng mục bắt buộc.'" 
+              [label]="'Ngày dùng thuốc'"
+              [placeholder]="'dd/mm/yyyy'" [active]="submitAttempt">
+            </input-date>
+            <input-text [(validControl)]="credentialsForm1.controls.description"
+              [errorMessage_Required]="'Mô tả là hạng mục bắt buộc'" 
+              [label]="'Mô tả'"
+              [placeholder]="'Nhập thông tin mô tả'" [active]="submitAttempt">
+            </input-text>
+            <ion-item>
+              <p><b>Danh sách thuốc xử lý</b></p>
+            </ion-item>
+            <span *ngFor="let usedMedicine of usedMedicineList;let idx = index">
+              <ion-row *ngIf="credentialsForm2.controls['medicine'+idx]">
+                <ion-col col-10>
+                  <ion-list>
+                    <input-select-target [(validControl)]="credentialsForm2.controls['medicine'+idx]" 
+                      [active]="submitAttempt"
+                      [placeholder]="'Chọn thuốc'" 
+                      [label]="'Chọn thuốc'" [(data)]="medicines"
+                      [errorMessage_Required]="'Thuốc là hạng mục bắt buộc'" 
+                      [targertCmp]="'medicines'"
+                      (valueChange)="medicineChange($event,usedMedicine,idx)">
+                    </input-select-target>
+
+                    <input-select-target [(validControl)]="credentialsForm2.controls['medicineWarehouse'+idx]" 
+                      [active]="submitAttempt"
+                      [placeholder]="'Chọn nguồn thuốc từ kho'" 
+                      [errorMessage_Required]="'Nguồn lấy thuốc là hạng mục bắt buộc'" 
+                      [label]="'Nguồn thuốc'" [(data)]="usedMedicine.medicineWarehouseList"
+                      [targertCmp]="'medicineWarehouses'">
+                    </input-select-target>
+
+                    <input-select 
+                      [(validControl)]="credentialsForm2.controls['unit'+idx]" 
+                      [errorMessage_Required]  ="'Đơn vị là hạng mục bắt buộc.'"
+                      [active]= "submitAttempt"
+                      [placeholder]="'Chọn đơn vị'"
+                      [(data)]="unit">
+                    </input-select>
+
+                    <input-text 
+                      [(validControl)]="credentialsForm2.controls['quantity'+idx]" 
+                      [errorMessage_Required]  = "'Số lượng là hạng mục bắt buộc.'"
+                      [errorMessage_ValidNumber] = "'Số lượng là hạng mục nhập số'"
+                      [label] = "'Số lượng'"
+                      [placeholder]="'Nhập số lượng'"
+                      [active]= "submitAttempt">
+                    </input-text>
+                  </ion-list>
+                </ion-col>
+                <ion-col col-2 align-self-center style="display: flex;justify-content: center">
+                  <button mode='ios' [attr.small]="platform.is('core')?null:''" ion-button color="danger"
+                    (tap)="remove_usedMedicine(idx)">
+                    Xóa</button>
+                </ion-col>
+              </ion-row>
+            </span>
+          </ion-list>
+          <ion-item>
+            <button ion-button color="secondary" mode='ios' small (tap)="add_usedMedicine()">Thêm thuốc</button>
+          </ion-item>
+        </form>
+      </ion-content>
+      <ion-footer no-border showWhen="core">
+        <ion-toolbar toolbar-transparent text-right showWhen="core">
+          <button type="submit" ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
+          <button ion-button mode='ios' color="danger">Hủy</button>
+        </ion-toolbar>
+      </ion-footer>
+
+      <ion-footer no-border no-padding showWhen="ios,android">
+        <button type="submit" no-margin full block ion-button mode='ios' color="secondary"
+          (tap)="onSubmit()">Lưu</button>
+      </ion-footer>
+    </ion-col>
+  </ion-row>
+</ion-content>

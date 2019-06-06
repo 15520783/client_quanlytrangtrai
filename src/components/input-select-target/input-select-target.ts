@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { group, employee, pig, sperms } from '../../common/entity';
+import { group, employee, pig, sperms, diseases, medicines, medicineWarehouse } from '../../common/entity';
 import { Utils } from '../../common/utils';
-import { ModalController } from 'ionic-angular';
+import { ModalController, Events } from 'ionic-angular';
 import { KEY } from '../../common/const';
 import { PigGroupListComponent } from '../pig-group-list/pig-group-list';
 import { EmployeeListComponent } from '../employee-list/employee-list';
@@ -9,6 +9,9 @@ import { PigListComponent } from '../pig-list/pig-list';
 import { PigsProvider } from '../../providers/pigs/pigs';
 import { EmployeesProvider } from '../../providers/employees/employees';
 import { SpermListPage } from '../../pages/sperm-list/sperm-list';
+import { DiseaseListPage } from '../../pages/disease-list/disease-list';
+import { MedicineListPage } from '../../pages/medicine-list/medicine-list';
+import { MedicineWarehouseListPage } from '../../pages/medicine-warehouse-list/medicine-warehouse-list';
 
 
 @Component({
@@ -26,10 +29,19 @@ export class InputSelectTargetComponent {
   @Input() active: boolean = false;
   @Input() placeholder: string = '';
   @Input() disabled: boolean = false;
-  @Input() targertCmp: 'pigGroup' | 'employee' | 'pigs' | 'sperms' = 'pigGroup';
+  @Input() targertCmp: 'pigGroup' |
+    'employee' |
+    'pigs' |
+    'sperms' |
+    'diseases' |
+    'medicineWarehouses' |
+    'medicines' = 'pigGroup';
+  @Input() farmId: string;
+  @Input() sectionId: string;
+
   public value_visible: any = '';
 
-  public value:any = '';
+  public value: any = '';
 
   @Output() valueChange = new EventEmitter();
 
@@ -54,6 +66,25 @@ export class InputSelectTargetComponent {
           break;
         }
 
+        case "diseases": {
+          this.value = this.validControl.value;
+          this.value_visible = this.validControl.value ? this.value.name : '';
+          break;
+        }
+
+        case "medicines": {
+          this.value = this.validControl.value;
+          this.value_visible = this.validControl.value ? this.value.name : '';
+          break;
+        }
+
+        case "medicineWarehouses": {
+          this.value = this.validControl.value;
+          this.value_visible = (this.validControl.value && this.value.medicine.name) ?
+            this.value.medicine.name + ' - Kho: ' + this.value.warehouse.name + ' - Chứng từ: ' + this.value.invoice.invoiceNo : '';
+          break;
+        }
+
         default:
           break;
       }
@@ -64,14 +95,35 @@ export class InputSelectTargetComponent {
     public util: Utils,
     public modalCtrl: ModalController,
     public pigProvider: PigsProvider,
-    public employeeProvider: EmployeesProvider
+    public employeeProvider: EmployeesProvider,
+    public event:Events
   ) {
-    console.log('Hello InputSelectPigGroupComponent Component');
+    
+  }
+
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    console.log('TESSTT');
+    switch (this.targertCmp) {
+      case "medicineWarehouses": {
+        
+        this.event.subscribe('input-select-target:medicineWarehouses',(event)=>{
+          console.log('TEST');
+          this.value = this.validControl.value;
+          this.value_visible = (this.validControl.value && this.value.medicine.name) ?
+          this.value.medicine.name + ' - Kho: ' + this.value.warehouse.name + ' - Chứng từ: ' + this.value.invoice.invoiceNo : '';
+        })
+        break;
+      }
+
+      default:
+        break;
+    }
   }
 
   presentModal() {
     if (!this.disabled) {
-
       let modal;
       switch (this.targertCmp) {
         case 'pigGroup':
@@ -146,6 +198,67 @@ export class InputSelectTargetComponent {
             modal.present();
           }
           break;
+
+        case 'diseases':
+          if (this.data) {
+            console.log(this.data);
+
+            modal = this.modalCtrl.create(DiseaseListPage,
+              {
+                diseases: this.data,
+                selectMode: true
+              });
+            modal.onDidDismiss((disease: diseases) => {
+              if (disease) {
+                this.valueChange.emit(disease);
+                this.value = JSON.parse(JSON.stringify(disease));
+                this.value_visible = disease.name;
+                this.validControl.setErrors(null);
+              }
+            })
+            modal.present();
+          }
+          break;
+
+        case 'medicines':
+          if (this.data) {
+            modal = this.modalCtrl.create(MedicineListPage,
+              {
+                medicines: this.data,
+                selectMode: true
+              });
+            modal.onDidDismiss((medicine: medicines) => {
+              if (medicine) {
+                this.valueChange.emit(medicine);
+                this.value = JSON.parse(JSON.stringify(medicine));
+                this.value_visible = medicine.name;
+                this.validControl.setErrors(null);
+              }
+            })
+            modal.present();
+          }
+          break;
+
+        case 'medicineWarehouses':
+          if (this.data) {
+            console.log(this.data);
+            modal = this.modalCtrl.create(MedicineWarehouseListPage,
+              {
+                medicineWarehouses: this.data,
+                selectMode: true
+              });
+            modal.onDidDismiss((medicineWarehouse: medicineWarehouse) => {
+              if (medicineWarehouse) {
+                this.valueChange.emit(medicineWarehouse);
+                this.value = JSON.parse(JSON.stringify(medicineWarehouse));
+                this.value_visible = this.value.medicine.name + ' - Kho: ' + medicineWarehouse.warehouse.name + ' - Chứng từ: ' + medicineWarehouse.invoice.invoiceNo;
+                this.validControl.setErrors(null);
+              }
+            })
+            modal.present();
+          }
+          break;
+
         default:
           break;
       }

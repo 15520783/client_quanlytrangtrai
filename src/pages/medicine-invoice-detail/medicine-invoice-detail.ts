@@ -53,17 +53,17 @@ export class MedicineInvoiceDetailPage {
   }
 
   ionViewDidLoad() {
-    this.util.showLoading('Đang tải dữ liệu');
+    this.util.openBackDrop();
     this.invoiceProvider.getMedicineWarehouse(this.navParams.data.invoice.id)
       .then((details: any) => {
         if (details.length) {
           this.details = details;
         }
-        this.util.closeLoading();
+        this.util.closeBackDrop();
       })
       .catch((err: Error) => {
         console.log(err);
-        this.util.closeLoading().then(() => {
+        this.util.closeBackDrop().then(() => {
           this.util.showToast('Dữ liệu chưa được tải về. Vui lòng kiểm tra kết nối');
         })
       })

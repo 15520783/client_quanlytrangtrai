@@ -29,7 +29,7 @@ const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".
 const CONFIG = {
     // SERVER_API: 'http://192.168.0.36:3000',
     // SERVER_API: 'https://quanlytrangtrai-uit.herokuapp.com',
-    SERVER_API: 'https://quanlytrangtrai-uit-eu.herokuapp.com',
+    SERVER_API: 'https://quanlytrangtrai-uit-us.herokuapp.com',
     // SERVER_API: 'http://192.168.1.45:8080',
     DEFAULT_TIMEOUT: 50000,
     LANGUAGE_DEFAULT: 'vi',
@@ -120,7 +120,7 @@ const VARIABLE = {
     ISSUE_PIG_STATUS: {
         DECTECTION: { id: 0, name: 'Mới phát hiện' },
         PROCESSING: { id: 1, name: 'Đang xử lý' },
-        RESOLVE: { id: 2, name: 'Đã xử lý' }
+        RESOLVED: { id: 2, name: 'Đã xử lý' }
     },
     OBJECT_BARCODE_TYPE: {
         PIG: 'pig',
@@ -131,7 +131,46 @@ const VARIABLE = {
         EXTERNAL_IMPORT: 'EXT-IMP',
         INTERNAL_EXPORT: 'EXT-EX',
         SALING_EXPORT: 'SAL-EX',
+    },
+    MENU_FIELDS :{
+        TONG_QUAN_TRANG_TRAI:{
+            codeName:"tong_quan_trang_trai",
+            name:"Tổng quan trang trại"
+        },
+        TONG_QUAN_KHU:{
+            codeName:"tong_quan_khu",
+            name:"Tổng quan khu"
+        },
+        QUAN_LY_DANH_SACH_HEO:{
+            codeName:"quan_ly_danh_sach_heo",
+            name:"Quản lý danh sách heo"
+        },
+        QUAN_LY_DANH_SACH_NHAN_VIEN:{
+            codeName:"quan_ly_danh_sach_nhan_vien",
+            name:"Quản lý danh sách nhân viên"
+        },
+        QUAN_LY_DANH_SACH_DOI_TAC:{
+            codeName:"quan_ly_danh_sach_doi_tac",
+            name:"Quản lý danh sách đối tác"
+        },
+        QUAN_LY_DANH_SACH_KHO:{
+            codeName:"quan_ly_danh_sach_kho",
+            name:"Quản lý danh sách kho"
+        },
+        QUAN_LY_HOAT_DONG:{
+            codeName:"quan_ly_hoat_dong",
+            name:"Quản lý hoạt động"
+        },
+        QUAN_LY_THIET_LAP:{
+            codeName:"quan_ly_thiet_lap",
+            name:"Quản lý thiết lập"
+        },
+        QUAN_LY_BANG_KE_HOACH:{
+            codeName:"quan_ly_bang_ke_hoach",
+            name:"Quản lý bảng kế hoạch"
+        }
     }
+
 }
 
 const API = {
@@ -161,6 +200,11 @@ const API = {
     GET_ALL_FORWARDING_PIG_INVOICE: '/api/invoicespig/forwarding/list',
     GET_SCHEDULE: '/api/schedule/list',
     GET_INFO_EMPLOYEE: '/api/employees/',
+    GET_ISSUE_PIG_OF_SECTION:'/api/issuespigs/listcurrentissues',   //{idfarm}/{idsection}
+    GET_ISSUE_PIG_OF_FARMS:'/api/issuespigs/list',   //{idfarm}/{idsection}
+    GET_FORECASTED_DISEASES: '/api/issuespigs/forecastdiseases',    //{idfarm}/{idsection}
+    GET_MEDICINES_OF_DISEASE: '/api/medicinedisease/disease',  //{diseaseId}
+    GET_MEDICINEWAREHOUSE_OF_MEDICINE: '/api/medicinewarehouse/medicine', //{{medicineId}}
 
     PUSH_NOTIFICATION: 'https://fcm.googleapis.com/fcm/send',
 
@@ -233,8 +277,9 @@ const API = {
 
     CREATE_BIRTH: '/api/births/',
 
-    CREATE_FEEDS: '/api/feeds/feedlist/'
+    CREATE_FEEDS: '/api/feeds/feedlist/',
 
+    CREATE_USED_MEDICINE_LIST: '/api/usedmedicine/'
 }
 
 const ERROR_NAME = {

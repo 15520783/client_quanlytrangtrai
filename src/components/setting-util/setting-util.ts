@@ -25,6 +25,7 @@ export class SettingUtilComponent {
   @Input() editButtonLabel: string = 'Sửa';
   @Input() removeButtonLabel: string = 'Xóa';
   @Input() roleInput: any;
+  @Input() extraButtons : any;
 
   // @Input() options: {
   //   data: Array<any>,
@@ -77,6 +78,7 @@ export class SettingUtilComponent {
     this.options.filter_default.length ? this.filter_default = this.options.filter_default : this.filter_default;
     this.options.addButtonLabel ? this.addButtonLabel = this.options.addButtonLabel : this.addButtonLabel;
     this.options.roleInput ? this.roleInput = this.options.roleInput : this.roleInput;
+    this.options.extraButtons ? this.extraButtons = this.options.extraButtons : this.extraButtons;
     this.setFilteredItems();
   }
 

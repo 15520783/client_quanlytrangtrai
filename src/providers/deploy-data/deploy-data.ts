@@ -58,7 +58,7 @@ export class DeployDataProvider {
     let female_pig = [];
 
     let female_pig_in_formal_section = this.pigsProvider.pigs.filter((pig) => {
-      return (houses[pig.houseId].section.farm.id == farmId &&
+      return (houses[pig.houseId] && houses[pig.houseId].section.farm.id == farmId &&
         formalSection.includes((houses[pig.houseId].section.typeId).toString())
         && pig.gender == 2) ? true : false;
     })
@@ -68,7 +68,7 @@ export class DeployDataProvider {
     }
 
     let female_pig_in_khu_de = this.pigsProvider.pigs.filter((pig) => {
-      return (houses[pig.houseId].section.farm.id == farmId &&
+      return (houses[pig.houseId] && houses[pig.houseId].section.farm.id == farmId &&
         (houses[pig.houseId].section.typeId).toString() == VARIABLE.SECTION_TYPE[5].value
         && pig.statusId != VARIABLE.STATUS_PIG.NEWBORN
         && pig.statusId != VARIABLE.STATUS_PIG.GROWING
@@ -92,7 +92,7 @@ export class DeployDataProvider {
     let child_pig = [];
 
     let child_pig_in_formal_section = this.pigsProvider.pigs.filter((pig) => {
-      return (houses[pig.houseId].section.farm.id == farmId &&
+      return (houses[pig.houseId] && houses[pig.houseId].section.farm.id == farmId &&
         formalSection.includes((houses[pig.houseId].section.typeId).toString())) ? true : false;
     })
 
@@ -101,7 +101,7 @@ export class DeployDataProvider {
     }
 
     let child_pig_in_khu_de = this.pigsProvider.pigs.filter((pig) => {
-      return (houses[pig.houseId].section.farm.id == farmId &&
+      return (houses[pig.houseId] && houses[pig.houseId].section.farm.id == farmId &&
         (houses[pig.houseId].section.typeId).toString() == VARIABLE.SECTION_TYPE[5].value
         && (pig.statusId == VARIABLE.STATUS_PIG.NEWBORN
           || pig.statusId == VARIABLE.STATUS_PIG.GROWING)) ? true : false;
@@ -121,7 +121,7 @@ export class DeployDataProvider {
   get_all_pig_of_farm(farmId: string) {
     let houses = this.get_object_list_key_of_house();
     return this.pigsProvider.pigs.filter((pig) => {
-      return houses[pig.houseId].section.farm.id == farmId ? true : false;
+      return (houses[pig.houseId] && houses[pig.houseId].section.farm.id == farmId) ? true : false;
     })
   }
 
@@ -261,6 +261,7 @@ export class DeployDataProvider {
       return a.id > b.id ? 1 : -1
     });
   }
+
 
   /**
    * Lấy danh sách loại lên giống cho ion-select
@@ -469,11 +470,11 @@ export class DeployDataProvider {
    * Lấy các đối tượng vấn đề heo dưới dạng key-value
    */
   get_object_list_key_of_issues() {
-    let issue = {};
+    let issues = {};
     this.settingProvider.setting.issues.forEach((issue) => {
-      issue[issue.id] = issue;
+      issues[issue.id] = issue;
     })
-    return issue;
+    return issues;
   }
 
   /**
@@ -485,6 +486,17 @@ export class DeployDataProvider {
       Status[status.id] = status;
     })
     return Status;
+  }
+
+  /**
+   * Lấy các đối tượng trạng thái sức khỏe với Object key là id
+   */
+  get_object_list_key_of_health_status() {
+    let healthStatus = {};
+    this.settingProvider.setting.healthStatus.forEach((status) => {
+      healthStatus[status.id] = status;
+    })
+    return healthStatus;
   }
 
   /**
@@ -728,7 +740,6 @@ export class DeployDataProvider {
    */
   get_medicine_object_to_send_request(medicineWarehouse: medicineWarehouse) {
     medicineWarehouse.warehouse = this.get_warehouse_by_id(medicineWarehouse.warehouse_id);
-    medicineWarehouse.medicine = this.get_medicine_by_id(medicineWarehouse.medicine_id);
     medicineWarehouse.unit = this.get_medicineUnit_by_id(medicineWarehouse.unit_id);
     return medicineWarehouse;
   }
@@ -765,12 +776,23 @@ export class DeployDataProvider {
     })
   }
 
+  /**
+   * Lấy danh sách heo theo section Id
+   * @param sectionId 
+   */
+  get_pigs_by_sectionId(sectionId: string) {
+    let houses = this.get_object_list_key_of_house();
+    return this.pigsProvider.pigs.filter((pig) => {
+      return houses[pig.houseId].section.id == sectionId ? true : false;
+    })
+  }
+
 
   /**
    * Lấy danh sách heo thuộc khu
    * @param sectionTypeId 
    */
-  get_pigs_of_section(sectionTypeId: string) {
+  get_pigs_of_sectionType(sectionTypeId: string) {
     let housesId: any = [];
     this.houseProvider.houses.filter((house) => {
       return (house.section.typeId == sectionTypeId) ? true : false;
@@ -989,8 +1011,8 @@ export class DeployDataProvider {
    * @param sectionId 
    * @param breedings 
    */
-  get_breeding_pig_in_section(sectionId: string, breedings: Array<breedings>) {
-    return this.get_pigs_of_section(sectionId).forEach(pig => {
+  get_breeding_pig_in_section(sectionTypeId: string, breedings: Array<breedings>) {
+    return this.get_pigs_of_sectionType(sectionTypeId).forEach(pig => {
       pig['breedings'] = this.get_breeding_of_pig(pig.id, breedings);
     });
   }

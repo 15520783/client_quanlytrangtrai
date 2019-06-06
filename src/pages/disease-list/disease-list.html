@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons left showWhen="ios,android">
+      <button navPop ion-button icon-only>
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-searchbar col-md-7 mode="ios" animated="true" debounce="500" [placeholder]="placeholderSearch"
+      [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="setFilteredItems()">
+    </ion-searchbar>
+    <ion-buttons right>
+      <button ion-button font20 (tap)="openFilter()">
+        <ion-icon name="funnel"></ion-icon>
+      </button>
+      <button item-end ion-button font20 showWhen='core'>
+        <ion-icon name="sync"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #contentExternalInvoice class="setting-util-component">
+  <not-found-data *ngIf="!visible_items.length"></not-found-data>
+  <div id="content" *ngIf="visible_items.length">
+    <ion-item-divider *ngIf="!titleHeader" custom-diviver sticky="true" showWhen="core">Danh sách chuẩn đoán</ion-item-divider>
+    <ion-item-divider *ngIf="titleHeader" custom-diviver sticky="true" showWhen="core">{{titleHeader}}</ion-item-divider>
+    <ion-list>
+      <ion-item-sliding *ngFor="let item of visible_items">
+        <ion-item  >
+          <ion-row (tap)="select(item)">
+            <ion-col align-self-center col-8 text-wrap>
+              <h2 *ngIf="mainAttribute"><b>{{item[mainAttribute]}}</b></h2>
+            </ion-col>
+            <ion-col align-self-center col-4 *ngIf="item.tiLe" text-wrap class="main-bg">
+              <p ion-text text-white style="color: white;font-weight: bold;">Khả năng: {{item.tiLe*100}} %  (từ đề xuất)</p>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <button ion-button mode="ios" small color="main" (tap)="item.expand = !item.expand">Xem thông tin</button>
+          </ion-row>
+          <expandable [expanded]="item.expand">
+            <ion-row>
+              <ion-col *ngFor="let attr of attributes" [attr.col-6]="!platform.is('core')"
+                [attr.col-xl-3]="platform.is('core')" [attr.col-lg-3]="platform.is('core')"
+                [attr.col-md-4]="platform.is('core')" [attr.col-sm-6]="platform.is('core')"
+                [attr.text-wrap]="platform.is('core')">
+                <p style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
+              </ion-col>
+            </ion-row>
+          </expandable>
+        </ion-item>
+      </ion-item-sliding>
+    </ion-list>
+    <ion-infinite-scroll (ionInfinite)="loadData($event)" *ngIf="page_Idx!==page_Total">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Đang tải dữ liệu...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+</ion-content>
+
+<!-- <ion-menu [content]="mycontent" side="right" #menuFilter sticky="true" type="overlay" width="500">
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons start>
+          <button ion-button font20 (tap)="closeFilter()">
+            <ion-icon name="ios-arrow-forward"></ion-icon>
+          </button>
+        </ion-buttons>
+        <ion-title>Lọc theo tùy chọn</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-item>
+          <ion-label stacked>Giống</ion-label>
+          <ion-select   interface="popover" title="Giống" mode="ios"
+            okText="Chọn" cancelText="Hủy" [selectOptions]="customAlertOptions" (ionChange)="filterBreed($event)"
+            placeholder="Tất cả">
+            <ion-option  [value]="''">Tất cả</ion-option>
+            <ion-option *ngFor="let item of breedFilter" [value]="item.value">{{item.name}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-nav #mycontent></ion-nav> -->

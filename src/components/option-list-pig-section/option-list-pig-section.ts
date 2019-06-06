@@ -303,16 +303,15 @@ export class OptionListPigSectionComponent {
     let callback = (healthInput: { issuePig: issuesPigs, issueList: Array<issues> }) => {
       if (healthInput) {
         let issuesPig: Array<any> = [];
-        let issues = this.deployData.get_object_list_key_of_pig();
         healthInput.issueList.forEach((issue) => {
-          issuesPig.push({
-            pig: healthInput.issuePig.pig,
-            date: healthInput.issuePig.date,
-            issue: issues[issue.id],
-            employee: healthInput.issuePig.employee,
-            status: VARIABLE.ISSUE_PIG_STATUS.DECTECTION.id,
-            description: '',
-          })
+          let newIssuePig = new issuesPigs();
+          newIssuePig.pig = this.deployData.get_pig_object_to_send_request(healthInput.issuePig.pig),
+          newIssuePig.date = healthInput.issuePig.date,
+          newIssuePig.issue = issue,
+          newIssuePig.employee = healthInput.issuePig.employee,
+          newIssuePig.status = VARIABLE.ISSUE_PIG_STATUS.DECTECTION.id,
+          newIssuePig.description = '',
+          issuesPig.push(newIssuePig);
         })
 
         this.activitiesProvider.createIssuePig(issuesPig)

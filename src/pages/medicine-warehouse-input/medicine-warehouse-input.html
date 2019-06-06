@@ -18,13 +18,12 @@
             [selectOptions]="selectOptions">
         </input-select>
 
-        <input-select 
-            [(validControl)] = "credentialsForm.controls.medicine_id"
-            [errorMessage_Required]  ="'Thuốc là hạng mục bắt buộc.'"
-            [active]= "submitAttempt"
-            [placeholder]="'Chọn thuốc'"
-            [(data)]="medicines">
-        </input-select>
+        <input-select-target [(validControl)]="credentialsForm.controls.medicine"
+          [active]="submitAttempt"
+          [placeholder]="'Chọn thuốc'" 
+          [label]="'Chọn thuốc'" [(data)]="medicines"
+          [targertCmp]="'medicines'">
+        </input-select-target>
 
         <input-select 
             [(validControl)] = "credentialsForm.controls.unit_id"

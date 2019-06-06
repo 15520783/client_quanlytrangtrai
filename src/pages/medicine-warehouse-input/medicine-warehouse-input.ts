@@ -16,6 +16,7 @@ export class MedicineWarehouseInputPage {
   
   public credentialsForm: FormGroup;
   public submitAttempt: boolean = false;
+  public medicines:Array<any> = [];
 
   public medicineWarehouse = new medicineWarehouse();
 
@@ -30,6 +31,7 @@ export class MedicineWarehouseInputPage {
     public events: Events,
     public viewCtrl: ViewController
   ) {
+    this.medicines = this.settingProvider.setting.medicines;
     if (this.navParams.data.invoice) {
       this.medicineWarehouse.invoice = this.navParams.data.invoice;
       this.medicineWarehouse['farmId'] = this.navParams.data.invoice.destination.id;
@@ -38,7 +40,8 @@ export class MedicineWarehouseInputPage {
     this.credentialsForm = this.formBuilder.group({
       id: this.medicineWarehouse.id,
       warehouse_id: [this.medicineWarehouse.warehouse_id, Validators.compose([Validators.required])],
-      medicine_id: [this.medicineWarehouse.medicine_id, Validators.compose([Validators.required])],
+      // medicine_id: [this.medicineWarehouse.medicine_id, Validators.compose([Validators.required])],
+      medicine: [this.medicineWarehouse.medicine, Validators.compose([Validators.required])],      
       invoice: this.medicineWarehouse.invoice,
       parentId: this.medicineWarehouse.parentId,
       unit_id: [this.medicineWarehouse.unit_id, Validators.compose([Validators.required])],
@@ -55,7 +58,8 @@ export class MedicineWarehouseInputPage {
       this.medicineWarehouse = this.navParams.data.medicineWarehouse;
       this.medicineWarehouse['farmId'] = this.medicineWarehouse.warehouse.manager.farm.id;
       this.medicineWarehouse.warehouse_id = this.medicineWarehouse.warehouse.id;
-      this.medicineWarehouse.medicine_id = this.medicineWarehouse.medicine.id;
+      // this.medicineWarehouse.medicine_id = this.medicineWarehouse.medicine.id;
+      this.medicineWarehouse.medicine = this.medicineWarehouse.medicine;
       this.medicineWarehouse.unit_id = this.medicineWarehouse.unit.id;
       this.medicineWarehouse.mfgDate = new Date (this.medicineWarehouse.mfgDate).toISOString();
       this.medicineWarehouse.expiryDate = new Date (this.medicineWarehouse.expiryDate).toISOString();
@@ -82,7 +86,7 @@ export class MedicineWarehouseInputPage {
   }
 
   public warehouses: Array<{ name: string, value: string }> = [];
-  public medicines: Array<{ name: string, value: string }> = [];
+  // public medicines: Array<{ name: string, value: string }> = [];
   public unit: Array<{ name: string, value: string }> = [];
   public selectOptions: any;
 
@@ -99,7 +103,7 @@ export class MedicineWarehouseInputPage {
     });
 
     this.unit = this.deployData.get_medicineUnit_list_for_select();
-    this.medicines = this.deployData.get_medicine_list_for_select();
+    // this.medicines = this.deployData.get_medicine_list_for_select();
   }
 
 }

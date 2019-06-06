@@ -10,6 +10,7 @@ import { StatusPigRole } from '../../role-input/statusPig';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { matingRole } from '../../common/entity';
 import { DiseasesRole } from '../../role-input/diseases';
+import { SettingRolePage } from '../setting-role/setting-role';
 
 @IonicPage()
 @Component({
@@ -110,6 +111,9 @@ export class SettingsPage {
         mainAttribute: 'name',
         data: this.settingProvider.setting.diseases,
         roleInput: new DiseasesRole(this.settingProvider),
+        extraButtons:[
+          {title:'Thiết lập lâm sàng',color:'main',component:null}
+        ]
       },
       farmTypes: {
         title: 'Danh sách loại trang trại',
@@ -266,6 +270,15 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.roles,
+        extraButtons:[
+          { 
+            title:'Thiết lập phân quyền',
+            color:'main',
+            handler(nav:NavController,data){
+              nav.push(SettingRolePage,data);
+            }
+          }
+        ]
       },
       matingRole: {
         title: 'Danh sách luật phối',

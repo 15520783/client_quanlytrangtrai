@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { breedings, sperms, mating, matingDetails, issuesPigs, births, feeds } from '../../common/entity';
+import { breedings, sperms, mating, matingDetails, issuesPigs, births, feeds, usedMedicine } from '../../common/entity';
 import { CONFIG, API } from '../../common/const';
 
 @Injectable()
@@ -203,5 +203,39 @@ export class ActivitiesProvider {
       .post<Array<feeds>>(API.CREATE_FEEDS, objBody)
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise();
+  }
+
+  /**
+   * Lấy danh sách vấn đề heo thuộc khu
+   * @param farmId 
+   * @param sectionId 
+   */
+  getIssuePigOfSection(farmId:string,sectionId:string){
+    return this.http
+    .get<Array<issuesPigs>>(API.GET_ISSUE_PIG_OF_SECTION +'/'+farmId+'/'+sectionId)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+
+  /**
+   * Lấy danh sách vấn đề heo thuộc trang trại
+   */
+  getIssuePigOfFarms(){
+    return this.http
+    .get<Array<issuesPigs>>(API.GET_ISSUE_PIG_OF_FARMS)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  /**
+   * Tạo danh sách ghi nhận sử dụng thuốc
+   * @param objBody 
+   */
+  createUsedMedicineList(objBody:Array<usedMedicine>){
+    return this.http
+    .post<Array<usedMedicine>>(API.CREATE_USED_MEDICINE_LIST,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
   }
 }

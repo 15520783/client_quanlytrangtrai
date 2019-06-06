@@ -40,10 +40,6 @@
 
 <ion-content *ngIf="!platform.is('core')">
   <ion-item-divider sticky="true">Danh sách thiết lập</ion-item-divider>
-  <!-- <ion-row> -->
-  <!-- <ion-card mode='ios'> -->
-  <!-- <ion-card-header>Danh sách thiết lập</ion-card-header> -->
-  <!-- <ion-card-content class="ion-card-content-list-setting" no-padding> -->
   <ion-list>
     <button *ngFor="let key of list_keys;let idx= index" ion-item (tap)="openPage(list_settings[key])">
       <ion-row>
@@ -56,7 +52,4 @@
       </ion-row>
     </button>
   </ion-list>
-  <!-- </ion-card-content> -->
-  <!-- </ion-card> -->
-  <!-- </ion-row> -->
 </ion-content>

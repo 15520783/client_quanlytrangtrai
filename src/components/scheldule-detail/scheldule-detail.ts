@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { FcmProvider } from '../../providers/fcm/fcm';
 import { ObjDataNotification } from '../../common/entity';
+import { EmailComposer } from '@ionic-native/email-composer';
+import {nodemailer} from "nodemailer";
 
 export class Schedule {
   name: string = '';
@@ -22,7 +24,8 @@ export class SchelduleDetailComponent {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public fcmProvider: FcmProvider
+    public fcmProvider: FcmProvider,
+    private emailComposer: EmailComposer
   ) {
     if (this.navParams.data.schedule) {
       this.schedule = this.navParams.data.schedule;
@@ -41,7 +44,7 @@ export class SchelduleDetailComponent {
         icon: "fcm_push_icon"
       },
       data: this.schedule,
-      to: 'fgt_8Qe00Kw:APA91bGKNGI0VfhIjy5OGlUPo1EW8ZlBKnYqFdHNVYmkc4BLNQcOuJQ4_C97AtoePddYQa8SP9FW5z1M89puYgmZR9zu3sRkO3tQh93vsAPXD72G_-z6JfaAuWWyWkz0YxqfiPlcuYzN',
+      registration_ids: ['fgt_8Qe00Kw:APA91bGKNGI0VfhIjy5OGlUPo1EW8ZlBKnYqFdHNVYmkc4BLNQcOuJQ4_C97AtoePddYQa8SP9FW5z1M89puYgmZR9zu3sRkO3tQh93vsAPXD72G_-z6JfaAuWWyWkz0YxqfiPlcuYzN'],
       priority: "high",
       restricted_package_name: 'io.ionic.quanlitrangtrai'
     }
@@ -53,6 +56,14 @@ export class SchelduleDetailComponent {
       .catch((err) => {
         return err;
       })
+
+      let email = {
+        to: '15520783@gm.uit.edu.vn',
+        subject: 'Product Enquiry',
+        body: 'Hello',
+        isHtml: true
+      };
+      this.emailComposer.open(email);   
   }
 
 }

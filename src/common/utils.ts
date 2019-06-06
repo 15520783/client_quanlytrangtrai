@@ -25,8 +25,8 @@ export class Utils {
   }
 
   isEmpty(obj) {
-    for(var prop in obj) {
-      if(obj.hasOwnProperty(prop))
+    for (var prop in obj) {
+      if (obj.hasOwnProperty(prop))
         return false;
     }
     return true;
@@ -49,7 +49,7 @@ export class Utils {
     return this.toast.present();
   }
 
-  showToastInform(message:string){
+  showToastInform(message: string) {
     this.toastOptions = {
       message: message,
       duration: 5000,
@@ -113,11 +113,11 @@ export class Utils {
     return this.storage.set(key, data);
   }
 
-  removeKey(key:string){
+  removeKey(key: string) {
     return this.storage.remove(key);
   }
 
-  clearAllKeyStorage(){
+  clearAllKeyStorage() {
     return this.storage.clear();
   }
 
@@ -126,21 +126,36 @@ export class Utils {
     return this.modal.present();
   }
 
-  closeModal(){
+  closeModal() {
     return this.modal.dismiss();
   }
 
-  
-  deepClone(obj){
+
+  deepClone(obj) {
     return JSON.parse(JSON.stringify(obj));
   }
 
-  openBackDrop(){
+  openBackDrop() {
     this.modal = this.modalCtrl.create(BackdropComponent, {}, { cssClass: 'ion-modal' });
     return this.modal.present();
   }
 
-  closeBackDrop(){
+  closeBackDrop() {
     return this.modal.dismiss();
+  }
+
+
+  groupBy(list, keyGetter) {
+    const map = new Map();
+    list.forEach((item) => {
+      const key = keyGetter(item);
+      const collection = map.get(key);
+      if (!collection) {
+        map.set(key, [item]);
+      } else {
+        collection.push(item);
+      }
+    });
+    return map;
   }
 }

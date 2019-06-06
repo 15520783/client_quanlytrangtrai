@@ -61,6 +61,7 @@ export class SectionsPage {
 
   changeFarm(res) {
     this.sections = this.deployData.get_sections_of_farm(res.valueId);
+    
     this.sections.forEach((section: any) => {
       section.houses = this.deployData.get_houses_of_section(section.id);
     })

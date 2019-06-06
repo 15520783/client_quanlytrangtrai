@@ -27,10 +27,17 @@
         </ion-row>
         <button showWhen="core" ion-button item-end mode='ios' color="main" (tap)="edit(item)">Sửa</button>
         <button showWhen="core" ion-button item-end mode='ios' color="danger" (tap)="remove(item)">Xóa</button>
+        <span *ngIf="extraButtons">
+          <button *ngFor="let button of extraButtons" showWhen="core" ion-button item-end mode='ios'
+            [color]="button.color" (tap)="button.handler(navCtrl,item)">{{button.title}}</button>
+        </span>
       </ion-item>
       <ion-item-options side="right" showWhen="ios,android">
         <button ion-button color="main" (tap)="edit(item)">Sửa</button>
         <button ion-button color="danger" (tap)="remove(item)">Xóa</button>
+        <span *ngIf="extraButtons">
+          <button *ngFor="let button of extraButtons" ion-button [color]="button.color">{{button.title}}</button>
+        </span>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
@@ -39,9 +46,9 @@
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 
-  <ion-fab bottom right showWhen="android,windows,ios" color="secondary" >
+  <ion-fab bottom right showWhen="android,windows,ios" color="secondary">
     <button ion-fab (tap)="add()">
-      <ion-icon name="add" ></ion-icon>
+      <ion-icon name="add"></ion-icon>
     </button>
     <!-- <ion-fab-list side="top" style="right:0px">
       <button data-balloon-visible data-balloon-length="medium" data-balloon="Thêm mới" data-balloon-pos="left" ion-fab

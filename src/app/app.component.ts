@@ -146,14 +146,15 @@ export class MyApp {
    * Update database by requesting to server and  recieved database will be store in local storage..
    */
   intinial_sync() {
-    // this.farmProvider.updated_flag = false;
-    // this.pigProvider.updated_flag = false;
-    // this.employeeProvider.updated_flag = false;
-    // this.sectionProvider.updated_flag = false;
-    // this.houseProvider.updated_flag = false;
-    // this.warehouseProvider.updated_flag = false;
-    // this.settingProvider.updated_flag = false;
-    // this.partnerProvider.updated_flag = false;
+    this.farmProvider.updated_flag = false;
+    this.pigProvider.updated_flag = false;
+    this.employeeProvider.updated_flag = false;
+    this.sectionProvider.updated_flag = false;
+    this.houseProvider.updated_flag = false;
+    this.warehouseProvider.updated_flag = false;
+    this.settingProvider.updated_flag = false;
+    this.partnerProvider.updated_flag = false;
+    
     this.subscribeEventUpdate();
     this.userProvider.checkServer()
       .then((res: any) => {
@@ -171,16 +172,23 @@ export class MyApp {
         }
       })
       .catch((err: any) => {
-        if (err.status != 401) {
-          if (err.name == ERROR_NAME.TIMEMOUT_ERROR || err.name == ERROR_NAME.ERROR_RESPONSE) {
-            this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].TIMEOUT_REQUEST);
+        // if (err.status != 401) {
+        //   if (err.name == ERROR_NAME.TIMEMOUT_ERROR || err.name == ERROR_NAME.ERROR_RESPONSE) {
+        //     this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].TIMEOUT_REQUEST);
+        //     this.rootPage = HomePage;
+        //     setTimeout(() => {
+        //       this.splash = false;
+        //     }, 1000);
+        //   }
+        // }else{
+          console.log(err);
+          this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].TIMEOUT_REQUEST);
             this.rootPage = HomePage;
             setTimeout(() => {
               this.splash = false;
             }, 1000);
-          }
-        }
-        this.events.unsubscribe('updated');
+        // }
+        // this.events.unsubscribe('updated');
       })
   }
 

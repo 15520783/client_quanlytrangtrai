@@ -28,6 +28,7 @@ import { PigSummaryPage } from '../pig-summary/pig-summary';
 import { house } from '../../common/entity';
 import { HouseInfomationPage } from '../house-infomation/house-infomation';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { IssuePigListPage } from '../issue-pig-list/issue-pig-list';
 
 @Component({
   selector: 'page-home',
@@ -100,6 +101,10 @@ export class HomePage {
       {
         title: 'Chứng từ', component: InvoicesPage, icon: 'app-file', active: false,
         show: Object.keys(this.userProvider.rolePermission.quan_ly_danh_sach_chung_tu).length ? true : false
+      },
+      {
+        title: 'Quản lý lâm sàn', component: IssuePigListPage, icon: 'app-medicine-manager', active: false,
+        show: true
       },
       {
         title: 'Hoạt động', component: ActivitiesPage, icon: 'app-activities', active: false,

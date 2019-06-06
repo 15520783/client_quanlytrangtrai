@@ -17,7 +17,6 @@ export class EmployeesProvider {
     public util: Utils,
     public events: Events
   ) {
-    console.log('Hello EmployeesProvider Provider');
     this.util.getKey(KEY.EMPLOYEES)
     .then((data)=>{
       this.employees = data;

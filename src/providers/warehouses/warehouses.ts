@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { warehouse } from '../../common/entity';
+import { warehouse, medicineWarehouse } from '../../common/entity';
 import { CONFIG, KEY } from '../../common/const';
 import { API } from '../../common/const';
 import { Utils } from '../../common/utils';
@@ -26,7 +26,8 @@ export class WarehousesProvider {
   public getWarehouses() {
     return this.http
       .get(API.GET_ALL_WAREHOUSES)
-      .timeout(CONFIG.DEFAULT_TIMEOUT).toPromise();
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
   sync() {
@@ -89,5 +90,17 @@ export class WarehousesProvider {
       .get(API.GET_MEDICINE_WAREHOUSE_OF_WAREHOUSE.concat(warehouseId))
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise();
+  }
+
+
+  /**
+   * Lấy danh sách thuốc lưu trữ của một loại thuốc
+   * @param medicineId 
+   */
+  getMedicineWarehouseOfMedicine(medicineId:string){
+    return this.http
+    .get<Array<medicineWarehouse>>(API.GET_MEDICINEWAREHOUSE_OF_MEDICINE+'/'+medicineId)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
   }
 }

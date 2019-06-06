@@ -65,6 +65,9 @@ export class PigsProvider {
         }
         return this.pigs;
       })
+      .catch((err) => {
+        return err;
+      })
   }
 
   /**

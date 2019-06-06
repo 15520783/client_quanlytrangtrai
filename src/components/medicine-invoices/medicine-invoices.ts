@@ -53,7 +53,7 @@ export class MedicineInvoicesComponent {
     public invoiceProvider: InvoicesProvider,
     public navParams: NavParams
   ) {
-    if(this.navParams.data.invoice){
+    if (this.navParams.data.invoice) {
       this.invoices = this.navParams.data.invoice;
       this.setFilteredItems();
     }
@@ -103,26 +103,34 @@ export class MedicineInvoicesComponent {
   }
 
   add() {
+    let callback = data => {
+      if (data) {
+        this.invoices.push(data);
+        this.setFilteredItems();
+      }
+    }
+
     this.roleInput.clear();
     this.navCtrl.push(InvoiceInputUtilComponent,
       {
         insertMode: true,
-        roleInput: this.roleInput
+        roleInput: this.roleInput,
+        callback: callback
       }
     )
-    this.events.unsubscribe('callback');
-    this.events.subscribe('callback', (data) => {
-      if (data) {
-        this.invoices.push(data);
-        this.setFilteredItems();
-        this.events.unsubscribe('callback');
-      }
-    })
+    // this.events.unsubscribe('callback');
+    // this.events.subscribe('callback', (data) => {
+    //   if (data) {
+    //     this.invoices.push(data);
+    //     this.setFilteredItems();
+    //     this.events.unsubscribe('callback');
+    //   }
+    // })
   }
 
-  input_medicine(item){
-    this.navCtrl.push(MedicineInvoiceDetailPage,{invoice:item});
-    
+  input_medicine(item) {
+    this.navCtrl.push(MedicineInvoiceDetailPage, { invoice: item });
+
     this.events.subscribe('removeInvoiceEvent', (invoice) => {
       if (invoice) {
         let idx = this.invoices.findIndex(Obj => Obj.id == invoice.id);

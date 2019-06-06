@@ -75,9 +75,28 @@ export class HealthInputPage {
         'issueId' + (this.issuesList.length - 1), this.formBuilder.control(new_issue.id, Validators.compose([Validators.required])));
   }
 
+
   remove_issue(idx) {
-    this.issuesList.splice(idx, 1);
+    // this.issuesList.splice(idx, 1);
+    // this.credentialsForm2.value['issueId' + idx].setValue('');
     this.credentialsForm2.removeControl('issueId' + idx);
+  }
+
+  changeIssue(e, idx) {
+    console.log(this.credentialsForm2.value);
+    let count = 0;
+    let attrs = Object.keys(this.credentialsForm2.value);
+    attrs.forEach((attr) => {
+      if (this.credentialsForm2.value[attr] == e.valueId) {
+        console.log(this.credentialsForm2.value[attr] == e.valueId);
+        count++;
+      }
+    })
+
+    if (count > 1) {
+      this.util.showToastInform('Vấn đề đã được nhập.')
+      this.credentialsForm2.controls['issueId' + idx].setValue('');
+    }
   }
 
   onSubmit() {
@@ -90,6 +109,10 @@ export class HealthInputPage {
 
       Object.keys(this.credentialsForm2.value).forEach((attr, idx) => {
         this.issuesList[idx].id = this.credentialsForm2.value[attr];
+      })
+
+      this.issuesList = this.issuesList.filter((issuePig) => {
+        return issuePig.id ? true : false;
       })
 
       this.navParams.get('callback')({

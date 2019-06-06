@@ -12,13 +12,6 @@
       [(ngModel)]="value"
       [(formControl)]="validControl">
     </ion-input>
-    <!-- <ion-input 
-      readonly
-      (tap)="presentModal()"
-      [(ngModel)]="value"
-      [(formControl)]="validControl"
-      [placeholder]="placeholder">
-    </ion-input> -->
   </ion-item>
 
   <expandable [expanded]="!validControl.valid" *ngIf="active">

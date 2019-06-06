@@ -44,6 +44,7 @@ export { mating, matingDetails }
 export { issuesPigs }
 export { births }
 export { feeds }
+export { usedMedicine }
 
 class base {
 	id: string;
@@ -108,6 +109,7 @@ class pig extends base {
 	index: number = 0;
 	parities: number = 0;
 	images: string = '';
+	healthStatus: healthStatus = new healthStatus();
 	healthStatusId: number = 0;
 	breedingType: string = '0';
 	breedStatus: string = '0';
@@ -593,6 +595,18 @@ class issuesPigs extends base {
 	status: number = null;
 }
 
+class usedMedicine extends base {
+	forPigId: pig = new pig();
+	diseases: diseases = new diseases();
+	medicine: medicines;
+	medicineWarehouse: medicineWarehouse;
+	unit: number = null;
+	quantity: number = null;
+	date: any = '';
+	employee: employee = new employee();
+	description: string = '';
+}
+
 class births extends base {
 	mating: mating = new mating();
 	date: any = '';
@@ -647,7 +661,7 @@ class ObjDataNotification {
 		icon: "fcm_push_icon"
 	};
 	data: any;
-	to: string;
+	registration_ids:Array<string> = [];
 	priority: "high";
 	restricted_package_name: 'io.ionic.quanlitrangtrai'
 
