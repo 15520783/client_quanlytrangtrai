@@ -22,7 +22,7 @@
       <ion-item-divider custom-diviver sticky="true" showWhen="core">Danh sách ghi nhận vấn đề heo</ion-item-divider>
       <ion-list>
         <span *ngFor="let item of visible_items;let idx= index">
-          <ion-item-sliding (tap)="select(item)">
+          <ion-item-sliding>
             <ion-item >
               <h2 *ngIf="mainAttribute"><b>{{item[mainAttribute]}}</b></h2>
               <ion-row>
@@ -57,7 +57,7 @@
           ion-fab color="main">
           <ion-icon name="ios-information-circle-outline"></ion-icon>
         </button>
-        <button data-balloon-visible data-balloon-length="medium" data-balloon="Nhập thông tin xử lí" data-balloon-pos="left"
+        <button (tap)="resolveIssuePigs()" data-balloon-visible data-balloon-length="medium" data-balloon="Nhập thông tin xử lí" data-balloon-pos="left"
           ion-fab color="main">
           <ion-icon name="app-hand"></ion-icon>
         </button>

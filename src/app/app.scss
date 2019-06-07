@@ -34,6 +34,12 @@ ion-navbar{
     padding:0px!important;
 }
 
+ion-title{
+  .toolbar-title{
+    font-size: 18px!important;
+  }
+}
+
 ion-content {
   .scroll-content {
     // overflow: hidden!important;
@@ -98,6 +104,10 @@ ion-menu {
 
 [font20] {
   font-size: 20px !important;
+}
+
+[font18]{
+  font-size: 18px!important;
 }
 
 [font28] {

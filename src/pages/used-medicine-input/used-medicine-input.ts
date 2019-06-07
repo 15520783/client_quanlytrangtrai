@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, ModalController, Events } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Platform, ModalController, Events, Menu, Content, MenuController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { employee, diseases, usedMedicine, issues, medicines, medicineWarehouse } from '../../common/entity';
 import { Utils } from '../../common/utils';
@@ -18,6 +18,8 @@ import { ActivitiesProvider } from '../../providers/activities/activities';
   templateUrl: 'used-medicine-input.html',
 })
 export class UsedMedicineInputPage {
+  @ViewChild('menuFilter') menuFilter: Menu;
+  @ViewChild('content') content: Content;
 
   public sectionId: string;
 
@@ -57,7 +59,8 @@ export class UsedMedicineInputPage {
     public warehouseProvider: WarehousesProvider,
     public activitiesProvider: ActivitiesProvider,
     public deployData: DeployDataProvider,
-    public event: Events
+    public event: Events,
+    public menuCtrl: MenuController
   ) {
 
     this.util.getKey(KEY.EMPID).then((employeeId)=>{
@@ -101,8 +104,18 @@ export class UsedMedicineInputPage {
       this.credentialsForm2.addControl('unit' + idx, this.formBuilder.control(e.unit, Validators.compose([Validators.required])));
       this.credentialsForm2.addControl('quantity' + idx, this.formBuilder.control(e.quantity, Validators.compose([Validators.required, ValidateNumber])));
     });
+
+    this.getDiseaseList(this.navParams.data.farmId, this.navParams.data.sectionId);
   }
 
+  openReport() {
+    this.menuFilter.enable(true);
+    this.menuFilter.open();
+  }
+
+  closeReport() {
+    this.menuCtrl.close();
+  }
 
   /**
    * Lấy danh sách bệnh được chuẩn đoán
@@ -207,7 +220,7 @@ export class UsedMedicineInputPage {
     this.credentialsForm2.addControl('medicine' + idx, this.formBuilder.control(new_usedMedicine.medicine, Validators.compose([Validators.required])));
     this.credentialsForm2.addControl('medicineWarehouse' + idx, this.formBuilder.control(new_usedMedicine.medicineWarehouse, Validators.compose([Validators.required])));
     this.credentialsForm2.addControl('unit' + idx, this.formBuilder.control(new_usedMedicine.unit, Validators.compose([Validators.required])));
-    this.credentialsForm2.addControl('quantity' + idx, this.formBuilder.control(new_usedMedicine.quantity, Validators.compose([Validators.required])));
+    this.credentialsForm2.addControl('quantity' + idx, this.formBuilder.control(new_usedMedicine.quantity, Validators.compose([Validators.required, ValidateNumber])));
   }
 
   remove_usedMedicine(idx) {

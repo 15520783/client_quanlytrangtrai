@@ -80,7 +80,7 @@ export class IssuePigListPage {
     public modalCtrl: ModalController
   ) {
 
-    
+
 
     VARIABLE.gender.forEach(gender => {
       this.gender[gender.value] = gender;
@@ -294,17 +294,28 @@ export class IssuePigListPage {
 
 
 
-  viewListIssuePig(section){
+  viewListIssuePig(section) {
+    let callback = (data: Array<usedMedicine>) => {
+      if (data) {
+        this.getAllIssuePigs()
+          .then((issuesPigs) => {
+            this.issues = this.issue_groupBySection.get(this.selectedSection) ? this.issue_groupBySection.get(this.selectedSection) : [];
+            this.setFilteredItems();
+          })
+      }
+    }
+
     this.sections.forEach((e) => {
       e.selected = false;
     })
     section.selected = true;
     this.selectedSection = section.id;
     this.issues = this.issue_groupBySection.get(this.selectedSection) ? this.issue_groupBySection.get(this.selectedSection) : [];
-    this.navCtrl.push(IssuePigListComponent,{
-      issues:this.issues,
-      selectedFarm:this.selectedFarm,
-      selectedSection:this.selectedSection
+    this.navCtrl.push(IssuePigListComponent, {
+      issues: this.issues,
+      selectedFarm: this.selectedFarm,
+      selectedSection: this.selectedSection,
+      callback: callback
     })
   }
 }

@@ -1,12 +1,17 @@
 <ion-header>
   <ion-navbar>
     <ion-toolbar toolbar-transparent no-border class="custom-toolbar">
-      <ion-title style="padding: 0px!important">Nhập thông tin lâm sàn của heo</ion-title>
+      <ion-title style="padding: 0px!important">Nhập thông tin xử lý lâm sàn</ion-title>
+      <ion-buttons right *ngIf="!platform.is('core')">
+        <button ion-button font20 (tap)="openReport()">
+          <ion-icon name="ios-information-circle-outline"></ion-icon>
+        </button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-navbar>
 </ion-header>
 
-<ion-content no-padding>
+<ion-content no-padding *ngIf="platform.is('core')">
   <ion-row style="height: 100%">
     <ion-col col-lg-3 col-md-4>
       <ion-header>
@@ -114,17 +119,127 @@
           </ion-item>
         </form>
       </ion-content>
-      <ion-footer no-border showWhen="core">
-        <ion-toolbar toolbar-transparent text-right showWhen="core">
+      <ion-footer no-border>
+        <ion-toolbar toolbar-transparent text-right>
           <button type="submit" ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
           <button ion-button mode='ios' color="danger">Hủy</button>
         </ion-toolbar>
       </ion-footer>
-
-      <ion-footer no-border no-padding showWhen="ios,android">
-        <button type="submit" no-margin full block ion-button mode='ios' color="secondary"
-          (tap)="onSubmit()">Lưu</button>
-      </ion-footer>
     </ion-col>
   </ion-row>
 </ion-content>
+
+
+<ion-content  *ngIf="!platform.is('core')">
+  <form action="" style="padding-bottom: 10vH">
+    <ion-list>
+      <input-select-target 
+        [(validControl)]="credentialsForm1.controls.disease" 
+        [active]="submitAttempt"
+        [placeholder]="'Chọn bệnh'" 
+        [label]="'Chuẩn đoán bệnh'" 
+        [errorMessage_Required]="'Bệnh là hạng mục bắt buộc.'"
+        [(data)]="diseases" 
+        [targertCmp]="'diseases'"
+        (valueChange)="diseaseChange($event)">
+      </input-select-target>
+      <input-date [(validControl)]="credentialsForm1.controls.date"
+        [errorMessage_Required]="'Ngày dùng thuốc là hạng mục bắt buộc.'" 
+        [label]="'Ngày dùng thuốc'"
+        [placeholder]="'dd/mm/yyyy'" [active]="submitAttempt">
+      </input-date>
+      <input-text [(validControl)]="credentialsForm1.controls.description"
+        [errorMessage_Required]="'Mô tả là hạng mục bắt buộc'" 
+        [label]="'Mô tả'"
+        [placeholder]="'Nhập thông tin mô tả'" [active]="submitAttempt">
+      </input-text>
+    </ion-list>
+    <ion-item>
+      <p><b>Danh sách thuốc xử lý</b></p>
+    </ion-item>
+    <ion-list no-lines>
+      <span *ngFor="let usedMedicine of usedMedicineList;let idx = index">
+        <ion-item-sliding border-sliding *ngIf="credentialsForm2.controls['medicine'+idx]">
+          <ion-item>
+            <input-select-target 
+              [(validControl)]="credentialsForm2.controls['medicine'+idx]" 
+              [active]="submitAttempt"
+              [placeholder]="'Chọn thuốc'" 
+              [label]="'Chọn thuốc'" [(data)]="medicines"
+              [errorMessage_Required]="'Thuốc là hạng mục bắt buộc'" 
+              [targertCmp]="'medicines'"
+              (valueChange)="medicineChange($event,usedMedicine,idx)">
+            </input-select-target>
+  
+            <input-select-target 
+              [(validControl)]="credentialsForm2.controls['medicineWarehouse'+idx]" 
+              [active]="submitAttempt"
+              [placeholder]="'Chọn nguồn thuốc từ kho'" 
+              [errorMessage_Required]="'Nguồn lấy thuốc là hạng mục bắt buộc'" 
+              [label]="'Nguồn thuốc'" [(data)]="usedMedicine.medicineWarehouseList"
+              [targertCmp]="'medicineWarehouses'">
+            </input-select-target>
+  
+            <input-select 
+              [(validControl)]="credentialsForm2.controls['unit'+idx]" 
+              [errorMessage_Required]  ="'Đơn vị là hạng mục bắt buộc.'"
+              [active]= "submitAttempt"
+              [placeholder]="'Chọn đơn vị'"
+              [(data)]="unit">
+            </input-select>
+  
+            <input-text 
+              [(validControl)]="credentialsForm2.controls['quantity'+idx]" 
+              [errorMessage_Required]  = "'Số lượng là hạng mục bắt buộc.'"
+              [errorMessage_ValidNumber] = "'Số lượng là hạng mục nhập số'"
+              [label] = "'Số lượng'"
+              [placeholder]="'Nhập số lượng'"
+              [active]= "submitAttempt">
+            </input-text>
+          </ion-item>
+          <ion-item-options side="right" showWhen="ios,android">
+            <button ion-button color="danger" (tap)="remove_usedMedicine(idx)">Xóa</button>
+          </ion-item-options>
+        </ion-item-sliding>
+      </span> 
+    </ion-list> 
+    
+    <ion-item>
+      <button ion-button color="secondary" mode='ios' small (tap)="add_usedMedicine()">Thêm thuốc</button>
+    </ion-item>
+  </form>
+
+  
+</ion-content>
+<ion-footer no-border no-padding *ngIf="!platform.is('core')">
+  <button type="submit" no-margin full block ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
+</ion-footer>
+
+<span *ngIf="!platform.is('core')">
+  <ion-menu [content]="mycontent" swipeEnabled="false" side="right" #menuFilter sticky="true" type="overlay" width="500">
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons start>
+          <button ion-button font20 (tap)="closeReport()">
+            <ion-icon name="ios-arrow-forward"></ion-icon>
+          </button>
+        </ion-buttons>
+        <ion-title>Danh sách các triệu chứng</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-item *ngFor="let issue of issues">
+          <p ion-text>{{issue.symptom}}</p>
+          <p ion-text color="danger">{{groupByIssues.get(issue.id).length}} trường hợp</p>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+    <ion-footer no-border>
+      <ion-toolbar toolbar-transparent text-right>
+        <button ion-button mode='ios' color="main" (click)="showForecast()">Gợi ý chuẩn đoán</button>
+      </ion-toolbar>
+    </ion-footer>
+  </ion-menu>
+  <ion-nav #mycontent></ion-nav>
+</span>

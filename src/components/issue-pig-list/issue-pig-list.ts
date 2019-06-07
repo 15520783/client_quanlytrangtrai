@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { issuesPigs } from '../../common/entity';
+import { issuesPigs, usedMedicine } from '../../common/entity';
 import { FormControl } from '@angular/forms';
 import { NavController, NavParams, Platform, ModalController } from 'ionic-angular';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
@@ -8,6 +8,7 @@ import { FilterProvider } from '../../providers/filter/filter';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { VARIABLE, MESSAGE, CONFIG } from '../../common/const';
 import { DiseaseListPage } from '../../pages/disease-list/disease-list';
+import { UsedMedicineInputPage } from '../../pages/used-medicine-input/used-medicine-input';
 
 @Component({
   selector: 'issue-pig-list',
@@ -18,12 +19,13 @@ export class IssuePigListComponent {
   public isSelectMode: boolean = false;
 
   public issues: Array<issuesPigs> = [];
-  public selectedFarm:string;
-  public selectedSection:string;
+  public selectedFarm: string;
+  public selectedSection: string;
 
   public breed: any = {};
   public gender: any = {};
   public employees: any = {};
+  public issueObjectKey: any = {};
   public houses: any = {};
   public breedFilter: any = [];
 
@@ -70,18 +72,19 @@ export class IssuePigListComponent {
       this.gender[gender.value] = gender;
     })
 
-    if(this.navParams.data.issues){
+    if (this.navParams.data.issues) {
       this.issues = this.navParams.data.issues;
       this.setFilteredItems();
     }
 
-    if(this.navParams.data.selectedFarm && this.navParams.data.selectedSection){
+    if (this.navParams.data.selectedFarm && this.navParams.data.selectedSection) {
       this.selectedFarm = this.navParams.data.selectedFarm;
       this.selectedSection = this.navParams.data.selectedSection;
     }
   }
 
-  init(){
+  init() {
+    this.issueObjectKey = this.deployData.get_object_list_key_of_issues();
     this.breed = this.deployData.get_object_list_key_of_breeds();
     this.houses = this.deployData.get_object_list_key_of_house();
     this.employees = this.deployData.get_object_list_key_of_employees();
@@ -132,39 +135,72 @@ export class IssuePigListComponent {
     }, 800);
   }
 
-  
+
   /**
   * Hiển thị danh sách gợi ý
   */
- showForecast() {
-  if (this.selectedFarm && this.selectedSection) {
-    this.util.openBackDrop();
-    return this.settingProvider.getForecastedDiseases(this.selectedFarm, this.selectedSection)
-      .then((diseases) => {
-        this.util.closeBackDrop();
-        if (diseases) {
-          let forecastDiseases = [];
-          diseases.forEach(disease => {
-            disease.disease['tiLe'] = disease.tiLe;
-            forecastDiseases.push(disease.disease);
-          })
+  showForecast() {
+    if (this.selectedFarm && this.selectedSection) {
+      this.util.openBackDrop();
+      return this.settingProvider.getForecastedDiseases(this.selectedFarm, this.selectedSection)
+        .then((diseases) => {
+          this.util.closeBackDrop();
+          if (diseases) {
+            let forecastDiseases = [];
+            diseases.forEach(disease => {
+              disease.disease['tiLe'] = disease.tiLe;
+              forecastDiseases.push(disease.disease);
+            })
 
-          let modal = this.modalCtrl.create(DiseaseListPage,
-            {
-              diseases: forecastDiseases,
-              titleHeader: 'Danh sách gợi ý chuẩn đoán bệnh'
-            });
-          return modal.present();
-        }
-      })
-      .catch((err: Error) => {
-        this.util.closeBackDrop();
-        this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].ERROR_OCCUR)
-        console.log(err);
-        return err;
-      })
+            let modal = this.modalCtrl.create(DiseaseListPage,
+              {
+                diseases: forecastDiseases,
+                titleHeader: 'Danh sách gợi ý chuẩn đoán bệnh'
+              });
+            return modal.present();
+          }
+        })
+        .catch((err: Error) => {
+          this.util.closeBackDrop();
+          this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].ERROR_OCCUR)
+          console.log(err);
+          return err;
+        })
+    }
   }
-}
+
+  resolveIssuePigs() {
+    let issues = [];
+    let groupByIssuesId = this.util.groupBy(this.issues, issuePig => issuePig.issue.id);
+
+    Array.from(groupByIssuesId.keys()).map(String).forEach((e) => {
+      issues.push(this.issueObjectKey[e]);
+    });
+
+    let callback = (data: Array<usedMedicine>) => {
+      if (data) {
+        // this.getAllIssuePigs()
+        //   .then((issuesPigs) => {
+        //     this.issues = this.issue_groupBySection.get(this.selectedSection) ? this.issue_groupBySection.get(this.selectedSection) : [];
+        //     this.setFilteredItems();
+        //   })
+        this.navCtrl.pop().then(()=>{
+          this.navCtrl.pop();
+        });
+        this.navParams.get('callback')(data);
+      }
+    }
+
+    this.navCtrl.push(UsedMedicineInputPage,
+      {
+        farmId: this.selectedFarm,
+        sectionId: this.selectedSection,
+        groupByIssues: groupByIssuesId,
+        issues: issues,
+        callback: callback
+      });
+  }
+
 
 }
 
