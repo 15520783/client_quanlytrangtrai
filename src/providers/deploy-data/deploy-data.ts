@@ -36,7 +36,7 @@ export class DeployDataProvider {
    */
   get_male_pig_of_farm(farmId) {
     let housesId: any = [];
-    let maleSection: any = [VARIABLE.SECTION_TYPE[1].value, VARIABLE.SECTION_TYPE[2].value, VARIABLE.SECTION_TYPE[3].value];
+    let maleSection: any = [VARIABLE.SECTION_TYPE[1].value, VARIABLE.SECTION_TYPE[2].value, VARIABLE.SECTION_TYPE[3].value, VARIABLE.SECTION_TYPE[7].value];
     this.houseProvider.houses.filter((house) => {
       return (house.section.farm.id == farmId &&
         maleSection.includes((house.section.typeId).toString())) ? true : false;
@@ -54,7 +54,7 @@ export class DeployDataProvider {
    */
   get_female_pig_of_farm(farmId) {
     let houses = this.get_object_list_key_of_house();
-    let formalSection: any = [VARIABLE.SECTION_TYPE[1].value, VARIABLE.SECTION_TYPE[3].value, VARIABLE.SECTION_TYPE[4].value];
+    let formalSection: any = [VARIABLE.SECTION_TYPE[1].value, VARIABLE.SECTION_TYPE[3].value, VARIABLE.SECTION_TYPE[4].value, VARIABLE.SECTION_TYPE[7].value];
     let female_pig = [];
 
     let female_pig_in_formal_section = this.pigsProvider.pigs.filter((pig) => {
@@ -88,7 +88,7 @@ export class DeployDataProvider {
    */
   get_child_pig_in_farm(farmId: string) {
     let houses = this.get_object_list_key_of_house();
-    let formalSection: any = [VARIABLE.SECTION_TYPE[6].value, VARIABLE.SECTION_TYPE[7].value];
+    let formalSection: any = [VARIABLE.SECTION_TYPE[6].value];
     let child_pig = [];
 
     let child_pig_in_formal_section = this.pigsProvider.pigs.filter((pig) => {

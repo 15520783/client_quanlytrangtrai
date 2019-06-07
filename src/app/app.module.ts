@@ -94,6 +94,7 @@ import { NotFoundDataComponent } from '../components/not-found-data/not-found-da
 import { SchelduleDetailComponent } from '../components/scheldule-detail/scheldule-detail';
 import { ListFabButtonPigComponent } from '../components/list-fab-button-pig/list-fab-button-pig';
 import { ExportInternalPigInvoiceComponent } from '../components/export-internal-pig-invoice/export-internal-pig-invoice';
+import { IssuePigListComponent } from '../components/issue-pig-list/issue-pig-list';
 
 import { HideHeaderDirective } from '../directives/hide-header/hide-header';
 
@@ -219,6 +220,7 @@ const Components = [
   SchelduleDetailComponent,
   ListFabButtonPigComponent,
   ExportInternalPigInvoiceComponent,
+  IssuePigListComponent
 ]
 
 const Providers = [

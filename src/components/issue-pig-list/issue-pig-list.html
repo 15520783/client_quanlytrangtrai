@@ -1,0 +1,67 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons left showWhen="ios,android">
+        <button navPop ion-button icon-only>
+          <ion-icon name="arrow-back"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-searchbar col-md-7 mode="ios" animated="true" debounce="500" [placeholder]="placeholderSearch"
+        [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="setFilteredItems()">
+      </ion-searchbar>
+      <!-- <ion-buttons right>
+        <button item-end ion-button font20 showWhen='core'>
+          <ion-icon name="sync"></ion-icon>
+        </button>
+      </ion-buttons> -->
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content #contentExternalInvoice class="setting-util-component">
+    <not-found-data *ngIf="!visible_items.length"></not-found-data>
+    <div id="content" *ngIf="visible_items.length">
+      <ion-item-divider custom-diviver sticky="true" showWhen="core">Danh sách ghi nhận vấn đề heo</ion-item-divider>
+      <ion-list>
+        <span *ngFor="let item of visible_items;let idx= index">
+          <ion-item-sliding (tap)="select(item)">
+            <ion-item >
+              <h2 *ngIf="mainAttribute"><b>{{item[mainAttribute]}}</b></h2>
+              <ion-row>
+                <ion-col *ngFor="let attr of attributes"
+                  [attr.col-6]    ="!platform.is('core')"
+                  [attr.col-xl-3] ="platform.is('core')" 
+                  [attr.col-lg-3] ="platform.is('core')"
+                  [attr.col-md-4] ="platform.is('core')"
+                  [attr.col-sm-6] ="platform.is('core')"
+                  [attr.text-wrap]="platform.is('core')">
+                  <p style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}} </p>
+                </ion-col>
+              </ion-row>
+              <ion-row *ngIf="!isSelectMode">
+                <button showWhen="core" small ion-button item-end mode='ios' color="danger" (tap)="remove(item)">Xóa</button>
+              </ion-row>
+            </ion-item>
+          </ion-item-sliding>
+        </span>
+      </ion-list>
+      <ion-infinite-scroll (ionInfinite)="loadData($event)" *ngIf="page_Idx!==page_Total">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Đang tải dữ liệu...">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </div>
+    <ion-fab bottom right showWhen="android,windows,ios">
+      <button ion-fab>
+        <ion-icon name="ios-arrow-up"></ion-icon>
+      </button>
+      <ion-fab-list side="top" style="right:0px">
+        <button (tap)="showForecast()" data-balloon-visible data-balloon-length="medium" data-balloon="Gợi ý chuẩn đoán" data-balloon-pos="left"
+          ion-fab color="main">
+          <ion-icon name="ios-information-circle-outline"></ion-icon>
+        </button>
+        <button data-balloon-visible data-balloon-length="medium" data-balloon="Nhập thông tin xử lí" data-balloon-pos="left"
+          ion-fab color="main">
+          <ion-icon name="app-hand"></ion-icon>
+        </button>
+      </ion-fab-list>
+    </ion-fab>
+  </ion-content>
+  
