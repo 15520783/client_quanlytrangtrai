@@ -25,4 +25,9 @@ page-sections {
             color:white!important;
         }
     }
+
+    [scroll]{
+        height: 100%;
+        overflow-y: scroll;
+    }
 }

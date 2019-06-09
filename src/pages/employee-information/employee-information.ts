@@ -1,26 +1,17 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides, Platform, ModalController } from 'ionic-angular';
-import { employee } from '../../common/entity';
-// import dayGridPlugin from '@fullcalendar/daygrid';
-// import timeGridPlugin from '@fullcalendar/timegrid';
-// import listPlugin from '@fullcalendar/list';
+import { IonicPage, ModalController, NavController, NavParams, Platform, Slides } from 'ionic-angular';
+
+import { CalendarComponent } from 'ng-fullcalendar';
 import { EmployeeInputPage } from '../employee-input/employee-input';
 import { OptionsInput } from '@fullcalendar/core';
-import { CalendarComponent } from 'ng-fullcalendar';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import listPlugin from '@fullcalendar/list';
-import resourceTimeline from '@fullcalendar/resource-timeline';
-import interactionPlugin from '@fullcalendar/interaction';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { Utils } from '../../common/utils';
-
-/**
- * Generated class for the EmployeeInformationPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import dayGridPlugin from '@fullcalendar/daygrid';
+import { employee } from '../../common/entity';
+import interactionPlugin from '@fullcalendar/interaction';
+import listPlugin from '@fullcalendar/list';
+import resourceTimeline from '@fullcalendar/resource-timeline';
+import timeGridPlugin from '@fullcalendar/timegrid';
 
 @IonicPage()
 @Component({

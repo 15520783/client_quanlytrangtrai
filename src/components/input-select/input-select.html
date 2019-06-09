@@ -4,6 +4,7 @@
               [attr.err-mode]="(!validControl.valid && active)?'':null">
     <ion-label stacked>{{label}}</ion-label>
     <ion-select 
+        [disabled] = "disabled"
         [multiple] = "multiple"
         [(ngModel)]="validControl.value" 
         [selectOptions]="selectOptions"

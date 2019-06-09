@@ -1,10 +1,10 @@
+import { API, CONFIG, KEY } from '../../common/const';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { breeds, issues, medicines, pregnancyStatus, breedingType, healthStatus, diseases, farmTypes, foodType, foods, medicineType, medicineUnits, priceCodes, footType, gentialType, markTypes, roles, status, round, foodUnits, matingRole, section } from '../../common/entity';
-import { CONFIG, API, KEY } from '../../common/const';
-import { Utils } from '../../common/utils';
-import { Events } from 'ionic-angular';
+import { breedingType, breeds, diseases, farmTypes, foodType, foodUnits, foods, footType, gentialType, healthStatus, issues, markTypes, matingRole, medicineType, medicineUnits, medicines, pregnancyStatus, priceCodes, regencies, roles, round, section, status, warehouse_type } from '../../common/entity';
 
+import { Events } from 'ionic-angular';
+import { Injectable } from '@angular/core';
+import { Utils } from '../../common/utils';
 
 export class setting {
   pregnancyStatus: Array<pregnancyStatus> = [];
@@ -23,11 +23,12 @@ export class setting {
   footType: Array<footType> = [];
   gentialType: Array<gentialType> = [];
   issues: Array<issues> = [];
+  regencies:Array<regencies> = [];
   roles: Array<roles> = [];
   status: Array<status> = [];
   rounds: Array<round> = [];
   matingRoles: Array<matingRole> = [];
-
+  warehouseTypes: Array<warehouse_type> = [];
   constructor() {
 
   }

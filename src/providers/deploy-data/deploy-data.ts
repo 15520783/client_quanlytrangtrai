@@ -1,17 +1,17 @@
+import { KEY, VARIABLE } from '../../common/const';
+import { births, breedings, foodWareHouse, mating, matingRole, medicineWarehouse, pig, sperms, status } from '../../common/entity';
+
+import { EmployeesProvider } from '../employees/employees';
+import { FarmsProvider } from '../farms/farms';
+import { HousesProvider } from '../houses/houses';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HousesProvider } from '../houses/houses';
-import { PigsProvider } from '../pigs/pigs';
-import { FarmsProvider } from '../farms/farms';
 import { PartnerProvider } from '../partner/partner';
-import { EmployeesProvider } from '../employees/employees';
+import { PigsProvider } from '../pigs/pigs';
 import { SectionsProvider } from '../sections/sections';
 import { SettingsProvider } from '../settings/settings';
-import { pig, foodWareHouse, medicineWarehouse, status, breedings, sperms, matingRole, mating, births } from '../../common/entity';
-import { WarehousesProvider } from '../warehouses/warehouses';
-import { VARIABLE, KEY } from '../../common/const';
 import { Utils } from '../../common/utils';
-
+import { WarehousesProvider } from '../warehouses/warehouses';
 
 @Injectable()
 export class DeployDataProvider {
@@ -162,6 +162,7 @@ export class DeployDataProvider {
   }
 
 
+
   /**
    *  Lấy danh sách khu cho ion-select
    */
@@ -278,6 +279,20 @@ export class DeployDataProvider {
   }
 
   /**
+   * Lấy danh sách loại kho cho ion-select
+   */
+  get_warehouse_types_list_for_select(){
+    let warehouseTypes_select = [];
+    this.settingProvider.setting.warehouseTypes.forEach((type) => {
+      warehouseTypes_select.push({
+        name: type.name,
+        value: type.id
+      })
+    })
+    return warehouseTypes_select;
+  }
+
+  /**
    * Lấy danh sách giống cho ion-select
    */
   get_breed_list_for_select() {
@@ -387,6 +402,16 @@ export class DeployDataProvider {
     return this.employeeProvider.employees.filter((emp) => {
       return emp.id == empId ? true : false;
     })[0];
+  }
+
+  /**
+   * Lấy danh sách  nhân viên thuộc trang trại
+   * @param farmId 
+   */
+  get_employees_of_farm(farmId:string){
+    return this.employeeProvider.employees.filter((emp)=>{
+      return emp.farm.id == farmId ? true:false;
+    });
   }
 
   /**

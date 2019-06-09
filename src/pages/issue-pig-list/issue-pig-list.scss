@@ -52,4 +52,9 @@ page-issue-pig-list {
             margin:0px!important;
         }
     }
+
+    [scroll]{
+        height: 100%;
+        overflow-y: scroll;
+    }
 }

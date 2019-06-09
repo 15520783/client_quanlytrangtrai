@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ModalController, Platform } from 'ionic-angular';
 import { section, house, farm } from '../../common/entity';
 import { SectionsProvider } from '../../providers/sections/sections';
 import { Utils } from '../../common/utils';
@@ -33,6 +33,7 @@ export class SectionsPage {
     public modalCtrl: ModalController,
     public deployData: DeployDataProvider,
     public houseProvider: HousesProvider,
+    public platform: Platform,
     public util: Utils,
   ) {
     this.init();

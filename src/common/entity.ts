@@ -635,7 +635,7 @@ class feeds extends base {
 
 class InputObject {
 	name: string;
-	type: "input-text" | "input-select" | "input-date";
+	type: "input-text" | "input-select" | "input-date" | "input-select-target";
 	label: string;
 	isRequire: boolean = false;
 	isNumber: boolean = false;

@@ -4,8 +4,10 @@
       <ion-title>{{warehouse.name}}</ion-title>
     </ion-toolbar>
   </ion-navbar>
-  <ion-toolbar showWhen="core" class="pl-10">
+  <ion-toolbar showWhen="core" class="pl-10" text-right>
     <button ion-button mode='ios' color="secondary">Lịch sử xuất, sử dụng</button>
+    <button ion-button mode='ios' color="secondary" (tap)="edit()">Chỉnh sửa</button>
+    <button ion-button mode='ios' color="danger" (tap)="remove()">Xóa</button>
   </ion-toolbar>
   <ion-segment [(ngModel)]="type" scrollable showWhen='ios,android'>
     <ion-segment-button value="0" (tap)="selectedTab(0)">Thông tin kho</ion-segment-button>
@@ -28,15 +30,11 @@
             </ion-item>
             <ion-item>
               <ion-label stacked>Loại kho</ion-label>
-              <ion-input text-wrap type="text" readonly [(ngModel)]="warehouse.type_id"></ion-input>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="warehouse.type.name"></ion-input>
             </ion-item>
-            <!-- <ion-item>
-              <ion-label stacked>Trực thuộc</ion-label>
-              <ion-input text-wrap type="text" readonly [(ngModel)]="warehouse.unit_id"></ion-input>
-            </ion-item> -->
             <ion-item>
               <ion-label stacked>Phụ trách kho</ion-label>
-              <ion-input text-wrap type="text" readonly [(ngModel)]="warehouse.manager.name"></ion-input>
+              <ion-input text-wrap type="text" *ngIf="warehouse.manager" readonly [(ngModel)]="warehouse.manager.name"></ion-input>
             </ion-item>
             <ion-item>
               <ion-label stacked>Tổng cám</ion-label>

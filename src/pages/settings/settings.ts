@@ -1,16 +1,17 @@
-import { Component, ViewChild, Renderer } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides, Events, Platform } from 'ionic-angular';
+import { Component, Renderer, ViewChild } from '@angular/core';
+import { Events, IonicPage, NavController, NavParams, Platform, Slides } from 'ionic-angular';
+
+import { BreedingTypesRole } from '../../role-input/breeding_type';
+import { BreedsRole } from '../../role-input/breeds';
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { DiseasesRole } from '../../role-input/diseases';
 import { EmployeesProvider } from '../../providers/employees/employees';
 import { PregnancyStatusRole } from '../../role-input/pregnancy_status';
-import { SettingsProvider } from '../../providers/settings/settings';
-import { BreedsRole } from '../../role-input/breeds';
-import { BreedingTypesRole } from '../../role-input/breeding_type';
-import { SettingUtilComponent } from '../../components/setting-util/setting-util';
-import { StatusPigRole } from '../../role-input/statusPig';
-import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
-import { matingRole } from '../../common/entity';
-import { DiseasesRole } from '../../role-input/diseases';
 import { SettingRolePage } from '../setting-role/setting-role';
+import { SettingUtilComponent } from '../../components/setting-util/setting-util';
+import { SettingsProvider } from '../../providers/settings/settings';
+import { StatusPigRole } from '../../role-input/statusPig';
+import { matingRole } from '../../common/entity';
 
 @IonicPage()
 @Component({
@@ -124,6 +125,16 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.farmTypes,
+      },
+      warehouseTypes: {
+        title: 'Danh sách loại kho',
+        placeholderSearch: 'Tìm kiếm loại kho',
+        filter_default: ["name", "description"],
+        attributes: [
+          { name: "description", label: 'Mô tả' },
+        ],
+        mainAttribute: 'name',
+        data: this.settingProvider.setting.warehouseTypes,
       },
       foodType: {
         title: 'Danh sách loại thức ăn',

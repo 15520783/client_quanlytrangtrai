@@ -1,12 +1,12 @@
-import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { Content, NavController, Events, NavParams } from 'ionic-angular';
-import { FormControl } from '@angular/forms';
-import { FilterProvider } from '../../providers/filter/filter';
-import { SettingInputUtilComponent } from '../setting-input-util/setting-input-util';
-import { Utils } from '../../common/utils';
-import { KEY } from '../../common/const';
-import { SettingsProvider } from '../../providers/settings/settings';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Content, Events, NavController, NavParams } from 'ionic-angular';
 
+import { FilterProvider } from '../../providers/filter/filter';
+import { FormControl } from '@angular/forms';
+import { KEY } from '../../common/const';
+import { SettingInputUtilComponent } from '../setting-input-util/setting-input-util';
+import { SettingsProvider } from '../../providers/settings/settings';
+import { Utils } from '../../common/utils';
 
 @Component({
   selector: 'setting-util',
@@ -25,7 +25,7 @@ export class SettingUtilComponent {
   @Input() editButtonLabel: string = 'Sửa';
   @Input() removeButtonLabel: string = 'Xóa';
   @Input() roleInput: any;
-  @Input() extraButtons : any;
+  @Input() extraButtons: any;
 
   // @Input() options: {
   //   data: Array<any>,
@@ -117,42 +117,44 @@ export class SettingUtilComponent {
   }
 
   add() {
-    this.roleInput.clear();
-    this.navCtrl.push(SettingInputUtilComponent,
-      {
-        insertMode: true,
-        roleInput: this.roleInput
-      }
-    )
 
-    this.events.unsubscribe('callback');
-    this.events.subscribe('callback', (data) => {
+    let callback = data => {
       if (data) {
         this.data = data;
         this.options.hasOwnProperty('customData') ? this.options.customData(this.data) : null;
         this.setFilteredItems();
-        this.events.unsubscribe('callback');
+        this.navCtrl.pop();
       }
-    })
+    }
+    this.roleInput.clear();
+    this.navCtrl.push(SettingInputUtilComponent,
+      {
+        insertMode: true,
+        roleInput: this.roleInput,
+        callback: callback
+      }
+    )
   }
 
 
   edit(item) {
+    let callback = data => {
+      if (data) {
+        this.data = data;
+        this.setFilteredItems();
+        this.roleInput.clear();
+        this.navCtrl.pop();
+      }
+    }
+
     this.roleInput.object = item;
     this.navCtrl.push(SettingInputUtilComponent,
       {
         editMode: true,
         roleInput: this.roleInput,
+        callback: callback
       }
     )
-    this.events.subscribe('callback', (data) => {
-      if (data) {
-        this.data = data;
-        this.setFilteredItems();
-        this.roleInput.clear();
-        this.events.unsubscribe('callback');
-      }
-    })
   }
 
   remove(item) {

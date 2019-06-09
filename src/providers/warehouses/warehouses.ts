@@ -1,10 +1,11 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { warehouse, medicineWarehouse } from '../../common/entity';
 import { CONFIG, KEY } from '../../common/const';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { medicineWarehouse, warehouse } from '../../common/entity';
+
 import { API } from '../../common/const';
-import { Utils } from '../../common/utils';
 import { Events } from 'ionic-angular';
+import { Injectable } from '@angular/core';
+import { Utils } from '../../common/utils';
 
 @Injectable()
 export class WarehousesProvider {
@@ -97,10 +98,99 @@ export class WarehousesProvider {
    * Lấy danh sách thuốc lưu trữ của một loại thuốc
    * @param medicineId 
    */
-  getMedicineWarehouseOfMedicine(medicineId:string){
+  getMedicineWarehouseOfMedicine(farmId: string, medicineId: string) {
     return this.http
-    .get<Array<medicineWarehouse>>(API.GET_MEDICINEWAREHOUSE_OF_MEDICINE+'/'+medicineId)
+      .get<Array<medicineWarehouse>>(API.GET_MEDICINEWAREHOUSE_OF_MEDICINE + '/' + farmId + '/' + medicineId)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+
+  /**
+   * Tạo mới một kho
+   * @param objBody 
+   */
+  createNewWarehouse(objBody:warehouse){
+    return this.http
+    .post<warehouse>(API.CREATE_WAREHOUSE,objBody)
     .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+    .toPromise()
+    .then((new_warehouse)=>{
+      if(new_warehouse){
+        this.util.getKey(KEY.WAREHOUSES).then((warehouses:Array<warehouse>)=>{
+          warehouses.push(new_warehouse);
+          this.util.setKey(KEY.WAREHOUSES,warehouses);
+        })
+        this.warehouses.push(new_warehouse);
+      }
+      return new_warehouse;
+    })
+    .catch((err)=>{
+      return err;
+    })
+  }
+
+  /**
+   * Cập nhật một kho
+   * @param objBody 
+   */
+  updateWarehouse(objBody:warehouse){
+    return this.http
+    .put<warehouse>(API.CREATE_WAREHOUSE,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise()
+    .then((updated_warehouse)=>{
+      if(updated_warehouse){
+        this.util.getKey(KEY.WAREHOUSES).then((warehouses:Array<warehouse>)=>{
+          let idx = warehouses.findIndex(_warehouse=>_warehouse.id == updated_warehouse.id);
+          if(idx > -1){
+            warehouses[idx] = updated_warehouse;
+            this.util.setKey(KEY.WAREHOUSES,warehouses);
+          }
+        })
+        let idx =this.warehouses.findIndex(_warehouse=>_warehouse.id == updated_warehouse.id);
+        if(idx>-1){
+          this.warehouses[idx] = updated_warehouse;
+        }
+      }
+      return updated_warehouse;
+    })
+    .catch((err)=>{
+      return err;
+    })
+  }
+
+  /**
+   * Xóa kho
+   * @param objBody 
+   */
+  deleteWarehouse(objBody:warehouse){
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http
+      .delete(API.DELETE_FARM, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise()
+      .then((isOK)=>{
+        if(isOK){
+          this.util.getKey(KEY.WAREHOUSES).then((warehouses:Array<warehouse>)=>{
+            let idx = warehouses.findIndex(_warehouse=>_warehouse.id == objBody.id);
+            if(idx > -1){
+              warehouses.splice(idx,1);
+              this.util.setKey(KEY.WAREHOUSES,warehouses);
+            }
+          })
+          let idx = this.warehouses.findIndex(_warehouse=>_warehouse.id == objBody.id);
+          if(idx > -1){
+            this.warehouses.splice(idx,1);
+          }
+        }
+        return isOK;
+      })
+      .catch((err)=>{
+        return err;
+      })
   }
 }

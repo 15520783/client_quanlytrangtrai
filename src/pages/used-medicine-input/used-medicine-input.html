@@ -72,7 +72,7 @@
                       [label]="'Chọn thuốc'" [(data)]="medicines"
                       [errorMessage_Required]="'Thuốc là hạng mục bắt buộc'" 
                       [targertCmp]="'medicines'"
-                      (valueChange)="medicineChange($event,usedMedicine,idx)">
+                      (valueChange)="medicineChange(farmId,$event,usedMedicine,idx)">
                     </input-select-target>
 
                     <input-select-target [(validControl)]="credentialsForm2.controls['medicineWarehouse'+idx]" 

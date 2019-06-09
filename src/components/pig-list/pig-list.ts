@@ -1,13 +1,13 @@
-import { Component, ViewChild, Output, Input, EventEmitter } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { pig, house } from '../../common/entity';
-import { HousesProvider } from '../../providers/houses/houses';
-import { NavParams, Content, ModalController, ViewController, NavController, Platform } from 'ionic-angular';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Content, ModalController, NavController, NavParams, Platform, ViewController } from 'ionic-angular';
+import { house, pig } from '../../common/entity';
+
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { FilterProvider } from '../../providers/filter/filter';
+import { FormControl } from '@angular/forms';
+import { HousesProvider } from '../../providers/houses/houses';
 import { PigViewPage } from '../../tabs/pig-view/pig-view';
 import { VARIABLE } from '../../common/const';
-import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
-
 
 @Component({
   selector: 'pig-list',
@@ -80,11 +80,7 @@ export class PigListComponent {
       this.canEdit = this.navParams.data.canEdit;
     }
 
-    this.houseProvider.getAllHouses()
-      .then((data: any) => {
-        this.houses = data;
-      })
-      .catch((err) => { console.log(err) });
+    this.houses = this.houseProvider.houses;
   }
 
   ngAfterViewInit(): void {

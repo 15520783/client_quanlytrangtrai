@@ -20,7 +20,7 @@
 </ion-header>
 
 <ion-content no-padding>
-  <ion-item-group>
+  <ion-item-group [attr.scroll]="platform.is('core')?'':null">
     <ion-item-divider sticky="true">Danh sách khu</ion-item-divider>
     <ion-list no-lines>
       <ion-item-sliding *ngFor="let section of sections" (click)="activeItem(section)">

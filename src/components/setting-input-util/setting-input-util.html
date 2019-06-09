@@ -30,6 +30,7 @@
                         [placeholder]="field.placeholder"
                         [(data)]="field.data"
                         [value]="field.setValue"
+                        [disabled] ="(navParams.data.editMode && field.notUpdate)?true:false"
                         [selectOptions]="field.selectOptions?field.selectOptions:[]">
             </input-select>
 
@@ -40,6 +41,16 @@
                         [placeholder]="field.placeholder"
                         [active]= "submitAttempt">
             </input-date>
+
+            <input-select-target *ngIf="field.type == 'input-select-target'" 
+              [(validControl)]="credentialsForm.controls[field.name]" 
+              [active]="submitAttempt"
+              [placeholder]="field.placeholder" 
+              [label]="field.label" 
+              [errorMessage_Required]="field.message.isRequire"
+              [(data)]="field.data" 
+              [targertCmp]="field.targetCmpName">
+            </input-select-target>
         </span>
       </ion-list>
 

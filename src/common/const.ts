@@ -21,7 +21,7 @@ const SETTING_STORAGE_KEY = {
     BREEDS: 'breeds',
     BREEDING_TYPE: 'breedingType',
     STATUS_PIG: 'status',
-    DISEASES:'diseases'
+    DISEASES: 'diseases'
 }
 
 const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -132,43 +132,50 @@ const VARIABLE = {
         INTERNAL_EXPORT: 'EXT-EX',
         SALING_EXPORT: 'SAL-EX',
     },
-    MENU_FIELDS :{
-        TONG_QUAN_TRANG_TRAI:{
-            codeName:"tong_quan_trang_trai",
-            name:"Tổng quan trang trại"
+    MENU_FIELDS: {
+        TONG_QUAN_TRANG_TRAI: {
+            codeName: "tong_quan_trang_trai",
+            name: "Tổng quan trang trại"
         },
-        TONG_QUAN_KHU:{
-            codeName:"tong_quan_khu",
-            name:"Tổng quan khu"
+        TONG_QUAN_KHU: {
+            codeName: "tong_quan_khu",
+            name: "Tổng quan khu"
         },
-        QUAN_LY_DANH_SACH_HEO:{
-            codeName:"quan_ly_danh_sach_heo",
-            name:"Quản lý danh sách heo"
+        QUAN_LY_DANH_SACH_HEO: {
+            codeName: "quan_ly_danh_sach_heo",
+            name: "Quản lý danh sách heo"
         },
-        QUAN_LY_DANH_SACH_NHAN_VIEN:{
-            codeName:"quan_ly_danh_sach_nhan_vien",
-            name:"Quản lý danh sách nhân viên"
+        QUAN_LY_DANH_SACH_NHAN_VIEN: {
+            codeName: "quan_ly_danh_sach_nhan_vien",
+            name: "Quản lý danh sách nhân viên"
         },
-        QUAN_LY_DANH_SACH_DOI_TAC:{
-            codeName:"quan_ly_danh_sach_doi_tac",
-            name:"Quản lý danh sách đối tác"
+        QUAN_LY_DANH_SACH_DOI_TAC: {
+            codeName: "quan_ly_danh_sach_doi_tac",
+            name: "Quản lý danh sách đối tác"
         },
-        QUAN_LY_DANH_SACH_KHO:{
-            codeName:"quan_ly_danh_sach_kho",
-            name:"Quản lý danh sách kho"
+        QUAN_LY_DANH_SACH_KHO: {
+            codeName: "quan_ly_danh_sach_kho",
+            name: "Quản lý danh sách kho"
         },
-        QUAN_LY_HOAT_DONG:{
-            codeName:"quan_ly_hoat_dong",
-            name:"Quản lý hoạt động"
+        QUAN_LY_HOAT_DONG: {
+            codeName: "quan_ly_hoat_dong",
+            name: "Quản lý hoạt động"
         },
-        QUAN_LY_THIET_LAP:{
-            codeName:"quan_ly_thiet_lap",
-            name:"Quản lý thiết lập"
+        QUAN_LY_THIET_LAP: {
+            codeName: "quan_ly_thiet_lap",
+            name: "Quản lý thiết lập"
         },
-        QUAN_LY_BANG_KE_HOACH:{
-            codeName:"quan_ly_bang_ke_hoach",
-            name:"Quản lý bảng kế hoạch"
+        QUAN_LY_BANG_KE_HOACH: {
+            codeName: "quan_ly_bang_ke_hoach",
+            name: "Quản lý bảng kế hoạch"
         }
+    },
+    WAREHOUSE_TYPE: [
+        { id: 0, name: 'Kho cám', value: 0 },
+        { id: 1, name: 'Kho thuốc', value: 1 }
+    ],
+    REGENCIES: {
+        quan_ly_kho: { id: '13', name: "Thủ kho trại" }
     }
 
 }
@@ -200,8 +207,8 @@ const API = {
     GET_ALL_FORWARDING_PIG_INVOICE: '/api/invoicespig/forwarding/list',
     GET_SCHEDULE: '/api/schedule/list',
     GET_INFO_EMPLOYEE: '/api/employees/',
-    GET_ISSUE_PIG_OF_SECTION:'/api/issuespigs/listcurrentissues',   //{idfarm}/{idsection}
-    GET_ISSUE_PIG_OF_FARMS:'/api/issuespigs/list',   //{idfarm}/{idsection}
+    GET_ISSUE_PIG_OF_SECTION: '/api/issuespigs/listcurrentissues',   //{idfarm}/{idsection}
+    GET_ISSUE_PIG_OF_FARMS: '/api/issuespigs/list',   //{idfarm}/{idsection}
     GET_FORECASTED_DISEASES: '/api/issuespigs/forecastdiseases',    //{idfarm}/{idsection}
     GET_MEDICINES_OF_DISEASE: '/api/medicinedisease/disease',  //{diseaseId}
     GET_MEDICINEWAREHOUSE_OF_MEDICINE: '/api/medicinewarehouse/medicine', //{{medicineId}}
@@ -215,6 +222,9 @@ const API = {
     CREATE_HOUSE: '/api/houses/',
     UPDATE_HOUSE: '/api/houses/',
 
+    CREATE_WAREHOUSE: '/api/warehouses/',
+    UPDATE_WAREHOUSE: '/api/warehouses/',
+
     CREATE_PREGNANCY_STATUS: '/api/pregnancystatus/',
     DELETE_PREGNANCY_STATUS: '/api/pregnancystatus/',
     UPDATE_PREGNANCY_STATUS: '/api/pregnancystatus/',
@@ -223,9 +233,9 @@ const API = {
     DELETE_PIG_STATUS: '/api/status/',
     UPDATE_PIG_STATUS: '/api/status/',
 
-    CREATE_DISEASE:'/api/diseases/',
-    UPDATE_DISEASE:'/api/diseases/',
-    DELETE_DISEASE:'/api/diseases/',
+    CREATE_DISEASE: '/api/diseases/',
+    UPDATE_DISEASE: '/api/diseases/',
+    DELETE_DISEASE: '/api/diseases/',
 
 
     CREATE_BREED: '/api/breeds/',

@@ -1,8 +1,10 @@
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { IonicPage, ModalController, NavController, NavParams } from 'ionic-angular';
+import { employee, farm } from '../../common/entity';
+
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { farm } from '../../common/entity';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { EmployeesProvider } from '../../providers/employees/employees';
 
 @IonicPage()
 @Component({
@@ -16,16 +18,19 @@ export class FarmInputPage {
   public FarmTypes: any = [];
 
   public farm = new farm();
+  public employees:Array<employee> = [];
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private formBuilder: FormBuilder,
     public modalCtrl: ModalController,
-    public deployData:DeployDataProvider
+    public deployData:DeployDataProvider,
+    public employeeProvider:EmployeesProvider
   ) {
     this.FarmTypes = this.deployData.get_farm_types_list_for_select();
-
+    this.employees = this.employeeProvider.employees;
+    
     if (this.navParams.data.farm) {
       this.farm = this.navParams.data.farm;
       this.farm.founding = new Date(this.navParams.data.farm.founding).toISOString();

@@ -1,9 +1,10 @@
-import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
-import { employee } from '../../common/entity';
-import { FormControl } from '@angular/forms';
-import { FilterProvider } from '../../providers/filter/filter';
-import { Content, ModalController, NavParams, ViewController, Events } from 'ionic-angular';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Content, Events, ModalController, NavParams, ViewController } from 'ionic-angular';
+
 import { EmployeeInformationPage } from '../../pages/employee-information/employee-information';
+import { FilterProvider } from '../../providers/filter/filter';
+import { FormControl } from '@angular/forms';
+import { employee } from '../../common/entity';
 
 @Component({
   selector: 'employee-list',
@@ -15,8 +16,8 @@ export class EmployeeListComponent {
   @Input() data: Array<employee> = [];
   @Input() selectMode: boolean = false;
 
-  @Output()  closeMenuEvent = new EventEmitter();
-  
+  @Output() closeMenuEvent = new EventEmitter();
+
   public page_Idx: number = 1;
   public page_Total: number = 0;
   public rows: Array<employee> = [];
@@ -36,18 +37,18 @@ export class EmployeeListComponent {
     public events: Events
   ) {
     console.log('Hello EmployeeListComponent Component');
-    if(this.navParams.data){
+    if (this.navParams.data) {
       this.data = this.navParams.data.employees;
       this.selectMode = this.navParams.data.selectMode;
     }
 
-    this.events.subscribe('viewEmployee:open',()=>{
+    this.events.subscribe('viewEmployee:open', () => {
       this.content.resize();
     })
   }
 
   ngAfterViewInit(): void {
-    this.setFilteredItems();                  
+    this.setFilteredItems();
   }
 
   public setFilteredItems() {
@@ -60,17 +61,21 @@ export class EmployeeListComponent {
   }
 
   public filterItems(searchItem) {
-    this.filterProvider.input = this.data;
-    // this.filterProvider.searchWithInclude.gender = this.genderFilter;/
-    // this.filterProvider.searchWithInclude.house_id = this.houseFilter;
-    this.filterProvider.searchText = searchItem;
-    this.filterProvider.searchWithText = this.filter_default;
+    if (this.data.length) {
+      this.filterProvider.input = this.data;
+      // this.filterProvider.searchWithInclude.gender = this.genderFilter;/
+      // this.filterProvider.searchWithInclude.house_id = this.houseFilter;
+      this.filterProvider.searchText = searchItem;
+      this.filterProvider.searchWithText = this.filter_default;
 
-    this.filterProvider.searchWithRange = {
-      // origin_sum_weight : { min: this.origin_sum_weight.lower, max: this.origin_sum_weight.upper },
-      // origin_avg_weight : { min: this.origin_avg_weight.lower, max: this.origin_avg_weight.upper }
+      this.filterProvider.searchWithRange = {
+        // origin_sum_weight : { min: this.origin_sum_weight.lower, max: this.origin_sum_weight.upper },
+        // origin_avg_weight : { min: this.origin_avg_weight.lower, max: this.origin_avg_weight.upper }
+      }
+      return this.filterProvider.filter();
+    }else{
+      return [];
     }
-    return this.filterProvider.filter();
   }
 
   loadData(infiniteScroll) {
@@ -84,10 +89,10 @@ export class EmployeeListComponent {
     }, 800);
   }
 
-  select(employee){
-    if(this.selectMode){
+  select(employee) {
+    if (this.selectMode) {
       this.viewCtrl.dismiss(employee);
-    }else{
+    } else {
       this.viewDeltail(employee);
     }
   }
@@ -101,11 +106,11 @@ export class EmployeeListComponent {
     modal.present();
   }
 
-  scrollToTop(){
+  scrollToTop() {
     this.content.scrollToTop();
   }
 
-  closeMenu(){
-    this.closeMenuEvent.emit({close:true});
+  closeMenu() {
+    this.closeMenuEvent.emit({ close: true });
   }
 }

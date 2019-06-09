@@ -1,18 +1,18 @@
-import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { group, employee, pig, sperms, diseases, medicines, medicineWarehouse } from '../../common/entity';
-import { Utils } from '../../common/utils';
-import { ModalController, Events } from 'ionic-angular';
-import { KEY } from '../../common/const';
-import { PigGroupListComponent } from '../pig-group-list/pig-group-list';
-import { EmployeeListComponent } from '../employee-list/employee-list';
-import { PigListComponent } from '../pig-list/pig-list';
-import { PigsProvider } from '../../providers/pigs/pigs';
-import { EmployeesProvider } from '../../providers/employees/employees';
-import { SpermListPage } from '../../pages/sperm-list/sperm-list';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Events, ModalController } from 'ionic-angular';
+import { diseases, employee, group, medicineWarehouse, medicines, pig, sperms } from '../../common/entity';
+
 import { DiseaseListPage } from '../../pages/disease-list/disease-list';
+import { EmployeeListComponent } from '../employee-list/employee-list';
+import { EmployeesProvider } from '../../providers/employees/employees';
+import { KEY } from '../../common/const';
 import { MedicineListPage } from '../../pages/medicine-list/medicine-list';
 import { MedicineWarehouseListPage } from '../../pages/medicine-warehouse-list/medicine-warehouse-list';
-
+import { PigGroupListComponent } from '../pig-group-list/pig-group-list';
+import { PigListComponent } from '../pig-list/pig-list';
+import { PigsProvider } from '../../providers/pigs/pigs';
+import { SpermListPage } from '../../pages/sperm-list/sperm-list';
+import { Utils } from '../../common/utils';
 
 @Component({
   selector: 'input-select-target',
@@ -56,7 +56,8 @@ export class InputSelectTargetComponent {
 
         case "employee": {
           this.value = this.validControl.value;
-          this.value_visible = this.employeeProvider.getEmployeeByID(this.validControl.value).name;
+          this.value_visible = this.employeeProvider.getEmployeeByID(this.validControl.value) ? this.employeeProvider.getEmployeeByID(this.validControl.value).name : '';
+          // this.value_visible = this.validControl.value ? this.value.name : '';
           break;
         }
 
@@ -96,23 +97,22 @@ export class InputSelectTargetComponent {
     public modalCtrl: ModalController,
     public pigProvider: PigsProvider,
     public employeeProvider: EmployeesProvider,
-    public event:Events
+    public event: Events
   ) {
-    
+
   }
 
   ngAfterViewInit(): void {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
-    console.log('TESSTT');
     switch (this.targertCmp) {
       case "medicineWarehouses": {
-        
-        this.event.subscribe('input-select-target:medicineWarehouses',(event)=>{
+
+        this.event.subscribe('input-select-target:medicineWarehouses', (event) => {
           console.log('TEST');
           this.value = this.validControl.value;
           this.value_visible = (this.validControl.value && this.value.medicine.name) ?
-          this.value.medicine.name + ' - Kho: ' + this.value.warehouse.name + ' - Chứng từ: ' + this.value.invoice.invoiceNo : '';
+            this.value.medicine.name + ' - Kho: ' + this.value.warehouse.name + ' - Chứng từ: ' + this.value.invoice.invoiceNo : '';
         })
         break;
       }
@@ -142,9 +142,21 @@ export class InputSelectTargetComponent {
           });
           break;
         case 'employee':
-          this.util.getKey(KEY.EMPLOYEES).then((data) => {
-            modal = this.modalCtrl.create(
-              EmployeeListComponent, { groups: data, employees: data, pigs: data, selectMode: true });
+          // this.util.getKey(KEY.EMPLOYEES).then((data) => {
+          //   modal = this.modalCtrl.create(
+          //     EmployeeListComponent, { groups: data, employees: data, pigs: data, selectMode: true });
+          //   modal.onDidDismiss((employee: employee) => {
+          //     if (employee) {
+          //       this.valueChange.emit(employee);
+          //       this.value = employee.id;
+          //       this.value_visible = employee.name;
+          //       this.validControl.setErrors(null);
+          //     }
+          //   })
+          //   modal.present();
+          // });
+          if (this.data) {
+            modal = this.modalCtrl.create(EmployeeListComponent, { groups: this.data, employees: this.data, pigs: this.data, selectMode: true });
             modal.onDidDismiss((employee: employee) => {
               if (employee) {
                 this.valueChange.emit(employee);
@@ -154,7 +166,7 @@ export class InputSelectTargetComponent {
               }
             })
             modal.present();
-          });
+          }
           break;
         case 'pigs':
           if (this.data) {

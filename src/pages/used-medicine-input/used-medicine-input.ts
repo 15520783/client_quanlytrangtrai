@@ -20,6 +20,7 @@ import { ActivitiesProvider } from '../../providers/activities/activities';
 export class UsedMedicineInputPage {
 
   public sectionId: string;
+  public farmId: string;
 
   public credentialsForm1: FormGroup;
   public credentialsForm2: FormGroup;
@@ -60,7 +61,7 @@ export class UsedMedicineInputPage {
     public event: Events
   ) {
 
-    this.util.getKey(KEY.EMPID).then((employeeId)=>{
+    this.util.getKey(KEY.EMPID).then((employeeId) => {
       this.employee.setID(employeeId);
     })
 
@@ -76,8 +77,9 @@ export class UsedMedicineInputPage {
 
     this.unit = this.deployData.get_medicineUnit_list_for_select();
 
-    if (this.navParams.data.sectionId) {
+    if (this.navParams.data.farmId && this.navParams.data.sectionId) {
       this.sectionId = this.navParams.data.sectionId;
+      this.farmId = this.navParams.data.farmId;
     }
 
     if (this.navParams.data.issues && this.navParams.data.groupByIssues) {
@@ -178,10 +180,10 @@ export class UsedMedicineInputPage {
     }
   }
 
-  medicineChange(medicine: medicines, item, idx) {
+  medicineChange(farmId: string, medicine: medicines, item, idx) {
     if (medicine) {
       this.util.openBackDrop();
-      this.warehouseProvider.getMedicineWarehouseOfMedicine(medicine.id)
+      this.warehouseProvider.getMedicineWarehouseOfMedicine(farmId, medicine.id)
         .then((medicineWarehouses: Array<medicineWarehouse>) => {
           if (medicineWarehouses) {
             item['medicineWarehouseList'] = medicineWarehouses;
@@ -247,35 +249,35 @@ export class UsedMedicineInputPage {
       })
 
       let param = {
-        disease : this.disease,
+        disease: this.disease,
         date: this.date,
         employee: this.employee,
         description: this.description
       }
 
       let pigs = this.deployData.get_pigs_by_sectionId(this.sectionId);
-      let usedMedicineParams:Array<usedMedicine> = [];
+      let usedMedicineParams: Array<usedMedicine> = [];
 
       pigs.forEach(pig => {
         this.usedMedicineList.forEach(item => {
-          let temp:usedMedicine = this.util.deepClone(item);
+          let temp: usedMedicine = this.util.deepClone(item);
           temp.forPigId = pig;
           usedMedicineParams.push(temp);
         })
       });
 
       console.log(usedMedicineParams);
-      
+
       this.activitiesProvider.createUsedMedicineList(usedMedicineParams)
-      .then((newUsedMedicineList)=>{
-        if(newUsedMedicineList){
-          this.navParams.get('callback')(newUsedMedicineList);
-          this.navCtrl.pop();
-        }
-      })
-      .catch((err)=>{
-        console.log(err);
-      })
+        .then((newUsedMedicineList) => {
+          if (newUsedMedicineList) {
+            this.navParams.get('callback')(newUsedMedicineList);
+            this.navCtrl.pop();
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        })
     }
   }
 }

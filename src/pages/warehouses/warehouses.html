@@ -12,11 +12,11 @@
           </input-select>
         </ion-col>
         <ion-col text-right>
-          <button ion-button mode='ios' color="secondary" (tap)="addNewFarm()">Thêm kho</button>
+          <button ion-button mode='ios' color="secondary" (tap)="add()">Thêm kho</button>
         </ion-col>
       </ion-row>
     </ion-toolbar>
-    <ion-segment [(ngModel)]="type" scrollable showWhen='ios,android'>
+    <ion-segment [(ngModel)]="type" scrollable showWhen='ios,android' class="main-bg">
       <ion-segment-button value="0" (tap)="selectedTab(0)">Kho cám</ion-segment-button>
       <ion-segment-button value="1" (tap)="selectedTab(1)">Kho thuốc</ion-segment-button>
     </ion-segment>
@@ -25,62 +25,24 @@
 </ion-header>
 
 <ion-content no-padding showWhen="core">
-  <ion-row>
-    <ion-col col-lg-6 col-md-6 col-sm-12 col-xs-12>
-      <ion-card mode='ios'>
-        <ion-card-header>Kho cám ({{food_warehouses.length}} kho)
-        </ion-card-header>
-        <ion-card-content no-padding>
-          <ion-scroll scrollY="true" class="scroll-custom">
-            <ion-item-group>
-              <ion-list>
-                <button ion-item *ngFor="let warehouse of food_warehouses" (tap)="viewDeltailFoodWarehouse(warehouse)">
-                  <ion-avatar item-start>
-                    <ion-icon name="app-warehouse" font28></ion-icon>
-                  </ion-avatar>
-                  <h2>{{warehouse.name}}</h2>
-                  <ion-row>
-                    <ion-col>
-                      <p>Người quản lý: {{warehouse.manager.name}}</p>
-                    </ion-col>
-                    <ion-col>
-                      <p>Chi tiết: {{warehouse.description}}</p>
-                    </ion-col>
-                  </ion-row>
-                </button>
-              </ion-list>
-            </ion-item-group>
-          </ion-scroll>
-        </ion-card-content>
-      </ion-card>
+  <ion-row style="height: 100%">
+    <ion-col col-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 style="height: 100%">
+      <page-warehouse-list 
+        [title]="'Danh sách kho cám'" 
+        [(data)]="food_warehouses" 
+        [setData] = "food_warehouses"
+        [warehouseType]="'food'" 
+        [viewMode]="true">
+      </page-warehouse-list>
     </ion-col>
-    <ion-col col-lg-6 col-md-6 col-sm-12 col-xs-12>
-      <ion-card mode='ios'>
-        <ion-card-header>Kho thuốc ({{medicine_warehouses.length}} kho)
-        </ion-card-header>
-        <ion-card-content no-padding>
-          <ion-scroll scrollY="true" class="scroll-custom">
-            <ion-item-group>
-              <ion-list>
-                <button ion-item *ngFor="let warehouse of medicine_warehouses" (tap)="viewDeltailMedicineWarehouse(warehouse)">
-                  <ion-avatar item-start>
-                    <ion-icon name="app-warehouse" font28></ion-icon>
-                  </ion-avatar>
-                  <h2>{{warehouse.name}}</h2>
-                  <ion-row>
-                    <ion-col>
-                      <p>Người quản lý: {{warehouse.manager.name}}</p>
-                    </ion-col>
-                    <ion-col>
-                      <p>Chi tiết: {{warehouse.description}}</p>
-                    </ion-col>
-                  </ion-row>
-                </button>
-              </ion-list>
-            </ion-item-group>
-          </ion-scroll>
-        </ion-card-content>
-      </ion-card>
+    <ion-col col-6 col-lg-6 col-md-6 col-sm-12 col-xs-12>
+      <page-warehouse-list 
+        [title]="'Danh sách kho thuốc'" 
+        [setData] = "medicine_warehouses"
+        [(data)]="medicine_warehouses" 
+        [warehouseType]="'medicine'" 
+        [viewMode]="true">
+      </page-warehouse-list>
     </ion-col>
   </ion-row>
 </ion-content>
@@ -88,7 +50,7 @@
 <ion-content no-padding showWhen="ios,android" #content>
   <ion-slides #slider (ionSlideDidChange)="slideChange()">
     <ion-slide>
-      <ion-scroll scrollY="true" class="modal-scroll">
+      <ion-scroll scrollY="true" class="modal-scroll" style="height: 100%">
         <ion-list>
           <button ion-item *ngFor="let warehouse of food_warehouses" (tap)="viewDeltailFoodWarehouse(warehouse)">
             <ion-avatar item-start>
@@ -108,7 +70,7 @@
       </ion-scroll>
     </ion-slide>
     <ion-slide>
-      <ion-scroll scrollY="true" class="modal-scroll">
+      <ion-scroll scrollY="true" class="modal-scroll" style="height: 100%">
         <ion-list>
           <button ion-item *ngFor="let warehouse of medicine_warehouses" (tap)="viewDeltailMedicineWarehouse(warehouse)">
             <ion-avatar item-start>
@@ -128,4 +90,20 @@
       </ion-scroll>
     </ion-slide>
   </ion-slides>
+
+  <ion-fab bottom right showWhen="android,windows,ios">
+    <button ion-fab>
+      <ion-icon name="ios-arrow-up"></ion-icon>
+    </button>
+    <ion-fab-list side="top" style="right:0px">
+      <button data-balloon-visible data-balloon-length="medium" data-balloon="Cập nhật dữ liệu" data-balloon-pos="left"
+        ion-fab color="main">
+        <ion-icon name="sync"></ion-icon>
+      </button>
+      <button data-balloon-visible data-balloon-length="medium" data-balloon="Thêm kho" data-balloon-pos="left"
+        ion-fab color="main" (tap)="add()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>

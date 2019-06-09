@@ -81,7 +81,7 @@
     </expandable>
   </ion-navbar>
 </ion-header>
-<ion-content #content >
+<ion-content #content style="height: 100%;overflow-y: scroll">
   <ion-list >
     <button ion-item *ngFor="let item of visible_items" (tap)="select(item)">
       <ion-avatar item-start>
