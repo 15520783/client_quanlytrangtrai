@@ -1,14 +1,14 @@
+import { Events, IonicPage, LoadingController, ModalController, NavController, NavParams, Platform } from 'ionic-angular';
+
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, LoadingController, ModalController, Events } from 'ionic-angular';
-import { FarmsProvider } from '../../providers/farms/farms';
-import { Utils } from '../../common/utils';
-import { farm } from '../../common/entity';
-import { KEY } from '../../common/const';
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { FarmInfomationPage } from '../farm-infomation/farm-infomation';
 import { FarmInputPage } from '../farm-input/farm-input';
-import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { FarmsProvider } from '../../providers/farms/farms';
+import { KEY } from '../../common/const';
 import { UserProvider } from '../../providers/user/user';
-
+import { Utils } from '../../common/utils';
+import { farm } from '../../common/entity';
 
 @IonicPage()
 @Component({
@@ -66,7 +66,13 @@ export class FarmsPage {
       this.farmProvider.getFarms()
         .then((data: Array<farm>) => {
           if (data.length) {
-            this.farms = data;
+            if(this.userProvider.user.farm.id == '0'){
+              this.farms = data;
+            }else{
+              this.farms = data.filter((farm:farm)=>{
+                return farm.id == this.userProvider.user.farm.id;
+              });
+            }
             this.getSummary();
           }
         })
@@ -76,15 +82,25 @@ export class FarmsPage {
             console.log('err_farm_provider', err);
             this.util.getKey(KEY.FARMS)
               .then((data: Array<farm>) => {
-                this.farms = data;
-                this.farmProvider.farms = data;
+                if(this.userProvider.user.farm.id == '0'){
+                  this.farms = data;
+                }else{
+                  this.farms = data.filter((farm:farm)=>{
+                    return farm.id == this.userProvider.user.farm.id;
+                  });
+                }
                 this.getSummary();
               })
           });
         })
     } else {
-      this.farms = this.util.deepClone(this.farmProvider.farms);
-      console.log(this.util.deepClone(this.farmProvider.farms));
+      if(this.userProvider.user.farm.id== '0'){
+        this.farms = this.farmProvider.farms;
+      }else{
+        this.farms = this.util.deepClone(this.farmProvider.farms).filter((farm:farm)=>{
+          return farm.id == this.userProvider.user.farm.id;
+        });
+      }
       this.getSummary();
     }
 

@@ -136,7 +136,7 @@ export class WarehousesProvider {
    */
   updateWarehouse(objBody:warehouse){
     return this.http
-    .put<warehouse>(API.CREATE_WAREHOUSE,objBody)
+    .put<warehouse>(API.UPDATE_WAREHOUSE,objBody)
     .timeout(CONFIG.DEFAULT_TIMEOUT)
     .toPromise()
     .then((updated_warehouse)=>{
@@ -170,7 +170,7 @@ export class WarehousesProvider {
       body: objBody
     };
     return this.http
-      .delete(API.DELETE_FARM, options)
+      .delete(API.DELETE_WAREHOUSE, options)
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise()
       .then((isOK)=>{

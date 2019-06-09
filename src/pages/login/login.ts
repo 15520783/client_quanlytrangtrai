@@ -1,17 +1,18 @@
+import { Backdrop, Content, Events, IonicPage, MenuController, ModalController, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Content, ToastController, MenuController, Events, Backdrop, ModalController } from 'ionic-angular';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { MyApp } from '../../app/app.component';
-import { Utils } from '../../common/utils';
-import { FarmsProvider } from '../../providers/farms/farms';
-import { PigsProvider } from '../../providers/pigs/pigs';
-import { PigGroupsProvider } from '../../providers/pig-groups/pig-groups';
-import { SectionsProvider } from '../../providers/sections/sections';
-import { EmployeesProvider } from '../../providers/employees/employees';
-import { HousesProvider } from '../../providers/houses/houses';
-import { UserProvider } from '../../providers/user/user';
-import { KEY } from '../../common/const';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { BackdropComponent } from '../../components/backdrop/backdrop';
+import { EmployeesProvider } from '../../providers/employees/employees';
+import { FarmsProvider } from '../../providers/farms/farms';
+import { HousesProvider } from '../../providers/houses/houses';
+import { KEY } from '../../common/const';
+import { MyApp } from '../../app/app.component';
+import { PigGroupsProvider } from '../../providers/pig-groups/pig-groups';
+import { PigsProvider } from '../../providers/pigs/pigs';
+import { SectionsProvider } from '../../providers/sections/sections';
+import { UserProvider } from '../../providers/user/user';
+import { Utils } from '../../common/utils';
 
 @IonicPage()
 @Component({
@@ -96,6 +97,7 @@ export class LoginPage {
         })
         .catch((err: any) => {
           this.wait = false;
+          backdrop.dismiss();
         })
         
     }

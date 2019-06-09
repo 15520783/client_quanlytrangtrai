@@ -272,9 +272,19 @@ export class SettingsPage {
         ],
         data: this.settingProvider.setting.rounds,
       },
-      roles: {
+      regencies:{
         title: 'Danh sách chức vụ',
         placeholderSearch: 'Tìm kiếm chức vụ',
+        filter_default: ["name", "description"],
+        attributes: [
+          { name: "description", label: 'Mô tả' },
+        ],
+        mainAttribute: 'name',
+        data: this.settingProvider.setting.regencies,
+      },
+      roles: {
+        title: 'Danh sách phân quyền',
+        placeholderSearch: 'Tìm kiếm phân quyền',
         filter_default: ["name", "description"],
         attributes: [
           { name: "description", label: 'Mô tả' },

@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { employee, farm } from '../../common/entity';
+
+import { Component } from '@angular/core';
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { FarmsProvider } from '../../providers/farms/farms';
-import { farm, employee } from '../../common/entity';
+import { SettingsProvider } from '../../providers/settings/settings';
 import { ValidateEmail } from '../../validators/email.validator';
 
 @IonicPage()
@@ -15,24 +18,18 @@ export class EmployeeInputPage {
   public credentialsForm: FormGroup;
   public submitAttempt: boolean = false;
 
-  public RegencyTypes: any = [
-    { name: 'Chức vụ 1', value: '1' },
-    { name: 'Chức vụ 2', value: '2' },
-    { name: 'Chức vụ 3', value: '3' },
-    { name: 'Chức vụ 4', value: '4' },
-    { name: 'Chức vụ 5', value: '5' },
-  ]
+  public RegencyTypes: any = [];
 
   public genders: any = [
     { name: 'Nam', value: 1 },
     { name: 'Nữ', value: 2 }
-  ]
+  ];
 
-  public status: any = [
-    { name: 'Trạng thái 1', value: 1 },
-    { name: 'Trạng thái 2', value: 2 },
-    { name: 'Trạng thái 3', value: 3 },
-  ]
+  // public status: any = [
+  //   { name: 'Trạng thái 1', value: 1 },
+  //   { name: 'Trạng thái 2', value: 2 },
+  //   { name: 'Trạng thái 3', value: 3 },
+  // ];
 
   public farms: any = [];
 
@@ -42,19 +39,20 @@ export class EmployeeInputPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private formBuilder: FormBuilder,
-    public farmProvider: FarmsProvider
+    public farmProvider: FarmsProvider,
+    public settingProvider: SettingsProvider,
+    public deployData:DeployDataProvider
   ) {
-
+    this.RegencyTypes= this.settingProvider.setting.regencies;
+    this.RegencyTypes.forEach(element => {
+      element['value'] = element.id;
+    });
     if(this.navParams.data.employee){
       this.employee = this.navParams.data.employee;
+      this.employee.dateJoin = new Date(this.employee.dateJoin).toISOString();
     }
 
-    this.farmProvider.farms.forEach((e: farm) => {
-      this.farms.push({
-        name: e.name,
-        value: e.id
-      })
-    });
+    this.farms = this.deployData.get_farm_list_for_select();
 
     this.credentialsForm = this.formBuilder.group({
       regency_id: [this.employee.regency.id, Validators.compose([Validators.required])],
@@ -65,18 +63,25 @@ export class EmployeeInputPage {
       address: [this.employee.address, Validators.compose([Validators.required, Validators.maxLength(1000)])],
       email: [this.employee.email, Validators.compose([Validators.required, Validators.maxLength(1000), ValidateEmail])],
       cmnd: [this.employee.cmnd, Validators.compose([Validators.required, Validators.maxLength(1000)])],
-      date_join: [this.employee.dateJoin, Validators.compose([Validators.required])],
-      date_off: [this.employee.dateOff, Validators.compose([])],
-      status: [this.employee.status, Validators.compose([Validators.required])]
+      dateJoin: [this.employee.dateJoin, Validators.compose([Validators.required])],
+      // status: [this.employee.status, Validators.compose([Validators.required])]
     });
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad EmployeeInputPage');
   }
 
   onSubmit() {
     this.submitAttempt = true;
-    this.employee = this.credentialsForm.value;
+    if(this.credentialsForm.valid){
+      Object.keys(this.credentialsForm.value).forEach((attr)=>{
+        this.employee[attr]= this.credentialsForm.value[attr];
+      })
+
+      this.employee.regency.id = this.employee['regency_id'];
+      this.employee.farm.id = this.employee['farm_id'];
+
+      this.navParams.get('callback')(this.employee);
+    }
   }
 }

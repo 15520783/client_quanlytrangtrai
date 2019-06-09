@@ -121,35 +121,6 @@ import { WarehouseListPage } from '../pages/warehouse-list/warehouse-list';
 import { WarehousesPage } from '../pages/warehouses/warehouses';
 import { WarehousesProvider } from '../providers/warehouses/warehouses';
 
-//Native implement
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const Pages = [
   LoginPage,
   HomePage,

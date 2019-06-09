@@ -10,6 +10,7 @@ import { PartnerProvider } from '../partner/partner';
 import { PigsProvider } from '../pigs/pigs';
 import { SectionsProvider } from '../sections/sections';
 import { SettingsProvider } from '../settings/settings';
+import { UserProvider } from '../user/user';
 import { Utils } from '../../common/utils';
 import { WarehousesProvider } from '../warehouses/warehouses';
 
@@ -26,6 +27,7 @@ export class DeployDataProvider {
     public sectionProvider: SectionsProvider,
     public settingProvider: SettingsProvider,
     public warehouseProvider: WarehousesProvider,
+    public userProvider:UserProvider,
     public util: Utils
   ) {
   }
@@ -132,13 +134,33 @@ export class DeployDataProvider {
     })
   }
 
+  
+  get_all_farm_for_select(){
+    let options_select = [];
+    this.farmProvider.farms.forEach(farm => {
+      options_select.push({
+        name: farm.name,
+        value: farm.id
+      })
+    })
+    return options_select;
+  }
+
 
   /**
    *  Lấy danh sách trang trại cho ion-select
    */
   get_farm_list_for_select() {
     let options_select = [];
-    this.farmProvider.farms.forEach(farm => {
+    let farms = [];
+    if(this.userProvider.user.farm.id == '0'){
+      farms = this.farmProvider.farms;
+    }else{
+      farms = this.farmProvider.farms.filter((farm)=>{
+        return farm.id == this.userProvider.user.farm.id ? true:false;
+      })
+    }
+    farms.forEach(farm => {
       options_select.push({
         name: farm.name,
         value: farm.id

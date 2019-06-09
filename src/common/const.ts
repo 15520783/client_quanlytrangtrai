@@ -224,6 +224,11 @@ const API = {
 
     CREATE_WAREHOUSE: '/api/warehouses/',
     UPDATE_WAREHOUSE: '/api/warehouses/',
+    DELETE_WAREHOUSE: '/api/warehouses/',
+
+    CREATE_EMPLOYEE:'/api/employees/',
+    UPDATE_EMPLOYEE:'/api/employees/',
+    DELETE_EMPLOYEE:'/api/employees/',
 
     CREATE_PREGNANCY_STATUS: '/api/pregnancystatus/',
     DELETE_PREGNANCY_STATUS: '/api/pregnancystatus/',

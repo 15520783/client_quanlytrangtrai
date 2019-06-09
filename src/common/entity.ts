@@ -65,10 +65,12 @@ class user extends base {
 	username: string = '';
 	password: string = '';
 	email: string;
-	employee_id: string = '';
+	employee:employee = new employee();
+	role:roles = new roles();
 	activate: number = null;
 	language: string = '';
-	last_active: any = '';
+	theme:string='';
+	lastActivate: any = '';
 	login: number;
 }
 

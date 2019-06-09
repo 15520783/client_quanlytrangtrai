@@ -1,9 +1,10 @@
+import { API, CONFIG, KEY } from '../../common/const';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { CONFIG, API, KEY } from '../../common/const';
-import { employee } from '../../common/entity';
-import { Utils } from '../../common/utils';
+
 import { Events } from 'ionic-angular';
+import { Injectable } from '@angular/core';
+import { Utils } from '../../common/utils';
+import { employee } from '../../common/entity';
 
 @Injectable()
 export class EmployeesProvider {
@@ -62,5 +63,94 @@ export class EmployeesProvider {
   publishUpdateEvent() {
     this.updated_flag = true;
     this.events.publish('updated');
+  }
+
+  /**
+   * Tạo mới nhân viên
+   * @param objBody 
+   */
+  createNewEmployee(objBody:employee){
+    return this.http
+    .post<employee>(API.CREATE_EMPLOYEE,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise()
+    .then((new_employee)=>{
+      if(new_employee){
+        this.util.getKey(KEY.EMPLOYEES).then((employees:Array<employee>)=>{
+          employees.push(new_employee);
+          this.util.setKey(KEY.EMPLOYEES,employees);
+        })
+        this.employees.push(new_employee);
+      }
+      return new_employee;
+    })
+    .catch((err)=>{
+      return err;
+    })
+  }
+
+  /**
+   * Cập nhật nhân viên
+   * @param objBody 
+   */
+  updateWarehouse(objBody:employee){
+    return this.http
+    .put<employee>(API.UPDATE_EMPLOYEE,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise()
+    .then((updated_employee)=>{
+      if(updated_employee){
+        this.util.getKey(KEY.EMPLOYEES).then((employees:Array<employee>)=>{
+          let idx = employees.findIndex(_employee=>_employee.id == updated_employee.id);
+          if(idx > -1){
+            employees[idx] = updated_employee;
+            this.util.setKey(KEY.EMPLOYEES,employees);
+          }
+        })
+        let idx =this.employees.findIndex(_employee=>_employee.id == updated_employee.id);
+        if(idx>-1){
+          this.employees[idx] = updated_employee;
+        }
+      }
+      return updated_employee;
+    })
+    .catch((err)=>{
+      return err;
+    })
+  }
+
+
+  /**
+   * Xóa nhân viên
+   * @param objBody 
+   */
+  deleteEmployees(objBody:employee){
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http
+      .delete(API.DELETE_EMPLOYEE, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise()
+      .then((isOK)=>{
+        if(isOK){
+          this.util.getKey(KEY.EMPLOYEES).then((employees:Array<employee>)=>{
+            let idx = employees.findIndex(_employee=>_employee.id == objBody.id);
+            if(idx > -1){
+              employees.splice(idx,1);
+              this.util.setKey(KEY.EMPLOYEES,employees);
+            }
+          })
+          let idx = this.employees.findIndex(_employee=>_employee.id == objBody.id);
+          if(idx > -1){
+            this.employees.splice(idx,1);
+          }
+        }
+        return isOK;
+      })
+      .catch((err)=>{
+        return err;
+      })
   }
 }

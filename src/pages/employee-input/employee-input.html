@@ -72,25 +72,25 @@
                     [placeholder]="'Nhập chứng minh nhân dân'"
                     [active]= "submitAttempt">
         </input-text>
-        <input-date [(validControl)] = "credentialsForm.controls.date_join"
+        <input-date [(validControl)] = "credentialsForm.controls.dateJoin"
                     [errorMessage_Required]  ="'Ngày vào làm là hạng mục bắt buộc.'"
                     [label] = "'Ngày vào làm'"
                     [placeholder]="'dd/mm/yyyy'"
                     [active]= "submitAttempt">
         </input-date>
-        <input-date [(validControl)] = "credentialsForm.controls.date_off"
+        <!-- <input-date [(validControl)] = "credentialsForm.controls.date_off"
                     [errorMessage_Required]  ="'Ngày thôi việc là hạng mục bắt buộc.'"
                     [label] = "'Ngày thôi việc'"
                     [placeholder]="'dd/mm/yyyy'"
                     [active]= "submitAttempt">
-        </input-date>
-        <input-select [(validControl)] = "credentialsForm.controls.status"
+        </input-date> -->
+        <!-- <input-select [(validControl)] = "credentialsForm.controls.status"
                       [errorMessage_Required]  ="'Trạng thái là hạng mục bắt buộc.'"
                       [label] = "'Trạng thái'"
                       [active]= "submitAttempt"
                       [placeholder]="'Chọn trạng thái'"
                       [(data)]="status">
-        </input-select>
+        </input-select> -->
       </ion-list>
     </form>
   </ion-content>

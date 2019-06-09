@@ -1,7 +1,7 @@
-import { invoicesPig } from "../common/entity";
 import { DeployDataProvider } from "../providers/deploy-data/deploy-data";
 import { InvoicesProvider } from "../providers/invoices/invoices";
 import { VARIABLE } from "../common/const";
+import { invoicesPig } from "../common/entity";
 
 export class ExportInternalPigInvoiceRole {
     public object = new invoicesPig();
@@ -135,7 +135,7 @@ export class ExportInternalPigInvoiceRole {
                 },
                 type: "input-select",
                 value: this.object.destinationId,
-                data: this.deployData.get_farm_list_for_select()
+                data: this.deployData.get_all_farm_for_select()
             }
         ];
     }

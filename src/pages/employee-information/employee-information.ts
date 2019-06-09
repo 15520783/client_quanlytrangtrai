@@ -3,6 +3,7 @@ import { IonicPage, ModalController, NavController, NavParams, Platform, Slides 
 
 import { CalendarComponent } from 'ng-fullcalendar';
 import { EmployeeInputPage } from '../employee-input/employee-input';
+import { EmployeesProvider } from '../../providers/employees/employees';
 import { OptionsInput } from '@fullcalendar/core';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { Utils } from '../../common/utils';
@@ -28,13 +29,14 @@ export class EmployeeInformationPage {
     public navParams: NavParams,
     public platform: Platform,
     public modalCtrl: ModalController,
-    public settingProvider:SettingsProvider,
-    public util:Utils
+    public settingProvider: SettingsProvider,
+    public employeeProvider: EmployeesProvider,
+    public util: Utils
   ) {
     this.employee = this.navParams.data;
-    this.employee['dateJoinDisplay']=this.util.convertDate(this.employee.dateJoin);
-    this.employee['dateOffDisplay']=this.util.convertDate(this.employee.dateOff);
-    this.employee['birthdayDisplay']=this.util.convertDate(this.employee.birthday);
+    this.employee['dateJoinDisplay'] = this.util.convertDate(this.employee.dateJoin);
+    this.employee['dateOffDisplay'] = this.util.convertDate(this.employee.dateOff);
+    this.employee['birthdayDisplay'] = this.util.convertDate(this.employee.birthday);
   }
 
   ionViewDidLoad() {
@@ -56,7 +58,7 @@ export class EmployeeInformationPage {
 
   ngOnInit() {
     this.options = {
-      schedulerLicenseKey : 'GPL-My-Project-Is-Open-Source',
+      schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
       selectable: true,
       defaultView: "dayGridMonth",
       header: {
@@ -89,21 +91,43 @@ export class EmployeeInformationPage {
         { title: 'Sự kiện 2', date: '2019-04-02', classNames: ['event-fullcalendar'] }
       ]
     }
-    
+
   }
 
-  editEmployee(){
-    // let modal = this.modalCtrl.create(EmployeeInputPage,{employee:this.employee});
-    // return modal.present();
-    this.navCtrl.push(EmployeeInputPage,{employee:this.employee});
-  }
+
 
   handleEventClick(arg) { // handler method
     console.log(arg.event.title);
     console.log(arg.event.start);
     console.log(arg.event.end);
   }
-  handleDayClick(event){
+
+  handleDayClick(event) {
     console.log(event);
+  }
+
+  scrollToView(idx: number) {
+    this.slider.slideTo(idx);
+  }
+
+
+  editEmployee() {
+    let callback = (employee: employee) => {
+      if (employee) {
+        this.employeeProvider.createNewEmployee(employee)
+          .then((updated_employee: any) => {
+            this.employee = updated_employee;
+            this.employee['dateJoinDisplay'] = this.util.convertDate(this.employee.dateJoin);
+            this.employee['dateOffDisplay'] = this.util.convertDate(this.employee.dateOff);
+            this.employee['birthdayDisplay'] = this.util.convertDate(this.employee.birthday);
+            this.navCtrl.pop();
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      }
+    }
+
+    this.navCtrl.push(EmployeeInputPage, { callback: callback });
   }
 }

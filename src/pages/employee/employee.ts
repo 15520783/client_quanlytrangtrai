@@ -1,14 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, Menu, Content, ModalController, Events } from 'ionic-angular';
-import { FormControl } from '@angular/forms';
-import { EmployeesProvider } from '../../providers/employees/employees';
-import { Utils } from '../../common/utils';
-import { employee } from '../../common/entity';
-import { KEY } from '../../common/const';
-import { FilterProvider } from '../../providers/filter/filter';
+import { Content, Events, IonicPage, Menu, ModalController, NavController, NavParams, Platform } from 'ionic-angular';
+
 import { EmployeeInformationPage } from '../employee-information/employee-information';
 import { EmployeeInputPage } from '../employee-input/employee-input';
-
+import { EmployeesProvider } from '../../providers/employees/employees';
+import { FilterProvider } from '../../providers/filter/filter';
+import { FormControl } from '@angular/forms';
+import { KEY } from '../../common/const';
+import { Utils } from '../../common/utils';
+import { employee } from '../../common/entity';
 
 @IonicPage()
 @Component({
@@ -44,7 +44,6 @@ export class EmployeePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad EmployeePage');
     this.getAllEmployee();
   }
 
@@ -130,9 +129,21 @@ export class EmployeePage {
   }
 
   addNewEmployee() {
-    this.navCtrl.push(EmployeeInputPage);
-    // let modal = this.modalCtrl.create(EmployeeInputPage);
-    // modal.present();
+    let callback = (employee: employee) => {
+      if (employee) {
+        this.employeeProvider.createNewEmployee(employee)
+          .then((new_employee: any) => {
+            console.log(new_employee);
+            this.setFilteredItems()
+            this.navCtrl.pop();
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      }
+    }
+
+    this.navCtrl.push(EmployeeInputPage, { callback: callback });
   }
 
   sync() {
