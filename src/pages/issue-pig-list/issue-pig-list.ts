@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, Slides } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, Slides, ModalController } from 'ionic-angular';
 import { pig, section, house, issuesPigs, issues, usedMedicine } from '../../common/entity';
 import { FormControl } from '@angular/forms';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
@@ -10,6 +10,8 @@ import { FilterProvider } from '../../providers/filter/filter';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { ActivitiesProvider } from '../../providers/activities/activities';
 import { UsedMedicineInputPage } from '../used-medicine-input/used-medicine-input';
+import { DiseaseListPage } from '../disease-list/disease-list';
+import { IssuePigListComponent } from '../../components/issue-pig-list/issue-pig-list';
 
 
 @IonicPage()
@@ -74,11 +76,11 @@ export class IssuePigListPage {
     public filterProvider: FilterProvider,
     public settingProvider: SettingsProvider,
     public activitiesProvider: ActivitiesProvider,
-    public platform: Platform
+    public platform: Platform,
+    public modalCtrl: ModalController
   ) {
 
-    this.breed = this.deployData.get_object_list_key_of_breeds();
-    this.houses = this.deployData.get_object_list_key_of_house();
+
 
     VARIABLE.gender.forEach(gender => {
       this.gender[gender.value] = gender;
@@ -98,8 +100,11 @@ export class IssuePigListPage {
 
   init() {
     this.issueObjectKey = this.deployData.get_object_list_key_of_issues();
+    this.breed = this.deployData.get_object_list_key_of_breeds();
+    this.houses = this.deployData.get_object_list_key_of_house();
     this.employees = this.deployData.get_object_list_key_of_employees();
     this.farms = this.deployData.get_farm_list_for_select();
+
     this.selectedFarm = this.farms[0].value;
     this.sections = this.deployData.get_sections_of_farm(this.selectedFarm);
     this.sections.forEach((section: any) => {
@@ -233,12 +238,12 @@ export class IssuePigListPage {
     });
 
     let callback = (data: Array<usedMedicine>) => {
-      if(data){
+      if (data) {
         this.getAllIssuePigs()
-        .then((issuesPigs)=>{
-          this.issues = this.issue_groupBySection.get(this.selectedSection) ? this.issue_groupBySection.get(this.selectedSection) : [];
-          this.setFilteredItems();
-        })
+          .then((issuesPigs) => {
+            this.issues = this.issue_groupBySection.get(this.selectedSection) ? this.issue_groupBySection.get(this.selectedSection) : [];
+            this.setFilteredItems();
+          })
       }
     }
 
@@ -250,8 +255,67 @@ export class IssuePigListPage {
         issues: issues,
         callback: callback
       });
-
-    
   }
 
+
+
+  /**
+  * Hiển thị danh sách gợi ý
+  */
+  showForecast() {
+    if (this.selectedFarm && this.selectedSection) {
+      this.util.openBackDrop();
+      return this.settingProvider.getForecastedDiseases(this.selectedFarm, this.selectedSection)
+        .then((diseases) => {
+          this.util.closeBackDrop();
+          if (diseases) {
+            let forecastDiseases = [];
+            diseases.forEach(disease => {
+              disease.disease['tiLe'] = disease.tiLe;
+              forecastDiseases.push(disease.disease);
+            })
+
+            let modal = this.modalCtrl.create(DiseaseListPage,
+              {
+                diseases: forecastDiseases,
+                titleHeader: 'Danh sách gợi ý chuẩn đoán bệnh'
+              });
+            return modal.present();
+          }
+        })
+        .catch((err: Error) => {
+          this.util.closeBackDrop();
+          this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].ERROR_OCCUR)
+          console.log(err);
+          return err;
+        })
+    }
+  }
+
+
+
+  viewListIssuePig(section) {
+    let callback = (data: Array<usedMedicine>) => {
+      if (data) {
+        this.getAllIssuePigs()
+          .then((issuesPigs) => {
+            this.issues = this.issue_groupBySection.get(this.selectedSection) ? this.issue_groupBySection.get(this.selectedSection) : [];
+            this.setFilteredItems();
+          })
+      }
+    }
+
+    this.sections.forEach((e) => {
+      e.selected = false;
+    })
+    section.selected = true;
+    this.selectedSection = section.id;
+    this.issues = this.issue_groupBySection.get(this.selectedSection) ? this.issue_groupBySection.get(this.selectedSection) : [];
+    this.navCtrl.push(IssuePigListComponent, {
+      issues: this.issues,
+      selectedFarm: this.selectedFarm,
+      selectedSection: this.selectedSection,
+      callback: callback
+    })
+  }
 }

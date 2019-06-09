@@ -7,8 +7,11 @@
             (changeValue)="changeFarm($event)">
           </input-select>
         </ion-col>
-        <ion-col text-right>
-          <button ion-button mode='ios' color="secondary" (tap)="resolveIssuePigs()">Chuẩn đoán và xử lý</button>
+        <ion-col text-right *ngIf="platform.is('core')">
+          <span *ngIf="issues.length">
+            <button ion-button mode='ios' color="main" (tap)="showForecast()">Gợi ý chuẩn đoán</button>
+            <button ion-button mode='ios' color="secondary" (tap)="resolveIssuePigs()">Nhập thông tin xử lý</button>
+          </span>
         </ion-col>
       </ion-row>
     </ion-toolbar>
@@ -26,7 +29,7 @@
               [attr.active]="section.selected? '':null" ion-item>
               <ion-row>
                 <ion-col align-self-center col-2>
-                  <ion-icon name="app-item-setting" font28></ion-icon>
+                  <ion-icon name="app-medicine-manager" font28></ion-icon>
                 </ion-col>
                 <ion-col col-10>
                   <h2 text-wrap>{{section.name}}</h2>
@@ -58,7 +61,7 @@
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <div id="content">
+        <div id="content" scroll>
           <ion-item-divider custom-diviver sticky="true" showWhen="core">
             Danh sách ghi nhận vấn đề heo
           </ion-item-divider>
@@ -116,6 +119,33 @@
   </ion-row>
 </ion-content>
 
-<!-- <ion-content #contentExternalInvoice class="setting-util-component">
-  
-</ion-content> -->
+
+<ion-content *ngIf="!platform.is('core')">
+  <ion-item-divider sticky="true">Danh sách khu thuộc trang trại</ion-item-divider>
+  <ion-list>
+    <button *ngFor="let section of sections;let idx= index" ion-item (tap)="viewListIssuePig(section)">
+      <ion-row>
+        <ion-col align-self-center col-2>
+          <ion-icon name="app-medicine-manager" font28></ion-icon>
+        </ion-col>
+        <ion-col col-10>
+          <ion-row>
+            <ion-col col-12>
+              <h2 text-wrap>{{section.name}}</h2>
+            </ion-col>
+            <ion-col col-12  *ngIf="issue_groupBySection.get(section.id)">
+              <p ion-text color="danger">
+                <ion-icon style="font-size: 20px" name="ios-warning"></ion-icon>
+                {{issue_groupBySection.get(section.id).length + ' vấn đề được phát hiện'}}
+              </p>
+            </ion-col>
+            <ion-col *ngIf="!issue_groupBySection.get(section.id)" align-items-center>
+              <p ion-text color="secondary">Không có vấn đề nào được phát hiện</p>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </button>
+  </ion-list>
+</ion-content>
+
