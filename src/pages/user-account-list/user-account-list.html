@@ -20,25 +20,25 @@
 </ion-header>
 
 <ion-content #contentExternalInvoice class="setting-util-component">
+  <ion-item-divider custom-diviver sticky="true" showWhen="core" text-left>
+    <ion-row>
+      <ion-col align-self-center>
+        Danh sách tài khoản của nhân viên
+      </ion-col>
+      <ion-col text-right>
+        <button showWhen="core" ion-button item-end mode='ios' color="secondary" (tap)="add()">
+          Tạo tài khoản
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-item-divider>
   <not-found-data *ngIf="!visible_items.length"></not-found-data>
   <div id="content" *ngIf="visible_items.length">
-    <ion-item-divider custom-diviver sticky="true" showWhen="core" text-left>
-      <ion-row>
-        <ion-col align-self-center>
-          Danh sách tài khoản của nhân viên
-        </ion-col>
-        <ion-col text-right>
-          <button showWhen="core" ion-button item-end mode='ios' color="secondary" (tap)="remove(item)">
-            Tạo tài khoản
-          </button>
-        </ion-col>
-      </ion-row>
-    </ion-item-divider>
     <ion-list>
       <span *ngFor="let item of visible_items;let idx= index">
-        <ion-item-sliding (tap)="select(item)">
+        <ion-item-sliding>
           <ion-item>
-            <h2 *ngIf="mainAttribute"><b>{{item[mainAttribute]}}</b></h2>
+            <h2 *ngIf="mainAttribute">Tài khoản:<b>{{item[mainAttribute]}}</b></h2>
             <ion-row>
               <ion-col *ngFor="let attr of attributes" [attr.col-6]="!platform.is('core')"
                 [attr.col-xl-3]="platform.is('core')" [attr.col-lg-3]="platform.is('core')"
@@ -48,15 +48,20 @@
                     *ngIf="attr.unit">{{attr.unit}}</span></p>
               </ion-col>
             </ion-row>
-            <ion-row *ngIf="!isSelectMode">
-              <button showWhen="core" small ion-button item-end mode='ios' color="main" (tap)="edit(item)">Cập nhật
-                thông tin</button>
-              <button showWhen="core" small ion-button item-end mode='ios' color="main" (tap)="edit(item)">Đổi mật
-                khẩu</button>
-              <button showWhen="core" small ion-button item-end mode='ios' color="danger" (tap)="remove(item)">Xóa tài
-                khoản</button>
+            <ion-row *ngIf="!isSelectMode && platform.is('core')">
+              <button showWhen="core" small ion-button item-end mode='ios' color="main" (tap)="edit(item)">Cập nhật thông tin</button>
+              <button showWhen="core" small ion-button item-end mode='ios' color="main" (tap)="changePassword(item)">Đổi mật khẩu</button>
+              <button showWhen="core" small ion-button item-end mode='ios' color="danger" (tap)="remove(item)">Xóa tài khoản</button>
             </ion-row>
           </ion-item>
+          <ion-item-options side="right" *ngIf="!platform.is('core')">
+            <button text-wrap ion-button color="secondary" (tap)="edit(item)" style="font-size: 10px">Cập nhật thông tin</button>
+            <button text-wrap ion-button color="main" (tap)="changePassword(item)" style="font-size: 10px">Đổi mật khẩu</button>
+            <button text-wrap ion-button color="danger" (tap)="remove(item)" style="font-size: 10px">Xóa tài khoản</button>
+            <span *ngIf="extraButtons">
+              <button *ngFor="let button of extraButtons" ion-button [color]="button.color">{{button.title}}</button>
+            </span>
+          </ion-item-options>
         </ion-item-sliding>
       </span>
     </ion-list>
@@ -65,9 +70,9 @@
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </div>
-  <!-- <ion-fab bottom right showWhen="android,windows,ios" color="secondary">
+  <ion-fab bottom right showWhen="android,windows,ios" color="secondary">
     <button ion-fab (tap)="add()">
       <ion-icon name="add"></ion-icon>
     </button>
-  </ion-fab> -->
+  </ion-fab>
 </ion-content>

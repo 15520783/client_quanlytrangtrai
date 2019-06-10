@@ -78,7 +78,9 @@ export class SettingInputUtilComponent {
                       this.navParams.get('callback')(setting[this.roleInput.keySettingStorage]);
                     })
                   } else {
-                    this.navParams.get('callback')(data);
+                    if(this.navParams.data.hasOwnProperty('callback')){
+                      this.navParams.get('callback')(data);
+                    }
                   }
                 }
               })

@@ -216,6 +216,10 @@ const API = {
 
     PUSH_NOTIFICATION: 'https://fcm.googleapis.com/fcm/send',
 
+    CREATE_USER: '/api/users/',
+    UPDATE_USER: '/api/users/',
+    DELETE_USER: '/api/users/',
+
     CREATE_FARM: '/api/farms/',
     UPDATE_FARM: '/api/farms/',
     DELETE_FARM: '/api/farms/',

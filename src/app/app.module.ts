@@ -115,6 +115,7 @@ import { Toast } from '@ionic-native/toast';
 import { TokenInterceptor } from './interceptor';
 import { UsedMedicineInputPage } from '../pages/used-medicine-input/used-medicine-input';
 import { UserAccountListPage } from '../pages/user-account-list/user-account-list';
+import { UserInputPage } from '../pages/user-input/user-input';
 import { UserProvider } from '../providers/user/user';
 import { Utils } from '../common/utils';
 import { WarehouseInformationPage } from '../pages/warehouse-information/warehouse-information';
@@ -189,7 +190,8 @@ const Pages = [
   MedicineListPage,
   MedicineWarehouseListPage,
   WarehouseListPage,
-  UserAccountListPage
+  UserAccountListPage,
+  UserInputPage
 ]
 
 const Components = [

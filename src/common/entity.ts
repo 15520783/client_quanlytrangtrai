@@ -68,7 +68,7 @@ class user extends base {
 	employee: employee = new employee();
 	role: roles = new roles();
 	activate: number = null;
-	language: string = '';
+	language: string = 'vi';
 	tokenNotification: string = '';
 	lastActivate: any = '';
 	login: number;

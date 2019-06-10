@@ -222,7 +222,7 @@
         </ion-slide>
         <ion-slide>
           <ion-content padding>
-            <ion-item-divider>Thông tin lịch biểu</ion-item-divider>
+            <ion-item-divider sticky="true" text-left>Thông tin lịch biểu</ion-item-divider>
             <div class='app-calendar'>
               <ng-fullcalendar #fullcalendar [options]="options" (eventClick)="handleEventClick($event)"
                 (dateClick)="handleDayClick($event)">
@@ -232,7 +232,7 @@
         </ion-slide>
         <ion-slide>
           <span *ngIf="users">
-            <page-user-account-list [setUsers]="users"></page-user-account-list>
+            <page-user-account-list [setUsers]="users" [employeeId]="employee.id"></page-user-account-list>
           </span>
         </ion-slide>
       </ion-slides>

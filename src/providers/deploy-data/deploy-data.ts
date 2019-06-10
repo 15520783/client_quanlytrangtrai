@@ -27,7 +27,7 @@ export class DeployDataProvider {
     public sectionProvider: SectionsProvider,
     public settingProvider: SettingsProvider,
     public warehouseProvider: WarehousesProvider,
-    public userProvider:UserProvider,
+    public userProvider: UserProvider,
     public util: Utils
   ) {
   }
@@ -134,8 +134,8 @@ export class DeployDataProvider {
     })
   }
 
-  
-  get_all_farm_for_select(){
+
+  get_all_farm_for_select() {
     let options_select = [];
     this.farmProvider.farms.forEach(farm => {
       options_select.push({
@@ -153,11 +153,11 @@ export class DeployDataProvider {
   get_farm_list_for_select() {
     let options_select = [];
     let farms = [];
-    if(this.userProvider.user.farm.id == '0'){
+    if (this.userProvider.user.farm.id == '0') {
       farms = this.farmProvider.farms;
-    }else{
-      farms = this.farmProvider.farms.filter((farm)=>{
-        return farm.id == this.userProvider.user.farm.id ? true:false;
+    } else {
+      farms = this.farmProvider.farms.filter((farm) => {
+        return farm.id == this.userProvider.user.farm.id ? true : false;
       })
     }
     farms.forEach(farm => {
@@ -303,7 +303,7 @@ export class DeployDataProvider {
   /**
    * Lấy danh sách loại kho cho ion-select
    */
-  get_warehouse_types_list_for_select(){
+  get_warehouse_types_list_for_select() {
     let warehouseTypes_select = [];
     this.settingProvider.setting.warehouseTypes.forEach((type) => {
       warehouseTypes_select.push({
@@ -354,6 +354,28 @@ export class DeployDataProvider {
     })
     return statusCode_select;
   }
+
+  get_role_list_for_select() {
+    let roles_select = [];
+    this.settingProvider.setting.roles.forEach((role) => {
+      roles_select.push({
+        name: role.name,
+        value: role.id
+      })
+    });
+    return roles_select;
+  }
+
+  /**
+   * Lấy phân quyền thông qua id
+   * @param roleId 
+   */
+  get_role_by_id(roleId: string) {
+    return this.settingProvider.setting.roles.filter((role) => {
+      return role.id == roleId ? true : false;
+    })[0];
+  }
+
 
   /**
    * Lấy trạng trại bằng Id
@@ -430,9 +452,9 @@ export class DeployDataProvider {
    * Lấy danh sách  nhân viên thuộc trang trại
    * @param farmId 
    */
-  get_employees_of_farm(farmId:string){
-    return this.employeeProvider.employees.filter((emp)=>{
-      return emp.farm.id == farmId ? true:false;
+  get_employees_of_farm(farmId: string) {
+    return this.employeeProvider.employees.filter((emp) => {
+      return emp.farm.id == farmId ? true : false;
     });
   }
 

@@ -246,11 +246,11 @@
         },
         "xoa_chung_tu_nhap_cam": {
             "name": "Xóa chứng từ nhập cám",
-            "api": "/api/invoicespig/"
+            "api": "/api/invoicesproduct/"
         },
         "cap_nhat_chung_tu_nhap_cam": {
             "name": "Cập nhật chứng từ nhập cám",
-            "api": "/api/invoicespig/"
+            "api": "/api/invoicesproduct/"
         },
         "them_chi_tiet_chung_tu_nhap_cam": {
             "name": "Thêm chi tiết chứng từ nhập cám",
@@ -332,7 +332,7 @@
         },
         "danh_gia_chuyen_noi_bo": {
             "name": "Đánh giá chuyển nội bộ",
-            "api": "/api/pigs/{id}"
+            "api": "/api/pigs/"
         },
         "len_giong_heo_nai": {
             "name": "Lên giống heo nái",

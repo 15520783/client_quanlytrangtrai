@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { employee } from '../../common/entity';
 import { API, CONFIG, KEY } from '../../common/const';
-import { Utils } from '../../common/utils';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { employee, user } from '../../common/entity';
+
 import { Events } from 'ionic-angular';
+import { Injectable } from '@angular/core';
+import { Utils } from '../../common/utils';
 
 @Injectable()
 export class UserProvider {
@@ -86,9 +87,45 @@ export class UserProvider {
         this.rolePermission = role;
         return role;
       })
-      .catch((err)=>{
+      .catch((err) => {
         return err;
       });
   }
 
+
+  /**
+   * Tạo mới user
+   * @param objBody 
+   */
+  createUser(objBody: user) {
+    return this.http
+      .post(API.CREATE_USER, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Cập nhật thông tin user
+   * @param objBody 
+   */
+  updateUser(objBody: user) {
+    return this.http
+      .post(API.UPDATE_USER, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Xóa user
+   * @param objBody 
+   */
+  removeUser(objBody:user){
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http.delete(API.DELETE_USER, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
 }

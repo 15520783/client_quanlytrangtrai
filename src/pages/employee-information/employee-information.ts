@@ -178,6 +178,6 @@ export class EmployeeInformationPage {
   }
 
   openUserList() {
-    this.navCtrl.push(UserAccountListPage, { users: this.users });
+    this.navCtrl.push(UserAccountListPage, { users: this.users, employeeId: this.employee.id });
   }
 }

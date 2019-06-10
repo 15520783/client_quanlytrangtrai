@@ -1,11 +1,12 @@
+import { CONFIG, MESSAGE } from '../../common/const';
+import { Events, IonicPage, NavController, NavParams } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { sperms } from '../../common/entity';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { Utils } from '../../common/utils';
 import { ValidateNumber } from '../../validators/number.validator';
-import { MESSAGE, CONFIG } from '../../common/const';
+import { sperms } from '../../common/entity';
 
 @IonicPage()
 @Component({
