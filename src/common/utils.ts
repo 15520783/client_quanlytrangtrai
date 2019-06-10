@@ -1,9 +1,10 @@
+import { AlertController, Loading, LoadingController, Modal, ModalController, Platform, ToastController } from 'ionic-angular';
+
+import { BackdropComponent } from '../components/backdrop/backdrop';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ToastController, AlertController, LoadingController, Loading, Platform, ModalController, Modal } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
-import { BackdropComponent } from '../components/backdrop/backdrop';
 import { PigsProvider } from '../providers/pigs/pigs';
+import { Storage } from '@ionic/storage';
 
 @Injectable()
 export class Utils {
@@ -142,6 +143,28 @@ export class Utils {
 
   closeBackDrop() {
     return this.modal.dismiss();
+  }
+
+  presentComfirm(msg: string, handle) {
+    let alert = this.alertCtrl.create({
+      title: 'Thông báo',
+      message: msg,
+      buttons: [
+        {
+          text: 'Hủy',
+          role: 'cancel',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Xác nhận',
+          handler: () => {
+            handle();
+          }
+        }
+      ]
+    });
+    return alert.present();
   }
 
 

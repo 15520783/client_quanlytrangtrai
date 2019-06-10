@@ -212,6 +212,7 @@ const API = {
     GET_FORECASTED_DISEASES: '/api/issuespigs/forecastdiseases',    //{idfarm}/{idsection}
     GET_MEDICINES_OF_DISEASE: '/api/medicinedisease/disease',  //{diseaseId}
     GET_MEDICINEWAREHOUSE_OF_MEDICINE: '/api/medicinewarehouse/medicine', //{{medicineId}}
+    GET_USER_ACCOUNT_OF_EMPLOYEE: '/api/users/employee', //{empId}
 
     PUSH_NOTIFICATION: 'https://fcm.googleapis.com/fcm/send',
 

@@ -1,14 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, ModalController, NavController, NavParams, Platform, Slides } from 'ionic-angular';
+import { employee, user } from '../../common/entity';
 
 import { CalendarComponent } from 'ng-fullcalendar';
 import { EmployeeInputPage } from '../employee-input/employee-input';
 import { EmployeesProvider } from '../../providers/employees/employees';
 import { OptionsInput } from '@fullcalendar/core';
 import { SettingsProvider } from '../../providers/settings/settings';
+import { UserAccountListPage } from '../user-account-list/user-account-list';
 import { Utils } from '../../common/utils';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import { employee } from '../../common/entity';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import resourceTimeline from '@fullcalendar/resource-timeline';
@@ -23,6 +24,9 @@ export class EmployeeInformationPage {
   @ViewChild('slider') slider: Slides;
 
   public employee: employee;
+  public users: Array<user> = [];
+
+  public tab = "0";
 
   constructor(
     public navCtrl: NavController,
@@ -33,20 +37,34 @@ export class EmployeeInformationPage {
     public employeeProvider: EmployeesProvider,
     public util: Utils
   ) {
-    this.employee = this.navParams.data;
+    this.employee = this.navParams.data.employee;
     this.employee['dateJoinDisplay'] = this.util.convertDate(this.employee.dateJoin);
     this.employee['dateOffDisplay'] = this.util.convertDate(this.employee.dateOff);
     this.employee['birthdayDisplay'] = this.util.convertDate(this.employee.birthday);
+
+    this.util.openBackDrop();
+
+    /**
+     * Lấy danh sách user
+     */
+    this.employeeProvider.getUserAccountsOfEmployee(this.employee.id)
+      .then((users: Array<user>) => {
+        if (users) {
+          this.users = users;
+        }
+        this.util.closeBackDrop();
+      })
+      .catch((err) => {
+        this.util.closeBackDrop();
+      })
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad EmployeeInformationPage');
   }
 
   ngAfterViewInit() {
     if (this.slider)
       this.slider.autoHeight = true;
-    console.log('ngAfterViewInit FarmInfomationPage');
   }
 
   // calendarPlugins = [dayGridPlugin, timeGridPlugin, listPlugin]; // important!
@@ -94,8 +112,6 @@ export class EmployeeInformationPage {
 
   }
 
-
-
   handleEventClick(arg) { // handler method
     console.log(arg.event.title);
     console.log(arg.event.start);
@@ -110,16 +126,27 @@ export class EmployeeInformationPage {
     this.slider.slideTo(idx);
   }
 
+  slideChange() {
+    this.tab = this.slider.realIndex.toString();
+  }
 
+  selectedTab(index) {
+    this.slider.slideTo(index);
+  }
+
+  /**
+   * Chỉnh sửa nhân viên
+   */
   editEmployee() {
     let callback = (employee: employee) => {
       if (employee) {
-        this.employeeProvider.createNewEmployee(employee)
+        this.employeeProvider.updateEmployee(employee)
           .then((updated_employee: any) => {
             this.employee = updated_employee;
             this.employee['dateJoinDisplay'] = this.util.convertDate(this.employee.dateJoin);
             this.employee['dateOffDisplay'] = this.util.convertDate(this.employee.dateOff);
             this.employee['birthdayDisplay'] = this.util.convertDate(this.employee.birthday);
+            this.navParams.get('callbacklUpdate')(updated_employee);
             this.navCtrl.pop();
           })
           .catch((err) => {
@@ -128,6 +155,29 @@ export class EmployeeInformationPage {
       }
     }
 
-    this.navCtrl.push(EmployeeInputPage, { callback: callback });
+    this.navCtrl.push(EmployeeInputPage, { employee: this.employee, callback: callback });
+  }
+
+  /**
+   * Xóa nhân viên
+   */
+  removeEmployee() {
+    let handler = () => {
+      this.employeeProvider.deleteEmployees(this.employee)
+        .then((isOK) => {
+          if (isOK) {
+            this.navParams.get('callbackRemove')(this.employee);
+            this.navCtrl.pop();
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
+    return this.util.presentComfirm('Xác nhận xóa nhân viên', handler);
+  }
+
+  openUserList() {
+    this.navCtrl.push(UserAccountListPage, { users: this.users });
   }
 }

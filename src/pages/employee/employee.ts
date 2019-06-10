@@ -119,13 +119,26 @@ export class EmployeePage {
   }
 
   viewDeltail(employee) {
-    // const modal = this.modalCtrl.create(
-    //   EmployeeInformationPage, employee, {
-    //     cssClass: 'ion-modal'
-    //   }
-    // )
-    // modal.present();
-    this.navCtrl.push(EmployeeInformationPage, employee);
+    let callbacklUpdate = data => {
+      if (data) {
+        employee = data;
+      }
+    }
+
+    let callbackRemove = data => {
+      if (data) {
+        let idx = this.visible_items.findIndex(_employee => _employee.id == data.id);
+        if (idx > -1) {
+          this.visible_items.splice(idx, 1);
+        }
+      }
+    }
+    this.navCtrl.push(EmployeeInformationPage,
+      {
+        employee: employee,
+        callbacklUpdate: callbacklUpdate,
+        callbackRemove: callbackRemove
+      });
   }
 
   addNewEmployee() {

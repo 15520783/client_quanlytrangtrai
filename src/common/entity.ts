@@ -65,11 +65,11 @@ class user extends base {
 	username: string = '';
 	password: string = '';
 	email: string;
-	employee:employee = new employee();
-	role:roles = new roles();
+	employee: employee = new employee();
+	role: roles = new roles();
 	activate: number = null;
 	language: string = '';
-	theme:string='';
+	tokenNotification: string = '';
 	lastActivate: any = '';
 	login: number;
 }
@@ -663,7 +663,7 @@ class ObjDataNotification {
 		icon: "fcm_push_icon"
 	};
 	data: any;
-	registration_ids:Array<string> = [];
+	registration_ids: Array<string> = [];
 	priority: "high";
 	restricted_package_name: 'io.ionic.quanlitrangtrai'
 

@@ -93,7 +93,7 @@ export class EmployeesProvider {
    * Cập nhật nhân viên
    * @param objBody 
    */
-  updateWarehouse(objBody:employee){
+  updateEmployee(objBody:employee){
     return this.http
     .put<employee>(API.UPDATE_EMPLOYEE,objBody)
     .timeout(CONFIG.DEFAULT_TIMEOUT)
@@ -152,5 +152,16 @@ export class EmployeesProvider {
       .catch((err)=>{
         return err;
       })
+  }
+
+  /**
+   * Lấy danh sách tài khoản của nhân viên
+   * @param empId 
+   */
+  getUserAccountsOfEmployee(empId:string){
+    return this.http
+    .get(API.GET_USER_ACCOUNT_OF_EMPLOYEE+'/'+empId)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
   }
 }
