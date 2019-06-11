@@ -1,9 +1,9 @@
 import { AlertController, Loading, LoadingController, Modal, ModalController, Platform, ToastController } from 'ionic-angular';
 
 import { BackdropComponent } from '../components/backdrop/backdrop';
+import { Firebase } from '@ionic-native/firebase';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PigsProvider } from '../providers/pigs/pigs';
 import { Storage } from '@ionic/storage';
 
 @Injectable()
@@ -21,8 +21,23 @@ export class Utils {
     public storage: Storage,
     public platform: Platform,
     public modalCtrl: ModalController,
+    public firebaseNative: Firebase,
   ) {
 
+  }
+
+  async getTokenNotification(){
+    let token;
+    if (this.platform.is('android')) {
+      token = await this.firebaseNative.getToken();
+      console.log(token);
+    }
+
+    if (this.platform.is('ios')) {
+      token = await this.firebaseNative.getToken();
+      await this.firebaseNative.grantPermission();
+    }
+    return token;
   }
 
   isEmpty(obj) {

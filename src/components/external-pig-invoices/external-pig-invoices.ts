@@ -1,27 +1,31 @@
-import { Component, ViewChild, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Content, NavController, Events, NavParams, Platform } from 'ionic-angular';
+import { Component, Input, ViewChild } from '@angular/core';
+import { Content, Events, Menu, MenuController, NavController, NavParams, Platform } from 'ionic-angular';
 import { invoicesPig, invoicesProduct } from '../../common/entity';
-import { FilterProvider } from '../../providers/filter/filter';
-import { Utils } from '../../common/utils';
-import { ExternalPigInvoiceRole } from '../../role-input/externalPigInvoice';
-import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
-import { InvoicesProvider } from '../../providers/invoices/invoices';
-import { InvoiceInputUtilComponent } from '../invoice-input-util/invoice-input-util';
-import { ExternalPigInvoiceDetailPage } from '../../pages/external-pig-invoice-detail/external-pig-invoice-detail';
-import { VARIABLE } from '../../common/const';
 
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { ExternalPigInvoiceDetailPage } from '../../pages/external-pig-invoice-detail/external-pig-invoice-detail';
+import { ExternalPigInvoiceRole } from '../../role-input/externalPigInvoice';
+import { FilterProvider } from '../../providers/filter/filter';
+import { FormControl } from '@angular/forms';
+import { InvoiceInputUtilComponent } from '../invoice-input-util/invoice-input-util';
+import { InvoicesProvider } from '../../providers/invoices/invoices';
+import { Utils } from '../../common/utils';
+import { VARIABLE } from '../../common/const';
 
 @Component({
   selector: 'external-pig-invoices',
   templateUrl: 'external-pig-invoices.html'
 })
 export class ExternalPigInvoicesComponent {
-
+  
+  @ViewChild('menuFilter') menuFilter: Menu;
   @ViewChild('contentExternalInvoice') content: Content;
+  
   @Input() invoices: Array<invoicesPig> = [];
   public roleInput: any;
 
+  public sourceFilter: Array<any> = [];
+  public destinationFilter: Array<any> = [];
 
   public mainAttribute = "invoiceNo";
   public attributes = [
@@ -57,7 +61,8 @@ export class ExternalPigInvoicesComponent {
     public deployData: DeployDataProvider,
     public invoiceProvider: InvoicesProvider,
     public navParams: NavParams,
-    public platform: Platform
+    public platform: Platform,
+    public menuCtrl: MenuController
   ) {
     if (this.navParams.data.invoice) {
       this.invoices = this.navParams.data.invoice;
@@ -67,6 +72,9 @@ export class ExternalPigInvoicesComponent {
     this.roleInput = new ExternalPigInvoiceRole(this.deployData, this.invoiceProvider);
     this.partners_util = this.deployData.get_object_list_key_of_partner();
     this.farms_util = this.deployData.get_object_list_key_of_farm()
+
+    this.sourceFilter = this.deployData.get_partner_list_for_select();
+    this.destinationFilter = this.deployData.get_farm_list_for_select();
 
     this.events.subscribe('invoicesReload', () => {
       this.setFilteredItems();
@@ -170,4 +178,34 @@ export class ExternalPigInvoicesComponent {
       }
     })
   }
+
+  openFilter() {
+    this.menuFilter.enable(true);
+    this.menuFilter.open();
+  }
+
+  closeFilter() {
+    this.menuCtrl.close();
+  }
+  
+  filterSource(sourceId) {
+    if (sourceId)
+      this.filterProvider.searchWithInclude.sourceId = [sourceId];
+    else
+      this.filterProvider.searchWithInclude.sourceId = [];
+    this.setFilteredItems();
+  }
+
+  filterDestination(destinationId) {
+    if (destinationId)
+      this.filterProvider.searchWithInclude.destinationId = [destinationId];
+    else
+      this.filterProvider.searchWithInclude.destinationId = [];
+    this.setFilteredItems();
+  }
+
+  customAlertOptions: any = {
+    translucent: true,
+    cssClass: 'ion-popover'
+  };
 }

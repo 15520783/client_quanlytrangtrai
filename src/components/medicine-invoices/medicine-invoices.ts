@@ -1,14 +1,16 @@
-import { Component, ViewChild, Input } from '@angular/core';
-import { InvoiceInputUtilComponent } from '../invoice-input-util/invoice-input-util';
-import { FilterProvider } from '../../providers/filter/filter';
-import { NavController, Events, Content, NavParams, Platform } from 'ionic-angular';
-import { Utils } from '../../common/utils';
+import { Component, Input, ViewChild } from '@angular/core';
+import { Content, Events, NavController, NavParams, Platform } from 'ionic-angular';
+
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
-import { InvoicesProvider } from '../../providers/invoices/invoices';
+import { FilterProvider } from '../../providers/filter/filter';
 import { FormControl } from '@angular/forms';
-import { invoicesProduct } from '../../common/entity';
-import { MedicineInvoiceRole } from '../../role-input/medicineInvoice';
+import { InvoiceInputUtilComponent } from '../invoice-input-util/invoice-input-util';
+import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { MedicineInvoiceDetailPage } from '../../pages/medicine-invoice-detail/medicine-invoice-detail';
+import { MedicineInvoiceRole } from '../../role-input/medicineInvoice';
+import { Utils } from '../../common/utils';
+import { VARIABLE } from '../../common/const';
+import { invoicesProduct } from '../../common/entity';
 
 @Component({
   selector: 'medicine-invoices',
@@ -25,7 +27,8 @@ export class MedicineInvoicesComponent {
     { name: "sourceName", label: 'Nguồn cung cấp' },
     { name: "destinationName", label: 'Nơi nhận' },
     { name: "importDateDisplay", label: 'Ngày nhập' },
-    { name: "price", label: 'Tổng giá' }
+    { name: "price", label: 'Tổng giá' },
+    { name: "statusName", label: 'Trạng thái' }
   ];
 
   public placeholderSearch: string = 'Tìm kiếm chứng từ'
@@ -82,6 +85,8 @@ export class MedicineInvoicesComponent {
       invoice['sourceName'] = this.partners_util[invoice.source.id].name;
       invoice['destinationName'] = this.farms_util[invoice.destination.id].name;
       invoice['importDateDisplay'] = this.util.convertDate(invoice.importDate);
+      invoice['statusName'] = VARIABLE.INVOICE_STATUS.PROCCESSING == invoice.status
+        ? 'Đang xử lí' : (VARIABLE.INVOICE_STATUS.COMPLETE == invoice.status ? 'Hoàn tất' : 'Chưa xác định');
     })
     this.filterProvider.input = this.invoices;
     this.filterProvider.searchText = searchItem;
@@ -129,7 +134,17 @@ export class MedicineInvoicesComponent {
   }
 
   input_medicine(item) {
-    this.navCtrl.push(MedicineInvoiceDetailPage, { invoice: item });
+    let callback = (invoice: invoicesProduct) => {
+      if (invoice) {
+        let idx = this.invoices.findIndex(_invoice => _invoice.id == invoice.id);
+        if (idx > -1) {
+          this.invoices[idx] = invoice;
+          this.setFilteredItems();
+        }
+      }
+    }
+
+    this.navCtrl.push(MedicineInvoiceDetailPage, { invoice: item, callback: callback });
 
     this.events.subscribe('removeInvoiceEvent', (invoice) => {
       if (invoice) {

@@ -11,7 +11,8 @@ const KEY = {
     SETTINGS: 'settings',
     PARTNERS: 'partners',
     EMPID: 'employeeId',
-    USER: 'user',
+    EMPLOYEE_USER: 'employee_user',
+    USER:'user',
     USERNAME: 'username',
     PASSWORD: 'password'
 }
@@ -262,6 +263,7 @@ const API = {
     DELETE_PIG_INVOICE: '/api/invoicespig/',
 
     CREATE_PRODUCT_INVOICE: '/api/invoicesproduct/',
+    UPDATE_PRODUCT_INVOICE: '/api/invoicesproduct/',
     DELETE_PRODUCT_INVOICE: '/api/invoicesproduct/',
 
     CREATE_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/pigsinvoicepigdetail/',

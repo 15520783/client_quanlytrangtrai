@@ -1,14 +1,15 @@
-import { Component, ViewChild, Renderer } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, Slides, Events } from 'ionic-angular';
-import { InvoicesProvider } from '../../providers/invoices/invoices';
-import { Utils } from '../../common/utils';
-import { VARIABLE } from '../../common/const';
-import { InternalPigInvoicesComponent } from '../../components/internal-pig-invoices/internal-pig-invoices';
+import { Component, Renderer, ViewChild } from '@angular/core';
+import { Events, IonicPage, NavController, NavParams, Platform, Slides } from 'ionic-angular';
+
+import { ExportInternalPigInvoiceComponent } from '../../components/export-internal-pig-invoice/export-internal-pig-invoice';
 import { ExternalPigInvoicesComponent } from '../../components/external-pig-invoices/external-pig-invoices';
 import { FoodInvoicesComponent } from '../../components/food-invoices/food-invoices';
+import { InternalPigInvoicesComponent } from '../../components/internal-pig-invoices/internal-pig-invoices';
+import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { MedicineInvoicesComponent } from '../../components/medicine-invoices/medicine-invoices';
-import { ExportInternalPigInvoiceComponent } from '../../components/export-internal-pig-invoice/export-internal-pig-invoice';
-
+import { SalePigInvoicesComponent } from '../../components/sale-pig-invoices/sale-pig-invoices';
+import { Utils } from '../../common/utils';
+import { VARIABLE } from '../../common/const';
 
 @IonicPage()
 @Component({
@@ -26,6 +27,7 @@ export class InvoicesPage {
   public foodInvoices: any = [];
   public medicineInvoices: any = [];
   public exportInternalPigInvoice: any = [];
+  public saleInvoices: any = [];
 
   constructor(
     public navCtrl: NavController,
@@ -37,10 +39,10 @@ export class InvoicesPage {
     public events: Events
   ) {
 
-    this.events.subscribe('invoicesPage:sync',()=>{
+    this.events.subscribe('invoicesPage:sync', () => {
       this.getInvoices();
     });
-    
+
     this.list_invoice_type = {
       internalPigInvoice: {
         title: 'Chứng từ nhập heo trong hệ thống',
@@ -55,7 +57,7 @@ export class InvoicesPage {
       salePigInvoice: {
         title: 'Chứng từ xuất bán heo',
         invoices: [],
-        component: ExternalPigInvoicesComponent
+        component: SalePigInvoicesComponent
       },
       exportInternalPigInvoice: {
         title: 'Chứng từ xuất heo trong hệ thống',
@@ -113,6 +115,9 @@ export class InvoicesPage {
             this.exportInternalPigInvoice = data.invoicesPigs.filter((invoices) => {
               return invoices.invoiceType == VARIABLE.INVOICE_PIG_TYPE.INTERNAL_EXPORT ? true : false;
             })
+            this.saleInvoices = data.invoicesPigs.filter((invoices) => {
+              return invoices.invoiceType == VARIABLE.INVOICE_PIG_TYPE.SALING_EXPORT ? true : false;
+            })
             this.foodInvoices = data.invoicesProducts.filter((invoices) => {
               return invoices.invoiceType === VARIABLE.INVOICE_PRODUCT_TYPE.FOOD ? true : false;
             })
@@ -124,6 +129,7 @@ export class InvoicesPage {
         this.list_invoice_type.externalPigInvoice.invoices = this.externalPigInvoices;
         this.list_invoice_type.internalPigInvoice.invoices = this.internalPigInvoices;
         this.list_invoice_type.exportInternalPigInvoice.invoices = this.exportInternalPigInvoice;
+        this.list_invoice_type.salePigInvoice.invoices = this.saleInvoices;
         this.list_invoice_type.foodInvoice.invoices = this.foodInvoices;
         this.list_invoice_type.medicineInvoice.invoices = this.medicineInvoices;
         this.util.closeBackDrop();

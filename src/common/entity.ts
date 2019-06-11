@@ -45,9 +45,10 @@ export { issuesPigs }
 export { births }
 export { feeds }
 export { usedMedicine }
+export { customerType, customerGroups, customers }
 
 class base {
-	id: string;
+	id: string = '';
 	createdAt: any = '';
 	updatedAt: any = '';
 	delFlag: boolean = false;
@@ -447,6 +448,30 @@ class partners extends base {
 	description: string = '';
 }
 
+class customerType extends base {
+	name: string = '';
+	description: string = '';
+}
+
+class customerGroups extends base {
+	name: string = '';
+	description: string = '';
+}
+
+class customers extends base {
+	type: customerType = new customerType();
+	group: customerGroups = new customerGroups();
+	farmId: string = ''; // bỏ
+	name: string = '';
+	phone: string = '';
+	email: string = '';
+	address: string = '';
+	companyAddress: string = '';
+	fax: string = '';
+	bank: string = '';
+	description: string = '';
+}
+
 class invoicesPig extends base {
 	invoiceNo: string = '';
 	invoiceType: string = '';
@@ -467,21 +492,28 @@ class invoicesPig extends base {
 	exportDate: any = '';
 	status: string = '';
 	description: string = '';
+	employee: employee = new employee();
 }
 
 class invoicesProduct extends base {
 	invoiceNo: string = '';
 	invoiceType: string = '';
 	source = new partners();
-	source_id: string = '';
+	sourceId: string = '';
 	sourceManagerName: string = '';
 	destination = new farm();
-	destination_id: string = '';
+	destinationId: string = '';
 	destinationManager: string = '';
 	destinationManagerName: string = '';
 	price: number = 0;
 	importDate: any = '';
 	description: string = '';
+	employee: employee = new employee();
+	status: string = '';
+
+	constructor() {
+		super();
+	}
 }
 
 class invoicePigDetail extends base {

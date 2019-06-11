@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
-import { Platform, ToastController } from 'ionic-angular';
+import { API, CONFIG, KEY } from '../../common/const';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { CONFIG, API } from '../../common/const';
-import { ObjDataNotification } from '../../common/entity';
-import { Firebase } from '@ionic-native/firebase';
+import { ObjDataNotification, employee } from '../../common/entity';
+import { Platform, ToastController } from 'ionic-angular';
+
 import { AngularFirestore } from 'angularfire2/firestore';
+import { Firebase } from '@ionic-native/firebase';
+import { Injectable } from '@angular/core';
+import { Utils } from '../../common/utils';
 import { tap } from 'rxjs/operators';
 
 @Injectable()
@@ -16,6 +18,7 @@ export class FcmProvider {
     public http: HttpClient,
     public toastCtrl: ToastController,
     public firebaseNative: Firebase,
+    public util:Utils
   ) {
   }
 
@@ -23,9 +26,8 @@ export class FcmProvider {
   // Get permission from the user
   async getToken() {
     let token;
-
     if (this.platform.is('android')) {
-      token = await this.firebaseNative.getToken()
+      token = await this.firebaseNative.getToken();
       console.log(token);
     }
 
@@ -33,22 +35,21 @@ export class FcmProvider {
       token = await this.firebaseNative.getToken();
       await this.firebaseNative.grantPermission();
     }
-
-    return this.saveTokenToFirestore(token);
+    return token;
   }
 
   // Save the token to firestore
-  private saveTokenToFirestore(token) {
-    if (!token) return;
+  // private saveTokenToFirestore(token,user:employee) {
+  //   if (!token) return;
 
-    const devicesRef = this.afs.collection('devices')
+  //   const devicesRef = this.afs.collection('devices')
 
-    const docData = {
-      token,
-      userId: 'testUser',
-    }
-    return devicesRef.doc(token).set(docData);
-  }
+  //   const docData = {
+  //     token,
+  //     employeeId: user.id,
+  //   }
+  //   return devicesRef.doc(token).set(docData);
+  // }
 
   // Listen to incoming FCM messages
   listenToNotifications() {

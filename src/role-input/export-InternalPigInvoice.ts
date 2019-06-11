@@ -133,6 +133,9 @@ export class ExportInternalPigInvoiceRole {
                     isNumber: '',
                     isMaxlength: ''
                 },
+                selectOptions: {
+                    cssClass: 'ion-popover'
+                },
                 type: "input-select",
                 value: this.object.destinationId,
                 data: this.deployData.get_all_farm_for_select()

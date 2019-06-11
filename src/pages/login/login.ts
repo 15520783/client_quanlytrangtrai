@@ -81,11 +81,13 @@ export class LoginPage {
               .then(() => {
                 this.util.setKey(KEY.TOKENTYPE, res.tokenType)
               }).then(() => {
-                this.util.setKey(KEY.EMPID, res.employeeId)
+                this.util.setKey(KEY.EMPID, res.user.employee.id)
               }).then(() => {
                 this.util.setKey(KEY.USERNAME, params.username)
               }).then(() => {
                 this.util.setKey(KEY.PASSWORD, params.password);
+              }).then(()=>{
+                this.util.setKey(KEY.USER,res.user)
               })
               .catch((err) => {
                 console.log(err);

@@ -1,8 +1,8 @@
 import { API, CONFIG, KEY } from '../../common/const';
+import { Events, Platform } from 'ionic-angular';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { employee, user } from '../../common/entity';
 
-import { Events } from 'ionic-angular';
 import { Injectable } from '@angular/core';
 import { Utils } from '../../common/utils';
 
@@ -17,7 +17,8 @@ export class UserProvider {
   constructor(
     public http: HttpClient,
     public util: Utils,
-    public event: Events
+    public event: Events,
+    public platform:Platform
   ) {
     console.log('Hello UserProvider Provider');
   }
@@ -40,7 +41,7 @@ export class UserProvider {
       .toPromise();
   }
 
-  getUserInfo(empId: string) {
+  getEmployeeInfo(empId: string) {
     return this.http
       .get(API.GET_INFO_EMPLOYEE.concat(empId))
       .timeout(CONFIG.DEFAULT_TIMEOUT)
@@ -49,12 +50,30 @@ export class UserProvider {
 
   sync() {
     this.util.getKey(KEY.EMPID).then((empId) => {
-      this.getUserInfo(empId)
+      this.getEmployeeInfo(empId)
         .then((employee: employee) => {
           if (employee) {
             this.user = employee;
-            this.util.setKey(KEY.USER, employee).then(() => {
+            this.util.setKey(KEY.EMPLOYEE_USER, employee).then(() => {
               this.publishUpdateEvent();
+              if(this.platform.is('cordova')){
+                this.util.getTokenNotification().then((token)=>{
+                  if(token){
+                    this.util.getKey(KEY.USER).then((userAccount:user)=>{
+                      userAccount.tokenNotification = token;
+                      this.updateUser(userAccount)
+                      .then((updated_user)=>{
+                        if(updated_user){
+                          this.util.setKey(KEY.USER,updated_user);
+                        }
+                      })
+                      .catch((err)=>{
+                        console.log(err);
+                      })
+                    })
+                  }
+                })
+              }
             })
           }
         })
@@ -63,7 +82,6 @@ export class UserProvider {
           console.log('err_user_provider', err);
           this.publishUpdateEvent();
         })
-
     })
   }
 
@@ -91,6 +109,7 @@ export class UserProvider {
         return err;
       });
   }
+
 
 
   /**

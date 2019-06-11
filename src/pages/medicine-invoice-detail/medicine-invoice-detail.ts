@@ -1,13 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, ViewController, Slides } from 'ionic-angular';
+import { Events, IonicPage, NavController, NavParams, Slides, ViewController } from 'ionic-angular';
+
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { InvoiceInputUtilComponent } from '../../components/invoice-input-util/invoice-input-util';
+import { InvoicesProvider } from '../../providers/invoices/invoices';
+import { MedicineInvoiceRole } from '../../role-input/medicineInvoice';
+import { MedicineWarehouseInputPage } from '../medicine-warehouse-input/medicine-warehouse-input';
+import { Utils } from '../../common/utils';
+import { VARIABLE } from '../../common/const';
 import { invoicesProduct } from '../../common/entity';
 import { medicineWarehouse } from '../../common/entity';
-import { InvoicesProvider } from '../../providers/invoices/invoices';
-import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
-import { Utils } from '../../common/utils';
-import { MedicineWarehouseInputPage } from '../medicine-warehouse-input/medicine-warehouse-input';
-
-
 
 @IonicPage()
 @Component({
@@ -22,6 +24,9 @@ export class MedicineInvoiceDetailPage {
   public invoice: invoicesProduct;
   public details: Array<medicineWarehouse> = [];
 
+  canCheckComplete: boolean = false;
+  canEditInvoice: boolean = false;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -35,6 +40,11 @@ export class MedicineInvoiceDetailPage {
       this.invoice = this.navParams.data.invoice;
       this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destination.id);
       this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.source.id);
+    }
+
+    if (this.invoice.status != VARIABLE.INVOICE_STATUS.COMPLETE) {
+      this.canCheckComplete = true;
+      this.canEditInvoice = true;
     }
   }
 
@@ -110,5 +120,54 @@ export class MedicineInvoiceDetailPage {
         .catch((err: Error) => { })
     }
     this.navCtrl.push(MedicineWarehouseInputPage, { medicineWarehouse: item, callback: callback })
+  }
+
+  
+  /**
+   * Chỉnh sửa chứng từ
+   */
+  editInvoice() {
+    let callback = data =>{
+      if (data) {
+        this.invoice = data;
+        // this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destination.id);
+        // this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.source.id);
+        this.navParams.get('callback')(this.invoice);
+        this.navCtrl.pop();
+      }
+    }
+
+    let roleInput = new MedicineInvoiceRole(this.deployData, this.invoiceProvider);
+    roleInput.object = this.util.deepClone(this.invoice);
+    roleInput.object.sourceId = roleInput.object.source.id;
+    roleInput.object.destinationId = roleInput.object.destination.id;
+    roleInput.object.importDate = new Date(roleInput.object.importDate).toISOString();
+    this.navCtrl.push(InvoiceInputUtilComponent,
+      {
+        editMode: true,
+        roleInput: roleInput,
+        callback:callback
+      }
+    )
+  }
+
+  /**
+   * Xác nhận chứng từ đã hoàn tất
+   */
+  completeInvoice() {
+    let invoice: invoicesProduct = this.util.deepClone(this.invoice);
+    invoice.status = VARIABLE.INVOICE_STATUS.COMPLETE;
+    this.invoiceProvider.updateProductInvoice(invoice)
+      .then((updatedInvoice: invoicesProduct) => {
+        if (updatedInvoice) {
+          this.invoice = updatedInvoice;
+          // this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
+          // this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.sourceId);
+          this.canCheckComplete = false;
+          this.canEditInvoice = false;
+          this.navParams.get('callback')(this.invoice);
+        }
+      })
+      .catch((err: Error) => { })
   }
 }

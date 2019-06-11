@@ -7,6 +7,7 @@
   <ion-toolbar showWhen="core" class="pl-10">
     <button ion-button mode='ios' color="secondary" (tap)="input_food()">Nhập cám</button>
     <button *ngIf="canEditInvoice" ion-button mode='ios' color="secondary" (tap)="editInvoice()">Chỉnh sửa chứng từ</button>
+    <button *ngIf="details.length && canCheckComplete" ion-button mode='ios' color="secondary" (tap)="completeInvoice()">Xác nhận hoàn tất</button>
     <button *ngIf="!details.length" ion-button mode='ios' color="danger" (tap)="removeInvoice()">Xóa chứng từ</button>
   </ion-toolbar>
   <ion-toolbar showWhen='ios,android'>

@@ -49,6 +49,41 @@ export class SettingsPage {
     })
 
     this.list_settings = {
+      customers: {
+        title: 'Danh sách khách hàng',
+        placeholderSearch: 'Tìm kiếm khách hàng',
+        filter_default: ["name","phone","email","address","companyAddress","fax","bank","description"],
+        attributes: [
+          { name: "phone", label: 'Số điện thoại' },
+          { name: "email", label: 'Email' },
+          { name: "address", label: 'Địa chỉ' },
+          { name: "companyAddress", label: 'Địa chỉ công ty' },
+          { name: "fax", label: 'Fax' },
+          { name: "bank", label: 'Tài khoản ngân hàng' },
+          { name: "description", label: 'Mô tả' },
+        ],
+        mainAttribute: 'name',
+        data: this.settingProvider.setting.customers,
+      },
+      partners: {
+        title: 'Danh sách đối tác',
+        placeholderSearch: 'Tìm kiếm đối tác',
+        filter_default: ["name","code","manager","address","agencyName","agencyAddress","distributionName","distributionAddress","distributionPhone","description"],
+        attributes: [
+          { name: "description", label: 'Mô tả' },
+          { name: "code", label: 'Mã đối tác' },
+          { name: "manager", label: 'Tên người quản lý' },
+          { name: "address", label: 'Địa chỉ' },
+          { name: "agencyName", label: 'Chức vụ người quản lý' },
+          { name: "agencyAddress", label: 'Địa chỉ người quản lý' },
+          { name: "agencyPhone", label: 'Số điện thoại người quản lý' },
+          { name: "distributionName", label: 'Tên nhà phân phối' },
+          { name: "distributionAddress", label: 'Địa chỉ nhà phân phối' },
+          { name: "distributionPhone", label: 'Số điện thoại nhà phân phối' },
+        ],
+        mainAttribute: 'name',
+        data: this.settingProvider.setting.partners,
+      },
       pregnancyStatus: {
         title: 'Trạng thái mang thai',
         placeholderSearch: 'Tìm kiếm trạng thái mang thai',

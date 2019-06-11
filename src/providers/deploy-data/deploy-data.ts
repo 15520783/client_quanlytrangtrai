@@ -93,26 +93,28 @@ export class DeployDataProvider {
     let formalSection: any = [VARIABLE.SECTION_TYPE[6].value];
     let child_pig = [];
 
-    let child_pig_in_formal_section = this.pigsProvider.pigs.filter((pig) => {
-      return (houses[pig.houseId] && houses[pig.houseId].section.farm.id == farmId &&
-        formalSection.includes((houses[pig.houseId].section.typeId).toString())) ? true : false;
-    })
+    let child_pig_in_formal_section = [];
+    if (this.pigsProvider.pigs) {
+      child_pig_in_formal_section = this.pigsProvider.pigs.filter((pig) => {
+        return (houses[pig.houseId] && houses[pig.houseId].section.farm.id == farmId &&
+          formalSection.includes((houses[pig.houseId].section.typeId).toString())) ? true : false;
+      })
 
-    if (child_pig_in_formal_section.length) {
-      child_pig.push.apply(child_pig, child_pig_in_formal_section);
+      if (child_pig_in_formal_section.length) {
+        child_pig.push.apply(child_pig, child_pig_in_formal_section);
+      }
+
+      let child_pig_in_khu_de = this.pigsProvider.pigs.filter((pig) => {
+        return (houses[pig.houseId] && houses[pig.houseId].section.farm.id == farmId &&
+          (houses[pig.houseId].section.typeId).toString() == VARIABLE.SECTION_TYPE[5].value
+          && (pig.statusId == VARIABLE.STATUS_PIG.NEWBORN
+            || pig.statusId == VARIABLE.STATUS_PIG.GROWING)) ? true : false;
+      })
+
+      if (child_pig_in_khu_de.length) {
+        child_pig.push.apply(child_pig, child_pig_in_khu_de);
+      }
     }
-
-    let child_pig_in_khu_de = this.pigsProvider.pigs.filter((pig) => {
-      return (houses[pig.houseId] && houses[pig.houseId].section.farm.id == farmId &&
-        (houses[pig.houseId].section.typeId).toString() == VARIABLE.SECTION_TYPE[5].value
-        && (pig.statusId == VARIABLE.STATUS_PIG.NEWBORN
-          || pig.statusId == VARIABLE.STATUS_PIG.GROWING)) ? true : false;
-    })
-
-    if (child_pig_in_khu_de.length) {
-      child_pig.push.apply(child_pig, child_pig_in_khu_de);
-    }
-
     return child_pig;
   }
 
@@ -122,27 +124,37 @@ export class DeployDataProvider {
    */
   get_all_pig_of_farm(farmId: string) {
     let houses = this.get_object_list_key_of_house();
-    return this.pigsProvider.pigs.filter((pig) => {
-      return (houses[pig.houseId] && houses[pig.houseId].section.farm.id == farmId) ? true : false;
-    })
+    if (this.pigsProvider.pigs) {
+      return this.pigsProvider.pigs.filter((pig) => {
+        return (houses[pig.houseId] && houses[pig.houseId].section.farm.id == farmId) ? true : false;
+      })
+    } else {
+      return [];
+    }
   }
 
   get_pig_of_section_type(sectionTypeId: string) {
     let houses = this.get_object_list_key_of_house();
-    return this.pigsProvider.pigs.filter((pig) => {
-      return houses[pig.houseId].section.typeId == sectionTypeId ? true : false;
-    })
+    if (this.pigsProvider.pigs) {
+      return this.pigsProvider.pigs.filter((pig) => {
+        return houses[pig.houseId].section.typeId == sectionTypeId ? true : false;
+      })
+    } else {
+      return [];
+    }
   }
 
 
   get_all_farm_for_select() {
     let options_select = [];
-    this.farmProvider.farms.forEach(farm => {
-      options_select.push({
-        name: farm.name,
-        value: farm.id
+    if (this.farmProvider.farms) {
+      this.farmProvider.farms.forEach(farm => {
+        options_select.push({
+          name: farm.name,
+          value: farm.id
+        })
       })
-    })
+    }
     return options_select;
   }
 
@@ -153,19 +165,23 @@ export class DeployDataProvider {
   get_farm_list_for_select() {
     let options_select = [];
     let farms = [];
-    if (this.userProvider.user.farm.id == '0') {
-      farms = this.farmProvider.farms;
-    } else {
-      farms = this.farmProvider.farms.filter((farm) => {
-        return farm.id == this.userProvider.user.farm.id ? true : false;
+    if (this.userProvider.user) {
+      if (this.userProvider.user.farm.id == '0') {
+        farms = this.farmProvider.farms;
+      } else {
+        if (this.farmProvider.farms) {
+          farms = this.farmProvider.farms.filter((farm) => {
+            return farm.id == this.userProvider.user.farm.id ? true : false;
+          })
+        } else return [];
+      }
+      farms.forEach(farm => {
+        options_select.push({
+          name: farm.name,
+          value: farm.id
+        })
       })
     }
-    farms.forEach(farm => {
-      options_select.push({
-        name: farm.name,
-        value: farm.id
-      })
-    })
     return options_select;
   }
 
@@ -174,12 +190,14 @@ export class DeployDataProvider {
    */
   get_farm_types_list_for_select() {
     let farm_types = [];
-    this.settingProvider.setting.farmTypes.forEach(farmType => {
-      farm_types.push({
-        name: farmType.name,
-        value: farmType.id
+    if (this.settingProvider.setting) {
+      this.settingProvider.setting.farmTypes.forEach(farmType => {
+        farm_types.push({
+          name: farmType.name,
+          value: farmType.id
+        })
       })
-    })
+    }
     return farm_types;
   }
 
@@ -190,12 +208,14 @@ export class DeployDataProvider {
    */
   get_section_list_for_select() {
     let options_select = [];
-    this.sectionProvider.sections.forEach(section => {
-      options_select.push({
-        name: section.name,
-        value: section.id
+    if (this.sectionProvider.sections) {
+      this.sectionProvider.sections.forEach(section => {
+        options_select.push({
+          name: section.name,
+          value: section.id
+        })
       })
-    })
+    }
     return options_select;
   }
 
@@ -204,12 +224,14 @@ export class DeployDataProvider {
    */
   get_house_list_for_select() {
     let options_select = [];
-    this.houseProvider.houses.forEach(house => {
-      options_select.push({
-        name: house.name,
-        value: house.id
+    if (this.houseProvider.houses) {
+      this.houseProvider.houses.forEach(house => {
+        options_select.push({
+          name: house.name,
+          value: house.id
+        })
       })
-    })
+    }
     return options_select;
   }
 
@@ -218,12 +240,30 @@ export class DeployDataProvider {
    */
   get_partner_list_for_select() {
     let options_select = [];
-    this.partnerProvider.partners.forEach(partner => {
-      options_select.push({
-        name: partner.name,
-        value: partner.id
+    if (this.partnerProvider.partners) {
+      this.partnerProvider.partners.forEach(partner => {
+        options_select.push({
+          name: partner.name,
+          value: partner.id
+        })
       })
-    })
+    }
+    return options_select;
+  }
+
+  /**
+   *  Lấy danh sách khách hàng cho ion-select
+   */
+  get_customer_list_for_select() {
+    let options_select = [];
+    if (this.settingProvider.setting) {
+      this.settingProvider.setting.customers.forEach(customer => {
+        options_select.push({
+          name: customer.name,
+          value: customer.id
+        })
+      })
+    }
     return options_select;
   }
 
@@ -232,12 +272,14 @@ export class DeployDataProvider {
    */
   get_food_list_for_select() {
     let food_select = [];
-    this.settingProvider.setting.foods.forEach(food => {
-      food_select.push({
-        name: food.name,
-        value: food.id
+    if (this.settingProvider.setting) {
+      this.settingProvider.setting.foods.forEach(food => {
+        food_select.push({
+          name: food.name,
+          value: food.id
+        })
       })
-    })
+    }
     return food_select;
   }
 
@@ -246,12 +288,14 @@ export class DeployDataProvider {
    */
   get_medicine_list_for_select() {
     let medicine_select = [];
-    this.settingProvider.setting.medicines.forEach(medicine => {
-      medicine_select.push({
-        name: medicine.name,
-        value: medicine.id
+    if (this.settingProvider.setting) {
+      this.settingProvider.setting.medicines.forEach(medicine => {
+        medicine_select.push({
+          name: medicine.name,
+          value: medicine.id
+        })
       })
-    })
+    }
     return medicine_select;
   }
 
@@ -260,12 +304,14 @@ export class DeployDataProvider {
    */
   get_medicineUnit_list_for_select() {
     let medicineUnit_select = [];
-    this.settingProvider.setting.medicineUnits.forEach(unit => {
-      medicineUnit_select.push({
-        name: unit.name,
-        value: unit.id
+    if (this.settingProvider.setting) {
+      this.settingProvider.setting.medicineUnits.forEach(unit => {
+        medicineUnit_select.push({
+          name: unit.name,
+          value: unit.id
+        })
       })
-    })
+    }
     return medicineUnit_select;
   }
 
@@ -274,12 +320,14 @@ export class DeployDataProvider {
    */
   get_foodUnit_list_for_select() {
     let foodUnit_select = [];
-    this.settingProvider.setting.foodUnits.forEach(unit => {
-      foodUnit_select.push({
-        name: unit.id == '1' ? unit.name : unit.name + ' ' + unit.quantity + ' kg',
-        value: unit.id
+    if (this.settingProvider.setting) {
+      this.settingProvider.setting.foodUnits.forEach(unit => {
+        foodUnit_select.push({
+          name: unit.id == '1' ? unit.name : unit.name + ' ' + unit.quantity + ' kg',
+          value: unit.id
+        })
       })
-    })
+    }
     return foodUnit_select.sort((a, b) => {
       return a.id > b.id ? 1 : -1
     });
@@ -291,12 +339,14 @@ export class DeployDataProvider {
    */
   get_breedingType_list_for_select() {
     let breedingTypes_select = [];
-    this.settingProvider.setting.breedingType.forEach((breedingType) => {
-      breedingTypes_select.push({
-        name: breedingType.name,
-        value: breedingType.id
+    if (this.settingProvider.setting) {
+      this.settingProvider.setting.breedingType.forEach((breedingType) => {
+        breedingTypes_select.push({
+          name: breedingType.name,
+          value: breedingType.id
+        })
       })
-    })
+    }
     return breedingTypes_select;
   }
 
@@ -305,12 +355,14 @@ export class DeployDataProvider {
    */
   get_warehouse_types_list_for_select() {
     let warehouseTypes_select = [];
-    this.settingProvider.setting.warehouseTypes.forEach((type) => {
-      warehouseTypes_select.push({
-        name: type.name,
-        value: type.id
+    if (this.settingProvider.setting) {
+      this.settingProvider.setting.warehouseTypes.forEach((type) => {
+        warehouseTypes_select.push({
+          name: type.name,
+          value: type.id
+        })
       })
-    })
+    }
     return warehouseTypes_select;
   }
 
@@ -319,12 +371,14 @@ export class DeployDataProvider {
    */
   get_breed_list_for_select() {
     let breed_select = [];
-    this.settingProvider.setting.breeds.forEach((breed) => {
-      breed_select.push({
-        name: breed.name + ' ' + breed.symbol,
-        value: breed.id
+    if (this.settingProvider.setting) {
+      this.settingProvider.setting.breeds.forEach((breed) => {
+        breed_select.push({
+          name: breed.name + ' ' + breed.symbol,
+          value: breed.id
+        })
       })
-    })
+    }
     return breed_select;
   }
 
@@ -333,36 +387,38 @@ export class DeployDataProvider {
    */
   get_issues_list_for_select() {
     let issues = [];
-    this.settingProvider.setting.issues.forEach((issue) => {
-      issues.push({
-        name: issue.symptom,
-        value: issue.id
+    if (this.settingProvider.setting) {
+      this.settingProvider.setting.issues.forEach((issue) => {
+        issues.push({
+          name: issue.symptom,
+          value: issue.id
+        })
       })
-    })
+    }
     return issues;
   }
 
   get_statusCode_list_for_select() {
     let statusCode_select = [];
     Object.keys(VARIABLE.STATUS_PIG).forEach((statusKey) => {
-      // if (parseInt(VARIABLE.STATUS_PIG[statusKey]) <= 7) {
       statusCode_select.push({
         name: statusKey,
         value: VARIABLE.STATUS_PIG[statusKey]
       })
-      // }
     })
     return statusCode_select;
   }
 
   get_role_list_for_select() {
     let roles_select = [];
-    this.settingProvider.setting.roles.forEach((role) => {
-      roles_select.push({
-        name: role.name,
-        value: role.id
-      })
-    });
+    if (this.settingProvider.setting) {
+      this.settingProvider.setting.roles.forEach((role) => {
+        roles_select.push({
+          name: role.name,
+          value: role.id
+        })
+      });
+    }
     return roles_select;
   }
 
@@ -371,9 +427,14 @@ export class DeployDataProvider {
    * @param roleId 
    */
   get_role_by_id(roleId: string) {
-    return this.settingProvider.setting.roles.filter((role) => {
-      return role.id == roleId ? true : false;
-    })[0];
+    if (this.settingProvider.setting) {
+      return this.settingProvider.setting.roles.filter((role) => {
+        return role.id == roleId ? true : false;
+      })[0];
+    } else {
+      return null;
+    }
+
   }
 
 
@@ -382,9 +443,13 @@ export class DeployDataProvider {
    * @param farmId 
    */
   get_farm_by_id(farmId: string) {
-    return this.farmProvider.farms.filter((farm) => {
-      return farm.id == farmId ? true : false;
-    })[0];
+    if (this.farmProvider.farms) {
+      return this.farmProvider.farms.filter((farm) => {
+        return farm.id == farmId ? true : false;
+      })[0];
+    } else {
+      return null;
+    }
   }
 
   /**
@@ -392,9 +457,14 @@ export class DeployDataProvider {
    * @param farmId 
    */
   get_sections_of_farm(farmId: string) {
-    return this.sectionProvider.sections.filter((section) => {
-      return section.farm.id == farmId ? true : false;
-    })
+    if (this.sectionProvider.sections) {
+      return this.sectionProvider.sections.filter((section) => {
+        return section.farm.id == farmId ? true : false;
+      })
+    } else {
+      return [];
+    }
+
   }
 
   /**
@@ -402,9 +472,14 @@ export class DeployDataProvider {
    * @param farmId 
    */
   get_sections_by_sectionType_of_farm(farmId: string, sectionTypeId: string) {
-    return this.sectionProvider.sections.filter((section) => {
-      return (section.farm.id == farmId && section.typeId == sectionTypeId) ? true : false;
-    })
+    if (this.sectionProvider.sections) {
+      return this.sectionProvider.sections.filter((section) => {
+        return (section.farm.id == farmId && section.typeId == sectionTypeId) ? true : false;
+      })
+    }
+    else {
+      return [];
+    }
   }
 
   /**
@@ -412,9 +487,11 @@ export class DeployDataProvider {
    * @param sectionId 
    */
   get_houses_of_section(sectionId: string) {
-    return this.houseProvider.houses.filter((house) => {
-      return house.section.id == sectionId ? true : false;
-    })
+    if (this.houseProvider.houses) {
+      return this.houseProvider.houses.filter((house) => {
+        return house.section.id == sectionId ? true : false;
+      })
+    } else return [];
   }
 
   /**
@@ -422,9 +499,13 @@ export class DeployDataProvider {
    * @param partnerId 
    */
   get_partner_by_id(partnerId: string) {
-    return this.partnerProvider.partners.filter((partner) => {
-      return partner.id == partnerId ? true : false;
-    })[0];
+    if (this.partnerProvider.partners) {
+      return this.partnerProvider.partners.filter((partner) => {
+        return partner.id == partnerId ? true : false;
+      })[0];
+    } else {
+      return null;
+    }
   }
 
   /**
@@ -432,9 +513,14 @@ export class DeployDataProvider {
    * @param typeId 
    */
   get_farm_type_by_id(typeId: string) {
-    return this.settingProvider.setting.farmTypes.filter((type) => {
-      return type.id == type.id ? true : false;
-    })[0];
+    if (this.settingProvider.setting) {
+      return this.settingProvider.setting.farmTypes.filter((type) => {
+        return type.id == type.id ? true : false;
+      })[0];
+    } else {
+      return null;
+    }
+
   }
 
 
@@ -443,9 +529,11 @@ export class DeployDataProvider {
    * @param empId 
    */
   get_employee_by_id(empId: string) {
-    return this.employeeProvider.employees.filter((emp) => {
-      return emp.id == empId ? true : false;
-    })[0];
+    if (this.employeeProvider.employees) {
+      return this.employeeProvider.employees.filter((emp) => {
+        return emp.id == empId ? true : false;
+      })[0];
+    } else return null;
   }
 
   /**
@@ -453,9 +541,11 @@ export class DeployDataProvider {
    * @param farmId 
    */
   get_employees_of_farm(farmId: string) {
-    return this.employeeProvider.employees.filter((emp) => {
-      return emp.farm.id == farmId ? true : false;
-    });
+    if (this.employeeProvider.employees) {
+      return this.employeeProvider.employees.filter((emp) => {
+        return emp.farm.id == farmId ? true : false;
+      });
+    } else return null;
   }
 
   /**
@@ -463,9 +553,11 @@ export class DeployDataProvider {
    */
   get_object_list_key_of_partner() {
     let partners = {};
-    this.partnerProvider.partners.forEach((partner) => {
-      partners[partner.id] = partner;
-    })
+    if (this.partnerProvider.partners) {
+      this.partnerProvider.partners.forEach((partner) => {
+        partners[partner.id] = partner;
+      })
+    }
     return partners;
   }
 
@@ -474,9 +566,11 @@ export class DeployDataProvider {
    */
   get_object_list_key_of_farm() {
     let farms = {};
-    this.farmProvider.farms.forEach((farm) => {
-      farms[farm.id] = farm;
-    })
+    if (this.farmProvider.farms) {
+      this.farmProvider.farms.forEach((farm) => {
+        farms[farm.id] = farm;
+      })
+    }
     return farms;
   }
 
@@ -485,9 +579,11 @@ export class DeployDataProvider {
    */
   get_object_list_key_of_pig() {
     let pigs = {};
-    this.pigsProvider.pigs.forEach((pig) => {
-      pigs[pig.id] = pig;
-    })
+    if (this.pigsProvider.pigs) {
+      this.pigsProvider.pigs.forEach((pig) => {
+        pigs[pig.id] = pig;
+      })
+    }
     return pigs;
   }
 
@@ -496,9 +592,11 @@ export class DeployDataProvider {
    */
   get_object_list_key_of_house() {
     let houses = {};
-    this.houseProvider.houses.forEach((house) => {
-      houses[house.id] = house;
-    })
+    if (this.houseProvider.houses) {
+      this.houseProvider.houses.forEach((house) => {
+        houses[house.id] = house;
+      })
+    }
     return houses;
   }
 
@@ -507,9 +605,11 @@ export class DeployDataProvider {
    */
   get_object_list_key_of_gential() {
     let gentials = {};
-    this.settingProvider.setting.gentialType.forEach((gential) => {
-      gentials[gential.id] = gential;
-    })
+    if (this.settingProvider.setting) {
+      this.settingProvider.setting.gentialType.forEach((gential) => {
+        gentials[gential.id] = gential;
+      })
+    }
     return gentials;
   }
 
@@ -518,9 +618,11 @@ export class DeployDataProvider {
    */
   get_object_list_key_of_foot() {
     let foots = {};
-    this.settingProvider.setting.footType.forEach((foot) => {
-      foots[foot.id] = foot;
-    })
+    if (this.settingProvider.setting) {
+      this.settingProvider.setting.footType.forEach((foot) => {
+        foots[foot.id] = foot;
+      })
+    }
     return foots;
   }
 
@@ -529,9 +631,11 @@ export class DeployDataProvider {
    */
   get_object_list_key_of_healthStatus() {
     let healthStatus = {};
-    this.settingProvider.setting.healthStatus.forEach((health) => {
-      healthStatus[health.id] = health;
-    })
+    if (this.settingProvider.setting) {
+      this.settingProvider.setting.healthStatus.forEach((health) => {
+        healthStatus[health.id] = health;
+      })
+    }
     return healthStatus;
   }
 
@@ -540,9 +644,11 @@ export class DeployDataProvider {
    */
   get_object_list_key_of_issues() {
     let issues = {};
-    this.settingProvider.setting.issues.forEach((issue) => {
-      issues[issue.id] = issue;
-    })
+    if (this.settingProvider.setting) {
+      this.settingProvider.setting.issues.forEach((issue) => {
+        issues[issue.id] = issue;
+      })
+    }
     return issues;
   }
 
@@ -551,9 +657,11 @@ export class DeployDataProvider {
    */
   get_object_list_key_of_status() {
     let Status = {};
-    this.settingProvider.setting.status.forEach((status) => {
-      Status[status.id] = status;
-    })
+    if (this.settingProvider.setting) {
+      this.settingProvider.setting.status.forEach((status) => {
+        Status[status.id] = status;
+      })
+    }
     return Status;
   }
 
@@ -562,9 +670,11 @@ export class DeployDataProvider {
    */
   get_object_list_key_of_health_status() {
     let healthStatus = {};
-    this.settingProvider.setting.healthStatus.forEach((status) => {
-      healthStatus[status.id] = status;
-    })
+    if (this.settingProvider.setting) {
+      this.settingProvider.setting.healthStatus.forEach((status) => {
+        healthStatus[status.id] = status;
+      })
+    }
     return healthStatus;
   }
 
@@ -573,9 +683,11 @@ export class DeployDataProvider {
    */
   get_object_list_key_of_breeds() {
     let breeds = {};
-    this.settingProvider.setting.breeds.forEach((breed) => {
-      breeds[breed.id] = breed;
-    })
+    if (this.settingProvider.setting) {
+      this.settingProvider.setting.breeds.forEach((breed) => {
+        breeds[breed.id] = breed;
+      })
+    }
     return breeds;
   }
 
@@ -584,9 +696,11 @@ export class DeployDataProvider {
    */
   get_object_list_key_of_breedingTypes() {
     let breedingType = {}
-    this.settingProvider.setting.breedingType.forEach((value) => {
-      breedingType[value.id] = value;
-    })
+    if (this.settingProvider.setting) {
+      this.settingProvider.setting.breedingType.forEach((value) => {
+        breedingType[value.id] = value;
+      })
+    }
     return breedingType;
   }
 
@@ -595,9 +709,11 @@ export class DeployDataProvider {
    */
   get_object_list_key_of_employees() {
     let employees = {};
-    this.employeeProvider.employees.forEach((emp) => {
-      employees[emp.id] = emp;
-    })
+    if (this.employeeProvider.employees) {
+      this.employeeProvider.employees.forEach((emp) => {
+        employees[emp.id] = emp;
+      })
+    }
     return employees;
   }
 
@@ -606,9 +722,11 @@ export class DeployDataProvider {
      */
   get_object_list_key_of_foodUnit() {
     let units = {};
-    this.settingProvider.setting.foodUnits.forEach((unit) => {
-      units[unit.id] = unit;
-    })
+    if (this.settingProvider.setting) {
+      this.settingProvider.setting.foodUnits.forEach((unit) => {
+        units[unit.id] = unit;
+      })
+    }
     return units;
   }
 
@@ -617,9 +735,13 @@ export class DeployDataProvider {
    * @param houseId 
    */
   get_house_by_id(houseId) {
-    return this.houseProvider.houses.filter((house) => {
-      return house.id == houseId ? true : false;
-    })[0];
+    if (this.houseProvider.houses) {
+      return this.houseProvider.houses.filter((house) => {
+        return house.id == houseId ? true : false;
+      })[0];
+    } else {
+      return null;
+    }
   }
 
   /**
@@ -627,9 +749,11 @@ export class DeployDataProvider {
    * @param breedId 
    */
   get_breed_by_id(breedId) {
-    return this.settingProvider.setting.breeds.filter((breed) => {
-      return breed.id == breedId ? true : false;
-    })[0];
+    if (this.settingProvider.setting) {
+      return this.settingProvider.setting.breeds.filter((breed) => {
+        return breed.id == breedId ? true : false;
+      })[0];
+    } else return null;
   }
 
   /**
@@ -637,9 +761,14 @@ export class DeployDataProvider {
    * @param footId 
    */
   get_foot_by_id(footId) {
-    return this.settingProvider.setting.footType.filter((foot) => {
-      return foot.id == footId ? true : false;
-    })[0];
+    if (this.settingProvider.setting) {
+      return this.settingProvider.setting.footType.filter((foot) => {
+        return foot.id == footId ? true : false;
+      })[0];
+    } else {
+      return null;
+    }
+
   }
 
   /**
@@ -647,9 +776,14 @@ export class DeployDataProvider {
    * @param healStatusId 
    */
   get_healthstatus_by_id(healStatusId) {
-    return this.settingProvider.setting.healthStatus.filter((healthStatus) => {
-      return healthStatus.id == healStatusId ? true : false;
-    })[0];
+    if (this.settingProvider.setting) {
+      return this.settingProvider.setting.healthStatus.filter((healthStatus) => {
+        return healthStatus.id == healStatusId ? true : false;
+      })[0];
+    } else {
+      return null;
+    }
+
   }
 
   /**
@@ -657,9 +791,14 @@ export class DeployDataProvider {
    * @param pregnancyStatusId 
    */
   get_pregnancystatus_by_id(pregnancyStatusId) {
-    return this.settingProvider.setting.pregnancyStatus.filter((pregnancyStatus) => {
-      return pregnancyStatus.id == pregnancyStatusId ? true : false;
-    })[0];
+    if (this.settingProvider.setting) {
+      return this.settingProvider.setting.pregnancyStatus.filter((pregnancyStatus) => {
+        return pregnancyStatus.id == pregnancyStatusId ? true : false;
+      })[0];
+    } else {
+      return null;
+    }
+
   }
 
   /**
@@ -667,9 +806,13 @@ export class DeployDataProvider {
    * @param pregnancyStatusId 
    */
   get_pricecode_by_id(priceCodeId) {
-    return this.settingProvider.setting.priceCodes.filter((priceCode) => {
-      return priceCode.id == priceCodeId ? true : false;
-    })[0];
+    if (this.settingProvider.setting) {
+      return this.settingProvider.setting.priceCodes.filter((priceCode) => {
+        return priceCode.id == priceCodeId ? true : false;
+      })[0];
+    } else {
+      return null;
+    }
   }
 
   /**
@@ -677,9 +820,14 @@ export class DeployDataProvider {
    * @param gentialTypeId 
    */
   get_gentialtype_by_id(gentialTypeId) {
-    return this.settingProvider.setting.gentialType.filter((gential) => {
-      return gential.id == gentialTypeId ? true : false;
-    })[0];
+    if (this.settingProvider.setting) {
+      return this.settingProvider.setting.gentialType.filter((gential) => {
+        return gential.id == gentialTypeId ? true : false;
+      })[0];
+    } else {
+      return null;
+    }
+
   }
 
   /**
@@ -687,9 +835,11 @@ export class DeployDataProvider {
    * @param statusId 
    */
   get_status_by_id(statusId) {
-    return this.settingProvider.setting.status.filter((status) => {
-      return status.id == statusId ? true : false;
-    })[0];
+    if (this.settingProvider.setting) {
+      return this.settingProvider.setting.status.filter((status) => {
+        return status.id == statusId ? true : false;
+      })[0];
+    } else return null;
   }
 
   /**
@@ -697,10 +847,13 @@ export class DeployDataProvider {
    * @param warehouseId 
    */
   get_warehouse_by_id(warehouseId: string) {
-    let idx = this.warehouseProvider.warehouses.findIndex(warehouse => warehouse.id == warehouseId);
-    if (idx > -1)
-      return this.warehouseProvider.warehouses[idx];
-    else return null;
+    if (this.warehouseProvider.warehouses) {
+      let idx = this.warehouseProvider.warehouses.findIndex(warehouse => warehouse.id == warehouseId);
+      if (idx > -1)
+        return this.warehouseProvider.warehouses[idx];
+      else return null;
+    } else return null;
+
   }
 
   /**
@@ -708,10 +861,12 @@ export class DeployDataProvider {
    * @param foodId 
    */
   get_food_by_id(foodId: string) {
-    let idx = this.settingProvider.setting.foods.findIndex(food => food.id == foodId);
-    if (idx > -1)
-      return this.settingProvider.setting.foods[idx];
-    else return null;
+    if (this.settingProvider.setting) {
+      let idx = this.settingProvider.setting.foods.findIndex(food => food.id == foodId);
+      if (idx > -1)
+        return this.settingProvider.setting.foods[idx];
+      else return null;
+    } else return null;
   }
 
   /**
@@ -719,10 +874,12 @@ export class DeployDataProvider {
    * @param medicineId 
    */
   get_medicine_by_id(medicineId: string) {
-    let idx = this.settingProvider.setting.medicines.findIndex(medicine => medicine.id == medicineId);
-    if (idx > -1)
-      return this.settingProvider.setting.medicines[idx];
-    else return null;
+    if (this.settingProvider.setting) {
+      let idx = this.settingProvider.setting.medicines.findIndex(medicine => medicine.id == medicineId);
+      if (idx > -1)
+        return this.settingProvider.setting.medicines[idx];
+      else return null;
+    } else return null;
   }
 
   /**
@@ -730,10 +887,12 @@ export class DeployDataProvider {
    * @param unitId 
    */
   get_medicineUnit_by_id(unitId: string) {
-    let idx = this.settingProvider.setting.medicineUnits.findIndex(unit => unit.id == unitId);
-    if (idx > -1)
-      return this.settingProvider.setting.medicineUnits[idx];
-    else return null;
+    if (this.settingProvider.setting) {
+      let idx = this.settingProvider.setting.medicineUnits.findIndex(unit => unit.id == unitId);
+      if (idx > -1)
+        return this.settingProvider.setting.medicineUnits[idx];
+      else return null;
+    } else return null;
   }
 
   /**
@@ -741,21 +900,24 @@ export class DeployDataProvider {
    * @param unitId 
    */
   get_foodUnit_by_id(unitId: string) {
-    let idx = this.settingProvider.setting.foodUnits.findIndex(unit => unit.id == unitId);
-    if (idx > -1)
-      return this.settingProvider.setting.foodUnits[idx];
-    else return null;
+    if (this.settingProvider.setting) {
+      let idx = this.settingProvider.setting.foodUnits.findIndex(unit => unit.id == unitId);
+      if (idx > -1)
+        return this.settingProvider.setting.foodUnits[idx];
+      else return null;
+    } else return null;
   }
 
   get_parent_of_pig(target: pig) {
     let result: any = {};
-    result['father'] = this.pigsProvider.pigs.filter((pig) => {
-      return target.originFather == pig.pigCode ? true : false;
-    })[0];
-    result['mother'] = this.pigsProvider.pigs.filter((pig) => {
-      return target.originMother == pig.pigCode ? true : false;
-    })[0];
-    console.log(result);
+    if (this.pigsProvider.pigs) {
+      result['father'] = this.pigsProvider.pigs.filter((pig) => {
+        return target.originFather == pig.pigCode ? true : false;
+      })[0];
+      result['mother'] = this.pigsProvider.pigs.filter((pig) => {
+        return target.originMother == pig.pigCode ? true : false;
+      })[0];
+    }
     return result;
   }
 
@@ -764,10 +926,12 @@ export class DeployDataProvider {
    * @param pigId 
    */
   get_pig_by_id(pigId: string) {
-    let pig = this.pigsProvider.pigs.filter((pig) => {
-      return pig.id == pigId ? true : false;
-    })[0];
-
+    let pig: pig;
+    if (this.pigsProvider.pigs) {
+      this.pigsProvider.pigs.filter((pig) => {
+        return pig.id == pigId ? true : false;
+      })[0];
+    }
     return pig;
   }
 
@@ -818,9 +982,11 @@ export class DeployDataProvider {
    * @param farmId 
    */
   get_food_warehouse_of_farm(farmId: string) {
-    return this.warehouseProvider.warehouses.filter((warehouse) => {
-      return (warehouse.manager.farm.id == farmId && warehouse.type.id == "1") ? true : false;
-    })
+    if (this.warehouseProvider.warehouses) {
+      return this.warehouseProvider.warehouses.filter((warehouse) => {
+        return (warehouse.manager.farm.id == farmId && warehouse.type.id == "1") ? true : false;
+      })
+    } else return [];
   }
 
   /**
@@ -828,9 +994,11 @@ export class DeployDataProvider {
    * @param farmId 
    */
   get_medicine_warehouse_of_farm(farmId: string) {
-    return this.warehouseProvider.warehouses.filter((warehouse) => {
-      return (warehouse.manager.farm.id == farmId && warehouse.type.id == "2") ? true : false;
-    })
+    if (this.warehouseProvider.warehouses) {
+      return this.warehouseProvider.warehouses.filter((warehouse) => {
+        return (warehouse.manager.farm.id == farmId && warehouse.type.id == "2") ? true : false;
+      })
+    } else return [];
   }
 
 
@@ -840,9 +1008,11 @@ export class DeployDataProvider {
    * @param houseId 
    */
   get_pigs_of_house(houseId: string) {
-    return this.pigsProvider.pigs.filter((pig) => {
-      return pig.houseId == houseId ? true : false;
-    })
+    if (this.pigsProvider.pigs) {
+      return this.pigsProvider.pigs.filter((pig) => {
+        return pig.houseId == houseId ? true : false;
+      })
+    } else return [];
   }
 
   /**
@@ -851,9 +1021,11 @@ export class DeployDataProvider {
    */
   get_pigs_by_sectionId(sectionId: string) {
     let houses = this.get_object_list_key_of_house();
-    return this.pigsProvider.pigs.filter((pig) => {
-      return houses[pig.houseId].section.id == sectionId ? true : false;
-    })
+    if (this.pigsProvider.pigs) {
+      return this.pigsProvider.pigs.filter((pig) => {
+        return houses[pig.houseId].section.id == sectionId ? true : false;
+      })
+    } else return [];
   }
 
 
@@ -863,15 +1035,19 @@ export class DeployDataProvider {
    */
   get_pigs_of_sectionType(sectionTypeId: string) {
     let housesId: any = [];
-    this.houseProvider.houses.filter((house) => {
-      return (house.section.typeId == sectionTypeId) ? true : false;
-    }).forEach((house) => {
-      housesId.push(house.id);
-    })
+    if (this.houseProvider.houses) {
+      this.houseProvider.houses.filter((house) => {
+        return (house.section.typeId == sectionTypeId) ? true : false;
+      }).forEach((house) => {
+        housesId.push(house.id);
+      })
+    } else return [];
 
-    return this.pigsProvider.pigs.filter((pig) => {
-      return housesId.includes(pig.houseId) ? true : false;
-    })
+    if (this.pigsProvider.pigs) {
+      return this.pigsProvider.pigs.filter((pig) => {
+        return housesId.includes(pig.houseId) ? true : false;
+      })
+    } else return [];
   }
 
 
@@ -881,15 +1057,20 @@ export class DeployDataProvider {
    */
   get_pigs_sale_waiting_of_section(sectionTypeId: string) {
     let housesId: any = [];
-    this.houseProvider.houses.filter((house) => {
-      return (house.section.typeId == sectionTypeId) ? true : false;
-    }).forEach((house) => {
-      housesId.push(house.id);
-    })
+    if (this.houseProvider.houses) {
+      this.houseProvider.houses.filter((house) => {
+        return (house.section.typeId == sectionTypeId) ? true : false;
+      }).forEach((house) => {
+        housesId.push(house.id);
+      })
+    } else return [];
+
     let statusObjectKeyList = this.get_object_list_key_of_status();
-    return this.pigsProvider.pigs.filter((pig) => {
-      return housesId.includes(pig.houseId) && statusObjectKeyList[pig.statusId].code == VARIABLE.STATUS_PIG.WAIT_FOR_SALE ? true : false;
-    })
+    if (this.pigsProvider.pigs && statusObjectKeyList) {
+      return this.pigsProvider.pigs.filter((pig) => {
+        return housesId.includes(pig.houseId) && statusObjectKeyList[pig.statusId].code == VARIABLE.STATUS_PIG.WAIT_FOR_SALE ? true : false;
+      })
+    } else return [];
   }
 
   /**
@@ -898,15 +1079,20 @@ export class DeployDataProvider {
   */
   get_pigs_transfer_waiting_of_section(sectionTypeId: string) {
     let housesId: any = [];
-    this.houseProvider.houses.filter((house) => {
-      return (house.section.typeId == sectionTypeId) ? true : false;
-    }).forEach((house) => {
-      housesId.push(house.id);
-    })
+    if (this.houseProvider.houses) {
+      this.houseProvider.houses.filter((house) => {
+        return (house.section.typeId == sectionTypeId) ? true : false;
+      }).forEach((house) => {
+        housesId.push(house.id);
+      })
+    } else return [];
+
     let statusObjectKeyList = this.get_object_list_key_of_status();
-    return this.pigsProvider.pigs.filter((pig) => {
-      return housesId.includes(pig.houseId) && statusObjectKeyList[pig.statusId].code == VARIABLE.STATUS_PIG.WAIT_FOR_TRANSFER ? true : false;
-    })
+    if (this.pigsProvider.pigs && statusObjectKeyList) {
+      return this.pigsProvider.pigs.filter((pig) => {
+        return housesId.includes(pig.houseId) && statusObjectKeyList[pig.statusId].code == VARIABLE.STATUS_PIG.WAIT_FOR_TRANSFER ? true : false;
+      })
+    } else return [];
   }
 
   /**
@@ -921,11 +1107,13 @@ export class DeployDataProvider {
       housesId.push(house.id);
     })
     let statusObjectKeyList = this.get_object_list_key_of_status();
-    return this.pigsProvider.pigs.filter((pig) => {
-      return housesId.includes(pig.houseId) &&
-        (statusObjectKeyList[pig.statusId].code == VARIABLE.STATUS_PIG.MATED
-          || statusObjectKeyList[pig.statusId].code == VARIABLE.STATUS_PIG.MATING) ? true : false;
-    })
+    if (this.pigsProvider.pigs && statusObjectKeyList) {
+      return this.pigsProvider.pigs.filter((pig) => {
+        return housesId.includes(pig.houseId) &&
+          (statusObjectKeyList[pig.statusId].code == VARIABLE.STATUS_PIG.MATED
+            || statusObjectKeyList[pig.statusId].code == VARIABLE.STATUS_PIG.MATING) ? true : false;
+      })
+    } else return [];
   }
 
   /**
@@ -934,15 +1122,20 @@ export class DeployDataProvider {
   */
   get_farrowing_pig_of_section(sectionTypeId: string) {
     let housesId: any = [];
-    this.houseProvider.houses.filter((house) => {
-      return (house.section.typeId == sectionTypeId) ? true : false;
-    }).forEach((house) => {
-      housesId.push(house.id);
-    })
+    if (this.houseProvider.houses) {
+      this.houseProvider.houses.filter((house) => {
+        return (house.section.typeId == sectionTypeId) ? true : false;
+      }).forEach((house) => {
+        housesId.push(house.id);
+      })
+    } else return [];
+
     let statusObjectKeyList = this.get_object_list_key_of_status();
-    return this.pigsProvider.pigs.filter((pig) => {
-      return housesId.includes(pig.houseId) && statusObjectKeyList[pig.statusId].code == VARIABLE.STATUS_PIG.FARROWING ? true : false;
-    })
+    if (this.pigsProvider.pigs && statusObjectKeyList) {
+      return this.pigsProvider.pigs.filter((pig) => {
+        return housesId.includes(pig.houseId) && statusObjectKeyList[pig.statusId].code == VARIABLE.STATUS_PIG.FARROWING ? true : false;
+      })
+    } else return [];
   }
 
   /**
@@ -951,15 +1144,21 @@ export class DeployDataProvider {
    */
   get_weaning_pig_of_section(sectionTypeId: string) {
     let housesId: any = [];
-    this.houseProvider.houses.filter((house) => {
-      return (house.section.typeId == sectionTypeId) ? true : false;
-    }).forEach((house) => {
-      housesId.push(house.id);
-    })
+    if (this.houseProvider.houses) {
+      this.houseProvider.houses.filter((house) => {
+        return (house.section.typeId == sectionTypeId) ? true : false;
+      }).forEach((house) => {
+        housesId.push(house.id);
+      })
+    } else return [];
+
     let statusObjectKeyList = this.get_object_list_key_of_status();
-    return this.pigsProvider.pigs.filter((pig) => {
-      return housesId.includes(pig.houseId) && statusObjectKeyList[pig.statusId].code == VARIABLE.STATUS_PIG.WEANING ? true : false;
-    })
+    if (statusObjectKeyList && this.pigsProvider.pigs) {
+      return this.pigsProvider.pigs.filter((pig) => {
+        return housesId.includes(pig.houseId) && statusObjectKeyList[pig.statusId].code == VARIABLE.STATUS_PIG.WEANING ? true : false;
+      })
+    } else return [];
+
   }
 
   /**
@@ -968,15 +1167,20 @@ export class DeployDataProvider {
    */
   get_growing_child_pig_of_section(sectionTypeId: string) {
     let housesId: any = [];
-    this.houseProvider.houses.filter((house) => {
-      return (house.section.typeId == sectionTypeId) ? true : false;
-    }).forEach((house) => {
-      housesId.push(house.id);
-    })
+    if (this.houseProvider.houses) {
+      this.houseProvider.houses.filter((house) => {
+        return (house.section.typeId == sectionTypeId) ? true : false;
+      }).forEach((house) => {
+        housesId.push(house.id);
+      })
+    } else return [];
+
     let statusObjectKeyList = this.get_object_list_key_of_status();
-    return this.pigsProvider.pigs.filter((pig) => {
-      return housesId.includes(pig.houseId) && statusObjectKeyList[pig.statusId].code == VARIABLE.STATUS_PIG.GROWING ? true : false;
-    })
+    if (statusObjectKeyList && this.pigsProvider.pigs) {
+      return this.pigsProvider.pigs.filter((pig) => {
+        return housesId.includes(pig.houseId) && statusObjectKeyList[pig.statusId].code == VARIABLE.STATUS_PIG.GROWING ? true : false;
+      })
+    } else return [];
   }
 
   /**
@@ -985,15 +1189,20 @@ export class DeployDataProvider {
    */
   get_abortion_pig_of_section(sectionTypeId: string) {
     let housesId: any = [];
-    this.houseProvider.houses.filter((house) => {
-      return (house.section.typeId == sectionTypeId) ? true : false;
-    }).forEach((house) => {
-      housesId.push(house.id);
-    })
+    if (this.houseProvider.houses) {
+      this.houseProvider.houses.filter((house) => {
+        return (house.section.typeId == sectionTypeId) ? true : false;
+      }).forEach((house) => {
+        housesId.push(house.id);
+      })
+    } else return [];
+
     let statusObjectKeyList = this.get_object_list_key_of_status();
-    return this.pigsProvider.pigs.filter((pig) => {
-      return housesId.includes(pig.houseId) && statusObjectKeyList[pig.statusId].code == VARIABLE.STATUS_PIG.ABORTION ? true : false;
-    })
+    if (statusObjectKeyList && this.pigsProvider.pigs) {
+      return this.pigsProvider.pigs.filter((pig) => {
+        return housesId.includes(pig.houseId) && statusObjectKeyList[pig.statusId].code == VARIABLE.STATUS_PIG.ABORTION ? true : false;
+      })
+    } else return [];
   }
 
   /**
@@ -1001,9 +1210,11 @@ export class DeployDataProvider {
    */
   get_all_sale_pig() {
     let status = this.get_object_list_key_of_status();
-    return this.pigsProvider.pigs.filter((pig) => {
-      return status[pig.statusId].code == VARIABLE.STATUS_PIG.WAIT_FOR_SALE ? true : false;
-    })
+    if (this.pigsProvider.pigs && status) {
+      return this.pigsProvider.pigs.filter((pig) => {
+        return status[pig.statusId].code == VARIABLE.STATUS_PIG.WAIT_FOR_SALE ? true : false;
+      })
+    } else return [];
   }
 
   /**
@@ -1011,18 +1222,22 @@ export class DeployDataProvider {
    */
   get_all_transfer_waiting_pig() {
     let status = this.get_object_list_key_of_status();
-    return this.pigsProvider.pigs.filter((pig) => {
-      return status[pig.statusId].code == VARIABLE.STATUS_PIG.WAIT_FOR_TRANSFER ? true : false;
-    })
+    if (this.pigsProvider.pigs && status) {
+      return this.pigsProvider.pigs.filter((pig) => {
+        return status[pig.statusId].code == VARIABLE.STATUS_PIG.WAIT_FOR_TRANSFER ? true : false;
+      })
+    } else return [];
   }
 
   /**
    * Lấy thông tin heo dựa vào mã heo
    */
   get_pig_by_pig_code(pigCode: string) {
-    return this.pigsProvider.pigs.filter((pig) => {
-      return pig.pigCode == pigCode ? true : false;
-    })[0];
+    if (this.pigsProvider.pigs) {
+      return this.pigsProvider.pigs.filter((pig) => {
+        return pig.pigCode == pigCode ? true : false;
+      })[0];
+    } else return null;
   }
 
   /**
@@ -1031,16 +1246,20 @@ export class DeployDataProvider {
    */
   get_status_saleWaiting_of_pig(statusId): status {
     let currentStatus = this.get_status_by_id(statusId);
-    return this.settingProvider.setting.status.filter((status) => {
-      return status.previousStatus == currentStatus.code && VARIABLE.STATUS_PIG.WAIT_FOR_SALE == status.code ? true : false;
-    })[0];
+    if (this.settingProvider.setting && currentStatus) {
+      return this.settingProvider.setting.status.filter((status) => {
+        return status.previousStatus == currentStatus.code && VARIABLE.STATUS_PIG.WAIT_FOR_SALE == status.code ? true : false;
+      })[0];
+    } else return null;
   }
 
   get_status_farm_transferWaiting_of_pig(statusId): status {
     let currentStatus = this.get_status_by_id(statusId);
-    return this.settingProvider.setting.status.filter((status) => {
-      return status.previousStatus == currentStatus.code && VARIABLE.STATUS_PIG.WAIT_FOR_TRANSFER == status.code ? true : false;
-    })[0];
+    if (this.settingProvider.setting && currentStatus) {
+      return this.settingProvider.setting.status.filter((status) => {
+        return status.previousStatus == currentStatus.code && VARIABLE.STATUS_PIG.WAIT_FOR_TRANSFER == status.code ? true : false;
+      })[0];
+    } else return null;
   }
 
 
@@ -1049,9 +1268,11 @@ export class DeployDataProvider {
    * @param statusId 
    */
   get_status_matingWait_of_pig(status: status): status {
-    return this.settingProvider.setting.status.filter((_status) => {
-      return _status.previousStatus == status.code && VARIABLE.STATUS_PIG.WAIT_FOR_MATING == _status.code ? true : false;
-    })[0];
+    if (this.settingProvider.setting && status) {
+      return this.settingProvider.setting.status.filter((_status) => {
+        return _status.previousStatus == status.code && VARIABLE.STATUS_PIG.WAIT_FOR_MATING == _status.code ? true : false;
+      })[0];
+    } else return null;
   }
 
   /**
@@ -1059,9 +1280,11 @@ export class DeployDataProvider {
  * @param statusId 
  */
   get_status_mated_of_pig(status: status): status {
-    return this.settingProvider.setting.status.filter((_status) => {
-      return status.code == _status.previousStatus && VARIABLE.STATUS_PIG.MATED == _status.code ? true : false;
-    })[0];
+    if (this.settingProvider.setting && status) {
+      return this.settingProvider.setting.status.filter((_status) => {
+        return status.code == _status.previousStatus && VARIABLE.STATUS_PIG.MATED == _status.code ? true : false;
+      })[0];
+    } else return null;
   }
 
   /**
@@ -1069,9 +1292,11 @@ export class DeployDataProvider {
    * @param statusCode 
    */
   get_status_pig_by_status_code(statusCode: string) {
-    return this.settingProvider.setting.status.filter((_status) => {
-      return _status.code == statusCode ? true : false;
-    })[0];
+    if (this.settingProvider.setting && statusCode) {
+      return this.settingProvider.setting.status.filter((_status) => {
+        return _status.code == statusCode ? true : false;
+      })[0];
+    } else return null;
   }
 
 
@@ -1081,9 +1306,12 @@ export class DeployDataProvider {
    * @param breedings 
    */
   get_breeding_pig_in_section(sectionTypeId: string, breedings: Array<breedings>) {
-    return this.get_pigs_of_sectionType(sectionTypeId).forEach(pig => {
-      pig['breedings'] = this.get_breeding_of_pig(pig.id, breedings);
-    });
+    let pigs = this.get_pigs_of_sectionType(sectionTypeId);
+    if (pigs && pigs.length) {
+      return this.get_pigs_of_sectionType(sectionTypeId).forEach(pig => {
+        pig['breedings'] = this.get_breeding_of_pig(pig.id, breedings);
+      });
+    } else return [];
   }
 
   /**
@@ -1092,19 +1320,23 @@ export class DeployDataProvider {
    * @param breedings 
    */
   get_breeding_of_pig(pigId, breedings: Array<breedings>) {
-    return breedings.filter((breeding) => {
-      return breeding.pig.id == pigId ? true : false;
-    }).sort((a: breedings, b: breedings) =>
-      (new Date(a.date) > new Date(b.date)) ? -1 : 1);
+    if (breedings && breedings.length) {
+      return breedings.filter((breeding) => {
+        return breeding.pig.id == pigId ? true : false;
+      }).sort((a: breedings, b: breedings) =>
+        (new Date(a.date) > new Date(b.date)) ? -1 : 1);
+    } else return [];
   }
 
   /**
    * Lấy danh sách lên giống của 1 khu
    */
   get_breedings_of_section(sectionTypeId: string, breedings: Array<breedings>) {
-    return breedings.filter((breeding) => {
-      return breeding.pig.house.section.typeId == sectionTypeId ? true : false;
-    })
+    if (breedings && breedings.length && sectionTypeId) {
+      return breedings.filter((breeding) => {
+        return breeding.pig.house.section.typeId == sectionTypeId ? true : false;
+      })
+    } else return [];
   }
 
   /**
@@ -1113,9 +1345,11 @@ export class DeployDataProvider {
    * @param matings 
    */
   get_matings_of_section(sectionTypeId: string, matings: Array<mating>) {
-    return matings.filter((mating) => {
-      return mating.mother.house.section.typeId == sectionTypeId ? true : false;
-    })
+    if (matings && matings.length && sectionTypeId) {
+      return matings.filter((mating) => {
+        return mating.mother.house.section.typeId == sectionTypeId ? true : false;
+      })
+    } else return [];
   }
 
   /**
@@ -1124,9 +1358,11 @@ export class DeployDataProvider {
    * @param sperms 
    */
   get_sperms_of_section(sectionTypeId: string, sperms: Array<sperms>) {
-    return sperms.filter((sperm) => {
-      return sperm.pig.house.section.typeId == sectionTypeId ? true : false;
-    })
+    if (sperms && sperms.length && sectionTypeId) {
+      return sperms.filter((sperm) => {
+        return sperm.pig.house.section.typeId == sectionTypeId ? true : false;
+      })
+    } else return [];
   }
 
   /**
@@ -1136,14 +1372,19 @@ export class DeployDataProvider {
    */
   get_pigs_of_sections_with_gender(sectionTypeId: string, gender: number) {
     let housesId: any = [];
-    this.houseProvider.houses.filter((house) => {
-      return (house.section.typeId == sectionTypeId) ? true : false;
-    }).forEach((house) => {
-      housesId.push(house.id);
-    })
-    return this.pigsProvider.pigs.filter((pig) => {
-      return housesId.includes(pig.houseId) && pig.gender == gender ? true : false;
-    })
+    if (this.houseProvider.houses) {
+      this.houseProvider.houses.filter((house) => {
+        return (house.section.typeId == sectionTypeId) ? true : false;
+      }).forEach((house) => {
+        housesId.push(house.id);
+      })
+    } else return [];
+
+    if (this.pigsProvider.pigs) {
+      return this.pigsProvider.pigs.filter((pig) => {
+        return housesId.includes(pig.houseId) && pig.gender == gender ? true : false;
+      })
+    } else return [];
   }
 
   /**
@@ -1152,7 +1393,7 @@ export class DeployDataProvider {
    */
   get_male_mating_pig_for_female_pig(pig: pig) {
     let houses = this.get_object_list_key_of_house();
-    if (pig.house) {
+    if (pig && pig.house) {
       return this.pigsProvider.pigs.filter((pig_element) => {
         return houses[pig_element.houseId].section.id == houses[pig.house.id].section.id && pig_element.gender == VARIABLE.GENDER[1].id ? true : false;
       })
@@ -1168,16 +1409,20 @@ export class DeployDataProvider {
    */
   get_mating_role_of_mating() {
     let roles: any = {};
-    this.settingProvider.setting.matingRoles.forEach((role: matingRole) => {
-      roles[(role.father.id) + '-' + (role.mother.id)] = role;
-    })
+    if (this.settingProvider.setting) {
+      this.settingProvider.setting.matingRoles.forEach((role: matingRole) => {
+        roles[(role.father.id) + '-' + (role.mother.id)] = role;
+      })
+    }
     return roles;
   }
 
   get_child_breed_of_mating_role(motherId, fatherId) {
-    return this.settingProvider.setting.matingRoles.filter((role: matingRole) => {
-      return role.father.id == fatherId && role.mother.id == motherId ? true : false;
-    })[0];
+    if (this.settingProvider.setting) {
+      return this.settingProvider.setting.matingRoles.filter((role: matingRole) => {
+        return role.father.id == fatherId && role.mother.id == motherId ? true : false;
+      })[0];
+    } else return null;
   }
 
 
@@ -1186,16 +1431,20 @@ export class DeployDataProvider {
    * @param birth 
    */
   get_child_pig_of_birth(birth: births) {
-    return this.pigsProvider.pigs.filter((pig) => {
-      return pig.birthId == birth.id ? true : false;
-    })
+    if (this.pigsProvider.pigs) {
+      return this.pigsProvider.pigs.filter((pig) => {
+        return pig.birthId == birth.id ? true : false;
+      })
+    } else return [];
   }
 
 
   get_farm_to_transfer_internal(employeeId) {
-    return this.farmProvider.farms.filter((farm) => {
-      return farm.manager != employeeId ? true : false;
-    })
+    if (this.farmProvider.farms) {
+      return this.farmProvider.farms.filter((farm) => {
+        return farm.manager != employeeId ? true : false;
+      })
+    } else return [];
   }
 
   get_employee_id(temp) {

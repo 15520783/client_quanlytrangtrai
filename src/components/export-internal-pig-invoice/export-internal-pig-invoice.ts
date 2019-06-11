@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { Content, Events, NavController, NavParams, Platform } from 'ionic-angular';
+import { Content, Events, Menu, MenuController, NavController, NavParams, Platform } from 'ionic-angular';
 
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { ExportInternalPigInvoiceDetailPage } from '../../pages/export-internal-pig-invoice-detail/export-internal-pig-invoice-detail';
@@ -17,11 +17,15 @@ import { invoicesPig } from '../../common/entity';
   templateUrl: 'export-internal-pig-invoice.html'
 })
 export class ExportInternalPigInvoiceComponent {
+  @ViewChild('menuFilter') menuFilter: Menu;
 
   @ViewChild('contentExternalInvoice') content: Content;
   @Input() invoices: Array<invoicesPig> = [];
   public roleInput: any;
 
+  public sourceFilter: Array<any> = [];
+  public destinationFilter: Array<any> = [];
+  
   public mainAttribute = "invoiceNo";
   public attributes = [
     { name: "sourceName", label: 'Nguồn cung cấp' },
@@ -54,12 +58,16 @@ export class ExportInternalPigInvoiceComponent {
     public deployData: DeployDataProvider,
     public invoiceProvider: InvoicesProvider,
     public navParams: NavParams,
-    public platform: Platform
+    public platform: Platform,
+    public menuCtrl: MenuController
   ) {
     if (this.navParams.data.invoice) {
       this.invoices = this.navParams.data.invoice;
       this.setFilteredItems();
     }
+
+    this.sourceFilter = this.deployData.get_farm_list_for_select();
+    this.destinationFilter = this.deployData.get_all_farm_for_select();
 
     this.roleInput = new ExportInternalPigInvoiceRole(this.deployData, this.invoiceProvider);
     this.farms_util = this.deployData.get_object_list_key_of_farm();
@@ -140,16 +148,6 @@ export class ExportInternalPigInvoiceComponent {
         callback: callback
       }
     )
-
-    // this.events.unsubscribe('callback');
-    // this.events.subscribe('callback', (data) => {
-    //   console.log('TEST', data);
-    //   if (data) {
-    //     this.invoices.push(data);
-    //     this.setFilteredItems();
-    //     this.events.unsubscribe('callback');
-    //   }
-    // })
   }
 
   input_pig(item) {
@@ -175,4 +173,35 @@ export class ExportInternalPigInvoiceComponent {
 
     this.navCtrl.push(ExportInternalPigInvoiceDetailPage, { invoice: item, callback: callback, callbackRemove: callbackRemove });
   }
+
+
+  openFilter() {
+    this.menuFilter.enable(true);
+    this.menuFilter.open();
+  }
+
+  closeFilter() {
+    this.menuCtrl.close();
+  }
+  
+  filterSource(sourceId) {
+    if (sourceId)
+      this.filterProvider.searchWithInclude.sourceId = [sourceId];
+    else
+      this.filterProvider.searchWithInclude.sourceId = [];
+    this.setFilteredItems();
+  }
+
+  filterDestination(destinationId) {
+    if (destinationId)
+      this.filterProvider.searchWithInclude.destinationId = [destinationId];
+    else
+      this.filterProvider.searchWithInclude.destinationId = [];
+    this.setFilteredItems();
+  }
+
+  customAlertOptions: any = {
+    translucent: true,
+    cssClass: 'ion-popover'
+  };
 }

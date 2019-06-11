@@ -1,26 +1,25 @@
+import { App, Events, Nav, Platform, ToastController } from 'ionic-angular';
+import { CONFIG, ERROR_NAME, KEY, MESSAGE } from '../common/const';
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, App, ToastController, Events } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { HeaderColor } from '@ionic-native/header-color';
-import { FarmsProvider } from '../providers/farms/farms';
-import { LoginPage } from '../pages/login/login';
-import { HomePage } from '../pages/home/home';
-import { PigsProvider } from '../providers/pigs/pigs';
-import { PigGroupsProvider } from '../providers/pig-groups/pig-groups';
-import { SectionsProvider } from '../providers/sections/sections';
-import { EmployeesProvider } from '../providers/employees/employees';
-import { HousesProvider } from '../providers/houses/houses';
-import { WarehousesProvider } from '../providers/warehouses/warehouses';
-import { Utils } from '../common/utils';
-import { KEY, CONFIG, MESSAGE, ERROR_NAME } from '../common/const';
-import { SettingsProvider } from '../providers/settings/settings';
-import { UserProvider } from '../providers/user/user';
-import { PartnerProvider } from '../providers/partner/partner';
 import { DeployDataProvider } from '../providers/deploy-data/deploy-data';
+import { EmployeesProvider } from '../providers/employees/employees';
+import { FarmsProvider } from '../providers/farms/farms';
 import { FcmProvider } from '../providers/fcm/fcm';
-
+import { HeaderColor } from '@ionic-native/header-color';
+import { HomePage } from '../pages/home/home';
+import { HousesProvider } from '../providers/houses/houses';
+import { LoginPage } from '../pages/login/login';
+import { PartnerProvider } from '../providers/partner/partner';
+import { PigGroupsProvider } from '../providers/pig-groups/pig-groups';
+import { PigsProvider } from '../providers/pigs/pigs';
+import { SectionsProvider } from '../providers/sections/sections';
+import { SettingsProvider } from '../providers/settings/settings';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
+import { UserProvider } from '../providers/user/user';
+import { Utils } from '../common/utils';
+import { WarehousesProvider } from '../providers/warehouses/warehouses';
 
 @Component({
   templateUrl: 'app.html'
@@ -75,19 +74,19 @@ export class MyApp {
             this.util.getKey(KEY.TOKENTYPE)
               .then((tokenType) => {
                 if (tokenType) {
-                  if (this.platform.is('cordova')) {
-                    // Get a FCM token
-                    this.fcmProvider.getToken();
-                  }
+                  // if (this.platform.is('cordova')) {
+                  //   // Get a FCM token
+                  //   this.fcmProvider.getToken();
+                  // }
                   CONFIG.ACCESS_KEY = tokenType.concat(' ').concat(accessToken);
                   this.splash = true;
                   this.userProvider.getRoleUser()
-                      .then((data) => {
-                        console.log(data);
-                      })
-                      .catch(err => {
-                        console.log(err);
-                      })
+                    .then((data) => {
+                      console.log(data);
+                    })
+                    .catch(err => {
+                      console.log(err);
+                    })
                   this.intinial_sync();
                 }
                 else {
@@ -154,7 +153,7 @@ export class MyApp {
     this.warehouseProvider.updated_flag = false;
     this.settingProvider.updated_flag = false;
     this.partnerProvider.updated_flag = false;
-    
+
     this.subscribeEventUpdate();
     this.userProvider.checkServer()
       .then((res: any) => {
@@ -172,23 +171,12 @@ export class MyApp {
         }
       })
       .catch((err: any) => {
-        // if (err.status != 401) {
-        //   if (err.name == ERROR_NAME.TIMEMOUT_ERROR || err.name == ERROR_NAME.ERROR_RESPONSE) {
-        //     this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].TIMEOUT_REQUEST);
-        //     this.rootPage = HomePage;
-        //     setTimeout(() => {
-        //       this.splash = false;
-        //     }, 1000);
-        //   }
-        // }else{
-          console.log(err);
-          this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].TIMEOUT_REQUEST);
-            this.rootPage = HomePage;
-            setTimeout(() => {
-              this.splash = false;
-            }, 1000);
-        // }
-        // this.events.unsubscribe('updated');
+        console.log(err);
+        this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].TIMEOUT_REQUEST);
+        this.rootPage = HomePage;
+        setTimeout(() => {
+          this.splash = false;
+        }, 1000);
       })
   }
 

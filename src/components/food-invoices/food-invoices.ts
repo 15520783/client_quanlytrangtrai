@@ -1,14 +1,16 @@
-import { Component, ViewChild, Input } from '@angular/core';
-import { Content, NavController, Events, NavParams } from 'ionic-angular';
-import { invoicesProduct } from '../../common/entity';
-import { FormControl } from '@angular/forms';
-import { FilterProvider } from '../../providers/filter/filter';
-import { Utils } from '../../common/utils';
+import { Component, Input, ViewChild } from '@angular/core';
+import { Content, Events, NavController, NavParams } from 'ionic-angular';
+
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
-import { InvoicesProvider } from '../../providers/invoices/invoices';
-import { InvoiceInputUtilComponent } from '../invoice-input-util/invoice-input-util';
-import { FoodInvoiceRole } from '../../role-input/foodInvoice';
+import { FilterProvider } from '../../providers/filter/filter';
 import { FoodInvoiceDetailPage } from '../../pages/food-invoice-detail/food-invoice-detail';
+import { FoodInvoiceRole } from '../../role-input/foodInvoice';
+import { FormControl } from '@angular/forms';
+import { InvoiceInputUtilComponent } from '../invoice-input-util/invoice-input-util';
+import { InvoicesProvider } from '../../providers/invoices/invoices';
+import { Utils } from '../../common/utils';
+import { VARIABLE } from '../../common/const';
+import { invoicesProduct } from '../../common/entity';
 
 @Component({
   selector: 'food-invoices',
@@ -25,7 +27,8 @@ export class FoodInvoicesComponent {
     { name: "sourceName", label: 'Nguồn cung cấp' },
     { name: "destinationName", label: 'Nơi nhận' },
     { name: "importDateDisplay", label: 'Ngày nhập' },
-    { name: "price", label: 'Tổng giá' }
+    { name: "price", label: 'Tổng giá' },
+    { name: "statusName", label: 'Trạng thái' }
   ];
 
   public placeholderSearch: string = 'Tìm kiếm chứng từ'
@@ -79,6 +82,8 @@ export class FoodInvoicesComponent {
       invoice['sourceName'] = this.partners_util[invoice.source.id].name;
       invoice['destinationName'] = this.farms_util[invoice.destination.id].name;
       invoice['importDateDisplay'] = this.util.convertDate(invoice.importDate);
+      invoice['statusName'] = VARIABLE.INVOICE_STATUS.PROCCESSING == invoice.status
+        ? 'Đang xử lí' : (VARIABLE.INVOICE_STATUS.COMPLETE == invoice.status ? 'Hoàn tất' : 'Chưa xác định');
     })
     this.filterProvider.input = this.invoices;
     this.filterProvider.searchText = searchItem;

@@ -1,10 +1,10 @@
+import { API, CONFIG, KEY } from '../../common/const';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { CONFIG, API, KEY } from '../../common/const';
-import { invoicesPig, invoicesProduct, invoicePigDetail, foodWareHouse, medicineWarehouse, pig } from '../../common/entity';
-import { Events } from 'ionic-angular';
-import { Utils } from '../../common/utils';
+import { foodWareHouse, invoicePigDetail, invoicesPig, invoicesProduct, medicineWarehouse, pig } from '../../common/entity';
 
+import { Events } from 'ionic-angular';
+import { Injectable } from '@angular/core';
+import { Utils } from '../../common/utils';
 
 export class invoices {
   invoicesPigs: Array<invoicesPig> = [];
@@ -100,6 +100,17 @@ export class InvoicesProvider {
       .post(API.CREATE_PRODUCT_INVOICE, objBody)
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise();
+  }
+
+  /**
+   * Cập nhật một chứng từ cám,thuốc
+   * @param objBody 
+   */
+  updateProductInvoice(objBody:invoicesProduct){
+    return this.http
+    .put(API.UPDATE_PRODUCT_INVOICE,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
   }
 
   /**

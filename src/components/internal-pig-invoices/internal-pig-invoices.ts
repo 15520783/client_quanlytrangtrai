@@ -1,7 +1,8 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { Content, Events, NavController, NavParams } from 'ionic-angular';
+import { Content, Events, Menu, MenuController, NavController, NavParams } from 'ionic-angular';
 
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { EmployeesProvider } from '../../providers/employees/employees';
 import { FilterProvider } from '../../providers/filter/filter';
 import { FormControl } from '@angular/forms';
 import { ForwardingPigInvoiceListPage } from '../../pages/forwarding-pig-invoice-list/forwarding-pig-invoice-list';
@@ -20,8 +21,13 @@ import { invoicesPig, } from '../../common/entity';
 export class InternalPigInvoicesComponent {
 
   @ViewChild('contentInternalInvoice') content: Content;
+  @ViewChild('menuFilter') menuFilter: Menu;
+
   @Input() invoices: Array<invoicesPig> = [];
   public roleInput: any;
+
+  public sourceFilter: Array<any> = [];
+  public destinationFilter: Array<any> = [];
 
   public mainAttribute = "invoiceNo";
   public attributes = [
@@ -45,6 +51,7 @@ export class InternalPigInvoicesComponent {
 
   public partners_util = {};
   public farms_util = {};
+  public employees: Array<any> = [];
 
   constructor(
     public filterProvider: FilterProvider,
@@ -53,7 +60,8 @@ export class InternalPigInvoicesComponent {
     public util: Utils,
     public navCtrl: NavController,
     public navParams: NavParams,
-    public events: Events
+    public events: Events,
+    public menuCtrl: MenuController
   ) {
     if (this.navParams.data.invoice) {
       this.invoices = this.navParams.data.invoice;
@@ -61,7 +69,10 @@ export class InternalPigInvoicesComponent {
     }
     this.roleInput = new InternalPigInvoiceRole(deployData, invoiceProvider);
     this.partners_util = this.deployData.get_object_list_key_of_partner();
-    this.farms_util = this.deployData.get_object_list_key_of_farm()
+    this.farms_util = this.deployData.get_object_list_key_of_farm();
+
+    this.sourceFilter = this.deployData.get_all_farm_for_select();
+    this.destinationFilter = this.deployData.get_farm_list_for_select();
   }
 
   ngAfterContentInit(): void {
@@ -141,7 +152,7 @@ export class InternalPigInvoicesComponent {
       }
     }
 
-    this.navCtrl.push(InternalPigInvoiceDetailPage, { invoice: item , callback: callback});
+    this.navCtrl.push(InternalPigInvoiceDetailPage, { invoice: item, callback: callback });
 
     this.events.subscribe('removeInvoiceEvent', (invoice) => {
       if (invoice) {
@@ -159,5 +170,37 @@ export class InternalPigInvoicesComponent {
    */
   viewListForwarding() {
     this.navCtrl.push(ForwardingPigInvoiceListPage);
+  }
+
+
+  openFilter() {
+    this.menuFilter.enable(true);
+    this.menuFilter.open();
+  }
+
+  closeFilter() {
+    this.menuCtrl.close();
+  }
+
+
+  customAlertOptions: any = {
+    translucent: true,
+    cssClass: 'ion-alert'
+  };
+  
+  filterSource(sourceId) {
+    if (sourceId)
+      this.filterProvider.searchWithInclude.sourceId = [sourceId];
+    else
+      this.filterProvider.searchWithInclude.sourceId = [];
+    this.setFilteredItems();
+  }
+
+  filterDestination(destinationId) {
+    if (destinationId)
+      this.filterProvider.searchWithInclude.destinationId = [destinationId];
+    else
+      this.filterProvider.searchWithInclude.destinationId = [];
+    this.setFilteredItems();
   }
 }

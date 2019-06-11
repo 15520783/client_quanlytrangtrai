@@ -1,34 +1,35 @@
+import { CONFIG, ERROR_NAME, KEY, MESSAGE, VARIABLE } from '../../common/const';
 import { Component, ViewChild } from '@angular/core';
-import { NavController, Nav, LoadingController, Events, Platform, NavParams } from 'ionic-angular';
-import { FarmsPage } from '../farms/farms';
-import { SectionsPage } from '../sections/sections';
-import { PigsPage } from '../pigs/pigs';
-import { Utils } from '../../common/utils';
-import { FarmsProvider } from '../../providers/farms/farms';
-import { SectionsProvider } from '../../providers/sections/sections';
-import { EmployeePage } from '../employee/employee';
-import { WarehousesPage } from '../warehouses/warehouses';
-import { SettingsPage } from '../settings/settings';
-import { KEY, ERROR_NAME, MESSAGE, CONFIG, VARIABLE } from '../../common/const';
-import { PartnersPage } from '../partners/partners';
+import { Events, LoadingController, Nav, NavController, NavParams, Platform } from 'ionic-angular';
+import { employee, pig } from '../../common/entity';
+
 import { ActivitiesPage } from '../activities/activities';
-import { InvoicesPage } from '../invoices/invoices';
-import { DatePlanPage } from '../date-plan/date-plan';
 import { ActivitiesProvider } from '../../providers/activities/activities';
-import { PigsProvider } from '../../providers/pigs/pigs';
-import { PigGroupsProvider } from '../../providers/pig-groups/pig-groups';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { DatePlanPage } from '../date-plan/date-plan';
+import { EmployeePage } from '../employee/employee';
 import { EmployeesProvider } from '../../providers/employees/employees';
+import { FarmsPage } from '../farms/farms';
+import { FarmsProvider } from '../../providers/farms/farms';
+import { HouseInfomationPage } from '../house-infomation/house-infomation';
 import { HousesProvider } from '../../providers/houses/houses';
-import { WarehousesProvider } from '../../providers/warehouses/warehouses';
+import { InvoicesPage } from '../invoices/invoices';
+import { IssuePigListPage } from '../issue-pig-list/issue-pig-list';
+import { PartnerProvider } from '../../providers/partner/partner';
+import { PartnersPage } from '../partners/partners';
+import { PigGroupsProvider } from '../../providers/pig-groups/pig-groups';
+import { PigSummaryPage } from '../pig-summary/pig-summary';
+import { PigsPage } from '../pigs/pigs';
+import { PigsProvider } from '../../providers/pigs/pigs';
+import { SectionsPage } from '../sections/sections';
+import { SectionsProvider } from '../../providers/sections/sections';
+import { SettingsPage } from '../settings/settings';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { UserProvider } from '../../providers/user/user';
-import { PartnerProvider } from '../../providers/partner/partner';
-import { pig, employee } from '../../common/entity';
-import { PigSummaryPage } from '../pig-summary/pig-summary';
+import { Utils } from '../../common/utils';
+import { WarehousesPage } from '../warehouses/warehouses';
+import { WarehousesProvider } from '../../providers/warehouses/warehouses';
 import { house } from '../../common/entity';
-import { HouseInfomationPage } from '../house-infomation/house-infomation';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-import { IssuePigListPage } from '../issue-pig-list/issue-pig-list';
 
 @Component({
   selector: 'page-home',
@@ -62,7 +63,7 @@ export class HomePage {
     public platform: Platform,
     public scanner: BarcodeScanner
   ) {
-    this.util.getKey(KEY.USER).then((user) => {
+    this.util.getKey(KEY.EMPLOYEE_USER).then((user) => {
       if (user) {
         this.user.name = user.name;
       }
@@ -70,8 +71,6 @@ export class HomePage {
     this.util.getKey(KEY.USERNAME).then((username) => {
       this.user['username'] = username;
     })
-
-    console.log('TEST',this.userProvider.rolePermission.tong_quan_trang_trai.xem_danh_sach_trang_trai ? true : false);
 
     this.pages = [
       {

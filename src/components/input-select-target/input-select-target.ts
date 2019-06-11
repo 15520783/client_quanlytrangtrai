@@ -46,7 +46,7 @@ export class InputSelectTargetComponent {
   @Output() valueChange = new EventEmitter();
 
   ngAfterContentInit() {
-    if (this.validControl.value) {
+    if (this.validControl && this.validControl.value) {
       switch (this.targertCmp) {
         case "pigs": {
           this.value = this.validControl.value;
@@ -135,7 +135,7 @@ export class InputSelectTargetComponent {
                 this.valueChange.emit(group);
                 this.value = group.id;
                 this.value_visible = group.groupCode;
-                this.validControl.setErrors(null);
+                this.validControl?this.validControl.setErrors(null):null;
               }
             })
             modal.present();
@@ -162,7 +162,7 @@ export class InputSelectTargetComponent {
                 this.valueChange.emit(employee);
                 this.value = employee.id;
                 this.value_visible = employee.name;
-                this.validControl.setErrors(null);
+                this.validControl?this.validControl.setErrors(null):null;
               }
             })
             modal.present();
@@ -176,7 +176,7 @@ export class InputSelectTargetComponent {
                 this.valueChange.emit(pig);
                 this.value = pig.id;
                 this.value_visible = pig.pigCode;
-                this.validControl.setErrors(null);
+                this.validControl?this.validControl.setErrors(null):null;
               }
             })
             modal.present();
@@ -188,7 +188,7 @@ export class InputSelectTargetComponent {
                   this.valueChange.emit(pig);
                   this.value = pig.id;
                   this.value_visible = pig.pigCode;
-                  this.validControl.setErrors(null);
+                  this.validControl?this.validControl.setErrors(null):null;
                 }
               })
               modal.present();
@@ -204,7 +204,7 @@ export class InputSelectTargetComponent {
                 this.valueChange.emit(sperm);
                 this.value = JSON.parse(JSON.stringify(sperm));
                 this.value_visible = 'Liều tinh của heo ' + sperm.pig.pigCode;
-                this.validControl.setErrors(null);
+                this.validControl?this.validControl.setErrors(null):null;
               }
             })
             modal.present();
@@ -225,7 +225,7 @@ export class InputSelectTargetComponent {
                 this.valueChange.emit(disease);
                 this.value = JSON.parse(JSON.stringify(disease));
                 this.value_visible = disease.name;
-                this.validControl.setErrors(null);
+                this.validControl?this.validControl.setErrors(null):null;
               }
             })
             modal.present();
@@ -244,7 +244,7 @@ export class InputSelectTargetComponent {
                 this.valueChange.emit(medicine);
                 this.value = JSON.parse(JSON.stringify(medicine));
                 this.value_visible = medicine.name;
-                this.validControl.setErrors(null);
+                this.validControl?this.validControl.setErrors(null):null;
               }
             })
             modal.present();
@@ -264,7 +264,7 @@ export class InputSelectTargetComponent {
                 this.valueChange.emit(medicineWarehouse);
                 this.value = JSON.parse(JSON.stringify(medicineWarehouse));
                 this.value_visible = this.value.medicine.name + ' - Kho: ' + medicineWarehouse.warehouse.name + ' - Chứng từ: ' + medicineWarehouse.invoice.invoiceNo;
-                this.validControl.setErrors(null);
+                this.validControl?this.validControl.setErrors(null):null;
               }
             })
             modal.present();

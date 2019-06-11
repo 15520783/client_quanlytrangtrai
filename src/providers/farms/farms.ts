@@ -1,9 +1,10 @@
+import { API, CONFIG, KEY } from '../../common/const';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+import { Events } from 'ionic-angular';
 import { Injectable } from '@angular/core';
 import { Utils } from '../../common/utils';
-import { API, CONFIG, KEY } from '../../common/const';
 import { farm } from '../../common/entity';
-import { Events } from 'ionic-angular';
 
 @Injectable()
 export class FarmsProvider {
@@ -38,7 +39,10 @@ export class FarmsProvider {
             })
           return data;
         }
-      });
+      })
+      .catch(err=>{
+        return err;
+      })
   }
 
   sync() {

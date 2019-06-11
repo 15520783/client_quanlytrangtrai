@@ -1,10 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, ViewController, Slides } from 'ionic-angular';
-import { invoicesProduct, foodWareHouse } from '../../common/entity';
-import { InvoicesProvider } from '../../providers/invoices/invoices';
+import { Events, IonicPage, NavController, NavParams, Slides, ViewController } from 'ionic-angular';
+import { foodWareHouse, invoicesProduct } from '../../common/entity';
+
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
-import { Utils } from '../../common/utils';
+import { FoodInvoiceRole } from '../../role-input/foodInvoice';
 import { FoodWarehouseInputPage } from '../food-warehouse-input/food-warehouse-input';
+import { InvoiceInputUtilComponent } from '../../components/invoice-input-util/invoice-input-util';
+import { InvoicesProvider } from '../../providers/invoices/invoices';
+import { Utils } from '../../common/utils';
+import { VARIABLE } from '../../common/const';
 
 @IonicPage()
 @Component({
@@ -19,6 +23,9 @@ export class FoodInvoiceDetailPage {
   public invoice: invoicesProduct;
   public details: Array<foodWareHouse> = [];
 
+  canCheckComplete: boolean = false;
+  canEditInvoice: boolean = false;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -30,8 +37,13 @@ export class FoodInvoiceDetailPage {
   ) {
     if (this.navParams.data.invoice) {
       this.invoice = this.navParams.data.invoice;
-      this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destination.id);
-      this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.source.id);
+      // this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destination.id);
+      // this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.source.id);
+    }
+
+    if (this.invoice.status != VARIABLE.INVOICE_STATUS.COMPLETE) {
+      this.canCheckComplete = true;
+      this.canEditInvoice = true;
     }
   }
 
@@ -50,17 +62,17 @@ export class FoodInvoiceDetailPage {
   }
 
   ionViewDidLoad() {
-    this.util.showLoading('Đang tải dữ liệu');
+    this.util.openBackDrop();
     this.invoiceProvider.getFoodWarehouse(this.navParams.data.invoice.id)
       .then((details: any) => {
         if (details.length) {
           this.details = details;
         }
-        this.util.closeLoading();
+        this.util.closeBackDrop();
       })
       .catch((err: Error) => {
         console.log(err);
-        this.util.closeLoading().then(() => {
+        this.util.closeBackDrop().then(() => {
           this.util.showToast('Dữ liệu chưa được tải về. Vui lòng kiểm tra kết nối');
         })
       })
@@ -109,5 +121,54 @@ export class FoodInvoiceDetailPage {
         .catch((err: Error) => { })
     }
     this.navCtrl.push(FoodWarehouseInputPage, { foodWarehouse: item, callback: callback });
+  }
+
+
+  /**
+   * Chỉnh sửa chứng từ
+   */
+  editInvoice() {
+    let callback = data =>{
+      if (data) {
+        this.invoice = data;
+        // this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destination.id);
+        // this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.source.id);
+        this.navParams.get('callback')(this.invoice);
+        this.navCtrl.pop();
+      }
+    }
+
+    let roleInput = new FoodInvoiceRole(this.deployData, this.invoiceProvider);
+    roleInput.object = this.util.deepClone(this.invoice);
+    roleInput.object.sourceId = roleInput.object.source.id;
+    roleInput.object.destinationId = roleInput.object.destination.id;
+    roleInput.object.importDate = new Date(roleInput.object.importDate).toISOString();
+    this.navCtrl.push(InvoiceInputUtilComponent,
+      {
+        editMode: true,
+        roleInput: roleInput,
+        callback:callback
+      }
+    )
+  }
+
+  /**
+   * Xác nhận chứng từ đã hoàn tất
+   */
+  completeInvoice() {
+    let invoice: invoicesProduct = this.util.deepClone(this.invoice);
+    invoice.status = VARIABLE.INVOICE_STATUS.COMPLETE;
+    this.invoiceProvider.updateProductInvoice(invoice)
+      .then((updatedInvoice: invoicesProduct) => {
+        if (updatedInvoice) {
+          this.invoice = updatedInvoice;
+          // this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
+          // this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.sourceId);
+          this.canCheckComplete = false;
+          this.canEditInvoice = false;
+          this.navParams.get('callback')(this.invoice);
+        }
+      })
+      .catch((err: Error) => { })
   }
 }

@@ -61,47 +61,54 @@ export class FarmsPage {
   }
 
   getAllFarms() {
-    if (!this.farmProvider.farms.length) {
-      this.util.openBackDrop();
+    if (!this.farmProvider.farms || !this.farmProvider.farms.length) {
+      // this.util.openBackDrop();
       this.farmProvider.getFarms()
         .then((data: Array<farm>) => {
           if (data.length) {
-            if(this.userProvider.user.farm.id == '0'){
+            if (this.userProvider.user.farm.id == '0') {
               this.farms = data;
-            }else{
-              this.farms = data.filter((farm:farm)=>{
+            } else {
+              this.farms = data.filter((farm: farm) => {
                 return farm.id == this.userProvider.user.farm.id;
               });
             }
             this.getSummary();
           }
+          // this.util.closeBackDrop();
         })
         .catch((err) => {
-          this.util.closeBackDrop().then(() => {
-            this.util.showToast('Dữ liệu chưa được cập nhật. Vui lòng kiểm tra kết nối.');
-            console.log('err_farm_provider', err);
-            this.util.getKey(KEY.FARMS)
-              .then((data: Array<farm>) => {
-                if(this.userProvider.user.farm.id == '0'){
-                  this.farms = data;
-                }else{
-                  this.farms = data.filter((farm:farm)=>{
-                    return farm.id == this.userProvider.user.farm.id;
-                  });
+          this.util.showToast('Dữ liệu chưa được cập nhật. Vui lòng kiểm tra kết nối.');
+          console.log('err_farm_provider', err);
+          // this.util.closeBackDrop();
+          this.util.getKey(KEY.FARMS)
+            .then((data: Array<farm>) => {
+              if (data && data.length) {
+                if (this.userProvider.user) {
+                  if (this.userProvider.user.farm.id == '0') {
+                    this.farms = data;
+                  } else {
+                    this.farms = data.filter((farm: farm) => {
+                      return farm.id == this.userProvider.user.farm.id;
+                    });
+                  }
+                  return this.getSummary();
                 }
-                this.getSummary();
-              })
-          });
+              }
+              return this.farms = [];
+            })
         })
     } else {
-      if(this.userProvider.user.farm.id== '0'){
-        this.farms = this.farmProvider.farms;
-      }else{
-        this.farms = this.util.deepClone(this.farmProvider.farms).filter((farm:farm)=>{
-          return farm.id == this.userProvider.user.farm.id;
-        });
-      }
-      this.getSummary();
+      if (this.userProvider.user) {
+        if (this.userProvider.user.farm.id == '0') {
+          this.farms = this.farmProvider.farms;
+        } else {
+          this.farms = this.util.deepClone(this.farmProvider.farms).filter((farm: farm) => {
+            return farm.id == this.userProvider.user.farm.id;
+          });
+        }
+        this.getSummary();
+      } else this.farms = [];
     }
 
   }

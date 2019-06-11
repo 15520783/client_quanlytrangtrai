@@ -1,45 +1,83 @@
 <ion-header>
+  <ion-toolbar>
+    <ion-buttons left showWhen="ios,android">
+      <button navPop ion-button icon-only>
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-searchbar col-md-7 mode="ios" animated="true" debounce="500" [placeholder]="placeholderSearch"
+      [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="setFilteredItems()">
+    </ion-searchbar>
+    <ion-buttons right>
+      <button ion-button font20 (tap)="openFilter()">
+        <ion-icon name="funnel"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content #contentExternalInvoice class="setting-util-component">
+  <div id="content">
+    <ion-item-divider custom-diviver sticky="true" showWhen="core">
+      <ion-row>
+        <button no-margin ion-button item-end mode='ios' color="secondary" (tap)="add()">Thêm chứng từ</button>
+      </ion-row>
+    </ion-item-divider>
+    <ion-list>
+      <ion-item-sliding *ngFor="let item of visible_items">
+        <button ion-item (tap)="input_pig(item)">
+          <h2 *ngIf="mainAttribute"><b>Số chứng từ: </b>{{item[mainAttribute]}}</h2>
+          <ion-row>
+            <ion-col *ngFor="let attr of attributes" [attr.col-6]="!platform.is('core')?'':null"
+              [attr.col-3]="platform.is('core')?'':null" text-wrap>
+              <p style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
+            </ion-col>
+          </ion-row>
+        </button>
+      </ion-item-sliding>
+    </ion-list>
+    <ion-infinite-scroll (ionInfinite)="loadData($event)" *ngIf="page_Idx!==page_Total">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Đang tải dữ liệu...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+  <ion-fab bottom right showWhen="android,windows,ios" color="secondary">
+    <button ion-fab (tap)="add()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>
+
+<ion-menu [content]="mycontent" side="right" #menuFilter sticky="true" type="overlay" width="500">
+  <ion-header>
     <ion-toolbar>
-      <ion-buttons left showWhen="ios,android">
-        <button navPop ion-button icon-only>
-          <ion-icon name="arrow-back"></ion-icon>
+      <ion-buttons start>
+        <button ion-button font20 (tap)="closeFilter()">
+          <ion-icon name="ios-arrow-forward"></ion-icon>
         </button>
       </ion-buttons>
-      <ion-searchbar col-md-7 mode="ios" animated="true" debounce="500" [placeholder]="placeholderSearch"
-        [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="setFilteredItems()">
-      </ion-searchbar>
+      <ion-title>Lọc theo tùy chọn</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-content #contentExternalInvoice class="setting-util-component">
-    <div id="content">
-      <ion-item-divider custom-diviver sticky="true" showWhen="core">
-        <ion-row>
-          <button no-margin ion-button item-end mode='ios' color="secondary" (tap)="add()">Thêm chứng từ</button>
-        </ion-row>
-      </ion-item-divider>
-      <ion-list>
-        <ion-item-sliding *ngFor="let item of visible_items">
-          <button ion-item (tap)="input_pig(item)">
-            <h2 *ngIf="mainAttribute"><b>Số chứng từ: </b>{{item[mainAttribute]}}</h2>
-            <ion-row>
-              <ion-col *ngFor="let attr of attributes" 
-                  [attr.col-6]="!platform.is('core')?'':null"
-                  [attr.col-3]="platform.is('core')?'':null" 
-                  text-wrap>
-                <p style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
-              </ion-col>
-            </ion-row>
-          </button>
-        </ion-item-sliding>
-      </ion-list>
-      <ion-infinite-scroll (ionInfinite)="loadData($event)" *ngIf="page_Idx!==page_Total">
-        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Đang tải dữ liệu...">
-        </ion-infinite-scroll-content>
-      </ion-infinite-scroll>
-    </div>
-    <ion-fab bottom right showWhen="android,windows,ios" color="secondary">
-      <button ion-fab (tap)="add()">
-        <ion-icon name="add"></ion-icon>
-      </button>
-    </ion-fab>
+  <ion-content>
+    <ion-list>
+      <ion-item>
+        <ion-label stacked>Đơn vị nguồn</ion-label>
+        <ion-select interface="popover" title="Đơn vị nguồn" mode="ios" okText="Chọn" cancelText="Hủy"
+          [selectOptions]="customAlertOptions" (ionChange)="filterSource($event)" placeholder="Tất cả">
+          <ion-option [value]="''">Tất cả</ion-option>
+          <ion-option *ngFor="let item of sourceFilter" [value]="item.value">{{item.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Đơn vị nhận</ion-label>
+        <ion-select interface="popover" title="Đơn vị nhận" mode="ios" okText="Chọn" cancelText="Hủy"
+          [selectOptions]="customAlertOptions" (ionChange)="filterDestination($event)" placeholder="Tất cả">
+          <ion-option [value]="''">Tất cả</ion-option>
+          <ion-option *ngFor="let item of destinationFilter" [value]="item.value">{{item.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
   </ion-content>
+</ion-menu>
+<ion-nav #mycontent></ion-nav>

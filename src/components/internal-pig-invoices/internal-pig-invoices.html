@@ -8,6 +8,11 @@
     <ion-searchbar col-md-7 mode="ios" animated="true" debounce="500" [placeholder]="placeholderSearch"
       [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="setFilteredItems()">
     </ion-searchbar>
+    <ion-buttons right>
+      <button ion-button font20 (tap)="openFilter()">
+        <ion-icon name="funnel"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content #contentInternalInvoice class="setting-util-component">
@@ -38,9 +43,43 @@
   </div>
   <ion-fab bottom right showWhen="android,windows,ios" color="secondary">
     <button ion-fab (tap)="viewListForwarding()" data-balloon-visible data-balloon-length="medium" data-balloon="Danh sách chừng
-    từ chuyển heo đến"
-      data-balloon-pos="left" ion-fab>
+    từ chuyển heo đến" data-balloon-pos="left" ion-fab>
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
 </ion-content>
+
+<ion-menu [content]="mycontent" side="right" #menuFilter sticky="true" type="overlay" width="500">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons start>
+        <button ion-button font20 (tap)="closeFilter()">
+          <ion-icon name="ios-arrow-forward"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-title>Lọc theo tùy chọn</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>
+        <ion-label stacked>Đơn vị nguồn</ion-label>
+        <ion-select interface="popover" title="Đơn vị nguồn" mode="ios" okText="Chọn" cancelText="Hủy"
+          [selectOptions]="customAlertOptions" (ionChange)="filterSource($event)" placeholder="Tất cả">
+          <ion-option [value]="''">Tất cả</ion-option>
+          <ion-option *ngFor="let item of sourceFilter" [value]="item.value">{{item.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Đơn vị nhận</ion-label>
+        <ion-select interface="popover" title="Đơn vị nhận" mode="ios" okText="Chọn" cancelText="Hủy"
+          [selectOptions]="customAlertOptions" (ionChange)="filterDestination($event)" placeholder="Tất cả">
+          <ion-option [value]="''">Tất cả</ion-option>
+          <ion-option *ngFor="let item of destinationFilter" [value]="item.value">{{item.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<ion-nav #mycontent></ion-nav>

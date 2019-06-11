@@ -1,16 +1,16 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, ViewController, Slides } from 'ionic-angular';
-import { invoicesPig, invoicePigDetail, pig } from '../../common/entity';
-import { InvoicesProvider } from '../../providers/invoices/invoices';
-import { Utils } from '../../common/utils';
-import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
-import { PigInputPage } from '../pig-input/pig-input';
-import { PigsProvider } from '../../providers/pigs/pigs';
+import { Events, IonicPage, NavController, NavParams, Slides, ViewController } from 'ionic-angular';
 import { KEY, VARIABLE } from '../../common/const';
+import { invoicePigDetail, invoicesPig, pig } from '../../common/entity';
+
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { ExternalPigInvoiceRole } from '../../role-input/externalPigInvoice';
 import { InvoiceInputUtilComponent } from '../../components/invoice-input-util/invoice-input-util';
+import { InvoicesProvider } from '../../providers/invoices/invoices';
+import { PigInputPage } from '../pig-input/pig-input';
+import { PigsProvider } from '../../providers/pigs/pigs';
 import { SettingsProvider } from '../../providers/settings/settings';
-
+import { Utils } from '../../common/utils';
 
 @IonicPage()
 @Component({
@@ -55,7 +55,7 @@ export class ExternalPigInvoiceDetailPage {
     this.healStatus = this.deployData.get_object_list_key_of_healthStatus();
     this.foots = this.deployData.get_object_list_key_of_foot();
 
-    if (this.invoice.status == VARIABLE.INVOICE_STATUS.PROCCESSING) {
+    if (this.invoice.status != VARIABLE.INVOICE_STATUS.COMPLETE) {
       this.canCheckComplete = true;
       this.canEditInvoice = true;
     }
