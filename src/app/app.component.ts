@@ -20,6 +20,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { UserProvider } from '../providers/user/user';
 import { Utils } from '../common/utils';
 import { WarehousesProvider } from '../providers/warehouses/warehouses';
+import { user } from '../common/entity';
 
 @Component({
   templateUrl: 'app.html'
@@ -74,10 +75,6 @@ export class MyApp {
             this.util.getKey(KEY.TOKENTYPE)
               .then((tokenType) => {
                 if (tokenType) {
-                  // if (this.platform.is('cordova')) {
-                  //   // Get a FCM token
-                  //   this.fcmProvider.getToken();
-                  // }
                   CONFIG.ACCESS_KEY = tokenType.concat(' ').concat(accessToken);
                   this.splash = true;
                   this.userProvider.getRoleUser()

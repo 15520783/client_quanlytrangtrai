@@ -1,6 +1,6 @@
 import { CONFIG, MESSAGE } from '../../common/const';
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, ModalController, NavController, NavParams, Platform, PopoverController } from 'ionic-angular';
+import { Events, IonicPage, ModalController, Nav, NavController, NavParams, Platform, PopoverController, ViewController } from 'ionic-angular';
 import { breedings, mating, schedule } from '../../common/entity';
 
 import { ActivitiesProvider } from '../../providers/activities/activities';
@@ -46,12 +46,17 @@ export class DatePlanPage {
     public userProvider: UserProvider,
     public util: Utils,
     public modalCtrl: ModalController,
-    public popoverCtrl: PopoverController
+    public popoverCtrl: PopoverController,
+    public eventEmitter: Events
   ) {
-    
+
   }
-  
+
   ngOnInit(): void {
+
+  }
+
+  ionViewDidLoad() {
     this.loadCalendar();
   }
 
@@ -59,7 +64,7 @@ export class DatePlanPage {
     this.getSchedule().then((data) => {
       this.initSchedule();
       this.options = {
-        // schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
+        schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
         selectable: true,
         defaultView: this.platform.is('core') ? "dayGridMonth" : "listWeek",
         header: {
@@ -175,19 +180,34 @@ export class DatePlanPage {
 
   handleEventClick(model) { // handler method
     let callbackRemove = (schedule: schedule) => {
-      console.log(schedule);
       if (schedule) {
         let idx = this.events.findIndex(_event => _event.id == schedule.id);
         if (idx > -1) {
           this.events.splice(idx, 1);
         }
         modal.dismiss();
+        this.eventEmitter.publish('home:reloadSchedule');
       }
     }
 
+    let callbackUpdate = (schedule: schedule) => {
+      if (schedule) {
+        this.activitiesProvider.updateSchedule(schedule)
+          .then((updated_schedule: schedule) => {
+            modal.dismiss();
+            this.eventEmitter.publish('home:reloadSchedule');
+          })
+          .catch((err)=>{
+            return err;
+          })
+      }
+    }
+    
+
     let modal = this.modalCtrl.create(SchelduleDetailComponent, {
       schedule: model.event.extendedProps.schedule,
-      callbackRemove: callbackRemove
+      callbackRemove: callbackRemove,
+      callbackUpdate: callbackUpdate
     });
 
     modal.present();
@@ -200,7 +220,6 @@ export class DatePlanPage {
           .then((newSchedule: schedule) => {
             if (newSchedule) {
               this.schedules.push(newSchedule);
-
               this.events.push({
                 id: newSchedule.id,
                 title: newSchedule.name,
@@ -211,30 +230,8 @@ export class DatePlanPage {
                   (newSchedule.employee ? '#32db64' : '#01c2fa') : '#f53d3d',
                 borderColor: (new Date(newSchedule.date) >= new Date()) ? (newSchedule.employee ? '#32db64' : '#01c2fa') : '#f53d3d'
               })
-
-              // this.fullcalendar.eventsModel.push({
-              //   id: newSchedule.id,
-              //   title: newSchedule.name,
-              //   status: newSchedule.status,
-              //   date: this.GetFormattedDate(newSchedule.date) + " 07:00",
-              //   employee: newSchedule.employee,
-              //   backgroundColor: (new Date(newSchedule.date) >= new Date()) ?
-              //     (newSchedule.employee ? '#32db64' : '#01c2fa') : '#f53d3d',
-              //   borderColor: (new Date(newSchedule.date) >= new Date()) ? (newSchedule.employee ? '#32db64' : '#01c2fa') : '#f53d3d'
-              // });
-
-              // this.events.push({
-              //   id: newSchedule.id,
-              //   title: newSchedule.name,
-              //   status: newSchedule.status,
-              //   date: this.GetFormattedDate(newSchedule.date) + " 07:00",
-              //   employee: newSchedule.employee,
-              //   backgroundColor: (new Date(newSchedule.date) >= new Date()) ?
-              //     (newSchedule.employee ? '#32db64' : '#01c2fa') : '#f53d3d',
-              //   borderColor: (new Date(newSchedule.date) >= new Date()) ? (newSchedule.employee ? '#32db64' : '#01c2fa') : '#f53d3d'
-              // })
+              this.eventEmitter.publish('home:reloadSchedule');
             }
-            this.navCtrl.pop();
           })
           .catch((err) => {
             return err;
@@ -246,6 +243,6 @@ export class DatePlanPage {
 
 
 
-  
+
 
 }

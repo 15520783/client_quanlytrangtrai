@@ -225,6 +225,8 @@ const API = {
     CREATE_USER: '/api/users/',
     UPDATE_USER: '/api/users/',
     DELETE_USER: '/api/users/',
+    UPDATE_USER_PASSWORD:'/api/users/updatepassword/',
+    UPDATE_TOKEN:'/api/users/updatetoken/', //{userId}/{token}
 
     CREATE_FARM: '/api/farms/',
     UPDATE_FARM: '/api/farms/',

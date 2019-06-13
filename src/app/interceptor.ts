@@ -1,17 +1,18 @@
-import { Injectable } from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor,
-  HttpHeaders
-} from '@angular/common/http';
-
-import { CONFIG, KEY, API, MESSAGE } from '../common/const';
-import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
+
+import { API, CONFIG, KEY, MESSAGE } from '../common/const';
+import {
+  HttpEvent,
+  HttpHandler,
+  HttpHeaders,
+  HttpInterceptor,
+  HttpRequest
+} from '@angular/common/http';
+
 import { Events } from 'ionic-angular';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 import { Utils } from '../common/utils';
 import { tap } from 'rxjs/operators';
 
@@ -67,10 +68,15 @@ export class TokenInterceptor implements HttpInterceptor {
         return error;
       }, () => {
         if (request.method === 'POST' || request.method === 'PUT' || request.method === 'DELETE') {
-          if (request.url !== CONFIG.SERVER_API.concat(API.LOGIN))
+          if (request.url !== CONFIG.SERVER_API.concat(API.LOGIN) && request.url != API.PUSH_NOTIFICATION)
             this.util.closeBackDrop().then(() => {
               this.util.showToastSuccess(MESSAGE[CONFIG.LANGUAGE_DEFAULT].UPDATE_SUCCESS);
             });
+          else if(request.url == API.PUSH_NOTIFICATION){
+            this.util.closeBackDrop().then(() => {
+              this.util.showToastSuccess('Gửi thông báo nhắc nhở thành công');
+            });
+          }
         }
       })
     )

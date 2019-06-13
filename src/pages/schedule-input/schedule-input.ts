@@ -21,7 +21,7 @@ export class ScheduleInputPage {
 
   public schedule = new schedule();
   public peopleForSchedule: Array<employee> = [];
-  public dateInput:any = '';
+  public dateInput: any = '';
 
   constructor(
     public navCtrl: NavController,
@@ -34,9 +34,13 @@ export class ScheduleInputPage {
   ) {
     if (this.navParams.data.schedule) {
       this.schedule = this.navParams.data.schedule;
-      this.schedule['employeeId'] = this.schedule.employee.id;
+      if (this.schedule.employee) {
+        this.schedule['employeeId'] = this.schedule.employee.id;
+      } else {
+        this.schedule.employee = new employee();
+      }
     }
-    if(this.navParams.data.dateInput){
+    if (this.navParams.data.dateInput) {
       this.dateInput = this.navParams.data.dateInput;
     }
 
@@ -50,17 +54,20 @@ export class ScheduleInputPage {
       status: this.schedule.status
     });
 
-    if(this.dateInput){
+    if (this.dateInput) {
       this.credentialsForm.controls.date.setValue(this.dateInput);
     }
 
     if (this.navParams.data.updateMode) {
       this.updateMode = true;
-      this.schedule = this.navParams.data.sperm;
+      this.schedule = this.navParams.data.schedule;
       this.schedule.date = this.schedule.date ? new Date(this.schedule.date).toISOString() : '';
       Object.keys(this.credentialsForm.value).forEach((attr) => {
         this.credentialsForm.controls[attr].setValue(this.schedule[attr]);
       })
+    } else {
+      this.schedule.name.length ? this.credentialsForm.controls.name.setValue(this.schedule.name) : '';
+      this.schedule.date ? this.credentialsForm.controls.date.setValue(new Date(this.schedule.date).toISOString()) : '';
     }
   }
 
@@ -70,10 +77,10 @@ export class ScheduleInputPage {
       Object.keys(this.credentialsForm.value).forEach((attr) => {
         this.schedule[attr] = this.credentialsForm.value[attr];
       });
-      if(this.credentialsForm.value.employeeId){
+      if (this.credentialsForm.value.employeeId) {
         this.schedule.employee = this.deployData.get_employee_by_id(this.credentialsForm.value.employeeId);
         this.schedule.status = VARIABLE.SCHEDULE_STATUS.ASSIGNED.name;
-      }else{
+      } else {
         this.schedule.employee = null;
         this.schedule.status = VARIABLE.SCHEDULE_STATUS.NOT_ASSIGNED.name;
       }

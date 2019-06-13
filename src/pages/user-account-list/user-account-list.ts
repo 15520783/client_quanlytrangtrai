@@ -224,7 +224,7 @@ export class UserAccountListPage {
               } else {
                 if (data.password == data.repeatPassword) {
                   user.password = data.password;
-                  this.userProvider.updateUser(user)
+                  this.userProvider.updatePassword(user)
                     .then((updated_user: user) => {
                       console.log(updated_user);
                     })

@@ -32,7 +32,8 @@
 <ion-footer no-border showWhen="core">
   <ion-toolbar toolbar-transparent text-right showWhen="core">
     <button *ngIf="schedule.employee" ion-button mode='ios' color="secondary" (tap)="pushNotification()">Gửi thông báo</button>
+    <button *ngIf="schedule.employee" ion-button mode='ios' color="secondary" (tap)="edit()">Chỉnh sửa</button>
     <button *ngIf="!schedule.employee" ion-button mode='ios' color="secondary" (tap)="input()">Phân công</button>
-    <button  ion-button mode='ios' color="secondary" (tap)="delete()">Xóa công việc</button>
+    <button  ion-button mode='ios' color="danger" (tap)="delete()">Xóa công việc</button>
   </ion-toolbar>
 </ion-footer>

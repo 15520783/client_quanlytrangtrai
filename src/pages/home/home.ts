@@ -128,6 +128,10 @@ export class HomePage {
         this.scan();
       })
     }
+
+    this.events.subscribe('home:reloadSchedule',()=>{
+      this.nav.setRoot(DatePlanPage);
+    })
   }
 
   ionViewDidLoad() {
@@ -158,11 +162,6 @@ export class HomePage {
       .catch((err: any) => {
         console.log(err);
       })
-  }
-
-  GetFormattedDate(value) {
-    let date = new Date(value);
-    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
   }
 
 

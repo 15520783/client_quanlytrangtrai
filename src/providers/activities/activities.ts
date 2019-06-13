@@ -211,55 +211,55 @@ export class ActivitiesProvider {
    * @param farmId 
    * @param sectionId 
    */
-  getIssuePigOfSection(farmId:string,sectionId:string){
+  getIssuePigOfSection(farmId: string, sectionId: string) {
     return this.http
-    .get<Array<issuesPigs>>(API.GET_ISSUE_PIG_OF_SECTION +'/'+farmId+'/'+sectionId)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+      .get<Array<issuesPigs>>(API.GET_ISSUE_PIG_OF_SECTION + '/' + farmId + '/' + sectionId)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
 
   /**
    * Lấy danh sách vấn đề heo thuộc trang trại
    */
-  getIssuePigOfFarms(){
+  getIssuePigOfFarms() {
     return this.http
-    .get<Array<issuesPigs>>(API.GET_ISSUE_PIG_OF_FARMS)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+      .get<Array<issuesPigs>>(API.GET_ISSUE_PIG_OF_FARMS)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
   /**
    * Tạo danh sách ghi nhận sử dụng thuốc
    * @param objBody 
    */
-  createUsedMedicineList(objBody:Array<usedMedicine>){
+  createUsedMedicineList(objBody: Array<usedMedicine>) {
     return this.http
-    .post<Array<usedMedicine>>(API.CREATE_USED_MEDICINE_LIST,objBody)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+      .post<Array<usedMedicine>>(API.CREATE_USED_MEDICINE_LIST, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
   /**
    * Tạo mới một kết hoạch
    * @param objBody 
    */
-  createSchedule(objBody:schedule){
+  createSchedule(objBody: schedule) {
     return this.http
-    .post<schedule>(API.CREATE_SCHEDULE,objBody)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+      .post<schedule>(API.CREATE_SCHEDULE, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
   /**
    * Cập nhật một kế hoạch
    * @param objBody 
    */
-  updateSchedule(objBody:schedule){
+  updateSchedule(objBody: schedule) {
     return this.http
-    .post<schedule>(API.UPDATE_SCHEDULE,objBody)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+      .post<schedule>(API.UPDATE_SCHEDULE, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
   /**
@@ -273,6 +273,18 @@ export class ActivitiesProvider {
     };
     return this.http
       .delete(API.DELETE_SCHEDULE, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Gửi mail nhắc nhở schedule
+   * @param email 
+   * @param scheduleId 
+   */
+  sendMailToEmployee(email: string, scheduleId) {
+    return this.http
+      .get(API.SEND_EMAIL + email + '/' + scheduleId)
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise();
   }

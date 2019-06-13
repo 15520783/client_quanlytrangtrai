@@ -56,26 +56,7 @@ export class UserProvider {
             this.user = employee;
             this.util.setKey(KEY.EMPLOYEE_USER, employee).then(() => {
               this.publishUpdateEvent();
-              if (this.platform.is('cordova')) {
-                this.util.getTokenNotification().then((token) => {
-                  if (token) {
-                    this.util.getKey(KEY.USER).then((userAccount: user) => {
-                      if (userAccount) {
-                        userAccount.tokenNotification = token;
-                        this.updateUser(userAccount)
-                          .then((updated_user) => {
-                            if (updated_user) {
-                              this.util.setKey(KEY.USER, updated_user);
-                            }
-                          })
-                          .catch((err) => {
-                            console.log(err);
-                          })
-                      }
-                    })
-                  }
-                })
-              }
+              
             })
           }
         })
@@ -137,6 +118,29 @@ export class UserProvider {
   }
 
   /**
+   * Cập nhật password user
+   * @param objBody 
+   */
+  updatePassword(objBody:user){
+    return this.http
+      .post(API.UPDATE_USER, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Cập nhật token notification
+   * @param userId 
+   * @param token 
+   */
+  updateTokenNotification(userId:string,token:string){
+    return this.http
+    .get(API.UPDATE_TOKEN+userId+'/'+token)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  /**
    * Xóa user
    * @param objBody 
    */
@@ -149,4 +153,5 @@ export class UserProvider {
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise();
   }
+
 }
