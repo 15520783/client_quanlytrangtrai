@@ -29,7 +29,7 @@
           <ion-list *ngIf="invoice">
             <ion-item>
               <ion-label stacked>Nơi cung cấp:</ion-label>
-              <ion-input *ngIf="invoice.source" text-wrap type="text" readonly [(ngModel)]="invoice.source.name"></ion-input>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.source.name"></ion-input>
             </ion-item>
             <ion-item>
               <ion-label stacked>Người đại diện:</ion-label>
@@ -41,19 +41,23 @@
             </ion-item>
             <ion-item>
               <ion-label stacked>Nơi nhận:</ion-label>
-              <ion-input *ngIf="invoice.destination" text-wrap type="text" readonly [(ngModel)]="invoice.destination.name"></ion-input>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.destination.name"></ion-input>
             </ion-item>
             <ion-item>
               <ion-label stacked>Người đại diện</ion-label>
               <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.destinationManagerName"></ion-input>
             </ion-item>
             <ion-item>
-              <ion-label stacked>Ngày nhập:</ion-label>
-              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.importDate"></ion-input>
+              <ion-label stacked>Ngày xuất bán:</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.exportDate"></ion-input>
             </ion-item>
             <ion-item>
-              <ion-label stacked>Ngày cập nhật:</ion-label>
-              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.updatedAt"></ion-input>
+              <ion-label stacked>Đơn giá:</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.unitPrice"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Tổng tiền:</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.totalPrice"></ion-input>
             </ion-item>
             <ion-item>
               <ion-label stacked>Tổng số heo theo chứng từ:</ion-label>
@@ -124,12 +128,9 @@
                   </ion-col>
                   <!-- <ion-col col-lg-2 col-md-3 col-sm-3> -->
                   <!-- <button ion-button mode='ios' block color="danger" text-wrap
-                      (tap)="removePigInvoicesDetail(item)">Xóa</button> -->
-
+                        (tap)="removePigInvoicesDetail(item)">Xóa</button> -->
                   <!-- </ion-col> -->
                 </ion-row>
-                <button *ngIf="canEditInvoice" showWhen="core" ion-button item-end mode='ios' color="main"
-                  (tap)="edit(item)">Đánh giá lại</button>
                 <button *ngIf="canEditInvoice" showWhen="core" ion-button item-end mode='ios' color="danger"
                   (tap)="removePigInvoicesDetail(item)">Xóa</button>
               </ion-item>
@@ -141,14 +142,13 @@
   </ion-row>
 </ion-content>
 
-
 <ion-content no-padding showWhen="ios,android">
   <ion-slides #slider (ionSlideDidChange)="slideChange()">
     <ion-slide>
       <ion-list *ngIf="invoice">
         <ion-item>
           <ion-label stacked>Nơi cung cấp:</ion-label>
-          <ion-input *ngIf="invoice.source" text-wrap type="text" readonly [(ngModel)]="invoice.source.name"></ion-input>
+          <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.source.name"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label stacked>Người đại diện:</ion-label>
@@ -156,19 +156,23 @@
         </ion-item>
         <ion-item>
           <ion-label stacked>Nơi nhận:</ion-label>
-          <ion-input *ngIf="invoice.destination" text-wrap type="text" readonly [(ngModel)]="invoice.destination.name"></ion-input>
+          <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.destination.name"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label stacked>Người đại diện</ion-label>
           <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.destinationManagerName"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label stacked>Ngày nhập:</ion-label>
-          <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.importDate"></ion-input>
+          <ion-label stacked>Ngày xuất bán:</ion-label>
+          <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.exportDate"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label stacked>Ngày cập nhật:</ion-label>
-          <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.updatedAt"></ion-input>
+          <ion-label stacked>Đơn giá:</ion-label>
+          <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.unitPrice"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Tổng tiền:</ion-label>
+          <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.totalPrice"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label stacked>Tổng số heo theo chứng từ:</ion-label>
@@ -226,8 +230,7 @@
             </ion-row>
           </ion-item>
           <ion-item-options side="right" showWhen="ios,android" *ngIf="canEditInvoice">
-            <button *ngIf="canEditInvoice" ion-button mode='ios' color="main" (tap)="edit(item)">Đánh giá lại</button>
-            <button *ngIf="canEditInvoice" ion-button mode='ios' color="danger" (tap)="removePigInvoicesDetail(item)">Xóa</button>
+            <button ion-button mode='ios' color="danger" (tap)="removePigInvoicesDetail(item)">Xóa</button>
           </ion-item-options>
         </ion-item-sliding>
       </ion-list>
@@ -239,11 +242,11 @@
       <ion-icon name="ios-arrow-up"></ion-icon>
     </button>
     <ion-fab-list side="top" style="right:0px">
-      <button *ngIf="!details.length" (tap)="removeInvoice()" data-balloon-visible data-balloon-length="medium"
+      <button *ngIf="!details.length || !canCheckComplete" (tap)="removeInvoice()" data-balloon-visible data-balloon-length="medium"
         data-balloon="Xóa chứng từ" data-balloon-pos="left" ion-fab color="danger">
         <ion-icon name="md-trash"></ion-icon>
       </button>
-      <button *ngIf="canEditInvoice" data-balloon-visible data-balloon-length="medium" data-balloon="Xác nhận hoàn tất"
+      <button *ngIf="details.length && canCheckComplete" data-balloon-visible data-balloon-length="medium" data-balloon="Xác nhận hoàn tất"
         data-balloon-pos="left" ion-fab color="main" (tap)="completeInvoice()">
         <ion-icon name="md-create"></ion-icon>
       </button>
@@ -251,7 +254,7 @@
         data-balloon-pos="left" ion-fab color="main" (tap)="editInvoice()">
         <ion-icon name="md-create"></ion-icon>
       </button>
-      <button data-balloon-visible data-balloon-length="medium" data-balloon="Nhập heo" data-balloon-pos="left" ion-fab
+      <button *ngIf="canEditInvoice" data-balloon-visible data-balloon-length="medium" data-balloon="Nhập heo" data-balloon-pos="left" ion-fab
         color="main" (tap)="input_pig()">
         <ion-icon name="add"></ion-icon>
       </button>

@@ -3,12 +3,13 @@ import { InvoicesProvider } from "../providers/invoices/invoices";
 import { VARIABLE } from "../common/const";
 import { invoicesPig } from "../common/entity";
 
-export class ExportInternalPigInvoiceRole {
+export class SalePigInvoiceRole {
     public object = new invoicesPig();
 
+
     public headerTitle = {
-        insertMode: 'Nhập thông tin chứng từ xuất heo trong hệ thống',
-        updateMode: 'Cập nhật thông tin chứng từ xuất heo trong hệ thống'
+        insertMode: 'Nhập thông tin chứng từ xuất bán heo',
+        updateMode: 'Cập nhật thông tin chứng từ xuất bán heo'
     }
 
     public inputRole: Array<any>
@@ -16,9 +17,9 @@ export class ExportInternalPigInvoiceRole {
 
     constructor(
         public deployData: DeployDataProvider,
-        public invoiceProvider: InvoicesProvider,
+        public invoiceProvider: InvoicesProvider
     ) {
-        this.object.invoiceNo = VARIABLE.GENERNAL_INVOICE_ID.INTERNAL_EXPORT + Date.now();
+
         this.inputRole = [
             {
                 name: 'sourceId',
@@ -27,8 +28,8 @@ export class ExportInternalPigInvoiceRole {
                 isRequire: true,
                 isMaxlength: false,
                 isMailFormat: false,
-                isNumber: false,
                 notUpdate:true,
+                isNumber: false,
                 maxlength: 1000,
                 message: {
                     isMailFormat: '',
@@ -78,13 +79,13 @@ export class ExportInternalPigInvoiceRole {
                     isMaxlength: 'Số chứng từ không được vượt quá 1000 ký tự'
                 },
                 type: "input-text",
-                value: VARIABLE.GENERNAL_INVOICE_ID.INTERNAL_EXPORT + Date.now(),
-                notEdit: true
+                value: this.object.invoiceNo,
+                data: [{ name: "Chọn đơn vị nguồn", value: "" }]
             },
             {
                 name: 'exportDate',
-                label: 'Ngày xuất',
-                placeholder: 'Chọn ngày xuất',
+                label: 'Ngày xuất bán',
+                placeholder: 'Chọn ngày xuất bán',
                 isRequire: true,
                 isMaxlength: false,
                 isMailFormat: false,
@@ -92,37 +93,75 @@ export class ExportInternalPigInvoiceRole {
                 maxlength: 1000,
                 message: {
                     isMailFormat: '',
-                    isRequire: 'Ngày xuất là hạng mục bắt buộc',
+                    isRequire: 'Ngày xuất bán là hạng mục bắt buộc',
                     isNumber: '',
                     isMaxlength: ''
                 },
                 type: "input-date",
-                value: this.object.exportDate?new Date(this.object.exportDate).toISOString():this.object.exportDate,
+                value: this.object.exportDate,
                 data: null
             },
-            // {
-            //     name: 'quantity',
-            //     label: 'Tổng số heo',
-            //     placeholder: 'Nhập tổng số heo',
-            //     isRequire: true,
-            //     isMaxlength: false,
-            //     isMailFormat: false,
-            //     isNumber: true,
-            //     maxlength: 1000,
-            //     message: {
-            //         isMailFormat: '',
-            //         isRequire: 'Tổng số heo là hạng mục bắt buộc',
-            //         isNumber: 'Tổng số heo là hạng mục số',
-            //         isMaxlength: 'Tổng số heo không được vượt quá 1000 ký tự'
-            //     },
-            //     type: "input-text",
-            //     value: this.object.quantity,
-            //     data: null
-            // },
+            {
+                name: 'unitPrice',
+                label: 'Đơn giá',
+                placeholder: 'Nhập đơn giá',
+                isRequire: true,
+                isMaxlength: false,
+                isMailFormat: false,
+                isNumber: true,
+                maxlength: 1000,
+                message: {
+                    isMailFormat: '',
+                    isRequire: 'Đơn giá là hạng mục bắt buộc',
+                    isNumber: 'Đơn giá là hạng mục số',
+                    isMaxlength: 'Đơn giá không được vượt quá 1000 ký tự'
+                },
+                type: "input-text",
+                value: this.object.unitPrice,
+                data: null
+            },
+            {
+                name: 'totalPrice',
+                label: 'Tổng giá',
+                placeholder: 'Nhập tổng giá',
+                isRequire: true,
+                isMaxlength: false,
+                isMailFormat: false,
+                isNumber: true,
+                maxlength: 1000,
+                message: {
+                    isMailFormat: '',
+                    isRequire: 'Tổng giá là hạng mục bắt buộc',
+                    isNumber: 'Tổng giá là hạng mục số',
+                    isMaxlength: 'Tổng giá không được vượt quá 1000 ký tự'
+                },
+                type: "input-text",
+                value: this.object.totalPrice,
+                data: null
+            },
+            {
+                name: 'quantity',
+                label: 'Tổng số heo',
+                placeholder: 'Nhập tổng số heo',
+                isRequire: true,
+                isMaxlength: false,
+                isMailFormat: false,
+                isNumber: true,
+                maxlength: 1000,
+                message: {
+                    isMailFormat: '',
+                    isRequire: 'Tổng số heo là hạng mục bắt buộc',
+                    isNumber: 'Tổng số heo là hạng mục số',
+                    isMaxlength: 'Tổng số heo không được vượt quá 1000 ký tự'
+                },
+                type: "input-text",
+                value: this.object.quantity,
+                data: null
+            },
             {
                 name: 'destinationId',
-                label: 'Nơi nhận (Trang trại)',
-                placeholder: 'Chọn nơi nhận',
+                label: 'Đơn vị mua',
+                placeholder: 'Chọn đơn vị mua',
                 isRequire: true,
                 isMaxlength: false,
                 isMailFormat: false,
@@ -130,53 +169,57 @@ export class ExportInternalPigInvoiceRole {
                 maxlength: 1000,
                 message: {
                     isMailFormat: '',
-                    isRequire: 'Nơi nhận là hạng mục bắt buộc',
+                    isRequire: 'Đơn vị mua là hạng mục bắt buộc',
                     isNumber: '',
                     isMaxlength: ''
                 },
+                type: "input-select",
                 selectOptions: {
                     cssClass: 'ion-popover'
                 },
-                type: "input-select",
                 value: this.object.destinationId,
-                data: this.deployData.get_all_farm_for_select()
+                data: this.deployData.get_customer_list_for_select()
             }
         ];
     }
 
     insert() {
-        this.object.invoiceType = VARIABLE.INVOICE_PIG_TYPE.INTERNAL_EXPORT;
+        this.object.invoiceType = VARIABLE.INVOICE_PIG_TYPE.SALING_EXPORT;
         this.object.status = VARIABLE.INVOICE_STATUS.PROCCESSING;
         let source = this.deployData.get_farm_by_id(this.object.sourceId);
-        let destination = this.deployData.get_farm_by_id(this.object.destinationId);
-        let source_manager = this.deployData.get_employee_by_id(this.object.destinationManager);
+        let destination = this.deployData.get_partner_by_id(this.object.destinationId);
+
         if (source) {
-            this.object.sourceAddress = source.address;
+            this.object.sourceAddress = source.name;
             this.object.sourceManager = source.manager;
-            this.object.sourceManagerName = source_manager.name;
+            this.object.sourceManagerName = this.deployData.get_employee_by_id(source.manager) ? this.deployData.get_employee_by_id(source.manager).name : '';
+            this.object.sourceId = source.id;
         }
         if (destination) {
+            this.object.destinationId = destination.id;
             this.object.destinationAddress = destination.address;
-            this.object.destinationManager = destination.manager;
+            this.object.destinationManagerName = destination.manager;
         }
 
         return this.invoiceProvider.createPigInvoice(this.object);
     }
 
     update() {
-        this.object.invoiceType = VARIABLE.INVOICE_PIG_TYPE.INTERNAL_EXPORT;
+        this.object.invoiceType = VARIABLE.INVOICE_PIG_TYPE.EXTERNAL_IMPORT;
         this.object.status = VARIABLE.INVOICE_STATUS.PROCCESSING;
-        let source = this.deployData.get_farm_by_id(this.object.sourceId);
+        let source = this.deployData.get_partner_by_id(this.object.sourceId);
         let destination = this.deployData.get_farm_by_id(this.object.destinationId);
-        let source_manager = this.deployData.get_employee_by_id(this.object.destinationManager);
+        let des_manager = this.deployData.get_employee_by_id(this.object.destinationManager);
         if (source) {
-            this.object.sourceAddress = source.name;
-            this.object.sourceManager = source.manager;
-            this.object.sourceManagerName = source_manager.name;
+            this.object.sourceAddress = source.address;
+            this.object.sourceManager = null;
         }
         if (destination) {
-            this.object.destinationAddress = destination.name;
+            this.object.destinationAddress = destination.address;
             this.object.destinationManager = destination.manager;
+        }
+        if (des_manager) {
+            this.object.destinationManagerName = des_manager.name;
         }
         return this.invoiceProvider.updatePigInvoice(this.object);
     }

@@ -107,7 +107,7 @@ export class ExternalPigInvoiceDetailPage {
         .then((response) => {
           if (response && response.pigs && response.invoicePigDetail) {
             this.pigs[response.pigs.id] = response.pigs;
-            this.pigProvider.pigs.push(response.pigs);
+            this.pigProvider.updatedPig(response.pigs);
             this.details.push(response.invoicePigDetail);
           }
           this.navCtrl.pop();

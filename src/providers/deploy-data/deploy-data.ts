@@ -1,5 +1,5 @@
 import { KEY, VARIABLE } from '../../common/const';
-import { births, breedings, foodWareHouse, mating, matingRole, medicineWarehouse, pig, sperms, status } from '../../common/entity';
+import { births, breedings, foodWareHouse, mating, matingRole, medicineWarehouse, pig, round, sperms, status } from '../../common/entity';
 
 import { EmployeesProvider } from '../employees/employees';
 import { FarmsProvider } from '../farms/farms';
@@ -509,6 +509,20 @@ export class DeployDataProvider {
   }
 
   /**
+   * Lấy khách hàng bằng Id
+   * @param partnerId 
+   */
+  get_customer_by_id(customerId: string) {
+    if (this.settingProvider.setting.customers) {
+      return this.settingProvider.setting.customers.filter((customer) => {
+        return customer.id == customerId ? true : false;
+      })[0];
+    } else {
+      return null;
+    }
+  }
+
+  /**
    * Lấy loại trang trại bằng Id
    * @param typeId 
    */
@@ -553,8 +567,8 @@ export class DeployDataProvider {
    */
   get_object_list_key_of_partner() {
     let partners = {};
-    if (this.partnerProvider.partners) {
-      this.partnerProvider.partners.forEach((partner) => {
+    if (this.settingProvider.setting) {
+      this.settingProvider.setting.partners.forEach((partner) => {
         partners[partner.id] = partner;
       })
     }
@@ -926,13 +940,12 @@ export class DeployDataProvider {
    * @param pigId 
    */
   get_pig_by_id(pigId: string) {
-    let pig: pig;
     if (this.pigsProvider.pigs) {
-      this.pigsProvider.pigs.filter((pig) => {
+      return this.pigsProvider.pigs.filter((pig) => {
         return pig.id == pigId ? true : false;
       })[0];
     }
-    return pig;
+    return null;
   }
 
   /**
@@ -941,7 +954,8 @@ export class DeployDataProvider {
    */
   get_pig_object_to_send_request(pig: pig) {
     pig['house'] = this.get_house_by_id(pig.houseId);
-    pig['round'] = { id: 0 };
+    pig.round = new round();
+    pig.round.id = '0';
     pig['breed'] = this.get_breed_by_id(pig.breedId);
     pig['foot'] = this.get_foot_by_id(pig.footTypeId);
     pig['healthStatus'] = this.get_healthstatus_by_id(pig.healthStatusId);

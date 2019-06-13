@@ -1,7 +1,7 @@
-import { invoicesPig } from "../common/entity";
 import { DeployDataProvider } from "../providers/deploy-data/deploy-data";
 import { InvoicesProvider } from "../providers/invoices/invoices";
 import { VARIABLE } from "../common/const";
+import { invoicesPig } from "../common/entity";
 
 export class ExternalPigInvoiceRole {
     public object = new invoicesPig();
@@ -12,7 +12,7 @@ export class ExternalPigInvoiceRole {
         updateMode: 'Cập nhật thông tin chứng từ nhập heo ngoài hệ thống'
     }
 
-    public inputRole: Array<any>
+    public inputRole: Array<any>;
 
 
     constructor(
@@ -97,28 +97,28 @@ export class ExternalPigInvoiceRole {
                     isMaxlength: ''
                 },
                 type: "input-date",
-                value: this.object.importDate,
+                value: this.object.importDate?new Date(this.object.importDate).toISOString():this.object.importDate,
                 data: null
             },
-            {
-                name: 'quantity',
-                label: 'Tổng số heo',
-                placeholder: 'Nhập tổng số heo',
-                isRequire: true,
-                isMaxlength: false,
-                isMailFormat: false,
-                isNumber: true,
-                maxlength: 1000,
-                message: {
-                    isMailFormat: '',
-                    isRequire: 'Tổng số heo là hạng mục bắt buộc',
-                    isNumber: 'Tổng số heo là hạng mục số',
-                    isMaxlength: 'Tổng số heo không được vượt quá 1000 ký tự'
-                },
-                type: "input-text",
-                value: this.object.quantity,
-                data: null
-            },
+            // {
+            //     name: 'quantity',
+            //     label: 'Tổng số heo',
+            //     placeholder: 'Nhập tổng số heo',
+            //     isRequire: true,
+            //     isMaxlength: false,
+            //     isMailFormat: false,
+            //     isNumber: true,
+            //     maxlength: 1000,
+            //     message: {
+            //         isMailFormat: '',
+            //         isRequire: 'Tổng số heo là hạng mục bắt buộc',
+            //         isNumber: 'Tổng số heo là hạng mục số',
+            //         isMaxlength: 'Tổng số heo không được vượt quá 1000 ký tự'
+            //     },
+            //     type: "input-text",
+            //     value: this.object.quantity,
+            //     data: null
+            // },
             {
                 name: 'destinationId',
                 label: 'Nơi nhận (Trang trại)',
@@ -126,6 +126,7 @@ export class ExternalPigInvoiceRole {
                 isRequire: true,
                 isMaxlength: false,
                 isMailFormat: false,
+                notUpdate:true,
                 isNumber: false,
                 maxlength: 1000,
                 message: {

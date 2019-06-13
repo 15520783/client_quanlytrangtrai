@@ -1,11 +1,13 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
 import { API, CONFIG, KEY } from '../../common/const';
-import { pig } from '../../common/entity';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+import { Events } from 'ionic-angular';
 import Highcharts from 'highcharts';
 import HightchartMore from 'highcharts-more';
+import { Injectable } from '@angular/core';
 import { Utils } from '../../common/utils';
-import { Events } from 'ionic-angular';
+import { pig } from '../../common/entity';
+
 HightchartMore(Highcharts);
 
 @Injectable()
@@ -133,6 +135,17 @@ export class PigsProvider {
         }
         return isOK;
       });
+  }
+
+  /**
+   * Cập nhật trạng thái heo sang đã bán
+   * @param pigs 
+   */
+  updateSoldStatusForPigs(pigs: Array<pig>) {
+    return this.http
+      .put(API.UPDATE_SOLD_STATUS_FOR_PIGS, pigs)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
   getPigByID(id: string) {

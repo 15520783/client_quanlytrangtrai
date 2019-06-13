@@ -171,4 +171,9 @@ export class FoodInvoiceDetailPage {
       })
       .catch((err: Error) => { })
   }
+
+
+  removeInvoicesDetail(item){
+
+  }
 }

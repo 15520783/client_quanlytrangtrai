@@ -73,6 +73,7 @@
 </ion-header>
 
 <ion-content #content>
+  <ion-item-divider *ngIf="title" sticky="true">{{title}}</ion-item-divider>
   <ion-list *ngIf="!viewMode">
     <button ion-item *ngFor="let item of visible_items" (tap)="select(item)">
       <ion-avatar item-start>

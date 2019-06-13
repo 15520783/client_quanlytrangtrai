@@ -189,7 +189,7 @@ export class InvoicesProvider {
 
 
   /**
-   * Tạo mới chi tiết của chứng từ heo
+   * Tạo mới chi tiết của chứng từ heo (trong trường hợp tạo mới heo hoặc cập nhật lại heo)
    * @param objBody 
    */
   // createPigInvoiceDetail(objBody: invoicePigDetail) {
@@ -202,16 +202,16 @@ export class InvoicesProvider {
     return this.http
       .post<{ invoicePigDetail: invoicePigDetail, pigs: pig }>(API.CREATE_PIG_INVOICE_DETAIL, objBody)
       .timeout(CONFIG.DEFAULT_TIMEOUT)
-      .toPromise()
-      .then((response) => {
-        if (response && response.pigs && response.invoicePigDetail) {
-          this.util.getKey(KEY.PIGS).then((pigs: Array<pig>) => {
-            pigs.push(response.pigs);
-            this.util.setKey(KEY.PIGS, pigs);
-          })
-        }
-        return response;
-      })
+      .toPromise();
+      // .then((response) => {
+      //   if (response && response.pigs && response.invoicePigDetail) {
+      //     this.util.getKey(KEY.PIGS).then((pigs: Array<pig>) => {
+      //       pigs.push(response.pigs);
+      //       this.util.setKey(KEY.PIGS, pigs);
+      //     })
+      //   }
+      //   return response;
+      // })
   }
 
 

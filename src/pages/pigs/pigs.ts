@@ -1,18 +1,18 @@
+import { CONFIG, KEY, MESSAGE } from '../../common/const';
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Menu, Content, LoadingController, MenuController, Platform, ModalController, Events } from 'ionic-angular';
-import { FormControl } from '@angular/forms';
-import { PigsProvider } from '../../providers/pigs/pigs';
-import { HousesProvider } from '../../providers/houses/houses';
-import { pig, house } from '../../common/entity';
-import { Utils } from '../../common/utils';
-import { KEY, MESSAGE, CONFIG } from '../../common/const';
-import { VARIABLE } from '../../common/const'
-import { FilterProvider } from '../../providers/filter/filter';
-import { PigInputPage } from '../pig-input/pig-input';
-import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
-import { PigSummaryPage } from '../pig-summary/pig-summary';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { Content, Events, IonicPage, LoadingController, Menu, MenuController, ModalController, NavController, NavParams, Platform } from 'ionic-angular';
+import { house, pig } from '../../common/entity';
 
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { FilterProvider } from '../../providers/filter/filter';
+import { FormControl } from '@angular/forms';
+import { HousesProvider } from '../../providers/houses/houses';
+import { PigInputPage } from '../pig-input/pig-input';
+import { PigSummaryPage } from '../pig-summary/pig-summary';
+import { PigsProvider } from '../../providers/pigs/pigs';
+import { Utils } from '../../common/utils';
+import { VARIABLE } from '../../common/const'
 
 @IonicPage()
 @Component({
@@ -29,7 +29,7 @@ export class PigsPage {
   public health_status = {};
   public status = {};
   public gender: any = [];
-
+  public farmFilters:Array<any> = [];
 
   public page_Idx: number = 1;
   public page_Total: number = 0;
@@ -75,6 +75,9 @@ export class PigsPage {
     this.house = this.deployData.get_object_list_key_of_house();
     this.status = this.deployData.get_object_list_key_of_status();
     this.gender = VARIABLE.gender;
+
+    this.farmFilters = this.deployData.get_farm_list_for_select();
+    console.log(this.farmFilters);
   }
 
   getRender(idx) {
@@ -137,6 +140,9 @@ export class PigsPage {
 
   public filterItems(searchItem) {
     let pigs = this.util.deepClone(this.pigProvider.pigs);
+    pigs.forEach(pig => {
+      pig.farmId = this.house[pig.houseId].section.farm.id;
+    });
     this.filterProvider.input = pigs;
     this.filterProvider.searchWithInclude.gender = this.genderFilter;
     this.filterProvider.searchWithInclude.house_id = this.houseFilter;
@@ -218,5 +224,14 @@ export class PigsPage {
 
   sync() {
     this.events.publish('sync', true);
+  }
+
+
+  filterFarm(farmId) {
+    if (farmId)
+      this.filterProvider.searchWithInclude.farmId = [farmId];
+    else
+      this.filterProvider.searchWithInclude.farmId = [];
+    this.setFilteredItems();
   }
 }

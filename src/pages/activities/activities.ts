@@ -1,14 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, Events, Nav } from 'ionic-angular';
-import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
-import { VARIABLE } from '../../common/const';
-import { PigListSectionPage } from '../pig-list-section/pig-list-section';
-import { Utils } from '../../common/utils';
-import { SpermListPage } from '../sperm-list/sperm-list';
-import { BreedingListPage } from '../breeding-list/breeding-list';
-import { MatingListPage } from '../mating-list/mating-list';
+import { Events, IonicPage, Nav, NavController, NavParams, Platform } from 'ionic-angular';
+
 import { BirthListPage } from '../birth-list/birth-list';
+import { BreedingListPage } from '../breeding-list/breeding-list';
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { IssuePigListPage } from '../issue-pig-list/issue-pig-list';
+import { MatingListPage } from '../mating-list/mating-list';
+import { PigListSectionPage } from '../pig-list-section/pig-list-section';
+import { SpermListPage } from '../sperm-list/sperm-list';
+import { Utils } from '../../common/utils';
+import { VARIABLE } from '../../common/const';
 
 @IonicPage()
 @Component({
@@ -71,16 +72,16 @@ export class ActivitiesPage {
           sectionType: VARIABLE.SECTION_TYPE[1]
         }
       },
-      list_issue_pig_khu_cach_ly: {
-        name: 'Danh sách ghi nhận vấn đề', component: IssuePigListPage, active: false,
-        data: {
-          sectionType: VARIABLE.SECTION_TYPE[1],
-          getPigs(deployData: DeployDataProvider) {
-            return deployData.get_pigs_of_sectionType(VARIABLE.SECTION_TYPE[1].id)
-          },
-          pigs: [],
-        }
-      },
+      // list_issue_pig_khu_cach_ly: {
+      //   name: 'Danh sách ghi nhận vấn đề', component: IssuePigListPage, active: false,
+      //   data: {
+      //     sectionType: VARIABLE.SECTION_TYPE[1],
+      //     getPigs(deployData: DeployDataProvider) {
+      //       return deployData.get_pigs_of_sectionType(VARIABLE.SECTION_TYPE[1].id)
+      //     },
+      //     pigs: [],
+      //   }
+      // },
 
       
       list_pig_khu_noc: {
@@ -398,7 +399,6 @@ export class ActivitiesPage {
           this.components.list_pig_for_sale_khu_cach_ly,
           this.components.list_pig_for_transfer_cach_ly,
           this.components.list_pig_breeding_khu_cach_ly,
-          this.components.list_issue_pig_khu_cach_ly
         ],
         icon: 'app-activities', active: true, expand: false
       },

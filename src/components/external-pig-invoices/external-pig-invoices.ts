@@ -17,10 +17,10 @@ import { VARIABLE } from '../../common/const';
   templateUrl: 'external-pig-invoices.html'
 })
 export class ExternalPigInvoicesComponent {
-  
+
   @ViewChild('menuFilter') menuFilter: Menu;
   @ViewChild('contentExternalInvoice') content: Content;
-  
+
   @Input() invoices: Array<invoicesPig> = [];
   public roleInput: any;
 
@@ -50,8 +50,8 @@ export class ExternalPigInvoicesComponent {
 
   public visible_items: Array<any> = [];
 
-  public partners_util = {};
-  public farms_util = {};
+  public partners_util = this.deployData.get_object_list_key_of_partner();
+  public farms_util = this.deployData.get_object_list_key_of_farm();
 
   constructor(
     public filterProvider: FilterProvider,
@@ -68,11 +68,8 @@ export class ExternalPigInvoicesComponent {
       this.invoices = this.navParams.data.invoice;
       this.setFilteredItems();
     }
-
     this.roleInput = new ExternalPigInvoiceRole(this.deployData, this.invoiceProvider);
-    this.partners_util = this.deployData.get_object_list_key_of_partner();
-    this.farms_util = this.deployData.get_object_list_key_of_farm()
-
+    console.log(this.partners_util);
     this.sourceFilter = this.deployData.get_partner_list_for_select();
     this.destinationFilter = this.deployData.get_farm_list_for_select();
 
@@ -95,8 +92,8 @@ export class ExternalPigInvoicesComponent {
 
   public filterItems(searchItem) {
     this.invoices.forEach((invoice) => {
-      invoice['sourceName'] = this.partners_util[invoice.sourceId].name;
-      invoice['destinationName'] = this.farms_util[invoice.destinationId].name;
+      invoice['sourceName'] = this.partners_util[invoice.sourceId] ? this.partners_util[invoice.sourceId].name : '';
+      invoice['destinationName'] = this.farms_util[invoice.destinationId] ? this.farms_util[invoice.destinationId].name : '';
       invoice['importDateDisplay'] = this.util.convertDate(invoice.importDate);
       invoice['statusName'] = VARIABLE.INVOICE_STATUS.PROCCESSING == invoice.status
         ? 'Đang xử lí' : (VARIABLE.INVOICE_STATUS.COMPLETE == invoice.status ? 'Hoàn tất' : 'Chưa xác định');
@@ -187,7 +184,7 @@ export class ExternalPigInvoicesComponent {
   closeFilter() {
     this.menuCtrl.close();
   }
-  
+
   filterSource(sourceId) {
     if (sourceId)
       this.filterProvider.searchWithInclude.sourceId = [sourceId];

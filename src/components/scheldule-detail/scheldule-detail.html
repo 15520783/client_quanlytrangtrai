@@ -11,8 +11,8 @@
 <ion-content padding>
   <ion-list>
     <ion-item>
-      <ion-label stacked>Tên công việc</ion-label>
-      <ion-input text-wrap type="text" readonly [(ngModel)]="schedule.name"></ion-input>
+      <ion-label text-wrap stacked>Tên công việc</ion-label>
+      <ion-textarea rows="3" cols="20" type="text" readonly [(ngModel)]="schedule.name"></ion-textarea>
     </ion-item>
     <ion-item>
       <ion-label stacked>Ngày thực hiện</ion-label>
@@ -20,7 +20,8 @@
     </ion-item>
     <ion-item>
       <ion-label stacked>Người thực hiện</ion-label>
-      <ion-input type="text" readonly [(ngModel)]="schedule.employee"></ion-input>
+      <ion-input *ngIf="schedule.employee" type="text" readonly [(ngModel)]="schedule.employee.name"></ion-input>
+      <ion-input *ngIf="!schedule.employee" type="text" readonly value="Chưa phân công"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Trạng thái</ion-label>
@@ -30,6 +31,7 @@
 </ion-content>
 <ion-footer no-border showWhen="core">
   <ion-toolbar toolbar-transparent text-right showWhen="core">
-    <button type="submit" ion-button mode='ios' color="secondary" (tap)="pushNotification()">Phân công</button>
+    <button *ngIf="schedule.employee" type="submit" ion-button mode='ios' color="secondary" (tap)="pushNotification()">Gửi thông báo</button>
+    <button *ngIf="!schedule.employee" type="submit" ion-button mode='ios' color="secondary">Phân công</button>
   </ion-toolbar>
 </ion-footer>

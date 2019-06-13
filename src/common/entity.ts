@@ -46,6 +46,7 @@ export { births }
 export { feeds }
 export { usedMedicine }
 export { customerType, customerGroups, customers }
+export { schedule }
 
 class base {
 	id: string = '';
@@ -81,6 +82,7 @@ class pig extends base {
 	farm: farm = new farm();
 	houseId: string = '';
 	house: house = new house();
+	round: round = new round();
 	roundId: string = '';
 	breed: breeds = new breeds();
 	breedId: string = '';
@@ -97,11 +99,11 @@ class pig extends base {
 	receiveWeight: number = 0;
 	healthPoint: number = null;
 	footTypeId: string = '';
+	foot: footType = new foodType();
 	functionUdder: number = 0;
 	totalUdder: number = 0;
 	gentialTypeId: string = '';
 	gential: gentialType = new gentialType();
-	// gentialTypeId: number = null;
 	description: string = '';
 	fcr: number = 0;
 	adg: number = 0;
@@ -116,16 +118,16 @@ class pig extends base {
 	healthStatusId: number = 0;
 	breedingType: string = '0';
 	breedStatus: string = '0';
+	pregnancyStatus: pregnancyStatus = new pregnancyStatus();
 	pregnancyStatusId: string = '0';
 	point_review: string = '0';
 	status = new status();
 	statusId: string = '0';
 	priceCodeId: string = '0';
+	priceCode: priceCodes = new priceCodes();
 	overviewStatus: string = '0';
 	birthId: string = '';
-	constructor() {
-		super();
-	}
+
 }
 
 class group extends base {
@@ -414,8 +416,9 @@ class warehouse_type extends base {
 class round extends base {
 	from: any = '';
 	to: any = '';
-	// numberOfPig: number = null;
-	// birthId: string = '';
+	constructor() {
+		super();
+	}
 }
 
 
@@ -484,10 +487,10 @@ class invoicesPig extends base {
 	destinationManagerName: string = '';
 	destinationAddress: string = '';
 	vehicleNumber: string = '';
-	quantity: number = null;
-	unitPrice: string = '';
-	totalWeight: number = null;
-	totalPrice: number = null;
+	quantity: number = 0;
+	unitPrice: string = '0';
+	totalWeight: number = 0;
+	totalPrice: number = 0;
 	importDate: any = '';
 	exportDate: any = '';
 	status: string = '';
@@ -680,6 +683,17 @@ class InputObject {
 	message: { isRequire: string, isNumber: string, isMailFormat: string, isMaxlength: string };
 	placeholder: string;
 	data: any;
+}
+
+class schedule extends base {
+	name: string = '';
+	employee: employee = new employee();
+	date: any = '';
+	status: string = '';
+
+	constructor(){
+		super();
+	}
 }
 
 class ObjectScanner {

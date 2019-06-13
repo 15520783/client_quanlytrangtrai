@@ -1,18 +1,19 @@
+import { CONFIG, MESSAGE } from '../../common/const';
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, ModalController, PopoverController } from 'ionic-angular';
+import { IonicPage, ModalController, NavController, NavParams, Platform, PopoverController } from 'ionic-angular';
+import { breedings, mating, schedule } from '../../common/entity';
+
+import { ActivitiesProvider } from '../../providers/activities/activities';
+import { CalendarComponent } from 'ng-fullcalendar';
+import { OptionsInput } from '@fullcalendar/core';
+import { SchelduleDetailComponent } from '../../components/scheldule-detail/scheldule-detail';
+import { UserProvider } from '../../providers/user/user';
+import { Utils } from '../../common/utils';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import resourceTimeline from '@fullcalendar/resource-timeline';
-import interactionPlugin from '@fullcalendar/interaction';
-import { OptionsInput } from '@fullcalendar/core';
-import { CalendarComponent } from 'ng-fullcalendar';
-import { breedings, mating } from '../../common/entity';
-import { ActivitiesProvider } from '../../providers/activities/activities';
-import { Utils } from '../../common/utils';
-import { UserProvider } from '../../providers/user/user';
-import { MESSAGE, CONFIG } from '../../common/const';
-import { SchelduleDetailComponent } from '../../components/scheldule-detail/scheldule-detail';
+import timeGridPlugin from '@fullcalendar/timegrid';
 
 export class Schedule {
   breedings: Array<breedings> = [];
@@ -32,10 +33,7 @@ export class DatePlanPage {
   options: OptionsInput;
   eventsModel: any;
 
-  public schedule: Schedule = {
-    breedings: [],
-    matings: []
-  };
+  public schedules:Array<schedule> = [];
   public events: Array<any> = [];
 
   calendarPlugins = [interactionPlugin, resourceTimeline, dayGridPlugin, timeGridPlugin, listPlugin]; // important!
@@ -73,11 +71,12 @@ export class DatePlanPage {
         weekends: true,
         locale: 'vi',
         timeZone: 'UTC',
+        isRTL: false,
         eventLimit: true,
         displayEventTime: false,
         views: {
           timeGrid: {
-            eventLimit: this.platform.is('core') ? 4 : 0,
+            eventLimit: 0,
           }
         },
         events: []
@@ -136,9 +135,9 @@ export class DatePlanPage {
   getSchedule() {
     this.util.openBackDrop();
     return this.userProvider.getSchedule()
-      .then((data: Schedule) => {
-        if (breedings) {
-          this.schedule.breedings = data.breedings;
+      .then((data: Array<schedule>) => {
+        if (data) {
+          this.schedules = data;
         }
         this.util.closeBackDrop();
       })
@@ -155,32 +154,20 @@ export class DatePlanPage {
   }
 
   initSchedule() {
-    this.schedule.breedings.forEach((breeding) => {
-      if (breeding.breedingNext) {
+    this.schedules.forEach((schedule) => {
+      if (schedule) {
         this.events.push({
-          id: breeding.id,
-          title: 'Thực hiện lên giống cho heo có mã '.concat(breeding.pig.pigCode).concat(' theo dự kiến.'),
-          type: 'breeding',
-          object: breeding,
-          start: this.GetFormattedDate(breeding.breedingNext),
-          end: this.GetFormattedDate(breeding.breedingNext),
-          backgroundColor: (new Date(breeding.breedingNext) > new Date()) ? '#01c2fa' : '#f53d3d',
-          borderColor: (new Date(breeding.breedingNext) > new Date()) ? '#01c2fa' : '#f53d3d'
+          id: schedule.id,
+          title: schedule.name,
+          status:schedule.status,
+          date: this.GetFormattedDate(schedule.date)+" 07:00",
+          // end: this.GetFormattedDate(schedule.date)+' 23:59',
+          employee:schedule.employee,
+          backgroundColor: (new Date(schedule.date) >= new Date()) ? 
+          (schedule.employee?'#32db64':'#01c2fa'): '#f53d3d',
+          borderColor: (new Date(schedule.date) >= new Date()) ? (schedule.employee?'#32db64':'#01c2fa') : '#f53d3d'
         })
       }
-      if (breeding.matingEstimate) {
-        this.events.push({
-          id: breeding.id,
-          title: 'Thực hiện phối giống cho heo có mã '.concat(breeding.pig.pigCode).concat(' theo dự kiến.'),
-          type: 'mating',
-          object: breeding,
-          start: this.GetFormattedDate(breeding.matingEstimate),
-          end: this.GetFormattedDate(breeding.matingEstimate),
-          backgroundColor: (new Date(breeding.matingEstimate) > new Date()) ? '#32db64' : '#f53d3d',
-          borderColor: (new Date(breeding.matingEstimate) > new Date()) ? '#32db64' : '#f53d3d'
-        })
-      }
-
     })
   }
 
@@ -190,10 +177,8 @@ export class DatePlanPage {
       schedule: {
         name: model.event.title,
         date: model.event.start,
-        employee: '',
-        status: 'Chưa phân công',
-        object: model.event.extendedProps.object,
-        type: model.event.extendedProps.type
+        employee: model.event.extendedProps.employee,
+        status: model.event.extendedProps.status,
       }
     });
 

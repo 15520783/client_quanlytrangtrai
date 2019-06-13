@@ -18,6 +18,7 @@ export class PigListComponent {
   @ViewChild('content') content: Content;
 
   @Output() closeMenuEvent = new EventEmitter();
+  @Input() title:string='';
   @Input() data: Array<pig> = [];
   @Input() selectMode: boolean = false;
   @Input() viewMode: boolean = false;
@@ -78,6 +79,10 @@ export class PigListComponent {
     }
     if(this.navParams.data.canEdit){
       this.canEdit = this.navParams.data.canEdit;
+    }
+
+    if(this.navParams.data.title){
+      this.title = this.navParams.data.title;
     }
 
     this.houses = this.houseProvider.houses;

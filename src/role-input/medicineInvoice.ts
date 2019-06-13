@@ -77,7 +77,7 @@ export class MedicineInvoiceRole {
                     isMaxlength: ''
                 },
                 type: "input-date",
-                value: this.object.importDate,
+                value: this.object.importDate?new Date(this.object.importDate).toISOString():this.object.importDate,
                 data: null
             },
             {
@@ -89,6 +89,7 @@ export class MedicineInvoiceRole {
                 isMailFormat: false,
                 isNumber: false,
                 maxlength: 1000,
+                notUpdate:true,
                 message: {
                     isMailFormat: '',
                     isRequire: 'Nơi nhận là hạng mục bắt buộc',

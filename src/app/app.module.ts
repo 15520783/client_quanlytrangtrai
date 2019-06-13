@@ -66,6 +66,7 @@ import { InvoiceInputUtilComponent } from '../components/invoice-input-util/invo
 import { InvoicesPage } from '../pages/invoices/invoices';
 import { InvoicesProvider } from '../providers/invoices/invoices';
 import { IonicStorageModule } from '@ionic/storage';
+import { IssuePigListComponent } from '../components/issue-pig-list/issue-pig-list';
 import { IssuePigListPage } from '../pages/issue-pig-list/issue-pig-list';
 import { ListFabButtonPigComponent } from '../components/list-fab-button-pig/list-fab-button-pig';
 import { LoginPage } from '../pages/login/login';
@@ -96,6 +97,7 @@ import { PigSummaryPage } from '../pages/pig-summary/pig-summary';
 import { PigViewPage } from '../tabs/pig-view/pig-view';
 import { PigsPage } from '../pages/pigs/pigs';
 import { PigsProvider } from '../providers/pigs/pigs';
+import { SalePigInvoiceDetailPage } from '../pages/sale-pig-invoice-detail/sale-pig-invoice-detail';
 import { SalePigInvoicesComponent } from '../components/sale-pig-invoices/sale-pig-invoices';
 import { SchelduleDetailComponent } from '../components/scheldule-detail/scheldule-detail';
 import { SectionInfomationPage } from '../pages/section-infomation/section-infomation';
@@ -191,7 +193,8 @@ const Pages = [
   MedicineWarehouseListPage,
   WarehouseListPage,
   UserAccountListPage,
-  UserInputPage
+  UserInputPage,
+  SalePigInvoiceDetailPage
 ]
 
 const Components = [
@@ -219,6 +222,7 @@ const Components = [
   SchelduleDetailComponent,
   ListFabButtonPigComponent,
   ExportInternalPigInvoiceComponent,
+  IssuePigListComponent
 ]
 
 const Providers = [
@@ -274,7 +278,7 @@ export const firebaseConfig = {
     FullCalendarModule,
     HttpModule,
     AngularFireModule,
-    AngularFireModule.initializeApp( firebaseConfig),
+    AngularFireModule.initializeApp(firebaseConfig),
   ],
   bootstrap: [IonicApp],
   entryComponents: [

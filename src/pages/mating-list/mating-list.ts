@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { mating, matingDetails, births } from '../../common/entity';
-import { FormControl } from '@angular/forms';
-import { FilterProvider } from '../../providers/filter/filter';
-import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { births, mating, matingDetails } from '../../common/entity';
+
 import { ActivitiesProvider } from '../../providers/activities/activities';
+import { BirthInputPage } from '../birth-input/birth-input';
+import { Component } from '@angular/core';
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { FilterProvider } from '../../providers/filter/filter';
+import { FormControl } from '@angular/forms';
+import { MatingInputPage } from '../mating-input/mating-input';
 import { PigsProvider } from '../../providers/pigs/pigs';
 import { Utils } from '../../common/utils';
-import { MatingInputPage } from '../mating-input/mating-input';
 import { VARIABLE } from '../../common/const';
-import { BirthInputPage } from '../birth-input/birth-input';
 
 @IonicPage()
 @Component({
@@ -275,8 +276,7 @@ export class MatingListPage {
   birth_input(item: mating) {
     let callback = (newBirth: births) => {
       if (newBirth) {
-        console.log(newBirth);
-        item.status = VARIABLE.MATING_STATUS.BORNED.codeName;
+        mating['statusName'] = VARIABLE.MATING_STATUS.BORNED.codeName;
       }
     };
     this.navCtrl.push(BirthInputPage, { mating: item, callback: callback });

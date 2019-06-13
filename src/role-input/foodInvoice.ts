@@ -77,7 +77,7 @@ export class FoodInvoiceRole {
                     isMaxlength: ''
                 },
                 type: "input-date",
-                value: this.object.importDate,
+                value: this.object.importDate?new Date(this.object.importDate).toISOString():this.object.importDate,
                 data: null
             },
             {
@@ -85,6 +85,7 @@ export class FoodInvoiceRole {
                 label: 'Nơi nhận (Trang trại)',
                 placeholder: 'Chọn nơi nhận',
                 isRequire: true,
+                notUpdate:true,
                 isMaxlength: false,
                 isMailFormat: false,
                 isNumber: false,

@@ -18,6 +18,7 @@
           [(validControl)]="credentialsForm.controls.sourceId"
           [label]="'Trang trại chuyển đến'" 
           [active]="submitAttempt"
+          [disabled]="editMode?true:false"
           [placeholder]="'Chọn trang trại'" [(data)]="farms">
         </input-select>
         <input-text
@@ -59,6 +60,7 @@
           [(validControl)]="credentialsForm.controls.houseId"
           [errorMessage_Required]="'Chuồng là hạng mục bắt buộc'" 
           [label]="'Chuồng'" [active]="submitAttempt"
+          [disabled]="editMode?true:false"
           [placeholder]="'Chọn chuồng'" [(data)]="houses">
         </input-select>
       </ion-list>

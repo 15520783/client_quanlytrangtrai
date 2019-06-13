@@ -1,13 +1,13 @@
+import { Events, IonicPage, ModalController, NavController, NavParams, Platform, ViewController } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { house, pig } from '../../common/entity';
+
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Platform, Events, ViewController } from 'ionic-angular';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { pig, house } from '../../common/entity';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { SettingsProvider } from '../../providers/settings/settings';
-import { VARIABLE } from '../../common/const';
 import { Utils } from '../../common/utils';
+import { VARIABLE } from '../../common/const';
 import { ValidateNumber } from '../../validators/number.validator';
-
 
 @IonicPage()
 @Component({
@@ -122,7 +122,6 @@ export class PigInputPage {
 
   }
 
-
   onSubmit() {
     this.submitAttempt = true;
     console.log(this.credentialsForm.value);
@@ -130,22 +129,6 @@ export class PigInputPage {
       Object.keys(this.credentialsForm.value).forEach((attr) => {
         this.pig[attr] = this.credentialsForm.value[attr];
       });
-
-      // if (!this.UpdateMode) {
-      //   this.events.publish('pig-inputs:createPig', this.pig);
-      //   this.events.subscribe('OK', () => {
-      //     this.viewCtrl.dismiss();
-      //     this.events.unsubscribe('OK');
-      //   })
-      // }
-      // else {
-      //   this.events.publish('pig-inputs:updatePig', this.pig);
-      //   this.events.subscribe('OK', () => {
-      //     this.viewCtrl.dismiss();
-      //     this.events.unsubscribe('OK');
-      //   })
-      // }
-
       this.navParams.get('callback')(this.pig);
     }
   }
@@ -243,6 +226,7 @@ export class PigInputPage {
 
   farmChange(e) {
     if (e.valueId) {
+      this.credentialsForm.controls.houseId.setValue(null);
       this.sections = [];
       this.deployData.get_sections_of_farm(e.valueId).forEach((section) => {
         this.sections.push({
@@ -254,8 +238,8 @@ export class PigInputPage {
   }
 
   sectionChange(e) {
-    console.log(e);
     if (e.valueId) {
+      this.credentialsForm.controls.houseId.setValue(null);
       this.houses = [];
       this.deployData.get_houses_of_section(e.valueId).forEach((house) => {
         this.houses.push({

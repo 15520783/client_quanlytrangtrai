@@ -6,6 +6,7 @@ import { FilterProvider } from '../../providers/filter/filter';
 import { FormControl } from '@angular/forms';
 import { InvoiceInputUtilComponent } from '../invoice-input-util/invoice-input-util';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
+import { SalePigInvoiceDetailPage } from '../../pages/sale-pig-invoice-detail/sale-pig-invoice-detail';
 import { SalePigInvoiceRole } from '../../role-input/salePigInvoice';
 import { Utils } from '../../common/utils';
 import { VARIABLE } from '../../common/const';
@@ -28,6 +29,8 @@ export class SalePigInvoicesComponent {
     { name: "quantity", label: 'Tổng số heo' },
     { name: "totalWeight", label: 'Tổng trọng lượng' },
     { name: "statusName", label: 'Trạng thái' },
+    { name: "unitPrice", label: 'Đơn giá' },
+    { name: "totalPrice", label: 'Tổng giá' }
   ];
 
   public placeholderSearch: string = 'Tìm kiếm chứng từ'
@@ -94,8 +97,8 @@ export class SalePigInvoicesComponent {
           invoice['statusName'] = 'Đã hoàn tất'; break;
         }
       }
-    })
-      ;
+    });
+    
     this.filterProvider.input = this.invoices;
     this.filterProvider.searchText = searchItem;
     this.filterProvider.searchWithText = this.filter_default;
@@ -137,6 +140,40 @@ export class SalePigInvoicesComponent {
         callback: callback
       }
     )
+  }
+
+
+  input_pig(item) {
+    let callbackUpdate = (invoice: invoicesPig) => {
+      if (invoice) {
+        let idx = this.invoices.findIndex(_invoice => _invoice.id == invoice.id);
+        if (idx > -1) {
+          this.invoices[idx] = invoice;
+          this.setFilteredItems();
+        }
+      }
+    }
+
+    let callbackRemove = (invoice: invoicesPig) => {
+      if (invoice) {
+        let idx = this.invoices.findIndex(Obj => Obj.id == invoice.id);
+        if (idx > -1)
+          this.invoices.splice(idx, 1);
+        this.setFilteredItems();
+      }
+    }
+
+    this.navCtrl.push(SalePigInvoiceDetailPage, { invoice: item, callbackUpdate: callbackUpdate, callbackRemove: callbackRemove });
+
+    // this.events.subscribe('removeInvoiceEvent', (invoice) => {
+    //   if (invoice) {
+    //     let idx = this.invoices.findIndex(Obj => Obj.id == invoice.id);
+    //     if (idx > -1)
+    //       this.invoices.splice(idx, 1);
+    //     this.setFilteredItems();
+    //     this.events.unsubscribe('removeInvoiceEvent');
+    //   }
+    // })
   }
 
 }

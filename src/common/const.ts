@@ -32,6 +32,7 @@ const CONFIG = {
     // SERVER_API: 'https://quanlytrangtrai-uit.herokuapp.com',
     SERVER_API: 'https://quanlytrangtrai-uit-us.herokuapp.com',
     // SERVER_API: 'http://192.168.1.45:8080',
+    // SERVER_API: 'http://10.10.121.34:8080',
     DEFAULT_TIMEOUT: 50000,
     LANGUAGE_DEFAULT: 'vi',
     ACCESS_KEY: '',
@@ -130,7 +131,7 @@ const VARIABLE = {
     GENERNAL_INVOICE_ID: {
         INTERNAL_IMPORT: 'INT-IMP',
         EXTERNAL_IMPORT: 'EXT-IMP',
-        INTERNAL_EXPORT: 'EXT-EX',
+        INTERNAL_EXPORT: 'INT-EX',
         SALING_EXPORT: 'SAL-EX',
     },
     MENU_FIELDS: {
@@ -177,7 +178,7 @@ const VARIABLE = {
     ],
     REGENCIES: {
         quan_ly_kho: { id: '13', name: "Thủ kho trại" }
-    }
+    },
 
 }
 
@@ -206,7 +207,7 @@ const API = {
     GET_FOOD_WAREHOUSE_FROM_INVOICE: '/api/foodwarehouse/invoice/',
     GET_MEDICINE_WAREHOUSE_FROM_INVOICE: '/api/medicinewarehouse/invoice/',
     GET_ALL_FORWARDING_PIG_INVOICE: '/api/invoicespig/forwarding/list',
-    GET_SCHEDULE: '/api/schedule/list',
+    GET_SCHEDULE: '/api/schedule/listschedule',
     GET_INFO_EMPLOYEE: '/api/employees/',
     GET_ISSUE_PIG_OF_SECTION: '/api/issuespigs/listcurrentissues',   //{idfarm}/{idsection}
     GET_ISSUE_PIG_OF_FARMS: '/api/issuespigs/list',   //{idfarm}/{idsection}
@@ -216,6 +217,7 @@ const API = {
     GET_USER_ACCOUNT_OF_EMPLOYEE: '/api/users/employee', //{empId}
 
     PUSH_NOTIFICATION: 'https://fcm.googleapis.com/fcm/send',
+    SEND_EMAIL:'/api/mail/sendemailnotification/', //{email}/{scheduleid}
 
     CREATE_USER: '/api/users/',
     UPDATE_USER: '/api/users/',
@@ -267,10 +269,12 @@ const API = {
     DELETE_PRODUCT_INVOICE: '/api/invoicesproduct/',
 
     CREATE_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/pigsinvoicepigdetail/',
+    CREATE_IMPORT_INTERNAL_PIG_INVOICE: '/api/invoicespig/pigsinvoicepig/',
+
     DELETE_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/onlyinvoicedetail/',
     DELETE_EXTERNAL_IMPORT_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/',
 
-    CREATE_IMPORT_INTERNAL_PIG_INVOICE: '/api/invoicespig/pigsinvoicepig/',
+    UPDATE_SOLD_STATUS_FOR_PIGS:'/api/pigs/updatestatussold/',
 
     CREATE_FOOD_WAREHOUSE: '/api/foodwarehouse/',
     UPDATE_FOOD_WAREHOUSE: '/api/foodwarehouse/',

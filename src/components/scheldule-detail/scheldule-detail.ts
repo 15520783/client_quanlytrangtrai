@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+
+import { Component } from '@angular/core';
 import { FcmProvider } from '../../providers/fcm/fcm';
 import { ObjDataNotification } from '../../common/entity';
+import { Utils } from '../../common/utils';
 
 export class Schedule {
   name: string = '';
@@ -23,9 +25,11 @@ export class SchelduleDetailComponent {
     public navCtrl: NavController,
     public navParams: NavParams,
     public fcmProvider: FcmProvider,
+    public util:Utils
   ) {
     if (this.navParams.data.schedule) {
       this.schedule = this.navParams.data.schedule;
+      this.schedule.date = this.util.convertDate(this.schedule.date);
     }
   }
 

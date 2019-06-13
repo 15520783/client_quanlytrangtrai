@@ -1,11 +1,12 @@
+import { Events, IonicPage, NavController, NavParams } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { ActivitiesProvider } from '../../providers/activities/activities';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { births } from '../../common/entity';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { Utils } from '../../common/utils';
 import { ValidateNumber } from '../../validators/number.validator';
-import { ActivitiesProvider } from '../../providers/activities/activities';
+import { births } from '../../common/entity';
 
 @IonicPage()
 @Component({
@@ -53,7 +54,6 @@ export class BirthInputPage {
 
   onSubmit() {
     this.submitAttempt = true;
-    console.log(this.credentialsForm.value);
     if (this.credentialsForm.valid) {
       Object.keys(this.credentialsForm.value).forEach((attr) => {
         this.birth[attr] = this.credentialsForm.value[attr];

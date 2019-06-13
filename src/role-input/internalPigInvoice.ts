@@ -1,4 +1,5 @@
 import { InputObject, invoicesPig } from "../common/entity";
+
 import { DeployDataProvider } from "../providers/deploy-data/deploy-data";
 import { InvoicesProvider } from "../providers/invoices/invoices";
 import { VARIABLE } from "../common/const";
@@ -21,25 +22,6 @@ export class InternalPigInvoiceRole {
     ) {
         this.object.invoiceNo = VARIABLE.GENERNAL_INVOICE_ID.INTERNAL_IMPORT + Date.now();
         this.inputRole = [
-            // {
-            //     name: 'invoiceType',
-            //     label: 'Nguồn gốc',
-            //     placeholder: 'Nhập nguồn gốc heo',
-            //     isRequire: true,
-            //     isMaxlength: false,
-            //     isMailFormat: false,
-            //     isNumber: false,
-            //     maxlength: 1000,
-            //     message: {
-            //         isMailFormat: '',
-            //         isRequire: 'Nguồn gốc nhập heo là hạng mục bắt buộc.',
-            //         isNumber: '',
-            //         isMaxlength: ''
-            //     },
-            //     type: "input-select",
-            //     value: this.object.invoiceType,
-            //     data: [{ name: "Trong hệ thống", value: "1" }],
-            // },
             {
                 name: 'sourceId',
                 label: 'Đơn vị nguồn',

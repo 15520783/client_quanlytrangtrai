@@ -22,7 +22,7 @@
       (tap)="transferSection()">Đánh giá & chuyển nội bộ</button>
     </ion-col>
     
-    <ion-col>
+    <!-- <ion-col>
       <button 
       showWhen="core" 
       *ngIf="add_to_sale_list.includes(sectionTypeId) 
@@ -31,7 +31,7 @@
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_MATING"
       small ion-button item-end mode='ios' color="secondary"
       (tap)="forwardToSaleWaiting()">Thêm vào danh sách chờ bán</button>
-    </ion-col>
+    </ion-col> -->
     
     <!-- <ion-col>
       <button 
@@ -45,14 +45,14 @@
     </ion-col> -->
    
 
-    <ion-col>
+    <!-- <ion-col>
       <button 
       showWhen="core" 
       *ngIf="add_to_sale_list.includes(sectionTypeId) 
       && statusObjectKey[pig.statusId].code == statusPig.WAIT_FOR_SALE"
       small ion-button item-end mode='ios' color="secondary"
       (tap)="cancelSaleWaiting()">Hủy chờ bán</button>
-    </ion-col>
+    </ion-col> -->
     
     <!-- <ion-col>
       <button 

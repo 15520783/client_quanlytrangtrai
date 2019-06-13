@@ -170,4 +170,8 @@ export class MedicineInvoiceDetailPage {
       })
       .catch((err: Error) => { })
   }
+
+  removeInvoicesDetail(item){
+
+  }
 }

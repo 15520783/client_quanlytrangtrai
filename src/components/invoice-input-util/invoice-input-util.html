@@ -30,6 +30,7 @@
                         [placeholder]="field.placeholder"
                         [(data)]="field.data"
                         [value]="field.setValue"
+                        [disabled] ="(navParams.data.editMode && field.notUpdate)?true:false"
                         [selectOptions]="field.selectOptions?field.selectOptions:[]">
             </input-select>
 
