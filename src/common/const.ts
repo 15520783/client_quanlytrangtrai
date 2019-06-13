@@ -12,7 +12,7 @@ const KEY = {
     PARTNERS: 'partners',
     EMPID: 'employeeId',
     EMPLOYEE_USER: 'employee_user',
-    USER:'user',
+    USER: 'user',
     USERNAME: 'username',
     PASSWORD: 'password'
 }
@@ -179,10 +179,17 @@ const VARIABLE = {
     REGENCIES: {
         quan_ly_kho: { id: '13', name: "Thủ kho trại" }
     },
-    SCHEDULE_STATUS:{
-        NOT_ASSIGNED:{id:0,name:'chưa phân công'},
-        ASSIGNED:{id:1,name:'đã phân công'}
-    }
+    SCHEDULE_STATUS: {
+        NOT_ASSIGNED: { id: 0, name: 'chưa phân công' },
+        ASSIGNED: { id: 1, name: 'đã phân công' }
+    },
+    TYPE_PIG: [
+        { id: 0, name: 'Chưa phân loại' },
+        { id: 1, name: 'Loại 1' },
+        { id: 2, name: 'Loại 2' },
+        { id: 3, name: 'Loại 3' },
+        { id: 4, name: 'Loại 4' }
+    ]
 }
 
 const API = {
@@ -218,15 +225,19 @@ const API = {
     GET_MEDICINES_OF_DISEASE: '/api/medicinedisease/disease',  //{diseaseId}
     GET_MEDICINEWAREHOUSE_OF_MEDICINE: '/api/medicinewarehouse/medicine', //{{medicineId}}
     GET_USER_ACCOUNT_OF_EMPLOYEE: '/api/users/employee', //{empId}
+    GET_PERMISSION_OF_ROLE: '/api/rolepermission/role/', //{roleId}
+    GET_ALL_PERMISSION: '/api/permission/list',
+
 
     PUSH_NOTIFICATION: 'https://fcm.googleapis.com/fcm/send',
-    SEND_EMAIL:'/api/mail/sendemailnotification/', //{email}/{scheduleid}
+    SEND_EMAIL: '/api/mail/sendemailnotification/', //{email}/{scheduleid}
+    MINING_TO_REVIEW_OFFSET: '/api/minings/',//{pigId}
 
     CREATE_USER: '/api/users/',
     UPDATE_USER: '/api/users/',
     DELETE_USER: '/api/users/',
-    UPDATE_USER_PASSWORD:'/api/users/updatepassword/',
-    UPDATE_TOKEN:'/api/users/updatetoken/', //{userId}/{token}
+    UPDATE_USER_PASSWORD: '/api/users/updatepassword/',
+    UPDATE_TOKEN: '/api/users/updatetoken/', //{userId}/{token}
 
     CREATE_FARM: '/api/farms/',
     UPDATE_FARM: '/api/farms/',
@@ -239,9 +250,9 @@ const API = {
     UPDATE_WAREHOUSE: '/api/warehouses/',
     DELETE_WAREHOUSE: '/api/warehouses/',
 
-    CREATE_EMPLOYEE:'/api/employees/',
-    UPDATE_EMPLOYEE:'/api/employees/',
-    DELETE_EMPLOYEE:'/api/employees/',
+    CREATE_EMPLOYEE: '/api/employees/',
+    UPDATE_EMPLOYEE: '/api/employees/',
+    DELETE_EMPLOYEE: '/api/employees/',
 
     CREATE_PREGNANCY_STATUS: '/api/pregnancystatus/',
     DELETE_PREGNANCY_STATUS: '/api/pregnancystatus/',
@@ -279,7 +290,7 @@ const API = {
     DELETE_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/onlyinvoicedetail/',
     DELETE_EXTERNAL_IMPORT_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/',
 
-    UPDATE_SOLD_STATUS_FOR_PIGS:'/api/pigs/updatestatussold/',
+    UPDATE_SOLD_STATUS_FOR_PIGS: '/api/pigs/updatestatussold/',
 
     CREATE_FOOD_WAREHOUSE: '/api/foodwarehouse/',
     UPDATE_FOOD_WAREHOUSE: '/api/foodwarehouse/',
@@ -312,9 +323,9 @@ const API = {
 
     CREATE_USED_MEDICINE_LIST: '/api/usedmedicine/',
 
-    CREATE_SCHEDULE:'/api/schedule/',
-    UPDATE_SCHEDULE:'/api/schedule/',
-    DELETE_SCHEDULE:'/api/schedule/'
+    CREATE_SCHEDULE: '/api/schedule/',
+    UPDATE_SCHEDULE: '/api/schedule/',
+    DELETE_SCHEDULE: '/api/schedule/'
 }
 
 const ERROR_NAME = {

@@ -1,8 +1,11 @@
-import { Component, ViewChild, Renderer } from '@angular/core';
+import { Component, Renderer, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, Slides } from 'ionic-angular';
-import { UserProvider } from '../../providers/user/user';
-import { VARIABLE } from '../../common/const';
+import { permission, roles } from '../../common/entity';
 
+import { SettingsProvider } from '../../providers/settings/settings';
+import { UserProvider } from '../../providers/user/user';
+import { Utils } from '../../common/utils';
+import { VARIABLE } from '../../common/const';
 
 @IonicPage()
 @Component({
@@ -17,14 +20,22 @@ export class SettingRolePage {
   public MainRolePermission: any;
   public listMainKey:Array<any> = [];
 
+  public role:roles = new roles();
+  public permissionList:Array<permission> = [];
+
   constructor(
     public renderer: Renderer,
     public navCtrl: NavController,
     public navParams: NavParams,
     public userProvider: UserProvider,
-    public platform: Platform
+    public platform: Platform,
+    public settingProvider: SettingsProvider,
+    public util:Utils
   ) {
-    
+    if(this.navParams.data){
+      this.role = this.navParams.data;
+    }
+
     this.MainRolePermission = VARIABLE.MENU_FIELDS;
     this.listMainKey = Object.keys(VARIABLE.MENU_FIELDS);
 
@@ -34,12 +45,26 @@ export class SettingRolePage {
         this.rolePermission[key].push(this.userProvider.rolePermission[key][_key]);
       })
     });
-    console.log(this.rolePermission);
   }
 
   ionViewDidLoad() {
+    this.getAllPermission();
   }
 
+  getAllPermission(){
+    this.util.openBackDrop();
+    this.settingProvider.getPermissionOfRole(this.role.id)
+    .then((permissions:Array<permission>)=>{
+      if(permissions){
+        this.permissionList = permissions;
+      }
+      this.util.closeBackDrop();
+    })
+    .catch((err)=>{
+      this.util.closeBackDrop();
+      return err;
+    })
+  }
 
   scrollToView(idx: number) {
     this.slider.slideTo(idx);

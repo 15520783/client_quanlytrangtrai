@@ -108,6 +108,15 @@
       small ion-button item-end mode='ios' color="secondary"
       (tap)="weaningMarked()">Thêm vào danh sách cai sữa</button>
     </ion-col>
+
+    <ion-col>
+      <button 
+      showWhen="core" 
+      *ngIf="review_offset.includes(sectionTypeId) 
+      && statusObjectKey[pig.statusId].code != statusPig.SOLD"
+      small ion-button item-end mode='ios' color="secondary"
+      (tap)="reviewOffset()">Đánh giá Offset</button>
+    </ion-col>
     
 </ion-row>
 

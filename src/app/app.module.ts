@@ -97,6 +97,7 @@ import { PigSummaryPage } from '../pages/pig-summary/pig-summary';
 import { PigViewPage } from '../tabs/pig-view/pig-view';
 import { PigsPage } from '../pages/pigs/pigs';
 import { PigsProvider } from '../providers/pigs/pigs';
+import { ReviewOffsetPigPage } from '../pages/review-offset-pig/review-offset-pig';
 import { SalePigInvoiceDetailPage } from '../pages/sale-pig-invoice-detail/sale-pig-invoice-detail';
 import { SalePigInvoicesComponent } from '../components/sale-pig-invoices/sale-pig-invoices';
 import { ScheduleInputPage } from '../pages/schedule-input/schedule-input';
@@ -196,7 +197,8 @@ const Pages = [
   UserAccountListPage,
   UserInputPage,
   SalePigInvoiceDetailPage,
-  ScheduleInputPage
+  ScheduleInputPage,
+  ReviewOffsetPigPage
 ]
 
 const Components = [

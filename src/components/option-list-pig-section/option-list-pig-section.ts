@@ -1,18 +1,20 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { VARIABLE } from '../../common/const';
-import { pig, status, sperms, breedings, mating, matingDetails, issuesPigs, issues } from '../../common/entity';
-import { PigsProvider } from '../../providers/pigs/pigs';
-import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
-import { NavController, Events } from 'ionic-angular';
-import { Utils } from '../../common/utils';
-import { BreedingInputPage } from '../../pages/breeding-input/breeding-input';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Events, ModalController, NavController } from 'ionic-angular';
+import { breedings, issues, issuesPigs, mating, matingDetails, pig, sperms, status } from '../../common/entity';
+
 import { ActivitiesProvider } from '../../providers/activities/activities';
-import { SpermInputPage } from '../../pages/sperm_input/sperm_input';
+import { BirthInputPage } from '../../pages/birth-input/birth-input';
+import { BreedingInputPage } from '../../pages/breeding-input/breeding-input';
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { HealthInputPage } from '../../pages/health-input/health-input';
 import { MatingInputPage } from '../../pages/mating-input/mating-input';
 import { PigInputPage } from '../../pages/pig-input/pig-input';
-import { HealthInputPage } from '../../pages/health-input/health-input';
-import { BirthInputPage } from '../../pages/birth-input/birth-input';
 import { PigSummaryPage } from '../../pages/pig-summary/pig-summary';
+import { PigsProvider } from '../../providers/pigs/pigs';
+import { ReviewOffsetPigPage } from '../../pages/review-offset-pig/review-offset-pig';
+import { SpermInputPage } from '../../pages/sperm_input/sperm_input';
+import { Utils } from '../../common/utils';
+import { VARIABLE } from '../../common/const';
 
 @Component({
   selector: 'option-list-pig-section',
@@ -44,17 +46,19 @@ export class OptionListPigSectionComponent {
     public navCtrl: NavController,
     public util: Utils,
     public events: Events,
-    public activitiesProvider: ActivitiesProvider
+    public activitiesProvider: ActivitiesProvider,
+    public modalCtrl: ModalController
   ) {
     this.statusPig = {
-      UNKNOW:VARIABLE.STATUS_PIG.UNKNOW,
+      UNKNOW: VARIABLE.STATUS_PIG.UNKNOW,
       WAIT_FOR_SALE: VARIABLE.STATUS_PIG.WAIT_FOR_SALE,
       WAIT_FOR_MATING: VARIABLE.STATUS_PIG.WAIT_FOR_MATING,
       MATING: VARIABLE.STATUS_PIG.MATING,
       MATED: VARIABLE.STATUS_PIG.MATED,
       FARROWING: VARIABLE.STATUS_PIG.FARROWING,
-      NEWBORN:VARIABLE.STATUS_PIG.NEWBORN,
-      WAIT_FOR_TRANSFER:VARIABLE.STATUS_PIG.WAIT_FOR_TRANSFER
+      NEWBORN: VARIABLE.STATUS_PIG.NEWBORN,
+      WAIT_FOR_TRANSFER: VARIABLE.STATUS_PIG.WAIT_FOR_TRANSFER,
+      SOLD: VARIABLE.STATUS_PIG.SOLD
     }
 
     this.add_to_sale_list = this.add_to_farm_transfer_list = this.view_info = [
@@ -105,6 +109,10 @@ export class OptionListPigSectionComponent {
     VARIABLE.SECTION_TYPE[1].id,
     VARIABLE.SECTION_TYPE[2].id,
     VARIABLE.SECTION_TYPE[3].id,
+  ]
+
+  public review_offset = [
+    VARIABLE.SECTION_TYPE[7].id
   ]
 
   ngOnInit(): void {
@@ -292,7 +300,7 @@ export class OptionListPigSectionComponent {
         })
         .catch((err: Error) => { })
     }
-    
+
     this.navCtrl.push(PigInputPage, { pigId: this.pig.id, isTransferSection: true, callback: callback })
   }
 
@@ -306,12 +314,12 @@ export class OptionListPigSectionComponent {
         healthInput.issueList.forEach((issue) => {
           let newIssuePig = new issuesPigs();
           newIssuePig.pig = this.deployData.get_pig_object_to_send_request(healthInput.issuePig.pig),
-          newIssuePig.date = healthInput.issuePig.date,
-          newIssuePig.issue = issue,
-          newIssuePig.employee = healthInput.issuePig.employee,
-          newIssuePig.status = VARIABLE.ISSUE_PIG_STATUS.DECTECTION.id,
-          newIssuePig.description = '',
-          issuesPig.push(newIssuePig);
+            newIssuePig.date = healthInput.issuePig.date,
+            newIssuePig.issue = issue,
+            newIssuePig.employee = healthInput.issuePig.employee,
+            newIssuePig.status = VARIABLE.ISSUE_PIG_STATUS.DECTECTION.id,
+            newIssuePig.description = '',
+            issuesPig.push(newIssuePig);
         })
 
         this.activitiesProvider.createIssuePig(issuesPig)
@@ -377,10 +385,10 @@ export class OptionListPigSectionComponent {
   weaningMarked() {
     let pigUpdate: pig = this.util.deepClone(this.pig);
     let currentStatus = this.deployData.get_status_by_id(this.pig.statusId);
-    if(currentStatus.code == VARIABLE.STATUS_PIG.FARROWING){
+    if (currentStatus.code == VARIABLE.STATUS_PIG.FARROWING) {
       let weaningStatus = this.deployData.get_status_pig_by_status_code(VARIABLE.STATUS_PIG.WEANING);
       pigUpdate.statusId = weaningStatus.id;
-    }else if(currentStatus.code == VARIABLE.STATUS_PIG.NEWBORN){
+    } else if (currentStatus.code == VARIABLE.STATUS_PIG.NEWBORN) {
       let growingStatus = this.deployData.get_status_pig_by_status_code(VARIABLE.STATUS_PIG.GROWING);
       pigUpdate.statusId = growingStatus.id;
     }
@@ -402,5 +410,23 @@ export class OptionListPigSectionComponent {
 
   publishPigChangeEvent(pig) {
     this.pigChange.emit(pig);
+  }
+
+  reviewOffset() {
+    this.util.openBackDrop();
+    this.pigProvider.reviewOffset(this.pig.id)
+      .then((res: any) => {
+        if (res) {
+          // let modal = this.modalCtrl.create(ReviewOffsetPigPage, { pig: this.pig, classification: res.classification });
+          // modal.present();
+          this.navCtrl.push(ReviewOffsetPigPage, { pig: this.pig, classification: res.classification })
+        }
+        this.util.closeBackDrop();
+      })
+      .catch(err => {
+        this.util.closeBackDrop();
+        return err
+      })
+
   }
 }

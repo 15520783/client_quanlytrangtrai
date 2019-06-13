@@ -148,6 +148,17 @@ export class PigsProvider {
       .toPromise();
   }
 
+  /**
+   * Đánh giá offset heo
+   * @param pigId 
+   */
+  reviewOffset(pigId: string) {
+    return this.http
+      .get(API.MINING_TO_REVIEW_OFFSET + pigId)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
   getPigByID(id: string) {
     let pig: Array<pig> = this.pigs.filter((pig: pig) => {
       return pig.id === id ? true : false;

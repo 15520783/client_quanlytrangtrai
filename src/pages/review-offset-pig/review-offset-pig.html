@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-navbar no-padding>
+    <ion-toolbar no-border>
+      <ion-title>Kết quả xếp loại heo</ion-title>
+    </ion-toolbar>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list *ngIf="pig">
+    <ion-row style="border-top:1px solid gray!important;">
+      <ion-col col-12>
+        <p>Mã heo: <b>{{pig.pigCode}}</b></p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <p>Giống: <b>{{pig.breed.name}}</b></p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <p>Giới tính: <b>{{pig.genderName}}</b></p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <div #chart class="hightchart"></div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-2 text-wrap> <b>Index</b> </ion-col>
+      <ion-col col-2 text-wrap> <b>Trọng lượng</b> </ion-col>
+      <ion-col col-2 text-wrap> <b>Điểm chân</b> </ion-col>
+      <ion-col col-2 text-wrap> <b>Điểm BPSD</b> </ion-col>
+      <ion-col col-2 text-wrap> <b>Số vú</b> </ion-col>
+      <ion-col col-2 text-wrap> <b>ADG</b> </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-2 text-wrap>
+        <ion-badge color="secondary">{{pig.index}}</ion-badge>
+      </ion-col>
+      <ion-col col-2 text-wrap>
+        <ion-badge color="secondary">{{pig.originWeight}}</ion-badge>
+      </ion-col>
+      <ion-col col-2 text-wrap>
+        <ion-badge color="secondary">{{pig.footTypeId}}</ion-badge>
+      </ion-col>
+      <ion-col col-2 text-wrap>
+        <ion-badge color="secondary">{{pig.gentialTypeId}}</ion-badge>
+      </ion-col>
+      <ion-col col-2 text-wrap>
+        <ion-badge color="secondary">{{pig.totalUdder}}</ion-badge>
+      </ion-col>
+      <ion-col col-2 text-wrap>
+        <ion-badge color="secondary">{{pig.adg}}</ion-badge>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-6 text-wrap><b>Xếp loại (Hệ thống khuyến nghị)</b></ion-col>
+      <ion-col col-6 text-wrap>
+        <ion-badge color="main"><b>{{classification}}</b></ion-badge>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-6 text-wrap><b>Đánh giá của người dùng</b></ion-col>
+      <ion-col col-6 text-wrap>
+        <ion-list>
+          <ion-item>
+            <ion-label><ion-badge>Loại 1</ion-badge></ion-label>
+            <ion-checkbox checked="true"></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label><ion-badge>Loại 2</ion-badge></ion-label>
+            <ion-checkbox checked="false"></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label><ion-badge>Loại 3</ion-badge></ion-label>
+            <ion-checkbox checked="false"></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label><ion-badge>Loại 4</ion-badge></ion-label>
+            <ion-checkbox checked="false"></ion-checkbox>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-list>
+</ion-content>
+<ion-footer no-border showWhen="core">
+  <ion-toolbar toolbar-transparent text-right>
+    <button type="submit" ion-button mode='ios' color="secondary">Xác nhận</button>
+  </ion-toolbar>
+</ion-footer>
+
+<ion-footer no-border no-padding showWhen="ios,android">
+  <button type="submit" no-margin full block ion-button mode='ios' color="secondary">Xác nhận</button>
+</ion-footer>

@@ -1,6 +1,6 @@
 import { API, CONFIG, KEY } from '../../common/const';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { breedingType, breeds, customers, diseases, farmTypes, foodType, foodUnits, foods, footType, gentialType, healthStatus, issues, markTypes, matingRole, medicineType, medicineUnits, medicines, partners, pregnancyStatus, priceCodes, regencies, roles, round, section, status, warehouse_type } from '../../common/entity';
+import { breedingType, breeds, customers, diseases, farmTypes, foodType, foodUnits, foods, footType, gentialType, healthStatus, issues, markTypes, matingRole, medicineType, medicineUnits, medicines, partners, permission, pregnancyStatus, priceCodes, regencies, roles, round, section, status, warehouse_type } from '../../common/entity';
 
 import { Events } from 'ionic-angular';
 import { Injectable } from '@angular/core';
@@ -23,14 +23,14 @@ export class setting {
   footType: Array<footType> = [];
   gentialType: Array<gentialType> = [];
   issues: Array<issues> = [];
-  regencies:Array<regencies> = [];
+  regencies: Array<regencies> = [];
   roles: Array<roles> = [];
   status: Array<status> = [];
   rounds: Array<round> = [];
   matingRoles: Array<matingRole> = [];
   warehouseTypes: Array<warehouse_type> = [];
-  customers:Array<customers> = [];
-  partners:Array<partners> = [];
+  customers: Array<customers> = [];
+  partners: Array<partners> = [];
   constructor() {
 
   }
@@ -240,6 +240,18 @@ export class SettingsProvider {
   getMedicineOfDiseases(diseaseId) {
     return this.http
       .get<Array<medicines>>(API.GET_MEDICINES_OF_DISEASE + '/' + diseaseId)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+
+  /**
+   * Lấy danh sách quyền của role
+   * @param roleId 
+   */
+  getPermissionOfRole(roleId: string) {
+    return this.http
+      .get<Array<permission>>(API.GET_ALL_PERMISSION)
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise();
   }

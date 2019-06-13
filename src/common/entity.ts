@@ -1,3 +1,4 @@
+import { extend } from "highcharts";
 
 export { base }
 export { user }
@@ -24,7 +25,6 @@ export { footType }
 export { gentialType }
 export { issues }
 export { markTypes }
-export { permissions }
 export { regencies }
 export { mating_status }
 export { warehouse_type }
@@ -47,6 +47,7 @@ export { feeds }
 export { usedMedicine }
 export { customerType, customerGroups, customers }
 export { schedule }
+export { permission, screen }
 
 class base {
 	id: string = '';
@@ -376,18 +377,18 @@ class markTypes extends base {
 	}
 }
 
-class permissions extends base {
-	name: string;
-	group_id: string;
-	show: string;
-	object_type: string;
-	description: string;
-	code: string;
-	order: string;
-	constructor() {
-		super();
-	}
-}
+// class permissions extends base {
+// 	name: string;
+// 	group_id: string;
+// 	show: string;
+// 	object_type: string;
+// 	description: string;
+// 	code: string;
+// 	order: string;
+// 	constructor() {
+// 		super();
+// 	}
+// }
 
 class regencies extends base {
 	name: string = '';
@@ -691,9 +692,21 @@ class schedule extends base {
 	date: any = '';
 	status: string = '';
 
-	constructor(){
+	constructor() {
 		super();
 	}
+}
+
+class permission extends base {
+	name: string = '';
+	code: string = '';
+	screen: screen = new screen();
+	description: string = '';
+}
+
+class screen extends base {
+	codeName: string = '';
+	name: string = '';
 }
 
 class ObjectScanner {
