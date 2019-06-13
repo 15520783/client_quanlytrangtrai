@@ -99,6 +99,7 @@ import { PigsPage } from '../pages/pigs/pigs';
 import { PigsProvider } from '../providers/pigs/pigs';
 import { SalePigInvoiceDetailPage } from '../pages/sale-pig-invoice-detail/sale-pig-invoice-detail';
 import { SalePigInvoicesComponent } from '../components/sale-pig-invoices/sale-pig-invoices';
+import { ScheduleInputPage } from '../pages/schedule-input/schedule-input';
 import { SchelduleDetailComponent } from '../components/scheldule-detail/scheldule-detail';
 import { SectionInfomationPage } from '../pages/section-infomation/section-infomation';
 import { SectionsPage } from '../pages/sections/sections';
@@ -194,7 +195,8 @@ const Pages = [
   WarehouseListPage,
   UserAccountListPage,
   UserInputPage,
-  SalePigInvoiceDetailPage
+  SalePigInvoiceDetailPage,
+  ScheduleInputPage
 ]
 
 const Components = [
@@ -222,7 +224,7 @@ const Components = [
   SchelduleDetailComponent,
   ListFabButtonPigComponent,
   ExportInternalPigInvoiceComponent,
-  IssuePigListComponent
+  IssuePigListComponent,
 ]
 
 const Providers = [

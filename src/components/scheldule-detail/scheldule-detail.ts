@@ -1,8 +1,10 @@
 import { NavController, NavParams } from 'ionic-angular';
+import { ObjDataNotification, schedule } from '../../common/entity';
 
+import { ActivitiesProvider } from '../../providers/activities/activities';
 import { Component } from '@angular/core';
 import { FcmProvider } from '../../providers/fcm/fcm';
-import { ObjDataNotification } from '../../common/entity';
+import { ScheduleInputPage } from '../../pages/schedule-input/schedule-input';
 import { Utils } from '../../common/utils';
 
 export class Schedule {
@@ -19,17 +21,18 @@ export class Schedule {
 
 export class SchelduleDetailComponent {
 
-  public schedule: Schedule = new Schedule();
+  public schedule: schedule = new schedule();
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public fcmProvider: FcmProvider,
-    public util:Utils
+    public activitiesProvider: ActivitiesProvider,
+    public util: Utils
   ) {
     if (this.navParams.data.schedule) {
       this.schedule = this.navParams.data.schedule;
-      this.schedule.date = this.util.convertDate(this.schedule.date);
+      this.schedule['dateDisplay'] = this.util.convertDate(this.schedule.date);
     }
   }
 
@@ -39,7 +42,7 @@ export class SchelduleDetailComponent {
 
     param = {
       notification: {
-        title:'Phân công công việc ngày '.concat(new Date(this.schedule.date).toISOString()),
+        title: 'Phân công công việc ngày '.concat(new Date(this.schedule.date).toISOString()),
         body: this.schedule.name,
         sound: 'default',
         icon: "fcm_push_icon"
@@ -57,7 +60,33 @@ export class SchelduleDetailComponent {
       .catch((err) => {
         return err;
       })
+  }
 
+  /**
+   * Tạo một công việc
+   */
+  input() {
+    let callback = (schedule: schedule) => {
+      if (schedule) {
+        console.log(schedule);
+      }
+    }
+    this.navCtrl.push(ScheduleInputPage, { schedule: this.schedule, callback: callback });
+  }
+
+  /**
+   * Xóa công việc lên kế hoạch
+   */
+  delete() {
+    this.activitiesProvider.removeSchedule(this.schedule)
+      .then((isOk) => {
+        if (isOk) {
+          this.navParams.get('callbackRemove')(this.schedule);
+        }
+      })
+      .catch((err) => {
+        return err;
+      })
   }
 
 }

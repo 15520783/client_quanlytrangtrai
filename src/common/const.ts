@@ -179,7 +179,10 @@ const VARIABLE = {
     REGENCIES: {
         quan_ly_kho: { id: '13', name: "Thủ kho trại" }
     },
-
+    SCHEDULE_STATUS:{
+        NOT_ASSIGNED:{id:0,name:'chưa phân công'},
+        ASSIGNED:{id:1,name:'đã phân công'}
+    }
 }
 
 const API = {
@@ -305,7 +308,11 @@ const API = {
 
     CREATE_FEEDS: '/api/feeds/feedlist/',
 
-    CREATE_USED_MEDICINE_LIST: '/api/usedmedicine/'
+    CREATE_USED_MEDICINE_LIST: '/api/usedmedicine/',
+
+    CREATE_SCHEDULE:'/api/schedule/',
+    UPDATE_SCHEDULE:'/api/schedule/',
+    DELETE_SCHEDULE:'/api/schedule/'
 }
 
 const ERROR_NAME = {

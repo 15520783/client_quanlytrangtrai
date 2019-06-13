@@ -1,7 +1,8 @@
+import { API, CONFIG } from '../../common/const';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { births, breedings, feeds, issuesPigs, mating, matingDetails, schedule, sperms, usedMedicine } from '../../common/entity';
+
 import { Injectable } from '@angular/core';
-import { breedings, sperms, mating, matingDetails, issuesPigs, births, feeds, usedMedicine } from '../../common/entity';
-import { CONFIG, API } from '../../common/const';
 
 @Injectable()
 export class ActivitiesProvider {
@@ -237,5 +238,42 @@ export class ActivitiesProvider {
     .post<Array<usedMedicine>>(API.CREATE_USED_MEDICINE_LIST,objBody)
     .timeout(CONFIG.DEFAULT_TIMEOUT)
     .toPromise();
+  }
+
+  /**
+   * Tạo mới một kết hoạch
+   * @param objBody 
+   */
+  createSchedule(objBody:schedule){
+    return this.http
+    .post<schedule>(API.CREATE_SCHEDULE,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  /**
+   * Cập nhật một kế hoạch
+   * @param objBody 
+   */
+  updateSchedule(objBody:schedule){
+    return this.http
+    .post<schedule>(API.UPDATE_SCHEDULE,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  /**
+   * Xóa một kế hoạch
+   * @param objBody 
+   */
+  removeSchedule(objBody: schedule) {
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http
+      .delete(API.DELETE_SCHEDULE, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 }

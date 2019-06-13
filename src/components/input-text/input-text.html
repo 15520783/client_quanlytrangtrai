@@ -1,12 +1,20 @@
 <span #input>  
   <ion-item  (tap)="scrollTo()"   pl-0 [attr.err-mode]="(!validControl.valid && active)?'':null">
       <ion-label stacked>{{label}}</ion-label>
-        <ion-input 
+        <ion-input *ngIf="!isTextArea"
             [readonly] = "readonly ? true:false"
             [type]="type" 
             [formControl]="validControl"
             [placeholder]="placeholder">
         </ion-input>
+        <ion-textarea *ngIf="isTextArea"
+            rows="3" 
+            cols="20" 
+            [readonly] = "readonly ? true:false"
+            [type]="type" 
+            [placeholder]="placeholder"
+            [formControl]="validControl">
+        </ion-textarea>
   </ion-item>
   <expandable [expanded]="!validControl.valid" *ngIf="active">
     <span *ngIf="validControl.errors">

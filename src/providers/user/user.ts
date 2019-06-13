@@ -18,7 +18,7 @@ export class UserProvider {
     public http: HttpClient,
     public util: Utils,
     public event: Events,
-    public platform:Platform
+    public platform: Platform
   ) {
     console.log('Hello UserProvider Provider');
   }
@@ -56,20 +56,22 @@ export class UserProvider {
             this.user = employee;
             this.util.setKey(KEY.EMPLOYEE_USER, employee).then(() => {
               this.publishUpdateEvent();
-              if(this.platform.is('cordova')){
-                this.util.getTokenNotification().then((token)=>{
-                  if(token){
-                    this.util.getKey(KEY.USER).then((userAccount:user)=>{
-                      userAccount.tokenNotification = token;
-                      this.updateUser(userAccount)
-                      .then((updated_user)=>{
-                        if(updated_user){
-                          this.util.setKey(KEY.USER,updated_user);
-                        }
-                      })
-                      .catch((err)=>{
-                        console.log(err);
-                      })
+              if (this.platform.is('cordova')) {
+                this.util.getTokenNotification().then((token) => {
+                  if (token) {
+                    this.util.getKey(KEY.USER).then((userAccount: user) => {
+                      if (userAccount) {
+                        userAccount.tokenNotification = token;
+                        this.updateUser(userAccount)
+                          .then((updated_user) => {
+                            if (updated_user) {
+                              this.util.setKey(KEY.USER, updated_user);
+                            }
+                          })
+                          .catch((err) => {
+                            console.log(err);
+                          })
+                      }
                     })
                   }
                 })
@@ -138,7 +140,7 @@ export class UserProvider {
    * Xóa user
    * @param objBody 
    */
-  removeUser(objBody:user){
+  removeUser(objBody: user) {
     const options = {
       headers: new HttpHeaders(),
       body: objBody

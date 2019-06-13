@@ -6,6 +6,7 @@ import { breedings, mating, schedule } from '../../common/entity';
 import { ActivitiesProvider } from '../../providers/activities/activities';
 import { CalendarComponent } from 'ng-fullcalendar';
 import { OptionsInput } from '@fullcalendar/core';
+import { ScheduleInputPage } from '../schedule-input/schedule-input';
 import { SchelduleDetailComponent } from '../../components/scheldule-detail/scheldule-detail';
 import { UserProvider } from '../../providers/user/user';
 import { Utils } from '../../common/utils';
@@ -31,14 +32,11 @@ export class DatePlanPage {
   @ViewChild('fullcalendar') fullcalendar: CalendarComponent;
 
   options: OptionsInput;
-  eventsModel: any;
 
-  public schedules:Array<schedule> = [];
+  public schedules: Array<schedule> = [];
   public events: Array<any> = [];
 
   calendarPlugins = [interactionPlugin, resourceTimeline, dayGridPlugin, timeGridPlugin, listPlugin]; // important!
-  // calendarOptions: any;
-  // calendarPlugins = [dayGridPlugin, timeGridPlugin]; // important!
 
   constructor(
     public navCtrl: NavController,
@@ -48,17 +46,25 @@ export class DatePlanPage {
     public userProvider: UserProvider,
     public util: Utils,
     public modalCtrl: ModalController,
-    public popoverCtrl:PopoverController
+    public popoverCtrl: PopoverController
   ) {
+    
+  }
+  
+  ngOnInit(): void {
+    this.loadCalendar();
+  }
+
+  loadCalendar() {
     this.getSchedule().then((data) => {
       this.initSchedule();
       this.options = {
-        schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
+        // schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
         selectable: true,
         defaultView: this.platform.is('core') ? "dayGridMonth" : "listWeek",
         header: {
           left: 'title',
-          right: this.platform.is('core') ?'dayGridMonth,listWeek':'dayGridWeek,listWeek'
+          right: this.platform.is('core') ? 'dayGridMonth,listWeek' : 'dayGridWeek,listWeek'
         },
         footer: {
           right: 'today prev,next'
@@ -71,7 +77,7 @@ export class DatePlanPage {
         weekends: true,
         locale: 'vi',
         timeZone: 'UTC',
-        isRTL: false,
+        // isRTL: false,
         eventLimit: true,
         displayEventTime: false,
         views: {
@@ -79,7 +85,7 @@ export class DatePlanPage {
             eventLimit: 0,
           }
         },
-        events: []
+        events: this.events
         // events: [
         //   { title: 'Sự kiện 1', object:{}, start: '2019-04-01', classNames: ['event-fullcalendar'] },
         //   { title: 'Sự kiện 1', object:{}, start: '2019-04-01', classNames: ['event-fullcalendar'] },
@@ -128,10 +134,6 @@ export class DatePlanPage {
     })
   }
 
-  ionViewDidLoad() {
-
-  }
-
   getSchedule() {
     this.util.openBackDrop();
     return this.userProvider.getSchedule()
@@ -159,38 +161,91 @@ export class DatePlanPage {
         this.events.push({
           id: schedule.id,
           title: schedule.name,
-          status:schedule.status,
-          date: this.GetFormattedDate(schedule.date)+" 07:00",
-          // end: this.GetFormattedDate(schedule.date)+' 23:59',
-          employee:schedule.employee,
-          backgroundColor: (new Date(schedule.date) >= new Date()) ? 
-          (schedule.employee?'#32db64':'#01c2fa'): '#f53d3d',
-          borderColor: (new Date(schedule.date) >= new Date()) ? (schedule.employee?'#32db64':'#01c2fa') : '#f53d3d'
+          status: schedule.status,
+          date: this.GetFormattedDate(schedule.date) + " 07:00",
+          employee: schedule.employee,
+          schedule: schedule,
+          backgroundColor: (new Date(schedule.date) >= new Date()) ?
+            (schedule.employee ? '#32db64' : '#01c2fa') : '#f53d3d',
+          borderColor: (new Date(schedule.date) >= new Date()) ? (schedule.employee ? '#32db64' : '#01c2fa') : '#f53d3d'
         })
       }
     })
   }
 
   handleEventClick(model) { // handler method
-    console.log(model.event.extendedProps);
-    let modal = this.modalCtrl.create(SchelduleDetailComponent, {
-      schedule: {
-        name: model.event.title,
-        date: model.event.start,
-        employee: model.event.extendedProps.employee,
-        status: model.event.extendedProps.status,
+    let callbackRemove = (schedule: schedule) => {
+      console.log(schedule);
+      if (schedule) {
+        let idx = this.events.findIndex(_event => _event.id == schedule.id);
+        if (idx > -1) {
+          this.events.splice(idx, 1);
+        }
+        modal.dismiss();
       }
+    }
+
+    let modal = this.modalCtrl.create(SchelduleDetailComponent, {
+      schedule: model.event.extendedProps.schedule,
+      callbackRemove: callbackRemove
     });
 
     modal.present();
   }
 
   handleDayClick(event) {
-    console.log(event);
+    let callback = (schedule: schedule) => {
+      if (schedule) {
+        this.activitiesProvider.createSchedule(schedule)
+          .then((newSchedule: schedule) => {
+            if (newSchedule) {
+              this.schedules.push(newSchedule);
+
+              this.events.push({
+                id: newSchedule.id,
+                title: newSchedule.name,
+                status: newSchedule.status,
+                date: this.GetFormattedDate(newSchedule.date) + " 07:00",
+                employee: newSchedule.employee,
+                backgroundColor: (new Date(newSchedule.date) >= new Date()) ?
+                  (newSchedule.employee ? '#32db64' : '#01c2fa') : '#f53d3d',
+                borderColor: (new Date(newSchedule.date) >= new Date()) ? (newSchedule.employee ? '#32db64' : '#01c2fa') : '#f53d3d'
+              })
+
+              // this.fullcalendar.eventsModel.push({
+              //   id: newSchedule.id,
+              //   title: newSchedule.name,
+              //   status: newSchedule.status,
+              //   date: this.GetFormattedDate(newSchedule.date) + " 07:00",
+              //   employee: newSchedule.employee,
+              //   backgroundColor: (new Date(newSchedule.date) >= new Date()) ?
+              //     (newSchedule.employee ? '#32db64' : '#01c2fa') : '#f53d3d',
+              //   borderColor: (new Date(newSchedule.date) >= new Date()) ? (newSchedule.employee ? '#32db64' : '#01c2fa') : '#f53d3d'
+              // });
+
+              // this.events.push({
+              //   id: newSchedule.id,
+              //   title: newSchedule.name,
+              //   status: newSchedule.status,
+              //   date: this.GetFormattedDate(newSchedule.date) + " 07:00",
+              //   employee: newSchedule.employee,
+              //   backgroundColor: (new Date(newSchedule.date) >= new Date()) ?
+              //     (newSchedule.employee ? '#32db64' : '#01c2fa') : '#f53d3d',
+              //   borderColor: (new Date(newSchedule.date) >= new Date()) ? (newSchedule.employee ? '#32db64' : '#01c2fa') : '#f53d3d'
+              // })
+            }
+            this.navCtrl.pop();
+          })
+          .catch((err) => {
+            return err;
+          })
+      }
+    }
+    this.navCtrl.push(ScheduleInputPage, { dateInput: event.dateStr, callback: callback })
   }
 
 
 
-
+  
 
 }

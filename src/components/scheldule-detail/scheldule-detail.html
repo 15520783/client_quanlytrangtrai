@@ -16,7 +16,7 @@
     </ion-item>
     <ion-item>
       <ion-label stacked>Ngày thực hiện</ion-label>
-      <ion-input type="text" readonly [(ngModel)]="schedule.date"></ion-input>
+      <ion-input type="text" readonly [(ngModel)]="schedule.dateDisplay"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Người thực hiện</ion-label>
@@ -31,7 +31,8 @@
 </ion-content>
 <ion-footer no-border showWhen="core">
   <ion-toolbar toolbar-transparent text-right showWhen="core">
-    <button *ngIf="schedule.employee" type="submit" ion-button mode='ios' color="secondary" (tap)="pushNotification()">Gửi thông báo</button>
-    <button *ngIf="!schedule.employee" type="submit" ion-button mode='ios' color="secondary">Phân công</button>
+    <button *ngIf="schedule.employee" ion-button mode='ios' color="secondary" (tap)="pushNotification()">Gửi thông báo</button>
+    <button *ngIf="!schedule.employee" ion-button mode='ios' color="secondary" (tap)="input()">Phân công</button>
+    <button  ion-button mode='ios' color="secondary" (tap)="delete()">Xóa công việc</button>
   </ion-toolbar>
 </ion-footer>
