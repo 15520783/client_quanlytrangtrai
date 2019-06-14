@@ -1,6 +1,6 @@
 import { Component, Renderer, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, Slides } from 'ionic-angular';
-import { permission, roles } from '../../common/entity';
+import { permission, rolepermission, roles } from '../../common/entity';
 
 import { SettingsProvider } from '../../providers/settings/settings';
 import { UserProvider } from '../../providers/user/user';
@@ -70,14 +70,29 @@ export class SettingRolePage {
   }
 
   onSubmit() {
-    let listPermissionsRequest: Array<any> = [];
+    let listPermissionsRequest: Array<rolepermission> = [];
     this.listMainKey.forEach((key) => {
-      let permission = this.rolePermission[this.MainRolePermission[key].codeName].filter((item) => {
-        return item.granted == true;
+      this.rolePermission[this.MainRolePermission[key].codeName].forEach((item) => {
+        if (item.granted) {
+          let role_permission: rolepermission = new rolepermission();
+          role_permission.permission = new permission();
+          role_permission.role = this.role;
+          role_permission.permission.id = item.id;
+          listPermissionsRequest.push(role_permission);
+        }
       })
-      listPermissionsRequest.push.apply(listPermissionsRequest, permission);
     })
-    console.log(listPermissionsRequest);
+    if (listPermissionsRequest) {
+      this.settingProvider.updateRolePermission(listPermissionsRequest)
+        .then((data: Array<rolepermission>) => {
+          if (data) {
+            console.log(data);
+          }
+        })
+        .catch((err) => {
+          return err;
+        })
+    }
   }
 
   scrollToView(idx: number) {

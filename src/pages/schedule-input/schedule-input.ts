@@ -1,6 +1,6 @@
 import { Events, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { employee, schedule } from '../../common/entity';
+import { employee, farm, schedule } from '../../common/entity';
 
 import { Component } from '@angular/core';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
@@ -22,6 +22,7 @@ export class ScheduleInputPage {
   public schedule = new schedule();
   public peopleForSchedule: Array<employee> = [];
   public dateInput: any = '';
+  public farms: Array<farm> = [];
 
   constructor(
     public navCtrl: NavController,
@@ -32,6 +33,7 @@ export class ScheduleInputPage {
     public events: Events,
     public util: Utils
   ) {
+    this.farms = this.deployData.get_farm_list_for_select();
     if (this.navParams.data.schedule) {
       this.schedule = this.navParams.data.schedule;
       if (this.schedule.employee) {
@@ -44,14 +46,15 @@ export class ScheduleInputPage {
       this.dateInput = this.navParams.data.dateInput;
     }
 
-    this.peopleForSchedule = this.employeeProvider.employees;
+    this.peopleForSchedule = [];
 
     this.credentialsForm = this.formBuilder.group({
       id: this.schedule.id,
       name: [this.schedule.name, Validators.compose([Validators.required, Validators.maxLength(1000)])],
       date: [this.schedule.date, Validators.compose([Validators.required])],
-      employeeId: [this.schedule.employee.id, Validators.compose([Validators.required])],
-      status: this.schedule.status
+      employeeId: [this.schedule.employee.id],
+      status: this.schedule.status,
+      farmId: [this.schedule.farmId],
     });
 
     if (this.dateInput) {
@@ -62,6 +65,7 @@ export class ScheduleInputPage {
       this.updateMode = true;
       this.schedule = this.navParams.data.schedule;
       this.schedule.date = this.schedule.date ? new Date(this.schedule.date).toISOString() : '';
+      this.peopleForSchedule = this.deployData.get_employees_of_farm(this.schedule.farmId);
       Object.keys(this.credentialsForm.value).forEach((attr) => {
         this.credentialsForm.controls[attr].setValue(this.schedule[attr]);
       })
@@ -92,5 +96,9 @@ export class ScheduleInputPage {
         this.navParams.get('callback')(this.schedule);
       }
     }
+  }
+
+  farmChange(e) {
+    this.peopleForSchedule = this.deployData.get_employees_of_farm(e.valueId);
   }
 }

@@ -14,7 +14,7 @@ const KEY = {
     EMPLOYEE_USER: 'employee_user',
     USER: 'user',
     USERNAME: 'username',
-    PASSWORD: 'password'
+    PASSWORD: 'password',
 }
 
 const SETTING_STORAGE_KEY = {
@@ -31,7 +31,7 @@ const CONFIG = {
     // SERVER_API: 'http://192.168.0.36:3000',
     // SERVER_API: 'https://quanlytrangtrai-uit.herokuapp.com',
     SERVER_API: 'https://quanlytrangtrai-uit-us.herokuapp.com',
-    // SERVER_API: 'http://192.168.1.45:8080',
+    // SERVER_API: 'http://192.168.1.48:8080',
     // SERVER_API: 'http://10.10.121.34:8080',
     DEFAULT_TIMEOUT: 50000,
     LANGUAGE_DEFAULT: 'vi',
@@ -234,6 +234,8 @@ const API = {
     MINING_TO_REVIEW_OFFSET: '/api/minings/',//{pigId}
     UPDATE_MINING_DATA:'/api/minings/update/', //{pigId}/{classification}
     
+    UPDATE_ROLE_PERMISSION:'/api/rolepermission/',
+
     CREATE_USER: '/api/users/',
     UPDATE_USER: '/api/users/',
     DELETE_USER: '/api/users/',

@@ -10,7 +10,7 @@
   <ion-content padding>
     <form action="" (ngSubmit)="onSubmit()" style="padding-bottom: 10vH">
       <ion-list >
-          <input-select [(validControl)] = "credentialsForm.controls.sectionId"
+        <input-select [(validControl)] = "credentialsForm.controls.sectionId"
                     [errorMessage_Required]  ="'Khu là hạng mục bắt buộc.'"
                     [label] = "'Khu'"
                     [active]= "submitAttempt"

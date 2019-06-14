@@ -1,6 +1,6 @@
 import { API, CONFIG, KEY } from '../../common/const';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { breedingType, breeds, customers, diseases, farmTypes, foodType, foodUnits, foods, footType, gentialType, healthStatus, issues, markTypes, matingRole, medicineType, medicineUnits, medicines, partners, permission, pregnancyStatus, priceCodes, regencies, roles, round, section, status, warehouse_type } from '../../common/entity';
+import { breedingType, breeds, customers, diseases, farmTypes, foodType, foodUnits, foods, footType, gentialType, healthStatus, issues, markTypes, matingRole, medicineType, medicineUnits, medicines, partners, permission, pregnancyStatus, priceCodes, regencies, rolepermission, roles, round, section, status, warehouse_type } from '../../common/entity';
 
 import { Events } from 'ionic-angular';
 import { Injectable } from '@angular/core';
@@ -252,6 +252,17 @@ export class SettingsProvider {
   getPermissionOfRole(roleId: string) {
     return this.http
       .get<Array<permission>>(API.GET_PERMISSION_OF_ROLE + roleId)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Cập nhật phân quyền
+   * @param objBody 
+   */
+  updateRolePermission(objBody: Array<rolepermission>) {
+    return this.http
+      .put<Array<rolepermission>>(API.UPDATE_ROLE_PERMISSION, objBody)
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise();
   }

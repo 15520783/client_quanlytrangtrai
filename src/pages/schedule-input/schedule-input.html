@@ -22,6 +22,14 @@
                     [placeholder]="'dd/mm/yyyy'"
                     [active]= "submitAttempt">
         </input-date>
+        <input-select [(validControl)] = "credentialsForm.controls.farmId"
+                    [errorMessage_Required]  ="'Khu là hạng mục bắt buộc.'"
+                    [label] = "'Khu'"
+                    [active]= "submitAttempt"
+                    [placeholder]="'Chọn khu'"
+                    [(data)]="farms"
+                    (changeValue)="farmChange($event)">
+        </input-select>
         <input-select-target 
                     [(validControl)]="credentialsForm.controls.employeeId" 
                     [errorMessage_Required]="'Người được phân công là hạng mục bắt buộc.'" 

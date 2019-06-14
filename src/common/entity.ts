@@ -47,7 +47,7 @@ export { feeds }
 export { usedMedicine }
 export { customerType, customerGroups, customers }
 export { schedule }
-export { permission, screen }
+export { permission, rolepermission, screen }
 
 class base {
 	id: string = '';
@@ -128,7 +128,7 @@ class pig extends base {
 	priceCode: priceCodes = new priceCodes();
 	overviewStatus: string = '0';
 	birthId: string = '';
-	pigType:string = '';
+	pigType: string = '';
 }
 
 class group extends base {
@@ -691,7 +691,7 @@ class schedule extends base {
 	employee: employee = new employee();
 	date: any = '';
 	status: string = '';
-
+	farmId: string = '';
 	constructor() {
 		super();
 	}
@@ -702,6 +702,11 @@ class permission extends base {
 	code: string = '';
 	screen: screen = new screen();
 	description: string = '';
+}
+
+class rolepermission extends base {
+	role: roles = new roles();
+	permission: permission = new permission();
 }
 
 class screen extends base {
