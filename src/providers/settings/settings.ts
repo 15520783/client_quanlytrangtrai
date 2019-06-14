@@ -251,7 +251,7 @@ export class SettingsProvider {
    */
   getPermissionOfRole(roleId: string) {
     return this.http
-      .get<Array<permission>>(API.GET_ALL_PERMISSION)
+      .get<Array<permission>>(API.GET_PERMISSION_OF_ROLE + roleId)
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise();
   }

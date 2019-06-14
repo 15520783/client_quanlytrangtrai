@@ -128,7 +128,7 @@ class pig extends base {
 	priceCode: priceCodes = new priceCodes();
 	overviewStatus: string = '0';
 	birthId: string = '';
-
+	pigType:string = '';
 }
 
 class group extends base {

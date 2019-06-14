@@ -413,13 +413,24 @@ export class OptionListPigSectionComponent {
   }
 
   reviewOffset() {
+    let callback = (pig: pig) => {
+      pig = this.deployData.get_pig_object_to_send_request(pig);
+      this.pigProvider.updatePig(pig)
+        .then((updatedPig: pig) => {
+          if (updatedPig && updatedPig.id) {
+            this.pig = updatedPig;
+            this.publishPigChangeEvent(this.pig);
+          }
+          this.navCtrl.pop();
+        })
+        .catch((err: Error) => { })
+    }
+
     this.util.openBackDrop();
     this.pigProvider.reviewOffset(this.pig.id)
       .then((res: any) => {
         if (res) {
-          // let modal = this.modalCtrl.create(ReviewOffsetPigPage, { pig: this.pig, classification: res.classification });
-          // modal.present();
-          this.navCtrl.push(ReviewOffsetPigPage, { pig: this.pig, classification: res.classification })
+          this.navCtrl.push(ReviewOffsetPigPage, { pig: this.pig, classification: res.classification, callback: callback })
         }
         this.util.closeBackDrop();
       })

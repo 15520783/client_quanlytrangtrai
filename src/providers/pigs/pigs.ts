@@ -159,6 +159,18 @@ export class PigsProvider {
       .toPromise();
   }
 
+  /**
+   * Cập nhật minings
+   * @param pigId 
+   * @param classification 
+   */
+  updateDataMining(pigId:string,classification:string){
+    return this.http
+    .get(API.UPDATE_MINING_DATA+pigId+'/'+classification)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
   getPigByID(id: string) {
     let pig: Array<pig> = this.pigs.filter((pig: pig) => {
       return pig.id === id ? true : false;

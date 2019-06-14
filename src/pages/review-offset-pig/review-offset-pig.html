@@ -59,40 +59,36 @@
     <ion-row>
       <ion-col col-6 text-wrap><b>Xếp loại (Hệ thống khuyến nghị)</b></ion-col>
       <ion-col col-6 text-wrap>
-        <ion-badge color="main"><b>{{classification}}</b></ion-badge>
+        <ion-badge color="main"><b>{{classificationRecommand}}</b></ion-badge>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col col-6 text-wrap><b>Đánh giá của người dùng</b></ion-col>
       <ion-col col-6 text-wrap>
-        <ion-list>
-          <ion-item>
-            <ion-label><ion-badge>Loại 1</ion-badge></ion-label>
-            <ion-checkbox checked="true"></ion-checkbox>
+        <!-- <ion-list>
+          <ion-item *ngFor="let item of classificationList">
+            <ion-label><ion-badge>{{item.name}}</ion-badge></ion-label>
+            <ion-checkbox [(ngModel)]="item.selected"></ion-checkbox>
           </ion-item>
-          <ion-item>
-            <ion-label><ion-badge>Loại 2</ion-badge></ion-label>
-            <ion-checkbox checked="false"></ion-checkbox>
-          </ion-item>
-          <ion-item>
-            <ion-label><ion-badge>Loại 3</ion-badge></ion-label>
-            <ion-checkbox checked="false"></ion-checkbox>
-          </ion-item>
-          <ion-item>
-            <ion-label><ion-badge>Loại 4</ion-badge></ion-label>
-            <ion-checkbox checked="false"></ion-checkbox>
+        </ion-list> -->
+
+        <ion-list radio-group [(ngModel)]="classification">
+          <ion-item *ngFor="let item of classificationList">
+            <ion-label><ion-badge>{{item.name}}</ion-badge></ion-label>
+            <ion-radio [value]="item.name"></ion-radio>
           </ion-item>
         </ion-list>
+
       </ion-col>
     </ion-row>
   </ion-list>
 </ion-content>
 <ion-footer no-border showWhen="core">
   <ion-toolbar toolbar-transparent text-right>
-    <button type="submit" ion-button mode='ios' color="secondary">Xác nhận</button>
+    <button type="submit" ion-button mode='ios' color="secondary" (tap)="confirm()">Xác nhận</button>
   </ion-toolbar>
 </ion-footer>
 
 <ion-footer no-border no-padding showWhen="ios,android">
-  <button type="submit" no-margin full block ion-button mode='ios' color="secondary">Xác nhận</button>
+  <button type="submit" no-margin full block ion-button mode='ios' color="secondary" (tap)="confirm()">Xác nhận</button>
 </ion-footer>

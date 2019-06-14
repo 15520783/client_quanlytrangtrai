@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { issuesPigs, issues } from '../../common/entity';
+import { issues, issuesPigs } from '../../common/entity';
+
+import { Component } from '@angular/core';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
-import { Utils } from '../../common/utils';
 import { KEY } from '../../common/const';
+import { Utils } from '../../common/utils';
 
 @IonicPage()
 @Component({
@@ -111,13 +112,13 @@ export class HealthInputPage {
         this.issuesList[idx].id = this.credentialsForm2.value[attr];
       })
 
-      this.issuesList = this.issuesList.filter((issuePig) => {
+      let issueListParams = this.issuesList.filter((issuePig) => {
         return issuePig.id ? true : false;
       })
 
       this.navParams.get('callback')({
         issuePig: this.issuePig,
-        issueList: this.issuesList
+        issueList: issueListParams
       })
     }
   }

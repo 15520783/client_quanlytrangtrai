@@ -300,7 +300,7 @@
         "ROLE_them_chung_nhap_cam": {
             "id":"61",
             "name": "Thêm chứng từ nhập cám",
-            "api": "/api/invoicespig/"
+            "api": "/api/invoicesproduct/"
         },
         "ROLE_xoa_chung_tu_nhap_cam": {
             "id":"62",

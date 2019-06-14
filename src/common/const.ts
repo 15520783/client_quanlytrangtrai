@@ -185,10 +185,10 @@ const VARIABLE = {
     },
     TYPE_PIG: [
         { id: 0, name: 'Chưa phân loại' },
-        { id: 1, name: 'Loại 1' },
-        { id: 2, name: 'Loại 2' },
-        { id: 3, name: 'Loại 3' },
-        { id: 4, name: 'Loại 4' }
+        { id: 1, name: 'Loai 1' },
+        { id: 2, name: 'Loai 2' },
+        { id: 3, name: 'Loai 3' },
+        { id: 4, name: 'Loai 4' }
     ]
 }
 
@@ -232,7 +232,8 @@ const API = {
     PUSH_NOTIFICATION: 'https://fcm.googleapis.com/fcm/send',
     SEND_EMAIL: '/api/mail/sendemailnotification/', //{email}/{scheduleid}
     MINING_TO_REVIEW_OFFSET: '/api/minings/',//{pigId}
-
+    UPDATE_MINING_DATA:'/api/minings/update/', //{pigId}/{classification}
+    
     CREATE_USER: '/api/users/',
     UPDATE_USER: '/api/users/',
     DELETE_USER: '/api/users/',
