@@ -29,7 +29,6 @@ export class PigsProvider {
   }
 
   public updatedPig = (pig: pig) => {
-    console.log(pig);
     if (pig) {
       let idx = this.pigs.findIndex(_pig => _pig.id == pig.id);
       if (idx > -1) {
@@ -56,6 +55,22 @@ export class PigsProvider {
     }
   }
 
+  removedPig = (pig: pig) => {
+    if (pig) {
+      let idx = this.pigs.findIndex(_pig => _pig.id == pig.id);
+      if (idx > -1) {
+        this.pigs.splice(idx, 1);
+        this.util.getKey(KEY.PIGS).then(pigs => {
+          let idx = pigs.findIndex(_pig => _pig.id == pig.id);
+          if (idx > -1) {
+            pigs.splice(idx, 1);
+            this.util.setKey(KEY.PIGS, pigs);
+          }
+        })
+      }
+    }
+  }
+
   getPigs() {
     return this.http
       .get(API.GET_ALL_PIGS)
@@ -65,11 +80,11 @@ export class PigsProvider {
         if (data.length) {
           this.util.setKey(KEY.PIGS, data)
         }
-        return this.pigs;
+        return data;
       })
-      .catch((err) => {
-        return err;
-      })
+    // .catch((err) => {
+    //   return err;
+    // })
   }
 
   /**
@@ -91,7 +106,8 @@ export class PigsProvider {
     return this.http
       .post<pig>(API.CREATE_PIG, objBody)
       .timeout(CONFIG.DEFAULT_TIMEOUT)
-      .toPromise().then((pig: pig) => {
+      .toPromise()
+      .then((pig: pig) => {
         this.updatedPig(pig);
         return pig;
       });
@@ -164,11 +180,11 @@ export class PigsProvider {
    * @param pigId 
    * @param classification 
    */
-  updateDataMining(pigId:string,classification:string){
+  updateDataMining(pigId: string, classification: string) {
     return this.http
-    .get(API.UPDATE_MINING_DATA+pigId+'/'+classification)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+      .get(API.UPDATE_MINING_DATA + pigId + '/' + classification)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
   getPigByID(id: string) {

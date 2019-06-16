@@ -20,7 +20,7 @@ export class UserProvider {
     public event: Events,
     public platform: Platform
   ) {
-    console.log('Hello UserProvider Provider');
+   
   }
 
   login(param) {
@@ -54,10 +54,7 @@ export class UserProvider {
         .then((employee: employee) => {
           if (employee) {
             this.user = employee;
-            this.util.setKey(KEY.EMPLOYEE_USER, employee).then(() => {
-              this.publishUpdateEvent();
-              
-            })
+            this.publishUpdateEvent();
           }
         })
         .catch((err) => {
@@ -81,7 +78,7 @@ export class UserProvider {
   }
 
 
-  getRoleUser() {
+  getRoleUserList() {
     return this.http
       .get('../../assets/data/role.json').toPromise()
       .then((role) => {
@@ -92,8 +89,6 @@ export class UserProvider {
         return err;
       });
   }
-
-
 
   /**
    * Tạo mới user
@@ -121,7 +116,7 @@ export class UserProvider {
    * Cập nhật password user
    * @param objBody 
    */
-  updatePassword(objBody:user){
+  updatePassword(objBody: user) {
     return this.http
       .post(API.UPDATE_USER, objBody)
       .timeout(CONFIG.DEFAULT_TIMEOUT)
@@ -133,11 +128,11 @@ export class UserProvider {
    * @param userId 
    * @param token 
    */
-  updateTokenNotification(userId:string,token:string){
+  updateTokenNotification(userId: string, token: string) {
     return this.http
-    .get(API.UPDATE_TOKEN+userId+'/'+token)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+      .get(API.UPDATE_TOKEN + userId + '/' + token)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
   /**
@@ -154,4 +149,13 @@ export class UserProvider {
       .toPromise();
   }
 
+  /**
+   * Lấy danh sách quyền của người dùng admin
+   */
+  getPermissionOfUserMaster() {
+    return this.http
+      .get(API.GET_ALL_PERMISSION)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
 }

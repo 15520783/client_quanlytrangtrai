@@ -39,15 +39,20 @@ export class DeployDataProvider {
   get_male_pig_of_farm(farmId) {
     let housesId: any = [];
     let maleSection: any = [VARIABLE.SECTION_TYPE[1].value, VARIABLE.SECTION_TYPE[2].value, VARIABLE.SECTION_TYPE[3].value, VARIABLE.SECTION_TYPE[7].value];
-    this.houseProvider.houses.filter((house) => {
-      return (house.section.farm.id == farmId &&
-        maleSection.includes((house.section.typeId).toString())) ? true : false;
-    }).forEach((house) => {
-      housesId.push(house.id);
-    })
-    return this.pigsProvider.pigs.filter((pig) => {
-      return (housesId.includes(pig.houseId) && (pig.gender == 1 || pig.gender == 3)) ? true : false;
-    })
+    if (this.houseProvider.houses.length) {
+      this.houseProvider.houses.filter((house) => {
+        return (house.section.farm.id == farmId &&
+          maleSection.includes((house.section.typeId).toString())) ? true : false;
+      }).forEach((house) => {
+        housesId.push(house.id);
+      })
+    }
+    if (housesId.length && this.pigsProvider.pigs && this.pigsProvider.pigs.length) {
+      return this.pigsProvider.pigs.filter((pig) => {
+        return (housesId.includes(pig.houseId) && (pig.gender == 1 || pig.gender == 3)) ? true : false;
+      })
+    } else return [];
+
   }
 
   /**
@@ -58,29 +63,30 @@ export class DeployDataProvider {
     let houses = this.get_object_list_key_of_house();
     let formalSection: any = [VARIABLE.SECTION_TYPE[1].value, VARIABLE.SECTION_TYPE[3].value, VARIABLE.SECTION_TYPE[4].value, VARIABLE.SECTION_TYPE[7].value];
     let female_pig = [];
+    let female_pig_in_formal_section = [];
+    let female_pig_in_khu_de = [];
+    if (this.pigsProvider.pigs && this.pigsProvider.pigs.length) {
+      female_pig_in_formal_section = this.pigsProvider.pigs.filter((pig) => {
+        return (houses[pig.houseId] && houses[pig.houseId].section.farm.id == farmId &&
+          formalSection.includes((houses[pig.houseId].section.typeId).toString())
+          && pig.gender == 2) ? true : false;
+      })
 
-    let female_pig_in_formal_section = this.pigsProvider.pigs.filter((pig) => {
-      return (houses[pig.houseId] && houses[pig.houseId].section.farm.id == farmId &&
-        formalSection.includes((houses[pig.houseId].section.typeId).toString())
-        && pig.gender == 2) ? true : false;
-    })
-
+      female_pig_in_khu_de = this.pigsProvider.pigs.filter((pig) => {
+        return (houses[pig.houseId] && houses[pig.houseId].section.farm.id == farmId &&
+          (houses[pig.houseId].section.typeId).toString() == VARIABLE.SECTION_TYPE[5].value
+          && pig.statusId != VARIABLE.STATUS_PIG.NEWBORN
+          && pig.statusId != VARIABLE.STATUS_PIG.GROWING
+          && pig.gender == 2) ? true : false;
+      })
+    }
     if (female_pig_in_formal_section.length) {
       female_pig.push.apply(female_pig, female_pig_in_formal_section);
     }
 
-    let female_pig_in_khu_de = this.pigsProvider.pigs.filter((pig) => {
-      return (houses[pig.houseId] && houses[pig.houseId].section.farm.id == farmId &&
-        (houses[pig.houseId].section.typeId).toString() == VARIABLE.SECTION_TYPE[5].value
-        && pig.statusId != VARIABLE.STATUS_PIG.NEWBORN
-        && pig.statusId != VARIABLE.STATUS_PIG.GROWING
-        && pig.gender == 2) ? true : false;
-    })
     if (female_pig_in_khu_de.length) {
       female_pig.push.apply(female_pig, female_pig_in_khu_de);
     }
-
-
     return female_pig;
   }
 
@@ -543,7 +549,7 @@ export class DeployDataProvider {
    * @param empId 
    */
   get_employee_by_id(empId: string) {
-    if (this.employeeProvider.employees) {
+    if (this.employeeProvider.employees && this.employeeProvider.employees.length) {
       return this.employeeProvider.employees.filter((emp) => {
         return emp.id == empId ? true : false;
       })[0];
@@ -954,8 +960,6 @@ export class DeployDataProvider {
    */
   get_pig_object_to_send_request(pig: pig) {
     pig['house'] = this.get_house_by_id(pig.houseId);
-    pig.round = new round();
-    pig.round.id = '0';
     pig['breed'] = this.get_breed_by_id(pig.breedId);
     pig['foot'] = this.get_foot_by_id(pig.footTypeId);
     pig['healthStatus'] = this.get_healthstatus_by_id(pig.healthStatusId);
@@ -963,6 +967,7 @@ export class DeployDataProvider {
     pig['priceCode'] = this.get_pricecode_by_id(pig.priceCodeId);
     pig['gentialType'] = this.get_gentialtype_by_id(pig.gentialTypeId);
     pig['status'] = this.get_status_by_id(pig.statusId);
+    pig['pigType'] = pig['pigType'] ? pig['pigType'] : VARIABLE.TYPE_PIG[0].name;
     let father = this.get_pig_by_id(pig.originFatherId);
     let mother = this.get_pig_by_id(pig.originMotherId);
     pig.originFather = father ? father.pigCode : '';

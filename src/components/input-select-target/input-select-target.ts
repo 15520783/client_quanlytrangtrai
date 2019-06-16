@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
 import { Events, ModalController } from 'ionic-angular';
 import { diseases, employee, group, medicineWarehouse, medicines, pig, sperms } from '../../common/entity';
 
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { DiseaseListPage } from '../../pages/disease-list/disease-list';
 import { EmployeeListComponent } from '../employee-list/employee-list';
 import { EmployeesProvider } from '../../providers/employees/employees';
@@ -56,7 +57,7 @@ export class InputSelectTargetComponent {
 
         case "employee": {
           this.value = this.validControl.value;
-          this.value_visible = this.employeeProvider.getEmployeeByID(this.validControl.value) ? this.employeeProvider.getEmployeeByID(this.validControl.value).name : '';
+          this.value_visible = this.deployData.get_employee_by_id(this.validControl.value) ? this.employeeProvider.getEmployeeByID(this.validControl.value).name : '';
           // this.value_visible = this.validControl.value ? this.value.name : '';
           break;
         }
@@ -97,7 +98,8 @@ export class InputSelectTargetComponent {
     public modalCtrl: ModalController,
     public pigProvider: PigsProvider,
     public employeeProvider: EmployeesProvider,
-    public event: Events
+    public event: Events,
+    public deployData:DeployDataProvider
   ) {
 
   }

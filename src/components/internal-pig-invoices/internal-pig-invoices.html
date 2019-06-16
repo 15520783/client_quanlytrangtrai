@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons left showWhen="ios,android">
+    <ion-buttons left *ngIf="!platform.is('core')">
       <button navPop ion-button icon-only>
         <ion-icon name="arrow-back"></ion-icon>
       </button>
@@ -17,7 +17,7 @@
 </ion-header>
 <ion-content #contentInternalInvoice class="setting-util-component">
   <div id="content">
-    <ion-item-divider custom-diviver sticky="true" showWhen="core">
+    <ion-item-divider  custom-diviver sticky="true" *ngIf="platform.is('core')">
       <ion-row>
         <button no-margin ion-button item-end mode='ios' color="secondary" (tap)="viewListForwarding()">Danh sách chừng
           từ chuyển heo đến</button>
@@ -41,10 +41,10 @@
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </div>
-  <ion-fab bottom right showWhen="android,windows,ios" color="secondary">
-    <button ion-fab (tap)="viewListForwarding()" data-balloon-visible data-balloon-length="medium" data-balloon="Danh sách chừng
+  <ion-fab bottom right *ngIf="!platform.is('core')" color="secondary">
+    <button color="main" ion-fab (tap)="viewListForwarding()" data-balloon-visible data-balloon-length="medium" data-balloon="Danh sách chừng
     từ chuyển heo đến" data-balloon-pos="left" ion-fab>
-      <ion-icon name="add"></ion-icon>
+      <ion-icon name="md-information"></ion-icon>
     </button>
   </ion-fab>
 </ion-content>

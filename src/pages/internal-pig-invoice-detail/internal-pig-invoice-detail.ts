@@ -1,13 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, ViewController, Slides } from 'ionic-angular';
-import { invoicesPig, invoicePigDetail, pig,  } from '../../common/entity';
-import { InvoicesProvider } from '../../providers/invoices/invoices';
+import { Events, IonicPage, NavController, NavParams, Platform, Slides, ViewController } from 'ionic-angular';
+import { invoicePigDetail, invoicesPig, pig, } from '../../common/entity';
+
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
-import { Utils } from '../../common/utils';
-import { PigsProvider } from '../../providers/pigs/pigs';
-import { VARIABLE } from '../../common/const';
 import { ImportInternalPigInvoiceInputPage } from '../import-internal-pig-invoice-input/import-internal-pig-invoice-input';
 import { InputPigToInternalInvoicePage } from '../input-pig-to-internal-invoice/input-pig-to-internal-invoice';
+import { InvoicesProvider } from '../../providers/invoices/invoices';
+import { PigsProvider } from '../../providers/pigs/pigs';
+import { UserProvider } from '../../providers/user/user';
+import { Utils } from '../../common/utils';
+import { VARIABLE } from '../../common/const';
 
 @IonicPage()
 @Component({
@@ -40,7 +42,9 @@ export class InternalPigInvoiceDetailPage {
     public util: Utils,
     public events: Events,
     public pigProvider: PigsProvider,
-    public viewCtrl: ViewController
+    public viewCtrl: ViewController,
+    public userProvider: UserProvider,
+    public platform:Platform
   ) {
     if (this.navParams.data.invoice) {
       this.invoice = this.navParams.data.invoice;

@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { FarmsProvider } from '../../providers/farms/farms';
 import { SettingsProvider } from '../../providers/settings/settings';
+import { VARIABLE } from '../../common/const';
 import { ValidateEmail } from '../../validators/email.validator';
 
 @IonicPage()
@@ -20,10 +21,7 @@ export class EmployeeInputPage {
 
   public RegencyTypes: any = [];
 
-  public genders: any = [
-    { name: 'Nam', value: 1 },
-    { name: 'Nữ', value: 2 }
-  ];
+  public genders: any ;
 
   // public status: any = [
   //   { name: 'Trạng thái 1', value: 1 },
@@ -47,8 +45,12 @@ export class EmployeeInputPage {
     this.RegencyTypes.forEach(element => {
       element['value'] = element.id;
     });
+
+    this.genders = VARIABLE.GENDER_EMPLOYEE;
+
     if(this.navParams.data.employee){
       this.employee = this.navParams.data.employee;
+      this.employee.birthday = new Date(this.employee.birthday).toISOString();
       this.employee.dateJoin = new Date(this.employee.dateJoin).toISOString();
     }
 
@@ -62,7 +64,7 @@ export class EmployeeInputPage {
       birthday: [this.employee.birthday, Validators.compose([Validators.required])],
       address: [this.employee.address, Validators.compose([Validators.required, Validators.maxLength(1000)])],
       email: [this.employee.email, Validators.compose([Validators.required, Validators.maxLength(1000), ValidateEmail])],
-      cmnd: [this.employee.cmnd, Validators.compose([Validators.required, Validators.maxLength(1000)])],
+      cmnd: [this.employee.cmnd, Validators.compose([Validators.required, Validators.maxLength(13)])],
       dateJoin: [this.employee.dateJoin, Validators.compose([Validators.required])],
       // status: [this.employee.status, Validators.compose([Validators.required])]
     });

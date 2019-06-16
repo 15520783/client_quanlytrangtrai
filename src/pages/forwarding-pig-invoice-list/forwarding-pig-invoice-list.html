@@ -23,15 +23,22 @@
                 </ion-col>
               </ion-row>
             </ion-col>
-            <ion-col col-2>
+            <ion-col col-2 *ngIf="platform.is('core')">
               <ion-row>
-                <button small no-margin ion-button item-end mode='ios' color="main"
-                  (tap)="viewAndCreateInvoice(item)">Duyệt danh sách heo & Lập phiếu nhập</button>
+                <button
+                  text-wrap *ngIf="UserProvider.rolePermission.ROLE_them_chung_tu_nhap_heo_trong_he_thong!=null" 
+                  small no-margin ion-button item-end mode='ios' color="main"
+                  (tap)="viewAndCreateInvoice(item)">Duyệt danh sách heo & Lập phiếu nhập
+                </button>
                 <!-- <button small no-margin ion-button item-end mode='ios' color="secondary" (tap)="createNewInvoice(item)">Lập phiếu nhập</button> -->
               </ion-row>
             </ion-col>
           </ion-row>
         </ion-item>
+        <ion-item-options side="right" *ngIf="!platform.is('core')">
+          <button *ngIf="userProvider.rolePermission.ROLE_them_chung_tu_nhap_heo_trong_he_thong!=null" text-wrap ion-button
+            color="main" (tap)="viewAndCreateInvoice(item)" style="font-size: 10px">Duyệt danh sách heo & Lập phiếu nhập</button>
+        </ion-item-options>
       </ion-item-sliding>
     </ion-list>
     <ion-infinite-scroll (ionInfinite)="loadData($event)" *ngIf="page_Idx!==page_Total">
@@ -39,9 +46,4 @@
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </div>
-  <ion-fab bottom right showWhen="android,windows,ios" color="secondary">
-    <button ion-fab (tap)="add()">
-      <ion-icon name="add"></ion-icon>
-    </button>
-  </ion-fab>
 </ion-content>

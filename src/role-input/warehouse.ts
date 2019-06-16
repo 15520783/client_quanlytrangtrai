@@ -54,7 +54,7 @@ export class WarehouseRole {
                 type: "input-select",
                 value: this.object.type.id,
                 data: this.deployData.get_warehouse_types_list_for_select(),
-                notUpdate:true
+                notUpdate: true
             },
             {
                 name: 'managerId',
@@ -99,13 +99,13 @@ export class WarehouseRole {
     }
 
     insert() {
-        this.object.manager.id = this.object['managerId'];
+        this.object.manager = this.deployData.get_employee_by_id(this.object['managerId']);
         this.object.type.id = this.object['typeId'];
         return this.warehouseProvider.createNewWarehouse(this.object)
     }
 
     update() {
-        this.object.manager.id = this.object['managerId'];
+        this.object.manager = this.deployData.get_employee_by_id(this.object['managerId']);
         this.object.type.id = this.object['typeId'];
         return this.warehouseProvider.updateWarehouse(this.object);
     }

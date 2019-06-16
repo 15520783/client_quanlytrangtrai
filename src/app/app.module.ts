@@ -103,6 +103,7 @@ import { SalePigInvoicesComponent } from '../components/sale-pig-invoices/sale-p
 import { ScheduleInputPage } from '../pages/schedule-input/schedule-input';
 import { SchelduleDetailComponent } from '../components/scheldule-detail/scheldule-detail';
 import { SectionInfomationPage } from '../pages/section-infomation/section-infomation';
+import { SectionInputPage } from '../pages/section-input/section-input';
 import { SectionsPage } from '../pages/sections/sections';
 import { SectionsProvider } from '../providers/sections/sections';
 import { SettingInputUtilComponent } from '../components/setting-input-util/setting-input-util';
@@ -198,7 +199,8 @@ const Pages = [
   UserInputPage,
   SalePigInvoiceDetailPage,
   ScheduleInputPage,
-  ReviewOffsetPigPage
+  ReviewOffsetPigPage,
+  SectionInputPage
 ]
 
 const Components = [

@@ -2,6 +2,7 @@ import { Component, Renderer, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, Slides } from 'ionic-angular';
 import { permission, rolepermission, roles } from '../../common/entity';
 
+import { PERMISSIONS } from '../../common/permissions';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { UserProvider } from '../../providers/user/user';
 import { Utils } from '../../common/utils';
@@ -38,13 +39,14 @@ export class SettingRolePage {
 
     this.MainRolePermission = VARIABLE.MENU_FIELDS;
     this.listMainKey = Object.keys(VARIABLE.MENU_FIELDS);
-
-    Object.keys(this.userProvider.rolePermission).forEach((key) => {
+    
+    Object.keys(PERMISSIONS).forEach((key) => {
       this.rolePermission[key] = new Array<any>();
-      Object.keys(this.userProvider.rolePermission[key]).forEach((_key) => {
-        this.rolePermission[key].push(this.userProvider.rolePermission[key][_key]);
+      Object.keys(PERMISSIONS[key]).forEach((_key) => {
+        this.rolePermission[key].push(PERMISSIONS[key][_key]);
       })
     });
+
   }
 
   ionViewDidLoad() {

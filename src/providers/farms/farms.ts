@@ -40,9 +40,6 @@ export class FarmsProvider {
           return data;
         }
       })
-      .catch(err=>{
-        return err;
-      })
   }
 
   sync() {

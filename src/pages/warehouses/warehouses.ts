@@ -4,6 +4,7 @@ import { Events, IonicPage, NavController, NavParams, Scroll, Slides, } from 'io
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { MedicineWarehouseInformationPage } from '../medicine-warehouse-information/medicine-warehouse-information';
 import { SettingInputUtilComponent } from '../../components/setting-input-util/setting-input-util';
+import { UserProvider } from '../../providers/user/user';
 import { VARIABLE } from '../../common/const';
 import { WarehouseInformationPage } from '../warehouse-information/warehouse-information';
 import { WarehouseRole } from '../../role-input/warehouse';
@@ -32,14 +33,15 @@ export class WarehousesPage {
     public warehouseProvider: WarehousesProvider,
     public renderer: Renderer,
     public deployData: DeployDataProvider,
-    public event:Events
+    public event: Events,
+    public userProvider: UserProvider
   ) {
     this.farms_select = this.deployData.get_farm_list_for_select();
     this.SelectedFarm = this.farms_select[0].value;
     this.food_warehouses = this.deployData.get_food_warehouse_of_farm(this.SelectedFarm);
     this.medicine_warehouses = this.deployData.get_medicine_warehouse_of_farm(this.SelectedFarm);
 
-    this.event.subscribe('warehousesPage:OnChange',(warehouse)=>{
+    this.event.subscribe('warehousesPage:OnChange', (warehouse) => {
       this.food_warehouses = this.deployData.get_food_warehouse_of_farm(this.SelectedFarm);
       this.medicine_warehouses = this.deployData.get_medicine_warehouse_of_farm(this.SelectedFarm);
     })
@@ -67,11 +69,15 @@ export class WarehousesPage {
   }
 
   viewDeltailFoodWarehouse(warehouse) {
-    this.navCtrl.push(WarehouseInformationPage, { warehouse: warehouse });
+    if (this.userProvider.rolePermission.ROLE_xem_thong_tin_kho != null) {
+      this.navCtrl.push(WarehouseInformationPage, { warehouse: warehouse });
+    }
   }
 
   viewDeltailMedicineWarehouse(warehouse) {
-    this.navCtrl.push(MedicineWarehouseInformationPage, { warehouse: warehouse });
+    if (this.userProvider.rolePermission.ROLE_xem_thong_tin_kho != null) {
+      this.navCtrl.push(MedicineWarehouseInformationPage, { warehouse: warehouse });
+    }
   }
 
   changeFarm(e) {
@@ -84,9 +90,10 @@ export class WarehousesPage {
 
     let callback = (data: warehouse) => {
       if (data) {
-        this.food_warehouses = this.deployData.get_food_warehouse_of_farm(this.SelectedFarm);
-        this.medicine_warehouses = this.deployData.get_medicine_warehouse_of_farm(this.SelectedFarm);
-        this.navCtrl.pop();
+        this.navCtrl.pop().then(()=>{
+          this.food_warehouses = this.deployData.get_food_warehouse_of_farm(this.SelectedFarm);
+          this.medicine_warehouses = this.deployData.get_medicine_warehouse_of_farm(this.SelectedFarm);
+        });
       }
     }
 
@@ -97,7 +104,7 @@ export class WarehousesPage {
       return man.regency.id == VARIABLE.REGENCIES.quan_ly_kho.id ? true : false;
     })
 
-    let roleInput = new WarehouseRole(this.deployData, this.warehouseProvider,man_Of_Warehouse);
+    let roleInput = new WarehouseRole(this.deployData, this.warehouseProvider, man_Of_Warehouse);
     this.navCtrl.push(SettingInputUtilComponent,
       {
         insertMode: true,
@@ -107,5 +114,5 @@ export class WarehousesPage {
     )
   }
 
-  
+
 }

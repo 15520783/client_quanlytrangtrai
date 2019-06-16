@@ -4,18 +4,21 @@
       <ion-title>{{warehouse.name}}</ion-title>
     </ion-toolbar>
   </ion-navbar>
-  <ion-toolbar showWhen="core" class="pl-10" text-right>
-    <button ion-button mode='ios' color="secondary">Lịch sử xuất, sử dụng</button>
-    <button ion-button mode='ios' color="secondary" (tap)="edit()">Chỉnh sửa</button>
-    <button ion-button mode='ios' color="danger" (tap)="remove()">Xóa</button>
+  <ion-toolbar showWhen="core" class="pl-10" text-left>
+    <button *ngIf="userProvider.rolePermission.ROLE_xem_lich_su_xuat_cam!=null" ion-button mode='ios'
+      color="secondary">Lịch sử xuất, sử dụng</button>
+    <button *ngIf="userProvider.rolePermission.ROLE_cap_nhat_kho!=null" ion-button mode='ios' color="secondary"
+      (tap)="edit()">Chỉnh sửa</button>
+    <button *ngIf="userProvider.rolePermission.ROLE_xoa_kho!=null" ion-button mode='ios' color="danger"
+      (tap)="remove()">Xóa</button>
   </ion-toolbar>
-  <ion-segment [(ngModel)]="type" scrollable showWhen='ios,android'>
+  <ion-segment class="main-bg" [(ngModel)]="type" scrollable showWhen='ios,android'>
     <ion-segment-button value="0" (tap)="selectedTab(0)">Thông tin kho</ion-segment-button>
     <ion-segment-button value="1" (tap)="selectedTab(1)">Danh sách cám</ion-segment-button>
   </ion-segment>
 </ion-header>
 
-<ion-content no-padding showWhen="core">
+<ion-content no-padding *ngIf="platform.is('core')">
   <ion-row style="height: 100%">
     <ion-col col-lg-4 col-md-4 col-sm-12 col-xs-12>
       <ion-card mode='ios' style="height: 100%">
@@ -34,7 +37,8 @@
             </ion-item>
             <ion-item>
               <ion-label stacked>Phụ trách kho</ion-label>
-              <ion-input text-wrap type="text" *ngIf="warehouse.manager" readonly [(ngModel)]="warehouse.manager.name"></ion-input>
+              <ion-input text-wrap type="text" *ngIf="warehouse.manager" readonly [(ngModel)]="warehouse.manager.name">
+              </ion-input>
             </ion-item>
             <ion-item>
               <ion-label stacked>Tổng cám</ion-label>
@@ -67,8 +71,9 @@
                     <ion-col col-3 col-md-6 col-sm-12>
                       <p text-wrap><b>Mã cám:</b>{{item.food.foodCode}}</p>
                     </ion-col>
-                    <ion-col col-3 col-md-6 col-sm-12 >
-                      <p text-wrap><b>Ngày nhập:</b> <span *ngIf="item.invoice">{{item.invoice.importDate| date:'dd/MM/yyyy'}}</span></p>
+                    <ion-col col-3 col-md-6 col-sm-12>
+                      <p text-wrap><b>Ngày nhập:</b> <span
+                          *ngIf="item.invoice">{{item.invoice.importDate| date:'dd/MM/yyyy'}}</span></p>
                     </ion-col>
                     <ion-col col-3 col-md-6 col-sm-12>
                       <p text-wrap><b>Số lượng nhập:</b> {{item.quantity}}</p>
@@ -97,7 +102,8 @@
                   </ion-row>
                 </ion-col>
                 <ion-col col-lg-2 col-md-3 col-sm-3>
-                  <button small ion-button mode='ios' block color="secondary" text-wrap (tap)="exportFood(item)">Xuất cám</button>
+                  <button *ngIf="userProvider.rolePermission.ROLE_xuat_cam_cho_heo_an!=null" small ion-button mode='ios'
+                    block color="secondary" text-wrap (tap)="exportFood(item)">Xuất cám</button>
                 </ion-col>
               </ion-row>
             </ion-item>
@@ -109,7 +115,7 @@
 </ion-content>
 
 
-<ion-content no-padding showWhen="ios,android">
+<ion-content no-padding *ngIf="!platform.is('core')">
   <ion-slides #slider (ionSlideDidChange)="slideChange()">
     <ion-slide>
       <ion-list>
@@ -142,38 +148,68 @@
 
     <ion-slide>
       <ion-list>
-        <ion-item *ngFor="let item of food_warehouses">
-          <ion-avatar item-start>
-            <ion-icon name="app-food" font28></ion-icon>
-          </ion-avatar>
-          <ion-row>
-            <ion-col col-7>
-              <h2><b>{{item.food.name}}</b></h2>
-            </ion-col>
-            <ion-col col-7>
-              <p><b>Số lượng nhập:</b> {{item.quantity}}</p>
-            </ion-col>
-            <ion-col >
-              <p><b>Tổng:</b> {{item.total}}</p>
-            </ion-col>
-            <ion-col col-7>
-              <p><b>Đã dùng:</b> {{item.used}}</p>
-            </ion-col>
-            <ion-col >
-              <p><b>Tồn:</b> {{item.remain}}</p>
-            </ion-col>
-            <ion-col col-12>
-              <p><b>Ngày nhập:</b> <span *ngIf="item.invoice">{{item.invoice.importDate | date:'dd/MM/yyyy'}}</span> </p>
-            </ion-col>
-            <ion-col col-12>
-              <p><b>Ngày sản xuất:</b> {{item.mfgDate | date:'dd/MM/yyyy'}}</p>
-            </ion-col>
-            <ion-col col-12>
-              <p><b>Hạn sử dụng:</b> {{item.expiryDate | date:'dd/MM/yyyy'}}</p>
-            </ion-col>
-          </ion-row>
-        </ion-item>
+        <ion-item-sliding *ngFor="let item of food_warehouses">
+          <ion-item>
+            <ion-avatar item-start>
+              <ion-icon name="app-food" font28></ion-icon>
+            </ion-avatar>
+            <ion-row>
+              <ion-col col-7>
+                <h2><b>{{item.food.name}}</b></h2>
+              </ion-col>
+              <ion-col col-7>
+                <p><b>Số lượng nhập:</b> {{item.quantity}}</p>
+              </ion-col>
+              <ion-col>
+                <p><b>Tổng:</b> {{item.total}}</p>
+              </ion-col>
+              <ion-col col-7>
+                <p><b>Đã dùng:</b> {{item.used}}</p>
+              </ion-col>
+              <ion-col>
+                <p><b>Tồn:</b> {{item.remain}}</p>
+              </ion-col>
+              <ion-col col-12>
+                <p><b>Ngày nhập:</b> <span *ngIf="item.invoice">{{item.invoice.importDate | date:'dd/MM/yyyy'}}</span>
+                </p>
+              </ion-col>
+              <ion-col col-12>
+                <p><b>Ngày sản xuất:</b> {{item.mfgDate | date:'dd/MM/yyyy'}}</p>
+              </ion-col>
+              <ion-col col-12>
+                <p><b>Hạn sử dụng:</b> {{item.expiryDate | date:'dd/MM/yyyy'}}</p>
+              </ion-col>
+            </ion-row>
+          </ion-item>
+          <ion-item-options side="right">
+            <button *ngIf="userProvider.rolePermission.ROLE_xuat_cam_cho_heo_an!=null" text-wrap ion-button
+              color="secondary" (tap)="exportFood(item)" style="font-size: 10px">Xuất cám</button>
+          </ion-item-options>
+        </ion-item-sliding>
       </ion-list>
     </ion-slide>
   </ion-slides>
+
+  <ion-fab bottom right>
+    <button ion-fab>
+      <ion-icon name="ios-arrow-up"></ion-icon>
+    </button>
+    <ion-fab-list side="top" style="right:0px">
+      <button *ngIf="userProvider.rolePermission.ROLE_xem_lich_su_xuat_cam!=null" data-balloon-visible
+        data-balloon-length="medium" data-balloon="Xem lich sử xuất, sử dụng" data-balloon-pos="left" ion-fab
+        color="main" >
+        <ion-icon name="md-information"></ion-icon>
+      </button>
+      <button (tap)="edit()" *ngIf="userProvider.rolePermission.ROLE_cap_nhat_kho!=null" data-balloon-visible
+        data-balloon-length="medium" data-balloon="Chỉnh sửa thông tin" data-balloon-pos="left" ion-fab color="main"
+        (tap)="editEmployee()">
+        <ion-icon name="md-create"></ion-icon>
+      </button>
+      <button (tap)="remove()" *ngIf="userProvider.rolePermission.ROLE_xoa_kho!=null" data-balloon-visible
+        data-balloon-length="medium" data-balloon="Xóa kho" data-balloon-pos="left" ion-fab color="danger"
+        (tap)="removeEmployee()">
+        <ion-icon name="md-trash"></ion-icon>
+      </button>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>

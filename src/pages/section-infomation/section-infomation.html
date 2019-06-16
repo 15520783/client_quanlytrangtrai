@@ -4,22 +4,16 @@
       <ion-title>{{section.name}}</ion-title>
     </ion-toolbar>
   </ion-navbar>
-  <!-- <ion-toolbar showWhen="core">
-    <ion-segment mode='md'>
-      <ion-segment-button font15>
-        <ion-icon vertical-alight-bottom name="ios-information-circle"></ion-icon>
-        Thông tin chung
-      </ion-segment-button>
-      <ion-segment-button font15>
-        <ion-icon vertical-alight-bottom name="md-calendar"></ion-icon>
-        Lịch
-      </ion-segment-button>
-      <ion-segment-button font15>
-        <ion-icon vertical-alight-bottom name="md-clipboard"></ion-icon>
-        Hoạt động
-      </ion-segment-button>
-    </ion-segment>
-  </ion-toolbar> -->
+  <ion-toolbar *ngIf="platform.is('core')">
+    <button *ngIf="userProvider.rolePermission.ROLE_cap_nhat_khu!=null" color="secondary" ion-button mode='ios'
+      (tap)="edit()">
+      Chỉnh sửa
+    </button>
+    <button *ngIf="userProvider.rolePermission.ROLE_xoa_khu!=null" color="danger" ion-button mode='ios'
+      (tap)="remove()">
+      Xóa
+    </button>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content no-padding *ngIf="platform.is('core')">
@@ -45,7 +39,7 @@
                   </ion-item>
                   <ion-item>
                     <ion-label stacked>Ngày thành lập</ion-label>
-                    <ion-input type="text" readonly [(ngModel)]="section.founding"></ion-input>
+                    <ion-input type="text" readonly [(ngModel)]="section.foundingDisplay"></ion-input>
                   </ion-item>
                   <ion-item>
                     <ion-label stacked>Loại khu</ion-label>
@@ -53,7 +47,8 @@
                   </ion-item>
                   <ion-item>
                     <ion-label stacked>Người quản lý</ion-label>
-                    <ion-input type="text" readonly [(ngModel)]="section.managerEmployee.name"></ion-input>
+                    <ion-input *ngIf="section.managerEmployee" type="text" readonly [(ngModel)]="section.managerEmployee.name"></ion-input>
+                    <ion-input *ngIf="!section.managerEmployee" type="text" readonly >Không xác định</ion-input>
                   </ion-item>
                   <ion-item>
                     <ion-label stacked>Mô tả</ion-label>
@@ -108,8 +103,6 @@
     <ion-slides paper="true" #slider>
       <ion-slide>
         <ion-infinite-scroll>
-          <!-- <ion-item-divider text-wrap sticky="true">Thông tin chi tiết</ion-item-divider> -->
-          <!-- <ion-list no-padding no-lines> -->
           <ion-item>
             <ion-label stacked>Tên khu</ion-label>
             <ion-input text-wrap type="text" readonly [(ngModel)]="section.name"></ion-input>
@@ -122,17 +115,15 @@
             <ion-label stacked>Ngày thành lập</ion-label>
             <ion-input type="text" readonly [(ngModel)]="section.founding"></ion-input>
           </ion-item>
-          <!-- <ion-item>
-            <ion-label stacked>Diện tích</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="section.fouding"></ion-input>
-          </ion-item> -->
           <ion-item>
             <ion-label stacked>Loại trại</ion-label>
             <ion-input type="text" readonly [(ngModel)]="section.typeId"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label stacked>Người quản lý</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="section.managerEmployee.name"></ion-input>
+            <ion-input *ngIf="section.managerEmployee" type="text" readonly [(ngModel)]="section.managerEmployee.name">
+            </ion-input>
+            <ion-input *ngIf="!section.managerEmployee" type="text" readonly>Không xác định</ion-input>
           </ion-item>
           <ion-item>
             <ion-label stacked>Mô tả</ion-label>
@@ -181,4 +172,22 @@
       </ion-slide>
     </ion-slides>
   </ion-list>
+
+  <ion-fab bottom right
+    *ngIf="userProvider.rolePermission.ROLE_cap_nhat_khu!=null || userProvider.rolePermission.ROLE_xoa_khu!=null">
+    <button ion-fab>
+      <ion-icon name="ios-arrow-up"></ion-icon>
+    </button>
+    <ion-fab-list side="top" style="right:0px">
+      <button  data-balloon-visible
+        data-balloon-length="medium" data-balloon="Chỉnh sửa thông tin" data-balloon-pos="left" ion-fab color="main"
+        (tap)="edit()">
+        <ion-icon name="md-create"></ion-icon>
+      </button>
+      <button *ngIf="userProvider.rolePermission.ROLE_xoa_khu!=null" data-balloon-visible data-balloon-length="medium"
+        data-balloon="Xóa" data-balloon-pos="left" ion-fab color="danger" (tap)="remove()">
+        <ion-icon name="md-trash"></ion-icon>
+      </button>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>

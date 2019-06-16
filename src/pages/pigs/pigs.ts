@@ -11,6 +11,7 @@ import { HousesProvider } from '../../providers/houses/houses';
 import { PigInputPage } from '../pig-input/pig-input';
 import { PigSummaryPage } from '../pig-summary/pig-summary';
 import { PigsProvider } from '../../providers/pigs/pigs';
+import { UserProvider } from '../../providers/user/user';
 import { Utils } from '../../common/utils';
 import { VARIABLE } from '../../common/const'
 
@@ -29,7 +30,7 @@ export class PigsPage {
   public health_status = {};
   public status = {};
   public gender: any = [];
-  public farmFilters:Array<any> = [];
+  public farmFilters: Array<any> = [];
 
   public page_Idx: number = 1;
   public page_Total: number = 0;
@@ -59,7 +60,8 @@ export class PigsPage {
     public util: Utils,
     public deployData: DeployDataProvider,
     public scanner: BarcodeScanner,
-    public events: Events
+    public events: Events,
+    public userProvider: UserProvider
   ) {
     this.init();
     this.houseProvider.getAllHouses()
@@ -77,7 +79,6 @@ export class PigsPage {
     this.gender = VARIABLE.gender;
 
     this.farmFilters = this.deployData.get_farm_list_for_select();
-    console.log(this.farmFilters);
   }
 
   getRender(idx) {
@@ -181,11 +182,47 @@ export class PigsPage {
 
 
   viewDeltail(pig) {
-    this.navCtrl.push(PigSummaryPage, { pig: pig });
+    let callbackUpdate = (pig: pig) => {
+      if (pig) {
+        console.log(pig);
+        this.setFilteredItems();
+      }
+    }
+
+    let callbackRemove = (pig: pig) => {
+      if (pig) {
+        this.setFilteredItems();
+        this.navCtrl.pop();
+      }
+    }
+
+    if (this.userProvider.rolePermission.ROLE_xem_thong_tin_heo != null) {
+      this.navCtrl.push(PigSummaryPage, { pig: pig, callbackUpdate: callbackUpdate, callbackRemove: callbackRemove });
+    }
   }
 
+  /**
+   * Tạo mới heo
+   */
   addNewPig() {
-    this.navCtrl.push(PigInputPage);
+    let callback = (pig: pig) => {
+      if (pig) {
+        let pigParam = this.deployData.get_pig_object_to_send_request(pig);
+        this.pigProvider.createPig(pigParam)
+          .then((newPig: pig) => {
+            if (newPig) {
+              this.pigProvider.updatedPig(newPig);
+              this.setFilteredItems();
+            }
+            this.navCtrl.pop();
+          })
+          .catch((err) => {
+            console.log(err);
+            return err;
+          })
+      }
+    }
+    this.navCtrl.push(PigInputPage, { callback: callback });
   }
 
 

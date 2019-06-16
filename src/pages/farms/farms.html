@@ -1,7 +1,7 @@
 <ion-header>
   <header [title]="'Quản lý trang trại'">
     <ion-toolbar showWhen="core">
-      <span *ngIf="userProvider.rolePermission.tong_quan_trang_trai.ROLE_them_trang_trai">
+      <span *ngIf="userProvider.rolePermission.ROLE_them_trang_trai!=null">
         <button ion-button mode='ios' color="secondary" (tap)="addNewFarm()">Thêm trang trại</button>
       </span>
     </ion-toolbar>
@@ -50,7 +50,7 @@
       <ion-icon name="ios-arrow-up"></ion-icon>
     </button>
     <ion-fab-list side="top" style="right:0px">
-      <span *ngIf="userProvider.rolePermission.tong_quan_trang_trai.ROLE_them_trang_trai">
+      <span *ngIf="userProvider.rolePermission.ROLE_them_trang_trai!=null">
         <button data-balloon-visible data-balloon-length="medium" data-balloon="Thêm trang trại" data-balloon-pos="left"
           ion-fab color="main" (tap)="addNewFarm()">
           <ion-icon name="add"></ion-icon>

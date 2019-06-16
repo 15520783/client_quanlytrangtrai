@@ -163,6 +163,7 @@ class farm extends base {
 }
 
 class section extends base {
+	farmId:string = '';
 	farm: farm = new farm();
 	typeId: string = '';
 	name: string = '';
@@ -173,12 +174,10 @@ class section extends base {
 
 class house extends base {
 	section: section = new section();
-	// typeId: string = '';
 	houseCode: string = '';
 	name: string = '';
 	description: string = '';
 	position: string = '';
-	// manager: string = '';
 	founding: any = '';
 	status: string = '';
 }

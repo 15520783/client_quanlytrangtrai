@@ -1,14 +1,17 @@
+import { IonicPage, LoadingController, ModalController, NavController, NavParams, Platform } from 'ionic-angular';
+import { farm, house, section } from '../../common/entity';
+
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, ModalController, Platform } from 'ionic-angular';
-import { section, house, farm } from '../../common/entity';
-import { SectionsProvider } from '../../providers/sections/sections';
-import { Utils } from '../../common/utils';
-import { KEY } from '../../common/const';
-import { SectionInfomationPage } from '../section-infomation/section-infomation';
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { HouseInfomationPage } from '../house-infomation/house-infomation';
 import { HouseInputPage } from '../house-input/house-input';
-import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { HousesProvider } from '../../providers/houses/houses';
+import { KEY } from '../../common/const';
+import { SectionInfomationPage } from '../section-infomation/section-infomation';
+import { SectionInputPage } from '../section-input/section-input';
+import { SectionsProvider } from '../../providers/sections/sections';
+import { UserProvider } from '../../providers/user/user';
+import { Utils } from '../../common/utils';
 
 @IonicPage()
 @Component({
@@ -35,13 +38,15 @@ export class SectionsPage {
     public houseProvider: HousesProvider,
     public platform: Platform,
     public util: Utils,
+    public userProvider: UserProvider
   ) {
     this.init();
   }
 
   init() {
     this.farms = this.deployData.get_farm_list_for_select();
-    this.sections = this.deployData.get_sections_of_farm(this.farms[0].value);
+    this.farmSelected = this.farms[0].value;
+    this.sections = this.deployData.get_sections_of_farm(this.farmSelected);
     this.sections.forEach((section: any) => {
       section.houses = this.deployData.get_houses_of_section(section.id);
     })
@@ -57,12 +62,12 @@ export class SectionsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SectionsPage');
-    this.farmSelected = this.farms[0].id;
   }
 
   changeFarm(res) {
-    this.sections = this.deployData.get_sections_of_farm(res.valueId);
-    
+    this.farmSelected = res.valueId;
+    this.sections = this.deployData.get_sections_of_farm(this.farmSelected);
+
     this.sections.forEach((section: any) => {
       section.houses = this.deployData.get_houses_of_section(section.id);
     })
@@ -122,13 +127,34 @@ export class SectionsPage {
 
 
   viewDetail(section: section) {
-    // this.util.openModal(SectionInfomationPage,section);
-    this.navCtrl.push(SectionInfomationPage, section);
+    let callbackRemove = (section: section) => {
+      if (section) {
+        let idx = this.sections.findIndex(_secion => _secion.id == section.id);
+        if (idx > -1) {
+          this.sections.splice(idx, 1);
+        }
+        this.navCtrl.pop();
+      }
+    }
+    this.navCtrl.push(SectionInfomationPage, { section: section, callbackRemove: callbackRemove });
   }
 
   viewHouse(house: house) {
-    // this.util.openModal(HouseInfomationPage,house);
-    this.navCtrl.push(HouseInfomationPage, { house: house });
+    if (this.userProvider.rolePermission.ROLE_xem_thong_tin_chuong != null) {
+      let callbackRemove = (_house: house) => {
+        if (_house) {
+          let idx = this.sections.findIndex(section => section.id == _house.section.id);
+          if (idx > -1) {
+            let idx1 = this.sections[idx]['houses'].findIndex(obj => obj.id == _house.id);
+            if (idx1 > -1) {
+              this.sections[idx]['houses'].splice(idx1, 1);
+            }
+          }
+          this.navCtrl.pop();
+        }
+      }
+      this.navCtrl.push(HouseInfomationPage, { house: house, callbackRemove: callbackRemove });
+    }
   }
 
 
@@ -137,10 +163,13 @@ export class SectionsPage {
       if (house) {
         this.houseProvider.createNewHouse(house)
           .then((house: house) => {
-            section.houses.push(house);
-            this.navCtrl.pop();
+            if (house) {
+              section.houses.push(house);
+              this.houseProvider.updatedHouse(house);
+              this.navCtrl.pop();
+            }
           })
-          .catch((err)=>{
+          .catch((err) => {
             console.log(err);
           })
       }
@@ -149,5 +178,24 @@ export class SectionsPage {
       section: section,
       callback: callback
     });
+  }
+
+
+  addNewSection() {
+    let callback = (section: section) => {
+      if (section) {
+        this.sectionProvider.createNewSection(section)
+          .then((newSection: section) => {
+            if (newSection) {
+              this.sectionProvider.updatedSection(newSection);
+              this.sections.push(newSection);
+            }
+            this.navCtrl.pop();
+          })
+          .catch(err => { return err; })
+      }
+    }
+
+    this.navCtrl.push(SectionInputPage, { farmId: this.farmSelected, callback: callback })
   }
 }

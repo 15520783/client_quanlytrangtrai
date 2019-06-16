@@ -19,7 +19,7 @@
         </ion-item>
       </ion-list>
       <ion-buttons right>
-        <button ion-button font20 padding style="position: relative!important">
+        <button ion-button font20 padding style="position: relative!important" (tap)="test()">
           <ion-icon name="md-notifications" font28>
             <ion-badge color="danger" class="ion-badge-notification">10</ion-badge>
           </ion-icon>
@@ -30,7 +30,7 @@
 
   <ion-content>
     <ion-list *ngFor="let p of pages" no-lines no-margin>
-      <span *ngIf="p.show">
+      <span>
         <button ion-item (click)="openPage(p);p.expand=!p.expand" [attr.active]="p.active?'':null" no-lines>
           <ion-icon item-start [name]="p.icon"></ion-icon>{{p.title}}
           <!-- <ion-icon item-end name="ios-arrow-forward" *ngIf="!p.expand"></ion-icon> -->

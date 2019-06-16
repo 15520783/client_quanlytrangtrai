@@ -1,0 +1,65 @@
+
+<ion-header>
+    <ion-navbar>
+        <ion-toolbar toolbar-transparent no-border class="custom-toolbar" >
+          <ion-title style="padding: 0px!important">Nhập thông tin khu</ion-title>
+        </ion-toolbar>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+    <form action="" (ngSubmit)="onSubmit()" style="padding-bottom: 10vH">
+      <ion-list >
+        <input-text [(validControl)] = "credentialsForm.controls.name"
+                    [errorMessage_Required]  = "'Tên khu là hạng mục bắt buộc.'"
+                    [errorMessage_Maxlength]  = "'Tên khu không được vượt quá 1000 kí tự.'"
+                    [label] = "'Tên khu'"
+                    [placeholder]="'Nhập tên khu'"l
+                    [active]= "submitAttempt">
+        </input-text>
+        <input-select [(validControl)] = "credentialsForm.controls.typeId"
+                    [errorMessage_Required]  ="'Loại khu là hạng mục bắt buộc.'"
+                    [label] = "'Loại khu'"
+                    [active]= "submitAttempt"
+                    [placeholder]="'Chọn loại khu'"
+                    [(data)]="typeSections">
+        </input-select>
+        <input-text [(validControl)] = "credentialsForm.controls.description"
+                    [errorMessage_Required]  = "'Mô tả là hạng mục bắt buộc'"
+                    [label] = "'Mô tả'"
+                    [placeholder]="'Nhập thông tin mô tả'"
+                    [active]= "submitAttempt">
+        </input-text>
+        <input-date [(validControl)] = "credentialsForm.controls.founding"
+                    [errorMessage_Required]  ="'Ngày thành lập là hạng mục bắt buộc.'"
+                    [label] = "'Ngày thành lập'"
+                    [placeholder]="'dd/mm/yyyy'"
+                    [active]= "submitAttempt">
+        </input-date>
+        <input-select-target
+                    [(validControl)] = "credentialsForm.controls.manager"
+                    [errorMessage_Required]  ="'Nhân viên quản lý là hạng mục bắt buộc.'"
+                    [active]= "submitAttempt"
+                    [placeholder]="'Chọn nhân viên'"
+                    [label]="'Nhân viên quản lý'"
+                    [(data)]="manOfSection"
+                    [targertCmp]="'employee'">
+        </input-select-target>
+        
+        
+        
+      </ion-list>
+    </form>
+  </ion-content>
+
+  <ion-footer no-border showWhen="core">
+    <ion-toolbar toolbar-transparent text-right showWhen="core">
+        <button type="submit"  ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
+        <button ion-button   mode='ios' color="danger">Hủy</button>
+    </ion-toolbar>
+  </ion-footer>
+  
+  <ion-footer no-border no-padding showWhen="ios,android">
+    <button type="submit" no-margin full block ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
+  </ion-footer>
+  

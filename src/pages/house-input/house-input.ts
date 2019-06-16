@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
+import { Component } from '@angular/core';
 import { house } from '../../common/entity';
 
 @IonicPage()
@@ -12,13 +13,6 @@ export class HouseInputPage {
 
   public credentialsForm: FormGroup;
   public submitAttempt: boolean = false;
-  public HouseTypes: any = [
-    { name: 'Loại 1', value: 1 },
-    { name: 'Loại 2', value: 2 },
-    { name: 'Loại 3', value: 3 },
-    { name: 'Loại 4', value: 4 },
-    { name: 'Loại 5', value: 5 },
-  ]
 
   public house = new house();
 

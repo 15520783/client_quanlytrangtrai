@@ -1,18 +1,14 @@
 <ion-header>
-  <header [title]="'Quản lý khu'" >
-    <ion-toolbar  toolbar-transparent>
+  <header [title]="'Quản lý khu'">
+    <ion-toolbar toolbar-transparent>
       <ion-row>
         <ion-col>
-          <input-select 
-            class="input-select" 
-            [value]="farms[0].value" 
-            [placeholder]="'Chọn trang trại'"
-            [(data)]="farms" 
+          <input-select class="input-select" [value]="farmSelected" [placeholder]="'Chọn trang trại'" [(data)]="farms"
             (changeValue)="changeFarm($event)">
           </input-select>
         </ion-col>
-        <ion-col text-right showWhen="core">
-          <button ion-button mode='ios' color="secondary" >Thêm khu</button>
+        <ion-col text-right showWhen="core" *ngIf="userProvider.rolePermission.ROLE_them_khu!=null">
+          <button ion-button mode='ios' color="secondary" (tap)="addNewSection()">Thêm khu</button>
         </ion-col>
       </ion-row>
     </ion-toolbar>
@@ -33,43 +29,46 @@
             <div>
               <p>{{section.description}}</p>
             </div>
-            <ion-list no-lines>
+            <ion-list no-lines *ngIf="userProvider.rolePermission.ROLE_xem_thong_tin_khu!=null">
               <button item-end ion-item (tap)="viewDetail(section)">
                 <ion-avatar item-start>
-                    <ion-icon name="ios-information-circle" style="vertical-align: bottom" font28></ion-icon>
+                  <ion-icon name="ios-information-circle" style="vertical-align: bottom" font28></ion-icon>
                 </ion-avatar>
                 <ion-row>
-                    <h2>
-                      Xem thông tin khu
-                    </h2>
+                  <h2>
+                    Xem thông tin khu
+                  </h2>
                 </ion-row>
               </button>
               <ion-list-header custom-list-header [attr.active_header]="section.active?'':null">
                 <div showWhen='ios,android'>Danh sách chuồng</div>
                 <ion-row showWhen="core">
                   <ion-title ion-text font15 color="dark">Danh sách chuồng</ion-title>
-                  <button ion-button item-end mode='ios' color="secondary" (tap)="addNewHouse(section)">Thêm chuồng</button>
+                  <button *ngIf="userProvider.rolePermission.ROLE_them_chuong!=null" ion-button item-end mode='ios' color="secondary" (tap)="addNewHouse(section)">Thêm chuồng</button>
                 </ion-row>
               </ion-list-header>
-              <button item-end ion-item *ngFor="let house of section.houses" (tap)="viewHouse(house)">
-                <ion-avatar item-start>
-                  <ion-icon name="ios-home" style="vertical-align: bottom" font28></ion-icon>
-                </ion-avatar>
-                <h2>{{house.name}}</h2>
-                <ion-row>
-                  <ion-col>
-                    <p><b>Số chuồng:</b> {{house.houseCode}}</p>
-                  </ion-col>
-                  <ion-col>
-                    <p><b>Mô tả:</b> {{house.description}}</p>
-                  </ion-col>
-                  <ion-col>
-                    <p><b>Ngày thành lập:</b> {{house.founding}}</p>
-                  </ion-col>
-                </ion-row>
-              </button>
+              <span *ngIf="userProvider.rolePermission.ROLE_xem_danh_sach_chuong!=null">
+                <button item-end ion-item *ngFor="let house of section.houses" (tap)="viewHouse(house)">
+                  <ion-avatar item-start>
+                    <ion-icon name="ios-home" style="vertical-align: bottom" font28></ion-icon>
+                  </ion-avatar>
+                  <h2>{{house.name}}</h2>
+                  <ion-row>
+                    <ion-col>
+                      <p><b>Số chuồng:</b> {{house.houseCode}}</p>
+                    </ion-col>
+                    <ion-col>
+                      <p><b>Mô tả:</b> {{house.description}}</p>
+                    </ion-col>
+                    <ion-col>
+                      <p><b>Ngày thành lập:</b> {{house.founding}}</p>
+                    </ion-col>
+                  </ion-row>
+                </button>
+              </span>
+
               <ion-toolbar showWhen="ios,android" toolbar-transparent>
-                <ion-buttons item-start>
+                <ion-buttons item-start *ngIf="userProvider.rolePermission.ROLE_them_chuong!=null">
                   <button ion-button mode='ios' block color="secondary" (tap)="addNewHouse(section)">
                     <ion-icon name='md-add-circle' padding></ion-icon>
                     Thêm chuồng
@@ -82,4 +81,18 @@
       </ion-item-sliding>
     </ion-list>
   </ion-item-group>
+
+  <ion-fab bottom right showWhen="android,windows,ios">
+    <button ion-fab>
+      <ion-icon name="ios-arrow-up"></ion-icon>
+    </button>
+    <ion-fab-list side="top" style="right:0px">
+      <span *ngIf="userProvider.rolePermission.ROLE_them_khu!=null">
+        <button (tap)="addNewSection()" data-balloon-visible data-balloon-length="medium" data-balloon="Thêm khu" data-balloon-pos="left"
+          ion-fab color="main">
+          <ion-icon name="add"></ion-icon>
+        </button>
+      </span>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>

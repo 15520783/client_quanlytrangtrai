@@ -115,19 +115,22 @@ export class WarehousesProvider {
     .post<warehouse>(API.CREATE_WAREHOUSE,objBody)
     .timeout(CONFIG.DEFAULT_TIMEOUT)
     .toPromise()
-    .then((new_warehouse)=>{
+    .then((new_warehouse:warehouse)=>{
       if(new_warehouse){
-        this.util.getKey(KEY.WAREHOUSES).then((warehouses:Array<warehouse>)=>{
-          warehouses.push(new_warehouse);
-          this.util.setKey(KEY.WAREHOUSES,warehouses);
-        })
-        this.warehouses.push(new_warehouse);
+        this.updatedwarehouse(new_warehouse);
       }
       return new_warehouse;
     })
-    .catch((err)=>{
-      return err;
-    })
+    // .then((new_warehouse)=>{
+    //   if(new_warehouse){
+    //     this.util.getKey(KEY.WAREHOUSES).then((warehouses:Array<warehouse>)=>{
+    //       warehouses.push(new_warehouse);
+    //       this.util.setKey(KEY.WAREHOUSES,warehouses);
+    //     })
+    //     this.warehouses.push(new_warehouse);
+    //   }
+    //   return new_warehouse;
+    // })
   }
 
   /**
@@ -139,25 +142,12 @@ export class WarehousesProvider {
     .put<warehouse>(API.UPDATE_WAREHOUSE,objBody)
     .timeout(CONFIG.DEFAULT_TIMEOUT)
     .toPromise()
-    .then((updated_warehouse)=>{
+    .then((updated_warehouse:warehouse)=>{
       if(updated_warehouse){
-        this.util.getKey(KEY.WAREHOUSES).then((warehouses:Array<warehouse>)=>{
-          let idx = warehouses.findIndex(_warehouse=>_warehouse.id == updated_warehouse.id);
-          if(idx > -1){
-            warehouses[idx] = updated_warehouse;
-            this.util.setKey(KEY.WAREHOUSES,warehouses);
-          }
-        })
-        let idx =this.warehouses.findIndex(_warehouse=>_warehouse.id == updated_warehouse.id);
-        if(idx>-1){
-          this.warehouses[idx] = updated_warehouse;
-        }
+        this.updatedwarehouse(updated_warehouse);
       }
       return updated_warehouse;
-    })
-    .catch((err)=>{
-      return err;
-    })
+    });
   }
 
   /**
@@ -173,24 +163,56 @@ export class WarehousesProvider {
       .delete(API.DELETE_WAREHOUSE, options)
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise()
-      .then((isOK)=>{
+      .then((isOK:boolean)=>{
         if(isOK){
-          this.util.getKey(KEY.WAREHOUSES).then((warehouses:Array<warehouse>)=>{
-            let idx = warehouses.findIndex(_warehouse=>_warehouse.id == objBody.id);
-            if(idx > -1){
-              warehouses.splice(idx,1);
-              this.util.setKey(KEY.WAREHOUSES,warehouses);
-            }
-          })
-          let idx = this.warehouses.findIndex(_warehouse=>_warehouse.id == objBody.id);
-          if(idx > -1){
-            this.warehouses.splice(idx,1);
-          }
+          this.removedwarehouse(objBody);
         }
         return isOK;
       })
-      .catch((err)=>{
-        return err;
-      })
+  }
+
+
+
+  updatedwarehouse = (warehouse: warehouse) => {
+    if (warehouse) {
+      let idx = this.warehouses.findIndex(_warehouse => _warehouse.id == warehouse.id);
+      if (idx > -1) {
+        this.warehouses.push(warehouse);
+        this.util.getKey(KEY.WAREHOUSES).then((warehouses) => {
+          let idx = warehouses.findIndex(_warehouse => _warehouse.id == warehouse.id);
+          if (idx > -1) {
+            warehouses[idx] = warehouse;
+          } else {
+            warehouses.push(warehouse);
+          }
+          this.util.setKey(KEY.WAREHOUSES, warehouses);
+        })
+      }
+      else {
+        this.util.getKey(KEY.WAREHOUSES).then((warehouses: Array<warehouse>) => {
+          warehouses.push(warehouse);
+          this.util.setKey(KEY.WAREHOUSES, warehouses).then(() => {
+            this.warehouses = warehouses;
+          })
+        })
+      }
+    }
+  }
+
+
+  removedwarehouse = (warehouse: warehouse) => {
+    if (warehouse) {
+      let idx = this.warehouses.findIndex(_warehouse => _warehouse.id == warehouse.id);
+      if (idx > -1) {
+        this.warehouses.splice(idx, 1);
+        this.util.getKey(KEY.WAREHOUSES).then(warehouses => {
+          let idx = warehouses.findIndex(_warehouse => _warehouse.id == warehouse.id);
+          if (idx > -1) {
+            warehouses.splice(idx, 1);
+            this.util.setKey(KEY.WAREHOUSES, warehouses);
+          }
+        })
+      }
+    }
   }
 }

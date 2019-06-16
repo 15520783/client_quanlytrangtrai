@@ -3,8 +3,8 @@
   </header>
 </ion-header>
 <ion-content *ngIf="platform.is('core')">
-  <ion-row>
-    <ion-col col-lg-3 col-md-4>
+  <ion-row style="height: 100%;overflow: hidden;">
+    <ion-col col-lg-3 col-md-4 style="height: 100%;">
       <ion-card mode='ios'>
         <ion-card-header>Danh sách thiết lập</ion-card-header>
         <ion-card-content class="ion-card-content-list-setting" no-padding>
@@ -25,7 +25,7 @@
       </ion-card>
     </ion-col>
 
-    <ion-col col-lg-9 col-md-8 no-padding>
+    <ion-col col-lg-9 col-md-8 no-padding style="height: 100%;">
       <ion-slides paper="true" #slider>
         <ion-slide *ngFor="let key of listMainKey;let idx= index">
           <!-- <setting-util *ngIf="list_settings[key].data" [options]='list_settings[key]'

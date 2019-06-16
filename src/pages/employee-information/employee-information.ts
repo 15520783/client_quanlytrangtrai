@@ -8,7 +8,9 @@ import { EmployeesProvider } from '../../providers/employees/employees';
 import { OptionsInput } from '@fullcalendar/core';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { UserAccountListPage } from '../user-account-list/user-account-list';
+import { UserProvider } from '../../providers/user/user';
 import { Utils } from '../../common/utils';
+import { VARIABLE } from '../../common/const';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
@@ -35,13 +37,14 @@ export class EmployeeInformationPage {
     public modalCtrl: ModalController,
     public settingProvider: SettingsProvider,
     public employeeProvider: EmployeesProvider,
-    public util: Utils
+    public util: Utils,
+    public userProvider:UserProvider
   ) {
     this.employee = this.navParams.data.employee;
     this.employee['dateJoinDisplay'] = this.util.convertDate(this.employee.dateJoin);
     this.employee['dateOffDisplay'] = this.util.convertDate(this.employee.dateOff);
     this.employee['birthdayDisplay'] = this.util.convertDate(this.employee.birthday);
-
+    this.employee['genderName'] = VARIABLE.GENDER_EMPLOYEE[this.employee.gender].name;
     this.util.openBackDrop();
 
     /**
@@ -142,10 +145,12 @@ export class EmployeeInformationPage {
       if (employee) {
         this.employeeProvider.updateEmployee(employee)
           .then((updated_employee: any) => {
+            this.employeeProvider.updatedEmployee(updated_employee);
             this.employee = updated_employee;
             this.employee['dateJoinDisplay'] = this.util.convertDate(this.employee.dateJoin);
             this.employee['dateOffDisplay'] = this.util.convertDate(this.employee.dateOff);
             this.employee['birthdayDisplay'] = this.util.convertDate(this.employee.birthday);
+            this.employee['genderName'] = VARIABLE.GENDER_EMPLOYEE[this.employee.gender].name;
             this.navParams.get('callbacklUpdate')(updated_employee);
             this.navCtrl.pop();
           })
@@ -166,6 +171,7 @@ export class EmployeeInformationPage {
       this.employeeProvider.deleteEmployees(this.employee)
         .then((isOK) => {
           if (isOK) {
+            this.employeeProvider.removedEmployee(this.employee);
             this.navParams.get('callbackRemove')(this.employee);
             this.navCtrl.pop();
           }

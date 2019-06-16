@@ -7,7 +7,6 @@
       <ion-segment [(ngModel)]="tab" scrollable>
         <ion-segment-button value="0" (tap)="selectedTab(0)">Thông tin nhân viên</ion-segment-button>
         <ion-segment-button value="1" (tap)="selectedTab(1)">Thông tin lịch biểu</ion-segment-button>
-        <!-- <ion-segment-button value="2" (tap)="selectedTab(2)">Danh sách tài khoản</ion-segment-button> -->
       </ion-segment>
     </ion-toolbar>
   </div>
@@ -40,7 +39,7 @@
           </ion-item>
           <ion-item>
             <ion-label stacked>Giới tính</ion-label>
-            <ion-input text-wrap type="text" readonly [(ngModel)]="employee.gender"></ion-input>
+            <ion-input text-wrap type="text" readonly [(ngModel)]="employee.genderName"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label stacked>Ngày sinh</ion-label>
@@ -86,7 +85,10 @@
       <ion-icon name="ios-arrow-up"></ion-icon>
     </button>
     <ion-fab-list side="top" style="right:0px">
-      <button data-balloon-visible data-balloon-length="medium" data-balloon="Xóa nhân viên" data-balloon-pos="left"
+      <button 
+        *ngIf="userProvider.rolePermission.ROLE_xoa_nhan_vien!=null"
+        data-balloon-visible data-balloon-length="medium" 
+        data-balloon="Xóa nhân viên" data-balloon-pos="left"
         ion-fab color="danger" (tap)="removeEmployee()">
         <ion-icon name="md-trash"></ion-icon>
       </button>
@@ -94,7 +96,10 @@
         data-balloon-pos="left" ion-fab color="main" (tap)="openUserList()">
         <ion-icon name="app-user-account"></ion-icon>
       </button>
-      <button data-balloon-visible data-balloon-length="medium" data-balloon="Chỉnh sửa thông tin"
+      <button 
+        *ngIf="userProvider.rolePermission.ROLE_cap_nhat_nhan_vien!=null"
+        data-balloon-visible data-balloon-length="medium" 
+        data-balloon="Chỉnh sửa thông tin"
         data-balloon-pos="left" ion-fab color="main" (tap)="editEmployee()">
         <ion-icon name="md-create"></ion-icon>
       </button>
@@ -156,8 +161,8 @@
                     <ion-title text-wrap text-white>Thông tin chi tiết</ion-title>
                   </ion-col>
                   <ion-col text-right>
-                    <button mode='ios' ion-button item-end color="secondary" (tap)="editEmployee()">Chỉnh sửa</button>
-                    <button mode='ios' ion-button item-end color="danger" (tap)="removeEmployee()">Xóa</button>
+                    <button *ngIf="userProvider.rolePermission.ROLE_cap_nhat_nhan_vien!=null" mode='ios' ion-button item-end color="secondary" (tap)="editEmployee()">Chỉnh sửa</button>
+                    <button *ngIf="userProvider.rolePermission.ROLE_xoa_nhan_vien!=null" mode='ios' ion-button item-end color="danger" (tap)="removeEmployee()">Xóa</button>
                   </ion-col>
                 </ion-row>
               </ion-toolbar>
@@ -187,7 +192,7 @@
                   </ion-item>
                   <ion-item>
                     <ion-label stacked>Giới tính</ion-label>
-                    <ion-input text-wrap type="text" readonly [(ngModel)]="employee.gender"></ion-input>
+                    <ion-input text-wrap type="text" readonly [(ngModel)]="employee.genderName"></ion-input>
                   </ion-item>
                   <ion-item>
                     <ion-label stacked>Ngày sinh</ion-label>

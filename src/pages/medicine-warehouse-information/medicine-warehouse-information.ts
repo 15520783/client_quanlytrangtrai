@@ -1,8 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
+import { Events, IonicPage, NavController, NavParams, Platform, Slides } from 'ionic-angular';
 import { medicineWarehouse, warehouse } from '../../common/entity';
-import { WarehousesProvider } from '../../providers/warehouses/warehouses';
+
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { SettingInputUtilComponent } from '../../components/setting-input-util/setting-input-util';
+import { UserProvider } from '../../providers/user/user';
 import { Utils } from '../../common/utils';
+import { VARIABLE } from '../../common/const';
+import { WarehouseRole } from '../../role-input/warehouse';
+import { WarehousesProvider } from '../../providers/warehouses/warehouses';
 
 @IonicPage()
 @Component({
@@ -21,7 +27,11 @@ export class MedicineWarehouseInformationPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public warehouseProvider: WarehousesProvider,
-    public util: Utils
+    public util: Utils,
+    public event:Events,
+    public deployData:DeployDataProvider,
+    public userProvider:UserProvider,
+    public platform:Platform
   ) {
     if (this.navParams.data.warehouse) {
       this.warehouse = this.navParams.data.warehouse;
@@ -32,7 +42,11 @@ export class MedicineWarehouseInformationPage {
     this.getAllMedicineWarehouse();
   }
 
-
+  ngAfterViewInit() {
+    if (this.slider) {
+      this.slider.autoHeight = true;
+    }
+  }
 
   getAllMedicineWarehouse() {
     this.util.openBackDrop();
@@ -57,5 +71,47 @@ export class MedicineWarehouseInformationPage {
 
   selectedTab(index) {
     this.slider.slideTo(index);
+  }
+
+
+  edit() {
+    let callback = (data: warehouse) => {
+      if (data) {
+        this.warehouse = data;
+        this.event.publish('warehousesPage:OnChange',(this.warehouse));
+        this.navCtrl.pop();
+      }
+    }
+
+    /**
+     * Lấy danh sách nhân viên chức vụ quản lý kho
+     */
+    let man_Of_Warehouse = this.deployData.get_employees_of_farm(this.warehouse.manager.farm.id).filter((man) => {
+      return man.regency.id == VARIABLE.REGENCIES.quan_ly_kho.id ? true : false;
+    })
+
+    let roleInput = new WarehouseRole(this.deployData, this.warehouseProvider,man_Of_Warehouse);
+    roleInput.object = this.warehouse;
+    roleInput.object['typeId'] = this.warehouse.type.id;
+    roleInput.object['managerId'] = this.warehouse.manager.id;
+    this.navCtrl.push(SettingInputUtilComponent,
+      {
+        editMode: true,
+        roleInput: roleInput,
+        callback: callback
+      }
+    )
+  }
+
+  remove() {
+    let roleInput = new WarehouseRole(this.deployData, this.warehouseProvider,[]);
+    roleInput.delete(this.warehouse)
+      .then((isOK: boolean) => {
+        if (isOK) {
+          this.event.publish('warehousesPage:OnChange',(this.warehouse));
+          this.navCtrl.pop();
+        }
+      })
+      .catch((err: Error) => { })
   }
 }

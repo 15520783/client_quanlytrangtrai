@@ -1,16 +1,17 @@
-import { Component, ViewChild, Input } from '@angular/core';
-import { IonicPage, NavController, NavParams, Content, Events, Platform, ModalController } from 'ionic-angular';
-import { invoicesPig, invoicePigDetail, pig } from '../../common/entity';
-import { FormControl } from '@angular/forms';
-import { FilterProvider } from '../../providers/filter/filter';
-import { Utils } from '../../common/utils';
-import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
-import { InvoicesProvider } from '../../providers/invoices/invoices';
-import { VARIABLE, MESSAGE, CONFIG } from '../../common/const';
-import { PigListComponent } from '../../components/pig-list/pig-list';
-import { ImportInternalPigInvoiceInputPage } from '../import-internal-pig-invoice-input/import-internal-pig-invoice-input';
-import { PigsProvider } from '../../providers/pigs/pigs';
+import { CONFIG, MESSAGE, VARIABLE } from '../../common/const';
+import { Component, Input, ViewChild } from '@angular/core';
+import { Content, Events, IonicPage, ModalController, NavController, NavParams, Platform } from 'ionic-angular';
+import { invoicePigDetail, invoicesPig, pig } from '../../common/entity';
 
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { FilterProvider } from '../../providers/filter/filter';
+import { FormControl } from '@angular/forms';
+import { ImportInternalPigInvoiceInputPage } from '../import-internal-pig-invoice-input/import-internal-pig-invoice-input';
+import { InvoicesProvider } from '../../providers/invoices/invoices';
+import { PigListComponent } from '../../components/pig-list/pig-list';
+import { PigsProvider } from '../../providers/pigs/pigs';
+import { UserProvider } from '../../providers/user/user';
+import { Utils } from '../../common/utils';
 
 @IonicPage()
 @Component({
@@ -62,7 +63,8 @@ export class ForwardingPigInvoiceListPage {
     public navParams: NavParams,
     public platform: Platform,
     public modalCtrl: ModalController,
-    public pigProvider: PigsProvider
+    public pigProvider: PigsProvider,
+    public userProvider:UserProvider
   ) {
     this.farms_util = this.deployData.get_object_list_key_of_farm();
     this.pig_util = this.deployData.get_object_list_key_of_pig();

@@ -1,10 +1,12 @@
+import { Events, IonicPage, ModalController, NavController, NavParams, Platform, ViewController } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Platform, Events, ViewController } from 'ionic-angular';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { invoicesPig } from '../../common/entity';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { UserProvider } from '../../providers/user/user';
 import { Utils } from '../../common/utils';
 import { VARIABLE } from '../../common/const';
+import { invoicesPig } from '../../common/entity';
 
 @IonicPage()
 @Component({
@@ -30,7 +32,8 @@ export class ImportInternalPigInvoiceInputPage {
     public deployData: DeployDataProvider,
     public events: Events,
     public viewCtrl: ViewController,
-    public util: Utils
+    public util: Utils,
+    public userProvider:UserProvider
   ) {
     this.init();
     if (this.navParams.data.sourceId) {

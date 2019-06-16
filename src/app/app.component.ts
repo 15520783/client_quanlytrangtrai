@@ -1,6 +1,7 @@
 import { App, Events, Nav, Platform, ToastController } from 'ionic-angular';
 import { CONFIG, ERROR_NAME, KEY, MESSAGE } from '../common/const';
 import { Component, ViewChild } from '@angular/core';
+import { permission, user } from '../common/entity';
 
 import { DeployDataProvider } from '../providers/deploy-data/deploy-data';
 import { EmployeesProvider } from '../providers/employees/employees';
@@ -20,7 +21,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { UserProvider } from '../providers/user/user';
 import { Utils } from '../common/utils';
 import { WarehousesProvider } from '../providers/warehouses/warehouses';
-import { user } from '../common/entity';
 
 @Component({
   templateUrl: 'app.html'
@@ -68,64 +68,10 @@ export class MyApp {
         this.headerColor.tint('#01C2FA');
       }
 
-
-      this.util.getKey(KEY.ACCESSTOKEN)
-        .then((accessToken) => {
-          if (accessToken) {
-            this.util.getKey(KEY.TOKENTYPE)
-              .then((tokenType) => {
-                if (tokenType) {
-                  CONFIG.ACCESS_KEY = tokenType.concat(' ').concat(accessToken);
-                  this.splash = true;
-                  this.userProvider.getRoleUser()
-                    .then((data) => {
-                      console.log(data);
-                    })
-                    .catch(err => {
-                      console.log(err);
-                    })
-                  this.intinial_sync();
-                }
-                else {
-                  this.splash = false;
-                  this.rootPage = LoginPage;
-                }
-              })
-          } else {
-            this.splash = false;
-            this.rootPage = LoginPage;
-          }
-        })
+      this.app_start();
 
       this.events.subscribe('app_begin', () => {
-        this.util.getKey(KEY.ACCESSTOKEN)
-          .then((accessToken) => {
-            if (accessToken) {
-              this.util.getKey(KEY.TOKENTYPE)
-                .then((tokenType) => {
-                  if (tokenType) {
-                    CONFIG.ACCESS_KEY = tokenType.concat(' ').concat(accessToken);
-                    this.splash = true;
-                    this.userProvider.getRoleUser()
-                      .then((data) => {
-                        console.log(data);
-                      })
-                      .catch(err => {
-                        console.log(err);
-                      })
-                    this.intinial_sync();
-                  }
-                  else {
-                    this.splash = false;
-                    this.rootPage = LoginPage;
-
-                  }
-                })
-            } else {
-              this.splash = false;
-              this.rootPage = LoginPage;
-            }
-          })
+        this.app_start();
       })
 
       if (this.platform.is('cordova')) {
@@ -135,6 +81,37 @@ export class MyApp {
 
       this.listener_logout();
     })
+  }
+
+
+  app_start() {
+
+    this.util.getKey(KEY.ACCESSTOKEN)
+      .then((accessToken) => {
+        if (accessToken) {
+          this.util.getKey(KEY.TOKENTYPE)
+            .then((tokenType) => {
+              if (tokenType) {
+                CONFIG.ACCESS_KEY = tokenType.concat(' ').concat(accessToken);
+                this.util.getKey(KEY.EMPLOYEE_USER).then((employee) => {
+                  this.userProvider.user = employee;
+                })
+                this.splash = true;
+                this.registerFCM();
+                this.getRolePermission().then(() => {
+                  this.intinial_sync();
+                });
+              }
+              else {
+                this.splash = false;
+                this.rootPage = LoginPage;
+              }
+            })
+        } else {
+          this.splash = false;
+          this.rootPage = LoginPage;
+        }
+      })
   }
 
   /**
@@ -155,7 +132,7 @@ export class MyApp {
     this.userProvider.checkServer()
       .then((res: any) => {
         if (res.success) {
-          this.userProvider.sync();
+          // this.userProvider.sync();
           this.farmProvider.sync();
           this.pigProvider.sync();
           this.employeeProvider.sync();
@@ -177,6 +154,8 @@ export class MyApp {
       })
   }
 
+
+
   subscribeEventUpdate() {
     this.events.subscribe('updated', () => {
       this.checkUpdate();
@@ -184,7 +163,8 @@ export class MyApp {
   }
 
   checkUpdate() {
-    if (this.userProvider.updated_flag &&
+    if (
+      // this.userProvider.updated_flag &&
       this.farmProvider.updated_flag &&
       this.pigProvider.updated_flag &&
       this.employeeProvider.updated_flag &&
@@ -209,5 +189,112 @@ export class MyApp {
         this.splash = false;
       }, 2000);
     })
+  }
+
+  registerFCM() {
+    if (this.platform.is('cordova')) {
+      this.util.getTokenNotification().then((token) => {
+        if (token) {
+          this.util.getKey(KEY.USER).then((userAccount: user) => {
+            if (userAccount) {
+              this.userProvider.updateTokenNotification(userAccount.id, token)
+                .then((isOk) => {
+                  console.log(isOk);
+                })
+                .catch((err) => { return err; })
+            }
+          })
+        }
+      })
+    }
+  }
+
+  /**
+   * Xử lý lấy phân quyền người dùng
+   */
+  getRolePermission() {
+    return this.util.getKey(KEY.USER)
+      .then((userAccount: user) => {
+        if (userAccount) {
+          if (userAccount.employee.farm.id == '0') {
+            this.userProvider.getPermissionOfUserMaster()
+              .then((permissions: Array<permission>) => {
+                if (permissions) {
+                  let data: any = {};
+                  permissions.forEach((permission: permission) => {
+                    if (permission) {
+                      data[permission.code] = permission;
+                    }
+                  })
+                  this.util.setKey(KEY.PERMISSIONS, data).then(() => {
+                    this.userProvider.rolePermission = data;
+                  });
+                  console.log(data);
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+                this.util.showToast('Lỗi phân quyền người dùng');
+                this.logOut();
+              })
+          } else {
+            this.settingProvider.getPermissionOfRole(userAccount.role.id)
+              .then((permissions: Array<permission>) => {
+                if (permissions) {
+                  let data: any = {};
+                  permissions.forEach((permission: permission) => {
+                    if (permission) {
+                      data[permission.code] = permission;
+                    }
+                  })
+                  this.util.setKey(KEY.PERMISSIONS, data).then(() => {
+                    this.userProvider.rolePermission = data;
+                  });
+                  console.log(data);
+                  // this.util.setKey(KEY.PERMISSIONS,)
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+                this.util.showToast('Lỗi phân quyền người dùng');
+                this.logOut();
+              })
+          }
+        } else {
+          this.logOut();
+        }
+      })
+      .catch(err => { console.log(err) });
+  }
+
+  settingRole(permissions) {
+    if (permissions) {
+      let data: any = {};
+      permissions.forEach((permission: permission) => {
+        if (permission) {
+          data[permission.code] = permission;
+        }
+      })
+      this.util.setKey(KEY.PERMISSIONS, data).then(() => {
+        this.userProvider.rolePermission = data;
+      });
+      console.log(data);
+      // this.util.setKey(KEY.PERMISSIONS,)
+    }
+  }
+
+
+  /**
+   * Đăng xuất
+   */
+  logOut() {
+    this.util.clearAllKeyStorage()
+      .then((isOK) => {
+        console.log(isOK);
+        this.events.publish('app_logout');
+      })
+      .catch((err: any) => {
+        console.log(err);
+      })
   }
 }

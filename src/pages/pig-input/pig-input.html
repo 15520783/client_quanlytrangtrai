@@ -84,11 +84,11 @@
             [attr.col-md-12]="platform.is('core')?'':null"
             [attr.col-sm-12]="platform.is('core')?'':null"
             [attr.col-12]="!platform.is('core')?'':null">
-          <input-select [(validControl)]="credentialsForm.controls.roundId"
+          <!-- <input-select [(validControl)]="credentialsForm.controls.roundId"
             [errorMessage_Required]="'Lứa là hạng mục bắt buộc.'" [label]="'Lứa'" 
             [active]="submitAttempt"
             [placeholder]="'Chọn lứa'" [(data)]="rounds">
-          </input-select>
+          </input-select> -->
           <input-text [(validControl)]="credentialsForm.controls.originWeight"
             [errorMessage_Required]="'Trọng lượng NCC là hạng mục bắt buộc.'" 
             [label]="'Trọng lượng NCC'"

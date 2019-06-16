@@ -1,12 +1,14 @@
-import { Component, ViewChild, Renderer } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, ActionSheetController, Slides, Menu, Content, ModalController } from 'ionic-angular';
+import { ActionSheetController, Content, IonicPage, Menu, ModalController, NavController, NavParams, Platform, Slides } from 'ionic-angular';
+import { Component, Renderer, ViewChild } from '@angular/core';
 import { house, pig } from '../../common/entity';
-import { HousesProvider } from '../../providers/houses/houses';
-import { HighChartProvider } from '../../providers/high-chart/high-chart';
-import { EmployeesProvider } from '../../providers/employees/employees';
-import { HouseInputPage } from '../house-input/house-input';
-import { Utils } from '../../common/utils';
+
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { EmployeesProvider } from '../../providers/employees/employees';
+import { HighChartProvider } from '../../providers/high-chart/high-chart';
+import { HouseInputPage } from '../house-input/house-input';
+import { HousesProvider } from '../../providers/houses/houses';
+import { UserProvider } from '../../providers/user/user';
+import { Utils } from '../../common/utils';
 
 @IonicPage()
 @Component({
@@ -35,7 +37,8 @@ export class HouseInfomationPage {
     public modalCtrl: ModalController,
     public deployData: DeployDataProvider,
     public util: Utils,
-    public renderer: Renderer
+    public renderer: Renderer,
+    public userProvider:UserProvider
   ) {
     if (this.navParams.data.house) {
       this.house = this.navParams.data.house;
@@ -86,7 +89,7 @@ export class HouseInfomationPage {
         selected: false
       },
     ]
-    // this.chartProvider.createPieChart(document.getElementById('chartSummary'), data, 'Quy mô khu', '');
+    this.chartProvider.createPieChart(document.getElementById('chartSummary'), data, 'Quy mô khu', '');
   }
 
 
@@ -144,18 +147,31 @@ export class HouseInfomationPage {
   }
 
   editHouse() {
-    let callback = (house:house) =>{
-      if(house){
+    let callback = (house: house) => {
+      if (house) {
         this.houseProvider.updateHouse(house)
-        .then((house:house)=>{
-          if(house){
-            this.house = house;
-            this.navCtrl.pop();
-          }
-        })
-        .catch((err)=>{console.log(err)})
+          .then((house: house) => {
+            if (house) {
+              this.houseProvider.updatedHouse(house);
+              this.navParams.data.callbackUpdate(this.house);
+              this.house = house;
+              this.navCtrl.pop();
+            }
+          })
+          .catch((err) => { console.log(err) })
       }
     }
-    this.navCtrl.push(HouseInputPage, { house: this.house ,callback:callback});
+    this.navCtrl.push(HouseInputPage, { house: this.house, callback: callback });
+  }
+
+
+  removeHouse(){
+    this.houseProvider.removeHouse(this.house)
+    .then((isOK)=>{
+      if(isOK){
+        this.houseProvider.removedHouse(this.house);
+        this.navParams.get('callbackRemove')(this.house);
+      }
+    })
   }
 }

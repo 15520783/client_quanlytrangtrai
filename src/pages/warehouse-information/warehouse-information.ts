@@ -1,10 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { Events, IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
+import { Events, IonicPage, NavController, NavParams, Platform, Slides } from 'ionic-angular';
 import { foodWareHouse, warehouse } from '../../common/entity';
 
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { FeedInputPage } from '../feed-input/feed-input';
 import { SettingInputUtilComponent } from '../../components/setting-input-util/setting-input-util';
+import { UserProvider } from '../../providers/user/user';
 import { Utils } from '../../common/utils';
 import { VARIABLE } from '../../common/const';
 import { WarehouseRole } from '../../role-input/warehouse';
@@ -28,7 +29,9 @@ export class WarehouseInformationPage {
     public warehouseProvider: WarehousesProvider,
     public deployData: DeployDataProvider,
     public util: Utils,
-    public event:Events
+    public event:Events,
+    public userProvider:UserProvider,
+    public platform:Platform
   ) {
     if (this.navParams.data.warehouse) {
       this.warehouse = this.navParams.data.warehouse;
@@ -44,7 +47,6 @@ export class WarehouseInformationPage {
     if (this.slider) {
       this.slider.autoHeight = true;
     }
-    console.log('ngAfterViewInit FarmInfomationPage');
   }
 
   getAllFoodWarehouse() {

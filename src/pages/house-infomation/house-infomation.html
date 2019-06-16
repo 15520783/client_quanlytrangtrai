@@ -5,7 +5,7 @@
     </ion-toolbar>
   </ion-navbar>
   <ion-toolbar showWhen='ios,android'>
-    <ion-segment [(ngModel)]="tab" scrollable >
+    <ion-segment [(ngModel)]="tab" scrollable>
       <ion-segment-button value="0" (tap)="selectedTab(0)">Thông tin chuồng</ion-segment-button>
       <ion-segment-button value="1" (tap)="selectedTab(1)">Danh sách heo</ion-segment-button>
     </ion-segment>
@@ -16,7 +16,8 @@
   <ion-list no-padding style="height: 100%!important;">
     <ion-row style="display: flex!important;height: 100%!important;">
       <ion-col>
-        <ion-card no-margin mode='ios' style="background: white" style="display: block!important;height: 100%!important">
+        <ion-card no-margin mode='ios' style="background: white"
+          style="display: block!important;height: 100%!important">
           <ion-card-header mode='ios'>
             <ion-row>
               <ion-col>
@@ -26,7 +27,10 @@
                 </ion-card-title>
               </ion-col>
               <ion-col text-right>
-                <button mode='ios' ion-button item-end color="secondary" (tap)="editHouse()">Chỉnh sửa</button>
+                <button *ngIf="userProvider.rolePermission.ROLE_cap_nhat_khu!=null" mode='ios' ion-button item-end
+                  color="secondary" (tap)="editHouse()">Chỉnh sửa</button>
+                <button *ngIf="userProvider.rolePermission.ROLE_xoa_chuong!=null" mode='ios' ion-button item-end
+                  color="danger" (tap)="removeHouse()">Xóa</button>
               </ion-col>
             </ion-row>
           </ion-card-header>
@@ -55,15 +59,18 @@
         </ion-card>
       </ion-col>
       <ion-col>
-        <pig-list [(data)]="pigs" *ngIf="pigs.length"></pig-list>
+        <ion-infinite-scroll>
+          <div id="chartSummary"></div>
+        </ion-infinite-scroll>
+        <!-- <pig-list [(data)]="pigs" *ngIf="pigs.length"></pig-list> -->
       </ion-col>
     </ion-row>
   </ion-list>
 </ion-content>
 
-<ion-content no-padding *ngIf="!platform.is('core')" #content  class="mobile">
+<ion-content no-padding *ngIf="!platform.is('core')" #content class="mobile">
   <!-- <ion-item-divider sticky="true">{{title[slider.realIndex]}}</ion-item-divider> -->
-  <ion-slides  #slider  (ionSlideDidChange)="slideChange()">
+  <ion-slides #slider (ionSlideDidChange)="slideChange()">
     <ion-slide>
       <ion-list no-padding lines>
         <ion-item>
@@ -86,10 +93,10 @@
 
     </ion-slide>
     <ion-slide>
-      <!-- <ion-infinite-scroll>
+      <ion-infinite-scroll>
         <div id="chartSummary"></div>
-      </ion-infinite-scroll> -->
-      <pig-list [(data)]="pigs" *ngIf="pigs.length"></pig-list>
+      </ion-infinite-scroll>
+      <!-- <pig-list [(data)]="pigs" *ngIf="pigs.length"></pig-list> -->
     </ion-slide>
   </ion-slides>
 
@@ -98,9 +105,15 @@
       <ion-icon name="ios-arrow-up"></ion-icon>
     </button>
     <ion-fab-list side="top" style="right:0px">
-      <button data-balloon-visible data-balloon-length="medium" data-balloon="Chỉnh sửa thông tin"
-        data-balloon-pos="left" ion-fab color="main" (tap)="editHouse()">
+      <button *ngIf="userProvider.rolePermission.ROLE_cap_nhat_khu!=null" data-balloon-visible
+        data-balloon-length="medium" data-balloon="Chỉnh sửa" data-balloon-pos="left" ion-fab color="main"
+        (tap)="editHouse()">
         <ion-icon name="md-create"></ion-icon>
+      </button>
+      <button *ngIf="userProvider.rolePermission.ROLE_xoa_chuong!=null" data-balloon-visible
+        data-balloon-length="medium" data-balloon="Xóa" data-balloon-pos="left" ion-fab color="danger"
+        (tap)="removeHouse()">
+        <ion-icon name="md-trash"></ion-icon>
       </button>
     </ion-fab-list>
   </ion-fab>

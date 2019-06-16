@@ -45,7 +45,7 @@ export class PigInputPage {
       farmId: this.pig['farmId'] ? this.pig['farmId'] : '',
       sectionId: this.pig['sectionId'] ? this.pig['sectionId'] : '',
       houseId: [this.pig.houseId, Validators.compose([Validators.required])],
-      roundId: [this.pig.roundId, Validators.compose([Validators.required])],
+      // roundId: [this.pig.roundId, Validators.compose([Validators.required])],
       breedId: [this.pig.breedId, Validators.compose([Validators.required])],
       gender: [this.pig.gender, Validators.compose([Validators.required])],
       originFatherId: [this.pig.originFatherId, Validators.compose([])],
@@ -69,7 +69,8 @@ export class PigInputPage {
       pregnancyStatusId: [this.pig.pregnancyStatusId, Validators.compose([Validators.required])],
       priceCodeId: [this.pig.priceCodeId, Validators.compose([Validators.required])],
       statusId: [this.pig.statusId, Validators.compose([Validators.required])],
-      birthId:this.pig.birthId
+      birthId: this.pig.birthId,
+      pigType: this.pig.pigType
     });
 
 
@@ -107,7 +108,7 @@ export class PigInputPage {
     if (this.navParams.data.isTransferSection) {
       this.credentialsForm.controls.pigCode.disable();
       this.credentialsForm.controls.farmId.disable();
-      this.credentialsForm.controls.roundId.disable();
+      // this.credentialsForm.controls.roundId.disable();
       this.credentialsForm.controls.breedId.disable();
       this.credentialsForm.controls.originFatherId.disable();
       this.credentialsForm.controls.originMotherId.disable();
@@ -124,7 +125,6 @@ export class PigInputPage {
 
   onSubmit() {
     this.submitAttempt = true;
-    console.log(this.credentialsForm.value);
     if (this.credentialsForm.valid) {
       Object.keys(this.credentialsForm.value).forEach((attr) => {
         this.pig[attr] = this.credentialsForm.value[attr];

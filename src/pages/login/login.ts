@@ -12,7 +12,6 @@ import { PigsProvider } from '../../providers/pigs/pigs';
 import { SectionsProvider } from '../../providers/sections/sections';
 import { UserProvider } from '../../providers/user/user';
 import { Utils } from '../../common/utils';
-import { user } from '../../common/entity';
 
 @IonicPage()
 @Component({
@@ -83,25 +82,11 @@ export class LoginPage {
               this.util.setKey(KEY.EMPID, res.user.employee.id);
               this.util.setKey(KEY.USERNAME, params.username);
               this.util.setKey(KEY.PASSWORD, params.password);
+              this.util.setKey(KEY.EMPLOYEE_USER, res.user.employee);
               this.util.setKey(KEY.USER, res.user).then(() => {
                 backdrop.dismiss();
                 this.events.publish('app_begin');
               });
-              if (this.platform.is('cordova')) {
-                this.util.getTokenNotification().then((token) => {
-                  if (token) {
-                    this.util.getKey(KEY.USER).then((userAccount: user) => {
-                      if (userAccount) {
-                        this.userProvider.updateTokenNotification(userAccount.id, token)
-                          .then((isOk) => {
-                            console.log(isOk);
-                          })
-                          .catch((err) => { return err; })
-                      }
-                    })
-                  }
-                })
-              }
             })
           }
         })

@@ -1,7 +1,7 @@
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 
-import { API, CONFIG, KEY, MESSAGE } from '../common/const';
+import { API, CONFIG, ERROR_NAME, KEY, MESSAGE } from '../common/const';
 import {
   HttpEvent,
   HttpHandler,
@@ -13,6 +13,7 @@ import {
 import { Events } from 'ionic-angular';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
+import { PERMISSIONS } from '../common/permissions';
 import { Utils } from '../common/utils';
 import { tap } from 'rxjs/operators';
 
@@ -23,7 +24,7 @@ export class TokenInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     let headers = new HttpHeaders().set('Authorization', CONFIG.ACCESS_KEY);
-    headers.set('Access-Control-Allow-Origin','*');
+    headers.set('Access-Control-Allow-Origin', '*');
     if (request.url != API.PUSH_NOTIFICATION && !request.url.includes('../..')) {
       request = request.clone({ url: CONFIG.SERVER_API + request.url, headers: headers });
     } else {
@@ -61,6 +62,20 @@ export class TokenInterceptor implements HttpInterceptor {
             this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].SESSIONS_NOT_EXPIRE);
           }
         }
+        else if (error.error.message.includes(ERROR_NAME.ERROR_UNIQUE_MAIL)) {
+          this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].MAIL_UNIQUE);
+        }
+        // else if (error.status === 403) {
+        //   Object.keys(PERMISSIONS).forEach((key) => {
+        //     Object.keys(PERMISSIONS[key]).forEach((codeName) => {
+        //       if ((request.url).includes(PERMISSIONS[key][codeName]['api'])) {
+        //         console.log(PERMISSIONS[key][codeName]['api']);
+        //         this.util.showToast('Không có quyền ' + PERMISSIONS[key][codeName].name);
+        //         return error;
+        //       }
+        //     })
+        //   })
+        // }
         else {
           this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].ERROR_OCCUR);
         }
@@ -72,7 +87,7 @@ export class TokenInterceptor implements HttpInterceptor {
             this.util.closeBackDrop().then(() => {
               this.util.showToastSuccess(MESSAGE[CONFIG.LANGUAGE_DEFAULT].UPDATE_SUCCESS);
             });
-          else if(request.url == API.PUSH_NOTIFICATION){
+          else if (request.url == API.PUSH_NOTIFICATION) {
             this.util.closeBackDrop().then(() => {
               this.util.showToastSuccess('Gửi thông báo nhắc nhở thành công');
             });

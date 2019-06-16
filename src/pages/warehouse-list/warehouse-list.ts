@@ -7,6 +7,7 @@ import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { FilterProvider } from '../../providers/filter/filter';
 import { FormControl } from '@angular/forms';
 import { MedicineWarehouseInformationPage } from '../medicine-warehouse-information/medicine-warehouse-information';
+import { UserProvider } from '../../providers/user/user';
 import { WarehouseInformationPage } from '../warehouse-information/warehouse-information';
 
 @IonicPage()
@@ -55,7 +56,8 @@ export class WarehouseListPage {
     public modalCtrl: ModalController,
     public viewCtrl: ViewController,
     public navCtrl: NavController,
-    public deployData: DeployDataProvider
+    public deployData: DeployDataProvider,
+    public userProvider: UserProvider
   ) {
     if (this.navParams.data) {
       this.data = this.navParams.data.pigs;
@@ -113,11 +115,12 @@ export class WarehouseListPage {
   }
 
   viewDeltail(data) {
-
-    if (this.warehouseType == 'food')
-      this.navCtrl.push(WarehouseInformationPage, { warehouse: data});
-    else
-      this.navCtrl.push(MedicineWarehouseInformationPage, { warehouse: data })
+    if (this.userProvider.rolePermission.ROLE_xem_thong_tin_kho != null) {
+      if (this.warehouseType == 'food')
+        this.navCtrl.push(WarehouseInformationPage, { warehouse: data });
+      else
+        this.navCtrl.push(MedicineWarehouseInformationPage, { warehouse: data })
+    }
   }
 
   scrollToTop() {

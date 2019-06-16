@@ -15,6 +15,7 @@ const KEY = {
     USER: 'user',
     USERNAME: 'username',
     PASSWORD: 'password',
+    PERMISSIONS: 'permissions'
 }
 
 const SETTING_STORAGE_KEY = {
@@ -53,6 +54,11 @@ const VARIABLE = {
         2: { id: 2, name: "Nái" },
         3: { id: 3, name: 'Đực thiến' }
     },
+    GENDER_EMPLOYEE:[
+        {name:'Nữ',value:'1'},
+        {name:'Nam',value:'0'}
+    ]
+    ,
     INVOICE_PRODUCT_TYPE: {
         FOOD: 'food',
         MEDICINE: 'medicine'
@@ -135,6 +141,10 @@ const VARIABLE = {
         SALING_EXPORT: 'SAL-EX',
     },
     MENU_FIELDS: {
+        CHUC_VU_NGUOI_DUNG:{
+            codeName:"chuc_vu_nguoi_dung",
+            name:"Chức vụ người dùng"
+        },
         TONG_QUAN_TRANG_TRAI: {
             codeName: "tong_quan_trang_trai",
             name: "Tổng quan trang trại"
@@ -151,10 +161,10 @@ const VARIABLE = {
             codeName: "quan_ly_danh_sach_nhan_vien",
             name: "Quản lý danh sách nhân viên"
         },
-        QUAN_LY_DANH_SACH_DOI_TAC: {
-            codeName: "quan_ly_danh_sach_doi_tac",
-            name: "Quản lý danh sách đối tác"
-        },
+        // QUAN_LY_DANH_SACH_DOI_TAC: {
+        //     codeName: "quan_ly_danh_sach_doi_tac",
+        //     name: "Quản lý danh sách đối tác"
+        // },
         QUAN_LY_DANH_SACH_KHO: {
             codeName: "quan_ly_danh_sach_kho",
             name: "Quản lý danh sách kho"
@@ -177,7 +187,8 @@ const VARIABLE = {
         { id: 1, name: 'Kho thuốc', value: 1 }
     ],
     REGENCIES: {
-        quan_ly_kho: { id: '13', name: "Thủ kho trại" }
+        quan_ly_kho: { id: '13', name: "Thủ kho trại" },
+        quan_ly_khu: { id: '10', name: "Trưởng khu" },
     },
     SCHEDULE_STATUS: {
         NOT_ASSIGNED: { id: 0, name: 'chưa phân công' },
@@ -196,7 +207,7 @@ const API = {
     LOGIN: '/auth/login',
     CHECK_SERVER: '/auth/check_login',
 
-    GET_INFORMATION_PIG: '/api/piginfoextend/',
+    GET_INFORMATION_PIG: '/api/piginfoextend/one/',  //{pigId}
     GET_ALL_FARMS: '/api/farms/list',
     GET_ALL_SECTIONS: '/api/sections/list',
     GET_ALL_HOUSES: '/api/houses/list',
@@ -218,13 +229,14 @@ const API = {
     GET_MEDICINE_WAREHOUSE_FROM_INVOICE: '/api/medicinewarehouse/invoice/',
     GET_ALL_FORWARDING_PIG_INVOICE: '/api/invoicespig/forwarding/list',
     GET_SCHEDULE: '/api/schedule/listschedule',
-    GET_INFO_EMPLOYEE: '/api/employees/',
+    GET_INFO_EMPLOYEE: '/api/employees/one/',  //{id}
     GET_ISSUE_PIG_OF_SECTION: '/api/issuespigs/listcurrentissues',   //{idfarm}/{idsection}
     GET_ISSUE_PIG_OF_FARMS: '/api/issuespigs/list',   //{idfarm}/{idsection}
     GET_FORECASTED_DISEASES: '/api/issuespigs/forecastdiseases',    //{idfarm}/{idsection}
     GET_MEDICINES_OF_DISEASE: '/api/medicinedisease/disease',  //{diseaseId}
     GET_MEDICINEWAREHOUSE_OF_MEDICINE: '/api/medicinewarehouse/medicine', //{{medicineId}}
     GET_USER_ACCOUNT_OF_EMPLOYEE: '/api/users/employee', //{empId}
+    GET_SCHEDULE_OF_EMPLOYEE:'/api/schedule/employee/',  //{empId}
     GET_PERMISSION_OF_ROLE: '/api/rolepermission/role/', //{roleId}
     GET_ALL_PERMISSION: '/api/permission/list',
 
@@ -232,9 +244,9 @@ const API = {
     PUSH_NOTIFICATION: 'https://fcm.googleapis.com/fcm/send',
     SEND_EMAIL: '/api/mail/sendemailnotification/', //{email}/{scheduleid}
     MINING_TO_REVIEW_OFFSET: '/api/minings/',//{pigId}
-    UPDATE_MINING_DATA:'/api/minings/update/', //{pigId}/{classification}
-    
-    UPDATE_ROLE_PERMISSION:'/api/rolepermission/',
+    UPDATE_MINING_DATA: '/api/minings/update/', //{pigId}/{classification}
+
+    UPDATE_ROLE_PERMISSION: '/api/rolepermission/',
 
     CREATE_USER: '/api/users/',
     UPDATE_USER: '/api/users/',
@@ -246,8 +258,13 @@ const API = {
     UPDATE_FARM: '/api/farms/',
     DELETE_FARM: '/api/farms/',
 
+    CREATE_SECTION: '/api/sections/',
+    UPDATE_SECTION: '/api/sections/',
+    DELETE_SECTION: '/api/sections/',
+
     CREATE_HOUSE: '/api/houses/',
     UPDATE_HOUSE: '/api/houses/',
+    DELETE_HOUSE: '/api/houses/',
 
     CREATE_WAREHOUSE: '/api/warehouses/',
     UPDATE_WAREHOUSE: '/api/warehouses/',
@@ -333,7 +350,8 @@ const API = {
 
 const ERROR_NAME = {
     TIMEMOUT_ERROR: 'TimeoutError',
-    ERROR_RESPONSE: 'HttpErrorResponse'
+    ERROR_RESPONSE: 'HttpErrorResponse',
+    ERROR_UNIQUE_MAIL: '[unique_email]'
 }
 
 const MESSAGE = {
@@ -345,7 +363,8 @@ const MESSAGE = {
         ERROR_OCCUR: 'Có lỗi xảy ra. Vui lòng kiểm tra lại.',
         UPDATE_SUCCESS: 'Dữ liệu cập nhật thành công.',
         UPDATE_FAILED: 'Dữ liệu cập nhật thất bại. Vui lòng thử lại.',
-        LOADING_DATA: 'Đang tải dữ liệu'
+        LOADING_DATA: 'Đang tải dữ liệu',
+        MAIL_UNIQUE: 'Email đăng kí đã tồn tại'
     }
 }
 

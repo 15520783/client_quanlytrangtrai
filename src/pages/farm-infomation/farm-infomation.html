@@ -6,12 +6,12 @@
   </ion-navbar>
   <ion-toolbar showWhen="core" class="pl-10">
     <!-- <ion-row showWhen="core" text-left> -->
-    <button color="secondary" ion-button mode='ios' (tap)="viewPigGroups()">
+    <!-- <button color="secondary" ion-button mode='ios' (tap)="viewPigGroups()">
       Danh sách nhóm heo
     </button>
     <button color="secondary" ion-button mode='ios' (tap)="viewEmployee()">
       Danh sách nhân viên
-    </button>
+    </button> -->
     <!-- </ion-row> -->
   </ion-toolbar>
 </ion-header>
@@ -29,7 +29,7 @@
                   Thông tin chi tiết
                 </ion-card-title>
               </ion-col>
-              <ion-col text-right>
+              <ion-col text-right *ngIf="userProvider.rolePermission.ROLE_cap_nhat_trang_trai">
                 <button mode='ios' ion-button item-end color="secondary" (tap)="editFarm()">Chỉnh sửa</button>
               </ion-col>
             </ion-row>
@@ -286,18 +286,18 @@
     </ion-slides>
   </ion-list>
 
-  <ion-fab bottom right *ngIf="userProvider.rolePermission.tong_quan_trang_trai.xoa_trang_trai || userProvider.rolePermission.tong_quan_trang_trai.xem_thong_tin_trang_trai">
+  <ion-fab bottom right *ngIf="userProvider.rolePermission.ROLE_xoa_trang_trai || userProvider.rolePermission.ROLE_xem_thong_tin_trang_trai">
     <button ion-fab>
       <ion-icon name="ios-arrow-up"></ion-icon>
     </button>
     <ion-fab-list side="top" style="right:0px">
-      <span *ngIf="userProvider.rolePermission.tong_quan_trang_trai.xoa_trang_trai">
+      <span *ngIf="userProvider.rolePermission.ROLE_xoa_trang_trai">
         <button data-balloon-visible data-balloon-length="medium" data-balloon="Xóa trang trại"
           data-balloon-pos="left" ion-fab color="danger" (tap)="removeFarm()">
           <ion-icon name="md-trash"></ion-icon>
         </button>
       </span>
-      <span *ngIf="userProvider.rolePermission.tong_quan_trang_trai.xem_thong_tin_trang_trai">
+      <span *ngIf="userProvider.rolePermission.ROLE_xem_thong_tin_trang_trai">
         <button data-balloon-visible data-balloon-length="medium" data-balloon="Chỉnh sửa thông tin"
           data-balloon-pos="left" ion-fab color="main" (tap)="editFarm()">
           <ion-icon name="md-create"></ion-icon>
@@ -311,8 +311,3 @@
   <employee-list (closeMenuEvent)="closeViewEmployee()" [data]="employeeProvider.employees"></employee-list>
 </ion-menu>
 <ion-nav #Employee></ion-nav>
-<!-- 
-<ion-menu [content]="Pigs" side="right" #menuPigs sticky="true" type="overlay" width="500">
-  <pig-group-list (closeMenuEvent)="closeViewPigGroups()" [data]="groupProvider.groups"></pig-group-list>
-</ion-menu>
-<ion-nav #Pigs></ion-nav> -->

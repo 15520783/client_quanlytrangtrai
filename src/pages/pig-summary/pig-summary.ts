@@ -1,13 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Nav, Platform, Slides } from 'ionic-angular';
-import { PigInfomationPage } from '../pig-infomation/pig-infomation';
-import { VARIABLE } from '../../common/const';
-import { PigsProvider } from '../../providers/pigs/pigs';
-import { Utils } from '../../common/utils';
+import { IonicPage, Nav, NavController, NavParams, Platform, Slides } from 'ionic-angular';
+
 import { BreedingListPage } from '../breeding-list/breeding-list';
-import { SpermListPage } from '../sperm-list/sperm-list';
-import { MatingListPage } from '../mating-list/mating-list';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { MatingListPage } from '../mating-list/mating-list';
+import { PigInfomationPage } from '../pig-infomation/pig-infomation';
+import { PigsProvider } from '../../providers/pigs/pigs';
+import { SpermListPage } from '../sperm-list/sperm-list';
+import { UserProvider } from '../../providers/user/user';
+import { Utils } from '../../common/utils';
+import { VARIABLE } from '../../common/const';
 
 @IonicPage()
 @Component({
@@ -32,44 +34,56 @@ export class PigSummaryPage {
     public navParams: NavParams,
     public platform: Platform,
     public util: Utils,
-    public deployData: DeployDataProvider
+    public deployData: DeployDataProvider,
+    public userProvider:UserProvider
   ) {
     if (this.navParams.data.pig) {
+      this.data.callbackUpdate = this.navParams.data.callbackUpdate;
+      this.data.callbackRemove = this.navParams.data.callbackRemove;
       this.data.pig = this.navParams.data.pig;
       this.data.pig.house = this.deployData.get_house_by_id(this.data.pig.houseId);
       this.data.sectionType = { id: this.data.pig.house.section.typeId };
     }
 
-    this.pages = [
-      {
-        title: 'Thông tin heo',
-        component: PigInfomationPage,
-        icon: 'ios-information-circle', active: true, expand: false,
-      },
-      {
-        title: 'Danh sách hoạt động',
-        components: [
-          {
-            title: 'Danh sách lên giống', component: BreedingListPage,
-            active: false,
-            notShow: (this.data.pig.gender == VARIABLE.GENDER[2].id) ? false : true,
-          },
-          {
-            title: 'Danh sách lấy tinh', component: SpermListPage,
-            active: false,
-            notShow: (this.data.pig.gender == VARIABLE.GENDER[1].id) ? false : true
-          },
-          {
-            title: 'Danh sách phối', component: MatingListPage,
-            active: false,
-          }
-        ],
-        icon: 'ios-information-circle', active: false, expand: false,
-      }
-    ]
+    if(this.userProvider.rolePermission.ROLE_xem_thong_tin_heo != null){
+      this.pages.push(
+        {
+          title: 'Thông tin heo',
+          component: PigInfomationPage,
+          icon: 'ios-information-circle', active: true, expand: false,
+        }
+      )
+    }
 
-    this.rootPage = PigInfomationPage;
-    this.rootParam = this.data;
+    if(this.userProvider.rolePermission.ROLE_xem_lich_su_hoat_dong != null){
+      this.pages.push(
+        {
+          title: 'Danh sách hoạt động',
+          components: [
+            {
+              title: 'Danh sách lên giống', component: BreedingListPage,
+              active: false,
+              notShow: (this.data.pig.gender == VARIABLE.GENDER[2].id) ? false : true,
+            },
+            {
+              title: 'Danh sách lấy tinh', component: SpermListPage,
+              active: false,
+              notShow: (this.data.pig.gender == VARIABLE.GENDER[1].id) ? false : true
+            },
+            {
+              title: 'Danh sách phối', component: MatingListPage,
+              active: false,
+            }
+          ],
+          icon: 'ios-information-circle', active: false, expand: false,
+        }
+      )
+    }
+    
+    if(this.pages && this.pages.length){
+      this.rootPage = this.pages[0].component;
+      this.rootParam = this.data;
+    }
   }
 
   ngAfterViewInit() {

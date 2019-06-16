@@ -1,8 +1,8 @@
 <ion-header>
   <header [title]="'Kho'">
-    <ion-toolbar showWhen="core" toolbar-transparent>
+    <ion-toolbar toolbar-transparent>
       <ion-row>
-        <ion-col showWhen="core">
+        <ion-col >
           <input-select 
             class="input-select" 
             [value]="farms_select[0].value" 
@@ -11,8 +11,8 @@
             (changeValue)="changeFarm($event)">
           </input-select>
         </ion-col>
-        <ion-col text-right>
-          <button ion-button mode='ios' color="secondary" (tap)="add()">Thêm kho</button>
+        <ion-col text-right showWhen="core">
+          <button *ngIf="userProvider.rolePermission.ROLE_them_kho!=null" ion-button mode='ios' color="secondary" (tap)="add()">Thêm kho</button>
         </ion-col>
       </ion-row>
     </ion-toolbar>

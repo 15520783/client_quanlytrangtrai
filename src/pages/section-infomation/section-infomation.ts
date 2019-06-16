@@ -1,10 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, Slides } from 'ionic-angular';
-import { SectionsProvider } from '../../providers/sections/sections';
-import { Utils } from '../../common/utils';
-import { HighChartProvider } from '../../providers/high-chart/high-chart';
-import { section } from '../../common/entity';
+
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { EmployeesProvider } from '../../providers/employees/employees';
+import { HighChartProvider } from '../../providers/high-chart/high-chart';
+import { SectionInputPage } from '../section-input/section-input';
+import { SectionsProvider } from '../../providers/sections/sections';
+import { UserProvider } from '../../providers/user/user';
+import { Utils } from '../../common/utils';
+import { section } from '../../common/entity';
 
 @IonicPage()
 @Component({
@@ -25,13 +29,16 @@ export class SectionInfomationPage {
     public chartProvider: HighChartProvider,
     public employeeProvider: EmployeesProvider,
     public util: Utils,
-    public platform: Platform
+    public platform: Platform,
+    public userProvider:UserProvider,
+    public deployData:DeployDataProvider
   ) {
-    this.section = this.navParams.data;
-    this.section['managerEmployee']=this.employeeProvider.employees.filter((emp)=>{
-      return emp.id == this.section.manager? true:false;
-    })[0];
-    this.section.founding = this.util.convertDate(this.section.founding);
+    if(this.navParams.data.section){
+      this.section = this.navParams.data.section;
+    }
+    this.deployData.get_employee_by_id
+    this.section['managerEmployee'] = this.deployData.get_employee_by_id(this.section.manager);
+    this.section['foundingDisplay'] = this.util.convertDate(this.section.founding);
   }
 
   ngAfterViewInit() {
@@ -102,4 +109,39 @@ export class SectionInfomationPage {
     this.chartProvider.createPieDrilldownChart(document.getElementById('chartSummary'), data, drilldown, 'Quy mô khu', '');
   }
 
+
+  edit() {
+    let callback = (section: section) => {
+      if (section) {
+        this.sectionProvider.updateSection(section)
+          .then((updated_section) => {
+            if (updated_section) {
+              this.sectionProvider.updatedSection(section);
+              this.section = section;
+              this.section['managerEmployee'] = this.deployData.get_employee_by_id(this.section.manager);
+              this.section['foundingDisplay'] = this.util.convertDate(this.section.founding);
+            }
+            this.navCtrl.pop();
+          })
+          .catch(err => {
+            return err;
+          })
+      }
+    }
+    this.navCtrl.push(SectionInputPage, { section: this.section, callback: callback });
+  }
+
+
+  remove(){
+    this.sectionProvider.removeSection(this.section)
+    .then((isOk)=>{
+      if(isOk){
+        this.sectionProvider.removedsection(this.section);
+        this.navParams.get('callbackRemove')(this.section);
+      }
+    })
+    .catch(err=>{
+      return err;
+    })
+  }
 }

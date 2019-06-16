@@ -8,10 +8,10 @@
         </ion-card-title>
       </ion-col>
       <ion-col text-right>
-        <span *ngIf="userProvider.rolePermission.tong_quan_trang_trai.xem_thong_tin_trang_trai">
+        <span *ngIf="userProvider.rolePermission.ROLE_xem_thong_tin_trang_trai!=null">
           <button mode='ios' ion-button item-end (tap)="viewDetail(farm)" color="secondary">Xem thông tin</button>
         </span>
-        <span *ngIf="userProvider.rolePermission.tong_quan_trang_trai.xoa_trang_trai">
+        <span *ngIf="userProvider.rolePermission.ROLE_xoa_trang_trai!=null">
           <button mode='ios' ion-button item-end (tap)="remove(farm)" color="danger">Xóa</button>
         </span>
       </ion-col>

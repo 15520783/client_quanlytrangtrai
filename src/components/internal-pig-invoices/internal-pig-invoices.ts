@@ -1,8 +1,7 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { Content, Events, Menu, MenuController, NavController, NavParams } from 'ionic-angular';
+import { Content, Events, Menu, MenuController, NavController, NavParams, Platform } from 'ionic-angular';
 
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
-import { EmployeesProvider } from '../../providers/employees/employees';
 import { FilterProvider } from '../../providers/filter/filter';
 import { FormControl } from '@angular/forms';
 import { ForwardingPigInvoiceListPage } from '../../pages/forwarding-pig-invoice-list/forwarding-pig-invoice-list';
@@ -10,6 +9,7 @@ import { InternalPigInvoiceDetailPage } from '../../pages/internal-pig-invoice-d
 import { InternalPigInvoiceRole } from '../../role-input/internalPigInvoice';
 import { InvoiceInputUtilComponent } from '../invoice-input-util/invoice-input-util';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
+import { UserProvider } from '../../providers/user/user';
 import { Utils } from '../../common/utils';
 import { VARIABLE } from '../../common/const';
 import { invoicesPig, } from '../../common/entity';
@@ -61,7 +61,9 @@ export class InternalPigInvoicesComponent {
     public navCtrl: NavController,
     public navParams: NavParams,
     public events: Events,
-    public menuCtrl: MenuController
+    public menuCtrl: MenuController,
+    public userProvider:UserProvider,
+    public platform:Platform
   ) {
     if (this.navParams.data.invoice) {
       this.invoices = this.navParams.data.invoice;

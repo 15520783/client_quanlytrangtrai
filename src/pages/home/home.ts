@@ -39,7 +39,7 @@ export class HomePage {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any;
-  pages: any;
+  pages: Array<any> = [];
   activeLogOut: boolean = false;
   public user: any = {};
 
@@ -72,52 +72,103 @@ export class HomePage {
       this.user['username'] = username;
     })
 
-    this.pages = [
-      {
-        title: 'Trang trại', component: FarmsPage, icon: 'app-farm', active: true,
-        show: Object.keys(this.userProvider.rolePermission.tong_quan_trang_trai).length ? true : false
-      },
-      {
-        title: 'Khu', component: SectionsPage, icon: 'app-sections', active: false,
-        show: Object.keys(this.userProvider.rolePermission.tong_quan_khu).length ? true : false
-      },
-      {
+    this.userProvider.rolePermission.ROLE_xem_danh_sach_trang_trai != null ?
+      this.pages.push({
+        title: 'Trang trại', component: FarmsPage, icon: 'app-farm', active: false
+      }) : null;
+
+    this.userProvider.rolePermission.ROLE_xem_danh_sach_khu != null ?
+      this.pages.push({
+        title: 'Khu', component: SectionsPage, icon: 'app-sections', active: false
+      }) : null;
+
+    this.userProvider.rolePermission.ROLE_xem_danh_sach_heo != null ?
+      this.pages.push({
         title: 'Heo', component: PigsPage, icon: 'app-pig-outline', active: false,
-        show: Object.keys(this.userProvider.rolePermission.quan_ly_danh_sach_heo).length ? true : false
-      },
-      {
-        title: 'Nhân viên', component: EmployeePage, icon: 'app-employees', active: false,
-        show: Object.keys(this.userProvider.rolePermission.quan_ly_danh_sach_nhan_vien).length ? true : false
-      },
-      {
-        title: 'Kho', component: WarehousesPage, icon: 'app-warehouse', active: false,
-        show: Object.keys(this.userProvider.rolePermission.quan_ly_danh_sach_kho).length ? true : false
-      },
-      {
-        title: 'Đối tác', component: PartnersPage, icon: 'app-partner', active: false,
-        show: Object.keys(this.userProvider.rolePermission.quan_ly_danh_sach_doi_tac).length ? true : false
-      },
-      {
+      }) : null;
+
+    this.userProvider.rolePermission.ROLE_xem_danh_sach_nhan_vien != null ?
+      this.pages.push({
+        title: 'Nhân viên', component: EmployeePage, icon: 'app-employees', active: false
+      }) : null;
+
+    this.userProvider.rolePermission.ROLE_xem_danh_sach_kho != null ?
+      this.pages.push({
+        title: 'Kho', component: WarehousesPage, icon: 'app-warehouse', active: false
+      }) : null;
+
+    this.userProvider.rolePermission.ROLE_xem_danh_sach_chung_tu != null ?
+      this.pages.push({
         title: 'Chứng từ', component: InvoicesPage, icon: 'app-file', active: false,
-        show: Object.keys(this.userProvider.rolePermission.quan_ly_danh_sach_chung_tu).length ? true : false
-      },
-      {
-        title: 'Quản lý lâm sàn', component: IssuePigListPage, icon: 'app-medicine-manager', active: false,
-        show: true
-      },
-      {
-        title: 'Hoạt động', component: ActivitiesPage, icon: 'app-activities', active: false,
-        show: Object.keys(this.userProvider.rolePermission.quan_ly_hoat_dong).length ? true : false
-      },
-      {
+      }) : null;
+
+    this.pages.push({
+      title: 'Quản lý lâm sàn', component: IssuePigListPage, icon: 'app-medicine-manager', active: false,
+    })
+
+    this.pages.push({
+      title: 'Hoạt động', component: ActivitiesPage, icon: 'app-activities', active: false,
+    })
+
+    this.userProvider.rolePermission.ROLE_xem_danh_sach_thiet_lap != null ?
+      this.pages.push({
         title: 'Thiết lập', component: SettingsPage, icon: 'app-settings', active: false,
-        show: Object.keys(this.userProvider.rolePermission.quan_ly_thiet_lap).length ? true : false
-      },
-      {
+      }) : null;
+
+    this.userProvider.rolePermission.ROLE_xem_bang_ke_hoach != null ?
+      this.pages.push({
         title: 'Bảng kế hoạch', component: DatePlanPage, icon: 'app-schedule', active: false, isSchedule: true,
-        show: Object.keys(this.userProvider.rolePermission.quan_ly_bang_ke_hoach).length ? true : false
-      },
-    ];
+      }) : null;
+
+
+    // this.pages = [
+    //   {
+    //     title: 'Trang trại', component: FarmsPage, icon: 'app-farm', active: true,
+    //     show: this.userProvider.rolePermission.ROLE_xem_danh_sach_trang_trai != null ? true : false
+    //   },
+    //   {
+    //     title: 'Khu', component: SectionsPage, icon: 'app-sections', active: false,
+    //     show: this.userProvider.rolePermission.ROLE_xem_danh_sach_khu != null ? true : false
+    //   },
+    //   {
+    //     title: 'Heo', component: PigsPage, icon: 'app-pig-outline', active: false,
+    //     show: this.userProvider.rolePermission.ROLE_xem_danh_sach_heo != null ? true : false
+    //   },
+    //   {
+    //     title: 'Nhân viên', component: EmployeePage, icon: 'app-employees', active: false,
+    //     show: this.userProvider.rolePermission.ROLE_xem_danh_sach_nhan_vien != null ? true : false
+    //   },
+    //   {
+    //     title: 'Kho', component: WarehousesPage, icon: 'app-warehouse', active: false,
+    //     show: this.userProvider.rolePermission.ROLE_xem_danh_sach_kho != null ? true : false
+    //   },
+    //   // {
+    //   //   title: 'Đối tác', component: PartnersPage, icon: 'app-partner', active: false,
+    //   //   show: Object.keys(this.userProvider.rolePermission.quan_ly_danh_sach_doi_tac).length ? true : false
+    //   // },
+    //   {
+    //     title: 'Chứng từ', component: InvoicesPage, icon: 'app-file', active: false,
+    //     show: this.userProvider.rolePermission.ROLE_xem_danh_sach_chung_tu != null ? true : false
+    //   },
+    //   {
+    //     title: 'Quản lý lâm sàn', component: IssuePigListPage, icon: 'app-medicine-manager', active: false,
+    //     show: true
+    //   },
+    //   {
+    //     title: 'Hoạt động', component: ActivitiesPage, icon: 'app-activities', active: false,
+    //     show: true
+    //     // show: Object.keys(this.userProvider.rolePermission.quan_ly_hoat_dong).length ? true : false
+    //   },
+    //   {
+    //     title: 'Thiết lập', component: SettingsPage, icon: 'app-settings', active: false,
+    //     show: this.userProvider.rolePermission.ROLE_xem_danh_sach_thiet_lap != null ? true : false
+    //   },
+    //   {
+    //     title: 'Bảng kế hoạch', component: DatePlanPage, icon: 'app-schedule', active: false, isSchedule: true,
+    //     show: true
+    //     // show: Object.keys(this.userProvider.rolePermission.ROLE_xem_bang_ke_hoach).length ? true : false
+    //   },
+    // ];
 
     this.events.subscribe('sync', (something) => {
       this.sync();
@@ -129,13 +180,14 @@ export class HomePage {
       })
     }
 
-    this.events.subscribe('home:reloadSchedule',()=>{
+    this.events.subscribe('home:reloadSchedule', () => {
       this.nav.setRoot(DatePlanPage);
     })
   }
 
   ionViewDidLoad() {
     this.rootPage = this.pages[0].component;
+    this.pages[0].active = true;
     setTimeout(() => {
       this.activeLogOut = true;
     }, 3000);
@@ -164,6 +216,10 @@ export class HomePage {
       })
   }
 
+  test(){
+    this.util.clearAllKeyStorage();
+  }
+
 
   sync() {
     this.farmProvider.updated_flag =
@@ -183,7 +239,7 @@ export class HomePage {
     this.userProvider.checkServer()
       .then((res: any) => {
         if (res.success) {
-          this.userProvider.sync();
+          // this.userProvider.sync();
           this.farmProvider.sync();
           this.pigProvider.sync();
           this.employeeProvider.sync();
@@ -208,7 +264,7 @@ export class HomePage {
 
   checkUpdate() {
     if (
-      this.userProvider.updated_flag &&
+      // this.userProvider.updated_flag &&
       this.farmProvider.updated_flag &&
       this.pigProvider.updated_flag &&
       this.employeeProvider.updated_flag &&

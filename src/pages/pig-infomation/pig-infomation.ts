@@ -1,11 +1,13 @@
-import { Component, ViewChild, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { pig, breeds, house, healthStatus, footType, gentialType, pregnancyStatus, priceCodes } from '../../common/entity';
-import { PigsProvider } from '../../providers/pigs/pigs';
-import { Utils } from '../../common/utils';
-import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
-import { VARIABLE } from '../../common/const';
+import { breeds, footType, gentialType, healthStatus, house, pig, pregnancyStatus, priceCodes } from '../../common/entity';
 
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { PigInputPage } from '../pig-input/pig-input';
+import { PigsProvider } from '../../providers/pigs/pigs';
+import { UserProvider } from '../../providers/user/user';
+import { Utils } from '../../common/utils';
+import { VARIABLE } from '../../common/const';
 
 @IonicPage()
 @Component({
@@ -22,7 +24,8 @@ export class PigInfomationPage {
     public navParams: NavParams,
     public pigProvider: PigsProvider,
     public util: Utils,
-    public deployData: DeployDataProvider
+    public deployData: DeployDataProvider,
+    public userProvider:UserProvider
   ) {
     if (this.navParams.data.pig) {
       this.pig = this.navParams.data.pig;
@@ -53,7 +56,7 @@ export class PigInfomationPage {
   public priceCode = new priceCodes();
   public foot = new footType();
   public gender: any;
-  public status:any = {};
+  public status: any = {};
 
 
   init() {
@@ -70,5 +73,46 @@ export class PigInfomationPage {
 
     if (parent.mother) this.mother = parent.mother;
     if (parent.father) this.father = parent.father;
+  }
+
+  /**
+   * Cập nhật heo
+   */
+  edit() {
+    let callback = (pig: pig) => {
+      if (pig) {
+        let pigParam = this.deployData.get_pig_object_to_send_request(pig);
+        this.pigProvider.updatePig(pigParam)
+        .then((updated_pig:pig)=>{
+          if(updated_pig){
+            this.pigProvider.updatedPig(pig);
+            this.navParams.get('callbackUpdate')(updated_pig);
+          }
+        })
+        .catch(err=>{
+          console.log(err);
+          return err;
+        })
+      }
+    }
+
+    this.navCtrl.push(PigInputPage, { pigId: this.pig.id, callback: callback });
+  }
+
+  /**
+   * Xóa heo
+   */
+  remove(){
+    this.pigProvider.removePig(this.pig)
+    .then((isOk)=>{
+      if(isOk){
+        this.pigProvider.removedPig(this.pig);
+        this.navParams.get('callbackRemove')(this.pig);
+      }
+    })
+    .catch((err)=>{
+      console.log(err);
+      return err;
+    })
   }
 }

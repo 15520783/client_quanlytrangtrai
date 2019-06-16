@@ -31,7 +31,6 @@ export class FarmsPage {
     public event: Events,
     public userProvider: UserProvider
   ) {
-    this.getAllFarms();
     this.event.subscribe('Farms:update_farm', farm => {
       let idx = this.farms.findIndex(_farm => _farm.id == farm.id);
       if (idx > -1) {
@@ -66,6 +65,7 @@ export class FarmsPage {
       this.farmProvider.getFarms()
         .then((data: Array<farm>) => {
           if (data.length) {
+            console.log(this.userProvider.user);
             if (this.userProvider.user.farm.id == '0') {
               this.farms = data;
             } else {
@@ -100,6 +100,7 @@ export class FarmsPage {
         })
     } else {
       if (this.userProvider.user) {
+        console.log(this.userProvider.user);
         if (this.userProvider.user.farm.id == '0') {
           this.farms = this.farmProvider.farms;
         } else {
