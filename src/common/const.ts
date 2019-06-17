@@ -169,6 +169,10 @@ const VARIABLE = {
             codeName: "quan_ly_danh_sach_kho",
             name: "Quản lý danh sách kho"
         },
+        QUAN_LY_DANH_SACH_CHUNG_TU: {
+            codeName: "quan_ly_danh_sach_chung_tu",
+            name: "Quản lý danh sách chứng từ"
+        },
         QUAN_LY_HOAT_DONG: {
             codeName: "quan_ly_hoat_dong",
             name: "Quản lý hoạt động"

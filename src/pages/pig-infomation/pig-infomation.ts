@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { Events, IonicPage, Nav, NavController, NavParams, Platform } from 'ionic-angular';
 import { breeds, footType, gentialType, healthStatus, house, pig, pregnancyStatus, priceCodes } from '../../common/entity';
 
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
@@ -16,6 +16,7 @@ import { VARIABLE } from '../../common/const';
 })
 export class PigInfomationPage {
   @ViewChild('chart') chart;
+
   @Input() public pig: pig;
 
   constructor(
@@ -25,14 +26,15 @@ export class PigInfomationPage {
     public pigProvider: PigsProvider,
     public util: Utils,
     public deployData: DeployDataProvider,
-    public userProvider:UserProvider
+    public userProvider:UserProvider,
+    public event:Events
   ) {
     if (this.navParams.data.pig) {
       this.pig = this.navParams.data.pig;
     }
 
     this.init();
-    this.pig['birthdayDisplay'] = this.util.convertDate(this.pig.birthday);
+    
   }
 
   ionViewDidLoad() {
@@ -70,6 +72,7 @@ export class PigInfomationPage {
     this.foot = this.deployData.get_foot_by_id(this.pig.footTypeId);
     let parent = this.deployData.get_parent_of_pig(this.pig);
     this.gender = VARIABLE.GENDER;
+    this.pig['birthdayDisplay'] = this.util.convertDate(this.pig.birthday);
 
     if (parent.mother) this.mother = parent.mother;
     if (parent.father) this.father = parent.father;
@@ -87,7 +90,10 @@ export class PigInfomationPage {
           if(updated_pig){
             this.pigProvider.updatedPig(pig);
             this.navParams.get('callbackUpdate')(updated_pig);
+            this.pig = updated_pig;
+            this.init();
           }
+          this.navCtrl.pop();
         })
         .catch(err=>{
           console.log(err);
@@ -95,7 +101,7 @@ export class PigInfomationPage {
         })
       }
     }
-
+    
     this.navCtrl.push(PigInputPage, { pigId: this.pig.id, callback: callback });
   }
 

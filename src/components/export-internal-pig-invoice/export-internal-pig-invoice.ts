@@ -8,6 +8,7 @@ import { FilterProvider } from '../../providers/filter/filter';
 import { FormControl } from '@angular/forms';
 import { InvoiceInputUtilComponent } from '../invoice-input-util/invoice-input-util';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
+import { UserProvider } from '../../providers/user/user';
 import { Utils } from '../../common/utils';
 import { VARIABLE } from '../../common/const';
 import { invoicesPig } from '../../common/entity';
@@ -59,7 +60,8 @@ export class ExportInternalPigInvoiceComponent {
     public invoiceProvider: InvoicesProvider,
     public navParams: NavParams,
     public platform: Platform,
-    public menuCtrl: MenuController
+    public menuCtrl: MenuController,
+    public userProvider:UserProvider
   ) {
     if (this.navParams.data.invoice) {
       this.invoices = this.navParams.data.invoice;
@@ -93,8 +95,6 @@ export class ExportInternalPigInvoiceComponent {
       invoice['sourceName'] = this.farms_util[invoice.sourceId].name;
       invoice['destinationName'] = this.farms_util[invoice.destinationId].name;
       invoice['exportDateDisplay'] = this.util.convertDate(invoice.exportDate);
-      // invoice['statusName'] = VARIABLE.INVOICE_STATUS.PROCCESSING == invoice.status
-      //   ? 'Đang xử lí' : (VARIABLE.INVOICE_STATUS.COMPLETE == invoice.status ? 'Hoàn tất' : 'Chưa xác định');
       switch (invoice.status) {
         case VARIABLE.INVOICE_STATUS.PROCCESSING: {
           invoice['statusName'] = 'Đang xử lí'; break;

@@ -10,6 +10,7 @@ import { PigListComponent } from '../../components/pig-list/pig-list';
 import { PigsProvider } from '../../providers/pigs/pigs';
 import { SalePigInvoiceRole } from '../../role-input/salePigInvoice';
 import { SettingsProvider } from '../../providers/settings/settings';
+import { UserProvider } from '../../providers/user/user';
 import { Utils } from '../../common/utils';
 import { invoicesPig } from '../../common/entity';
 
@@ -44,7 +45,8 @@ export class SalePigInvoiceDetailPage {
     public pigProvider: PigsProvider,
     public viewCtrl: ViewController,
     public settingProvider: SettingsProvider,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    public userProvider:UserProvider
   ) {
     if (this.navParams.data.invoice) {
       this.invoice = this.navParams.data.invoice;
@@ -240,7 +242,6 @@ export class SalePigInvoiceDetailPage {
                   this.pigs[response.pigs.id] = response.pigs;
                   this.details.push(response.invoicePigDetail);
                 }
-                this.navCtrl.pop();
               })
               .catch((err: Error) => { })
           }

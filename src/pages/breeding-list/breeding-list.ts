@@ -1,13 +1,15 @@
-import { Component, Input } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, Platform } from 'ionic-angular';
-import { FormControl } from '@angular/forms';
-import { FilterProvider } from '../../providers/filter/filter';
-import { breedings, pig } from '../../common/entity';
-import { Utils } from '../../common/utils';
-import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { Events, IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+
 import { ActivitiesProvider } from '../../providers/activities/activities';
 import { BreedingInputPage } from '../breeding-input/breeding-input';
+import { Component } from '@angular/core';
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { FilterProvider } from '../../providers/filter/filter';
+import { FormControl } from '@angular/forms';
 import { PigsProvider } from '../../providers/pigs/pigs';
+import { UserProvider } from '../../providers/user/user';
+import { Utils } from '../../common/utils';
+import { breedings } from '../../common/entity';
 
 @IonicPage()
 @Component({
@@ -56,6 +58,7 @@ export class BreedingListPage {
     public filterProvider: FilterProvider,
     public deployData: DeployDataProvider,
     public activitiesProvider: ActivitiesProvider,
+    public userProvider: UserProvider,
     public events: Events,
     public pigProvider: PigsProvider,
     public util: Utils) {

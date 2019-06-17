@@ -7,7 +7,18 @@ export class FilterProvider {
   constructor(
     public util: Utils
   ) {
-    console.log('Hello FilterProvider Provider');
+    
+  }
+
+  ionViewDidLoad(){
+    
+  }
+
+  clear(){
+    this.searchText = '';
+    this.searchWithInclude = {};
+    this.searchWithRange = {};
+    this.searchWithText = [];
   }
 
   public input: any = [];
@@ -37,10 +48,11 @@ export class FilterProvider {
   public typeSort: "DESC" | "ASC";
 
   filter() {
+    let result = [];
     if (this.input && this.input.length) {
 
 
-      let result = this.input.filter((item) => {
+      result= this.input.filter((item) => {
         let check = 0;
         this.searchWithText.forEach(e => {
           if (item[e])
@@ -64,9 +76,9 @@ export class FilterProvider {
         })
       })
 
-      return result;
-    }else{
-      return [];
+      this.clear();
     }
+    
+    return result;
   }
 }

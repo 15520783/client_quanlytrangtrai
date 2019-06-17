@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { Events, NavController, NavParams, Platform } from 'ionic-angular';
+import { Component, Input, ViewChild } from '@angular/core';
+import { Events, Menu, MenuController, NavController, NavParams, Platform } from 'ionic-angular';
 
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { FilterProvider } from '../../providers/filter/filter';
@@ -8,6 +8,7 @@ import { InvoiceInputUtilComponent } from '../invoice-input-util/invoice-input-u
 import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { SalePigInvoiceDetailPage } from '../../pages/sale-pig-invoice-detail/sale-pig-invoice-detail';
 import { SalePigInvoiceRole } from '../../role-input/salePigInvoice';
+import { UserProvider } from '../../providers/user/user';
 import { Utils } from '../../common/utils';
 import { VARIABLE } from '../../common/const';
 import { invoicesPig } from '../../common/entity';
@@ -17,6 +18,7 @@ import { invoicesPig } from '../../common/entity';
   templateUrl: 'sale-pig-invoices.html'
 })
 export class SalePigInvoicesComponent {
+  @ViewChild('menuFilter') menuFilter: Menu;
 
   @Input() invoices: Array<invoicesPig> = [];
   public roleInput: any;
@@ -45,8 +47,11 @@ export class SalePigInvoicesComponent {
 
   public visible_items: Array<any> = [];
 
-  public partners_util = {};
+  public customer_util = {};
   public farms_util = {};
+
+  public sourceFilter: Array<any> = [];
+  public destinationFilter: Array<any> = [];
 
   constructor(
     public filterProvider: FilterProvider,
@@ -56,17 +61,20 @@ export class SalePigInvoicesComponent {
     public deployData: DeployDataProvider,
     public invoiceProvider: InvoicesProvider,
     public navParams: NavParams,
-    public platform: Platform
+    public platform: Platform,
+    public menuCtrl: MenuController,
+    public userProvider:UserProvider
   ) {
     if (this.navParams.data.invoice) {
-      console.log(this.navParams.data.invoice);
       this.invoices = this.navParams.data.invoice;
       this.setFilteredItems();
     }
 
     this.roleInput = new SalePigInvoiceRole(this.deployData, this.invoiceProvider);
     this.farms_util = this.deployData.get_object_list_key_of_farm();
-    this.partners_util = this.deployData.get_object_list_key_of_partner();
+    this.customer_util = this.deployData.get_object_list_key_of_customer();
+    this.sourceFilter = this.deployData.get_farm_list_for_select();
+    this.destinationFilter = this.deployData.get_customer_list_for_select();
 
     this.events.subscribe('invoicesReload', () => {
       this.setFilteredItems();
@@ -87,7 +95,7 @@ export class SalePigInvoicesComponent {
   public filterItems(searchItem) {
     this.invoices.forEach((invoice) => {
       invoice['sourceName'] = this.farms_util[invoice.sourceId].name;
-      invoice['destinationName'] = this.partners_util[invoice.destinationId].name;
+      invoice['destinationName'] = this.customer_util[invoice.destinationId].name;
       invoice['exportDateDisplay'] = this.util.convertDate(invoice.exportDate);
       switch (invoice.status) {
         case VARIABLE.INVOICE_STATUS.PROCCESSING: {
@@ -164,16 +172,35 @@ export class SalePigInvoicesComponent {
     }
 
     this.navCtrl.push(SalePigInvoiceDetailPage, { invoice: item, callbackUpdate: callbackUpdate, callbackRemove: callbackRemove });
-
-    // this.events.subscribe('removeInvoiceEvent', (invoice) => {
-    //   if (invoice) {
-    //     let idx = this.invoices.findIndex(Obj => Obj.id == invoice.id);
-    //     if (idx > -1)
-    //       this.invoices.splice(idx, 1);
-    //     this.setFilteredItems();
-    //     this.events.unsubscribe('removeInvoiceEvent');
-    //   }
-    // })
   }
 
+  openFilter() {
+    this.menuFilter.enable(true);
+    this.menuFilter.open();
+  }
+
+  closeFilter() {
+    this.menuCtrl.close();
+  }
+
+  filterSource(sourceId) {
+    if (sourceId)
+      this.filterProvider.searchWithInclude.sourceId = [sourceId];
+    else
+      this.filterProvider.searchWithInclude.sourceId = [];
+    this.setFilteredItems();
+  }
+
+  filterDestination(destinationId) {
+    if (destinationId)
+      this.filterProvider.searchWithInclude.destinationId = [destinationId];
+    else
+      this.filterProvider.searchWithInclude.destinationId = [];
+    this.setFilteredItems();
+  }
+
+  customAlertOptions: any = {
+    translucent: true,
+    cssClass: 'ion-popover'
+  };
 }

@@ -17,7 +17,7 @@
 </ion-header>
 <ion-content #contentInternalInvoice class="setting-util-component">
   <div id="content">
-    <ion-item-divider  custom-diviver sticky="true" *ngIf="platform.is('core')">
+    <ion-item-divider custom-diviver sticky="true" *ngIf="platform.is('core')">
       <ion-row>
         <button no-margin ion-button item-end mode='ios' color="secondary" (tap)="viewListForwarding()">Danh sách chừng
           từ chuyển heo đến</button>
@@ -42,10 +42,16 @@
     </ion-infinite-scroll>
   </div>
   <ion-fab bottom right *ngIf="!platform.is('core')" color="secondary">
-    <button color="main" ion-fab (tap)="viewListForwarding()" data-balloon-visible data-balloon-length="medium" data-balloon="Danh sách chừng
-    từ chuyển heo đến" data-balloon-pos="left" ion-fab>
-      <ion-icon name="md-information"></ion-icon>
+    <button ion-fab>
+      <ion-icon name="ios-arrow-up"></ion-icon>
     </button>
+    <ion-fab-list side="top" style="right:0px">
+      <button color="main" ion-fab (tap)="viewListForwarding()" data-balloon-visible data-balloon-length="medium"
+        data-balloon="Danh sách chừng
+            từ chuyển heo đến" data-balloon-pos="left" ion-fab>
+        <ion-icon name="md-information"></ion-icon>
+      </button>
+    </ion-fab-list>
   </ion-fab>
 </ion-content>
 

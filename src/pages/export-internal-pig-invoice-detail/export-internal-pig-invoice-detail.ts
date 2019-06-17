@@ -1,15 +1,17 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, ViewController, Slides, Content } from 'ionic-angular';
+import { Events, IonicPage, NavController, NavParams, Slides, ViewController } from 'ionic-angular';
+import { MESSAGE, VARIABLE } from '../../common/const';
+import { invoicePigDetail, invoicesPig, pig } from '../../common/entity';
+
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { ExportInternalPigInvoiceRole } from '../../role-input/export-InternalPigInvoice';
+import { InputPigToInternalInvoicePage } from '../input-pig-to-internal-invoice/input-pig-to-internal-invoice';
+import { InvoiceInputUtilComponent } from '../../components/invoice-input-util/invoice-input-util';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
-import { Utils } from '../../common/utils';
 import { PigsProvider } from '../../providers/pigs/pigs';
 import { SettingsProvider } from '../../providers/settings/settings';
-import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
-import { invoicePigDetail, invoicesPig, pig } from '../../common/entity';
-import { VARIABLE, MESSAGE, KEY } from '../../common/const';
-import { ExportInternalPigInvoiceRole } from '../../role-input/export-InternalPigInvoice';
-import { InvoiceInputUtilComponent } from '../../components/invoice-input-util/invoice-input-util';
-import { InputPigToInternalInvoicePage } from '../input-pig-to-internal-invoice/input-pig-to-internal-invoice';
+import { UserProvider } from '../../providers/user/user';
+import { Utils } from '../../common/utils';
 
 @IonicPage()
 @Component({
@@ -43,7 +45,8 @@ export class ExportInternalPigInvoiceDetailPage {
     public events: Events,
     public pigProvider: PigsProvider,
     public viewCtrl: ViewController,
-    public settingProvider: SettingsProvider
+    public settingProvider: SettingsProvider,
+    public userProvider:UserProvider
   ) {
     if (this.navParams.data.invoice) {
       this.invoice = this.navParams.data.invoice;

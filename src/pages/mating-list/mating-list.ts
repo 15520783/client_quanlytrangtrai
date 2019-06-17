@@ -9,6 +9,7 @@ import { FilterProvider } from '../../providers/filter/filter';
 import { FormControl } from '@angular/forms';
 import { MatingInputPage } from '../mating-input/mating-input';
 import { PigsProvider } from '../../providers/pigs/pigs';
+import { UserProvider } from '../../providers/user/user';
 import { Utils } from '../../common/utils';
 import { VARIABLE } from '../../common/const';
 
@@ -59,8 +60,9 @@ export class MatingListPage {
     public deployData: DeployDataProvider,
     public activitiesProvider: ActivitiesProvider,
     public pigProvider: PigsProvider,
-    public platform:Platform,
-    public util: Utils
+    public platform: Platform,
+    public util: Utils,
+    public userProvider: UserProvider
   ) {
     if (this.navParams.data.sectionType) {
       this.sectionType = this.navParams.data.sectionType;

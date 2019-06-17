@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Events, IonicPage, NavController, NavParams, Slides, ViewController } from 'ionic-angular';
+import { Events, IonicPage, NavController, NavParams, Platform, Slides, ViewController } from 'ionic-angular';
 import { KEY, VARIABLE } from '../../common/const';
 import { invoicePigDetail, invoicesPig, pig } from '../../common/entity';
 
@@ -10,6 +10,7 @@ import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { PigInputPage } from '../pig-input/pig-input';
 import { PigsProvider } from '../../providers/pigs/pigs';
 import { SettingsProvider } from '../../providers/settings/settings';
+import { UserProvider } from '../../providers/user/user';
 import { Utils } from '../../common/utils';
 
 @IonicPage()
@@ -42,7 +43,9 @@ export class ExternalPigInvoiceDetailPage {
     public events: Events,
     public pigProvider: PigsProvider,
     public viewCtrl: ViewController,
-    public settingProvider: SettingsProvider
+    public settingProvider: SettingsProvider,
+    public userProvider:UserProvider,
+    public platform:Platform
   ) {
     if (this.navParams.data.invoice) {
       this.invoice = this.navParams.data.invoice;
@@ -127,6 +130,7 @@ export class ExternalPigInvoiceDetailPage {
       this.pigProvider.updatePig(pig)
         .then((pig) => {
           this.pigs[pig.id] = pig;
+          this.navCtrl.pop();
         })
         .catch((err: Error) => { })
     }

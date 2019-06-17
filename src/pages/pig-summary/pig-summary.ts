@@ -144,9 +144,20 @@ export class PigSummaryPage {
     }
   }
 
-  // setData = data => {
-  //   if (data) {
-  //     this.data.dataActivities = data;
-  //   }
-  // }
+
+  updateCallback(pig){
+    if(pig){
+      this.data.pig = pig;
+      this.navParams.get('callbackUpdate')(pig);
+      this.navCtrl.pop();
+    }
+  }
+
+  removeCallback(pig){
+    if(pig){
+      this.data.pig = pig;
+      this.navParams.get('callbackRemove')(pig);
+      this.navCtrl.pop();
+    }
+  }
 }

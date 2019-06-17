@@ -1,13 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, Menu, Content, MenuController, Platform } from 'ionic-angular';
-import { sperms } from '../../common/entity';
-import { FormControl } from '@angular/forms';
-import { FilterProvider } from '../../providers/filter/filter';
+import { Content, IonicPage, Menu, MenuController, NavController, NavParams, Platform, ViewController } from 'ionic-angular';
+
+import { ActivitiesProvider } from '../../providers/activities/activities';
 import { CONFIG } from '../../common/const';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
-import { Utils } from '../../common/utils';
-import { ActivitiesProvider } from '../../providers/activities/activities';
+import { FilterProvider } from '../../providers/filter/filter';
+import { FormControl } from '@angular/forms';
 import { SpermInputPage } from '../sperm_input/sperm_input';
+import { UserProvider } from '../../providers/user/user';
+import { Utils } from '../../common/utils';
+import { sperms } from '../../common/entity';
 
 @IonicPage()
 @Component({
@@ -69,7 +71,8 @@ export class SpermListPage {
     public util: Utils,
     public menuCtrl: MenuController,
     public viewCtrl: ViewController,
-    public platform: Platform
+    public platform: Platform,
+    public userProvider:UserProvider
   ) {
     if (this.navParams.data.sectionType) {
       this.sectionType = this.navParams.data.sectionType;

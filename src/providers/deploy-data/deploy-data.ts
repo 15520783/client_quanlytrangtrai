@@ -582,6 +582,19 @@ export class DeployDataProvider {
   }
 
   /**
+   * Lấy các đối tượng khách hàng với Object key  là id
+   */
+  get_object_list_key_of_customer() {
+    let customers = {};
+    if (this.settingProvider.setting) {
+      this.settingProvider.setting.customers.forEach((customer) => {
+        customers[customer.id] = customer;
+      })
+    }
+    return customers;
+  }
+
+  /**
    * Lấy các đối tượng trang trại với Object key  là id
    */
   get_object_list_key_of_farm() {

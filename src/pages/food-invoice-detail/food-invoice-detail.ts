@@ -7,6 +7,7 @@ import { FoodInvoiceRole } from '../../role-input/foodInvoice';
 import { FoodWarehouseInputPage } from '../food-warehouse-input/food-warehouse-input';
 import { InvoiceInputUtilComponent } from '../../components/invoice-input-util/invoice-input-util';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
+import { UserProvider } from '../../providers/user/user';
 import { Utils } from '../../common/utils';
 import { VARIABLE } from '../../common/const';
 
@@ -33,7 +34,8 @@ export class FoodInvoiceDetailPage {
     public deployData: DeployDataProvider,
     public util: Utils,
     public events: Events,
-    public viewCtrl: ViewController
+    public viewCtrl: ViewController,
+    public userProvider: UserProvider
   ) {
     if (this.navParams.data.invoice) {
       this.invoice = this.navParams.data.invoice;

@@ -13,6 +13,7 @@ import { PigSummaryPage } from '../../pages/pig-summary/pig-summary';
 import { PigsProvider } from '../../providers/pigs/pigs';
 import { ReviewOffsetPigPage } from '../../pages/review-offset-pig/review-offset-pig';
 import { SpermInputPage } from '../../pages/sperm_input/sperm_input';
+import { UserProvider } from '../../providers/user/user';
 import { Utils } from '../../common/utils';
 import { VARIABLE } from '../../common/const';
 
@@ -47,7 +48,8 @@ export class OptionListPigSectionComponent {
     public util: Utils,
     public events: Events,
     public activitiesProvider: ActivitiesProvider,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    public userProvider: UserProvider
   ) {
     this.statusPig = {
       UNKNOW: VARIABLE.STATUS_PIG.UNKNOW,
@@ -123,7 +125,8 @@ export class OptionListPigSectionComponent {
   @Output() pigChange = new EventEmitter();
 
   viewDetail() {
-    this.navCtrl.push(PigSummaryPage, { pig: this.pig });
+
+    this.navCtrl.push(PigSummaryPage, { pig: this.pig});
   }
 
   /**

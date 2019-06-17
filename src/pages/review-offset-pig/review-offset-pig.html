@@ -6,7 +6,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content [attr.padding]="platform.is('core')?'':null">
   <ion-list *ngIf="pig">
     <ion-row style="border-top:1px solid gray!important;">
       <ion-col col-12>
@@ -74,7 +74,9 @@
 
         <ion-list radio-group [(ngModel)]="classification">
           <ion-item *ngFor="let item of classificationList">
-            <ion-label><ion-badge>{{item.name}}</ion-badge></ion-label>
+            <ion-label>
+              <ion-badge>{{item.name}}</ion-badge>
+            </ion-label>
             <ion-radio [value]="item.name"></ion-radio>
           </ion-item>
         </ion-list>

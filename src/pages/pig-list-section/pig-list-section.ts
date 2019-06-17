@@ -1,15 +1,15 @@
+import { CONFIG, MESSAGE, VARIABLE } from '../../common/const';
 import { Component, Input, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, Platform, Menu, MenuController } from 'ionic-angular';
-import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
-import { FormControl } from '@angular/forms';
-import { FilterProvider } from '../../providers/filter/filter';
-import { Utils } from '../../common/utils';
-import { VARIABLE, MESSAGE, CONFIG } from '../../common/const';
-import { PigViewPage } from '../../tabs/pig-view/pig-view';
-import { pig } from '../../common/entity';
-import { PigSummaryPage } from '../pig-summary/pig-summary';
-import { PigsProvider } from '../../providers/pigs/pigs';
+import { Events, IonicPage, Menu, MenuController, NavController, NavParams, Platform } from 'ionic-angular';
 
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { FilterProvider } from '../../providers/filter/filter';
+import { FormControl } from '@angular/forms';
+import { PigSummaryPage } from '../pig-summary/pig-summary';
+import { PigViewPage } from '../../tabs/pig-view/pig-view';
+import { PigsProvider } from '../../providers/pigs/pigs';
+import { Utils } from '../../common/utils';
+import { pig } from '../../common/entity';
 
 @IonicPage()
 @Component({
@@ -90,11 +90,23 @@ export class PigListSectionPage {
       this.setFilteredItems();
       this.util.closeBackDrop();
     })
-    .catch((err)=>{
-      this.util.closeBackDrop().then((sth)=>{
-        this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].ERROR_OCCUR)
+      .catch((err) => {
+        this.util.closeBackDrop().then((sth) => {
+          this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].ERROR_OCCUR)
+        })
       })
-    })
+
+    if (!this.platform.is('core')) {
+      this.events.subscribe('pig-list-section:removePig', (pig) => {
+        if (pig) {
+          let idx = this.pigs.findIndex(_pig => _pig.id == pig.id);
+          if (idx > -1) {
+            this.pigs.splice(idx, 1);
+            this.setFilteredItems();
+          }
+        }
+      })
+    }
   }
 
   ionViewDidLoad() {
@@ -230,11 +242,26 @@ export class PigListSectionPage {
 
     this.events.subscribe('pig-list-section:PigChange', (pig: pig) => {
       if (pig) {
-        // let EditPig = this.deployData.get_pig_by_id(pig.id);
         this.pigChange(pig, item);
       }
     })
 
-    this.navCtrl.push(PigSummaryPage, { pig: item });
+    let callbackUpdate = (pig: pig) => {
+      if (pig) {
+        this.pigChange(pig, item);
+      }
+    }
+
+    let callbackRemove = (pig: pig) => {
+      if (pig) {
+        let idx = this.pigs.findIndex(_pig => _pig.id == pig.id);
+        if (idx > -1) {
+          this.pigs.splice(idx, 1);
+          this.setFilteredItems();
+        }
+        this.navCtrl.pop();
+      }
+    }
+    this.navCtrl.push(PigSummaryPage, { pig: item, callbackUpdate: callbackUpdate, callbackRemove: callbackRemove });
   }
 }

@@ -1,6 +1,5 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { Content, Events, Menu, MenuController, NavController, NavParams, Platform } from 'ionic-angular';
-import { invoicesPig, invoicesProduct } from '../../common/entity';
 
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { ExternalPigInvoiceDetailPage } from '../../pages/external-pig-invoice-detail/external-pig-invoice-detail';
@@ -9,8 +8,10 @@ import { FilterProvider } from '../../providers/filter/filter';
 import { FormControl } from '@angular/forms';
 import { InvoiceInputUtilComponent } from '../invoice-input-util/invoice-input-util';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
+import { UserProvider } from '../../providers/user/user';
 import { Utils } from '../../common/utils';
 import { VARIABLE } from '../../common/const';
+import { invoicesPig } from '../../common/entity';
 
 @Component({
   selector: 'external-pig-invoices',
@@ -62,14 +63,14 @@ export class ExternalPigInvoicesComponent {
     public invoiceProvider: InvoicesProvider,
     public navParams: NavParams,
     public platform: Platform,
-    public menuCtrl: MenuController
+    public menuCtrl: MenuController,
+    public userProvider: UserProvider
   ) {
     if (this.navParams.data.invoice) {
       this.invoices = this.navParams.data.invoice;
       this.setFilteredItems();
     }
     this.roleInput = new ExternalPigInvoiceRole(this.deployData, this.invoiceProvider);
-    console.log(this.partners_util);
     this.sourceFilter = this.deployData.get_partner_list_for_select();
     this.destinationFilter = this.deployData.get_farm_list_for_select();
 
@@ -99,11 +100,12 @@ export class ExternalPigInvoicesComponent {
         ? 'Đang xử lí' : (VARIABLE.INVOICE_STATUS.COMPLETE == invoice.status ? 'Hoàn tất' : 'Chưa xác định');
     })
       ;
+ 
     this.filterProvider.input = this.invoices;
     this.filterProvider.searchText = searchItem;
     this.filterProvider.searchWithText = this.filter_default;
 
-    this.filterProvider.searchWithRange = {}
+    this.filterProvider.searchWithRange = {};
     return this.filterProvider.filter().sort((a: invoicesPig, b: invoicesPig) =>
       (new Date(a.importDate) > new Date(b.importDate)) ? -1 : 1
     );

@@ -2,13 +2,14 @@
   <ion-row>
     <ion-col>
       <button 
-      *ngIf="view_info.includes(sectionTypeId)"
+      *ngIf="userProvider.rolePermission.ROLE_xem_thong_tin_heo_tai_khu!=null && view_info.includes(sectionTypeId)"
       small ion-button item-end mode='ios' color="main"
       (tap)="viewDetail()">Xem thông tin</button>
     </ion-col>
     
     <ion-col>
       <button 
+      *ngIf="userProvider.rolePermission.ROLE_nhap_van_de_cua_heo!=null"
       showWhen="core" 
       small ion-button item-end mode='ios' color="secondary"
       (tap)="health_input()">Nhập vấn đề</button>
@@ -18,7 +19,7 @@
       <button 
       showWhen="core"
       small ion-button item-end mode='ios' color="secondary"
-      *ngIf="statusObjectKey[pig.statusId].code != statusPig.MATING"
+      *ngIf="userProvider.rolePermission.ROLE_danh_gia_chuyen_noi_bo!=null &&  statusObjectKey[pig.statusId].code != statusPig.MATING"
       (tap)="transferSection()">Đánh giá & chuyển nội bộ</button>
     </ion-col>
     
@@ -66,7 +67,8 @@
     <ion-col>
       <button 
       showWhen="core" 
-      *ngIf="breeding.includes(sectionTypeId) 
+      *ngIf="userProvider.rolePermission.ROLE_len_giong_heo_nai!=null 
+      && breeding.includes(sectionTypeId) 
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE 
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_MATING 
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_TRANSFER
@@ -78,7 +80,8 @@
     <ion-col>
       <button 
       showWhen="core" 
-      *ngIf="sperm.includes(sectionTypeId) 
+      *ngIf="userProvider.rolePermission.ROLE_khai_thac_tinh_heo!=null 
+      && sperm.includes(sectionTypeId) 
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_TRANSFER
       && pig.gender == gender.MALE"
@@ -89,7 +92,8 @@
     <ion-col>
       <button 
       showWhen="core" 
-      *ngIf="mating.includes(sectionTypeId) 
+      *ngIf="userProvider.rolePermission.ROLE_ghi_nhan_phoi_giong!=null
+      && mating.includes(sectionTypeId) 
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_TRANSFER
       && pig.gender == gender.FEMALE
@@ -101,7 +105,8 @@
     <ion-col>
       <button 
       showWhen="core" 
-      *ngIf="weaning.includes(sectionTypeId) 
+      *ngIf="userProvider.rolePermission.ROLE_them_vao_danh_sach_cai_sua!=null && 
+      weaning.includes(sectionTypeId) 
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_TRANSFER
       && (statusObjectKey[pig.statusId].code == statusPig.FARROWING || statusObjectKey[pig.statusId].code == statusPig.NEWBORN)"
@@ -112,7 +117,8 @@
     <ion-col>
       <button 
       showWhen="core" 
-      *ngIf="review_offset.includes(sectionTypeId) 
+      *ngIf="userProvider.rolePermission.ROLE_phan_loai_danh_gia_chat_luong_heo!=null && 
+      review_offset.includes(sectionTypeId) 
       && statusObjectKey[pig.statusId].code != statusPig.SOLD"
       small ion-button item-end mode='ios' color="secondary"
       (tap)="reviewOffset()">Phân loại đánh giá chất lượng heo đầu ra</button>

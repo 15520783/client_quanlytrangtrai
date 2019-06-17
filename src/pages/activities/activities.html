@@ -19,8 +19,12 @@
             </button>
             <expandable [expanded]="p.expand" *ngIf="p.components">
               <ion-list>
-                <button ion-item *ngFor="let component of p.components" (click)="openComponent(component)"
-                  [attr.active]="component.active?'':null">{{component.name}}</button>
+                <span *ngFor="let component of p.components">
+                  <button ion-item *ngIf="component!=null" 
+                    (click)="openComponent(component)"
+                    [attr.active]="component.active?'':null">{{component.name}}
+                  </button>
+                </span>
               </ion-list>
             </expandable>
           </ion-list>
@@ -48,8 +52,14 @@
     </button>
     <expandable [expanded]="p.expand" *ngIf="p.components">
       <ion-list>
-        <button ion-item *ngFor="let component of p.components" (click)="openComponent(component)"
-          [attr.active]="component.active?'':null">{{component.name}}</button>
+        <span *ngFor="let component of p.components">
+          <button ion-item  
+            *ngIf="component!=null"
+            (click)="openComponent(component)"
+            [attr.active]="component.active?'':null">
+            {{component.name}}
+          </button>
+        </span>
       </ion-list>
     </expandable>
   </ion-list>

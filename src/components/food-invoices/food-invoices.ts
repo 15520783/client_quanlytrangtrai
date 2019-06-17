@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { Content, Events, NavController, NavParams } from 'ionic-angular';
+import { Content, Events, Menu, MenuController, NavController, NavParams, Platform } from 'ionic-angular';
 
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { FilterProvider } from '../../providers/filter/filter';
@@ -8,6 +8,7 @@ import { FoodInvoiceRole } from '../../role-input/foodInvoice';
 import { FormControl } from '@angular/forms';
 import { InvoiceInputUtilComponent } from '../invoice-input-util/invoice-input-util';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
+import { UserProvider } from '../../providers/user/user';
 import { Utils } from '../../common/utils';
 import { VARIABLE } from '../../common/const';
 import { invoicesProduct } from '../../common/entity';
@@ -17,7 +18,9 @@ import { invoicesProduct } from '../../common/entity';
   templateUrl: 'food-invoices.html'
 })
 export class FoodInvoicesComponent {
+  @ViewChild('menuFilter') menuFilter: Menu;
   @ViewChild('contentFoodInvoice') content: Content;
+
   @Input() invoices: Array<invoicesProduct> = [];
   public roleInput: any;
 
@@ -43,6 +46,9 @@ export class FoodInvoicesComponent {
 
   public visible_items: Array<any> = [];
 
+  public sourceFilter: Array<any> = [];
+  public destinationFilter: Array<any> = [];
+
   constructor(
     public filterProvider: FilterProvider,
     public util: Utils,
@@ -50,7 +56,10 @@ export class FoodInvoicesComponent {
     public events: Events,
     public deployData: DeployDataProvider,
     public invoiceProvider: InvoicesProvider,
-    public navParams: NavParams
+    public navParams: NavParams,
+    public userProvider:UserProvider,
+    public menuCtrl: MenuController,
+    public platform:Platform
   ) {
     if (this.navParams.data.invoice) {
       this.invoices = this.navParams.data.invoice;
@@ -60,6 +69,9 @@ export class FoodInvoicesComponent {
     this.events.subscribe('invoicesReload', () => {
       this.setFilteredItems();
     })
+
+    this.sourceFilter = this.deployData.get_partner_list_for_select();
+    this.destinationFilter = this.deployData.get_farm_list_for_select();
   }
 
   public partners_util = this.deployData.get_object_list_key_of_partner();
@@ -146,4 +158,34 @@ export class FoodInvoicesComponent {
       }
     })
   }
+
+  openFilter() {
+    this.menuFilter.enable(true);
+    this.menuFilter.open();
+  }
+
+  closeFilter() {
+    this.menuCtrl.close();
+  }
+
+  filterSource(sourceId) {
+    if (sourceId)
+      this.filterProvider.searchWithInclude.sourceId = [sourceId];
+    else
+      this.filterProvider.searchWithInclude.sourceId = [];
+    this.setFilteredItems();
+  }
+
+  filterDestination(destinationId) {
+    if (destinationId)
+      this.filterProvider.searchWithInclude.destinationId = [destinationId];
+    else
+      this.filterProvider.searchWithInclude.destinationId = [];
+    this.setFilteredItems();
+  }
+
+  customAlertOptions: any = {
+    translucent: true,
+    cssClass: 'ion-popover'
+  };
 }

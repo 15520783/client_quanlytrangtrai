@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { Content, Events, NavController, NavParams, Platform } from 'ionic-angular';
+import { Content, Events, Menu, MenuController, NavController, NavParams, Platform } from 'ionic-angular';
 
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { FilterProvider } from '../../providers/filter/filter';
@@ -8,6 +8,7 @@ import { InvoiceInputUtilComponent } from '../invoice-input-util/invoice-input-u
 import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { MedicineInvoiceDetailPage } from '../../pages/medicine-invoice-detail/medicine-invoice-detail';
 import { MedicineInvoiceRole } from '../../role-input/medicineInvoice';
+import { UserProvider } from '../../providers/user/user';
 import { Utils } from '../../common/utils';
 import { VARIABLE } from '../../common/const';
 import { invoicesProduct } from '../../common/entity';
@@ -17,7 +18,9 @@ import { invoicesProduct } from '../../common/entity';
   templateUrl: 'medicine-invoices.html'
 })
 export class MedicineInvoicesComponent {
+  @ViewChild('menuFilter') menuFilter: Menu;
   @ViewChild('contentMedicineInvoice') content: Content;
+  
   @Input() invoices: Array<invoicesProduct> = [];
   public roleInput: any;
 
@@ -46,6 +49,9 @@ export class MedicineInvoicesComponent {
   public partners_util;
   public farms_util;
 
+  public sourceFilter: Array<any> = [];
+  public destinationFilter: Array<any> = [];
+
   constructor(
     public platform: Platform,
     public filterProvider: FilterProvider,
@@ -54,7 +60,9 @@ export class MedicineInvoicesComponent {
     public events: Events,
     public deployData: DeployDataProvider,
     public invoiceProvider: InvoicesProvider,
-    public navParams: NavParams
+    public navParams: NavParams,
+    public userProvider:UserProvider,
+    public menuCtrl:MenuController,
   ) {
     if (this.navParams.data.invoice) {
       this.invoices = this.navParams.data.invoice;
@@ -62,6 +70,9 @@ export class MedicineInvoicesComponent {
     }
     this.partners_util = this.deployData.get_object_list_key_of_partner();
     this.farms_util = this.deployData.get_object_list_key_of_farm();
+    this.sourceFilter = this.deployData.get_farm_list_for_select();
+    this.destinationFilter = this.deployData.get_customer_list_for_select();
+    
     this.roleInput = new MedicineInvoiceRole(this.deployData, this.invoiceProvider);
     this.events.subscribe('invoicesReload', () => {
       this.setFilteredItems();
@@ -123,14 +134,7 @@ export class MedicineInvoicesComponent {
         callback: callback
       }
     )
-    // this.events.unsubscribe('callback');
-    // this.events.subscribe('callback', (data) => {
-    //   if (data) {
-    //     this.invoices.push(data);
-    //     this.setFilteredItems();
-    //     this.events.unsubscribe('callback');
-    //   }
-    // })
+
   }
 
   input_medicine(item) {
@@ -156,4 +160,34 @@ export class MedicineInvoicesComponent {
       }
     })
   }
+
+  openFilter() {
+    this.menuFilter.enable(true);
+    this.menuFilter.open();
+  }
+
+  closeFilter() {
+    this.menuCtrl.close();
+  }
+
+  filterSource(sourceId) {
+    if (sourceId)
+      this.filterProvider.searchWithInclude.sourceId = [sourceId];
+    else
+      this.filterProvider.searchWithInclude.sourceId = [];
+    this.setFilteredItems();
+  }
+
+  filterDestination(destinationId) {
+    if (destinationId)
+      this.filterProvider.searchWithInclude.destinationId = [destinationId];
+    else
+      this.filterProvider.searchWithInclude.destinationId = [];
+    this.setFilteredItems();
+  }
+
+  customAlertOptions: any = {
+    translucent: true,
+    cssClass: 'ion-popover'
+  };
 }

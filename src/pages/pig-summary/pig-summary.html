@@ -4,9 +4,9 @@
   </ion-navbar>
   <ion-toolbar showWhen='ios,android'>
     <ion-segment [(ngModel)]="tab" scrollable>
-      <ion-segment-button value="0" (tap)="selectedTab(0)">Thông tin heo</ion-segment-button>
-      <ion-segment-button value="1" (tap)="selectedTab(1)">Chỉ số heo</ion-segment-button>
-      <ion-segment-button value="2" (tap)="selectedTab(2)">Hoạt động</ion-segment-button>
+      <ion-segment-button *ngIf="userProvider.rolePermission.ROLE_xem_thong_tin_heo != null" value="0" (tap)="selectedTab(0)">Thông tin heo</ion-segment-button>
+      <ion-segment-button *ngIf="userProvider.rolePermission.ROLE_xem_thong_tin_heo != null" value="1" (tap)="selectedTab(1)">Chỉ số heo</ion-segment-button>
+      <ion-segment-button *ngIf="userProvider.rolePermission.ROLE_xem_lich_su_hoat_dong != null" value="2" (tap)="selectedTab(2)">Hoạt động</ion-segment-button>
     </ion-segment>
   </ion-toolbar>
 </ion-header>
@@ -55,7 +55,23 @@
     <ion-slide *ngIf="data.pig">
       <page-pig-review-index [(pig)]="data.pig"></page-pig-review-index>
     </ion-slide>
-    <ion-slide *ngIf="data.pig">
+    <span *ngFor="let page of pages">
+      <span *ngIf="page.components && page.components.length">
+        <ion-slide *ngIf="data.pig">
+          <ion-infinite-scroll>
+            <ion-item-divider sticky="true" text-wrap text-left>Danh sách tùy chọn</ion-item-divider>
+            <ion-list>
+              <span *ngFor="let item of page.components">
+                <button ion-item (tap)="openOptions(item.component)" *ngIf="!item.notShow">
+                  {{item.title}}
+                </button>
+              </span>
+            </ion-list>
+          </ion-infinite-scroll>
+        </ion-slide>
+      </span>
+    </span>
+    <!-- <ion-slide *ngIf="data.pig">
       <ion-infinite-scroll>
         <ion-item-divider sticky="true" text-wrap text-left>Danh sách tùy chọn</ion-item-divider>
         <ion-list>
@@ -66,9 +82,14 @@
           </span>
         </ion-list>
       </ion-infinite-scroll>
-    </ion-slide>
+    </ion-slide> -->
   </ion-slides>
   <span *ngIf="data.pig && data.pig.house">
-    <list-fab-button-pig [(pig)]="data.pig" [sectionTypeId]="data.pig.house.section.typeId"></list-fab-button-pig>
+    <list-fab-button-pig 
+      (updatePigEvent)="updateCallback($event)" 
+      (removePigEvent)="removeCallback($event)"
+      [(pig)]="data.pig" 
+      [sectionTypeId]="data.pig.house.section.typeId">
+    </list-fab-button-pig>
   </span>
 </ion-content>

@@ -57,10 +57,7 @@
           <ion-item-options side="right" *ngIf="!platform.is('core')">
             <button text-wrap ion-button color="secondary" (tap)="edit(item)" style="font-size: 10px">Cập nhật thông tin</button>
             <button text-wrap ion-button color="main" (tap)="changePassword(item)" style="font-size: 10px">Đổi mật khẩu</button>
-            <button text-wrap ion-button color="danger" (tap)="remove(item)" style="font-size: 10px">Xóa tài khoản</button>
-            <span *ngIf="extraButtons">
-              <button *ngFor="let button of extraButtons" ion-button [color]="button.color">{{button.title}}</button>
-            </span>
+            <button  ion-button color="danger" (tap)="remove(item)" style="font-size: 10px">Xóa tài khoản</button>
           </ion-item-options>
         </ion-item-sliding>
       </span>

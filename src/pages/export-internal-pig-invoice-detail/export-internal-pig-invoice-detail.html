@@ -5,11 +5,11 @@
     </ion-toolbar>
   </ion-navbar>
   <ion-toolbar showWhen="core" class="pl-10">
-    <button *ngIf="canEditInvoice" ion-button mode='ios' color="secondary" (tap)="input_pig()">Nhập heo</button>
-    <button *ngIf="canEditInvoice" ion-button mode='ios' color="secondary" (tap)="editInvoice()">Chỉnh sửa chứng
+    <button *ngIf="userProvider.rolePermission.ROLE_them_chi_tiet_chung_tu_xuat_heo_trong_he_thong!=null && canEditInvoice" ion-button mode='ios' color="secondary" (tap)="input_pig()">Nhập heo</button>
+    <button *ngIf="userProvider.rolePermission.ROLE_cap_nhat_chung_tu_xuat_heo_trong_he_thong!=null && canEditInvoice" ion-button mode='ios' color="secondary" (tap)="editInvoice()">Chỉnh sửa chứng
       từ</button>
-    <button *ngIf="details.length" ion-button mode='ios' color="secondary" (tap)="forwardingModifyInvoice()">Xác nhận xuất heo</button>
-    <button  *ngIf="!details.length || !canCheckComplete" ion-button mode='ios' color="danger" (tap)="removeInvoice()">Xóa chứng từ</button>
+    <button *ngIf="userProvider.rolePermission.ROLE_xac_nhan_xuat_heo_chung_tu_xuat_heo_trong_he_thong!=null && details.length" ion-button mode='ios' color="secondary" (tap)="forwardingModifyInvoice()">Xác nhận xuất heo</button>
+    <button  *ngIf="userProvider.rolePermission.ROLE_xoa_chung_tu_xuat_heo_trong_he_thong!=null && (!details.length || !canCheckComplete)" ion-button mode='ios' color="danger" (tap)="removeInvoice()">Xóa chứng từ</button>
   </ion-toolbar>
   <ion-toolbar showWhen='ios,android'>
     <ion-segment [(ngModel)]="tab" scrollable>
@@ -121,9 +121,9 @@
                     </ion-row>
                   </ion-col>
                 </ion-row>
-                <button *ngIf="canEditInvoice" showWhen="core" ion-button item-end mode='ios' color="main" (tap)="edit(item)">Đánh giá
+                <button *ngIf="userProvider.rolePermission.ROLE_danh_gia_lai_heo_thuoc_chung_tu_xuat_heo_trong_he_thong!=null && canEditInvoice" showWhen="core" ion-button item-end mode='ios' color="main" (tap)="edit(item)">Đánh giá
                   lại</button>
-                <button *ngIf="canEditInvoice" showWhen="core" ion-button item-end mode='ios' color="danger"
+                <button *ngIf="userProvider.rolePermission.ROLE_xoa_chi_tiet_chung_tu_xuat_heo_trong_he_thong!=null && canEditInvoice" showWhen="core" ion-button item-end mode='ios' color="danger"
                   (tap)="removePigInvoicesDetail(item)">Xóa</button>
               </ion-item>
             </span>
@@ -216,8 +216,8 @@
               </ion-row>
             </ion-item>
             <ion-item-options side="right" showWhen="ios,android">
-              <button ion-button mode='ios' color="main"   (tap)="edit(item)">Đánh giá lại</button>
-              <button ion-button mode='ios' color="danger" (tap)="removePigInvoicesDetail(item)">Xóa</button>
+              <button *ngIf="userProvider.rolePermission.ROLE_danh_gia_lai_heo_thuoc_chung_tu_xuat_heo_trong_he_thong!=null && canEditInvoice" ion-button mode='ios' color="main"   (tap)="edit(item)">Đánh giá lại</button>
+              <button *ngIf="userProvider.rolePermission.ROLE_xoa_chi_tiet_chung_tu_xuat_heo_trong_he_thong!=null && canEditInvoice" ion-button mode='ios' color="danger" (tap)="removePigInvoicesDetail(item)">Xóa</button>
             </ion-item-options>
           </ion-item-sliding>
         </ion-list>
@@ -229,19 +229,19 @@
         <ion-icon name="ios-arrow-up"></ion-icon>
       </button>
       <ion-fab-list side="top" style="right:0px">
-        <button *ngIf="!details.length || !canCheckComplete" data-balloon-visible data-balloon-length="medium" data-balloon="Xóa chứng từ" data-balloon-pos="left"
+        <button *ngIf="userProvider.rolePermission.ROLE_xoa_chung_tu_xuat_heo_trong_he_thong!=null && (!details.length || !canCheckComplete)" data-balloon-visible data-balloon-length="medium" data-balloon="Xóa chứng từ" data-balloon-pos="left"
           ion-fab color="danger"  (tap)="removeInvoice()">
           <ion-icon name="md-trash"></ion-icon>
         </button>
-        <button *ngIf="details.length" data-balloon-visible data-balloon-length="medium" data-balloon="Xác nhận xuất heo" data-balloon-pos="left"
+        <button *ngIf="userProvider.rolePermission.ROLE_xac_nhan_xuat_heo_chung_tu_xuat_heo_trong_he_thong!=null && details.length" data-balloon-visible data-balloon-length="medium" data-balloon="Xác nhận xuất heo" data-balloon-pos="left"
           ion-fab color="main" (tap)="forwardingModifyInvoice()">
           <ion-icon name="md-create"></ion-icon>
         </button>
-        <button *ngIf="canEditInvoice" data-balloon-visible data-balloon-length="medium" data-balloon="Chỉnh sửa chứng từ" data-balloon-pos="left"
+        <button *ngIf="userProvider.rolePermission.ROLE_cap_nhat_chung_tu_xuat_heo_trong_he_thong!=null && canEditInvoice" data-balloon-visible data-balloon-length="medium" data-balloon="Chỉnh sửa chứng từ" data-balloon-pos="left"
           ion-fab color="main" (tap)="editInvoice()">
           <ion-icon name="md-create"></ion-icon>
         </button>
-        <button *ngIf="canEditInvoice" data-balloon-visible data-balloon-length="medium" data-balloon="Nhập heo" data-balloon-pos="left"
+        <button *ngIf="userProvider.rolePermission.ROLE_them_chi_tiet_chung_tu_xuat_heo_trong_he_thong!=null && canEditInvoice" data-balloon-visible data-balloon-length="medium" data-balloon="Nhập heo" data-balloon-pos="left"
           ion-fab color="main" (tap)="input_pig()">
           <ion-icon name="add"></ion-icon>
         </button>

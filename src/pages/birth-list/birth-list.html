@@ -25,13 +25,17 @@
                 <p style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}} </p>
               </ion-col>
             </ion-row>
-            <ion-row>
-              <button showWhen="core" small ion-button item-end mode='ios' color="main"
+            <ion-row *ngIf="platform.is('core')">
+              <button  *ngIf="userProvider.rolePermission.ROLE_xem_danh_sach_dan_heo_con!=null" small ion-button item-end mode='ios' color="main"
                 (tap)="viewDetail(item)">Danh sách đàn heo con</button>
-              <button showWhen="core" small ion-button item-end mode='ios' color="danger"
+              <button  *ngIf="userProvider.rolePermission.ROLE_xoa_ghi_nhan_thong_tin_heo_de!=null" small ion-button item-end mode='ios' color="danger"
                 (tap)="remove(item)">Xóa</button>
             </ion-row>
           </ion-item>
+          <ion-item-options side="right" *ngIf="!platform.is('core')">
+            <button *ngIf="userProvider.rolePermission.ROLE_xem_danh_sach_dan_heo_con!=null" text-wrap ion-button color="main" (tap)="viewDetail(item)" style="font-size: 10px">Danh sách đàn heo co</button>
+            <button *ngIf="userProvider.rolePermission.ROLE_xoa_ghi_nhan_thong_tin_heo_de!=null" text-wrap ion-button color="danger" (tap)="remove(item)" style="font-size: 10px">Xóa</button>
+          </ion-item-options>
         </ion-item-sliding>
       </span>
     </ion-list>

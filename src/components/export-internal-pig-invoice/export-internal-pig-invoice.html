@@ -17,7 +17,7 @@
 </ion-header>
 <ion-content #contentExternalInvoice class="setting-util-component">
   <div id="content">
-    <ion-item-divider custom-diviver sticky="true" showWhen="core">
+    <ion-item-divider *ngIf="userProvider.rolePermission.ROLE_them_chung_tu_xuat_heo_trong_he_thong!=null" custom-diviver sticky="true" showWhen="core">
       <ion-row>
         <button no-margin ion-button item-end mode='ios' color="secondary" (tap)="add()">Thêm chứng từ</button>
       </ion-row>
@@ -40,10 +40,15 @@
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </div>
-  <ion-fab bottom right showWhen="android,windows,ios" color="secondary">
-    <button ion-fab (tap)="add()">
-      <ion-icon name="add"></ion-icon>
+  <ion-fab bottom right *ngIf="!platform.is('core')" color="secondary">
+    <button ion-fab>
+      <ion-icon name="ios-arrow-up"></ion-icon>
     </button>
+    <ion-fab-list side="top" style="right:0px">
+      <button *ngIf="userProvider.rolePermission.ROLE_them_chung_tu_xuat_heo_trong_he_thong!=null" ion-fab (tap)="add()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-fab-list>
   </ion-fab>
 </ion-content>
 

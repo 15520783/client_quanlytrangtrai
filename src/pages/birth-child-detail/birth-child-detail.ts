@@ -1,14 +1,15 @@
 import { Component, Input } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { births, pig, invoicesPig } from '../../common/entity';
-import { FormControl } from '@angular/forms';
-import { FilterProvider } from '../../providers/filter/filter';
-import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { births, invoicesPig, pig } from '../../common/entity';
+
 import { ChildPigInputPage } from '../child-pig-input/child-pig-input';
-import { VARIABLE } from '../../common/const';
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { FilterProvider } from '../../providers/filter/filter';
+import { FormControl } from '@angular/forms';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { PigsProvider } from '../../providers/pigs/pigs';
-
+import { UserProvider } from '../../providers/user/user';
+import { VARIABLE } from '../../common/const';
 
 @IonicPage()
 @Component({
@@ -58,7 +59,8 @@ export class BirthChildDetailPage {
     public deployData: DeployDataProvider,
     public invoiceProvider: InvoicesProvider,
     public pigProvider: PigsProvider,
-    public platform: Platform
+    public platform: Platform,
+    public userProvider:UserProvider
   ) {
     this.init();
 

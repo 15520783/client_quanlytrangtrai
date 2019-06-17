@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { births } from '../../common/entity';
-import { FormControl } from '@angular/forms';
-import { FilterProvider } from '../../providers/filter/filter';
-import { Utils } from '../../common/utils';
+
 import { ActivitiesProvider } from '../../providers/activities/activities';
 import { BirthChildDetailPage } from '../birth-child-detail/birth-child-detail';
+import { Component } from '@angular/core';
+import { FilterProvider } from '../../providers/filter/filter';
+import { FormControl } from '@angular/forms';
+import { UserProvider } from '../../providers/user/user';
+import { Utils } from '../../common/utils';
+import { births } from '../../common/entity';
 
 @IonicPage()
 @Component({
@@ -53,7 +55,8 @@ export class BirthListPage {
     public navParams: NavParams,
     public filterProvider: FilterProvider,
     public util:Utils,
-    public activitiesProvider:ActivitiesProvider
+    public activitiesProvider:ActivitiesProvider,
+    public userProvider:UserProvider
   ) {
     if (this.navParams.data.sectionType) {
       this.sectionType = this.navParams.data.sectionType;

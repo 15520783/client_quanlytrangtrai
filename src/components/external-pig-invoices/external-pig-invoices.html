@@ -17,7 +17,8 @@
 </ion-header>
 <ion-content #contentExternalInvoice class="setting-util-component">
   <div id="content">
-    <ion-item-divider custom-diviver sticky="true" showWhen="core">
+    <ion-item-divider *ngIf="userProvider.rolePermission.ROLE_them_chung_tu_nhap_heo_ngoai_he_thong!=null"
+      custom-diviver sticky="true" showWhen="core">
       <ion-row>
         <button no-margin ion-button item-end mode='ios' color="secondary" (tap)="add()">Thêm chứng từ</button>
       </ion-row>
@@ -27,10 +28,8 @@
         <button ion-item (tap)="input_pig(item)">
           <h2 *ngIf="mainAttribute"><b>Số chứng từ: </b>{{item[mainAttribute]}}</h2>
           <ion-row>
-            <ion-col *ngFor="let attr of attributes" 
-                [attr.col-6]="!platform.is('core')?'':null"
-                [attr.col-3]="platform.is('core')?'':null" 
-                text-wrap>
+            <ion-col *ngFor="let attr of attributes" [attr.col-6]="!platform.is('core')?'':null"
+              [attr.col-3]="platform.is('core')?'':null" text-wrap>
               <p style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
             </ion-col>
           </ion-row>
@@ -42,44 +41,51 @@
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </div>
-  <ion-fab bottom right showWhen="android,windows,ios" color="secondary">
-    <button ion-fab (tap)="add()">
-      <ion-icon name="add"></ion-icon>
+  <ion-fab bottom right *ngIf="!platform.is('core')" color="secondary">
+    <button ion-fab>
+      <ion-icon name="ios-arrow-up"></ion-icon>
     </button>
+    <ion-fab-list side="top" style="right:0px">
+      <button *ngIf="userProvider.rolePermission.ROLE_them_chung_tu_nhap_heo_ngoai_he_thong!=null" color="main" ion-fab
+        (tap)="add()" data-balloon-visible data-balloon-length="medium" data-balloon="Thêm chứng từ"
+        data-balloon-pos="left" ion-fab>
+        <ion-icon name="md-add"></ion-icon>
+      </button>
+    </ion-fab-list>
   </ion-fab>
 </ion-content>
 
 <ion-menu [content]="mycontent" side="right" #menuFilter sticky="true" type="overlay" width="500">
-    <ion-header>
-      <ion-toolbar>
-        <ion-buttons start>
-          <button ion-button font20 (tap)="closeFilter()">
-            <ion-icon name="ios-arrow-forward"></ion-icon>
-          </button>
-        </ion-buttons>
-        <ion-title>Lọc theo tùy chọn</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content>
-      <ion-list>
-        <ion-item>
-          <ion-label stacked>Đơn vị nguồn</ion-label>
-          <ion-select interface="popover" title="Đơn vị nguồn" mode="ios" okText="Chọn" cancelText="Hủy"
-            [selectOptions]="customAlertOptions" (ionChange)="filterSource($event)" placeholder="Tất cả">
-            <ion-option [value]="''">Tất cả</ion-option>
-            <ion-option *ngFor="let item of sourceFilter" [value]="item.value">{{item.name}}</ion-option>
-          </ion-select>
-        </ion-item>
-  
-        <ion-item>
-          <ion-label stacked>Đơn vị nhận</ion-label>
-          <ion-select interface="popover" title="Đơn vị nhận" mode="ios" okText="Chọn" cancelText="Hủy"
-            [selectOptions]="customAlertOptions" (ionChange)="filterDestination($event)" placeholder="Tất cả">
-            <ion-option [value]="''">Tất cả</ion-option>
-            <ion-option *ngFor="let item of destinationFilter" [value]="item.value">{{item.name}}</ion-option>
-          </ion-select>
-        </ion-item>
-      </ion-list>
-    </ion-content>
-  </ion-menu>
-  <ion-nav #mycontent></ion-nav>
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons start>
+        <button ion-button font20 (tap)="closeFilter()">
+          <ion-icon name="ios-arrow-forward"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-title>Lọc theo tùy chọn</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>
+        <ion-label stacked>Đơn vị nguồn</ion-label>
+        <ion-select interface="popover" title="Đơn vị nguồn" mode="ios" okText="Chọn" cancelText="Hủy"
+          [selectOptions]="customAlertOptions" (ionChange)="filterSource($event)" placeholder="Tất cả">
+          <ion-option [value]="''">Tất cả</ion-option>
+          <ion-option *ngFor="let item of sourceFilter" [value]="item.value">{{item.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Đơn vị nhận</ion-label>
+        <ion-select interface="popover" title="Đơn vị nhận" mode="ios" okText="Chọn" cancelText="Hủy"
+          [selectOptions]="customAlertOptions" (ionChange)="filterDestination($event)" placeholder="Tất cả">
+          <ion-option [value]="''">Tất cả</ion-option>
+          <ion-option *ngFor="let item of destinationFilter" [value]="item.value">{{item.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<ion-nav #mycontent></ion-nav>

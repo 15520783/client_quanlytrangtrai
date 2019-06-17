@@ -6,6 +6,7 @@
 
 
     <button (tap)="health_input()"
+      *ngIf="userProvider.rolePermission.ROLE_nhap_van_de_cua_heo!=null"
       data-balloon-visible data-balloon-length="medium" 
       data-balloon="Nhập vấn đề"
       data-balloon-pos="left" ion-fab color="main">
@@ -13,35 +14,40 @@
     </button>
 
     <button (tap)="transferSection()"
-      *ngIf="statusObjectKey[pig.statusId].code != statusPig.MATING"
+      *ngIf="userProvider.rolePermission.ROLE_danh_gia_chuyen_noi_bo!=null && statusObjectKey[pig.statusId].code != statusPig.MATING"
       data-balloon-visible data-balloon-length="medium" 
       data-balloon="Đánh giá & chuyển nội bộ"
       data-balloon-pos="left" ion-fab color="main">
       <ion-icon name="app-hand"></ion-icon>
     </button>
     
-
-    <!-- <button (tap)="forwardToSaleWaiting()"
-      *ngIf="add_to_sale_list.includes((sectionTypeId).toString()) 
+    <button 
+      *ngIf="userProvider.rolePermission.ROLE_them_vao_danh_sach_cai_sua!=null && 
+      weaning.includes((sectionTypeId).toString()) 
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE
-      && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_MATING"
+      && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_TRANSFER
+      && (statusObjectKey[pig.statusId].code == statusPig.FARROWING || statusObjectKey[pig.statusId].code == statusPig.NEWBORN)"
       data-balloon-visible data-balloon-length="medium" 
-      data-balloon="Thêm vào danh sách chờ bán"
-      data-balloon-pos="left" ion-fab color="main">
+      data-balloon="Thêm vào danh sách cai sữa"
+      data-balloon-pos="left" ion-fab color="main"
+      (tap)="weaningMarked()">
       <ion-icon name="app-hand"></ion-icon>
-    </button> -->
-
-    <!-- <button (tap)="cancelSaleWaiting()"
-      *ngIf="add_to_sale_list.includes((sectionTypeId).toString()) 
-      && statusObjectKey[pig.statusId].code == statusPig.WAIT_FOR_SALE"
+    </button>
+  
+    <button 
+      *ngIf="userProvider.rolePermission.ROLE_phan_loai_danh_gia_chat_luong_heo!=null
+      && review_offset.includes((sectionTypeId).toString()) 
+      && statusObjectKey[pig.statusId].code != statusPig.SOLD"
       data-balloon-visible data-balloon-length="medium" 
-      data-balloon="Hủy chờ bán"
-      data-balloon-pos="left" ion-fab color="main">
+      data-balloon="Phân loại && Đánh giá"
+      data-balloon-pos="left" ion-fab color="main"
+      (tap)="reviewOffset()">
       <ion-icon name="app-hand"></ion-icon>
-    </button> -->
+    </button>
 
     <button (tap)="mating_input()"
-      *ngIf="mating.includes((sectionTypeId).toString()) 
+      *ngIf="userProvider.rolePermission.ROLE_ghi_nhan_phoi_giong!=null 
+      && mating.includes((sectionTypeId).toString()) 
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE 
       && pig.gender == gender.FEMALE
       && statusObjectKey[pig.statusId].code == statusPig.WAIT_FOR_MATING"
@@ -52,7 +58,8 @@
     </button>
 
     <button (tap)="breeding_input()"
-      *ngIf="breeding.includes((sectionTypeId).toString()) 
+      *ngIf="userProvider.rolePermission.ROLE_len_giong_heo_nai!=null 
+      && breeding.includes((sectionTypeId).toString()) 
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE 
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_MATING 
       && pig.gender == gender.FEMALE"
@@ -63,7 +70,8 @@
     </button>
 
     <button (tap)="sperm_input()"
-      *ngIf="sperm.includes((sectionTypeId).toString()) 
+      *ngIf="userProvider.rolePermission.ROLE_khai_thac_tinh_heo!=null 
+      && sperm.includes((sectionTypeId).toString()) 
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE 
       && pig.gender == gender.MALE"
       data-balloon-visible data-balloon-length="medium" 
@@ -73,14 +81,21 @@
     </button>
 
 
-    <!-- <button data-balloon-visible data-balloon-length="medium" data-balloon="Cập nhật dữ liệu" data-balloon-pos="left"
-      ion-fab color="main">
-      <ion-icon name="sync"></ion-icon>
+    <button 
+      *ngIf="userProvider.rolePermission.ROLE_cap_nhat_thong_tin_heo!=null" 
+      data-balloon-visible data-balloon-length="medium" 
+      data-balloon="Chỉnh sửa thông tin" data-balloon-pos="left"
+      ion-fab color="main" (tap)="edit()">
+      <ion-icon name="md-create" ></ion-icon>
     </button>
 
-    <button data-balloon-visible data-balloon-length="medium" data-balloon="Thêm heo mới" data-balloon-pos="left"
-      ion-fab color="main" (tap)="addNewPig()">
-      <ion-icon name="add"></ion-icon>
-    </button> -->
+
+    <button 
+      *ngIf="userProvider.rolePermission.ROLE_xoa_heo!=null" 
+      data-balloon-visible data-balloon-length="medium" 
+      data-balloon="Xóa heo" data-balloon-pos="left"
+      ion-fab color="danger" (tap)="remove()">
+      <ion-icon name="md-trash"></ion-icon>
+    </button>
   </ion-fab-list>
 </ion-fab>

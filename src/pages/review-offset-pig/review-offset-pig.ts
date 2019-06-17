@@ -1,6 +1,6 @@
 import { CONFIG, MESSAGE, VARIABLE } from '../../common/const';
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { PigsProvider } from '../../providers/pigs/pigs';
@@ -24,7 +24,8 @@ export class ReviewOffsetPigPage {
     public navParams: NavParams,
     public deployData: DeployDataProvider,
     public pigProvider: PigsProvider,
-    public util: Utils
+    public util: Utils,
+    public platform:Platform
   ) {
     if (this.navParams.data.pig && this.navParams.data.classification) {
       this.pig = this.navParams.data.pig;

@@ -40,12 +40,15 @@
                     *ngIf="attr.unit">{{attr.unit}}</span></p>
               </ion-col>
             </ion-row>
-            <ion-row *ngIf="!isSelectMode">
-              <button showWhen="core" small ion-button item-end mode='ios' color="main" (tap)="edit(item)">Sửa</button>
-              <button showWhen="core" small ion-button item-end mode='ios' color="danger"
-                (tap)="remove(item)">Xóa</button>
+            <ion-row >
+              <button *ngIf="userProvider.rolePermission.ROLE_cap_nhat_thong_tin_khai_thac_tinh_heo!=null && !isSelectMode" showWhen="core" small ion-button item-end mode='ios' color="main" (tap)="edit(item)">Sửa</button>
+              <button *ngIf="userProvider.rolePermission.ROLE_xoa_thong_tin_khai_thac_tinh_heo!=null && !isSelectMode" showWhen="core" small ion-button item-end mode='ios' color="danger" (tap)="remove(item)">Xóa</button>
             </ion-row>
           </ion-item>
+          <ion-item-options side="right" *ngIf="!platform.is('core')">
+            <button *ngIf="userProvider.rolePermission.ROLE_cap_nhat_thong_tin_khai_thac_tinh_heo!=null && !isSelectMode" text-wrap ion-button color="main" (tap)="edit(item)" style="font-size: 10px">Sửa</button>
+            <button *ngIf="userProvider.rolePermission.ROLE_xoa_thong_tin_khai_thac_tinh_heo!=null && !isSelectMode" text-wrap ion-button color="danger" (tap)="remove(item)" style="font-size: 10px">Xóa</button>
+          </ion-item-options>
         </ion-item-sliding>
       </span>
     </ion-list>
@@ -54,11 +57,6 @@
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </div>
-  <!-- <ion-fab bottom right showWhen="android,windows,ios" color="secondary">
-    <button ion-fab (tap)="add()">
-      <ion-icon name="add"></ion-icon>
-    </button>
-  </ion-fab> -->
 </ion-content>
 
 <ion-menu [content]="mycontent" side="right" #menuFilter sticky="true" type="overlay" width="500">
@@ -83,24 +81,6 @@
             <ion-option *ngFor="let item of breedFilter" [value]="item.value">{{item.name}}</ion-option>
           </ion-select>
         </ion-item>
-        <!-- <ion-item>
-          <ion-label stacked>Nhà</ion-label>
-          <ion-select [(ngModel)]="houseFilter" multiple="true" interface="alert" title="Giới tính" mode="ios"
-            okText="Duyệt" cancelText="Hủy" [selectOptions]="customAlertOptions" placeholder="Tất cả"
-            (ionChange)="setFilteredItems()">
-            <ion-option *ngFor="let house of houses" [value]="house.id">{{house.name}}</ion-option>
-          </ion-select>
-        </ion-item>
-        <ion-item>
-          <ion-label stacked>
-            Khối lượng gốc
-            <ion-badge color="danger">{{dualValue2.lower}}</ion-badge>
-            <ion-badge color="danger">{{dualValue2.upper}}</ion-badge>
-          </ion-label>
-          <ion-range mode="ios" pin="true" dualKnobs="true" [(ngModel)]="dualValue2" min="0" max="500" snaps="true"
-            debounce="500" (ionChange)="setFilteredItems()">
-          </ion-range>
-        </ion-item> -->
       </ion-list>
     </ion-content>
   </ion-menu>

@@ -213,6 +213,39 @@ const PERMISSIONS = {
             "name": "Xem danh sách chứng từ",
             "api": "/api/invoices/list"
         },
+
+        "ROLE_quan_ly_chung_tu_nhap_heo_trong_he_thong": {
+            "id":"",
+            "name": "Quản lý chứng từ nhập heo trong hệ thống",
+            "api": ""
+        },
+        "ROLE_quan_ly_chung_tu_nhap_heo_ngoai_he_thong": {
+            "id":"",
+            "name": "Quản lý chứng từ nhập heo ngoài hệ thống",
+            "api": ""
+        },
+        "ROLE_quan_ly_chung_tu_xuat_ban_heo": {
+            "id":"",
+            "name": "Quản lý chứng từ xuất bán heo",
+            "api": ""
+        },
+        "ROLE_quan_ly_chung_tu_xuat_heo_trong_he_thong": {
+            "id":"",
+            "name": "Quản lý chứng từ xuất heo trong hệ thống",
+            "api": ""
+        },
+        "ROLE_quan_ly_chung_tu_nhap_cam": {
+            "id":"",
+            "name": "Quản lý chứng từ nhập cám",
+            "api": ""
+        },
+        "ROLE_quan_ly_chung_tu_nhap_thuoc": {
+            "id":"",
+            "name": "Quản lý chứng từ nhập thuốc",
+            "api": ""
+        },
+
+
         "ROLE_them_chung_tu_nhap_heo_trong_he_thong": {
             "id": "42",
             "name": "Thêm chứng từ nhập heo trong hệ thống",
@@ -323,6 +356,11 @@ const PERMISSIONS = {
             "name": "Cập nhật chứng từ nhập cám",
             "api": "/api/invoicesproduct/"
         },
+        "ROLE_xac_nhan_hoan_tat_chung_tu_nhap_cam": {
+            "id":"",
+            "name": "Xác nhận hoàn tất chứng từ nhập cám",
+            "api": "/api/invoicesproduct/"
+        },
         "ROLE_them_chi_tiet_chung_tu_nhap_cam": {
             "id": "64",
             "name": "Thêm chi tiết chứng từ nhập cám",
@@ -353,6 +391,11 @@ const PERMISSIONS = {
             "name": "Cập nhật chứng từ nhập thuốc",
             "api": "/api/invoicespig/"
         },
+        "ROLE_xac_nhan_hoan_tat_chung_tu_nhap_thuoc": {
+            "id":"",
+            "name": "Xác nhận hoàn tất chứng từ nhập thuốc",
+            "api": "/api/invoicesproduct/"
+        },
         "ROLE_them_chi_tiet_chung_tu_nhap_thuoc": {
             "id": "70",
             "name": "Thêm chi tiết chứng từ nhập thuốc",
@@ -367,6 +410,37 @@ const PERMISSIONS = {
             "id": "72",
             "name": "Xóa chi tiết chứng từ nhập thuốc",
             "api": "/api/medicinewarehouse/"
+        },
+        "ROLE_them_chung_tu_xuat_ban_heo":{
+            "id":"",
+            "name":"Thêm chứng từ xuất bán heo",
+            "api":""
+        },
+        "ROLE_xoa_chung_tu_xuat_ban_heo": {
+            "id":"",
+            "name": "Xóa chứng từ xuất bán heo",
+            "api": "/api/invoicespig/"
+        },
+        "ROLE_cap_nhat_chung_tu_xuat_ban_heo": {
+            "id":"",
+            "name": "Cập nhật chứng từ xuất bán heo",
+            "api": "/api/invoicespig/"
+        },
+        "ROLE_xac_nhan_hoan_tat_chung_tu_xuat_ban_heo": {
+            "id":"",
+            "name": "Xác nhận xuất heo chứng từ xuất bán heo",
+            "api": "/api/invoicespig/"
+        },
+        "ROLE_them_chi_tiet_chung_tu_xuat_ban_heo": {
+            "id":"",
+            "name": "Thêm chi tiết chứng từ xuất bán heo",
+            "api": "/api/invoicepigdetail/pigsinvoicepigdetail/"
+        },
+    
+        "ROLE_xoa_chi_tiet_chung_tu_xuat_ban_heo": {
+            "id":"",
+            "name": "Xóa chi tiết chứng từ xuất bán heo",
+            "api": "/api/invoicepigdetail/onlyinvoicedetail/"
         }
     },
     "quan_ly_hoat_dong": {
@@ -410,9 +484,9 @@ const PERMISSIONS = {
             "name": "Quản lý heo khu 8",
             "api": "/api/pigs/list"
         },
-        "ROLE_xem_thong_tin_heo": {
+        "ROLE_xem_thong_tin_heo_tai_khu": {
             "id": "81",
-            "name": "Xem thông tin heo",
+            "name": "Xem thông tin heo tại khu",
             "api": "/api/pigs/{id}"
         },
         "ROLE_nhap_van_de_cua_heo": {
@@ -515,11 +589,32 @@ const PERMISSIONS = {
             "name": "Nhập thông tin đàn heo con",
             "api": "/api/invoicepigdetail/pigsinvoicepigdetail/"
         },
+        "ROLE_xem_danh_sach_ghi_nhan_heo_de": {
+            "id":"",
+            "name": "Xem danh sách ghi nhận heo đẻ",
+            "api": "/api/births/list"
+        },
+        "ROLE_xem_danh_sach_dan_heo_con": {
+            "id":"",
+            "name": "Xem danh sách ghi nhận heo con",
+            "api": ""
+        },
         "ROLE_them_vao_danh_sach_cai_sua": {
             "id": "102",
             "name": "Thêm heo vào danh sách cai sữa",
             "api": "/api/pigs/"
-        }
+        },
+
+        "ROLE_phan_loai_danh_gia_chat_luong_heo": {
+            "id":"",
+            "name": "Phân loại đánh giá chất lượng heo",
+            "api": "/api/minings/"
+        },
+        "ROLE_luu_ghi_nhan_danh_gia_chat_luong_heo": {
+            "id":"",
+            "name": "Lưu ghi nhận đánh giá chất lượng heo",
+            "api": "/api/minings/update/"
+        },
     },
     "quan_ly_thiet_lap": {
         "ROLE_xem_danh_sach_thiet_lap": {

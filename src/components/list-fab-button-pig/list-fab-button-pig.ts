@@ -1,17 +1,19 @@
-import { Component, Input, ViewChild } from '@angular/core';
-import { pig, issuesPigs, issues, breedings, sperms, mating, matingDetails } from '../../common/entity';
-import { VARIABLE } from '../../common/const';
-import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
-import { ActivitiesProvider } from '../../providers/activities/activities';
-import { NavController, FabContainer, Events } from 'ionic-angular';
-import { HealthInputPage } from '../../pages/health-input/health-input';
-import { PigsProvider } from '../../providers/pigs/pigs';
-import { BreedingInputPage } from '../../pages/breeding-input/breeding-input';
-import { SpermInputPage } from '../../pages/sperm_input/sperm_input';
-import { PigInputPage } from '../../pages/pig-input/pig-input';
-import { MatingInputPage } from '../../pages/mating-input/mating-input';
-import { Utils } from '../../common/utils';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Events, FabContainer, NavController } from 'ionic-angular';
+import { breedings, issues, issuesPigs, mating, matingDetails, pig, sperms } from '../../common/entity';
 
+import { ActivitiesProvider } from '../../providers/activities/activities';
+import { BreedingInputPage } from '../../pages/breeding-input/breeding-input';
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { HealthInputPage } from '../../pages/health-input/health-input';
+import { MatingInputPage } from '../../pages/mating-input/mating-input';
+import { PigInputPage } from '../../pages/pig-input/pig-input';
+import { PigsProvider } from '../../providers/pigs/pigs';
+import { ReviewOffsetPigPage } from '../../pages/review-offset-pig/review-offset-pig';
+import { SpermInputPage } from '../../pages/sperm_input/sperm_input';
+import { UserProvider } from '../../providers/user/user';
+import { Utils } from '../../common/utils';
+import { VARIABLE } from '../../common/const';
 
 @Component({
   selector: 'list-fab-button-pig',
@@ -30,6 +32,8 @@ export class ListFabButtonPigComponent {
   public sperm;
   public gender;
   public mating;
+  public weaning;
+  public review_offset;
 
   constructor(
     public deployData:DeployDataProvider,
@@ -37,7 +41,8 @@ export class ListFabButtonPigComponent {
     public navCtrl: NavController,
     public pigProvider:PigsProvider,
     public util:Utils,
-    public event: Events
+    public event: Events,
+    public userProvider:UserProvider
   ) {
     this.statusPig = {
       WAIT_FOR_SALE: VARIABLE.STATUS_PIG.WAIT_FOR_SALE,
@@ -45,7 +50,9 @@ export class ListFabButtonPigComponent {
       MATING: VARIABLE.STATUS_PIG.MATING,
       MATED: VARIABLE.STATUS_PIG.MATED,
       FARROWING: VARIABLE.STATUS_PIG.FARROWING,
-      NEWBORN:VARIABLE.STATUS_PIG.NEWBORN
+      NEWBORN:VARIABLE.STATUS_PIG.NEWBORN,
+      WAIT_FOR_TRANSFER:VARIABLE.STATUS_PIG.WAIT_FOR_TRANSFER,
+      SOLD:VARIABLE.STATUS_PIG.SOLD
     }
 
     this.breeding = [
@@ -60,6 +67,15 @@ export class ListFabButtonPigComponent {
     this.mating = [
       VARIABLE.SECTION_TYPE[3].id
     ]
+
+    this.weaning = [
+      VARIABLE.SECTION_TYPE[5].id
+    ]
+
+    this.review_offset = [
+      VARIABLE.SECTION_TYPE[7].id
+    ]
+
 
     this.gender = {
       MALE: VARIABLE.gender[0].value,
@@ -267,6 +283,62 @@ export class ListFabButtonPigComponent {
       .catch((err: Error) => { })
   }
 
+  /**
+   * Đánh dấu heo cai sữa
+   */
+  weaningMarked(){
+    let pigUpdate: pig = this.util.deepClone(this.pig);
+    let currentStatus = this.deployData.get_status_by_id(this.pig.statusId);
+    if (currentStatus.code == VARIABLE.STATUS_PIG.FARROWING) {
+      let weaningStatus = this.deployData.get_status_pig_by_status_code(VARIABLE.STATUS_PIG.WEANING);
+      pigUpdate.statusId = weaningStatus.id;
+    } else if (currentStatus.code == VARIABLE.STATUS_PIG.NEWBORN) {
+      let growingStatus = this.deployData.get_status_pig_by_status_code(VARIABLE.STATUS_PIG.GROWING);
+      pigUpdate.statusId = growingStatus.id;
+    }
+    pigUpdate = this.deployData.get_pig_object_to_send_request(pigUpdate);
+    this.pigProvider.updatePig(pigUpdate)
+      .then((pig: pig) => {
+        if (pig && pig.id) {
+          this.pig = pig;
+          this.publishEvenPigChange(this.pig);
+        }
+      })
+      .catch((err: Error) => { })
+  }
+
+
+  /**
+   * Phân loại heo
+   */
+  reviewOffset(){
+    let callback = (pig: pig) => {
+      pig = this.deployData.get_pig_object_to_send_request(pig);
+      this.pigProvider.updatePig(pig)
+        .then((updatedPig: pig) => {
+          if (updatedPig && updatedPig.id) {
+            this.pig = updatedPig;
+            this.publishEvenPigChange(this.pig);
+          }
+          this.navCtrl.pop();
+        })
+        .catch((err: Error) => { })
+    }
+
+    this.util.openBackDrop();
+    this.pigProvider.reviewOffset(this.pig.id)
+      .then((res: any) => {
+        if (res) {
+          this.navCtrl.push(ReviewOffsetPigPage, { pig: this.pig, classification: res.classification, callback: callback })
+        }
+        this.util.closeBackDrop();
+      })
+      .catch(err => {
+        this.util.closeBackDrop();
+        return err
+      })
+  }
+
 
   closeFabList(){
     this.fab.close();
@@ -274,5 +346,47 @@ export class ListFabButtonPigComponent {
 
   publishEvenPigChange(pig){
     this.event.publish('pig-list-section:PigChange',pig);
+  }
+
+
+  @Output() updatePigEvent = new EventEmitter();
+  @Output() removePigEvent = new EventEmitter();
+
+  edit(){
+    let callback = (pig: pig) => {
+      if (pig) {
+        let pigParam = this.deployData.get_pig_object_to_send_request(pig);
+        this.pigProvider.updatePig(pigParam)
+        .then((updated_pig:pig)=>{
+          if(updated_pig){
+            this.pigProvider.updatedPig(pig);
+            this.event.publish('pig-list-section:PigChange',updated_pig);
+            this.pig = updated_pig;
+            this.updatePigEvent.emit(updated_pig);
+          }
+          this.navCtrl.pop();
+        })
+        .catch(err=>{
+          console.log(err);
+          return err;
+        })
+      }
+    }
+    this.navCtrl.push(PigInputPage, { pigId: this.pig.id, callback: callback });
+  }
+
+  remove(){
+    this.pigProvider.removePig(this.pig)
+    .then((isOk)=>{
+      if(isOk){
+        this.pigProvider.removedPig(this.pig);
+        this.event.publish('pig-list-section:removePig',this.pig);
+        this.removePigEvent.emit(this.pig);
+      }
+    })
+    .catch((err)=>{
+      console.log(err);
+      return err;
+    })
   }
 }

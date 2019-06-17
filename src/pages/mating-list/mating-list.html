@@ -42,22 +42,66 @@
                 </p>
               </ion-col>
             </ion-row>
-            <ion-row>
-              <button small ion-button item-end mode='ios' color="secondary"
-                *ngIf="item.status == statusMating.PROCESSING.codeName" (tap)="edit(item)">Gieo tinh cho lần tiếp
-                theo</button>
-              <button   small ion-button item-end mode='ios' color="main"
-                *ngIf="item.status == statusMating.PROCESSING.codeName" (tap)="edit(item)">Sửa</button>
-              <button small ion-button item-end mode='ios' color="danger"
-                *ngIf="item.status == statusMating.PROCESSING.codeName" (tap)="remove(item)">Xóa</button>
-              <button small ion-button item-end mode='ios' color="secondary" *ngIf="item.status == statusMating.COMPLETE.codeName &&
-                sectionType.id == section[4].id" (tap)="markedFarrow(item)">Xác nhận heo mang thai</button>
-              <button small ion-button item-end mode='ios' color="secondary" *ngIf="item.status == statusMating.FARROW.codeName &&
-                sectionType.id == section[4].id" (tap)="markedAbortion(item)">Xác nhận heo sẩy thai</button>
-              <button small ion-button item-end mode='ios' color="secondary" *ngIf="item.status == statusMating.FARROW.codeName && 
-                sectionType.id == section[5].id" (tap)="birth_input(item)">Nhập thông tin heo đẻ</button>
+            <ion-row *ngIf="platform.is('core')">
+              <button 
+                small ion-button item-end mode='ios' color="secondary"
+                *ngIf="userProvider.rolePermission.ROLE_cap_nhat_thong_tin_phoi_giong!=null && item.status == statusMating.PROCESSING.codeName" 
+                (tap)="edit(item)">Gieo tinh cho lần tiếp theo</button>
+              <button   
+                small ion-button item-end mode='ios' color="main"
+                *ngIf="userProvider.rolePermission.ROLE_cap_nhat_thong_tin_phoi_giong!=null && item.status == statusMating.PROCESSING.codeName" 
+                (tap)="edit(item)">Sửa</button>
+              <button 
+                small ion-button item-end mode='ios' color="danger"
+                *ngIf="userProvider.rolePermission.ROLE_xoa_thong_tin_phoi_giong!=null && item.status == statusMating.PROCESSING.codeName" 
+                (tap)="remove(item)">Xóa</button>
+              <button 
+                small ion-button item-end mode='ios' color="secondary" 
+                *ngIf="userProvider.rolePermission.ROLE_xac_nhan_heo_mang_thai!=null && item.status == statusMating.COMPLETE.codeName && sectionType.id == section[4].id" 
+                (tap)="markedFarrow(item)">Xác nhận heo mang thai</button>
+              <button 
+                small ion-button item-end mode='ios' color="secondary" 
+                *ngIf="userProvider.rolePermission.ROLE_xac_nhan_heo_say_thai!=null && item.status == statusMating.FARROW.codeName && sectionType.id == section[4].id" 
+                (tap)="markedAbortion(item)">Xác nhận heo sẩy thai</button>
+              <button 
+                small ion-button item-end mode='ios' 
+                color="secondary" 
+                *ngIf="userProvider.rolePermission.ROLE_ghi_nhan_thong_tin_heo_de!=null && item.status == statusMating.FARROW.codeName &&  sectionType.id == section[5].id" 
+                (tap)="birth_input(item)">Nhập thông tin heo đẻ</button>
             </ion-row>
           </ion-item>
+          <ion-item-options side="right" *ngIf="!platform.is('core')">
+            <button   *ngIf="userProvider.rolePermission.ROLE_cap_nhat_thong_tin_phoi_giong!=null && item.status == statusMating.PROCESSING.codeName" 
+                      (tap)="edit(item)" 
+                      text-wrap ion-button color="secondary" 
+                      style="font-size: 10px">Gieo tinh cho lần tiếp theo
+            </button>
+            <button   *ngIf="userProvider.rolePermission.ROLE_cap_nhat_thong_tin_phoi_giong!=null && item.status == statusMating.PROCESSING.codeName" 
+                      (tap)="edit(item)" 
+                      text-wrap ion-button color="main" 
+                      style="font-size: 10px">Sửa
+            </button>
+            <button   *ngIf="userProvider.rolePermission.ROLE_xoa_thong_tin_phoi_giong!=null && item.status == statusMating.PROCESSING.codeName" 
+                      (tap)="remove(item)"
+                      text-wrap ion-button color="main" 
+                      style="font-size: 10px">Xóa
+            </button>
+            <button   *ngIf="userProvider.rolePermission.ROLE_xac_nhan_heo_mang_thai!=null && item.status == statusMating.COMPLETE.codeName && sectionType.id == section[4].id" 
+                      (tap)="markedFarrow(item)" 
+                      text-wrap ion-button color="main" 
+                      style="font-size: 10px">Xác nhận heo mang thai
+            </button>
+            <button   *ngIf="userProvider.rolePermission.ROLE_xac_nhan_heo_say_thai!=null && item.status == statusMating.FARROW.codeName && sectionType.id == section[4].id" 
+                      (tap)="markedAbortion(item)" 
+                      text-wrap ion-button color="main" 
+                      style="font-size: 10px">Xác nhận heo sẩy thai
+            </button>
+            <button   *ngIf="userProvider.rolePermission.ROLE_ghi_nhan_thong_tin_heo_de!=null && item.status == statusMating.FARROW.codeName &&  sectionType.id == section[5].id" 
+                      (tap)="birth_input(item)"
+                      text-wrap ion-button color="main" 
+                      style="font-size: 10px">Nhập thông tin heo đẻ
+            </button>
+          </ion-item-options>
         </ion-item-sliding>
       </span>
     </ion-list>
