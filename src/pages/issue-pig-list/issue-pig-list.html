@@ -10,6 +10,7 @@
         <ion-col text-right *ngIf="platform.is('core')">
           <span *ngIf="issues.length">
             <button ion-button mode='ios' color="main" (tap)="showForecast()">Gợi ý chuẩn đoán</button>
+            <button ion-button mode='ios' color="main" (tap)="confirmResolved()">Xác nhận hoản tất xử lý</button>
             <button ion-button mode='ios' color="secondary" (tap)="resolveIssuePigs()">Nhập thông tin xử lý</button>
           </span>
         </ion-col>
@@ -83,7 +84,7 @@
                   </ion-row>
                   <ion-row>
                     <ion-col>
-                      <button small ion-button item-end mode='ios' color="danger">Xóa</button>
+                      <button small ion-button item-end mode='ios' color="danger" (tap)="remove(item)">Xóa</button>
                     </ion-col>
                   </ion-row>
                 </ion-item>

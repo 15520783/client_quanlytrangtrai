@@ -195,6 +195,22 @@ export class ActivitiesProvider {
       .toPromise();
   }
 
+
+  /**
+   * Xóa ghi nhận vấn đề heo
+   * @param objBody 
+   */
+  deleteIssuePig(objBody: issuesPigs) {
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http
+      .delete(API.DELETE_ISSUES_PIG, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
   /**
    * Thêm mới ghi nhận cho heo ăn
    * @param objBody 
@@ -218,13 +234,23 @@ export class ActivitiesProvider {
       .toPromise();
   }
 
-
   /**
    * Lấy danh sách vấn đề heo thuộc trang trại
    */
   getIssuePigOfFarms() {
     return this.http
       .get<Array<issuesPigs>>(API.GET_ISSUE_PIG_OF_FARMS)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Cập nhật danh sách vấn đề heo
+   * @param objBody 
+   */
+  updateAllIssuePig(objBody: Array<issuesPigs>) {
+    return this.http
+      .put<Array<issuesPigs>>(API.UPDATE_LIST_ISSUES_PIG, objBody)
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise();
   }

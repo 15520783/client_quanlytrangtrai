@@ -1,5 +1,5 @@
 import { App, Events, Nav, Platform, ToastController } from 'ionic-angular';
-import { CONFIG, ERROR_NAME, KEY, MESSAGE } from '../common/const';
+import { CONFIG, KEY, MESSAGE } from '../common/const';
 import { Component, ViewChild } from '@angular/core';
 import { permission, user } from '../common/entity';
 
@@ -126,7 +126,6 @@ export class MyApp {
     this.houseProvider.updated_flag = false;
     this.warehouseProvider.updated_flag = false;
     this.settingProvider.updated_flag = false;
-    this.partnerProvider.updated_flag = false;
 
     this.subscribeEventUpdate();
     this.userProvider.checkServer()
@@ -136,7 +135,6 @@ export class MyApp {
           this.farmProvider.sync();
           this.pigProvider.sync();
           this.employeeProvider.sync();
-          this.partnerProvider.sync();
           this.sectionProvider.sync();
           this.houseProvider.sync();
           this.warehouseProvider.sync();
@@ -171,8 +169,7 @@ export class MyApp {
       this.sectionProvider.updated_flag &&
       this.houseProvider.updated_flag &&
       this.warehouseProvider.updated_flag &&
-      this.settingProvider.updated_flag &&
-      this.partnerProvider.updated_flag) {
+      this.settingProvider.updated_flag ) {
       this.rootPage = HomePage;
       this.events.unsubscribe('updated');
       setTimeout(() => {
@@ -229,7 +226,6 @@ export class MyApp {
                   this.util.setKey(KEY.PERMISSIONS, data).then(() => {
                     this.userProvider.rolePermission = data;
                   });
-                  console.log(data);
                 }
               })
               .catch((err) => {
@@ -250,7 +246,6 @@ export class MyApp {
                   this.util.setKey(KEY.PERMISSIONS, data).then(() => {
                     this.userProvider.rolePermission = data;
                   });
-                  console.log(data);
                   // this.util.setKey(KEY.PERMISSIONS,)
                 }
               })

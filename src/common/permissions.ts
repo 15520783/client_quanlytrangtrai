@@ -207,6 +207,29 @@ const PERMISSIONS = {
             "api": ""
         }
     },
+    "quan_ly_lam_san":{
+        "xem_danh_sach_ghi_nhan_van_de_heo":{
+            "id":"",
+            "name":"Xem danh sách ghi nhận vấn đề heo",
+            "api":""
+        },
+        "xem_goi_y_chuan_doan":{
+            "id":"",
+            "name":"Xem gợi ý chuẩn đoán",
+            "api":""
+        },
+        "xoa_ghi_nhan_van_de_heo":{
+            "id":"",
+            "name":"Xóa ghi nhận vấn đề heo",
+            "api":""
+        },
+        "xu_ly_van_de_heo":{
+            "id":"",
+            "name":"Xử lí vấn đề của heo",
+            "api":""
+        }
+    },
+
     "quan_ly_danh_sach_chung_tu": {
         "ROLE_xem_danh_sach_chung_tu": {
             "id": "41",

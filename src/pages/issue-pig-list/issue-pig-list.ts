@@ -1,18 +1,18 @@
-import { Component, Input, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, Slides, ModalController } from 'ionic-angular';
-import { pig, section, house, issuesPigs, issues, usedMedicine } from '../../common/entity';
-import { FormControl } from '@angular/forms';
-import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
-import { VARIABLE, MESSAGE, CONFIG } from '../../common/const';
-import { Utils } from '../../common/utils';
-import { PigsProvider } from '../../providers/pigs/pigs';
-import { FilterProvider } from '../../providers/filter/filter';
-import { SettingsProvider } from '../../providers/settings/settings';
-import { ActivitiesProvider } from '../../providers/activities/activities';
-import { UsedMedicineInputPage } from '../used-medicine-input/used-medicine-input';
-import { DiseaseListPage } from '../disease-list/disease-list';
-import { IssuePigListComponent } from '../../components/issue-pig-list/issue-pig-list';
+import { CONFIG, MESSAGE, VARIABLE } from '../../common/const';
+import { Component, Input } from '@angular/core';
+import { IonicPage, ModalController, NavController, NavParams, Platform } from 'ionic-angular';
+import { issues, issuesPigs, usedMedicine } from '../../common/entity';
 
+import { ActivitiesProvider } from '../../providers/activities/activities';
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { DiseaseListPage } from '../disease-list/disease-list';
+import { FilterProvider } from '../../providers/filter/filter';
+import { FormControl } from '@angular/forms';
+import { IssuePigListComponent } from '../../components/issue-pig-list/issue-pig-list';
+import { PigsProvider } from '../../providers/pigs/pigs';
+import { SettingsProvider } from '../../providers/settings/settings';
+import { UsedMedicineInputPage } from '../used-medicine-input/used-medicine-input';
+import { Utils } from '../../common/utils';
 
 @IonicPage()
 @Component({
@@ -182,7 +182,6 @@ export class IssuePigListPage {
     }, 800);
   }
 
-
   getIssuePig(farmId, sectionId) {
     this.util.openBackDrop();
     return this.activitiesProvider.getIssuePigOfSection(farmId, sectionId)
@@ -199,13 +198,15 @@ export class IssuePigListPage {
       })
   }
 
+  public issuesPigList:Array<issuesPigs> = [];
 
   getAllIssuePigs() {
     this.util.openBackDrop();
     return this.activitiesProvider.getIssuePigOfFarms()
       .then((issues) => {
         if (issues) {
-          this.issue_groupBySection = this.util.groupBy(issues, issue => issue.pig.house.section.id);
+          this.issuesPigList = issues;
+          this.issue_groupBySection = this.util.groupBy(this.issuesPigList, issue => issue.pig.house.section.id);
         }
         this.util.closeBackDrop();
         return issues;
@@ -216,7 +217,6 @@ export class IssuePigListPage {
       })
   }
 
-
   selectSection(section) {
     this.sections.forEach((e) => {
       e.selected = false;
@@ -225,9 +225,7 @@ export class IssuePigListPage {
     this.selectedSection = section.id;
     this.issues = this.issue_groupBySection.get(this.selectedSection) ? this.issue_groupBySection.get(this.selectedSection) : [];
     this.setFilteredItems();
-
   }
-
 
   resolveIssuePigs() {
     let issues = [];
@@ -256,8 +254,6 @@ export class IssuePigListPage {
         callback: callback
       });
   }
-
-
 
   /**
   * Hiển thị danh sách gợi ý
@@ -292,8 +288,6 @@ export class IssuePigListPage {
     }
   }
 
-
-
   viewListIssuePig(section) {
     let callback = (data: Array<usedMedicine>) => {
       if (data) {
@@ -304,7 +298,6 @@ export class IssuePigListPage {
           })
       }
     }
-
     this.sections.forEach((e) => {
       e.selected = false;
     })
@@ -316,6 +309,49 @@ export class IssuePigListPage {
       selectedFarm: this.selectedFarm,
       selectedSection: this.selectedSection,
       callback: callback
+    })
+  }
+
+  /**
+   * Xóa ghi nhận vấn đề
+   * @param issue 
+   */
+  remove(issue:issuesPigs){
+    if(issue){
+      this.activitiesProvider.deleteIssuePig(issue)
+      .then((isOk:boolean)=>{
+        if(isOk){
+          let idx = this.issuesPigList.findIndex(_issue=>_issue.id == issue.id);
+          if(idx > -1){
+            this.issuesPigList.splice(idx,1);
+            this.issue_groupBySection = this.util.groupBy(this.issuesPigList, issue => issue.pig.house.section.id);
+            this.issues = this.issue_groupBySection.get(this.selectedSection) ? this.issue_groupBySection.get(this.selectedSection) : [];
+            this.setFilteredItems();
+          }
+        }
+      })
+    }
+  }
+
+  /**
+   * Xác nhận hoàn tất xử lý vấn đề heo
+   */
+  confirmResolved(){
+    this.issues.forEach((issue:issuesPigs)=>{
+      issue.status = VARIABLE.ISSUE_PIG_STATUS.RESOLVED.name;
+    })
+    this.activitiesProvider.updateAllIssuePig(this.issues)
+    .then((issues:Array<issuesPigs>)=>{
+      if(issues && issues.length){
+        this.getAllIssuePigs()
+        .then((issuesPigs) => {
+          this.issues = this.issue_groupBySection.get(this.selectedSection) ? this.issue_groupBySection.get(this.selectedSection) : [];
+          this.setFilteredItems();
+        })
+      }
+    })
+    .catch((err)=>{
+      console.log(err);
     })
   }
 }

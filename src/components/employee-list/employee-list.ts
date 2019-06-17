@@ -4,6 +4,7 @@ import { Content, Events, ModalController, NavParams, ViewController } from 'ion
 import { EmployeeInformationPage } from '../../pages/employee-information/employee-information';
 import { FilterProvider } from '../../providers/filter/filter';
 import { FormControl } from '@angular/forms';
+import { Utils } from '../../common/utils';
 import { employee } from '../../common/entity';
 
 @Component({
@@ -22,7 +23,7 @@ export class EmployeeListComponent {
   public page_Total: number = 0;
   public rows: Array<employee> = [];
   public cols: any = [];
-  public filter_default: any = ["name", "address", "email", "birthday"];
+  public filter_default: any = ["name", "address", "email", "birthday","regencyName","dateJoinDisplay"];
 
   public visible_items: Array<employee> = [];
 
@@ -34,7 +35,8 @@ export class EmployeeListComponent {
     public modalCtrl: ModalController,
     public navParams: NavParams,
     public viewCtrl: ViewController,
-    public events: Events
+    public events: Events,
+    public util:Utils
   ) {
     console.log('Hello EmployeeListComponent Component');
     if (this.navParams.data) {
@@ -62,15 +64,14 @@ export class EmployeeListComponent {
 
   public filterItems(searchItem) {
     if (this.data.length) {
+      this.data.forEach(e=>{
+          e['regencyName'] = e.regency.name;
+          e['dateJoinDisplay'] = this.util.convertDate(e.dateJoin);
+      })
       this.filterProvider.input = this.data;
-      // this.filterProvider.searchWithInclude.gender = this.genderFilter;/
-      // this.filterProvider.searchWithInclude.house_id = this.houseFilter;
       this.filterProvider.searchText = searchItem;
       this.filterProvider.searchWithText = this.filter_default;
-
       this.filterProvider.searchWithRange = {
-        // origin_sum_weight : { min: this.origin_sum_weight.lower, max: this.origin_sum_weight.upper },
-        // origin_avg_weight : { min: this.origin_avg_weight.lower, max: this.origin_avg_weight.upper }
       }
       return this.filterProvider.filter();
     }else{

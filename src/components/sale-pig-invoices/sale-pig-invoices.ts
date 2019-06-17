@@ -30,13 +30,14 @@ export class SalePigInvoicesComponent {
     { name: "importDateDisplay", label: 'Ngày nhập' },
     { name: "quantity", label: 'Tổng số heo' },
     { name: "totalWeight", label: 'Tổng trọng lượng' },
-    { name: "statusName", label: 'Trạng thái' },
+    { name: "statusName", label: 'Trạng thái', usingBadge: true },
     { name: "unitPrice", label: 'Đơn giá' },
-    { name: "totalPrice", label: 'Tổng giá' }
+    { name: "totalPrice", label: 'Tổng giá' },
+    { name: "createBy", label: 'Người lập' }
   ];
 
   public placeholderSearch: string = 'Tìm kiếm chứng từ'
-  public filter_default: Array<string> = ["invoiceNo", "sourceName", "destinationName", "importDateDisplay", "quantity", "totalWeight", "statusName"];
+  public filter_default: Array<string> = ["invoiceNo", "sourceName", "destinationName", "importDateDisplay", "quantity", "totalWeight", "statusName", "createBy"];
 
   public page_Idx: number = 1;
   public page_Total: number = 0;
@@ -63,7 +64,7 @@ export class SalePigInvoicesComponent {
     public navParams: NavParams,
     public platform: Platform,
     public menuCtrl: MenuController,
-    public userProvider:UserProvider
+    public userProvider: UserProvider
   ) {
     if (this.navParams.data.invoice) {
       this.invoices = this.navParams.data.invoice;
@@ -97,6 +98,7 @@ export class SalePigInvoicesComponent {
       invoice['sourceName'] = this.farms_util[invoice.sourceId].name;
       invoice['destinationName'] = this.customer_util[invoice.destinationId].name;
       invoice['exportDateDisplay'] = this.util.convertDate(invoice.exportDate);
+      invoice['createBy'] = invoice.employee ? invoice.employee.name : '';
       switch (invoice.status) {
         case VARIABLE.INVOICE_STATUS.PROCCESSING: {
           invoice['statusName'] = 'Đang xử lí'; break;
@@ -105,8 +107,30 @@ export class SalePigInvoicesComponent {
           invoice['statusName'] = 'Đã hoàn tất'; break;
         }
       }
+
+      switch (invoice.status) {
+        case VARIABLE.INVOICE_STATUS.COMPLETE: {
+          invoice['color'] = 'secondary';
+          break;
+        }
+
+        case VARIABLE.INVOICE_STATUS.PROCCESSING: {
+          invoice['color'] = 'main';
+          break;
+        }
+
+        case VARIABLE.INVOICE_STATUS.FORWARDING: {
+          invoice['color'] = 'warning';
+          break;
+        }
+
+        default: {
+          invoice['color'] = 'danger';
+          break;
+        }
+      }
     });
-    
+
     this.filterProvider.input = this.invoices;
     this.filterProvider.searchText = searchItem;
     this.filterProvider.searchWithText = this.filter_default;

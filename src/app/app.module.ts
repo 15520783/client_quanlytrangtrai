@@ -1,7 +1,7 @@
 import { AngularFirestore, FirestoreSettingsToken } from 'angularfire2/firestore';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { IonicApp, IonicModule } from 'ionic-angular';
 
 import { ActivitiesPage } from '../pages/activities/activities';
 import { ActivitiesProvider } from '../providers/activities/activities';
@@ -127,6 +127,13 @@ import { WarehouseInformationPage } from '../pages/warehouse-information/warehou
 import { WarehouseListPage } from '../pages/warehouse-list/warehouse-list';
 import { WarehousesPage } from '../pages/warehouses/warehouses';
 import { WarehousesProvider } from '../providers/warehouses/warehouses';
+
+class MyErrorHandler implements ErrorHandler {
+  handleError(err: any): void {
+    // do something with the error
+    console.log(err);
+  }
+}
 
 const Pages = [
   LoginPage,
@@ -302,7 +309,8 @@ export const firebaseConfig = {
     SplashScreen,
     HeaderColor,
     BarcodeScanner,
-    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    // { provide: ErrorHandler, useClass: IonicErrorHandler },
+    { provide: ErrorHandler, useClass: MyErrorHandler },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
@@ -315,3 +323,5 @@ export const firebaseConfig = {
   ]
 })
 export class AppModule { }
+
+

@@ -1,9 +1,10 @@
+import { API, CONFIG, KEY } from '../../common/const';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { CONFIG, API, KEY } from '../../common/const';
-import { partners } from '../../common/entity';
-import { Utils } from '../../common/utils';
+
 import { Events } from 'ionic-angular';
+import { Injectable } from '@angular/core';
+import { Utils } from '../../common/utils';
+import { partners } from '../../common/entity';
 
 @Injectable()
 export class PartnerProvider {

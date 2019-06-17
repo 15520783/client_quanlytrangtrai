@@ -629,7 +629,7 @@ class issuesPigs extends base {
 	employee: employee = new employee();
 	description: string = ''
 	images: string = '';
-	status: number = null;
+	status: string = '';
 }
 
 class usedMedicine extends base {

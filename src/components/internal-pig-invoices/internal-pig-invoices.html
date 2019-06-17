@@ -21,7 +21,6 @@
       <ion-row>
         <button no-margin ion-button item-end mode='ios' color="secondary" (tap)="viewListForwarding()">Danh sách chừng
           từ chuyển heo đến</button>
-        <!-- <button no-margin ion-button item-end mode='ios' color="secondary" (tap)="add()">Thêm chứng từ</button> -->
       </ion-row>
     </ion-item-divider>
     <ion-list>
@@ -30,7 +29,11 @@
           <h2 *ngIf="mainAttribute"><b>Số chứng từ: </b>{{item[mainAttribute]}}</h2>
           <ion-row>
             <ion-col *ngFor="let attr of attributes" col-6 text-wrap>
-              <p style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
+            <p *ngIf = "attr.usingBadge"  style="padding:5px!important">
+              <b>{{attr.label}}:</b> 
+              <ion-badge [color]="item.color">{{item[attr.name]}}</ion-badge>
+            </p>
+            <p *ngIf = "!attr.usingBadge" style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
             </ion-col>
           </ion-row>
         </button>

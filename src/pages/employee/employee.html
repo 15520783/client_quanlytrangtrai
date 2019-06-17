@@ -41,17 +41,26 @@
       </ion-avatar>
       <h2>{{item.name}}</h2>
       <ion-row>
-        <ion-col>
+        <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6 text-wrap>
           <p><b>Ngày sinh:</b> {{item.birthday|date:'dd/MM/yyyy'}}</p>
-        </ion-col>
-        <ion-col>
+        </ion-col >
+        <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6 text-wrap>
           <p><b>Giới tính:</b> {{item.gender}}</p>
         </ion-col>
-        <ion-col>
+        <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6 text-wrap>
           <p><b>Địa chỉ:</b> {{item.address}}</p>
         </ion-col>
-        <ion-col>
+        <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6 text-wrap>
           <p><b>Email:</b> {{item.email}}</p>
+        </ion-col>
+        <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6 text-wrap>
+          <p><b>Chức vụ:</b> {{item.regencyName}}</p>
+        </ion-col>
+        <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6 text-wrap>
+          <p><b>CMND:</b> {{item.cmnd}}</p>
+        </ion-col>
+        <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6 text-wrap>
+          <p><b>Ngày vào làm:</b> {{item.dateJoinDisplay}}</p>
         </ion-col>
       </ion-row>
     </button>

@@ -246,8 +246,8 @@ export class DeployDataProvider {
    */
   get_partner_list_for_select() {
     let options_select = [];
-    if (this.partnerProvider.partners) {
-      this.partnerProvider.partners.forEach(partner => {
+    if (this.settingProvider.setting.partners) {
+      this.settingProvider.setting.partners.forEach(partner => {
         options_select.push({
           name: partner.name,
           value: partner.id
@@ -505,8 +505,8 @@ export class DeployDataProvider {
    * @param partnerId 
    */
   get_partner_by_id(partnerId: string) {
-    if (this.partnerProvider.partners) {
-      return this.partnerProvider.partners.filter((partner) => {
+    if (this.settingProvider.setting.partners) {
+      return this.settingProvider.setting.partners.filter((partner) => {
         return partner.id == partnerId ? true : false;
       })[0];
     } else {

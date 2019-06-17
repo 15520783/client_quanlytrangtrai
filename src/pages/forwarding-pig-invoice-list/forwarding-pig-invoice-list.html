@@ -19,16 +19,20 @@
               <ion-row>
                 <ion-col *ngFor="let attr of attributes" [attr.col-6]="!platform.is('core')?'':null"
                   [attr.col-3]="platform.is('core')?'':null" text-wrap>
-                  <p style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
+                  <p *ngIf="attr.usingBadge" style="padding:5px!important">
+                    <b>{{attr.label}}:</b>
+                    <ion-badge [color]="item.color">{{item[attr.name]}}</ion-badge>
+                  </p>
+                  <p *ngIf="!attr.usingBadge" style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}
+                  </p>
                 </ion-col>
               </ion-row>
             </ion-col>
             <ion-col col-2 *ngIf="platform.is('core')">
               <ion-row>
-                <button
-                  text-wrap *ngIf="UserProvider.rolePermission.ROLE_them_chung_tu_nhap_heo_trong_he_thong!=null" 
-                  small no-margin ion-button item-end mode='ios' color="main"
-                  (tap)="viewAndCreateInvoice(item)">Duyệt danh sách heo & Lập phiếu nhập
+                <button text-wrap *ngIf="UserProvider.rolePermission.ROLE_them_chung_tu_nhap_heo_trong_he_thong!=null"
+                  small no-margin ion-button item-end mode='ios' color="main" (tap)="viewAndCreateInvoice(item)">Duyệt
+                  danh sách heo & Lập phiếu nhập
                 </button>
                 <!-- <button small no-margin ion-button item-end mode='ios' color="secondary" (tap)="createNewInvoice(item)">Lập phiếu nhập</button> -->
               </ion-row>
@@ -36,8 +40,9 @@
           </ion-row>
         </ion-item>
         <ion-item-options side="right" *ngIf="!platform.is('core')">
-          <button *ngIf="userProvider.rolePermission.ROLE_them_chung_tu_nhap_heo_trong_he_thong!=null" text-wrap ion-button
-            color="main" (tap)="viewAndCreateInvoice(item)" style="font-size: 10px">Duyệt danh sách heo & Lập phiếu nhập</button>
+          <button *ngIf="userProvider.rolePermission.ROLE_them_chung_tu_nhap_heo_trong_he_thong!=null" text-wrap
+            ion-button color="main" (tap)="viewAndCreateInvoice(item)" style="font-size: 10px">Duyệt danh sách heo & Lập
+            phiếu nhập</button>
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>

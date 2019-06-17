@@ -35,10 +35,11 @@ export class InternalPigInvoicesComponent {
     { name: "destinationName", label: 'Nơi nhận' },
     { name: "importDateDisplay", label: 'Ngày nhập' },
     { name: "quantity", label: 'Tổng số heo' },
-    { name: "statusName", label: 'Trạng thái' },
+    { name: "statusName", label: 'Trạng thái', usingBadge: true },
+    { name: "createBy", label: 'Người lập' }
   ];
   public placeholderSearch: string = 'Tìm kiếm chứng từ'
-  public filter_default: Array<string> = ["invoiceNo", "sourceName", "destinationName", "importDateDisplay", "statusName", "quantity"];
+  public filter_default: Array<string> = ["invoiceNo", "sourceName", "destinationName", "importDateDisplay", "statusName", "quantity", "createBy"];
 
   public page_Idx: number = 1;
   public page_Total: number = 0;
@@ -62,8 +63,8 @@ export class InternalPigInvoicesComponent {
     public navParams: NavParams,
     public events: Events,
     public menuCtrl: MenuController,
-    public userProvider:UserProvider,
-    public platform:Platform
+    public userProvider: UserProvider,
+    public platform: Platform
   ) {
     if (this.navParams.data.invoice) {
       this.invoices = this.navParams.data.invoice;
@@ -99,8 +100,31 @@ export class InternalPigInvoicesComponent {
       invoice['sourceName'] = this.farms_util[invoice.sourceId] ? this.farms_util[invoice.sourceId].name : '';
       invoice['destinationName'] = this.farms_util[invoice.destinationId] ? this.farms_util[invoice.destinationId].name : '';
       invoice['importDateDisplay'] = this.util.convertDate(invoice.importDate);
+      invoice['createBy'] = invoice.employee ? invoice.employee.name : '';
       invoice['statusName'] = VARIABLE.INVOICE_STATUS.PROCCESSING == invoice.status
         ? 'Đang xử lí' : (VARIABLE.INVOICE_STATUS.COMPLETE == invoice.status ? 'Hoàn tất' : 'Chưa xác định');
+
+      switch(invoice.status){
+        case VARIABLE.INVOICE_STATUS.COMPLETE:{
+          invoice['color'] = 'secondary';
+          break;
+        }
+
+        case VARIABLE.INVOICE_STATUS.PROCCESSING:{
+          invoice['color'] = 'main';
+          break;
+        }
+
+        case VARIABLE.INVOICE_STATUS.FORWARDING:{
+          invoice['color'] = 'warning';
+          break;
+        }
+
+        default:{
+          invoice['color'] = 'danger';
+          break;
+        }
+      }
     })
     this.filterProvider.input = this.invoices;
     this.filterProvider.searchText = searchItem;
@@ -189,7 +213,7 @@ export class InternalPigInvoicesComponent {
     translucent: true,
     cssClass: 'ion-alert'
   };
-  
+
   filterSource(sourceId) {
     if (sourceId)
       this.filterProvider.searchWithInclude.sourceId = [sourceId];

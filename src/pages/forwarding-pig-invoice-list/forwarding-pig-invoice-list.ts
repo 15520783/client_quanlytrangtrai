@@ -34,11 +34,12 @@ export class ForwardingPigInvoiceListPage {
     { name: "importDateDisplay", label: 'Ngày nhập' },
     { name: "quantity", label: 'Tổng số heo' },
     { name: "totalWeight", label: 'Tổng trọng lượng' },
-    { name: "statusName", label: 'Trạng thái' },
+    { name: "statusName", label: 'Trạng thái', usingBadge: true },
+    { name: "createBy", label: 'Người lập' }
   ];
 
   public placeholderSearch: string = 'Tìm kiếm chứng từ'
-  public filter_default: Array<string> = ["invoiceNo", "sourceName", "destinationName", "importDateDisplay", "quantity", "totalWeight", "statusName"];
+  public filter_default: Array<string> = ["invoiceNo", "sourceName", "destinationName", "importDateDisplay", "quantity", "totalWeight", "statusName", "createBy"];
 
   public page_Idx: number = 1;
   public page_Total: number = 0;
@@ -64,7 +65,7 @@ export class ForwardingPigInvoiceListPage {
     public platform: Platform,
     public modalCtrl: ModalController,
     public pigProvider: PigsProvider,
-    public userProvider:UserProvider
+    public userProvider: UserProvider
   ) {
     this.farms_util = this.deployData.get_object_list_key_of_farm();
     this.pig_util = this.deployData.get_object_list_key_of_pig();
@@ -90,12 +91,34 @@ export class ForwardingPigInvoiceListPage {
       invoice['sourceName'] = this.farms_util[invoice.sourceId].name;
       invoice['destinationName'] = this.farms_util[invoice.destinationId].name;
       invoice['importDateDisplay'] = this.util.convertDate(invoice.importDate);
+      invoice['createBy'] = invoice.employee ? invoice.employee.name : '';
       switch (invoice.status) {
         case VARIABLE.INVOICE_STATUS.FORWARDING: {
           invoice['statusName'] = 'Đang chuyển heo'; break;
         }
         default: {
           invoice['statusName'] = 'Không xác định'; break;
+        }
+      }
+      switch (invoice.status) {
+        case VARIABLE.INVOICE_STATUS.COMPLETE: {
+          invoice['color'] = 'secondary';
+          break;
+        }
+
+        case VARIABLE.INVOICE_STATUS.PROCCESSING: {
+          invoice['color'] = 'main';
+          break;
+        }
+
+        case VARIABLE.INVOICE_STATUS.FORWARDING: {
+          invoice['color'] = 'warning';
+          break;
+        }
+
+        default: {
+          invoice['color'] = 'danger';
+          break;
         }
       }
     })
@@ -214,8 +237,8 @@ export class ForwardingPigInvoiceListPage {
                 }
               }
               this.navCtrl.pop().then(() => {
-                this.navCtrl.pop().then(()=>{
-                  this.navCtrl.pop().then(()=>{
+                this.navCtrl.pop().then(() => {
+                  this.navCtrl.pop().then(() => {
                     this.events.publish('invoicesPage:sync');
                   });
                 });

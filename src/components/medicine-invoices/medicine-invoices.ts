@@ -20,7 +20,7 @@ import { invoicesProduct } from '../../common/entity';
 export class MedicineInvoicesComponent {
   @ViewChild('menuFilter') menuFilter: Menu;
   @ViewChild('contentMedicineInvoice') content: Content;
-  
+
   @Input() invoices: Array<invoicesProduct> = [];
   public roleInput: any;
 
@@ -31,11 +31,12 @@ export class MedicineInvoicesComponent {
     { name: "destinationName", label: 'Nơi nhận' },
     { name: "importDateDisplay", label: 'Ngày nhập' },
     { name: "price", label: 'Tổng giá' },
-    { name: "statusName", label: 'Trạng thái' }
+    { name: "statusName", label: 'Trạng thái', usingBadge: true },
+    { name: "createBy", label: 'Người lập' }
   ];
 
   public placeholderSearch: string = 'Tìm kiếm chứng từ'
-  public filter_default: Array<string> = ["invoiceNo", "sourceName", "destinationName", "importDateDisplay", "price"];
+  public filter_default: Array<string> = ["invoiceNo", "sourceName", "destinationName", "importDateDisplay", "price", "createBy"];
 
   public page_Idx: number = 1;
   public page_Total: number = 0;
@@ -61,8 +62,8 @@ export class MedicineInvoicesComponent {
     public deployData: DeployDataProvider,
     public invoiceProvider: InvoicesProvider,
     public navParams: NavParams,
-    public userProvider:UserProvider,
-    public menuCtrl:MenuController,
+    public userProvider: UserProvider,
+    public menuCtrl: MenuController,
   ) {
     if (this.navParams.data.invoice) {
       this.invoices = this.navParams.data.invoice;
@@ -72,7 +73,7 @@ export class MedicineInvoicesComponent {
     this.farms_util = this.deployData.get_object_list_key_of_farm();
     this.sourceFilter = this.deployData.get_farm_list_for_select();
     this.destinationFilter = this.deployData.get_customer_list_for_select();
-    
+
     this.roleInput = new MedicineInvoiceRole(this.deployData, this.invoiceProvider);
     this.events.subscribe('invoicesReload', () => {
       this.setFilteredItems();
@@ -96,8 +97,31 @@ export class MedicineInvoicesComponent {
       invoice['sourceName'] = this.partners_util[invoice.source.id].name;
       invoice['destinationName'] = this.farms_util[invoice.destination.id].name;
       invoice['importDateDisplay'] = this.util.convertDate(invoice.importDate);
+      invoice['createBy'] = invoice.employee ? invoice.employee.name : '';
       invoice['statusName'] = VARIABLE.INVOICE_STATUS.PROCCESSING == invoice.status
         ? 'Đang xử lí' : (VARIABLE.INVOICE_STATUS.COMPLETE == invoice.status ? 'Hoàn tất' : 'Chưa xác định');
+
+      switch (invoice.status) {
+        case VARIABLE.INVOICE_STATUS.COMPLETE: {
+          invoice['color'] = 'secondary';
+          break;
+        }
+
+        case VARIABLE.INVOICE_STATUS.PROCCESSING: {
+          invoice['color'] = 'main';
+          break;
+        }
+
+        case VARIABLE.INVOICE_STATUS.FORWARDING: {
+          invoice['color'] = 'warning';
+          break;
+        }
+
+        default: {
+          invoice['color'] = 'danger';
+          break;
+        }
+      }
     })
     this.filterProvider.input = this.invoices;
     this.filterProvider.searchText = searchItem;

@@ -320,7 +320,7 @@ export class OptionListPigSectionComponent {
             newIssuePig.date = healthInput.issuePig.date,
             newIssuePig.issue = issue,
             newIssuePig.employee = healthInput.issuePig.employee,
-            newIssuePig.status = VARIABLE.ISSUE_PIG_STATUS.DECTECTION.id,
+            newIssuePig.status = VARIABLE.ISSUE_PIG_STATUS.DECTECTION.name,
             newIssuePig.description = '',
             issuesPig.push(newIssuePig);
         })

@@ -35,7 +35,8 @@ export class ExternalPigInvoicesComponent {
     { name: "importDateDisplay", label: 'Ngày nhập' },
     { name: "quantity", label: 'Tổng số heo' },
     { name: "totalWeight", label: 'Tổng trọng lượng' },
-    { name: "statusName", label: 'Trạng thái' },
+    { name: "statusName", label: 'Trạng thái', usingBadge: true },
+    { name: "createBy", label: 'Người lập' }
   ];
 
 
@@ -96,11 +97,33 @@ export class ExternalPigInvoicesComponent {
       invoice['sourceName'] = this.partners_util[invoice.sourceId] ? this.partners_util[invoice.sourceId].name : '';
       invoice['destinationName'] = this.farms_util[invoice.destinationId] ? this.farms_util[invoice.destinationId].name : '';
       invoice['importDateDisplay'] = this.util.convertDate(invoice.importDate);
+      invoice['createBy'] = invoice.employee ? invoice.employee.name : '';
       invoice['statusName'] = VARIABLE.INVOICE_STATUS.PROCCESSING == invoice.status
         ? 'Đang xử lí' : (VARIABLE.INVOICE_STATUS.COMPLETE == invoice.status ? 'Hoàn tất' : 'Chưa xác định');
-    })
-      ;
- 
+
+      switch (invoice.status) {
+        case VARIABLE.INVOICE_STATUS.COMPLETE: {
+          invoice['color'] = 'secondary';
+          break;
+        }
+
+        case VARIABLE.INVOICE_STATUS.PROCCESSING: {
+          invoice['color'] = 'main';
+          break;
+        }
+
+        case VARIABLE.INVOICE_STATUS.FORWARDING: {
+          invoice['color'] = 'warning';
+          break;
+        }
+
+        default: {
+          invoice['color'] = 'danger';
+          break;
+        }
+      }
+    });
+
     this.filterProvider.input = this.invoices;
     this.filterProvider.searchText = searchItem;
     this.filterProvider.searchWithText = this.filter_default;

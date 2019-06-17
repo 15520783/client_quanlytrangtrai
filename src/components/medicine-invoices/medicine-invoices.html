@@ -17,7 +17,8 @@
 </ion-header>
 <ion-content #contentMedicineInvoice class="setting-util-component">
   <div id="content">
-    <ion-item-divider *ngIf="userProvider.rolePermission.ROLE_them_chung_nhap_thuoc!=null" custom-diviver sticky="true" showWhen="core">
+    <ion-item-divider *ngIf="userProvider.rolePermission.ROLE_them_chung_nhap_thuoc!=null" custom-diviver sticky="true"
+      showWhen="core">
       <ion-row>
         <button no-margin ion-button item-end mode='ios' color="secondary" (tap)="add()">Thêm chứng từ</button>
       </ion-row>
@@ -27,11 +28,13 @@
         <button ion-item (tap)="input_medicine(item)">
           <h2 *ngIf="mainAttribute"><b>Số chứng từ: </b>{{item[mainAttribute]}}</h2>
           <ion-row>
-            <ion-col  *ngFor="let attr of attributes" 
-                      [attr.col-6]="platform.is('core')?'':null"
-                      [attr.col-12]="!platform.is('core')? '':null" 
-                      text-wrap>
-              <p style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
+            <ion-col *ngFor="let attr of attributes" [attr.col-6]="platform.is('core')?'':null"
+              [attr.col-12]="!platform.is('core')? '':null" text-wrap>
+              <p *ngIf="attr.usingBadge" style="padding:5px!important">
+                <b>{{attr.label}}:</b>
+                <ion-badge [color]="item.color">{{item[attr.name]}}</ion-badge>
+              </p>
+              <p *ngIf="!attr.usingBadge" style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
             </ion-col>
           </ion-row>
         </button>
@@ -43,17 +46,17 @@
     </ion-infinite-scroll>
   </div>
   <ion-fab bottom right *ngIf="!platform.is('core')" color="secondary">
-      <button ion-fab>
-        <ion-icon name="ios-arrow-up"></ion-icon>
+    <button ion-fab>
+      <ion-icon name="ios-arrow-up"></ion-icon>
+    </button>
+    <ion-fab-list side="top" style="right:0px">
+      <button *ngIf="userProvider.rolePermission.ROLE_them_chung_nhap_thuoc!=null" color="main" ion-fab (tap)="add()"
+        data-balloon-visible data-balloon-length="medium" data-balloon="Thêm chứng từ mới" data-balloon-pos="left"
+        ion-fab>
+        <ion-icon name="md-add"></ion-icon>
       </button>
-      <ion-fab-list side="top" style="right:0px">
-        <button *ngIf="userProvider.rolePermission.ROLE_them_chung_nhap_thuoc!=null" color="main" ion-fab
-          (tap)="add()" data-balloon-visible data-balloon-length="medium" data-balloon="Thêm chứng từ mới"
-          data-balloon-pos="left" ion-fab>
-          <ion-icon name="md-add"></ion-icon>
-        </button>
-      </ion-fab-list>
-    </ion-fab>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>
 
 <ion-menu [content]="mycontent" side="right" #menuFilter sticky="true" type="overlay" width="500">

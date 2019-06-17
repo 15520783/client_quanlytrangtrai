@@ -26,7 +26,7 @@ export class ExportInternalPigInvoiceComponent {
 
   public sourceFilter: Array<any> = [];
   public destinationFilter: Array<any> = [];
-  
+
   public mainAttribute = "invoiceNo";
   public attributes = [
     { name: "sourceName", label: 'Nguồn cung cấp' },
@@ -34,11 +34,12 @@ export class ExportInternalPigInvoiceComponent {
     { name: "exportDateDisplay", label: 'Ngày nhập' },
     { name: "quantity", label: 'Tổng số heo' },
     { name: "totalWeight", label: 'Tổng trọng lượng' },
-    { name: "statusName", label: 'Trạng thái' },
+    { name: "statusName", label: 'Trạng thái', usingBadge: true },
+    { name: "createBy", label: 'Người lập' }
   ];
 
   public placeholderSearch: string = 'Tìm kiếm chứng từ'
-  public filter_default: Array<string> = ["invoiceNo", "sourceName", "destinationName", "exportDateDisplay", "quantity", "totalWeight", "statusName"];
+  public filter_default: Array<string> = ["invoiceNo", "sourceName", "destinationName", "exportDateDisplay", "quantity", "totalWeight", "statusName","createBy"];
 
   public page_Idx: number = 1;
   public page_Total: number = 0;
@@ -61,7 +62,7 @@ export class ExportInternalPigInvoiceComponent {
     public navParams: NavParams,
     public platform: Platform,
     public menuCtrl: MenuController,
-    public userProvider:UserProvider
+    public userProvider: UserProvider
   ) {
     if (this.navParams.data.invoice) {
       this.invoices = this.navParams.data.invoice;
@@ -91,10 +92,11 @@ export class ExportInternalPigInvoiceComponent {
   }
 
   public filterItems(searchItem) {
-    this.invoices.forEach((invoice) => {
+    this.invoices.forEach((invoice: invoicesPig) => {
       invoice['sourceName'] = this.farms_util[invoice.sourceId].name;
       invoice['destinationName'] = this.farms_util[invoice.destinationId].name;
       invoice['exportDateDisplay'] = this.util.convertDate(invoice.exportDate);
+      invoice['createBy'] = invoice.employee?invoice.employee.name:'';
       switch (invoice.status) {
         case VARIABLE.INVOICE_STATUS.PROCCESSING: {
           invoice['statusName'] = 'Đang xử lí'; break;
@@ -104,6 +106,28 @@ export class ExportInternalPigInvoiceComponent {
         }
         case VARIABLE.INVOICE_STATUS.COMPLETE: {
           invoice['statusName'] = 'Đã hoàn tất'; break;
+        }
+      }
+
+      switch(invoice.status){
+        case VARIABLE.INVOICE_STATUS.COMPLETE:{
+          invoice['color'] = 'secondary';
+          break;
+        }
+
+        case VARIABLE.INVOICE_STATUS.PROCCESSING:{
+          invoice['color'] = 'main';
+          break;
+        }
+
+        case VARIABLE.INVOICE_STATUS.FORWARDING:{
+          invoice['color'] = 'warning';
+          break;
+        }
+
+        default:{
+          invoice['color'] = 'danger';
+          break;
         }
       }
     })
@@ -183,7 +207,7 @@ export class ExportInternalPigInvoiceComponent {
   closeFilter() {
     this.menuCtrl.close();
   }
-  
+
   filterSource(sourceId) {
     if (sourceId)
       this.filterProvider.searchWithInclude.sourceId = [sourceId];

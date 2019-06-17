@@ -41,11 +41,12 @@ export class PigListSectionPage {
     { name: "sectionName", label: 'Khu' },
     { name: "genderName", label: 'Giới tính' },
     { name: "birthdayDisplay", label: 'Ngày sinh' },
-    { name: "statusName", label: 'Trạng thái' }
+    { name: "statusName", label: 'Trạng thái' },
+    { name: "pigType", label: 'Loại heo', usingBadge: true }
   ];
 
   public placeholderSearch: string = 'Tìm kiếm heo'
-  public filter_default: Array<string> = ["pigCode", "breedName", "houseName", "genderName", "birthdayDisplay", "statusName"];
+  public filter_default: Array<string> = ["pigCode", "breedName", "houseName", "genderName", "birthdayDisplay", "statusName", "pigType"];
 
   public page_Idx: number = 1;
   public page_Total: number = 0;
@@ -137,7 +138,6 @@ export class PigListSectionPage {
       pig['farmId'] = this.houses[pig.houseId].section.farm ? this.houses[pig.houseId].section.farm.id : '';
       pig['sectionId'] = this.houses[pig.houseId].section ? this.houses[pig.houseId].section.id : '';
       pig['houseId'] = this.houses[pig.houseId] ? this.houses[pig.houseId].id : '';
-
     })
     this.filterProvider.input = this.pigs;
     this.filterProvider.searchText = searchItem;

@@ -1,7 +1,7 @@
 import { CONFIG, ERROR_NAME, KEY, MESSAGE, VARIABLE } from '../../common/const';
 import { Component, ViewChild } from '@angular/core';
 import { Events, LoadingController, Nav, NavController, NavParams, Platform } from 'ionic-angular';
-import { employee, pig } from '../../common/entity';
+import { employee, permission, pig, user } from '../../common/entity';
 
 import { ActivitiesPage } from '../activities/activities';
 import { ActivitiesProvider } from '../../providers/activities/activities';
@@ -120,56 +120,6 @@ export class HomePage {
         title: 'Bảng kế hoạch', component: DatePlanPage, icon: 'app-schedule', active: false, isSchedule: true,
       }) : null;
 
-
-    // this.pages = [
-    //   {
-    //     title: 'Trang trại', component: FarmsPage, icon: 'app-farm', active: true,
-    //     show: this.userProvider.rolePermission.ROLE_xem_danh_sach_trang_trai != null ? true : false
-    //   },
-    //   {
-    //     title: 'Khu', component: SectionsPage, icon: 'app-sections', active: false,
-    //     show: this.userProvider.rolePermission.ROLE_xem_danh_sach_khu != null ? true : false
-    //   },
-    //   {
-    //     title: 'Heo', component: PigsPage, icon: 'app-pig-outline', active: false,
-    //     show: this.userProvider.rolePermission.ROLE_xem_danh_sach_heo != null ? true : false
-    //   },
-    //   {
-    //     title: 'Nhân viên', component: EmployeePage, icon: 'app-employees', active: false,
-    //     show: this.userProvider.rolePermission.ROLE_xem_danh_sach_nhan_vien != null ? true : false
-    //   },
-    //   {
-    //     title: 'Kho', component: WarehousesPage, icon: 'app-warehouse', active: false,
-    //     show: this.userProvider.rolePermission.ROLE_xem_danh_sach_kho != null ? true : false
-    //   },
-    //   // {
-    //   //   title: 'Đối tác', component: PartnersPage, icon: 'app-partner', active: false,
-    //   //   show: Object.keys(this.userProvider.rolePermission.quan_ly_danh_sach_doi_tac).length ? true : false
-    //   // },
-    //   {
-    //     title: 'Chứng từ', component: InvoicesPage, icon: 'app-file', active: false,
-    //     show: this.userProvider.rolePermission.ROLE_xem_danh_sach_chung_tu != null ? true : false
-    //   },
-    //   {
-    //     title: 'Quản lý lâm sàn', component: IssuePigListPage, icon: 'app-medicine-manager', active: false,
-    //     show: true
-    //   },
-    //   {
-    //     title: 'Hoạt động', component: ActivitiesPage, icon: 'app-activities', active: false,
-    //     show: true
-    //     // show: Object.keys(this.userProvider.rolePermission.quan_ly_hoat_dong).length ? true : false
-    //   },
-    //   {
-    //     title: 'Thiết lập', component: SettingsPage, icon: 'app-settings', active: false,
-    //     show: this.userProvider.rolePermission.ROLE_xem_danh_sach_thiet_lap != null ? true : false
-    //   },
-    //   {
-    //     title: 'Bảng kế hoạch', component: DatePlanPage, icon: 'app-schedule', active: false, isSchedule: true,
-    //     show: true
-    //     // show: Object.keys(this.userProvider.rolePermission.ROLE_xem_bang_ke_hoach).length ? true : false
-    //   },
-    // ];
-
     this.events.subscribe('sync', (something) => {
       this.sync();
     })
@@ -216,7 +166,7 @@ export class HomePage {
       })
   }
 
-  test(){
+  test() {
     this.util.clearAllKeyStorage();
   }
 
@@ -228,8 +178,7 @@ export class HomePage {
       this.sectionProvider.updated_flag =
       this.houseProvider.updated_flag =
       this.warehouseProvider.updated_flag =
-      this.settingProvider.updated_flag =
-      this.partnerProvider.updated_flag = false;
+      this.settingProvider.updated_flag = false;
     this.intinial_sync();
   }
 
@@ -239,16 +188,17 @@ export class HomePage {
     this.userProvider.checkServer()
       .then((res: any) => {
         if (res.success) {
-          // this.userProvider.sync();
-          this.farmProvider.sync();
-          this.pigProvider.sync();
-          this.employeeProvider.sync();
-          this.partnerProvider.sync();
-          this.sectionProvider.sync();
-          this.houseProvider.sync();
-          this.warehouseProvider.sync();
-          this.settingProvider.sync();
-          this.sectionProvider.sync();
+          this.getRolePermission().then(() => {
+            // this.userProvider.sync();
+            this.farmProvider.sync();
+            this.pigProvider.sync();
+            this.employeeProvider.sync();
+            this.sectionProvider.sync();
+            this.houseProvider.sync();
+            this.warehouseProvider.sync();
+            this.settingProvider.sync();
+            this.sectionProvider.sync();
+          })
         }
       })
       .catch((err: any) => {
@@ -271,8 +221,7 @@ export class HomePage {
       this.sectionProvider.updated_flag &&
       this.houseProvider.updated_flag &&
       this.warehouseProvider.updated_flag &&
-      this.settingProvider.updated_flag &&
-      this.partnerProvider.updated_flag) {
+      this.settingProvider.updated_flag ) {
       this.events.unsubscribe('updated');
       this.util.closeBackDrop();
     }
@@ -325,6 +274,78 @@ export class HomePage {
           this.util.closeBackDrop();
           this.util.showToastInform('Không tìm thấy đối tượng');
         })
+    }
+  }
+
+  /**
+   * Cập nhật lại danh sách quyền
+   */
+  getRolePermission() {
+    return this.util.getKey(KEY.USER)
+      .then((userAccount: user) => {
+        if (userAccount) {
+          if (userAccount.employee.farm.id == '0') {
+            this.userProvider.getPermissionOfUserMaster()
+              .then((permissions: Array<permission>) => {
+                if (permissions) {
+                  let data: any = {};
+                  permissions.forEach((permission: permission) => {
+                    if (permission) {
+                      data[permission.code] = permission;
+                    }
+                  })
+                  this.util.setKey(KEY.PERMISSIONS, data).then(() => {
+                    this.userProvider.rolePermission = data;
+                  });
+                }
+                return permissions;
+              })
+              .catch((err) => {
+                this.util.showToast('Lỗi phân quyền người dùng');
+                this.logOut();
+              })
+          } else {
+            this.settingProvider.getPermissionOfRole(userAccount.role.id)
+              .then((permissions: Array<permission>) => {
+                if (permissions) {
+                  let data: any = {};
+                  permissions.forEach((permission: permission) => {
+                    if (permission) {
+                      data[permission.code] = permission;
+                    }
+                  })
+                  this.util.setKey(KEY.PERMISSIONS, data).then(() => {
+                    this.userProvider.rolePermission = data;
+                  });
+                  // this.util.setKey(KEY.PERMISSIONS,)
+                }
+                return permissions;
+              })
+              .catch((err) => {
+                this.util.showToast('Lỗi phân quyền người dùng');
+                this.logOut();
+              })
+          }
+        } else {
+          this.logOut();
+        }
+      })
+      .catch(err => { console.log(err) });
+  }
+
+  settingRole(permissions) {
+    if (permissions) {
+      let data: any = {};
+      permissions.forEach((permission: permission) => {
+        if (permission) {
+          data[permission.code] = permission;
+        }
+      })
+      this.util.setKey(KEY.PERMISSIONS, data).then(() => {
+        this.userProvider.rolePermission = data;
+      });
+      console.log(data);
+      // this.util.setKey(KEY.PERMISSIONS,)
     }
   }
 }

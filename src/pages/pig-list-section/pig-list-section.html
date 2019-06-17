@@ -61,7 +61,8 @@
               [attr.col-md-4] ="platform.is('core')"
               [attr.col-sm-6] ="platform.is('core')"
               [attr.text-wrap]="platform.is('core')">
-            <p style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
+            <p *ngIf="usingBadge" style="padding:5px!important"><b>{{attr.label}}:</b><ion-badge color="main">{{item[attr.name]}}</ion-badge></p>
+            <p *ngIf="!usingBadge"style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
           </ion-col>
         </ion-row>
       </button>

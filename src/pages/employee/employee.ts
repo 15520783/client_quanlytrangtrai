@@ -24,7 +24,7 @@ export class EmployeePage {
   public page_Total: number = 0;
   public rows: Array<employee> = [];
   public cols: any = [];
-  public filter_default: any = ["name", "address", "email", "birthday"];
+  public filter_default: any = ["name", "address", "email", "birthday","regencyName","cmnd","dateJoinDisplay"];
   protected visible_items: Array<employee> = [];
 
   protected searchControl: FormControl = new FormControl();
@@ -99,7 +99,11 @@ export class EmployeePage {
   }
 
   public filterItems(searchItem) {
-    let employees = this.util.deepClone(this.employeeProvider.employees)
+    let employees:Array<employee> = this.util.deepClone(this.employeeProvider.employees);
+    employees.forEach(e => {
+      e['regencyName'] = e.regency.name;
+      e['dateJoinDisplay'] = this.util.convertDate(e.dateJoin);
+    });
     this.filterProvider.input = employees;
     this.filterProvider.searchText = searchItem;
     this.filterProvider.searchWithText = this.filter_default;

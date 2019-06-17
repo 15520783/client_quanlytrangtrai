@@ -340,6 +340,8 @@ const API = {
     DELETE_MATING: '/api/matings/',
 
     CREATE_ISSUES_PIG: '/api/issuespigs/',
+    UPDATE_LIST_ISSUES_PIG:'/api/issuespigs/updateall/',
+    DELETE_ISSUES_PIG: '/api/issuespigs/',
 
     CREATE_BIRTH: '/api/births/',
 
