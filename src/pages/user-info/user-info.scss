@@ -1,5 +1,5 @@
-page-employee-information {
-  .web {
+page-user-info {
+  .web{
     ion-slides {
       .swiper-container-autoheight {
         height: 100% !important;
@@ -14,20 +14,17 @@ page-employee-information {
       }
     }
   }
+  
 
-  // ion-scroll{
-  //     .scroll-content{
-  //         top:12px;
-  //     }
-  // }
+  ion-content {
+    .scroll-content {
+      // overflow: hidden!important;
+      -ms-overflow-style: none; // IE 10+
+      overflow: -moz-scrollbars-none; // Firefox
+    }
 
-  ion-col {
-    padding: 0px !important;
-  }
-
-  ion-item-divider {
-    .label {
-      margin: 0px !important;
+    .scroll-content::-webkit-scrollbar {
+      display: none; // Safari and Chrome
     }
   }
 
@@ -37,7 +34,8 @@ page-employee-information {
     white-space: nowrap;
   }
 
-  .fc-toolbar.fc-header-toolbar {
-    font-size: 15px !important;
+  .fc-toolbar.fc-header-toolbar{
+    font-size: 15px!important;
   }
+
 }

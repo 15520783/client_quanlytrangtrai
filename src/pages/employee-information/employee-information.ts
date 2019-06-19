@@ -1,11 +1,13 @@
-import { Component, ViewChild } from '@angular/core';
-import { IonicPage, ModalController, NavController, NavParams, Platform, Slides } from 'ionic-angular';
-import { employee, user } from '../../common/entity';
+import { Component, NgZone, ViewChild } from '@angular/core';
+import { Content, IonicPage, ModalController, NavController, NavParams, Platform, Slides } from 'ionic-angular';
+import { employee, schedule, user } from '../../common/entity';
 
+import { ActivitiesProvider } from '../../providers/activities/activities';
 import { CalendarComponent } from 'ng-fullcalendar';
 import { EmployeeInputPage } from '../employee-input/employee-input';
 import { EmployeesProvider } from '../../providers/employees/employees';
 import { OptionsInput } from '@fullcalendar/core';
+import { SchelduleDetailComponent } from '../../components/scheldule-detail/scheldule-detail';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { UserAccountListPage } from '../user-account-list/user-account-list';
 import { UserProvider } from '../../providers/user/user';
@@ -24,11 +26,23 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 })
 export class EmployeeInformationPage {
   @ViewChild('slider') slider: Slides;
+  @ViewChild('content') content:Content;
 
   public employee: employee;
   public users: Array<user> = [];
 
   public tab = "0";
+
+  public schedules: Array<schedule> = [];
+  public events: Array<any> = [];
+  public month: number;
+  public year: number;
+
+  calendarOptions: any;
+
+  options: OptionsInput;
+  @ViewChild('fullcalendar') fullcalendar: CalendarComponent;
+  calendarPlugins = [interactionPlugin, resourceTimeline, dayGridPlugin, timeGridPlugin, listPlugin]; // important!
 
   constructor(
     public navCtrl: NavController,
@@ -37,88 +51,142 @@ export class EmployeeInformationPage {
     public modalCtrl: ModalController,
     public settingProvider: SettingsProvider,
     public employeeProvider: EmployeesProvider,
+    public activitiesProvider: ActivitiesProvider,
     public util: Utils,
-    public userProvider:UserProvider
+    public userProvider: UserProvider
   ) {
+    this.month = new Date().getMonth() + 1;
+    this.year = new Date().getFullYear();
+
     this.employee = this.navParams.data.employee;
     this.employee['dateJoinDisplay'] = this.util.convertDate(this.employee.dateJoin);
     this.employee['dateOffDisplay'] = this.util.convertDate(this.employee.dateOff);
     this.employee['birthdayDisplay'] = this.util.convertDate(this.employee.birthday);
     this.employee['genderName'] = VARIABLE.GENDER_EMPLOYEE[this.employee.gender].name;
+  }
+
+  ionViewDidLoad() {
     this.util.openBackDrop();
 
     /**
      * Lấy danh sách user
      */
-    this.employeeProvider.getUserAccountsOfEmployee(this.employee.id)
-      .then((users: Array<user>) => {
-        if (users) {
-          this.users = users;
-        }
-        this.util.closeBackDrop();
+    this.employeeProvider.getScheduleOfEmployee(this.employee.id)
+      .then((schedules: Array<schedule>) => {
+        if (schedules)
+          this.schedules = schedules;
+        return this.employeeProvider.getUserAccountsOfEmployee(this.employee.id)
+          .then((users: Array<user>) => {
+            if (users) {
+              this.users = users;
+            }
+            this.util.closeBackDrop();
+          })
+          .then(() => {
+            this.initSchedule();
+            this.options = {
+              schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
+              selectable: true,
+              defaultView: this.platform.is('core') ? "dayGridMonth" : "listWeek",
+              header: {
+                left: 'today prev,next',
+                right: this.platform.is('core') ? 'dayGridMonth,listWeek' : 'dayGridWeek,listWeek'
+              },
+              height: 'parent',
+              fixedWeekCount: false,
+              editable: true,
+              contentHeight: this.platform.is('core') ? 400 : 400,
+              plugins: this.calendarPlugins,
+              weekends: true,
+              locale: 'vi',
+              timeZone: 'UTC',
+              // isRTL: false,
+              eventLimit: true,
+              displayEventTime: false,
+              views: {
+                timeGrid: {
+                  eventLimit: 0,
+                }
+              },
+              events: this.events
+            }
+          })
       })
       .catch((err) => {
         this.util.closeBackDrop();
       })
   }
 
-  ionViewDidLoad() {
+  initSchedule() {
+    this.schedules.forEach((schedule) => {
+      let today = new Date(new Date().getFullYear()+'/'+(new Date().getMonth()+1) +'/'+new Date().getDate());
+      if (schedule) {
+        this.events.push({
+          id: schedule.id,
+          title: schedule.name,
+          status: schedule.status,
+          date: this.GetFormattedDate(schedule.date) + " 07:00",
+          employee: schedule.employee,
+          schedule: schedule,
+          backgroundColor: (new Date(schedule.date) >= today) ?
+            (schedule.employee ? '#32db64' : '#01c2fa') : '#f53d3d',
+          borderColor: (new Date(schedule.date) >= today) ? (schedule.employee ? '#32db64' : '#01c2fa') : '#f53d3d'
+        })
+      }
+    })
   }
+
+  GetFormattedDate(value) {
+    let date = new Date(value);
+    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+  }
+
 
   ngAfterViewInit() {
     if (this.slider)
       this.slider.autoHeight = true;
   }
 
-  // calendarPlugins = [dayGridPlugin, timeGridPlugin, listPlugin]; // important!
-  calendarOptions: any;
-
-  options: OptionsInput;
-  @ViewChild('fullcalendar') fullcalendar: CalendarComponent;
-  calendarPlugins = [interactionPlugin, resourceTimeline, dayGridPlugin, timeGridPlugin, listPlugin]; // important!
-
   ngOnInit() {
-    this.options = {
-      schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-      selectable: true,
-      defaultView: "dayGridMonth",
-      header: {
-        left: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-      },
-      footer: {
-        right: 'today prev,next'
-      },
-      height: 'parent',
-      fixedWeekCount: false,
-      editable: true,
-      contentHeight: this.platform.is('core') ? 400 : 300,
-      plugins: this.calendarPlugins,
-      weekends: true,
-      locale: 'vi',
-      timeZone: 'UTC',
-      eventLimit: true,
-      views: {
-        timeGrid: {
-          eventLimit: 4
-        }
-      },
-      events: [
-        { title: 'Sự kiện 1', start: '2019-04-01 7:30', end: '2019-04-01 9:30', classNames: ['event-fullcalendar'] },
-        { title: 'Sự kiện 1', start: '2019-04-01', end: '2019-04-03', classNames: ['event-fullcalendar'] },
-        { title: 'Sự kiện 1', start: '2019-04-01', end: '2019-04-03', classNames: ['event-fullcalendar'] },
-        { title: 'Sự kiện 1', start: '2019-04-01', end: '2019-04-03', classNames: ['event-fullcalendar'] },
-        { title: 'Sự kiện 3', date: '2019-04-01', classNames: ['event-fullcalendar'] },
-        { title: 'Sự kiện 2', date: '2019-04-02', classNames: ['event-fullcalendar'] }
-      ]
-    }
 
   }
+  
+  handleEventClick(model) { // handler method
+    // let callbackRemove = (schedule: schedule) => {
+    //   if (schedule) {
+    //     let idx = this.events.findIndex(_event => _event.id == schedule.id);
+    //     if (idx > -1) {
+    //       this.events.splice(idx, 1);
+    //     }
+    //     modal.dismiss();
+    //     this.eventEmitter.publish('home:reloadSchedule');
+    //   }
+    // }
 
-  handleEventClick(arg) { // handler method
-    console.log(arg.event.title);
-    console.log(arg.event.start);
-    console.log(arg.event.end);
+    let callbackUpdate = (schedule: schedule) => {
+      if (schedule) {
+        this.activitiesProvider.updateSchedule(schedule)
+          .then((updated_schedule: schedule) => {
+            modal.dismiss();
+            let active_idx = this.navCtrl.getActive().index; 
+            this.navCtrl.push(this.navCtrl.getActive().component,this.navParams.data);
+            this.navCtrl.remove(active_idx);
+            // this.navCtrl.setPages(this.navCtrl.getActive().component,this.navParams.data);
+          })
+          .catch((err) => {
+            return err;
+          })
+      }
+    }
+
+
+    let modal = this.modalCtrl.create(SchelduleDetailComponent, {
+      schedule: model.event.extendedProps.schedule,
+      // callbackRemove: callbackRemove,
+      callbackUpdate: callbackUpdate
+    });
+
+    modal.present();
   }
 
   handleDayClick(event) {
@@ -185,5 +253,17 @@ export class EmployeeInformationPage {
 
   openUserList() {
     this.navCtrl.push(UserAccountListPage, { users: this.users, employeeId: this.employee.id });
+  }
+
+  clickButton(button: { buttonType: string, data: Date }) {
+    console.log(button);
+    if (button.buttonType == 'next') {
+      this.month = button.data.getMonth() + 1;
+      this.year = button.data.getFullYear();
+    }
+    else if (button.buttonType == 'prev') {
+      this.month = button.data.getMonth() + 1;
+      this.year = button.data.getFullYear();
+    }
   }
 }

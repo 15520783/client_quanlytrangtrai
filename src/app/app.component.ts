@@ -1,5 +1,5 @@
 import { App, Events, Nav, Platform, ToastController } from 'ionic-angular';
-import { CONFIG, KEY, MESSAGE } from '../common/const';
+import { CONFIG, KEY, MESSAGE, SETTING_KEY } from '../common/const';
 import { Component, ViewChild } from '@angular/core';
 import { permission, user } from '../common/entity';
 
@@ -68,10 +68,14 @@ export class MyApp {
         this.headerColor.tint('#01C2FA');
       }
 
-      this.app_start();
+      this.settingConfig().then(() => {
+        this.app_start();
+      });
 
       this.events.subscribe('app_begin', () => {
-        this.app_start();
+        this.settingConfig().then(() => {
+          this.app_start();
+        });
       })
 
       if (this.platform.is('cordova')) {
@@ -84,8 +88,32 @@ export class MyApp {
   }
 
 
-  app_start() {
+  settingConfig() {
+    return this.util.getKey(SETTING_KEY.SERVER_API)
+      .then((serverApi: string) => {
+        console.log(serverApi);
+        if (serverApi) {
+          CONFIG.SERVER_API = serverApi;
+        }
+        this.util.getKey(SETTING_KEY.DEFAULT_REQUEST_TIMEOUT)
+          .then((timeOut: number) => {
+            if (timeOut) {
+              CONFIG.DEFAULT_TIMEOUT = timeOut;
+            }
+            this.util.getKey(SETTING_KEY.INTERVAL_SYNC_DELAY)
+              .then((intervalDelay: number) => {
+                if (intervalDelay) {
+                  CONFIG.SYNC_DELAY_DURATION = intervalDelay;
+                }
+              })
+          })
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
 
+  app_start() {
     this.util.getKey(KEY.ACCESSTOKEN)
       .then((accessToken) => {
         if (accessToken) {
@@ -169,7 +197,7 @@ export class MyApp {
       this.sectionProvider.updated_flag &&
       this.houseProvider.updated_flag &&
       this.warehouseProvider.updated_flag &&
-      this.settingProvider.updated_flag ) {
+      this.settingProvider.updated_flag) {
       this.rootPage = HomePage;
       this.events.unsubscribe('updated');
       setTimeout(() => {

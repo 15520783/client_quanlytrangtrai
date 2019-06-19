@@ -13,6 +13,7 @@
     <allow-intent href="geo:*" />
     <preference name="ScrollEnabled" value="false" />
     <preference name="android-minSdkVersion" value="19" />
+    <preference name="android-targetSdkVersion" value="28" />
     <preference name="BackupWebStorage" value="none" />
     <preference name="loadUrlTimeoutValue" value="700000" />
     <preference name="SplashMaintainAspectRatio" value="true" />
@@ -92,9 +93,11 @@
     <plugin name="phonegap-plugin-barcodescanner" spec="8.0.1">
         <variable name="ANDROID_SUPPORT_V4_VERSION" value="27.+" />
     </plugin>
-    <plugin name="cordova-plugin-firebase" spec="https://github.com/dpa99c/cordova-plugin-firebase#GH-1057-April-05-android-build-issue" />
-    <plugin name="cordova-plugin-email-composer" spec="0.9.2">
-        <variable name="ANDROID_SUPPORT_V4_VERSION" value="27.+" />
+    <plugin name="cordova-android-support-gradle-release" spec="^3.0.0">
+        <variable name="ANDROID_SUPPORT_VERSION" value="27.+" />
     </plugin>
-    <engine name="android" spec="^7.1.4" />
+    <plugin name="cordova-plugin-firebase" spec="https://github.com/dpa99c/cordova-plugin-firebase#GH-1057-April-05-android-build-issue" />
+    <plugin name="cordova-plugin-androidx-adapter" spec="^1.0.2" />
+    <plugin name="cordova-plugin-androidx" spec="^1.0.2" />
+    <engine name="android" spec="^8.0.0" />
 </widget>

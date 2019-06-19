@@ -2,8 +2,8 @@
   <ion-header>
     <ion-toolbar text-center>
       <ion-list no-margin no-bounce no-lines>
-        <ion-item style="background: transparent!important">
-          <ion-avatar item-start>
+        <ion-item style="background: transparent!important" (tap)="viewUserPage()">
+          <ion-avatar item-start style="margin: 5px!important">
             <img src="../../assets/imgs/default-user.png">
           </ion-avatar>
           <ion-row>
@@ -19,11 +19,15 @@
         </ion-item>
       </ion-list>
       <ion-buttons right>
-        <button ion-button font20 padding style="position: relative!important" (tap)="test()">
+        <button ion-button font20 padding style="position: relative!important" >
           <ion-icon name="md-notifications" font28>
             <ion-badge color="danger" class="ion-badge-notification">10</ion-badge>
           </ion-icon>
         </button>
+        <button ion-button font20 padding (tap)="openSetting()">
+            <ion-icon name="app-setting-config" font28 ></ion-icon>
+        </button>
+
       </ion-buttons>
     </ion-toolbar>
   </ion-header>

@@ -4,6 +4,7 @@ import { BackdropComponent } from '../components/backdrop/backdrop';
 import { Firebase } from '@ionic-native/firebase';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { KEY } from './const';
 import { Storage } from '@ionic/storage';
 
 @Injectable()
@@ -134,6 +135,9 @@ export class Utils {
   }
 
   clearAllKeyStorage() {
+    // Object.keys(KEY).forEach((key)=>{
+    //   this.storage.remove(key)
+    // })
     return this.storage.clear();
   }
 

@@ -76,4 +76,7 @@ ion-icon {
     &[class*="medicine-manager"] {
         mask-image: url(../../../assets/imgs/prescription.svg);
     }
+    &[class*="setting-config"] {
+        mask-image: url(../../../assets/imgs/cogwheel.svg);
+    }
 }

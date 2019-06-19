@@ -1,4 +1,4 @@
-import { CONFIG, MESSAGE } from '../../common/const';
+import { CONFIG, MESSAGE, VARIABLE } from '../../common/const';
 import { Component, ViewChild } from '@angular/core';
 import { Events, IonicPage, ModalController, Nav, NavController, NavParams, Platform, PopoverController, ViewController } from 'ionic-angular';
 import { breedings, mating, schedule } from '../../common/entity';
@@ -35,6 +35,8 @@ export class DatePlanPage {
 
   public schedules: Array<schedule> = [];
   public events: Array<any> = [];
+  public month: number;
+  public year: number;
 
   calendarPlugins = [interactionPlugin, resourceTimeline, dayGridPlugin, timeGridPlugin, listPlugin]; // important!
 
@@ -49,7 +51,8 @@ export class DatePlanPage {
     public popoverCtrl: PopoverController,
     public eventEmitter: Events
   ) {
-
+    this.month = new Date().getMonth() + 1;
+    this.year = new Date().getFullYear();
   }
 
   ngOnInit(): void {
@@ -68,16 +71,14 @@ export class DatePlanPage {
         selectable: true,
         defaultView: this.platform.is('core') ? "dayGridMonth" : "listWeek",
         header: {
-          left: 'title',
+          left: 'today prev,next',
+          // center: 'title',
           right: this.platform.is('core') ? 'dayGridMonth,listWeek' : 'dayGridWeek,listWeek'
-        },
-        footer: {
-          right: 'today prev,next'
         },
         height: 'parent',
         fixedWeekCount: false,
         editable: true,
-        contentHeight: this.platform.is('core') ? 500 : 400,
+        contentHeight: this.platform.is('core') ? 400 : 400,
         plugins: this.calendarPlugins,
         weekends: true,
         locale: 'vi',
@@ -163,6 +164,7 @@ export class DatePlanPage {
   initSchedule() {
     this.schedules.forEach((schedule) => {
       if (schedule) {
+        let today = new Date(new Date().getFullYear() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getDate());
         this.events.push({
           id: schedule.id,
           title: schedule.name,
@@ -170,15 +172,17 @@ export class DatePlanPage {
           date: this.GetFormattedDate(schedule.date) + " 07:00",
           employee: schedule.employee,
           schedule: schedule,
-          backgroundColor: (new Date(schedule.date) >= new Date()) ?
-            (schedule.employee ? '#32db64' : '#01c2fa') : '#f53d3d',
-          borderColor: (new Date(schedule.date) >= new Date()) ? (schedule.employee ? '#32db64' : '#01c2fa') : '#f53d3d'
+          backgroundColor: (new Date(schedule.date) >= today) ?
+            (schedule.employee ? VARIABLE.SCHEDULE_STATUS.ASSIGNED.color : VARIABLE.SCHEDULE_STATUS.NOT_ASSIGNED.color) : VARIABLE.SCHEDULE_STATUS.OVERDUE.color,
+          borderColor: (new Date(schedule.date) >= today) ?
+            (schedule.employee ? VARIABLE.SCHEDULE_STATUS.ASSIGNED.color : VARIABLE.SCHEDULE_STATUS.NOT_ASSIGNED.color) : VARIABLE.SCHEDULE_STATUS.OVERDUE.color
         })
       }
     })
   }
 
   handleEventClick(model) { // handler method
+    console.log(model);
     let callbackRemove = (schedule: schedule) => {
       if (schedule) {
         let idx = this.events.findIndex(_event => _event.id == schedule.id);
@@ -197,12 +201,12 @@ export class DatePlanPage {
             modal.dismiss();
             this.eventEmitter.publish('home:reloadSchedule');
           })
-          .catch((err)=>{
+          .catch((err) => {
             return err;
           })
       }
     }
-    
+
 
     let modal = this.modalCtrl.create(SchelduleDetailComponent, {
       schedule: model.event.extendedProps.schedule,
@@ -219,17 +223,18 @@ export class DatePlanPage {
         this.activitiesProvider.createSchedule(schedule)
           .then((newSchedule: schedule) => {
             if (newSchedule) {
-              this.schedules.push(newSchedule);
-              this.events.push({
-                id: newSchedule.id,
-                title: newSchedule.name,
-                status: newSchedule.status,
-                date: this.GetFormattedDate(newSchedule.date) + " 07:00",
-                employee: newSchedule.employee,
-                backgroundColor: (new Date(newSchedule.date) >= new Date()) ?
-                  (newSchedule.employee ? '#32db64' : '#01c2fa') : '#f53d3d',
-                borderColor: (new Date(newSchedule.date) >= new Date()) ? (newSchedule.employee ? '#32db64' : '#01c2fa') : '#f53d3d'
-              })
+              // this.schedules.push(newSchedule);
+              // this.events.push({
+              //   id: newSchedule.id,
+              //   title: newSchedule.name,
+              //   status: newSchedule.status,
+              //   date: this.GetFormattedDate(newSchedule.date) + " 07:00",
+              //   employee: newSchedule.employee,
+              //   backgroundColor: (new Date(newSchedule.date) >= new Date()) ?
+              //     (newSchedule.employee ? VARIABLE.SCHEDULE_STATUS.ASSIGNED.color : VARIABLE.SCHEDULE_STATUS.NOT_ASSIGNED.color) : VARIABLE.SCHEDULE_STATUS.OVERDUE.color,
+              //   borderColor: (new Date(newSchedule.date) >= new Date()) ?
+              //     (newSchedule.employee ? VARIABLE.SCHEDULE_STATUS.ASSIGNED.color : VARIABLE.SCHEDULE_STATUS.NOT_ASSIGNED.color) : VARIABLE.SCHEDULE_STATUS.OVERDUE.color
+              // })
               this.eventEmitter.publish('home:reloadSchedule');
             }
           })
@@ -241,8 +246,15 @@ export class DatePlanPage {
     this.navCtrl.push(ScheduleInputPage, { dateInput: event.dateStr, callback: callback })
   }
 
-
-
-
-
+  clickButton(button: { buttonType: string, data: Date }) {
+    console.log(button);
+    if (button.buttonType == 'next') {
+      this.month = button.data.getMonth() + 1;
+      this.year = button.data.getFullYear();
+    }
+    else if (button.buttonType == 'prev') {
+      this.month = button.data.getMonth() + 1;
+      this.year = button.data.getFullYear();
+    }
+  }
 }

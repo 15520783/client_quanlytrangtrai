@@ -1,15 +1,17 @@
 <ion-header showWhen="core">
   <ion-navbar>
     <ion-toolbar>
-        <ion-row>
-            <ion-col text-left align-self-center>
-              <ion-title text-left>Thông tin chi tiết</ion-title>
-            </ion-col>
-            <ion-col text-right align-self-center>
-              <button *ngIf="userProvider.rolePermission.ROLE_cap_nhat_thong_tin_heo!=null" ion-button mode='ios' color="secondary" (tap)="edit()">Chỉnh sửa thông tin</button>
-              <button *ngIf="userProvider.rolePermission.ROLE_xoa_heo!=null" ion-button mode='ios' color="danger" (tap)="remove()">Xóa</button>
-            </ion-col>
-          </ion-row>
+      <ion-row>
+        <ion-col text-left align-self-center>
+          <ion-title text-left>Thông tin chi tiết</ion-title>
+        </ion-col>
+        <ion-col text-right align-self-center>
+          <button *ngIf="userProvider.rolePermission.ROLE_cap_nhat_thong_tin_heo!=null" ion-button mode='ios'
+            color="secondary" (tap)="edit()">Chỉnh sửa thông tin</button>
+          <button *ngIf="userProvider.rolePermission.ROLE_xoa_heo!=null" ion-button mode='ios' color="danger"
+            (tap)="remove()">Xóa</button>
+        </ion-col>
+      </ion-row>
     </ion-toolbar>
   </ion-navbar>
 </ion-header>
@@ -19,7 +21,14 @@
     <ion-item-group>
       <ion-list>
         <ion-row>
-          <ion-col col-sm-6 col-md-3>
+          <ion-col col-12>
+            <ion-list no-padding>
+              <div #chart></div>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-sm-6 col-md-4 col-lg-4>
             <ion-list no-padding>
               <ion-item>
                 <ion-label stacked>Số tai heo :</ion-label>
@@ -56,7 +65,7 @@
             </ion-list>
           </ion-col>
 
-          <ion-col col-sm-6 col-md-3>
+          <ion-col col-sm-6 col-md-4 col-lg-4>
             <ion-list no-padding>
 
               <ion-item>
@@ -95,7 +104,7 @@
             </ion-list>
           </ion-col>
 
-          <ion-col col-sm-6 col-md-2>
+          <ion-col col-sm-6 col-md-4 col-lg-4>
             <ion-list no-padding>
               <ion-item>
                 <ion-label stacked>Số vú :</ion-label>
@@ -129,13 +138,6 @@
                 <ion-label stacked>Chỉ số ADG:</ion-label>
                 <ion-input text-wrap type="text" readonly [(ngModel)]="pig.adg"></ion-input>
               </ion-item>
-
-            </ion-list>
-          </ion-col>
-
-          <ion-col col-sm-6 col-md-4>
-            <ion-list no-padding>
-              <div #chart></div>
             </ion-list>
           </ion-col>
         </ion-row>

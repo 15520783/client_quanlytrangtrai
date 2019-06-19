@@ -167,4 +167,15 @@ export class EmployeesProvider {
       }
     }
   }
+
+  /**
+   * Lấy danh sách kế hoạch của nhân viên
+   * @param employeeId 
+   */
+  getScheduleOfEmployee(employeeId:string){
+    return this.http
+    .get(API.GET_SCHEDULE_OF_EMPLOYEE + employeeId)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
 }

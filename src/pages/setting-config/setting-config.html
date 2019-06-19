@@ -1,0 +1,56 @@
+
+<ion-header>
+  <ion-navbar>
+      <ion-toolbar toolbar-transparent no-border class="custom-toolbar" >
+        <ion-title style="padding: 0px!important">Thông tin cấu hình</ion-title>
+      </ion-toolbar>
+  </ion-navbar>
+</ion-header>
+
+<ion-content no-padding>
+  <form style="padding-bottom: 10vH">
+    <ion-list >
+      <ion-item-group>
+        <ion-item-divider color="light" sticky="true" text-left>Thiết lập cấu hình</ion-item-divider>
+        <input-text [(validControl)] = "credentialsForm.controls.serverApi"
+                    [errorMessage_Required]  = "'Địa chỉ máy chủ là hạng mục bắt buộc.'"
+                    [errorMessage_Maxlength]  = "'Địa chỉ máy chủ không được vượt quá 1000 kí tự.'"
+                    [label] = "'Địa chỉ máy chủ'"
+                    [placeholder]="'Nhập địa chỉ máy chủ'"
+                    [readonly]="!editMode"
+                    [active]= "submitAttempt">
+        </input-text>
+        <input-select [(validControl)] = "credentialsForm.controls.defaultTimeout"
+                    [errorMessage_Required]  ="'Giới hạn thời gian phản hồi từ máy chủ là hạng mục bắt buộc.'"
+                    [label] = "'Giới hạn thời gian phản hồi từ máy chủ'"
+                    [active]= "submitAttempt"
+                    [disabled]="!editMode"
+                    [placeholder]="'Chọn thời gian phản hồi'"
+                    [(data)]="defaultTimeoutList">
+        </input-select>
+        <input-select [(validControl)] = "credentialsForm.controls.syncDelayDuration"
+                    [errorMessage_Required]  ="'Thiết lập tự đồng bộ dữ liệu là hạng mục bắt buộc.'"
+                    [label] = "'Tự đồng bộ sau'"
+                    [active]= "submitAttempt"
+                    [disabled]="!editMode"
+                    [placeholder]="'Thời gian tự đồng bộ dữ liệu'"
+                    [(data)]="syncDelayList">
+        </input-select>
+      </ion-item-group>
+    </ion-list>
+  </form>
+</ion-content>
+
+<ion-footer no-border showWhen="core">
+  <ion-toolbar toolbar-transparent text-right showWhen="core">
+    <button *ngIf="!editMode"  ion-button mode='ios' color="secondary" (tap)="editMode=true">Chỉnh sửa</button>
+    <button *ngIf="editMode"   ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu và đồng bộ</button>
+    <!-- <button ion-button   mode='ios' color="danger">Hủy</button> -->
+  </ion-toolbar>
+</ion-footer>
+
+<ion-footer no-border no-padding showWhen="ios,android">
+  <button *ngIf="!editMode"  no-margin full block ion-button mode='ios' color="secondary" (tap)="editMode=true">Chỉnh sửa</button>
+  <button *ngIf="editMode"  no-margin full block ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu và đồng bộ</button>
+</ion-footer>
+

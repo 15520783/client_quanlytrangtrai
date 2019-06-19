@@ -67,7 +67,7 @@ export class PigInputPage {
       longBack: [this.pig.longBack, Validators.compose([Validators.required, ValidateNumber])],
       longBody: [this.pig.longBody, Validators.compose([Validators.required, ValidateNumber])],
       pregnancyStatusId: [this.pig.pregnancyStatusId, Validators.compose([Validators.required])],
-      priceCodeId: [this.pig.priceCodeId, Validators.compose([Validators.required])],
+      priceCodeId: [this.pig.priceCodeId],
       statusId: [this.pig.statusId, Validators.compose([Validators.required])],
       birthId: this.pig.birthId,
       pigType: this.pig.pigType
@@ -114,7 +114,7 @@ export class PigInputPage {
       this.credentialsForm.controls.originMotherId.disable();
       this.credentialsForm.controls.gender.disable();
       this.credentialsForm.controls.birthday.disable();
-      this.credentialsForm.controls.priceCodeId.disable();
+      // this.credentialsForm.controls.priceCodeId.disable();
       // this.credentialsForm.controls.statusId.disable();
     }
   }

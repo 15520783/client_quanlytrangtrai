@@ -2,23 +2,26 @@
   <header [title]="'Bảng kế hoạch công việc'"></header>
 </ion-header>
 
-<ion-content [attr.padding]="platform.is('core')?'':null" #content>
+<ion-content no-padding>
+  <ion-item-divider sticky="true" no-lines>
     <ion-row>
-      <ion-badge color="main" style="margin:5px!important">Công việc chưa phân công</ion-badge>
-      <ion-badge color="danger" style="margin:5px!important">Công việc đã qua hạn</ion-badge>
-      <ion-badge color="secondary" style="margin:5px!important">Công việc đã phân công</ion-badge>
+      <ion-col align-self-center text-left ion-text color="main"><ion-icon name="md-calendar"></ion-icon> {{'Tháng '+ month +' năm '+ year}}</ion-col>
+      <!-- <ion-col align-self-center>
+        <ion-badge color="danger" style="margin:5px!important">Công việc đã quá hạn</ion-badge>
+        <ion-badge color="medium" style="margin:5px!important">Công việc chưa phân công</ion-badge>
+        <ion-badge color="main" style="margin:5px!important">Công việc đã phân công</ion-badge>
+        <ion-badge color="secondary" style="margin:5px!important">Công việc đã hoàn thành</ion-badge>
+      </ion-col> -->
     </ion-row>
+  </ion-item-divider>
+  <ion-list padding>
     <div class='app-calendar' [attr.padding]="platform.is('core')?'':null">
-        <div *ngIf="options">
-            <ng-fullcalendar 
-                #fullcalendar 
-                [(options)]="options"
-                (eventClick)="handleEventClick($event)"
-                (dateClick)="handleDayClick($event)"
-                [(eventsModel)]="events">
-            </ng-fullcalendar>
-        </div>
-        <!-- <full-calendar 
+      <div *ngIf="options">
+        <ng-fullcalendar #fullcalendar [(options)]="options" (eventClick)="handleEventClick($event)"
+          (dateClick)="handleDayClick($event)" [(eventsModel)]="events" (clickButton)="clickButton($event)">
+        </ng-fullcalendar>
+      </div>
+      <!-- <full-calendar 
               (dayClick)="handleDayClick($event)"
               (eventClick)="handleEventClick($event)"
               #calendar 
@@ -73,7 +76,7 @@
                         ]"
               >
         </full-calendar> -->
-        <!-- <ng-fullcalendar 
+      <!-- <ng-fullcalendar 
               (dateClick)="handleDayClick($event)"
               (eventClick)="handleEventClick($event)"
               #calendar 
@@ -115,4 +118,5 @@
               >
         </ng-fullcalendar> -->
     </div>
+  </ion-list>
 </ion-content>

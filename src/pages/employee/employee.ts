@@ -1,12 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
 import { Content, Events, IonicPage, Menu, ModalController, NavController, NavParams, Platform } from 'ionic-angular';
+import { KEY, VARIABLE } from '../../common/const';
 
 import { EmployeeInformationPage } from '../employee-information/employee-information';
 import { EmployeeInputPage } from '../employee-input/employee-input';
 import { EmployeesProvider } from '../../providers/employees/employees';
 import { FilterProvider } from '../../providers/filter/filter';
 import { FormControl } from '@angular/forms';
-import { KEY } from '../../common/const';
 import { UserProvider } from '../../providers/user/user';
 import { Utils } from '../../common/utils';
 import { employee } from '../../common/entity';
@@ -24,7 +24,7 @@ export class EmployeePage {
   public page_Total: number = 0;
   public rows: Array<employee> = [];
   public cols: any = [];
-  public filter_default: any = ["name", "address", "email", "birthday","regencyName","cmnd","dateJoinDisplay"];
+  public filter_default: any = ["name", "address", "email", "birthday","regencyName","cmnd","dateJoinDisplay","genderName"];
   protected visible_items: Array<employee> = [];
 
   protected searchControl: FormControl = new FormControl();
@@ -103,6 +103,7 @@ export class EmployeePage {
     employees.forEach(e => {
       e['regencyName'] = e.regency.name;
       e['dateJoinDisplay'] = this.util.convertDate(e.dateJoin);
+      e['genderName'] = VARIABLE.GENDER_EMPLOYEE[e.gender].name;
     });
     this.filterProvider.input = employees;
     this.filterProvider.searchText = searchItem;

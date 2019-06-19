@@ -208,25 +208,30 @@ const PERMISSIONS = {
         }
     },
     "quan_ly_lam_san":{
-        "xem_danh_sach_ghi_nhan_van_de_heo":{
+        "ROLE_xem_danh_sach_ghi_nhan_van_de_heo":{
             "id":"",
             "name":"Xem danh sách ghi nhận vấn đề heo",
-            "api":""
+            "api":"/api/issuespigs/list"
         },
-        "xem_goi_y_chuan_doan":{
+        "ROLE_xem_goi_y_chuan_doan":{
             "id":"",
             "name":"Xem gợi ý chuẩn đoán",
-            "api":""
+            "api":"/api/issuespigs/forecastdiseases"
         },
-        "xoa_ghi_nhan_van_de_heo":{
+        "ROLE_xoa_ghi_nhan_van_de_heo":{
             "id":"",
             "name":"Xóa ghi nhận vấn đề heo",
-            "api":""
+            "api":"/api/issuespigs/"
         },
-        "xu_ly_van_de_heo":{
+        "ROLE_xu_ly_van_de_heo":{
             "id":"",
             "name":"Xử lí vấn đề của heo",
-            "api":""
+            "api":"/api/usedmedicine/"
+        },
+        "ROLE_xac_nhan_hoan_tat_xu_ly":{
+            "id":"",
+            "name":"Xác nhận hoàn tất xử lý",
+            "api":"/api/issuespigs/updateall/"
         }
     },
 
@@ -721,7 +726,22 @@ const PERMISSIONS = {
     "quan_ly_bang_ke_hoach": {
         "ROLE_xem_bang_ke_hoach": {
             "id": "122",
-            "name": "Xem bảng kế hoạch"
+            "name": "Xem bảng kế hoạch",
+        },
+        "ROLE_tao_moi_ke_hoach":{
+            "id":"",
+            "name":"Tạo mới kế hoạch",
+            "api":"/api/schedule/"
+        },
+        "ROLE_xoa_ke_hoach":{
+            "id":"",
+            "name":"Xóa kế hoạch",
+            "api":"/api/schedule/"
+        },
+        "ROLE_gui_thong_bao_ke_hoach":{
+            "id":"",
+            "name":"Gửi thông báo kế hoạch",
+            "api":"/api/mail/sendemailnotification/"
         }
     }
 }

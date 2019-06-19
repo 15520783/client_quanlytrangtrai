@@ -24,90 +24,79 @@
 </ion-header>
 
 <ion-content *ngIf="!platform.is('core')" class="mobile">
-  <ion-slides #slider (ionSlideDidChange)="slideChange()">
-    <ion-infinite-scroll>
+  <ion-list>
+    <ion-slides #slider (ionSlideDidChange)="slideChange()">
       <ion-slide>
-        <ion-item-divider sticky="true">Thông tin nhân viên</ion-item-divider>
-        <ion-list no-padding>
-          <ion-item>
-            <ion-label stacked>Chức vụ</ion-label>
-            <ion-input text-wrap type="text" readonly [(ngModel)]="employee.regency.name"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label stacked>Trạng trại</ion-label>
-            <ion-input text-wrap type="text" readonly [(ngModel)]="employee.farm.name"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label stacked>Giới tính</ion-label>
-            <ion-input text-wrap type="text" readonly [(ngModel)]="employee.genderName"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label stacked>Ngày sinh</ion-label>
-            <ion-input text-wrap type="text" readonly [(ngModel)]="employee.birthdayDisplay"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label stacked>Địa chỉ</ion-label>
-            <ion-input text-wrap type="text" readonly [(ngModel)]="employee.address"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label stacked>CMND</ion-label>
-            <ion-input text-wrap type="text" readonly [(ngModel)]="employee.cmnd"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label stacked>Ngày vào làm</ion-label>
-            <ion-input text-wrap type="text" readonly [(ngModel)]="employee.dateJoinDisplay"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label stacked>Ngày nghỉ</ion-label>
-            <ion-input text-wrap type="text" readonly [(ngModel)]="employee.dateOffDisplay"></ion-input>
-          </ion-item>
-        </ion-list>
+        <ion-infinite-scroll>
+          <ion-list no-padding>
+            <ion-item>
+              <ion-label stacked>Chức vụ</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="employee.regency.name"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Trạng trại</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="employee.farm.name"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Giới tính</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="employee.genderName"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Ngày sinh</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="employee.birthdayDisplay"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Địa chỉ</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="employee.address"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>CMND</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="employee.cmnd"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Ngày vào làm</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="employee.dateJoinDisplay"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Ngày nghỉ</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="employee.dateOffDisplay"></ion-input>
+            </ion-item>
+          </ion-list>
+        </ion-infinite-scroll>
       </ion-slide>
-    </ion-infinite-scroll>
-    <ion-slide>
-      <ion-content padding>
-        <ion-item-divider sticky="true">Thông tin lịch biểu</ion-item-divider>
-        <div class='app-calendar'>
-          <ng-fullcalendar #fullcalendar [options]="options" (eventClick)="handleEventClick($event)"
-            (dateClick)="handleDayClick($event)">
+      <ion-slide padding>
+        <div *ngIf="options">
+          <ng-fullcalendar #fullcalendar [(options)]="options" (eventClick)="handleEventClick($event)"
+            (dateClick)="handleDayClick($event)" (clickButton)="clickButton($event)" [(eventsModel)]="events">
           </ng-fullcalendar>
         </div>
-      </ion-content>
-    </ion-slide>
-    <!-- <ion-slide>
-      <span *ngIf="users">
-        <page-user-account-list  [setUsers]="users" ></page-user-account-list>
-      </span>
-    </ion-slide> -->
-  </ion-slides>
+      </ion-slide>
+    </ion-slides>
+  </ion-list>
   <ion-fab bottom right>
     <button ion-fab>
       <ion-icon name="ios-arrow-up"></ion-icon>
     </button>
     <ion-fab-list side="top" style="right:0px">
-      <button 
-        *ngIf="userProvider.rolePermission.ROLE_xoa_nhan_vien!=null"
-        data-balloon-visible data-balloon-length="medium" 
-        data-balloon="Xóa nhân viên" data-balloon-pos="left"
-        ion-fab color="danger" (tap)="removeEmployee()">
+      <button *ngIf="userProvider.rolePermission.ROLE_xoa_nhan_vien!=null" data-balloon-visible
+        data-balloon-length="medium" data-balloon="Xóa nhân viên" data-balloon-pos="left" ion-fab color="danger"
+        (tap)="removeEmployee()">
         <ion-icon name="md-trash"></ion-icon>
       </button>
       <button data-balloon-visible data-balloon-length="medium" data-balloon="Xem danh sách tài khoản"
         data-balloon-pos="left" ion-fab color="main" (tap)="openUserList()">
         <ion-icon name="app-user-account"></ion-icon>
       </button>
-      <button 
-        *ngIf="userProvider.rolePermission.ROLE_cap_nhat_nhan_vien!=null"
-        data-balloon-visible data-balloon-length="medium" 
-        data-balloon="Chỉnh sửa thông tin"
-        data-balloon-pos="left" ion-fab color="main" (tap)="editEmployee()">
+      <button *ngIf="userProvider.rolePermission.ROLE_cap_nhat_nhan_vien!=null" data-balloon-visible
+        data-balloon-length="medium" data-balloon="Chỉnh sửa thông tin" data-balloon-pos="left" ion-fab color="main"
+        (tap)="editEmployee()">
         <ion-icon name="md-create"></ion-icon>
       </button>
     </ion-fab-list>
   </ion-fab>
 </ion-content>
 
-<ion-content no-padding *ngIf="platform.is('core')">
+<ion-content #content no-padding *ngIf="platform.is('core')" class="web">
   <ion-row style="height: 100%">
     <ion-col col-lg-3 col-md-4 style="height: 100%">
       <ion-header>
@@ -161,8 +150,10 @@
                     <ion-title text-wrap text-white>Thông tin chi tiết</ion-title>
                   </ion-col>
                   <ion-col text-right>
-                    <button *ngIf="userProvider.rolePermission.ROLE_cap_nhat_nhan_vien!=null" mode='ios' ion-button item-end color="secondary" (tap)="editEmployee()">Chỉnh sửa</button>
-                    <button *ngIf="userProvider.rolePermission.ROLE_xoa_nhan_vien!=null" mode='ios' ion-button item-end color="danger" (tap)="removeEmployee()">Xóa</button>
+                    <button *ngIf="userProvider.rolePermission.ROLE_cap_nhat_nhan_vien!=null" mode='ios' ion-button
+                      item-end color="secondary" (tap)="editEmployee()">Chỉnh sửa</button>
+                    <button *ngIf="userProvider.rolePermission.ROLE_xoa_nhan_vien!=null" mode='ios' ion-button item-end
+                      color="danger" (tap)="removeEmployee()">Xóa</button>
                   </ion-col>
                 </ion-row>
               </ion-toolbar>
@@ -226,11 +217,22 @@
           </ion-content>
         </ion-slide>
         <ion-slide>
+          <ion-header>
+            <ion-navbar>
+              <ion-row>
+                <ion-col text-left align-self-center>
+                  <ion-title>Thông tin lịch biểu</ion-title>
+                </ion-col>
+                <ion-col text-right align-self-center>
+                  <p ion-text color="main">{{'Tháng '+ month +' năm '+ year}}</p>
+                </ion-col>
+              </ion-row>
+            </ion-navbar>
+          </ion-header>
           <ion-content padding>
-            <ion-item-divider sticky="true" text-left>Thông tin lịch biểu</ion-item-divider>
-            <div class='app-calendar'>
-              <ng-fullcalendar #fullcalendar [options]="options" (eventClick)="handleEventClick($event)"
-                (dateClick)="handleDayClick($event)">
+            <div *ngIf="options">
+              <ng-fullcalendar #fullcalendar [(options)]="options" (eventClick)="handleEventClick($event)"
+                (dateClick)="handleDayClick($event)" (clickButton)="clickButton($event)" [(eventsModel)]="events">
               </ng-fullcalendar>
             </div>
           </ion-content>

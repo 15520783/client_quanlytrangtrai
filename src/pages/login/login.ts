@@ -1,3 +1,4 @@
+import { CONFIG, KEY, MESSAGE, SETTING_KEY } from '../../common/const';
 import { Component, ViewChild } from '@angular/core';
 import { Content, Events, IonicPage, MenuController, ModalController, NavController, NavParams, Platform, ToastController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -6,7 +7,6 @@ import { BackdropComponent } from '../../components/backdrop/backdrop';
 import { EmployeesProvider } from '../../providers/employees/employees';
 import { FarmsProvider } from '../../providers/farms/farms';
 import { HousesProvider } from '../../providers/houses/houses';
-import { KEY } from '../../common/const';
 import { PigGroupsProvider } from '../../providers/pig-groups/pig-groups';
 import { PigsProvider } from '../../providers/pigs/pigs';
 import { SectionsProvider } from '../../providers/sections/sections';
@@ -44,12 +44,18 @@ export class LoginPage {
     this.menuCtrl.enable(false);
     this.credentialsForm = this.formBuilder.group({
       username: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
-      password: ['', Validators.compose([Validators.required, , Validators.maxLength(100)])]
+      password: ['', Validators.compose([Validators.required, , Validators.maxLength(100)])],
     });
+
+    this.util.getKey(SETTING_KEY.SERVER_API).then((serverApi: string) => {
+      if (serverApi) {
+        CONFIG.SERVER_API = serverApi;
+      }
+    })
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
+
   }
 
   scrollToBottom() {
@@ -73,6 +79,7 @@ export class LoginPage {
         username: this.credentialsForm.get('username').value,
         password: this.credentialsForm.get('password').value
       }
+
       this.userProvider.login(params)
         .then((res: any) => {
           if (res) {
@@ -91,6 +98,7 @@ export class LoginPage {
           }
         })
         .catch((err: any) => {
+          this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].ERROR_OCCUR);
           this.wait = false;
           backdrop.dismiss();
           return err;

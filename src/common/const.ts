@@ -15,7 +15,13 @@ const KEY = {
     USER: 'user',
     USERNAME: 'username',
     PASSWORD: 'password',
-    PERMISSIONS: 'permissions'
+    PERMISSIONS: 'permissions',
+}
+
+const SETTING_KEY = {
+    SERVER_API:'serverApi',
+    DEFAULT_REQUEST_TIMEOUT:'defaultRequestTimeout',
+    INTERVAL_SYNC_DELAY:'intervalSyncDelay'
 }
 
 const SETTING_STORAGE_KEY = {
@@ -34,7 +40,8 @@ const CONFIG = {
     SERVER_API: 'https://quanlytrangtrai-uit-us.herokuapp.com',
     // SERVER_API: 'http://192.168.1.48:8080',
     // SERVER_API: 'http://10.10.121.34:8080',
-    DEFAULT_TIMEOUT: 50000,
+    DEFAULT_TIMEOUT: 30000,
+    SYNC_DELAY_DURATION: 0,
     LANGUAGE_DEFAULT: 'vi',
     ACCESS_KEY: '',
     PAGE_SITE: 50,
@@ -54,9 +61,9 @@ const VARIABLE = {
         2: { id: 2, name: "Nái" },
         3: { id: 3, name: 'Đực thiến' }
     },
-    GENDER_EMPLOYEE:[
-        {name:'Nữ',value:'1'},
-        {name:'Nam',value:'0'}
+    GENDER_EMPLOYEE: [
+        { name: 'Nữ', value: '1' },
+        { name: 'Nam', value: '0' }
     ]
     ,
     INVOICE_PRODUCT_TYPE: {
@@ -141,9 +148,9 @@ const VARIABLE = {
         SALING_EXPORT: 'SAL-EX',
     },
     MENU_FIELDS: {
-        CHUC_VU_NGUOI_DUNG:{
-            codeName:"chuc_vu_nguoi_dung",
-            name:"Chức vụ người dùng"
+        CHUC_VU_NGUOI_DUNG: {
+            codeName: "chuc_vu_nguoi_dung",
+            name: "Chức vụ người dùng"
         },
         TONG_QUAN_TRANG_TRAI: {
             codeName: "tong_quan_trang_trai",
@@ -195,8 +202,10 @@ const VARIABLE = {
         quan_ly_khu: { id: '10', name: "Trưởng khu" },
     },
     SCHEDULE_STATUS: {
-        NOT_ASSIGNED: { id: 0, name: 'chưa phân công' },
-        ASSIGNED: { id: 1, name: 'đã phân công' }
+        OVERDUE: { id: 0, name: 'quá hạn', color: '#f53d3d' },
+        NOT_ASSIGNED: { id: 1, name: 'chưa phân công', color: '#989aa2' },
+        ASSIGNED: { id: 2, name: 'đã phân công', color: '#01c2fa' },
+        COMPLETE: { id: 3, name: 'đã hoàn thành', color: '#32db64' }
     },
     TYPE_PIG: [
         { id: 0, name: 'Chưa phân loại' },
@@ -204,6 +213,19 @@ const VARIABLE = {
         { id: 2, name: 'Loai 2' },
         { id: 3, name: 'Loai 3' },
         { id: 4, name: 'Loai 4' }
+    ],
+    INTERVALTIME_LIST: [
+        { name: 'Không thiết lập', value: 0 },
+        { name: '15 phút', value: 900000 },
+        { name: '30 phút', value: 1800000 },
+        { name: '60 phút', value: 3600000 },
+        { name: '120 phút', value: 7200000 },
+    ],
+    DEFAULT_TIMEOUT_LIST: [
+        { name: '30 giây', value: 30000 },
+        { name: '1 phút', value: 60000 },
+        { name: '5 phút', value: 300000 },
+        { name: '10 phút', value: 600000 },
     ]
 }
 
@@ -240,7 +262,7 @@ const API = {
     GET_MEDICINES_OF_DISEASE: '/api/medicinedisease/disease',  //{diseaseId}
     GET_MEDICINEWAREHOUSE_OF_MEDICINE: '/api/medicinewarehouse/medicine', //{{medicineId}}
     GET_USER_ACCOUNT_OF_EMPLOYEE: '/api/users/employee', //{empId}
-    GET_SCHEDULE_OF_EMPLOYEE:'/api/schedule/employee/',  //{empId}
+    GET_SCHEDULE_OF_EMPLOYEE: '/api/schedule/employee/',  //{empId}
     GET_PERMISSION_OF_ROLE: '/api/rolepermission/role/', //{roleId}
     GET_ALL_PERMISSION: '/api/permission/list',
 
@@ -340,7 +362,7 @@ const API = {
     DELETE_MATING: '/api/matings/',
 
     CREATE_ISSUES_PIG: '/api/issuespigs/',
-    UPDATE_LIST_ISSUES_PIG:'/api/issuespigs/updateall/',
+    UPDATE_LIST_ISSUES_PIG: '/api/issuespigs/updateall/',
     DELETE_ISSUES_PIG: '/api/issuespigs/',
 
     CREATE_BIRTH: '/api/births/',
@@ -381,5 +403,6 @@ export { VARIABLE }
 export { EMAIL_PATTERN }
 export { SETTING_STORAGE_KEY }
 export { MESSAGE, ERROR_NAME }
+export { SETTING_KEY}
 
 

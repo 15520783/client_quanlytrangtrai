@@ -210,13 +210,13 @@
             [placeholder]="'Chọn trạng thái mang thai'" 
             [(data)]="pregnancyStatus">
           </input-select>
-          <input-select [(validControl)]="credentialsForm.controls.priceCodeId"
+          <!-- <input-select [(validControl)]="credentialsForm.controls.priceCodeId"
             [errorMessage_Required]="'Loại sản phẩm là hạng mục bắt buộc.'" 
             [label]="'Loại sản phẩm'"
             [active]="submitAttempt" 
             [placeholder]="'Chọn loại sản phẩm'" 
             [(data)]="priceCodes">
-          </input-select>
+          </input-select> -->
           <input-text [(validControl)]="credentialsForm.controls.description"
             [errorMessage_Required]="'Ghi chú là hạng mục bắt buộc'"
             [errorMessage_Maxlength]="'Ghi chú không được vượt quá 1000 kí tự.'" [label]="'Ghi chú'"

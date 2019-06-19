@@ -5,6 +5,7 @@ import { EmployeeInformationPage } from '../../pages/employee-information/employ
 import { FilterProvider } from '../../providers/filter/filter';
 import { FormControl } from '@angular/forms';
 import { Utils } from '../../common/utils';
+import { VARIABLE } from '../../common/const';
 import { employee } from '../../common/entity';
 
 @Component({
@@ -23,7 +24,7 @@ export class EmployeeListComponent {
   public page_Total: number = 0;
   public rows: Array<employee> = [];
   public cols: any = [];
-  public filter_default: any = ["name", "address", "email", "birthday","regencyName","dateJoinDisplay"];
+  public filter_default: any = ["name", "address", "email", "birthday","regencyName","dateJoinDisplay","genderName"];
 
   public visible_items: Array<employee> = [];
 
@@ -67,6 +68,7 @@ export class EmployeeListComponent {
       this.data.forEach(e=>{
           e['regencyName'] = e.regency.name;
           e['dateJoinDisplay'] = this.util.convertDate(e.dateJoin);
+          e['genderName'] = VARIABLE.GENDER_EMPLOYEE[e.gender].name;
       })
       this.filterProvider.input = this.data;
       this.filterProvider.searchText = searchItem;

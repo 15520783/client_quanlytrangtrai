@@ -1,7 +1,7 @@
 import { CONFIG, ERROR_NAME, KEY, MESSAGE, VARIABLE } from '../../common/const';
 import { Component, ViewChild } from '@angular/core';
 import { Events, LoadingController, Nav, NavController, NavParams, Platform } from 'ionic-angular';
-import { employee, permission, pig, user } from '../../common/entity';
+import { permission, pig, user } from '../../common/entity';
 
 import { ActivitiesPage } from '../activities/activities';
 import { ActivitiesProvider } from '../../providers/activities/activities';
@@ -23,8 +23,10 @@ import { PigsPage } from '../pigs/pigs';
 import { PigsProvider } from '../../providers/pigs/pigs';
 import { SectionsPage } from '../sections/sections';
 import { SectionsProvider } from '../../providers/sections/sections';
+import { SettingConfigPage } from '../setting-config/setting-config';
 import { SettingsPage } from '../settings/settings';
 import { SettingsProvider } from '../../providers/settings/settings';
+import { UserInfoPage } from '../user-info/user-info';
 import { UserProvider } from '../../providers/user/user';
 import { Utils } from '../../common/utils';
 import { WarehousesPage } from '../warehouses/warehouses';
@@ -207,6 +209,8 @@ export class HomePage {
           if (err.name == ERROR_NAME.TIMEMOUT_ERROR || err.name == ERROR_NAME.ERROR_RESPONSE) {
             this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].TIMEOUT_REQUEST);
             this.events.unsubscribe('updated');
+          } else {
+            this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].ERROR_OCCUR);
           }
         }
       })
@@ -221,7 +225,7 @@ export class HomePage {
       this.sectionProvider.updated_flag &&
       this.houseProvider.updated_flag &&
       this.warehouseProvider.updated_flag &&
-      this.settingProvider.updated_flag ) {
+      this.settingProvider.updated_flag) {
       this.events.unsubscribe('updated');
       this.util.closeBackDrop();
     }
@@ -347,5 +351,24 @@ export class HomePage {
       console.log(data);
       // this.util.setKey(KEY.PERMISSIONS,)
     }
+  }
+
+
+  viewUserPage() {
+    this.util.getKey(KEY.USER)
+      .then((user: user) => {
+        if (user) {
+          this.navCtrl.push(UserInfoPage, { user: user });
+        }
+      })
+  }
+
+  openSetting() {
+    let callback = data => {
+      if (data) {
+        this.sync();
+      }
+    }
+    this.navCtrl.push(SettingConfigPage, { callback: callback });
   }
 }

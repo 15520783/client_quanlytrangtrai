@@ -230,7 +230,7 @@ export class PigsProvider {
         // x: -80
       },
       pane: {
-        size: '80%'
+        size: '60%'
       },
       xAxis: {
         categories: ['Index', 'Trọng lượng', 'Chân', 'Số vú', 'BPSD', 'ADG'],

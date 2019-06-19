@@ -1,0 +1,323 @@
+<ion-header>
+  <div *ngIf="!platform.is('core')">
+    <ion-navbar>
+      <ion-title>Thông tin người dùng</ion-title>
+    </ion-navbar>
+    <ion-toolbar>
+      <ion-segment [(ngModel)]="tab" scrollable>
+        <ion-segment-button value="0" (tap)="selectedTab(0)">Thông tin tài khoản</ion-segment-button>
+        <ion-segment-button value="1" (tap)="selectedTab(1)">Thông tin lịch biểu</ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+  </div>
+  <div *ngIf="platform.is('core')">
+    <ion-navbar no-padding>
+      <ion-toolbar style="position: relative">
+        <ion-row>
+          <ion-col vertical-center>
+            <ion-title>Thông tin người dùng</ion-title>
+          </ion-col>
+        </ion-row>
+      </ion-toolbar>
+    </ion-navbar>
+  </div>
+</ion-header>
+
+<ion-content *ngIf="!platform.is('core')" class="mobile">
+  <ion-list no-lines>
+    <ion-slides #slider1 paper="true" (ionSlideDidChange)="slideChange()">
+      <ion-slide>
+        <ion-infinite-scroll>
+          <ion-item-group>
+            <ion-item-divider color="light" sticky="true" text-left text-weight>Thông tin tài khoản</ion-item-divider>
+            <ion-item>
+              <ion-label stacked>Tên đăng nhập:</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="userAccount.username"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Phân quyền:</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="userAccount.role.name"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Ngày tạo:</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="userAccount.createdAtDisplay">
+              </ion-input>
+            </ion-item>
+          </ion-item-group>
+          <ion-item-group>
+            <ion-item-divider color="light" sticky="true" text-left text-weight>Thông tin người dùng</ion-item-divider>
+            <ion-item>
+              <ion-label stacked>Họ và tên:</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="userAccount.employee.name">
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Chức vụ</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="userAccount.employee.regency.name">
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Trang trại</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="userAccount.employee.farm.name">
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Giới tính</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="userAccount.employee.genderName">
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Ngày sinh</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="userAccount.employee.birthdayDisplay">
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Email</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="userAccount.employee.email">
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Địa chỉ</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="userAccount.employee.address">
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>CMND</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="userAccount.employee.cmnd">
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Ngày vào làm</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="userAccount.employee.dateJoinDisplay">
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Ngày nghỉ</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="userAccount.employee.dateOffDisplay">
+              </ion-input>
+            </ion-item>
+          </ion-item-group>
+        </ion-infinite-scroll>
+      </ion-slide>
+      <ion-slide padding>
+        <ion-item-divider sticky="true" text-weight text-left no-lines>
+          <ion-icon name="md-calendar"></ion-icon>{{'Tháng '+ month +' năm '+ year}}
+        </ion-item-divider>
+        <div *ngIf="options">
+          <ng-fullcalendar #fullcalendar [(options)]="options" (eventClick)="handleEventClick($event)"
+            (dateClick)="handleDayClick($event)" [(eventsModel)]="events" (clickButton)="clickButton($event)">
+          </ng-fullcalendar>
+        </div>
+      </ion-slide>
+    </ion-slides>
+  </ion-list>
+  <ion-fab bottom right>
+    <button ion-fab>
+      <ion-icon name="ios-arrow-up"></ion-icon>
+    </button>
+    <ion-fab-list side="top" style="right:0px">
+      <button *ngIf="userProvider.rolePermission.ROLE_xoa_nhan_vien!=null" data-balloon-visible
+        data-balloon-length="medium" data-balloon="Xóa nhân viên" data-balloon-pos="left" ion-fab color="danger"
+        (tap)="removeEmployee()">
+        <ion-icon name="md-trash"></ion-icon>
+      </button>
+      <button data-balloon-visible data-balloon-length="medium" data-balloon="Xem danh sách tài khoản"
+        data-balloon-pos="left" ion-fab color="main" (tap)="openUserList()">
+        <ion-icon name="app-user-account"></ion-icon>
+      </button>
+      <button *ngIf="userProvider.rolePermission.ROLE_cap_nhat_nhan_vien!=null" data-balloon-visible
+        data-balloon-length="medium" data-balloon="Chỉnh sửa thông tin" data-balloon-pos="left" ion-fab color="main"
+        (tap)="editEmployee()">
+        <ion-icon name="md-create"></ion-icon>
+      </button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>
+
+<ion-content #content no-padding *ngIf="platform.is('core')" class="web">
+  <ion-row style="height: 100%">
+    <ion-col col-lg-3 col-md-4 style="height: 100%">
+      <ion-header>
+        <ion-navbar>
+          <ion-title>Danh sách tùy chọn</ion-title>
+        </ion-navbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          <button ion-item (tap)="scrollToView(0)">
+            <ion-row>
+              <ion-col align-self-center col-2>
+                <ion-icon name="app-item-setting" font28></ion-icon>
+              </ion-col>
+              <ion-col col-10>
+                <h2 text-wrap>Thông tin tài khoản</h2>
+              </ion-col>
+            </ion-row>
+          </button>
+          <button ion-item (tap)="scrollToView(1)">
+            <ion-row>
+              <ion-col align-self-center col-2>
+                <ion-icon name="app-item-setting" font28></ion-icon>
+              </ion-col>
+              <ion-col col-10>
+                <h2 text-wrap>Thông tin lịch biểu</h2>
+              </ion-col>
+            </ion-row>
+          </button>
+        </ion-list>
+      </ion-content>
+    </ion-col>
+    <ion-col col-lg-9 col-md-8 no-padding style="height: 100%">
+      <ion-slides paper="true" #slider>
+        <ion-slide>
+          <ion-header>
+            <ion-navbar no-padding>
+              <ion-row>
+                <ion-col text-left align-self-center>
+                  <ion-title text-wrap text-white>Thông tin người dùng</ion-title>
+                </ion-col>
+                <ion-col text-right>
+                  <button mode='ios' ion-button item-end color="secondary" (tap)="editEmployee()">Chỉnh sửa</button>
+                  <button mode='ios' ion-button item-end color="danger" (tap)="removeEmployee()">Xóa</button>
+                </ion-col>
+              </ion-row>
+            </ion-navbar>
+          </ion-header>
+          <ion-content>
+            <ion-list no-lines>
+              <ion-row>
+                <ion-col col-4>
+                  <ion-card>
+                    <ion-card-header>
+                      <ion-row text-center>
+                        <ion-avatar style="margin: 0 auto!important">
+                          <img #header height-12vh src="../../assets/imgs/default-user.png" alt=""
+                            style="height: 15vH;width: auto;margin: 15px">
+                        </ion-avatar>
+                      </ion-row>
+                    </ion-card-header>
+                    <ion-card-content>
+                      <ion-row>
+                        <p text-left color="main" font-28 text-weight>Thông tin tài khoản</p>
+                      </ion-row>
+                      <ion-row>
+                        <ion-item>
+                          <ion-label stacked>Tên đăng nhập:</ion-label>
+                          <ion-input text-wrap type="text" readonly [(ngModel)]="userAccount.username"></ion-input>
+                        </ion-item>
+                      </ion-row>
+                      <ion-row>
+                        <ion-item>
+                          <ion-label stacked>Phân quyền:</ion-label>
+                          <ion-input text-wrap type="text" readonly [(ngModel)]="userAccount.role.name"></ion-input>
+                        </ion-item>
+                      </ion-row>
+                      <ion-row>
+                        <ion-item>
+                          <ion-label stacked>Ngày tạo:</ion-label>
+                          <ion-input text-wrap type="text" readonly [(ngModel)]="userAccount.createdAtDisplay">
+                          </ion-input>
+                        </ion-item>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+
+                <ion-col col-8>
+                  <ion-card>
+                    <ion-card-content>
+                      <ion-row>
+                        <p text-left color="main" font-28 text-weight>Thông tin người dùng</p>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col col-6>
+                          <ion-item>
+                            <ion-label stacked>Họ và tên:</ion-label>
+                            <ion-input text-wrap type="text" readonly [(ngModel)]="userAccount.employee.name">
+                            </ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label stacked>Chức vụ</ion-label>
+                            <ion-input text-wrap type="text" readonly [(ngModel)]="userAccount.employee.regency.name">
+                            </ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label stacked>Trang trại</ion-label>
+                            <ion-input text-wrap type="text" readonly [(ngModel)]="userAccount.employee.farm.name">
+                            </ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label stacked>Giới tính</ion-label>
+                            <ion-input text-wrap type="text" readonly [(ngModel)]="userAccount.employee.genderName">
+                            </ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label stacked>Ngày sinh</ion-label>
+                            <ion-input text-wrap type="text" readonly
+                              [(ngModel)]="userAccount.employee.birthdayDisplay">
+                            </ion-input>
+                          </ion-item>
+                        </ion-col>
+                        <ion-col col-6>
+                          <ion-item>
+                            <ion-label stacked>Email</ion-label>
+                            <ion-input text-wrap type="text" readonly [(ngModel)]="userAccount.employee.email">
+                            </ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label stacked>Địa chỉ</ion-label>
+                            <ion-input text-wrap type="text" readonly [(ngModel)]="userAccount.employee.address">
+                            </ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label stacked>CMND</ion-label>
+                            <ion-input text-wrap type="text" readonly [(ngModel)]="userAccount.employee.cmnd">
+                            </ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label stacked>Ngày vào làm</ion-label>
+                            <ion-input text-wrap type="text" readonly
+                              [(ngModel)]="userAccount.employee.dateJoinDisplay">
+                            </ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label stacked>Ngày nghỉ</ion-label>
+                            <ion-input text-wrap type="text" readonly [(ngModel)]="userAccount.employee.dateOffDisplay">
+                            </ion-input>
+                          </ion-item>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+              </ion-row>
+            </ion-list>
+          </ion-content>
+        </ion-slide>
+        <ion-slide>
+          <ion-header>
+            <ion-navbar>
+              <ion-row>
+                <ion-col text-left align-self-center>
+                  <ion-title>Thông tin lịch biểu</ion-title>
+                </ion-col>
+                <ion-col text-right align-self-center>
+                  <p text-weight font-28>
+                    <ion-icon name="md-calendar"></ion-icon>{{'Tháng '+ month +' năm '+ year}}
+                  </p>
+                </ion-col>
+              </ion-row>
+            </ion-navbar>
+          </ion-header>
+          <ion-content padding>
+            <div *ngIf="options">
+              <ng-fullcalendar #fullcalendar [(options)]="options" (eventClick)="handleEventClick($event)"
+                (dateClick)="handleDayClick($event)" (clickButton)="clickButton($event)" [(eventsModel)]="events">
+              </ng-fullcalendar>
+            </div>
+          </ion-content>
+        </ion-slide>
+      </ion-slides>
+    </ion-col>
+  </ion-row>
+</ion-content>

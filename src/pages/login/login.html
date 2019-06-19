@@ -1,11 +1,3 @@
-<!-- <div *ngIf="splash" class="splash">
-  <div class="sk-folding-cube">
-    <div class="sk-cube1 sk-cube"></div>
-    <div class="sk-cube2 sk-cube"></div>
-    <div class="sk-cube4 sk-cube"></div>
-    <div class="sk-cube3 sk-cube"></div>
-  </div>
-</div> -->
 
 <ion-header no-border>
 </ion-header>
@@ -67,11 +59,11 @@
         style="background: rgba(50, 211, 152,0.8)!important;" padding [disabled]="wait">Đăng nhập</button>
     </ion-col>
   </ion-row>
-  <ion-row *ngIf="wait">
+  <!-- <ion-row *ngIf="wait">
     <ion-col text-center>
       <ion-spinner color="secondary"></ion-spinner>
     </ion-col>
-  </ion-row>
+  </ion-row> -->
   <!-- <ion-row>
     <ion-col text-center>
       <button ion-button clear color="light" font10>
@@ -95,7 +87,7 @@
       <form action="" [formGroup]="credentialsForm">
         <ion-list pd-5>
           <ion-item pl-0>
-            <ion-label class="pt-5" pl-16 no-margin floating>Username</ion-label>
+            <ion-label class="pt-5" pl-16 no-margin floating>Tên đăng nhập</ion-label>
             <ion-input pl-16 font28 [formControl]="credentialsForm.controls['username']"></ion-input>
           </ion-item>
           <expandable *ngIf="active" [expanded]="!credentialsForm.controls.username.valid">
@@ -112,7 +104,7 @@
           </expandable>
 
           <ion-item mt-15 pl-0>
-            <ion-label class="pt-5" pl-16 no-margin floating>Password</ion-label>
+            <ion-label class="pt-5" pl-16 no-margin floating>Mật khẩu</ion-label>
             <ion-input pl-16 type="password" font28 [formControl]="credentialsForm.controls.password"></ion-input>
           </ion-item>
           <expandable *ngIf="active" [expanded]="!credentialsForm.controls.password.valid">
@@ -137,11 +129,11 @@
             </button>
           </ion-col>
         </ion-row>
-        <ion-row *ngIf="wait">
+        <!-- <ion-row *ngIf="wait">
           <ion-col text-center>
             <ion-spinner color="secondary"></ion-spinner>
           </ion-col>
-        </ion-row>
+        </ion-row> -->
         <!-- <ion-row>
           <ion-col text-center>
             <button ion-button clear color="light" font10>

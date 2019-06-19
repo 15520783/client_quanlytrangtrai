@@ -79,6 +79,7 @@ import { MedicineWarehouseInformationPage } from '../pages/medicine-warehouse-in
 import { MedicineWarehouseInputPage } from '../pages/medicine-warehouse-input/medicine-warehouse-input';
 import { MedicineWarehouseListPage } from '../pages/medicine-warehouse-list/medicine-warehouse-list';
 import { MyApp } from './app.component';
+import { MyErrorHandler } from './myErrorHandler';
 import { NotFoundDataComponent } from '../components/not-found-data/not-found-data';
 import { OptionListPigSectionComponent } from '../components/option-list-pig-section/option-list-pig-section';
 import { PartnerProvider } from '../providers/partner/partner';
@@ -106,6 +107,7 @@ import { SectionInfomationPage } from '../pages/section-infomation/section-infom
 import { SectionInputPage } from '../pages/section-input/section-input';
 import { SectionsPage } from '../pages/sections/sections';
 import { SectionsProvider } from '../providers/sections/sections';
+import { SettingConfigPage } from '../pages/setting-config/setting-config';
 import { SettingInputUtilComponent } from '../components/setting-input-util/setting-input-util';
 import { SettingRolePage } from '../pages/setting-role/setting-role';
 import { SettingUtilComponent } from '../components/setting-util/setting-util';
@@ -120,6 +122,7 @@ import { Toast } from '@ionic-native/toast';
 import { TokenInterceptor } from './interceptor';
 import { UsedMedicineInputPage } from '../pages/used-medicine-input/used-medicine-input';
 import { UserAccountListPage } from '../pages/user-account-list/user-account-list';
+import { UserInfoPage } from '../pages/user-info/user-info';
 import { UserInputPage } from '../pages/user-input/user-input';
 import { UserProvider } from '../providers/user/user';
 import { Utils } from '../common/utils';
@@ -127,13 +130,6 @@ import { WarehouseInformationPage } from '../pages/warehouse-information/warehou
 import { WarehouseListPage } from '../pages/warehouse-list/warehouse-list';
 import { WarehousesPage } from '../pages/warehouses/warehouses';
 import { WarehousesProvider } from '../providers/warehouses/warehouses';
-
-class MyErrorHandler implements ErrorHandler {
-  handleError(err: any): void {
-    // do something with the error
-    console.log(err);
-  }
-}
 
 const Pages = [
   LoginPage,
@@ -207,7 +203,9 @@ const Pages = [
   SalePigInvoiceDetailPage,
   ScheduleInputPage,
   ReviewOffsetPigPage,
-  SectionInputPage
+  SectionInputPage,
+  UserInfoPage,
+  SettingConfigPage
 ]
 
 const Components = [

@@ -163,7 +163,7 @@ class farm extends base {
 }
 
 class section extends base {
-	farmId:string = '';
+	farmId: string = '';
 	farm: farm = new farm();
 	typeId: string = '';
 	name: string = '';
@@ -713,6 +713,13 @@ class screen extends base {
 	name: string = '';
 }
 
+
+class settingConfig {
+	serverApi: string = '';
+	defaultTimeout: number = null;
+	syncDelayDuration: number = null;
+}
+
 class ObjectScanner {
 	id: string = '';
 	typeObject: string = '';
@@ -736,3 +743,4 @@ class ObjDataNotification {
 export { ObjDataNotification }
 export { ObjectScanner }
 export { InputObject }
+export { settingConfig }
