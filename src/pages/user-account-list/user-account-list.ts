@@ -30,14 +30,15 @@ export class UserAccountListPage {
   public mainAttribute = "username";
   public attributes = [
     { name: "email", label: 'Email' },
-    { name: "activate", label: 'Trạng thái kích hoạt' },
-    { name: "lastActivate", label: 'Last active' },
-    { name: "login", label: 'Login' },
+    // { name: "activate", label: 'Trạng thái kích hoạt' },
+    // { name: "lastActivate", label: 'Last active' },
+    // { name: "login", label: 'Login' },
     { name: "roleName", label: 'Phân quyền' },
+    {name:"createAtDisplay",label:'Ngày tạo'}
   ];
 
   public placeholderSearch: string = 'Tìm kiếm tài khoản'
-  public filter_default: Array<string> = ["username", "email", "roleName"];
+  public filter_default: Array<string> = ["username", "email", "roleName","createAtDisplay"];
 
   public page_Idx: number = 1;
   public page_Total: number = 0;
@@ -88,6 +89,7 @@ export class UserAccountListPage {
   public filterItems(searchItem) {
     this.users.forEach((user) => {
       user['roleName'] = user.role.name;
+      user['createAtDisplay'] = this.util.convertDate(user.createdAt);
     })
     this.filterProvider.input = this.users;
     this.filterProvider.searchText = searchItem;
@@ -198,8 +200,8 @@ export class UserAccountListPage {
 
   changePassword(user) {
     let alert = this.alertCtrl.create({
-      title: '',
-      message: 'Nhập lại mật khẩu để xác nhận',
+      title: 'Đổi mật khẩu',
+      message: '',
       inputs: [
         {
           name: 'password',

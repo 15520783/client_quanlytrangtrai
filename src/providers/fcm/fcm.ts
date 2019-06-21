@@ -2,12 +2,17 @@ import { API, CONFIG, KEY } from '../../common/const';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ObjDataNotification, employee } from '../../common/entity';
 import { Platform, ToastController } from 'ionic-angular';
+import { map, tap } from 'rxjs/operators';
 
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Firebase } from '@ionic-native/firebase';
 import { Injectable } from '@angular/core';
 import { Utils } from '../../common/utils';
-import { tap } from 'rxjs/operators';
+
+interface notification {
+  id: String;
+  notification: String;
+}
 
 @Injectable()
 export class FcmProvider {
@@ -18,7 +23,7 @@ export class FcmProvider {
     public http: HttpClient,
     public toastCtrl: ToastController,
     public firebaseNative: Firebase,
-    public util:Utils
+    public util: Utils
   ) {
   }
 
@@ -37,6 +42,23 @@ export class FcmProvider {
     }
     return token;
   }
+
+  // listen(empId:string){
+  //   this.afs.collection<notification>(empId).valueChanges().subscribe((data:any)=>{
+  //     if(data && data.length){
+  //       this.afs.collection(empId).doc().delete()
+  //     }
+  //   })
+  // }
+
+  // describeChannel(){
+  //   this.util.getKey(KEY.EMPLOYEE_USER).then((employee:employee)=>{
+  //     if(employee){
+  //       return this.afs.collection(employee.id);
+  //     }
+  //   })
+  // }
+
 
   // Save the token to firestore
   // private saveTokenToFirestore(token,user:employee) {

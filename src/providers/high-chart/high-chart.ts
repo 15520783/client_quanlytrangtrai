@@ -1,9 +1,9 @@
+import Drilldown from 'highcharts/modules/drilldown';
+import Highcharts from 'highcharts';
+import HighchartsExportData from 'highcharts/modules/export-data'
+import HighchartsExporting from 'highcharts/modules/exporting';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import Highcharts from 'highcharts';
-import Drilldown from 'highcharts/modules/drilldown';
-import HighchartsExporting from 'highcharts/modules/exporting';
-import HighchartsExportData from 'highcharts/modules/export-data'
 Drilldown(Highcharts);
 HighchartsExporting(Highcharts);
 HighchartsExportData(Highcharts);
@@ -66,7 +66,6 @@ export class HighChartProvider {
   }
 
   createPieDrilldownChart(elementChart: any, data: Array<{ name: String, y: number, unit: String, sliced: boolean, selected: boolean }>, drilldownData, title: string, subtitle: string) {
-    // let options = Highcharts.getOptions().exporting.buttons.contextButton.menuItems;
     Highcharts.chart(elementChart, {
       chart: {
         plotBackgroundColor: null,
@@ -86,7 +85,7 @@ export class HighChartProvider {
         text: subtitle
       },
       tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b> ({point.y} {point.unit})'
       },
 
       plotOptions: {
@@ -97,7 +96,7 @@ export class HighChartProvider {
           dataLabels: {
             distance: 20,
             enabled: true,
-            format: '<b>{point.name}</b>: {point.percentage:.1f} %  ({point.y} {point.unit})',
+            format: '<b>{point.name}</b>: {point.percentage:.1f} % ',
             style: {
               color: 'black'
             }
@@ -107,7 +106,6 @@ export class HighChartProvider {
       },
       series: <any>[
         {
-          // name: 'Brands',  
           colorByPoint: true,
           data: data
         }
@@ -152,6 +150,7 @@ export class HighChartProvider {
           'Khu mang thai',
           'Khu đẻ',
           'Khu cai sửa',
+          'Khu hậu bị',
         ],
         crosshair: true
       },

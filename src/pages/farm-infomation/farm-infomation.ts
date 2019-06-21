@@ -1,16 +1,16 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, Slides, ModalController, Menu, Events } from 'ionic-angular';
-import { farm, pig, house } from '../../common/entity';
-import { HighChartProvider } from '../../providers/high-chart/high-chart';
-import { FarmsProvider } from '../../providers/farms/farms';
-import { FarmInputPage } from '../farm-input/farm-input';
-import { EmployeesProvider } from '../../providers/employees/employees';
-import { PigGroupsProvider } from '../../providers/pig-groups/pig-groups';
-import { Utils } from '../../common/utils';
-import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
-import { VARIABLE } from '../../common/const';
-import { UserProvider } from '../../providers/user/user';
+import { Events, IonicPage, Menu, ModalController, NavController, NavParams, Platform, Slides } from 'ionic-angular';
+import { farm, house, pig } from '../../common/entity';
 
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { EmployeesProvider } from '../../providers/employees/employees';
+import { FarmInputPage } from '../farm-input/farm-input';
+import { FarmsProvider } from '../../providers/farms/farms';
+import { HighChartProvider } from '../../providers/high-chart/high-chart';
+import { PigGroupsProvider } from '../../providers/pig-groups/pig-groups';
+import { UserProvider } from '../../providers/user/user';
+import { Utils } from '../../common/utils';
+import { VARIABLE } from '../../common/const';
 
 @IonicPage()
 @Component({
@@ -119,7 +119,7 @@ export class FarmInfomationPage {
       },
     ]
 
-    let data1 = [
+    let data_co_cau_dan_nai = [
       {
         name: 'Chờ bán',
         y: this.summary.co_cau_dan_nai.wait_for_sale.length,
@@ -127,13 +127,13 @@ export class FarmInfomationPage {
         sliced: false,
         selected: false
       },
-      //  {
-      //   name: 'Hậu bị',
-      //   y: 300,
-      //   unit: 'con',
-      //   sliced: false,
-      //   selected: false
-      // },
+      {
+        name: 'Chờ chuyển trại',
+        y: this.summary.co_cau_dan_nai.wait_for_transfer.length,
+        unit: 'con',
+        sliced: false,
+        selected: false
+      },
       {
         name: 'Mang thai',
         y: this.summary.co_cau_dan_nai.farrowing.length,
@@ -141,13 +141,6 @@ export class FarmInfomationPage {
         sliced: false,
         selected: false
       },
-      // {
-      //   name: 'Lốc',
-      //   y: 0,
-      //   unit: 'con',
-      //   sliced: false,
-      //   selected: false
-      // },
       {
         name: 'Sẩy thai',
         y: this.summary.co_cau_dan_nai.abort.length,
@@ -169,54 +162,38 @@ export class FarmInfomationPage {
       },
     ]
 
-    let data2 = [
+    let data_co_cau_dan_noc = [
       {
-        name: 'Hậu bị',
-        y: 300,
-        unit: 'con',
-        sliced: false,
-        selected: false
-      }, {
-        name: 'Khai thác tinh',
-        y: 800,
-        unit: 'conlol',
-        sliced: false,
-        selected: false
-      }, {
         name: 'Chờ bán',
-        y: 0,
-        unit: 'con',
-        sliced: false,
-        selected: false
-      }, {
-        name: 'Thí tình',
-        y: 0,
+        y: this.summary.co_cau_dan_noc.wait_for_sale.length,
         unit: 'con',
         sliced: false,
         selected: false
       },
+      {
+        name: 'Chờ chuyển trại',
+        y: this.summary.co_cau_dan_noc.wait_for_transfer.length,
+        unit: 'con',
+        sliced: false,
+        selected: false
+      }
     ]
 
-    let data3 = [
+    let data_co_cau_dan_heo_con = [
       {
-        name: 'Đực',
-        y: 2,
-        unit: 'con',
-        sliced: false,
-        selected: false
-      }, {
-        name: 'Cái',
-        y: 500,
-        unit: 'con',
-        sliced: false,
-        selected: false
-      }, {
-        name: 'Đực thiến',
-        y: 510,
+        name: 'Chờ bán',
+        y: this.summary.co_cau_dan_heo_con.wait_for_sale.length,
         unit: 'con',
         sliced: false,
         selected: false
       },
+      {
+        name: 'Chờ chuyển trại',
+        y: this.summary.co_cau_dan_heo_con.wait_for_transfer.length,
+        unit: 'con',
+        sliced: false,
+        selected: false
+      }
     ]
 
     let dataBarChart = {
@@ -231,9 +208,9 @@ export class FarmInfomationPage {
 
     this.chartProvider.createPieChart(document.getElementById('chartMain'), data, '', '');
     this.chartProvider.createBarchart(document.getElementById('barChart'), dataBarChart);
-    this.chartProvider.createPieChart(document.getElementById('chart1'), data1, 'Cơ cấu đàn nái', '');
-    this.chartProvider.createPieChart(document.getElementById('chart2'), data2, 'Cơ cấu đàn nộc', '');
-    this.chartProvider.createPieChart(document.getElementById('chart3'), data3, 'Cơ cấu đàn heo con', '');
+    this.chartProvider.createPieChart(document.getElementById('chart1'), data_co_cau_dan_nai, 'Cơ cấu đàn nái', '');
+    this.chartProvider.createPieChart(document.getElementById('chart2'), data_co_cau_dan_noc, 'Cơ cấu đàn nộc', '');
+    this.chartProvider.createPieChart(document.getElementById('chart3'), data_co_cau_dan_heo_con, 'Cơ cấu đàn heo con', '');
   }
 
   editFarm() {
@@ -256,13 +233,13 @@ export class FarmInfomationPage {
     this.navCtrl.push(FarmInputPage, { farm: this.farm, callback: callback });
   }
 
-  removeFarm(){
+  removeFarm() {
     this.farmProvider.removeFarm(this.farm)
-    .then((isOk)=>{
-      if(isOk){
-        this.navParams.get('callbackRemove')(this.farm);
-      }
-    })
+      .then((isOk) => {
+        if (isOk) {
+          this.navParams.get('callbackRemove')(this.farm);
+        }
+      })
   }
 
 
@@ -307,6 +284,8 @@ export class FarmInfomationPage {
       return houses[pig.houseId].section.typeId == VARIABLE.SECTION_TYPE[1].value ? true : false;
     })
 
+    this.summary['total_pig_khu_cach_ly'] = this.summary.khu_cach_ly.male_pig.length + this.summary.khu_cach_ly.female_pig.length + this.summary.khu_cach_ly.child_pig.length;
+
     /**
      * Tổng quan khu nọc
      */
@@ -319,6 +298,7 @@ export class FarmInfomationPage {
     this.summary.khu_noc.child_pig = this.summary.child_pig.filter((pig) => {
       return houses[pig.houseId].section.typeId == VARIABLE.SECTION_TYPE[2].value ? true : false;
     })
+    this.summary['total_pig_khu_noc'] = this.summary.khu_noc.male_pig.length + this.summary.khu_noc.female_pig.length + this.summary.khu_noc.child_pig.length;
 
     /**
      * Tổng quan khu phối
@@ -332,6 +312,7 @@ export class FarmInfomationPage {
     this.summary.khu_phoi.child_pig = this.summary.child_pig.filter((pig) => {
       return houses[pig.houseId].section.typeId == VARIABLE.SECTION_TYPE[3].value ? true : false;
     })
+    this.summary['total_pig_khu_phoi'] = this.summary.khu_phoi.male_pig.length + this.summary.khu_phoi.female_pig.length + this.summary.khu_phoi.child_pig.length;
 
     /**
      * Tổng quan khu mang thai
@@ -345,6 +326,7 @@ export class FarmInfomationPage {
     this.summary.khu_mang_thai.child_pig = this.summary.child_pig.filter((pig) => {
       return houses[pig.houseId].section.typeId == VARIABLE.SECTION_TYPE[4].value ? true : false;
     })
+    this.summary['total_pig_khu_mang_thai'] = this.summary.khu_mang_thai.male_pig.length + this.summary.khu_mang_thai.female_pig.length + this.summary.khu_mang_thai.child_pig.length;
 
     /**
      * Tổng quan khu đẻ
@@ -358,6 +340,7 @@ export class FarmInfomationPage {
     this.summary.khu_de.child_pig = this.summary.child_pig.filter((pig) => {
       return houses[pig.houseId].section.typeId == VARIABLE.SECTION_TYPE[5].value ? true : false;
     })
+    this.summary['total_pig_khu_de'] = this.summary.khu_de.male_pig.length + this.summary.khu_de.female_pig.length + this.summary.khu_de.child_pig.length;
 
     /**
      * Tổng quan khu cai sữa
@@ -371,6 +354,7 @@ export class FarmInfomationPage {
     this.summary.khu_cai_sua.child_pig = this.summary.child_pig.filter((pig) => {
       return houses[pig.houseId].section.typeId == VARIABLE.SECTION_TYPE[6].value ? true : false;
     })
+    this.summary['total_pig_khu_cai_sua'] = this.summary.khu_cai_sua.male_pig.length + this.summary.khu_cai_sua.female_pig.length + this.summary.khu_cai_sua.child_pig.length;
 
     /**
      * Tổng quan khu hậu bị
@@ -384,6 +368,7 @@ export class FarmInfomationPage {
     this.summary.khu_hau_bi.child_pig = this.summary.child_pig.filter((pig) => {
       return houses[pig.houseId].section.typeId == VARIABLE.SECTION_TYPE[7].value ? true : false;
     })
+    this.summary['total_pig_khu_hau_bi'] = this.summary.khu_hau_bi.male_pig.length + this.summary.khu_hau_bi.female_pig.length + this.summary.khu_hau_bi.child_pig.length;
 
     let status = this.deployData.get_object_list_key_of_status();
 
@@ -412,6 +397,32 @@ export class FarmInfomationPage {
         return ((status[pig.statusId].code).toString() == VARIABLE.STATUS_PIG.WEANING) ? true : false;
       })
     }
-    console.log(this.summary.co_cau_dan_nai);
+
+
+    /**
+     * Cơ cấu đàn nọc
+     */
+
+    this.summary.co_cau_dan_noc = {
+      wait_for_sale: this.summary.male_pig.filter((pig) => {
+        return (status[pig.statusId].code).toString() == VARIABLE.STATUS_PIG.WAIT_FOR_SALE ? true : false;
+      }),
+      wait_for_transfer: this.summary.male_pig.filter((pig) => {
+        return (status[pig.statusId].code).toString() == VARIABLE.STATUS_PIG.WAIT_FOR_TRANSFER ? true : false;
+      })
+    }
+
+    /**
+    * Cơ cấu đàn nọc
+    */
+
+    this.summary.co_cau_dan_heo_con = {
+      wait_for_sale: this.summary.child_pig.filter((pig) => {
+        return (status[pig.statusId].code).toString() == VARIABLE.STATUS_PIG.WAIT_FOR_SALE ? true : false;
+      }),
+      wait_for_transfer: this.summary.child_pig.filter((pig) => {
+        return (status[pig.statusId].code).toString() == VARIABLE.STATUS_PIG.WAIT_FOR_TRANSFER ? true : false;
+      })
+    }
   }
 }

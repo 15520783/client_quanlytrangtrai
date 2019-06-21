@@ -147,8 +147,6 @@ export class FarmsPage {
     this.navCtrl.push(FarmInputPage, { callback: callback });
   }
 
-
-
   removeFarm(farm) {
     let idx = this.farms.findIndex(_farm => _farm.id == farm.id);
     if (idx > -1) {

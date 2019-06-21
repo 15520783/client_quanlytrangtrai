@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, Slides } from 'ionic-angular';
+import { house, pig, section } from '../../common/entity';
 
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { EmployeesProvider } from '../../providers/employees/employees';
@@ -8,7 +9,6 @@ import { SectionInputPage } from '../section-input/section-input';
 import { SectionsProvider } from '../../providers/sections/sections';
 import { UserProvider } from '../../providers/user/user';
 import { Utils } from '../../common/utils';
-import { section } from '../../common/entity';
 
 @IonicPage()
 @Component({
@@ -19,8 +19,13 @@ export class SectionInfomationPage {
   @ViewChild('slider') slider: Slides;
 
   public section: section = new section();
+  public summary: any = {};
+  public title = ["Thông tin chi tiết", "Quy mô khu"];
+  public houses: Array<house> = [];
 
-  public title = ["Thông tin chi tiết", "Cơ cấu đàn nái"];
+  public drilldown_heo_noc = [];
+  public drilldown_heo_nai = [];
+  public drilldown_heo_con = [];
 
   constructor(
     public navCtrl: NavController,
@@ -30,12 +35,33 @@ export class SectionInfomationPage {
     public employeeProvider: EmployeesProvider,
     public util: Utils,
     public platform: Platform,
-    public userProvider:UserProvider,
-    public deployData:DeployDataProvider
+    public userProvider: UserProvider,
+    public deployData: DeployDataProvider
   ) {
-    if(this.navParams.data.section){
+    if (this.navParams.data.section) {
       this.section = this.navParams.data.section;
     }
+    this.summary = this.deployData.get_summary_pig_of_section(this.section.id, this.section.typeId);
+    this.houses = this.deployData.get_houses_of_section(this.section.id);
+
+    
+
+    this.houses.forEach((house: house) => {
+      house['female_pigs'] = this.summary.female_pig.filter((pig: pig) => {
+        return pig.houseId == house.id  ? true : false;
+      })
+      house['male_pigs'] = this.summary.male_pig.filter((pig: pig) => {
+        return pig.houseId == house.id? true : false;
+      })
+      house['child_pigs'] = this.summary.child_pig.filter((pig: pig) => {
+        return pig.houseId == house.id ? true : false;
+      })
+      this.drilldown_heo_noc.push([house.name,house['female_pigs'].length]);
+      this.drilldown_heo_nai.push([house.name,house['male_pigs'].length]);
+      this.drilldown_heo_con.push([house.name,house['child_pigs'].length]);
+    })
+
+
     this.deployData.get_employee_by_id
     this.section['managerEmployee'] = this.deployData.get_employee_by_id(this.section.manager);
     this.section['foundingDisplay'] = this.util.convertDate(this.section.founding);
@@ -44,32 +70,35 @@ export class SectionInfomationPage {
   ngAfterViewInit() {
     if (this.slider)
       this.slider.autoHeight = true;
-    console.log('ngAfterViewInit FarmInfomationPage');
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SectionInfomationPage');
+    
+
+
+
     let data = [
       {
         name: 'Đực',
-        y: 400,
+        y: this.summary.female_pig.length,
         unit: 'con',
         sliced: false,
         selected: false,
         drilldown: "Đực"
       }, {
         name: 'Nái',
-        y: 1000,
+        y: this.summary.male_pig.length,
         unit: 'con',
         sliced: false,
         selected: false,
         drilldown: "Nái"
       }, {
-        name: 'Đực thiến',
-        y: 200,
+        name: 'Heo con',
+        y: this.summary.child_pig.length,
         unit: 'con',
         sliced: false,
-        selected: false
+        selected: false,
+        drilldown: "Heo con"
       },
     ]
 
@@ -78,32 +107,20 @@ export class SectionInfomationPage {
       {
         "name": "Nái",
         "id": "Nái",
-        "data": [
-          [
-            "Nhà 1", 200
-          ],
-          [
-            "Nhà 2", 300
-          ],
-          [
-            "Nhà 3", 500
-          ]
-        ]
+        "data": this.drilldown_heo_nai,
+        "unit":"con"
       },
       {
         "name": "Đực",
         "id": "Đực",
-        "data": [
-          [
-            "Nhà 1", 300
-          ],
-          [
-            "Nhà 2", 200
-          ],
-          [
-            "Nhà 3", 0
-          ]
-        ]
+        "data": this.drilldown_heo_noc,
+        "unit":"con"
+      },
+      {
+        "name": "Heo con",
+        "id": "Heo con",
+        "data": this.drilldown_heo_con,
+        "unit":"con"
       }
     ]
     this.chartProvider.createPieDrilldownChart(document.getElementById('chartSummary'), data, drilldown, 'Quy mô khu', '');
@@ -132,16 +149,16 @@ export class SectionInfomationPage {
   }
 
 
-  remove(){
+  remove() {
     this.sectionProvider.removeSection(this.section)
-    .then((isOk)=>{
-      if(isOk){
-        this.sectionProvider.removedsection(this.section);
-        this.navParams.get('callbackRemove')(this.section);
-      }
-    })
-    .catch(err=>{
-      return err;
-    })
+      .then((isOk) => {
+        if (isOk) {
+          this.sectionProvider.removedsection(this.section);
+          this.navParams.get('callbackRemove')(this.section);
+        }
+      })
+      .catch(err => {
+        return err;
+      })
   }
 }

@@ -43,6 +43,8 @@ export class HomePage {
   rootPage: any;
   pages: Array<any> = [];
   activeLogOut: boolean = false;
+  interval:any;
+
   public user: any = {};
 
   constructor(
@@ -74,53 +76,7 @@ export class HomePage {
       this.user['username'] = username;
     })
 
-    this.userProvider.rolePermission.ROLE_xem_danh_sach_trang_trai != null ?
-      this.pages.push({
-        title: 'Trang trại', component: FarmsPage, icon: 'app-farm', active: false
-      }) : null;
-
-    this.userProvider.rolePermission.ROLE_xem_danh_sach_khu != null ?
-      this.pages.push({
-        title: 'Khu', component: SectionsPage, icon: 'app-sections', active: false
-      }) : null;
-
-    this.userProvider.rolePermission.ROLE_xem_danh_sach_heo != null ?
-      this.pages.push({
-        title: 'Heo', component: PigsPage, icon: 'app-pig-outline', active: false,
-      }) : null;
-
-    this.userProvider.rolePermission.ROLE_xem_danh_sach_nhan_vien != null ?
-      this.pages.push({
-        title: 'Nhân viên', component: EmployeePage, icon: 'app-employees', active: false
-      }) : null;
-
-    this.userProvider.rolePermission.ROLE_xem_danh_sach_kho != null ?
-      this.pages.push({
-        title: 'Kho', component: WarehousesPage, icon: 'app-warehouse', active: false
-      }) : null;
-
-    this.userProvider.rolePermission.ROLE_xem_danh_sach_chung_tu != null ?
-      this.pages.push({
-        title: 'Chứng từ', component: InvoicesPage, icon: 'app-file', active: false,
-      }) : null;
-
-    this.pages.push({
-      title: 'Quản lý lâm sàn', component: IssuePigListPage, icon: 'app-medicine-manager', active: false,
-    })
-
-    this.pages.push({
-      title: 'Hoạt động', component: ActivitiesPage, icon: 'app-activities', active: false,
-    })
-
-    this.userProvider.rolePermission.ROLE_xem_danh_sach_thiet_lap != null ?
-      this.pages.push({
-        title: 'Thiết lập', component: SettingsPage, icon: 'app-settings', active: false,
-      }) : null;
-
-    this.userProvider.rolePermission.ROLE_xem_bang_ke_hoach != null ?
-      this.pages.push({
-        title: 'Bảng kế hoạch', component: DatePlanPage, icon: 'app-schedule', active: false, isSchedule: true,
-      }) : null;
+    this.init();
 
     this.events.subscribe('sync', (something) => {
       this.sync();
@@ -135,11 +91,67 @@ export class HomePage {
     this.events.subscribe('home:reloadSchedule', () => {
       this.nav.setRoot(DatePlanPage);
     })
+
+    /**Auto sync */
+    this.interval = CONFIG.SYNC_DELAY_DURATION ?  setInterval(() => {
+      this.sync();
+    }, CONFIG.SYNC_DELAY_DURATION) : null;
+  }
+
+  init(){
+    this.pages = [
+      {
+        title: 'Trang trại', component: FarmsPage, icon: 'app-farm', active: false,
+        show: this.userProvider.rolePermission.ROLE_xem_danh_sach_trang_trai != null ? true : false
+      },
+      {
+        title: 'Khu', component: SectionsPage, icon: 'app-sections', active: false,
+        show: this.userProvider.rolePermission.ROLE_xem_danh_sach_khu != null ? true : false
+      },
+      {
+        title: 'Heo', component: PigsPage, icon: 'app-pig-outline', active: false,
+        show: this.userProvider.rolePermission.ROLE_xem_danh_sach_heo != null ? true : false
+      },
+      {
+        title: 'Nhân viên', component: EmployeePage, icon: 'app-employees', active: false,
+        show: this.userProvider.rolePermission.ROLE_xem_danh_sach_nhan_vien != null ? true : false
+      },
+      {
+        title: 'Kho', component: WarehousesPage, icon: 'app-warehouse', active: false,
+        show: this.userProvider.rolePermission.ROLE_xem_danh_sach_kho != null ? true : false
+      },
+      {
+        title: 'Chứng từ', component: InvoicesPage, icon: 'app-file', active: false,
+        show: this.userProvider.rolePermission.ROLE_xem_danh_sach_chung_tu != null ? true : false
+      },
+      {
+        title: 'Quản lý lâm sàn', component: IssuePigListPage, icon: 'app-medicine-manager', active: false,
+        show: true
+      },
+      {
+        title: 'Hoạt động', component: ActivitiesPage, icon: 'app-activities', active: false,
+        show: true
+      },
+      {
+        title: 'Thiết lập', component: SettingsPage, icon: 'app-settings', active: false,
+        show: this.userProvider.rolePermission.ROLE_xem_danh_sach_thiet_lap != null ? true : false
+      },
+      {
+        title: 'Bảng kế hoạch', component: DatePlanPage, icon: 'app-schedule', active: false, isSchedule: true,
+        show: this.userProvider.rolePermission.ROLE_xem_bang_ke_hoach != null ? true : false
+      }
+    ]
   }
 
   ionViewDidLoad() {
-    this.rootPage = this.pages[0].component;
-    this.pages[0].active = true;
+    let showPage = this.pages.filter(page => {
+      return page.show ? true : false;
+    })
+    
+    // this.rootPage = this.pages[0].component;
+    // this.pages[0].active = true;
+    this.rootPage = showPage[0].component;
+    showPage[0].active = true;
     setTimeout(() => {
       this.activeLogOut = true;
     }, 3000);
@@ -191,13 +203,20 @@ export class HomePage {
       .then((res: any) => {
         if (res.success) {
           this.getRolePermission().then(() => {
-            // this.userProvider.sync();
             this.farmProvider.sync();
             this.pigProvider.sync();
-            this.employeeProvider.sync();
+
+            if (this.userProvider.rolePermission.ROLE_xem_danh_sach_nhan_vien != null) {
+              this.employeeProvider.sync();
+            } else this.employeeProvider.updated_flag = true;
+
             this.sectionProvider.sync();
             this.houseProvider.sync();
-            this.warehouseProvider.sync();
+
+            if (this.userProvider.rolePermission.ROLE_xem_danh_sach_kho != null) {
+              this.warehouseProvider.sync();
+            } else this.warehouseProvider.updated_flag = true;
+
             this.settingProvider.sync();
             this.sectionProvider.sync();
           })
@@ -226,6 +245,7 @@ export class HomePage {
       this.houseProvider.updated_flag &&
       this.warehouseProvider.updated_flag &&
       this.settingProvider.updated_flag) {
+      this.init();
       this.events.unsubscribe('updated');
       this.util.closeBackDrop();
     }
@@ -267,9 +287,11 @@ export class HomePage {
                 }
               })
             } else {
+              this.util.closeBackDrop();
               this.util.showToastInform('Không tìm thấy đối tượng');
             }
           } else {
+            this.util.closeBackDrop();
             this.util.showToastInform('Không tìm thấy đối tượng');
           }
         })

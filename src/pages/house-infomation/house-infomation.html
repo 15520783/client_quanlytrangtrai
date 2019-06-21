@@ -4,11 +4,17 @@
       <ion-title>Thông tin chuồng</ion-title>
     </ion-toolbar>
   </ion-navbar>
-  <ion-toolbar showWhen='ios,android'>
+  <!-- <ion-toolbar showWhen='ios,android'>
     <ion-segment [(ngModel)]="tab" scrollable>
       <ion-segment-button value="0" (tap)="selectedTab(0)">Thông tin chuồng</ion-segment-button>
       <ion-segment-button value="1" (tap)="selectedTab(1)">Danh sách heo</ion-segment-button>
     </ion-segment>
+  </ion-toolbar> -->
+  <ion-toolbar showWhen='core'>
+    <button *ngIf="userProvider.rolePermission.ROLE_cap_nhat_khu!=null" mode='ios' ion-button item-end color="secondary"
+      (tap)="editHouse()">Chỉnh sửa</button>
+    <button *ngIf="userProvider.rolePermission.ROLE_xoa_chuong!=null" mode='ios' ion-button item-end color="danger"
+      (tap)="removeHouse()">Xóa</button>
   </ion-toolbar>
 </ion-header>
 
@@ -16,9 +22,12 @@
   <ion-list no-padding style="height: 100%!important;">
     <ion-row style="display: flex!important;height: 100%!important;">
       <ion-col>
-        <ion-card no-margin mode='ios' style="background: white"
-          style="display: block!important;height: 100%!important">
-          <ion-card-header mode='ios'>
+        <ion-item-group>
+          <ion-item-divider color="light" sticky="true" text-left text-weight>Thông tin chung
+          </ion-item-divider>
+          <ion-card no-margin mode='ios' style="background: white"
+            style="display: block!important;height: 100%!important">
+            <!-- <ion-card-header mode='ios'>
             <ion-row>
               <ion-col>
                 <ion-card-title text-wrap>
@@ -26,50 +35,66 @@
                   Thông tin chi tiết
                 </ion-card-title>
               </ion-col>
-              <ion-col text-right>
-                <button *ngIf="userProvider.rolePermission.ROLE_cap_nhat_khu!=null" mode='ios' ion-button item-end
-                  color="secondary" (tap)="editHouse()">Chỉnh sửa</button>
-                <button *ngIf="userProvider.rolePermission.ROLE_xoa_chuong!=null" mode='ios' ion-button item-end
-                  color="danger" (tap)="removeHouse()">Xóa</button>
-              </ion-col>
             </ion-row>
-          </ion-card-header>
-          <ion-card-content mode='ios' class="card-content-custom" padding style="height: 100%!important;">
-            <ion-list no-lines>
+          </ion-card-header> -->
+            <ion-card-content mode='ios' class="card-content-custom" padding style="height: 100%!important;">
               <ion-row>
-                <ion-item>
-                  <ion-label stacked>Tên chuồng</ion-label>
-                  <ion-input type="text" readonly [(ngModel)]="house.name"></ion-input>
-                </ion-item>
-                <ion-item>
-                  <ion-label stacked>Số chuồng</ion-label>
-                  <ion-input type="text" readonly [(ngModel)]="house.houseCode"></ion-input>
-                </ion-item>
-                <ion-item>
-                  <ion-label stacked>Ngày thành lập</ion-label>
-                  <ion-input type="text" readonly [(ngModel)]="house.founding"></ion-input>
-                </ion-item>
-                <ion-item>
-                  <ion-label stacked>Mô tả</ion-label>
-                  <ion-input type="text" readonly [(ngModel)]="house.description"></ion-input>
-                </ion-item>
+                <ion-col>
+                  <ion-list no-lines>
+                    <ion-row>
+                      <ion-item>
+                        <ion-label stacked>Tên chuồng</ion-label>
+                        <ion-input type="text" readonly [(ngModel)]="house.name"></ion-input>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label stacked>Số chuồng</ion-label>
+                        <ion-input type="text" readonly [(ngModel)]="house.houseCode"></ion-input>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label stacked>Ngày thành lập</ion-label>
+                        <ion-input type="text" readonly [(ngModel)]="house.foundingDisplay"></ion-input>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label stacked>Mô tả</ion-label>
+                        <ion-input type="text" readonly [(ngModel)]="house.description"></ion-input>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label stacked>Tổng số heo</ion-label>
+                        <ion-input type="text" readonly [(ngModel)]="summary.total_pig.length"></ion-input>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label stacked>Số heo nọc</ion-label>
+                        <ion-input type="text" readonly [(ngModel)]="summary.female_pig.length"></ion-input>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label stacked>Số heo nái</ion-label>
+                        <ion-input type="text" readonly [(ngModel)]="summary.male_pig.length"></ion-input>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label stacked>Số heo con</ion-label>
+                        <ion-input type="text" readonly [(ngModel)]="summary.child_pig.length"></ion-input>
+                      </ion-item>
+                    </ion-row>
+                  </ion-list>
+                </ion-col>
+                <ion-col>
+                  <ion-infinite-scroll>
+                    <div id="chartSummary"></div>
+                  </ion-infinite-scroll>
+                  <!-- <pig-list [(data)]="pigs" *ngIf="pigs.length"></pig-list> -->
+                </ion-col>
               </ion-row>
-            </ion-list>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-      <ion-col>
-        <ion-infinite-scroll>
-          <div id="chartSummary"></div>
-        </ion-infinite-scroll>
-        <!-- <pig-list [(data)]="pigs" *ngIf="pigs.length"></pig-list> -->
+
+            </ion-card-content>
+          </ion-card>
+        </ion-item-group>
       </ion-col>
     </ion-row>
   </ion-list>
 </ion-content>
 
 <ion-content no-padding *ngIf="!platform.is('core')" #content class="mobile">
-  <!-- <ion-item-divider sticky="true">{{title[slider.realIndex]}}</ion-item-divider> -->
+  <ion-item-divider sticky="true">{{title[slider.realIndex]}}</ion-item-divider>
   <ion-slides #slider (ionSlideDidChange)="slideChange()">
     <ion-slide>
       <ion-list no-padding lines>
@@ -89,8 +114,24 @@
           <ion-label stacked>Mô tả</ion-label>
           <ion-input type="text" readonly [(ngModel)]="house.description"></ion-input>
         </ion-item>
-      </ion-list>
 
+        <ion-item>
+            <ion-label stacked>Tổng số heo</ion-label>
+            <ion-input type="text" readonly [(ngModel)]="summary.total_pig.length"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Số heo nọc</ion-label>
+            <ion-input type="text" readonly [(ngModel)]="summary.female_pig.length"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Số heo nái</ion-label>
+            <ion-input type="text" readonly [(ngModel)]="summary.male_pig.length"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Số heo con</ion-label>
+            <ion-input type="text" readonly [(ngModel)]="summary.child_pig.length"></ion-input>
+          </ion-item>
+      </ion-list>
     </ion-slide>
     <ion-slide>
       <ion-infinite-scroll>

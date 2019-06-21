@@ -208,6 +208,53 @@ export class DeployDataProvider {
   }
 
 
+  get_summary_pig_of_section(sectionId: string, sectionTypeId: string) {
+    let formal_section: any = [
+      VARIABLE.SECTION_TYPE[1].value,
+      VARIABLE.SECTION_TYPE[2].value,
+      VARIABLE.SECTION_TYPE[3].value,
+      VARIABLE.SECTION_TYPE[4].value,
+      VARIABLE.SECTION_TYPE[7].value
+    ]
+
+    let houses_util = this.get_object_list_key_of_house();
+    let total_pig = [];
+    let female_pig = [];
+    let male_pig = [];
+    let child_pig = [];
+    if (this.pigsProvider.pigs.length) {
+      total_pig = this.pigsProvider.pigs.filter((pig) => {
+        return houses_util[pig.houseId].section.id == sectionId ? true : false;
+      });
+      if (total_pig.length) {
+        if (formal_section.includes(sectionTypeId.toString())) {
+          female_pig = total_pig.filter(pig => {
+            return pig.gender == 1 ? true : false;
+          });
+
+          male_pig = total_pig.filter(pig => {
+            return pig.gender == 2 ? true : false;
+          })
+        } else if (sectionTypeId == VARIABLE.SECTION_TYPE[5].value) {
+          male_pig = total_pig.filter((pig: pig) => {
+            return pig.gender == 2
+              && pig.statusId != VARIABLE.STATUS_PIG.NEWBORN
+              && pig.statusId != VARIABLE.STATUS_PIG.GROWING ? true : false;
+          });
+
+          child_pig = total_pig.filter((pig: pig) => {
+            return pig.statusId == VARIABLE.STATUS_PIG.NEWBORN
+              && pig.statusId == VARIABLE.STATUS_PIG.GROWING ? true : false;
+          });
+        } else if (sectionTypeId == VARIABLE.SECTION_TYPE[6].value) {
+          child_pig = total_pig;
+        }
+      }
+    }
+
+    return {total_pig:total_pig,female_pig:female_pig,male_pig:male_pig,child_pig:child_pig};
+  }
+
 
   /**
    *  Lấy danh sách khu cho ion-select

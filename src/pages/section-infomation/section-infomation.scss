@@ -1,9 +1,12 @@
 page-section-infomation {
-    ion-item-divider{
-        color:white!important;
-        text-align: left!important;
-        background:linear-gradient(to right,$themeColor2,$light-tint)!important;
+    .mobile{
+        ion-item-divider{
+            color:white!important;
+            text-align: left!important;
+            background:linear-gradient(to right,$themeColor2,$light-tint)!important;
+        }
     }
+
 
     ion-label{
         font-size:15px!important;

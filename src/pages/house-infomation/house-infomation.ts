@@ -20,11 +20,12 @@ export class HouseInfomationPage {
   @ViewChild('menuEmployee') menuEmployee: Menu;
   @ViewChild('menuPigs') menuPigs: Menu;
 
-  public title = ["Thông tin chi tiết", "Quy mô khu"];
+  public title = ["Thông tin chi tiết", "Quy mô chuồng"];
 
   public house: house = new house();
   public pigs: Array<pig> = [];
   public tab = "0";
+  public summary: any = {};
 
   constructor(
     public navCtrl: NavController,
@@ -38,12 +39,27 @@ export class HouseInfomationPage {
     public deployData: DeployDataProvider,
     public util: Utils,
     public renderer: Renderer,
-    public userProvider:UserProvider
+    public userProvider: UserProvider
   ) {
     if (this.navParams.data.house) {
       this.house = this.navParams.data.house;
-      this.pigs = this.deployData.get_pigs_of_house(this.navParams.data.house.id);
-      // this.house.founding = this.util.convertDate(this.house.founding);
+      this.house['foundingDisplay'] = this.util.convertDate(this.house.founding);
+
+      let section_summary = this.deployData.get_summary_pig_of_section(this.house.section.id, this.house.section.typeId);
+      if (section_summary) {
+        this.summary.total_pig = section_summary.total_pig.filter((pig: pig) => {
+          return pig.houseId == this.house.id ? true : false;
+        })
+        this.summary.female_pig = section_summary.female_pig.filter((pig: pig) => {
+          return pig.houseId == this.house.id ? true : false;
+        })
+        this.summary.male_pig = section_summary.male_pig.filter((pig: pig) => {
+          return pig.houseId == this.house.id ? true : false;
+        })
+        this.summary.child_pig = section_summary.child_pig.filter((pig: pig) => {
+          return pig.houseId == this.house.id ? true : false;
+        })
+      }
     }
   }
 
@@ -65,25 +81,22 @@ export class HouseInfomationPage {
 
   ionViewDidLoad() {
 
-    setTimeout(() => {
-    }, 500);
-    console.log('ionViewDidLoad HouseInfomationPage');
     let data = [
       {
         name: 'Đực',
-        y: 400,
+        y: this.summary.female_pig.length,
         unit: 'con',
         sliced: false,
         selected: false,
       }, {
         name: 'Nái',
-        y: 1000,
+        y: this.summary.male_pig.length,
         unit: 'con',
         sliced: false,
         selected: false,
       }, {
-        name: 'Đực thiến',
-        y: 200,
+        name: 'Heo con',
+        y: this.summary.child_pig.length,
         unit: 'con',
         sliced: false,
         selected: false
@@ -165,13 +178,13 @@ export class HouseInfomationPage {
   }
 
 
-  removeHouse(){
+  removeHouse() {
     this.houseProvider.removeHouse(this.house)
-    .then((isOK)=>{
-      if(isOK){
-        this.houseProvider.removedHouse(this.house);
-        this.navParams.get('callbackRemove')(this.house);
-      }
-    })
+      .then((isOK) => {
+        if (isOK) {
+          this.houseProvider.removedHouse(this.house);
+          this.navParams.get('callbackRemove')(this.house);
+        }
+      })
   }
 }

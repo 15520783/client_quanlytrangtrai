@@ -4,15 +4,8 @@
       <ion-title>{{farm.name}}</ion-title>
     </ion-toolbar>
   </ion-navbar>
-  <ion-toolbar showWhen="core" class="pl-10">
-    <!-- <ion-row showWhen="core" text-left> -->
-    <!-- <button color="secondary" ion-button mode='ios' (tap)="viewPigGroups()">
-      Danh sách nhóm heo
-    </button>
-    <button color="secondary" ion-button mode='ios' (tap)="viewEmployee()">
-      Danh sách nhân viên
-    </button> -->
-    <!-- </ion-row> -->
+  <ion-toolbar *ngIf="userProvider.rolePermission.ROLE_cap_nhat_trang_trai" showWhen="core">
+    <button mode='ios' ion-button item-end color="secondary" (tap)="editFarm()">Chỉnh sửa</button>
   </ion-toolbar>
 </ion-header>
 
@@ -20,8 +13,11 @@
   <ion-list no-padding>
     <ion-row>
       <ion-col>
-        <ion-card mode='ios' style="background: white" style="margin-right:0px">
-          <ion-card-header mode='ios'>
+        <ion-item-group>
+          <ion-item-divider color="light" sticky="true" text-left text-weight>Thông tin tổng quan
+          </ion-item-divider>
+          <ion-card mode='ios' style="background: white" style="margin-right:0px">
+            <!-- <ion-card-header mode='ios'>
             <ion-row>
               <ion-col>
                 <ion-card-title text-wrap>
@@ -33,132 +29,137 @@
                 <button mode='ios' ion-button item-end color="secondary" (tap)="editFarm()">Chỉnh sửa</button>
               </ion-col>
             </ion-row>
-          </ion-card-header>
-          <ion-card-content mode='ios' class="card-content-custom" no-padding>
-            <ion-list no-lines>
-              <ion-row>
-                <ion-col [attr.col-12]="platform.is('core')?null:''">
-                  <ion-item>
-                    <ion-label stacked>Số lượng</ion-label>
-                    <ion-input text-wrap type="text" readonly [(ngModel)]="summary.total_pig.length"></ion-input>
-                  </ion-item>
-                  <ion-item>
-                    <ion-label text-wrap stacked>Địa chỉ</ion-label>
-                    <ion-textarea rows="1" cols="20" type="text" readonly [(ngModel)]="farm.address"></ion-textarea>
-                  </ion-item>
-                  <ion-item>
-                    <ion-label stacked>Ngày thành lập</ion-label>
-                    <ion-input type="text" readonly [(ngModel)]="farm.foundingDisplay"></ion-input>
-                  </ion-item>
-                  <ion-item>
-                    <ion-label stacked>Diện tích</ion-label>
-                    <ion-input type="text" readonly [(ngModel)]="farm.area"></ion-input>
-                  </ion-item>
-                  <ion-item *ngIf="farm.type">
-                    <ion-label stacked>Loại trại</ion-label>
-                    <ion-input type="text" readonly [(ngModel)]="farm.type.name"></ion-input>
-                  </ion-item>
-                  <ion-item >
-                    <ion-label stacked>Người quản lý</ion-label>
-                    <ion-input type="text" readonly [(ngModel)]="farm.managerEmployee.name"></ion-input>
-                  </ion-item>
-
-                  <ion-item>
-                    <ion-label stacked>Mô tả</ion-label>
-                    <ion-input type="text" readonly [(ngModel)]="farm.description"></ion-input>
-                  </ion-item>
-                </ion-col>
-                <ion-col [attr.col-12]="platform.is('core')?null:''">
-                  <ion-item>
-                    <ion-label stacked>Tổng đàn</ion-label>
-                    <ion-input type="text" readonly [(ngModel)]="summary.total_pig.length"></ion-input>
-                  </ion-item>
-                  <ion-item>
-                    <ion-label stacked>Khu cách ly</ion-label>
-                    <ion-input type="text" readonly></ion-input>
-                  </ion-item>
-                  <ion-item>
-                    <ion-label stacked>Khu nọc</ion-label>
-                    <ion-input type="text" readonly></ion-input>
-                  </ion-item>
-                  <ion-item>
-                    <ion-label stacked>Khu phối</ion-label>
-                    <ion-input type="text" readonly></ion-input>
-                  </ion-item>
-                  <ion-item>
-                    <ion-label stacked>Khu mang thai</ion-label>
-                    <ion-input type="text" readonly></ion-input>
-                  </ion-item>
-                  <ion-item>
-                    <ion-label stacked>Khu đẻ</ion-label>
-                    <ion-input type="text" readonly></ion-input>
-                  </ion-item>
-                  <ion-item>
-                    <ion-label stacked>Khu cai sữa</ion-label>
-                    <ion-input type="text" readonly></ion-input>
-                  </ion-item>
-                  <ion-item>
-                    <ion-label stacked>Chờ bán</ion-label>
-                    <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
-                  </ion-item>
-                </ion-col>
-                <ion-col [attr.col-12]="platform.is('core')?null:''" *ngIf="summary">
-                  <div *ngIf="platform.is('core')" id="chartMain"></div>
-                </ion-col>
-              </ion-row>
-            </ion-list>
-          </ion-card-content>
-        </ion-card>
+          </ion-card-header> -->
+            <ion-card-content mode='ios' class="card-content-custom" no-padding>
+              <ion-list no-lines>
+                <ion-row>
+                  <ion-col [attr.col-12]="platform.is('core')?null:''">
+                    <ion-item>
+                      <ion-label stacked>Số lượng</ion-label>
+                      <ion-input text-wrap type="text" readonly [(ngModel)]="summary.total_pig.length"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label text-wrap stacked>Địa chỉ</ion-label>
+                      <ion-textarea rows="1" cols="20" type="text" readonly [(ngModel)]="farm.address"></ion-textarea>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label stacked>Ngày thành lập</ion-label>
+                      <ion-input type="text" readonly [(ngModel)]="farm.foundingDisplay"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label stacked>Diện tích</ion-label>
+                      <ion-input type="text" readonly [(ngModel)]="farm.area"></ion-input>
+                    </ion-item>
+                    <ion-item *ngIf="farm.type">
+                      <ion-label stacked>Loại trại</ion-label>
+                      <ion-input type="text" readonly [(ngModel)]="farm.type.name"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label stacked>Người quản lý</ion-label>
+                      <ion-input type="text" readonly [(ngModel)]="farm.managerEmployee.name"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label stacked>Mô tả</ion-label>
+                      <ion-input type="text" readonly [(ngModel)]="farm.description"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col [attr.col-12]="platform.is('core')?null:''">
+                    <ion-item>
+                      <ion-label stacked>Tổng số heo</ion-label>
+                      <ion-input type="text" readonly [(ngModel)]="summary.total_pig.length"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label stacked>Tổng số heo khu cách ly</ion-label>
+                      <ion-input type="text" readonly [(ngModel)]="summary.total_pig_khu_cach_ly"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label stacked>Tổng số heo khu nọc</ion-label>
+                      <ion-input type="text" readonly [(ngModel)]="summary.total_pig_khu_noc"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label stacked>Tổng số heo khu phối</ion-label>
+                      <ion-input type="text" readonly [(ngModel)]="summary.total_pig_khu_phoi"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label stacked>Tổng số heo khu mang thai</ion-label>
+                      <ion-input type="text" readonly [(ngModel)]="summary.total_pig_khu_mang_thai"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label stacked>Tổng số heo khu đẻ</ion-label>
+                      <ion-input type="text" readonly [(ngModel)]="summary.total_pig_khu_de"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label stacked>Tổng số heo khu cai sữa</ion-label>
+                      <ion-input type="text" readonly [(ngModel)]="summary.total_pig_khu_cai_sua"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label stacked>Tổng số heo khu hậu bị</ion-label>
+                      <ion-input type="text" readonly [(ngModel)]="summary.total_pig_khu_hau_bi"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col [attr.col-12]="platform.is('core')?null:''" *ngIf="summary">
+                    <div *ngIf="platform.is('core')" id="chartMain"></div>
+                  </ion-col>
+                </ion-row>
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
+        </ion-item-group>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col col-12>
-        <ion-card style="background: white">
-          <ion-card-header mode='ios'>
+        <ion-item-group>
+          <ion-item-divider color="light" sticky="true" text-left text-weight>Quy mô các khu</ion-item-divider>
+          <ion-card style="background: white">
+            <!-- <ion-card-header mode='ios'>
             <ion-card-title text-wrap>Quy mô các khu</ion-card-title>
-          </ion-card-header>
-          <ion-card-content mode='ios' style="padding-top: 10vH">
-            <ion-row>
-              <ion-col [attr.col-12]="platform.is('core')?null:''">
-                <div *ngIf="platform.is('core')" id="barChart"></div>
-              </ion-col>
-            </ion-row>
-          </ion-card-content>
-        </ion-card>
+          </ion-card-header> -->
+            <ion-card-content mode='ios' style="padding-top: 10vH">
+              <ion-row>
+                <ion-col [attr.col-12]="platform.is('core')?null:''">
+                  <div *ngIf="platform.is('core')" id="barChart"></div>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+        </ion-item-group>
       </ion-col>
     </ion-row>
-
     <ion-row>
-      <ion-card mode='ios' style="background: white">
-        <ion-card-header mode='ios'>
-          <ion-card-title text-wrap>Cơ cấu tổng đàn</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <ion-row>
-            <ion-col [attr.col-12]="platform.is('core')?null:''">
-              <ion-card *ngIf="platform.is('core')">
-                <ion-card-content>
-                  <div id='chart1'></div>
-                </ion-card-content>
-              </ion-card>
-            </ion-col>
-            <ion-col [attr.col-12]="platform.is('core')?null:''">
-              <ion-card *ngIf="platform.is('core')">
-                <ion-card-content>
-                  <div id='chart2'></div>
-                </ion-card-content>
-              </ion-card>
-            </ion-col>
-            <ion-col [attr.col-12]="platform.is('core')?null:''">
-              <ion-card *ngIf="platform.is('core')">
-                <ion-card-content>
-                  <div id='chart3'></div>
-                </ion-card-content>
-              </ion-card>
-            </ion-col>
-          </ion-row>
-        </ion-card-content>
-      </ion-card>
+      <ion-col col-12>
+        <ion-item-group>
+          <ion-item-divider color="light" sticky="true" text-left text-weight>Cơ cấu tổng đàn
+          </ion-item-divider>
+          <ion-card mode='ios' style="background: white">
+            <ion-card-content>
+              <ion-row>
+                <ion-col col-4 [attr.col-12]="platform.is('core')?null:''">
+                  <ion-card *ngIf="platform.is('core')">
+                    <ion-card-content>
+                      <div id='chart1'></div>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <ion-col col-4 [attr.col-12]="platform.is('core')?null:''">
+                  <ion-card *ngIf="platform.is('core')">
+                    <ion-card-content>
+                      <div id='chart2'></div>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <ion-col col-4 [attr.col-12]="platform.is('core')?null:''">
+                  <ion-card *ngIf="platform.is('core')">
+                    <ion-card-content>
+                      <div id='chart3'></div>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+        </ion-item-group>
+      </ion-col>
     </ion-row>
   </ion-list>
 </ion-content>
@@ -190,7 +191,7 @@
             <ion-label stacked>Loại trại</ion-label>
             <ion-input type="text" readonly [(ngModel)]="farm.type.name"></ion-input>
           </ion-item>
-          <ion-item >
+          <ion-item>
             <ion-label stacked>Người quản lý</ion-label>
             <ion-input type="text" readonly [(ngModel)]="farm.managerEmployee.name"></ion-input>
           </ion-item>
@@ -199,36 +200,36 @@
             <ion-input type="text" readonly [(ngModel)]="farm.description"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label stacked>Chờ bán</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+            <ion-label stacked>Tổng số heo</ion-label>
+            <ion-input type="text" readonly [(ngModel)]="summary.total_pig.length"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label stacked>Tổng đàn</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+            <ion-label stacked>Tổng số heo khu cách ly</ion-label>
+            <ion-input type="text" readonly [(ngModel)]="summary.total_pig_khu_cach_ly"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label stacked>Khu cách ly</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+            <ion-label stacked>Tổng số heo khu nọc</ion-label>
+            <ion-input type="text" readonly [(ngModel)]="summary.total_pig_khu_noc"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label stacked>Khu nọc</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+            <ion-label stacked>Tổng số heo khu phối</ion-label>
+            <ion-input type="text" readonly [(ngModel)]="summary.total_pig_khu_phoi"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label stacked>Khu phối</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+            <ion-label stacked>Tổng số heo khu mang thai</ion-label>
+            <ion-input type="text" readonly [(ngModel)]="summary.total_pig_khu_mang_thai"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label stacked>Khu mang thai</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+            <ion-label stacked>Tổng số heo khu đẻ</ion-label>
+            <ion-input type="text" readonly [(ngModel)]="summary.total_pig_khu_de"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label stacked>Khu đẻ</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+            <ion-label stacked>Tổng số heo khu cai sữa</ion-label>
+            <ion-input type="text" readonly [(ngModel)]="summary.total_pig_khu_cai_sua"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label stacked>Khu cai sữa</ion-label>
-            <ion-input type="text" readonly [(ngModel)]="farm.fouding"></ion-input>
+            <ion-label stacked>Tổng số heo khu hậu bị</ion-label>
+            <ion-input type="text" readonly [(ngModel)]="summary.total_pig_khu_hau_bi"></ion-input>
           </ion-item>
         </ion-infinite-scroll>
       </ion-slide>
@@ -257,6 +258,16 @@
         <ion-infinite-scroll>
           <ion-row padding style="margin-top: 10%">
             <ion-col [attr.col-12]="platform.is('core')?null:''">
+              <div id='chart1' *ngIf="!platform.is('core')"></div>
+            </ion-col>
+          </ion-row>
+        </ion-infinite-scroll>
+      </ion-slide>
+
+      <ion-slide>
+        <ion-infinite-scroll>
+          <ion-row padding style="margin-top: 10%">
+            <ion-col [attr.col-12]="platform.is('core')?null:''">
               <div id='chart2' *ngIf="!platform.is('core')"></div>
             </ion-col>
           </ion-row>
@@ -273,27 +284,20 @@
         </ion-infinite-scroll>
       </ion-slide>
 
-      <ion-slide>
-        <ion-infinite-scroll>
-          <ion-row padding style="margin-top: 10%">
-            <ion-col [attr.col-12]="platform.is('core')?null:''">
-              <div id='chart1' *ngIf="!platform.is('core')"></div>
-            </ion-col>
-          </ion-row>
-        </ion-infinite-scroll>
-      </ion-slide>
+
 
     </ion-slides>
   </ion-list>
 
-  <ion-fab bottom right *ngIf="userProvider.rolePermission.ROLE_xoa_trang_trai || userProvider.rolePermission.ROLE_xem_thong_tin_trang_trai">
+  <ion-fab bottom right
+    *ngIf="userProvider.rolePermission.ROLE_xoa_trang_trai || userProvider.rolePermission.ROLE_xem_thong_tin_trang_trai">
     <button ion-fab>
       <ion-icon name="ios-arrow-up"></ion-icon>
     </button>
     <ion-fab-list side="top" style="right:0px">
       <span *ngIf="userProvider.rolePermission.ROLE_xoa_trang_trai">
-        <button data-balloon-visible data-balloon-length="medium" data-balloon="Xóa trang trại"
-          data-balloon-pos="left" ion-fab color="danger" (tap)="removeFarm()">
+        <button data-balloon-visible data-balloon-length="medium" data-balloon="Xóa trang trại" data-balloon-pos="left"
+          ion-fab color="danger" (tap)="removeFarm()">
           <ion-icon name="md-trash"></ion-icon>
         </button>
       </span>

@@ -51,7 +51,7 @@
           <p ><b>Khu:</b> {{house[item.houseId].section.name}}</p>
         </ion-col>
         <ion-col col-2  [attr.col-6]="!platform.is('core')?'':null">
-          <p ><b>Nhà:</b> {{house[item.houseId].name}}</p>
+          <p ><b>Chuồng:</b> {{house[item.houseId].name}}</p>
         </ion-col>
         <ion-col col-lg-2 [attr.col-6]="!platform.is('core')?'':null" >
           <p><b>Giống</b>: {{breeds[item.breedId].name}}</p>
@@ -154,7 +154,7 @@
       </ion-item>
   
       <ion-item>
-        <ion-label stacked>Nhà</ion-label>
+        <ion-label stacked>Chuồng</ion-label>
         <ion-select [(ngModel)]="houseFilter" multiple="true" interface="alert" title="Giới tính" mode="ios"
           okText="Duyệt" cancelText="Hủy" [selectOptions]="customAlertOptions" placeholder="Tất cả"
           (ionChange)="setFilteredItems()">

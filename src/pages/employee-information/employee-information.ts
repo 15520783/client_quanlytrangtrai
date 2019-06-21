@@ -256,12 +256,14 @@ export class EmployeeInformationPage {
   }
 
   clickButton(button: { buttonType: string, data: Date }) {
-    console.log(button);
     if (button.buttonType == 'next') {
       this.month = button.data.getMonth() + 1;
       this.year = button.data.getFullYear();
     }
     else if (button.buttonType == 'prev') {
+      this.month = button.data.getMonth() + 1;
+      this.year = button.data.getFullYear();
+    } else if (button.buttonType == 'today') {
       this.month = button.data.getMonth() + 1;
       this.year = button.data.getFullYear();
     }

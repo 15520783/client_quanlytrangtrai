@@ -126,9 +126,7 @@ export class MyApp {
                 })
                 this.splash = true;
                 this.registerFCM();
-                this.getRolePermission().then(() => {
-                  this.intinial_sync();
-                });
+                this.getRolePermission();
               }
               else {
                 this.splash = false;
@@ -159,24 +157,33 @@ export class MyApp {
     this.userProvider.checkServer()
       .then((res: any) => {
         if (res.success) {
-          // this.userProvider.sync();
           this.farmProvider.sync();
+          this.sectionProvider.sync();
+
           this.pigProvider.sync();
-          this.employeeProvider.sync();
+
+          if(this.userProvider.rolePermission.ROLE_xem_danh_sach_nhan_vien!=null){
+            this.employeeProvider.sync();
+          }else this.employeeProvider.updated_flag = true;
+
           this.sectionProvider.sync();
           this.houseProvider.sync();
-          this.warehouseProvider.sync();
+
+          if(this.userProvider.rolePermission.ROLE_xem_danh_sach_kho!=null){
+            this.warehouseProvider.sync();
+          }else this.warehouseProvider.updated_flag = true;
+          
+          
           this.settingProvider.sync();
-          this.sectionProvider.sync();
         }
       })
       .catch((err: any) => {
-        console.log(err);
         this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].TIMEOUT_REQUEST);
         this.rootPage = HomePage;
         setTimeout(() => {
           this.splash = false;
         }, 1000);
+        return err;
       })
   }
 
@@ -254,6 +261,8 @@ export class MyApp {
                   this.util.setKey(KEY.PERMISSIONS, data).then(() => {
                     this.userProvider.rolePermission = data;
                   });
+
+                  this.intinial_sync();
                 }
               })
               .catch((err) => {
@@ -274,7 +283,8 @@ export class MyApp {
                   this.util.setKey(KEY.PERMISSIONS, data).then(() => {
                     this.userProvider.rolePermission = data;
                   });
-                  // this.util.setKey(KEY.PERMISSIONS,)
+                  
+                  this.intinial_sync();
                 }
               })
               .catch((err) => {

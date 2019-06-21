@@ -241,16 +241,16 @@ export class SettingsPage {
         data: this.medicines_temp,
 
       },
-      priceCodes: {
-        title: 'Danh sách mã sản phẩm',
-        placeholderSearch: 'Tìm kiếm mã sản phẩm',
-        filter_default: ["name", "description"],
-        attributes: [
-          { name: "description", label: 'Mô tả' },
-        ],
-        mainAttribute: 'name',
-        data: this.settingProvider.setting.priceCodes,
-      },
+      // priceCodes: {
+      //   title: 'Danh sách mã sản phẩm',
+      //   placeholderSearch: 'Tìm kiếm mã sản phẩm',
+      //   filter_default: ["name", "description"],
+      //   attributes: [
+      //     { name: "description", label: 'Mô tả' },
+      //   ],
+      //   mainAttribute: 'name',
+      //   data: this.settingProvider.setting.priceCodes,
+      // },
       footType: {
         title: 'Danh sách loại chân',
         placeholderSearch: 'Tìm kiếm loại chân',
@@ -297,16 +297,16 @@ export class SettingsPage {
         data: this.settingProvider.setting.status,
         roleInput: new StatusPigRole(this.settingProvider,this.deployData),
       },
-      rounds: {
-        title: 'Danh sách lứa',
-        placeholderSearch: 'Tìm kiếm lứa heo',
-        filter_default: ["name", "from", "to"],
-        attributes: [
-          { name: "from", label: 'Từ ngày' },
-          { name: "from", label: 'Đến ngày' }
-        ],
-        data: this.settingProvider.setting.rounds,
-      },
+      // rounds: {
+      //   title: 'Danh sách lứa',
+      //   placeholderSearch: 'Tìm kiếm lứa heo',
+      //   filter_default: ["name", "from", "to"],
+      //   attributes: [
+      //     { name: "from", label: 'Từ ngày' },
+      //     { name: "from", label: 'Đến ngày' }
+      //   ],
+      //   data: this.settingProvider.setting.rounds,
+      // },
       regencies:{
         title: 'Danh sách chức vụ',
         placeholderSearch: 'Tìm kiếm chức vụ',
