@@ -4,15 +4,22 @@ import { customers, matingRole } from '../../common/entity';
 
 import { BreedingTypesRole } from '../../role-input/breeding_type';
 import { BreedsRole } from '../../role-input/breeds';
+import { CustomerGroupsRole } from '../../role-input/customer_group';
 import { CustomerRole } from '../../role-input/customer';
+import { CustomerTypesRole } from '../../role-input/customer_type';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { DiseasesRole } from '../../role-input/diseases';
 import { EmployeesProvider } from '../../providers/employees/employees';
+import { FarmTypesRole } from '../../role-input/farm_type';
+import { FoodTypeRole } from '../../role-input/food_type';
+import { HealthStatusRole } from '../../role-input/healthStatus';
+import { PartnersRole } from '../../role-input/partner';
 import { PregnancyStatusRole } from '../../role-input/pregnancy_status';
 import { SettingRolePage } from '../setting-role/setting-role';
 import { SettingUtilComponent } from '../../components/setting-util/setting-util';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { StatusPigRole } from '../../role-input/statusPig';
+import { WarehouseTyperole } from '../../role-input/warehouse_type';
 
 @IonicPage()
 @Component({
@@ -50,6 +57,28 @@ export class SettingsPage {
     })
 
     this.list_settings = {
+      customerTypes: {
+        title: 'Danh sách loại khách hàng',
+        placeholderSearch: 'Tìm kiếm loại khách hàng',
+        filter_default: ["name", "description"],
+        attributes: [
+          { name: "description", label: 'Mô tả' },
+        ],
+        mainAttribute: 'name',
+        data: this.settingProvider.setting.customerTypes,
+        roleInput: new CustomerTypesRole(this.settingProvider),
+      },
+      customerGroups: {
+        title: 'Danh sách nhóm khách hàng',
+        placeholderSearch: 'Tìm kiếm nhóm khách hàng',
+        filter_default: ["name", "description"],
+        attributes: [
+          { name: "description", label: 'Mô tả' },
+        ],
+        mainAttribute: 'name',
+        data: this.settingProvider.setting.customerGroups,
+        roleInput: new CustomerGroupsRole(this.settingProvider),
+      },
       customers: {
         title: 'Danh sách khách hàng',
         placeholderSearch: 'Tìm kiếm khách hàng',
@@ -83,18 +112,19 @@ export class SettingsPage {
         filter_default: ["name", "code", "manager", "address", "agencyName", "agencyAddress", "distributionName", "distributionAddress", "distributionPhone", "description"],
         attributes: [
           { name: "description", label: 'Mô tả' },
-          { name: "code", label: 'Mã đối tác' },
+          // { name: "code", label: 'Mã đối tác' },
           { name: "manager", label: 'Tên người quản lý' },
           { name: "address", label: 'Địa chỉ' },
-          { name: "agencyName", label: 'Chức vụ người quản lý' },
-          { name: "agencyAddress", label: 'Địa chỉ người quản lý' },
-          { name: "agencyPhone", label: 'Số điện thoại người quản lý' },
-          { name: "distributionName", label: 'Tên nhà phân phối' },
-          { name: "distributionAddress", label: 'Địa chỉ nhà phân phối' },
-          { name: "distributionPhone", label: 'Số điện thoại nhà phân phối' },
+          { name: "agencyName", label: 'Tên chi nhánh' },
+          { name: "agencyAddress", label: 'Địa chỉ chi nhánh' },
+          { name: "agencyPhone", label: 'Số điện thoại chi nhánh' },
+          { name: "distributionName", label: 'Tên nhà cung cấp' },
+          { name: "distributionAddress", label: 'Địa chỉ nhà cung cấp' },
+          { name: "distributionPhone", label: 'Số điện thoại nhà cung cấp' },
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.partners,
+        roleInput: new PartnersRole(this.settingProvider, this.deployData),
       },
       pregnancyStatus: {
         title: 'Trạng thái mang thai',
@@ -143,6 +173,7 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.healthStatus,
+        roleInput: new HealthStatusRole(this.settingProvider,this.deployData),
       },
       diseases: {
         title: 'Danh sách bệnh',
@@ -172,6 +203,7 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.farmTypes,
+        roleInput: new FarmTypesRole(this.settingProvider),
       },
       warehouseTypes: {
         title: 'Danh sách loại kho',
@@ -182,6 +214,7 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.warehouseTypes,
+        roleInput: new WarehouseTyperole(this.settingProvider),
       },
       foodType: {
         title: 'Danh sách loại thức ăn',
@@ -192,6 +225,7 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.foodType,
+        roleInput: new FoodTypeRole(this.settingProvider),
       },
       foodUnits: {
         title: 'Danh sách đơn vị cám',

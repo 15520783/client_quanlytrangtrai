@@ -42,7 +42,6 @@ export class TokenInterceptor implements HttpInterceptor {
         
         //intercept the respons error and displace it to the console
         console.log('Error occur', error);
-
         if (request.method === 'POST' || request.method === 'PUT' || request.method === 'DELETE') {
           if (request.url !== CONFIG.SERVER_API.concat(API.LOGIN))
             // this.util.closeLoading();
@@ -70,7 +69,7 @@ export class TokenInterceptor implements HttpInterceptor {
         else if (error.status === 403) {
           this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].PERMISSIONS_ERROR);
         }
-        else if(error.error.includes(MESSAGE[CONFIG.LANGUAGE_DEFAULT].ERROR_CHECK_REMAIN_PRODUCT_CODE)){
+        else if(MESSAGE[CONFIG.LANGUAGE_DEFAULT].ERROR_CHECK_REMAIN_PRODUCT_CODE.test(error.error)){
           this.util.showToast('Số lượng tồn kho không đủ.');
         }
         else {

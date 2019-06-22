@@ -959,19 +959,19 @@ export class DeployDataProvider {
 
   }
 
-  /**
-   * Lấy thông tin sản phẩm thông qua id
-   * @param pregnancyStatusId 
-   */
-  get_pricecode_by_id(priceCodeId) {
-    if (this.settingProvider.setting) {
-      return this.settingProvider.setting.priceCodes.filter((priceCode) => {
-        return priceCode.id == priceCodeId ? true : false;
-      })[0];
-    } else {
-      return null;
-    }
-  }
+  // /**
+  //  * Lấy thông tin sản phẩm thông qua id
+  //  * @param pregnancyStatusId 
+  //  */
+  // get_pricecode_by_id(priceCodeId) {
+  //   if (this.settingProvider.setting) {
+  //     return this.settingProvider.setting.priceCodes.filter((priceCode) => {
+  //       return priceCode.id == priceCodeId ? true : false;
+  //     })[0];
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
   /**
    * Lấy thông tin loại BPSD thông qua id
@@ -1102,7 +1102,7 @@ export class DeployDataProvider {
     pig['foot'] = this.get_foot_by_id(pig.footTypeId);
     pig['healthStatus'] = this.get_healthstatus_by_id(pig.healthStatusId);
     pig['pregnancyStatus'] = this.get_pregnancystatus_by_id(pig.pregnancyStatusId);
-    pig['priceCode'] = this.get_pricecode_by_id(pig.priceCodeId);
+    // pig['priceCode'] = this.get_pricecode_by_id(pig.priceCodeId);
     pig['gentialType'] = this.get_gentialtype_by_id(pig.gentialTypeId);
     pig['status'] = this.get_status_by_id(pig.statusId);
     pig['pigType'] = pig['pigType'] ? pig['pigType'] : VARIABLE.TYPE_PIG[0].name;

@@ -55,7 +55,6 @@ export class PigInfomationPage {
   public healthStatus = new healthStatus();
   public gentitalType = new gentialType();
   public pregnancyStatus = new pregnancyStatus();
-  public priceCode = new priceCodes();
   public foot = new footType();
   public gender: any;
   public status: any = {};
@@ -67,7 +66,6 @@ export class PigInfomationPage {
     this.healthStatus = this.deployData.get_healthstatus_by_id(this.pig.healthStatusId);
     this.gentitalType = this.deployData.get_gentialtype_by_id(this.pig.gentialTypeId);
     this.pregnancyStatus = this.deployData.get_pregnancystatus_by_id(this.pig.pregnancyStatusId);
-    this.priceCode = this.deployData.get_pricecode_by_id(this.pig.priceCodeId);
     this.status = this.deployData.get_object_list_key_of_status();
     this.foot = this.deployData.get_foot_by_id(this.pig.footTypeId);
     let parent = this.deployData.get_parent_of_pig(this.pig);

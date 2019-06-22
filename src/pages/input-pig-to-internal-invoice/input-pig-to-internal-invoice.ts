@@ -1,10 +1,11 @@
+import { Events, IonicPage, ModalController, NavController, NavParams, Platform, ViewController } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { house, pig } from '../../common/entity';
+
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, ViewController, Platform, ModalController } from 'ionic-angular';
-import { VARIABLE } from '../../common/const';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { SettingsProvider } from '../../providers/settings/settings';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
-import { pig, house } from '../../common/entity';
+import { SettingsProvider } from '../../providers/settings/settings';
+import { VARIABLE } from '../../common/const';
 
 @IonicPage()
 @Component({
@@ -185,12 +186,12 @@ export class InputPigToInternalInvoicePage {
       })
     })
 
-    this.settingProvider.setting.priceCodes.forEach((priceCode) => {
-      this.priceCodes.push({
-        name: priceCode.name,
-        value: priceCode.id
-      })
-    })
+    // this.settingProvider.setting.priceCodes.forEach((priceCode) => {
+    //   this.priceCodes.push({
+    //     name: priceCode.name,
+    //     value: priceCode.id
+    //   })
+    // })
 
     this.settingProvider.setting.status.forEach((status) => {
       this.status.push({

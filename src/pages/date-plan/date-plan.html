@@ -117,8 +117,14 @@
     </div>
   </ion-list>
 </ion-content>
-<ion-footer no-padding>
-  <ion-row>
+<ion-footer padding>
+  <ion-row *ngIf="platform.is('core')">
+    <ion-badge color="danger" style="margin:5px!important">Công việc đã quá hạn</ion-badge>
+    <ion-badge color="medium" style="margin:5px!important">Công việc chưa phân công</ion-badge>
+    <ion-badge color="main" style="margin:5px!important">Công việc đã phân công</ion-badge>
+    <ion-badge color="secondary" style="margin:5px!important">Công việc đã hoàn thành</ion-badge>
+  </ion-row>
+  <ion-row *ngIf="!platform.is('core')">
     <ion-col align-self-center col-6>
       <ion-badge color="danger" style="margin:5px!important">Công việc đã quá hạn</ion-badge>
     </ion-col>

@@ -215,13 +215,12 @@ export class PigInputPage {
       })
     })
 
-    this.settingProvider.setting.priceCodes.forEach((priceCode) => {
-      this.priceCodes.push({
-        name: priceCode.name,
-        value: priceCode.id
-      })
-    })
-
+    // this.settingProvider.setting.priceCodes.forEach((priceCode) => {
+    //   this.priceCodes.push({
+    //     name: priceCode.name,
+    //     value: priceCode.id
+    //   })
+    // })
   }
 
   farmChange(e) {

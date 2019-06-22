@@ -30,7 +30,14 @@ const SETTING_STORAGE_KEY = {
     BREEDING_TYPE: 'breedingType',
     STATUS_PIG: 'status',
     DISEASES: 'diseases',
-    CUSTOMER:'customers'
+    CUSTOMER:'customers',
+    CUSTOMER_TYPE:'customerTypes',
+    CUSTOMER_GROUP:'customerGroups',
+    PARTNER:'partners',
+    HEALTH_STATUS:'healthStatus',
+    FARM_TYPE:'farmTypes',
+    FOOD_TYPE:'foodType',
+    WAREHOUSE_TYPE:'warehouseTypes'
 }
 
 const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -303,9 +310,33 @@ const API = {
     UPDATE_EMPLOYEE: '/api/employees/',
     DELETE_EMPLOYEE: '/api/employees/',
 
+    CREATE_CUSTOMER_TYPE:'/api/customertypes/',
+    UPDATE_CUSTOMER_TYPE:'/api/customertypes/',
+    DELETE_CUSTOMER_TYPE:'/api/customertypes/',
+
+    CREATE_CUSTOMER_GROUP:'/api/customergroups/',
+    UPDATE_CUSTOMER_GROUP:'/api/customergroups/',
+    DELETE_CUSTOMER_GROUP:'/api/customergroups/',
+
     CREATE_CUSTOMER:'/api/customers/',
     UPDATE_CUSTOMER:'/api/customers/',
     DELETE_CUSTOMER:'/api/customers/',
+
+    CREATE_PARTNER:'/api/partners/',
+    UPDATE_PARTNER:'/api/partners/',
+    DELETE_PARTNER:'/api/partners/',
+
+    CREATE_FARM_TYPE:'/api/farmtypes/',
+    UPDATE_FARM_TYPE:'/api/farmtypes/',
+    DELELE_FARM_TYPE:'/api/farmtypes/',
+
+    CREATE_FOOD_TYPE:'/api/foodtype/',
+    UPDATE_FOOD_TYPE:'/api/foodtype/',
+    DELETE_FOOD_TYPE:'/api/foodtype/',
+
+    CREATE_HEALTH_STATUS:'/api/healthstatus/',
+    UPDATE_HEALTH_STATUS:'/api/healthstatus/',
+    DELETE_HEALTH_STATUS:'/api/healthstatus/',
 
     CREATE_PREGNANCY_STATUS: '/api/pregnancystatus/',
     DELETE_PREGNANCY_STATUS: '/api/pregnancystatus/',
@@ -345,15 +376,20 @@ const API = {
 
     UPDATE_SOLD_STATUS_FOR_PIGS: '/api/pigs/updatestatussold/',
 
+
     CREATE_FOOD_WAREHOUSE: '/api/foodwarehouse/',
     UPDATE_FOOD_WAREHOUSE: '/api/foodwarehouse/',
 
     CREATE_MEDICINE_WAREHOUSE: '/api/medicinewarehouse/',
     UPDATE_MEDICINE_WAREHOUSE: '/api/medicinewarehouse/',
 
-    CREATE_PIG: '/api/pigs/',
-    UPDATE_PIG: '/api/pigs/',
-    DELETE_PIG: '/api/pigs/',
+    CREATE_WAREHOUSE_TYPE: '/api/warehousetype/',
+    UPDATE_WAREHOUSE_TYPE: '/api/warehousetype/',
+    DELETE_WAREHOUSE_TYPE: '/api/warehousetype/',
+
+    CREATE_PIG: '/api/warehousetype/',
+    UPDATE_PIG: '/api/warehousetype/',
+    DELETE_PIG: '/api/warehousetype/',
 
     CREATE_BREEDING: '/api/breedings/',
     UPDATE_BREEDING: '/api/breedings/',
@@ -401,7 +437,7 @@ const MESSAGE = {
         LOADING_DATA: 'Đang tải dữ liệu',
         MAIL_UNIQUE: 'Email đăng kí đã tồn tại',
         PERMISSIONS_ERROR: 'Lỗi truy cập không được cấp quyền',
-        ERROR_CHECK_REMAIN_PRODUCT_CODE:'1432'
+        ERROR_CHECK_REMAIN_PRODUCT_CODE:/1432/
     }
 }
 

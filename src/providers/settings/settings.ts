@@ -19,20 +19,18 @@ export class setting {
   medicineType: Array<medicineType> = [];
   medicineUnits: Array<medicineUnits> = [];
   medicines: Array<medicines> = [];
-  priceCodes: Array<priceCodes> = [];
   footType: Array<footType> = [];
   gentialType: Array<gentialType> = [];
   issues: Array<issues> = [];
   regencies: Array<regencies> = [];
   roles: Array<roles> = [];
   status: Array<status> = [];
-  rounds: Array<round> = [];
   matingRoles: Array<matingRole> = [];
   warehouseTypes: Array<warehouse_type> = [];
   customers: Array<customers> = [];
   partners: Array<partners> = [];
-  customerTypes:Array<customerType> = [];
-  customerGroups:Array<customerGroups> = [];
+  customerTypes: Array<customerType> = [];
+  customerGroups: Array<customerGroups> = [];
   constructor() {
 
   }
@@ -223,34 +221,250 @@ export class SettingsProvider {
   }
 
   /**
+   * Thêm mới loại khách hàng
+   * @param objBody 
+   */
+  createNewCustomerType(objBody) {
+    return this.http.post(API.CREATE_CUSTOMER_TYPE, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Cập nhật loại khách hàng
+   * @param objBody 
+   */
+  updateCustomerType(objBody) {
+    return this.http.put(API.UPDATE_CUSTOMER_TYPE, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Xóa loại khách hàng
+   * @param objBody 
+   */
+  deleteCustomerType(objBody) {
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http.delete(API.DELETE_CUSTOMER_TYPE, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Tạo mới nhóm khách hàng
+   * @param objBody 
+   */
+  createCustomerGroup(objBody) {
+    return this.http.post(API.CREATE_CUSTOMER_GROUP, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Cập nhật nhóm khách hàng
+   * @param objBody 
+   */
+  updateCustomerGroup(objBody) {
+    return this.http.put(API.UPDATE_CUSTOMER_GROUP, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Xóa nhóm khách hàng
+   * @param objBody 
+   */
+  deleteCustomerGroup(objBody) {
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http.delete(API.DELETE_CUSTOMER_GROUP, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
    * Thêm mới khách hàng
    * @param objBody 
    */
-  createNewCustomer(objBody){
-    return this.http.post(API.CREATE_CUSTOMER,objBody)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+  createNewCustomer(objBody) {
+    return this.http.post(API.CREATE_CUSTOMER, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
   /**
    * Cập nhật khách hàng
    * @param objBody 
    */
-  updateCustomer(objBody){
-    return this.http.put(API.UPDATE_CUSTOMER,objBody)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+  updateCustomer(objBody) {
+    return this.http.put(API.UPDATE_CUSTOMER, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
   /**
    * Xóa khách hàng
    */
-  deleteCustomer(objBody){
+  deleteCustomer(objBody) {
     const options = {
       headers: new HttpHeaders(),
       body: objBody
     };
     return this.http.delete(API.DELETE_CUSTOMER, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Tạo mới đối tác
+   * @param objBody 
+   */
+  createNewPartner(objBody) {
+    return this.http.post(API.CREATE_PARTNER, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Cập nhật đối tác
+   * @param objBody 
+   */
+  updatePartner(objBody) {
+    return this.http.put(API.UPDATE_PARTNER, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Xóa đối tác
+   * @param objBody 
+   */
+  deletePartner(objBody) {
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http.delete(API.DELETE_PARTNER, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Tạo mới trạng thái sức khỏe heo
+   * @param objBody 
+   */
+  createNewHealthStatus(objBody) {
+    return this.http.post(API.CREATE_HEALTH_STATUS, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Cập nhật trạng thái sức khỏe của heo
+   * @param objBody 
+   */
+  updateHeathStatus(objBody) {
+    return this.http.put(API.UPDATE_HEALTH_STATUS, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Xóa trạng thái sức khỏe của heo
+   * @param objBody 
+   */
+  deleteHealthStatus(objBody) {
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http.delete(API.DELETE_HEALTH_STATUS, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Tạo mới loại trang trại
+   * @param objBody 
+   */
+  createNewFarmType(objBody) {
+    return this.http.post(API.CREATE_FARM_TYPE, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Cập nhật loại trang trại
+   * @param objBody 
+   */
+  updateFarmType(objBody) {
+    return this.http.put(API.UPDATE_FARM_TYPE, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Xóa loại trang trại
+   * @param objBody 
+   */
+  deleteFarmType(objBody) {
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http.delete(API.DELELE_FARM_TYPE, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+
+  createNewFoodType(objBody){
+    return this.http.post(API.CREATE_FOOD_TYPE,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  updateFoodType(objBody){
+    return this.http.put(API.CREATE_FOOD_TYPE,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  deleteFoodType(objBody){
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http.delete(API.DELETE_FOOD_TYPE, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+  
+
+  createNewWarehouseType(objBody){
+    return this.http.post(API.CREATE_WAREHOUSE_TYPE,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  updateWarehouseType(objBody){
+    return this.http.put(API.UPDATE_WAREHOUSE_TYPE,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  deleteWarehouseType(objBody){
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http.delete(API.DELETE_WAREHOUSE_TYPE, options)
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise();
   }
