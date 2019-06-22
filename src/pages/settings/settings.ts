@@ -1,8 +1,10 @@
 import { Component, Renderer, ViewChild } from '@angular/core';
 import { Events, IonicPage, NavController, NavParams, Platform, Slides } from 'ionic-angular';
+import { customers, matingRole } from '../../common/entity';
 
 import { BreedingTypesRole } from '../../role-input/breeding_type';
 import { BreedsRole } from '../../role-input/breeds';
+import { CustomerRole } from '../../role-input/customer';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { DiseasesRole } from '../../role-input/diseases';
 import { EmployeesProvider } from '../../providers/employees/employees';
@@ -11,7 +13,6 @@ import { SettingRolePage } from '../setting-role/setting-role';
 import { SettingUtilComponent } from '../../components/setting-util/setting-util';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { StatusPigRole } from '../../role-input/statusPig';
-import { matingRole } from '../../common/entity';
 
 @IonicPage()
 @Component({
@@ -36,7 +37,7 @@ export class SettingsPage {
     public renderer: Renderer,
     public settingProvider: SettingsProvider,
     public platform: Platform,
-    public deployData:DeployDataProvider
+    public deployData: DeployDataProvider
   ) {
     this.settingProvider.setting.foods.forEach((food, idx) => {
       this.foods_temp.push(food);
@@ -52,8 +53,10 @@ export class SettingsPage {
       customers: {
         title: 'Danh sách khách hàng',
         placeholderSearch: 'Tìm kiếm khách hàng',
-        filter_default: ["name","phone","email","address","companyAddress","fax","bank","description"],
+        filter_default: ["name","typeName","groupName", "phone", "email", "address", "companyAddress", "fax", "bank", "description"],
         attributes: [
+          { name: "typeName", label: 'Loại khách hàng' },
+          { name: "groupName", label: 'Nhóm khách hàng' },
           { name: "phone", label: 'Số điện thoại' },
           { name: "email", label: 'Email' },
           { name: "address", label: 'Địa chỉ' },
@@ -64,11 +67,20 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.customers,
+        roleInput: new CustomerRole(this.settingProvider, this.deployData),
+        customData(customerRole: Array<customers>) {
+          customerRole.forEach((role) => {
+            role['typeId'] = role.type?role.type.id:'';
+            role['groupId'] = role.type?role.group.id:'';
+            role['typeName'] = role.type?role.type.name:'';
+            role['groupName'] = role.group?role.group.name:'';
+          })
+        }
       },
       partners: {
         title: 'Danh sách đối tác',
         placeholderSearch: 'Tìm kiếm đối tác',
-        filter_default: ["name","code","manager","address","agencyName","agencyAddress","distributionName","distributionAddress","distributionPhone","description"],
+        filter_default: ["name", "code", "manager", "address", "agencyName", "agencyAddress", "distributionName", "distributionAddress", "distributionPhone", "description"],
         attributes: [
           { name: "description", label: 'Mô tả' },
           { name: "code", label: 'Mã đối tác' },
@@ -147,8 +159,8 @@ export class SettingsPage {
         mainAttribute: 'name',
         data: this.settingProvider.setting.diseases,
         roleInput: new DiseasesRole(this.settingProvider),
-        extraButtons:[
-          {title:'Thiết lập lâm sàng',color:'main',component:null}
+        extraButtons: [
+          { title: 'Thiết lập lâm sàng', color: 'main', component: null }
         ]
       },
       farmTypes: {
@@ -295,7 +307,7 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.status,
-        roleInput: new StatusPigRole(this.settingProvider,this.deployData),
+        roleInput: new StatusPigRole(this.settingProvider, this.deployData),
       },
       // rounds: {
       //   title: 'Danh sách lứa',
@@ -307,7 +319,7 @@ export class SettingsPage {
       //   ],
       //   data: this.settingProvider.setting.rounds,
       // },
-      regencies:{
+      regencies: {
         title: 'Danh sách chức vụ',
         placeholderSearch: 'Tìm kiếm chức vụ',
         filter_default: ["name", "description"],
@@ -326,12 +338,12 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.roles,
-        extraButtons:[
-          { 
-            title:'Thiết lập phân quyền',
-            color:'main',
-            handler(nav:NavController,data){
-              nav.push(SettingRolePage,data);
+        extraButtons: [
+          {
+            title: 'Thiết lập phân quyền',
+            color: 'main',
+            handler(nav: NavController, data) {
+              nav.push(SettingRolePage, data);
             }
           }
         ]
@@ -339,7 +351,7 @@ export class SettingsPage {
       matingRole: {
         title: 'Danh sách luật phối',
         placeholderSearch: 'Tìm kiếm luật phối',
-        filter_default: ["fatherBreedName", "motherBreedName","childBreedName","birthStatusEstimate"],
+        filter_default: ["fatherBreedName", "motherBreedName", "childBreedName", "birthStatusEstimate"],
         attributes: [
           { name: "fatherBreedName", label: 'Giống đực' },
           { name: "motherBreedName", label: 'Giống cái' },
@@ -347,12 +359,12 @@ export class SettingsPage {
           { name: "birthStatusEstimate", label: 'Trạng thái sinh dự kiến' },
         ],
         mainAttribute: 'name',
-        data: this.settingProvider.setting.matingRoles ,
-        customData(matingRoles:Array<matingRole>) {
-            matingRoles.forEach((role)=>{
+        data: this.settingProvider.setting.matingRoles,
+        customData(matingRoles: Array<matingRole>) {
+          matingRoles.forEach((role) => {
             role['fatherBreedName'] = role.father.name.concat('-').concat(role.father.symbol);
             role['motherBreedName'] = role.mother.name.concat('-').concat(role.mother.symbol);
-            role['childBreedName' ]  = role.child.name.concat('-').concat(role.child.symbol);
+            role['childBreedName'] = role.child.name.concat('-').concat(role.child.symbol);
           })
         }
       },

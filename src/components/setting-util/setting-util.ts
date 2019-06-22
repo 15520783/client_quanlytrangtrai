@@ -141,6 +141,7 @@ export class SettingUtilComponent {
     let callback = data => {
       if (data) {
         this.data = data;
+        this.options.hasOwnProperty('customData') ? this.options.customData(this.data) : null;
         this.setFilteredItems();
         this.roleInput.clear();
         this.navCtrl.pop();
@@ -168,6 +169,7 @@ export class SettingUtilComponent {
               this.util.setKey(KEY.SETTINGS, setting).then(() => {
                 this.settingProvider.setting = setting;
                 this.data = setting[this.roleInput.keySettingStorage];
+                this.options.hasOwnProperty('customData') ? this.options.customData(this.data) : null;
                 this.setFilteredItems();
               })
             }

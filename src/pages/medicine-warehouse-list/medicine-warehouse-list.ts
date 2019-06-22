@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, Platform } from 'ionic-angular';
-import { FormControl } from '@angular/forms';
-import { medicineWarehouse } from '../../common/entity';
+import { IonicPage, NavController, NavParams, Platform, ViewController } from 'ionic-angular';
+
 import { CONFIG } from '../../common/const';
+import { Component } from '@angular/core';
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { FilterProvider } from '../../providers/filter/filter';
+import { FormControl } from '@angular/forms';
 import { Utils } from '../../common/utils';
+import { medicineWarehouse } from '../../common/entity';
 
 @IonicPage()
 @Component({
@@ -31,7 +33,7 @@ export class MedicineWarehouseListPage {
     { name: "unitName", label: 'Đơn vị' },
     { name: "total", label: 'total' },
     { name: "used", label: 'used' },
-    { name: "remain", label: 'remain' },
+    { name: "remainDisplay", label: 'Tồn kho' },
     { name: "manufacturer", label: 'Nhà sản xuất' },
     { name: "ImportDisplay", label: 'Ngày nhập' },
     { name: "mfgDateDisplay", label: 'Ngày sản xuất' },
@@ -39,7 +41,7 @@ export class MedicineWarehouseListPage {
   ];
 
   public placeholderSearch: string = 'Tìm kiếm bệnh'
-  public filter_default: Array<string> = ["warehouseName", "medicineTypeName", "medicineName", "invoiceNo"];
+  public filter_default: Array<string> = ["warehouseName", "medicineTypeName", "medicineName", "invoiceNo", "remainDisplay"];
 
   public page_Idx: number = 1;
   public page_Total: number = 0;
@@ -49,6 +51,7 @@ export class MedicineWarehouseListPage {
   protected searchTerm: string = '';
 
   public visible_items: Array<any> = [];
+  public units: any = {};
 
   constructor(
     public navCtrl: NavController,
@@ -56,7 +59,8 @@ export class MedicineWarehouseListPage {
     public filterProvider: FilterProvider,
     public viewCtrl: ViewController,
     public util: Utils,
-    public platform:Platform
+    public platform: Platform,
+    public deployData: DeployDataProvider
   ) {
     if (this.navParams.data.selectMode) {
       this.isSelectMode = true;
@@ -64,6 +68,7 @@ export class MedicineWarehouseListPage {
     if (this.navParams.data.medicineWarehouses) {
       this.medicineWarehouses = this.navParams.data.medicineWarehouses;
     }
+    this.units = this.deployData.get_object_list_key_of_medicineUnit();
   }
 
 
@@ -74,7 +79,6 @@ export class MedicineWarehouseListPage {
   public setFilteredItems() {
     setTimeout(() => {
       this.rows = this.filterItems(this.searchTerm);
-      console.log(this.filterItems(this.searchTerm));
       this.page_Total = this.rows.length % CONFIG.PAGE_SITE === 0 ? parseInt(this.rows.length / CONFIG.PAGE_SITE + '') : parseInt(this.rows.length / CONFIG.PAGE_SITE + 1 + '');
       this.page_Idx = 1;
       this.visible_items = this.rows.slice(0, CONFIG.PAGE_SITE);
@@ -94,6 +98,8 @@ export class MedicineWarehouseListPage {
       element['ImportDisplay'] = this.util.convertDate(element.invoice.importDate);
       element['mfgDateDisplay'] = this.util.convertDate(element.mfgDate);
       element['expiryDateDisplay'] = this.util.convertDate(element.expiryDate);
+      // element['remainDisplay'] = (parseInt(element.remain) * parseInt(element.unit.quantity)) + ' ' + this.units[element.unit.baseUnit].name;
+      element['remainDisplay'] = this.deployData.show_quantity_remain_medicine(parseFloat(element.remain),element.unit);
     })
     this.filterProvider.input = this.medicineWarehouses;
     this.filterProvider.searchText = searchItem;

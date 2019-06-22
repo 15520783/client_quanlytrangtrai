@@ -1,4 +1,4 @@
-import { API, CONFIG, KEY } from '../../common/const';
+import { API, CONFIG, KEY, VARIABLE } from '../../common/const';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Events } from 'ionic-angular';
@@ -76,6 +76,11 @@ export class PigsProvider {
       .get(API.GET_ALL_PIGS)
       .timeout(CONFIG.DEFAULT_TIMEOUT).toPromise()
       .then((data: Array<pig>) => {
+        console.log(data.length);
+        data = data.filter((pig:pig)=>{
+          return pig.statusId != '18' ? true:false;
+        })
+        console.log(data.length);
         this.pigs = data;
         if (data.length) {
           this.util.setKey(KEY.PIGS, data)

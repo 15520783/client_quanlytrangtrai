@@ -203,8 +203,8 @@ export class IssuePigListPage {
   getAllIssuePigs() {
     this.util.openBackDrop();
     return this.activitiesProvider.getIssuePigOfFarms()
-      .then((issues) => {
-        if (issues) {
+      .then((issues:Array<issuesPigs>) => {
+        if (issues && issues.length) {
           this.issuesPigList = issues;
           this.issue_groupBySection = this.util.groupBy(this.issuesPigList, issue => issue.pig.house.section.id);
         }
@@ -212,6 +212,7 @@ export class IssuePigListPage {
         return issues;
       })
       .catch((err) => {
+        this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].ERROR_OCCUR)
         this.util.closeBackDrop();
         console.log(err);
       })

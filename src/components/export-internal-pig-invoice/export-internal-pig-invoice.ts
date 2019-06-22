@@ -31,7 +31,7 @@ export class ExportInternalPigInvoiceComponent {
   public attributes = [
     { name: "sourceName", label: 'Nguồn cung cấp' },
     { name: "destinationName", label: 'Nơi nhận' },
-    { name: "exportDateDisplay", label: 'Ngày nhập' },
+    { name: "exportDateDisplay", label: 'Ngày xuất' },
     { name: "quantity", label: 'Tổng số heo' },
     { name: "totalWeight", label: 'Tổng trọng lượng' },
     { name: "statusName", label: 'Trạng thái', usingBadge: true },
@@ -72,7 +72,7 @@ export class ExportInternalPigInvoiceComponent {
     this.sourceFilter = this.deployData.get_farm_list_for_select();
     this.destinationFilter = this.deployData.get_all_farm_for_select();
 
-    this.roleInput = new ExportInternalPigInvoiceRole(this.deployData, this.invoiceProvider);
+    this.roleInput = new ExportInternalPigInvoiceRole(this.deployData,this.userProvider,this.invoiceProvider);
     this.farms_util = this.deployData.get_object_list_key_of_farm();
 
     this.events.subscribe('invoicesReload', () => {
@@ -138,7 +138,7 @@ export class ExportInternalPigInvoiceComponent {
 
     this.filterProvider.searchWithRange = {}
     return this.filterProvider.filter().sort((a: invoicesPig, b: invoicesPig) =>
-      (new Date(a.importDate) > new Date(b.importDate)) ? -1 : 1
+      (new Date(a.exportDate) > new Date(b.exportDate)) ? -1 : 1
     );
   }
 

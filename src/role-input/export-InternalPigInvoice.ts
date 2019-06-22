@@ -1,5 +1,6 @@
 import { DeployDataProvider } from "../providers/deploy-data/deploy-data";
 import { InvoicesProvider } from "../providers/invoices/invoices";
+import { UserProvider } from "../providers/user/user";
 import { VARIABLE } from "../common/const";
 import { invoicesPig } from "../common/entity";
 
@@ -16,6 +17,7 @@ export class ExportInternalPigInvoiceRole {
 
     constructor(
         public deployData: DeployDataProvider,
+        public userProvider:UserProvider,
         public invoiceProvider: InvoicesProvider,
     ) {
         this.object.invoiceNo = VARIABLE.GENERNAL_INVOICE_ID.INTERNAL_EXPORT + Date.now();
@@ -66,7 +68,7 @@ export class ExportInternalPigInvoiceRole {
                 name: 'invoiceNo',
                 label: 'Số chứng từ',
                 placeholder: 'Nhập số chứng từ',
-                isRequire: true,
+                isRequire: false,
                 isMaxlength: true,
                 isMailFormat: false,
                 isNumber: false,
@@ -78,7 +80,7 @@ export class ExportInternalPigInvoiceRole {
                     isMaxlength: 'Số chứng từ không được vượt quá 1000 ký tự'
                 },
                 type: "input-text",
-                value: VARIABLE.GENERNAL_INVOICE_ID.INTERNAL_EXPORT + Date.now(),
+                value: this.object.invoiceNo,
                 notEdit: true
             },
             {
@@ -145,6 +147,7 @@ export class ExportInternalPigInvoiceRole {
     }
 
     insert() {
+        this.object.employee = this.userProvider.user;
         this.object.invoiceType = VARIABLE.INVOICE_PIG_TYPE.INTERNAL_EXPORT;
         this.object.status = VARIABLE.INVOICE_STATUS.PROCCESSING;
         let source = this.deployData.get_farm_by_id(this.object.sourceId);

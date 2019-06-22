@@ -140,7 +140,7 @@ export class FoodInvoiceDetailPage {
       }
     }
 
-    let roleInput = new FoodInvoiceRole(this.deployData, this.invoiceProvider);
+    let roleInput = new FoodInvoiceRole(this.deployData,this.userProvider, this.invoiceProvider);
     roleInput.object = this.util.deepClone(this.invoice);
     roleInput.object.sourceId = roleInput.object.source.id;
     roleInput.object.destinationId = roleInput.object.destination.id;

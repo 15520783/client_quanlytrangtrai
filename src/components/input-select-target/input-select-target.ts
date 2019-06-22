@@ -109,16 +109,13 @@ export class InputSelectTargetComponent {
     //Add 'implements AfterViewInit' to the class.
     switch (this.targertCmp) {
       case "medicineWarehouses": {
-
         this.event.subscribe('input-select-target:medicineWarehouses', (event) => {
-          console.log('TEST');
           this.value = this.validControl.value;
           this.value_visible = (this.validControl.value && this.value.medicine.name) ?
             this.value.medicine.name + ' - Kho: ' + this.value.warehouse.name + ' - Chứng từ: ' + this.value.invoice.invoiceNo : '';
         })
         break;
       }
-
       default:
         break;
     }
@@ -255,7 +252,6 @@ export class InputSelectTargetComponent {
 
         case 'medicineWarehouses':
           if (this.data) {
-            console.log(this.data);
             modal = this.modalCtrl.create(MedicineWarehouseListPage,
               {
                 medicineWarehouses: this.data,

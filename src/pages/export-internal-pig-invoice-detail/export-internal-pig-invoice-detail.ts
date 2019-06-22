@@ -113,7 +113,7 @@ export class ExportInternalPigInvoiceDetailPage {
       }
     }
 
-    let roleInput = new ExportInternalPigInvoiceRole(this.deployData, this.invoiceProvider);
+    let roleInput = new ExportInternalPigInvoiceRole(this.deployData,this.userProvider, this.invoiceProvider);
     roleInput.object = this.util.deepClone(this.invoice);
     roleInput.object.importDate = new Date(roleInput.object.importDate).toISOString();
     this.navCtrl.push(InvoiceInputUtilComponent,

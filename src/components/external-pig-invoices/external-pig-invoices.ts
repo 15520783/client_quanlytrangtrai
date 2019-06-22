@@ -71,7 +71,7 @@ export class ExternalPigInvoicesComponent {
       this.invoices = this.navParams.data.invoice;
       this.setFilteredItems();
     }
-    this.roleInput = new ExternalPigInvoiceRole(this.deployData, this.invoiceProvider);
+    this.roleInput = new ExternalPigInvoiceRole(this.deployData,this.userProvider, this.invoiceProvider);
     this.sourceFilter = this.deployData.get_partner_list_for_select();
     this.destinationFilter = this.deployData.get_farm_list_for_select();
 

@@ -66,7 +66,7 @@ export class FoodInvoicesComponent {
       this.invoices = this.navParams.data.invoice;
       this.setFilteredItems();
     }
-    this.roleInput = new FoodInvoiceRole(this.deployData, this.invoiceProvider);
+    this.roleInput = new FoodInvoiceRole(this.deployData, this.userProvider, this.invoiceProvider);
     this.events.subscribe('invoicesReload', () => {
       this.setFilteredItems();
     })
@@ -125,7 +125,9 @@ export class FoodInvoicesComponent {
     this.filterProvider.searchWithText = this.filter_default;
 
     this.filterProvider.searchWithRange = {}
-    return this.filterProvider.filter();
+    return this.filterProvider.filter().sort((a: invoicesProduct, b: invoicesProduct) =>
+      (new Date(a.importDate) > new Date(b.importDate)) ? -1 : 1
+    );
   }
 
   loadData(infiniteScroll) {
@@ -140,22 +142,33 @@ export class FoodInvoicesComponent {
   }
 
   add() {
-    this.roleInput.clear();
-    this.navCtrl.push(InvoiceInputUtilComponent,
-      {
-        insertMode: true,
-        roleInput: this.roleInput
-      }
-    )
-
-    this.events.unsubscribe('callback');
-    this.events.subscribe('callback', (data) => {
+    let callback = data => {
       if (data) {
         this.invoices.push(data);
         this.setFilteredItems();
-        this.events.unsubscribe('callback');
+        this.navCtrl.pop();
       }
-    })
+    }
+
+    this.roleInput.clear();
+    this.roleInput.object.invoiceNo = VARIABLE.GENERNAL_INVOICE_ID.FOOD_IMPORT + Date.now();
+
+    this.navCtrl.push(InvoiceInputUtilComponent,
+      {
+        insertMode: true,
+        roleInput: this.roleInput,
+        callback: callback
+      }
+    )
+
+    // this.events.unsubscribe('callback');
+    // this.events.subscribe('callback', (data) => {
+    //   if (data) {
+    //     this.invoices.push(data);
+    //     this.setFilteredItems();
+    //     this.events.unsubscribe('callback');
+    //   }
+    // })
   }
 
   input_food(item) {

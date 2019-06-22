@@ -29,7 +29,8 @@ const SETTING_STORAGE_KEY = {
     BREEDS: 'breeds',
     BREEDING_TYPE: 'breedingType',
     STATUS_PIG: 'status',
-    DISEASES: 'diseases'
+    DISEASES: 'diseases',
+    CUSTOMER:'customers'
 }
 
 const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -37,7 +38,7 @@ const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".
 const CONFIG = {
     // SERVER_API: 'http://192.168.0.36:3000',
     // SERVER_API: 'https://quanlytrangtrai-uit.herokuapp.com',
-    SERVER_API: 'https://quanlytrangtrai-uit-us.herokuapp.com',
+    SERVER_API: 'https://quanlytrangtrai-uit-eu.herokuapp.com',
     // SERVER_API: 'http://192.168.1.48:8080',
     // SERVER_API: 'http://10.10.121.34:8080',
     DEFAULT_TIMEOUT: 30000,
@@ -146,6 +147,8 @@ const VARIABLE = {
         EXTERNAL_IMPORT: 'EXT-IMP',
         INTERNAL_EXPORT: 'INT-EX',
         SALING_EXPORT: 'SAL-EX',
+        FOOD_IMPORT:'FOOD_IMP',
+        MEDICINE_IMPORT:'MEDICINE_IMP'
     },
     MENU_FIELDS: {
         CHUC_VU_NGUOI_DUNG: {
@@ -300,6 +303,10 @@ const API = {
     UPDATE_EMPLOYEE: '/api/employees/',
     DELETE_EMPLOYEE: '/api/employees/',
 
+    CREATE_CUSTOMER:'/api/customers/',
+    UPDATE_CUSTOMER:'/api/customers/',
+    DELETE_CUSTOMER:'/api/customers/',
+
     CREATE_PREGNANCY_STATUS: '/api/pregnancystatus/',
     DELETE_PREGNANCY_STATUS: '/api/pregnancystatus/',
     UPDATE_PREGNANCY_STATUS: '/api/pregnancystatus/',
@@ -392,7 +399,9 @@ const MESSAGE = {
         UPDATE_SUCCESS: 'Dữ liệu cập nhật thành công.',
         UPDATE_FAILED: 'Dữ liệu cập nhật thất bại. Vui lòng thử lại.',
         LOADING_DATA: 'Đang tải dữ liệu',
-        MAIL_UNIQUE: 'Email đăng kí đã tồn tại'
+        MAIL_UNIQUE: 'Email đăng kí đã tồn tại',
+        PERMISSIONS_ERROR: 'Lỗi truy cập không được cấp quyền',
+        ERROR_CHECK_REMAIN_PRODUCT_CODE:'1432'
     }
 }
 

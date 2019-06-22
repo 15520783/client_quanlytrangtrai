@@ -103,9 +103,9 @@ export class PigsPage {
             .then(() => {
               this.pigProvider.pigs = data;
               this.setFilteredItems();
-              this.util.closeBackDrop();
             })
         }
+        this.util.closeBackDrop();
       })
       .catch((err) => {
         console.log('err_pig_provider', err);

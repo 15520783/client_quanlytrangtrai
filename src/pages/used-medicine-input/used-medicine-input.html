@@ -85,7 +85,8 @@
                       [placeholder]="'Chọn nguồn thuốc từ kho'" 
                       [errorMessage_Required]="'Nguồn lấy thuốc là hạng mục bắt buộc'" 
                       [label]="'Nguồn thuốc'" [(data)]="usedMedicine.medicineWarehouseList"
-                      [targertCmp]="'medicineWarehouses'">
+                      [targertCmp]="'medicineWarehouses'"
+                      (valueChange)="changeMedicineWarehouse($event,usedMedicine)">
                     </input-select-target>
 
                     <input-select 
@@ -93,7 +94,7 @@
                       [errorMessage_Required]  ="'Đơn vị là hạng mục bắt buộc.'"
                       [active]= "submitAttempt"
                       [placeholder]="'Chọn đơn vị'"
-                      [(data)]="unit">
+                      [(data)]="usedMedicine.unitsData">
                     </input-select>
 
                     <input-text 
@@ -168,7 +169,7 @@
               [label]="'Chọn thuốc'" [(data)]="medicines"
               [errorMessage_Required]="'Thuốc là hạng mục bắt buộc'" 
               [targertCmp]="'medicines'"
-              (valueChange)="medicineChange($event,usedMedicine,idx)">
+              (valueChange)="medicineChange(farmId,$event,usedMedicine,idx)">
             </input-select-target>
   
             <input-select-target 
@@ -177,7 +178,8 @@
               [placeholder]="'Chọn nguồn thuốc từ kho'" 
               [errorMessage_Required]="'Nguồn lấy thuốc là hạng mục bắt buộc'" 
               [label]="'Nguồn thuốc'" [(data)]="usedMedicine.medicineWarehouseList"
-              [targertCmp]="'medicineWarehouses'">
+              [targertCmp]="'medicineWarehouses'"
+              (valueChange)="medicineWarehouseChange($event,usedMedicine)">
             </input-select-target>
   
             <input-select 
@@ -185,7 +187,7 @@
               [errorMessage_Required]  ="'Đơn vị là hạng mục bắt buộc.'"
               [active]= "submitAttempt"
               [placeholder]="'Chọn đơn vị'"
-              [(data)]="unit">
+              [(data)]="usedMedicine.unitsData">
             </input-select>
   
             <input-text 

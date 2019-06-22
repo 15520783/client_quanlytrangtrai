@@ -283,7 +283,7 @@ export const firebaseConfig = {
     IonicModule.forRoot(MyApp, {
       menuType: 'push',
       tabsPlacement: 'top',
-      iconMode: 'ios',
+      iconMode: 'ios',  
       activator: 'ripple'
     }),
     FullCalendarModule,
@@ -307,7 +307,6 @@ export const firebaseConfig = {
     SplashScreen,
     HeaderColor,
     BarcodeScanner,
-    // { provide: ErrorHandler, useClass: IonicErrorHandler },
     { provide: ErrorHandler, useClass: MyErrorHandler },
     {
       provide: HTTP_INTERCEPTORS,

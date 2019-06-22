@@ -1,6 +1,7 @@
+import { Events, NavController, NavParams } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NavController, NavParams, Events } from 'ionic-angular';
 import { Utils } from '../../common/utils';
 import { ValidateEmail } from '../../validators/email.validator';
 import { ValidateNumber } from '../../validators/number.validator';
@@ -49,12 +50,12 @@ export class InvoiceInputUtilComponent {
 
     this.credentialsForm = this.formBuilder.group(this.groupFormBuild);
 
-    this.navParams.data.roleInput.inputRole.forEach(e => {
-      if (e.notEdit) {
-        this.credentialsForm.controls[e.name].disable();
-        this.credentialsForm.controls[e.name].setErrors(null);
-      }
-    })
+    // this.navParams.data.roleInput.inputRole.forEach(e => {
+    //   if (e.notEdit) {
+    //     this.credentialsForm.controls[e.name].disable();
+    //     this.credentialsForm.controls[e.name].setErrors(null);
+    //   }
+    // })
   }
 
   ngAfterContentInit(): void {

@@ -13,7 +13,7 @@ export class InternalPigInvoiceRole {
         updateMode: 'Cập nhật thông tin chứng từ nhập heo trong hệ thống'
     }
 
-    public inputRole: Array<InputObject>;
+    public inputRole: Array<any>;
 
 
     constructor(
@@ -58,7 +58,8 @@ export class InternalPigInvoiceRole {
                 },
                 type: "input-text",
                 value: this.object.invoiceNo,
-                data: [{ name: "Chọn đơn vị nguồn", value: "" }]
+                data: [{ name: "Chọn đơn vị nguồn", value: "" }],
+                notEdit:true
             },
             {
                 name: 'vehicleNumber',

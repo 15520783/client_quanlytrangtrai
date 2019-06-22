@@ -59,7 +59,8 @@ export class ImportInternalPigInvoiceInputPage {
       destinationId: [this.invoice.destinationId, Validators.compose([Validators.required])],
       sectionId: this.editMode ? null : [this.sectionId, Validators.compose([Validators.required])],
       houseId: this.editMode ? null : [this.houseId, Validators.compose([Validators.required])],
-      status: VARIABLE.INVOICE_STATUS.PROCCESSING
+      status: VARIABLE.INVOICE_STATUS.PROCCESSING,
+      employee:this.userProvider.user
     });
 
     if (this.navParams.data.editMode) {

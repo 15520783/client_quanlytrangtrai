@@ -463,8 +463,10 @@ class customerGroups extends base {
 
 class customers extends base {
 	type: customerType = new customerType();
+	typeId:string = '';
 	group: customerGroups = new customerGroups();
-	farmId: string = ''; // bỏ
+	groupId:string = '';
+	// farmId: string = ''; // bỏ
 	name: string = '';
 	phone: string = '';
 	email: string = '';

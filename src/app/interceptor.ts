@@ -39,6 +39,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
     return next.handle(request).pipe(
       tap(event => { }, error => {
+        
         //intercept the respons error and displace it to the console
         console.log('Error occur', error);
 
@@ -48,6 +49,7 @@ export class TokenInterceptor implements HttpInterceptor {
             this.util.closeBackDrop();
         }
 
+        
         if (error.status === 401) {
           if (request.url === CONFIG.SERVER_API.concat(API.LOGIN)) {
             this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].LOGIN_INVALID);
@@ -62,20 +64,15 @@ export class TokenInterceptor implements HttpInterceptor {
             this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].SESSIONS_NOT_EXPIRE);
           }
         }
-        else if (error.error.message.includes(ERROR_NAME.ERROR_UNIQUE_MAIL)) {
+        else if (error.error && error.error.message && error.error.message.includes(ERROR_NAME.ERROR_UNIQUE_MAIL)) {
           this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].MAIL_UNIQUE);
         }
-        // else if (error.status === 403) {
-        //   Object.keys(PERMISSIONS).forEach((key) => {
-        //     Object.keys(PERMISSIONS[key]).forEach((codeName) => {
-        //       if ((request.url).includes(PERMISSIONS[key][codeName]['api'])) {
-        //         console.log(PERMISSIONS[key][codeName]['api']);
-        //         this.util.showToast('Không có quyền ' + PERMISSIONS[key][codeName].name);
-        //         return error;
-        //       }
-        //     })
-        //   })
-        // }
+        else if (error.status === 403) {
+          this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].PERMISSIONS_ERROR);
+        }
+        else if(error.error.includes(MESSAGE[CONFIG.LANGUAGE_DEFAULT].ERROR_CHECK_REMAIN_PRODUCT_CODE)){
+          this.util.showToast('Số lượng tồn kho không đủ.');
+        }
         else {
           this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].ERROR_OCCUR);
         }

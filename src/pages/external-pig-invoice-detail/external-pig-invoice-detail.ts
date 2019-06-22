@@ -192,7 +192,7 @@ export class ExternalPigInvoiceDetailPage {
       }
     }
 
-    let roleInput = new ExternalPigInvoiceRole(this.deployData, this.invoiceProvider);
+    let roleInput = new ExternalPigInvoiceRole(this.deployData,this.userProvider, this.invoiceProvider);
     roleInput.object = this.util.deepClone(this.invoice);
     roleInput.object.importDate = new Date(roleInput.object.importDate).toISOString();
     this.navCtrl.push(InvoiceInputUtilComponent,

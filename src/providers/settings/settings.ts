@@ -1,6 +1,6 @@
 import { API, CONFIG, KEY } from '../../common/const';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { breedingType, breeds, customers, diseases, farmTypes, foodType, foodUnits, foods, footType, gentialType, healthStatus, issues, markTypes, matingRole, medicineType, medicineUnits, medicines, partners, permission, pregnancyStatus, priceCodes, regencies, rolepermission, roles, round, section, status, warehouse_type } from '../../common/entity';
+import { breedingType, breeds, customerGroups, customerType, customers, diseases, farmTypes, foodType, foodUnits, foods, footType, gentialType, healthStatus, issues, markTypes, matingRole, medicineType, medicineUnits, medicines, partners, permission, pregnancyStatus, priceCodes, regencies, rolepermission, roles, round, section, status, warehouse_type } from '../../common/entity';
 
 import { Events } from 'ionic-angular';
 import { Injectable } from '@angular/core';
@@ -31,6 +31,8 @@ export class setting {
   warehouseTypes: Array<warehouse_type> = [];
   customers: Array<customers> = [];
   partners: Array<partners> = [];
+  customerTypes:Array<customerType> = [];
+  customerGroups:Array<customerGroups> = [];
   constructor() {
 
   }
@@ -220,6 +222,38 @@ export class SettingsProvider {
       .toPromise();
   }
 
+  /**
+   * Thêm mới khách hàng
+   * @param objBody 
+   */
+  createNewCustomer(objBody){
+    return this.http.post(API.CREATE_CUSTOMER,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  /**
+   * Cập nhật khách hàng
+   * @param objBody 
+   */
+  updateCustomer(objBody){
+    return this.http.put(API.UPDATE_CUSTOMER,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  /**
+   * Xóa khách hàng
+   */
+  deleteCustomer(objBody){
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http.delete(API.DELETE_CUSTOMER, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
 
   /**
    * Lấy danh sách gợi ý bệnh

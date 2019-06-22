@@ -1,16 +1,16 @@
+import { CONFIG, KEY, MESSAGE } from '../../common/const';
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, ModalController, Events, Menu, Content, MenuController } from 'ionic-angular';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { employee, diseases, usedMedicine, issues, medicines, medicineWarehouse } from '../../common/entity';
-import { Utils } from '../../common/utils';
-import { SettingsProvider } from '../../providers/settings/settings';
-import { MESSAGE, CONFIG, KEY } from '../../common/const';
-import { DiseaseListPage } from '../disease-list/disease-list';
-import { WarehousesProvider } from '../../providers/warehouses/warehouses';
-import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
-import { ValidateNumber } from '../../validators/number.validator';
-import { ActivitiesProvider } from '../../providers/activities/activities';
+import { Content, Events, IonicPage, Menu, MenuController, ModalController, NavController, NavParams, Platform } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { diseases, employee, issues, medicineUnits, medicineWarehouse, medicines, usedMedicine } from '../../common/entity';
 
+import { ActivitiesProvider } from '../../providers/activities/activities';
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { DiseaseListPage } from '../disease-list/disease-list';
+import { SettingsProvider } from '../../providers/settings/settings';
+import { Utils } from '../../common/utils';
+import { ValidateNumber } from '../../validators/number.validator';
+import { WarehousesProvider } from '../../providers/warehouses/warehouses';
 
 @IonicPage()
 @Component({
@@ -101,6 +101,7 @@ export class UsedMedicineInputPage {
 
     this.usedMedicineList.forEach((e, idx) => {
       e['medicineWarehouseList'] = [];
+      e['unitsData'] = [];
       this.credentialsForm2.addControl('medicine' + idx, this.formBuilder.control(e.medicine, Validators.compose([Validators.required])));
       this.credentialsForm2.addControl('medicineWarehouse' + idx, this.formBuilder.control(e.medicineWarehouse, Validators.compose([Validators.required])));
       this.credentialsForm2.addControl('unit' + idx, this.formBuilder.control(e.unit, Validators.compose([Validators.required])));
@@ -199,6 +200,7 @@ export class UsedMedicineInputPage {
       this.warehouseProvider.getMedicineWarehouseOfMedicine(farmId, medicine.id)
         .then((medicineWarehouses: Array<medicineWarehouse>) => {
           if (medicineWarehouses) {
+            item['unitsData'] = [];
             item['medicineWarehouseList'] = medicineWarehouses;
             this.credentialsForm2.controls['medicineWarehouse' + idx].setValue(null);
             this.credentialsForm2.controls['unit' + idx].setValue(null);
@@ -212,6 +214,12 @@ export class UsedMedicineInputPage {
           this.util.closeBackDrop();
         })
     }
+  }
+
+  changeMedicineWarehouse(medicineWarehouse: medicineWarehouse, item) {
+    item.unitsData = this.deployData.get_medicineUnit_list_for_select().filter((unit: medicineUnits) => {
+      return unit.baseUnit == medicineWarehouse.unit.baseUnit ? true : false;
+    })
   }
 
   add_usedMedicine() {
@@ -228,6 +236,7 @@ export class UsedMedicineInputPage {
   remove_usedMedicine(idx) {
     // this.issuesList.splice(idx, 1);
     // this.credentialsForm2.value['issueId' + idx].setValue('');
+
     this.credentialsForm2.removeControl('medicine' + idx);
     this.credentialsForm2.removeControl('medicineWarehouse' + idx);
     this.credentialsForm2.removeControl('unit' + idx);
@@ -261,36 +270,68 @@ export class UsedMedicineInputPage {
           used_medicine.quantity) ? true : false;
       })
 
-      let param = {
-        disease: this.disease,
-        date: this.date,
-        employee: this.employee,
-        description: this.description
+      /**
+       * Check quantity remain in medicineWarehouse
+       */
+      let MedicineWarehouse: Array<medicineWarehouse> = [];
+      this.usedMedicineList.forEach((usedMedicine: usedMedicine) => {
+        if (MedicineWarehouse.findIndex((_e: medicineWarehouse) => _e.id == usedMedicine.medicineWarehouse.id) < 0) {
+          MedicineWarehouse.push(usedMedicine.medicineWarehouse);
+        }
+      })
+
+      let unit_util = this.deployData.get_object_list_key_of_medicineUnit();
+      let error: boolean = false;
+
+      MedicineWarehouse.forEach((e) => {
+        let usedMedicine = this.usedMedicineList.filter((usedMedicine: usedMedicine) => {
+          return usedMedicine.medicineWarehouse.id == e.id;
+        })
+        let used_quantity = 0;
+        let remain_quantity = parseInt(e.remain) * parseInt(e.unit.quantity);
+        usedMedicine.forEach((e: usedMedicine) => {
+          used_quantity += e.quantity * unit_util[e.unit].quantity;
+        })
+        if (used_quantity > remain_quantity) {
+          this.util.showToast('Khối lượng tồn kho không đủ. Kiểm tra lại số lượng thuốc ' + e.medicine.name);
+          error = true;
+        }
+      })
+      /** */
+      if (!error) {
+        let param = {
+          disease: this.disease,
+          date: this.date,
+          employee: this.employee,
+          description: this.description
+        }
+
+        let pigs = this.deployData.get_pigs_by_sectionId(this.sectionId);
+        let usedMedicineParams: Array<usedMedicine> = [];
+
+        pigs.forEach(pig => {
+          this.usedMedicineList.forEach(item => {
+            let temp: usedMedicine = this.util.deepClone(item);
+            temp.forPigId = pig;
+            usedMedicineParams.push(temp);
+          })
+        });
+
+
+        this.activitiesProvider.createUsedMedicineList(usedMedicineParams)
+          .then((newUsedMedicineList) => {
+            if (newUsedMedicineList) {
+              this.navParams.get('callback')(newUsedMedicineList);
+              this.navCtrl.pop();
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          })
       }
 
-      let pigs = this.deployData.get_pigs_by_sectionId(this.sectionId);
-      let usedMedicineParams: Array<usedMedicine> = [];
 
-      pigs.forEach(pig => {
-        this.usedMedicineList.forEach(item => {
-          let temp: usedMedicine = this.util.deepClone(item);
-          temp.forPigId = pig;
-          usedMedicineParams.push(temp);
-        })
-      });
 
-      console.log(usedMedicineParams);
-
-      this.activitiesProvider.createUsedMedicineList(usedMedicineParams)
-        .then((newUsedMedicineList) => {
-          if (newUsedMedicineList) {
-            this.navParams.get('callback')(newUsedMedicineList);
-            this.navCtrl.pop();
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        })
     }
   }
 }

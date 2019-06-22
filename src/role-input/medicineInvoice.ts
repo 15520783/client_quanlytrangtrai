@@ -1,5 +1,6 @@
 import { DeployDataProvider } from "../providers/deploy-data/deploy-data";
 import { InvoicesProvider } from "../providers/invoices/invoices";
+import { UserProvider } from "../providers/user/user";
 import { VARIABLE } from "../common/const";
 import { invoicesProduct } from "../common/entity";
 
@@ -17,6 +18,7 @@ export class MedicineInvoiceRole {
 
     constructor(
         public deployData:DeployDataProvider,
+        public userProvider:UserProvider,
         public invoiceProvider: InvoicesProvider
     ) {
 
@@ -59,7 +61,8 @@ export class MedicineInvoiceRole {
                     isMaxlength: 'Số chứng từ không được vượt quá 1000 ký tự'
                 },
                 type: "input-text",
-                value: this.object.invoiceNo,
+                value:  VARIABLE.GENERNAL_INVOICE_ID.MEDICINE_IMPORT + Date.now(),
+                notEdit: true
             },
             {
                 name: 'importDate',
@@ -104,6 +107,7 @@ export class MedicineInvoiceRole {
     }
 
     insert() {
+        this.object.employee = this.userProvider.user;
         this.object.invoiceType = VARIABLE.INVOICE_PRODUCT_TYPE.MEDICINE;
         this.object.status = VARIABLE.INVOICE_STATUS.PROCCESSING;
         let source = this.deployData.get_partner_by_id(this.object.sourceId);

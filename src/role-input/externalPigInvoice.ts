@@ -1,5 +1,6 @@
 import { DeployDataProvider } from "../providers/deploy-data/deploy-data";
 import { InvoicesProvider } from "../providers/invoices/invoices";
+import { UserProvider } from "../providers/user/user";
 import { VARIABLE } from "../common/const";
 import { invoicesPig } from "../common/entity";
 
@@ -17,6 +18,7 @@ export class ExternalPigInvoiceRole {
 
     constructor(
         public deployData:DeployDataProvider,
+        public userProvider: UserProvider,
         public invoiceProvider: InvoicesProvider
     ) {
 
@@ -79,7 +81,8 @@ export class ExternalPigInvoiceRole {
                 },
                 type: "input-text",
                 value: this.object.invoiceNo,
-                data: [{ name: "Chọn đơn vị nguồn", value: "" }]
+                data: [{ name: "Chọn đơn vị nguồn", value: "" }],
+                notEdit:true
             },
             {
                 name: 'importDate',
@@ -143,6 +146,7 @@ export class ExternalPigInvoiceRole {
     }
 
     insert() {
+        this.object.employee = this.userProvider.user;
         this.object.invoiceType = VARIABLE.INVOICE_PIG_TYPE.EXTERNAL_IMPORT;
         this.object.status = VARIABLE.INVOICE_STATUS.PROCCESSING;
         let source = this.deployData.get_partner_by_id(this.object.sourceId);

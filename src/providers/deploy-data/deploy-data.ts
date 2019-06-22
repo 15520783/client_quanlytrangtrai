@@ -1,5 +1,5 @@
 import { KEY, VARIABLE } from '../../common/const';
-import { births, breedings, foodWareHouse, mating, matingRole, medicineWarehouse, pig, round, sperms, status } from '../../common/entity';
+import { births, breedings, foodWareHouse, mating, matingRole, medicineUnits, medicineWarehouse, pig, round, sperms, status } from '../../common/entity';
 
 import { EmployeesProvider } from '../employees/employees';
 import { FarmsProvider } from '../farms/farms';
@@ -252,7 +252,7 @@ export class DeployDataProvider {
       }
     }
 
-    return {total_pig:total_pig,female_pig:female_pig,male_pig:male_pig,child_pig:child_pig};
+    return { total_pig: total_pig, female_pig: female_pig, male_pig: male_pig, child_pig: child_pig };
   }
 
 
@@ -321,6 +321,39 @@ export class DeployDataProvider {
   }
 
   /**
+  *  Lấy danh sách khách hàng cho ion-select
+  */
+  get_customer_group_list_for_select() {
+    let options_select = [];
+    if (this.settingProvider.setting) {
+      this.settingProvider.setting.customerGroups.forEach(group => {
+        options_select.push({
+          name: group.name,
+          value: group.id
+        })
+      })
+    }
+    return options_select;
+  }
+
+  /**
+   *  Lấy danh sách loại khách hàng cho ion-select
+   */
+  get_customer_type_list_for_select() {
+    let options_select = [];
+    if (this.settingProvider.setting) {
+      this.settingProvider.setting.customerTypes.forEach(type => {
+        options_select.push({
+          name: type.name,
+          value: type.id
+        })
+      })
+    }
+    return options_select;
+  }
+
+
+  /**
    *  Lấy danh sách cám cho ion-select
    */
   get_food_list_for_select() {
@@ -357,10 +390,14 @@ export class DeployDataProvider {
    */
   get_medicineUnit_list_for_select() {
     let medicineUnit_select = [];
+    let unit_util = this.get_object_list_key_of_medicineUnit();
     if (this.settingProvider.setting) {
-      this.settingProvider.setting.medicineUnits.forEach(unit => {
+      let temp = this.util.deepClone(this.settingProvider.setting.medicineUnits);
+      temp.forEach((unit: medicineUnits) => {
         medicineUnit_select.push({
-          name: unit.name,
+          name: unit.id != unit.baseUnit ? unit.name + ' (' + unit.quantity + ' ' + unit_util[unit.baseUnit].name + ')' : unit.name,
+          baseUnit: unit.baseUnit,
+          quantity: unit.quantity,
           value: unit.id
         })
       })
@@ -569,6 +606,34 @@ export class DeployDataProvider {
     if (this.settingProvider.setting.customers) {
       return this.settingProvider.setting.customers.filter((customer) => {
         return customer.id == customerId ? true : false;
+      })[0];
+    } else {
+      return null;
+    }
+  }
+
+  /**
+   * Lấy loại khách hàng bằng Id
+   * @param typeId 
+   */
+  get_customerType_by_id(typeId: string) {
+    if (this.settingProvider.setting.customerTypes) {
+      return this.settingProvider.setting.customerTypes.filter((type) => {
+        return type.id == typeId ? true : false;
+      })[0];
+    } else {
+      return null;
+    }
+  }
+
+  /**
+   * Lấy nhóm khách hàng bằng Id
+   * @param typeId 
+   */
+  get_customerGroup_by_id(groupId: string) {
+    if (this.settingProvider.setting.customerGroups) {
+      return this.settingProvider.setting.customerGroups.filter((group) => {
+        return group.id == groupId ? true : false;
       })[0];
     } else {
       return null;
@@ -804,6 +869,19 @@ export class DeployDataProvider {
     let units = {};
     if (this.settingProvider.setting) {
       this.settingProvider.setting.foodUnits.forEach((unit) => {
+        units[unit.id] = unit;
+      })
+    }
+    return units;
+  }
+
+  /**
+       * Lấy các đối tượng đơn vị thuốc với Object key là id
+       */
+  get_object_list_key_of_medicineUnit() {
+    let units = {};
+    if (this.settingProvider.setting) {
+      this.settingProvider.setting.medicineUnits.forEach((unit) => {
         units[unit.id] = unit;
       })
     }
@@ -1531,5 +1609,17 @@ export class DeployDataProvider {
       .then((empId: string) => {
         temp = empId;
       })
+  }
+
+  show_quantity_remain_medicine(quantity: number, unit: medicineUnits) {
+    let unit_util = this.get_object_list_key_of_medicineUnit();
+    let quantity_div = parseInt(quantity + '');
+    let quantity_mode = (quantity * 10 - parseInt(quantity + '') * 10) / 10;
+    console.log(quantity_mode);
+    if (quantity_mode) {
+      return quantity_div + ' ' + unit.name + ' + ' + (quantity_mode * parseInt(unit.quantity)) + ' ' + unit_util[unit.baseUnit].name;
+    } else {
+      return quantity_div + ' ' + unit.name;
+    }
   }
 }

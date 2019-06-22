@@ -74,7 +74,7 @@ export class MedicineInvoicesComponent {
     this.sourceFilter = this.deployData.get_farm_list_for_select();
     this.destinationFilter = this.deployData.get_customer_list_for_select();
 
-    this.roleInput = new MedicineInvoiceRole(this.deployData, this.invoiceProvider);
+    this.roleInput = new MedicineInvoiceRole(this.deployData, this.userProvider, this.invoiceProvider);
     this.events.subscribe('invoicesReload', () => {
       this.setFilteredItems();
     })
@@ -128,7 +128,9 @@ export class MedicineInvoicesComponent {
     this.filterProvider.searchWithText = this.filter_default;
 
     this.filterProvider.searchWithRange = {}
-    return this.filterProvider.filter();
+    return this.filterProvider.filter().sort((a: invoicesProduct, b: invoicesProduct) =>
+      (new Date(a.importDate) > new Date(b.importDate)) ? -1 : 1
+    );
   }
 
   loadData(infiniteScroll) {
@@ -151,6 +153,8 @@ export class MedicineInvoicesComponent {
     }
 
     this.roleInput.clear();
+    this.roleInput.object.invoiceNo = VARIABLE.GENERNAL_INVOICE_ID.MEDICINE_IMPORT + Date.now();
+
     this.navCtrl.push(InvoiceInputUtilComponent,
       {
         insertMode: true,
@@ -168,6 +172,7 @@ export class MedicineInvoicesComponent {
         if (idx > -1) {
           this.invoices[idx] = invoice;
           this.setFilteredItems();
+          this.navCtrl.pop();
         }
       }
     }
