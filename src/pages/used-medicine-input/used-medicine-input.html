@@ -71,15 +71,17 @@
               <ion-row *ngIf="credentialsForm2.controls['medicine'+idx]">
                 <ion-col col-10>
                   <ion-list>
-                    <input-select-target [(validControl)]="credentialsForm2.controls['medicine'+idx]" 
-                      [active]="submitAttempt"
-                      [placeholder]="'Chọn thuốc'" 
-                      [label]="'Chọn thuốc'" [(data)]="medicines"
-                      [errorMessage_Required]="'Thuốc là hạng mục bắt buộc'" 
-                      [targertCmp]="'medicines'"
-                      (valueChange)="medicineChange(farmId,$event,usedMedicine,idx)">
-                    </input-select-target>
-
+                    <span (tap)="setCurrentMedicineId(credentialsForm2.value['medicine'+idx])">
+                      <input-select-target 
+                        [(validControl)]="credentialsForm2.controls['medicine'+idx]" 
+                        [active]="submitAttempt"
+                        [placeholder]="'Chọn thuốc'" 
+                        [label]="'Chọn thuốc'" [(data)]="medicines"
+                        [errorMessage_Required]="'Thuốc là hạng mục bắt buộc'" 
+                        [targertCmp]="'medicines'"
+                        (valueChange)="medicineChange(farmId,$event,usedMedicine,idx)">
+                      </input-select-target>
+                    </span>
                     <input-select-target [(validControl)]="credentialsForm2.controls['medicineWarehouse'+idx]" 
                       [active]="submitAttempt"
                       [placeholder]="'Chọn nguồn thuốc từ kho'" 

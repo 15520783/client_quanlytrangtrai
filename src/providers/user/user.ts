@@ -1,7 +1,7 @@
-import { API, CONFIG, KEY } from '../../common/const';
+import { API, CONFIG, KEY, VARIABLE } from '../../common/const';
 import { Events, Platform } from 'ionic-angular';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { employee, user } from '../../common/entity';
+import { employee, schedule, user } from '../../common/entity';
 
 import { Injectable } from '@angular/core';
 import { Utils } from '../../common/utils';
@@ -13,6 +13,7 @@ export class UserProvider {
   public user: employee;
   public updated_flag = false;
   public rolePermission: any;
+  public schedules: Array<schedule> = [];
 
   constructor(
     public http: HttpClient,
@@ -20,7 +21,9 @@ export class UserProvider {
     public event: Events,
     public platform: Platform
   ) {
-   
+    this.util.getKey(KEY.EMPLOYEE_USER).then((employee) => {
+      this.user = employee;
+    })
   }
 
   login(param) {
@@ -48,21 +51,40 @@ export class UserProvider {
       .toPromise();
   }
 
-  sync() {
-    this.util.getKey(KEY.EMPID).then((empId) => {
-      this.getEmployeeInfo(empId)
-        .then((employee: employee) => {
-          if (employee) {
-            this.user = employee;
-            this.publishUpdateEvent();
-          }
-        })
-        .catch((err) => {
-          this.util.showToast('Thông tin người dùng chưa được cập nhật. Vui lòng kiểm tra kết nối.');
-          console.log('err_user_provider', err);
+  // sync() {
+  //   this.util.getKey(KEY.EMPID).then((empId) => {
+  //     this.getEmployeeInfo(empId)
+  //       .then((employee: employee) => {
+  //         if (employee) {
+  //           this.user = employee;
+  //           this.publishUpdateEvent();
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         this.util.showToast('Thông tin người dùng chưa được cập nhật. Vui lòng kiểm tra kết nối.');
+  //         console.log('err_user_provider', err);
+  //         this.publishUpdateEvent();
+  //       })
+  //   })
+  // }
+
+  syncSchedule() {
+    this.getPersonalSchedule()
+      .then((schedules: Array<schedule>) => {
+        if (schedules) {
+          let today = new Date(new Date().getFullYear() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getDate());
+
+          this.schedules = schedules.filter((schedule: schedule) => {
+            return (schedule.status == VARIABLE.SCHEDULE_STATUS.ASSIGNED.name && new Date(schedule.date) >= today) ? true : false;
+          });
           this.publishUpdateEvent();
-        })
-    })
+        }
+      })
+      .catch((err) => {
+        this.util.showToast('Thông tin người dùng chưa được cập nhật. Vui lòng kiểm tra kết nối.');
+        console.log('err_user_provider', err);
+        this.publishUpdateEvent();
+      })
   }
 
   publishUpdateEvent() {
@@ -77,6 +99,12 @@ export class UserProvider {
       .toPromise();
   }
 
+  getPersonalSchedule() {
+    return this.http
+      .get(API.GET_SCHEDULE_OF_EMPLOYEE + this.user.id)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
 
   getRoleUserList() {
     return this.http

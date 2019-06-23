@@ -1,6 +1,5 @@
 import { InputObject, foodType } from "../common/entity";
 
-import { DeployDataProvider } from "../providers/deploy-data/deploy-data";
 import { SETTING_STORAGE_KEY } from "../common/const";
 import { SettingsProvider } from "../providers/settings/settings";
 
@@ -16,8 +15,8 @@ export class FoodTypeRole {
     public inputRole: Array<any> = [
         {
             name: 'name',
-            label: 'Tên khách hàng',
-            placeholder: 'Nhập tên khách hàng',
+            label: 'Tên loại cám',
+            placeholder: 'Nhập tên loại cám',
             isRequire: true,
             isMaxlength: true,
             isMailFormat: false,
@@ -25,9 +24,9 @@ export class FoodTypeRole {
             maxlength: 1000,
             message: {
                 isMailFormat: '',
-                isRequire: 'Tên khách hàng là hạng mục bắt buộc.',
+                isRequire: 'Tên loại cám là hạng mục bắt buộc.',
                 isNumber: '',
-                isMaxlength: 'Tên khách hàng không được vượt quá 1000 ký tự'
+                isMaxlength: 'Tên loại cám không được vượt quá 1000 ký tự'
             },
             type: "input-text",
             value: this.object.name,

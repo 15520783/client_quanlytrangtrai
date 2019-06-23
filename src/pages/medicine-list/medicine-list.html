@@ -18,20 +18,24 @@
     </ion-buttons> -->
   </ion-toolbar>
 </ion-header>
-  
+
 <ion-content #contentExternalInvoice class="setting-util-component">
   <not-found-data *ngIf="!visible_items.length"></not-found-data>
   <div id="content" *ngIf="visible_items.length">
     <ion-item-divider custom-diviver sticky="true" showWhen="core">Danh sách thuốc</ion-item-divider>
     <ion-list>
       <ion-item-sliding *ngFor="let item of visible_items">
-        <ion-item  >
+        <ion-item>
           <ion-row (tap)="select(item)">
             <ion-col align-self-center col-8 text-wrap>
               <h2 *ngIf="mainAttribute"><b>{{item[mainAttribute]}}</b></h2>
             </ion-col>
-            <ion-col align-self-center col-4 *ngIf="item.advised" text-wrap class="main-bg">
-              <p ion-text text-white style="color: white;font-weight: bold;">Khuyên dùng  (từ gợi ý)</p>
+            <ion-col align-self-center col-4 *ngIf="item.advised && !item.used" text-wrap class="main-bg">
+              <p ion-text text-white style="color: white;font-weight: bold;">Khuyên dùng (từ gợi ý)</p>
+            </ion-col>
+
+            <ion-col align-self-center col-4 *ngIf="item.used" text-wrap style="background: #32db64">
+              <p ion-text text-white style="color: white;font-weight: bold;">Đã chọn</p>
             </ion-col>
           </ion-row>
           <ion-row>
@@ -56,4 +60,3 @@
     </ion-infinite-scroll>
   </div>
 </ion-content>
-  

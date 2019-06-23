@@ -370,6 +370,22 @@ export class DeployDataProvider {
   }
 
   /**
+   *  Lấy danh sách loại cám cho ion-select
+   */
+  get_food_type_list_for_select() {
+    let food_select = [];
+    if (this.settingProvider.setting) {
+      this.settingProvider.setting.foodType.forEach(type => {
+        food_select.push({
+          name: type.name,
+          value: type.id
+        })
+      })
+    }
+    return food_select;
+  }
+
+  /**
    * Lấy danh sách thuốc cho ion-select
    */
   get_medicine_list_for_select() {
@@ -1028,6 +1044,19 @@ export class DeployDataProvider {
   }
 
   /**
+ * Lấy thông tin loại cám thông qua id
+ * @param foodId 
+ */
+  get_food_type_by_id(foodTypeId: string) {
+    if (this.settingProvider.setting) {
+      let idx = this.settingProvider.setting.foodType.findIndex(type => type.id == foodTypeId);
+      if (idx > -1)
+        return this.settingProvider.setting.foodType[idx];
+      else return null;
+    } else return null;
+  }
+
+  /**
    * Lấy thông tin thuốc thông qua id
    * @param medicineId 
    */
@@ -1611,15 +1640,18 @@ export class DeployDataProvider {
       })
   }
 
-  show_quantity_remain_medicine(quantity: number, unit: medicineUnits) {
-    let unit_util = this.get_object_list_key_of_medicineUnit();
-    let quantity_div = parseInt(quantity + '');
-    let quantity_mode = (quantity * 10 - parseInt(quantity + '') * 10) / 10;
-    console.log(quantity_mode);
-    if (quantity_mode) {
-      return quantity_div + ' ' + unit.name + ' + ' + (quantity_mode * parseInt(unit.quantity)) + ' ' + unit_util[unit.baseUnit].name;
+  show_quantity_medicine(quantity: number, unit: medicineUnits) {
+    if (unit.id == unit.baseUnit) {
+      return quantity + ' ' + unit.name;
     } else {
-      return quantity_div + ' ' + unit.name;
+      let unit_util = this.get_object_list_key_of_medicineUnit();
+      let quantity_div = parseInt(quantity + '');
+      let quantity_mode = (quantity * 10 - parseInt(quantity + '') * 10) / 10;
+      if (quantity_mode) {
+        return quantity_div + ' ' + unit.name + ' + ' + (quantity_mode * parseInt(unit.quantity)) + ' ' + unit_util[unit.baseUnit].name;
+      } else {
+        return quantity_div + ' ' + unit.name;
+      }
     }
   }
 }

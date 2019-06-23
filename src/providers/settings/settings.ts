@@ -446,6 +446,61 @@ export class SettingsProvider {
       .toPromise();
   }
   
+  createNewFoodUnit(objBody){
+    return this.http.post(API.CREATE_FOOD_UNIT,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  updateFoodUnit(objBody){
+    return this.http.put(API.UPDATE_FOOD_UNIT,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  deleteFoodUnit(objBody){
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http.delete(API.DELETE_FOOD_UNIT, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Tạo mới cám
+   * @param objBody 
+   */
+  createNewFood(objBody){
+    return this.http.post(API.CREATE_FOOD,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  /**
+   * Cập nhật cám
+   * @param objBody 
+   */
+  updateFood(objBody){
+    return this.http.put(API.UPDATE_FOOD,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  /**
+   * Xóa cám
+   * @param objBody 
+   */
+  deleteFood(objBody){
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http.delete(API.DELETE_FOOD, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
 
   createNewWarehouseType(objBody){
     return this.http.post(API.CREATE_WAREHOUSE_TYPE,objBody)

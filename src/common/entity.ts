@@ -277,6 +277,7 @@ class foodType extends base {
 
 class foods extends base {
 	foodCode: string;
+	typeId:string = '';
 	type: foodType = new foodType();
 	name: string = '';
 	useFor: string = '';

@@ -37,7 +37,9 @@ const SETTING_STORAGE_KEY = {
     HEALTH_STATUS:'healthStatus',
     FARM_TYPE:'farmTypes',
     FOOD_TYPE:'foodType',
-    WAREHOUSE_TYPE:'warehouseTypes'
+    FOOD_UNIT:'foodUnits',
+    FOOD:'foods',
+    WAREHOUSE_TYPE:'warehouseTypes',
 }
 
 const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -276,7 +278,6 @@ const API = {
     GET_PERMISSION_OF_ROLE: '/api/rolepermission/role/', //{roleId}
     GET_ALL_PERMISSION: '/api/permission/list',
 
-
     PUSH_NOTIFICATION: 'https://fcm.googleapis.com/fcm/send',
     SEND_EMAIL: '/api/mail/sendemailnotification/', //{email}/{scheduleid}
     MINING_TO_REVIEW_OFFSET: '/api/minings/',//{pigId}
@@ -334,6 +335,14 @@ const API = {
     UPDATE_FOOD_TYPE:'/api/foodtype/',
     DELETE_FOOD_TYPE:'/api/foodtype/',
 
+    CREATE_FOOD_UNIT:'/api/foodunits/',
+    UPDATE_FOOD_UNIT:'/api/foodunits/',
+    DELETE_FOOD_UNIT:'/api/foodunits/',
+
+    CREATE_FOOD:'/api/foods/',
+    UPDATE_FOOD:'/api/foods/',
+    DELETE_FOOD:'/api/foods/',
+
     CREATE_HEALTH_STATUS:'/api/healthstatus/',
     UPDATE_HEALTH_STATUS:'/api/healthstatus/',
     DELETE_HEALTH_STATUS:'/api/healthstatus/',
@@ -350,7 +359,6 @@ const API = {
     UPDATE_DISEASE: '/api/diseases/',
     DELETE_DISEASE: '/api/diseases/',
 
-
     CREATE_BREED: '/api/breeds/',
     UPDATE_BREED: '/api/breeds/',
     DELETE_BREED: '/api/breeds/',
@@ -358,7 +366,6 @@ const API = {
     CREATE_BREEDING_TYPE: '/api/breedingtype/',
     UPDATE_BREEDING_TYPE: '/api/breedingtype/',
     DELETE_BREEDING_TYPE: '/api/breedingtype/',
-
 
     CREATE_PIG_INVOICE: '/api/invoicespig/',
     UPDATE_PIG_INVOICE: '/api/invoicespig/',
@@ -375,7 +382,6 @@ const API = {
     DELETE_EXTERNAL_IMPORT_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/',
 
     UPDATE_SOLD_STATUS_FOR_PIGS: '/api/pigs/updatestatussold/',
-
 
     CREATE_FOOD_WAREHOUSE: '/api/foodwarehouse/',
     UPDATE_FOOD_WAREHOUSE: '/api/foodwarehouse/',

@@ -21,7 +21,7 @@
       <ion-buttons right>
         <button ion-button font20 padding style="position: relative!important" >
           <ion-icon name="md-notifications" font28>
-            <ion-badge color="danger" class="ion-badge-notification">10</ion-badge>
+            <ion-badge *ngIf="userProvider.schedules.length" color="danger" class="ion-badge-notification">{{userProvider.schedules.length}}</ion-badge>
           </ion-icon>
         </button>
         <button ion-button font20 padding (tap)="openSetting()">

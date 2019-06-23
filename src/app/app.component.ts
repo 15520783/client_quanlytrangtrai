@@ -152,11 +152,13 @@ export class MyApp {
     this.houseProvider.updated_flag = false;
     this.warehouseProvider.updated_flag = false;
     this.settingProvider.updated_flag = false;
+    this.userProvider.updated_flag = false;
 
     this.subscribeEventUpdate();
     this.userProvider.checkServer()
       .then((res: any) => {
         if (res.success) {
+          this.userProvider.syncSchedule();
           this.farmProvider.sync();
           this.sectionProvider.sync();
 
@@ -197,7 +199,7 @@ export class MyApp {
 
   checkUpdate() {
     if (
-      // this.userProvider.updated_flag &&
+      this.userProvider.updated_flag &&
       this.farmProvider.updated_flag &&
       this.pigProvider.updated_flag &&
       this.employeeProvider.updated_flag &&

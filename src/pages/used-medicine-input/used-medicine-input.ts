@@ -194,8 +194,38 @@ export class UsedMedicineInputPage {
     }
   }
 
+  // checkDuplicateMedicine(){
+  //   this.usedMedicineList.forEach((e:usedMedicine,idx)=>{
+  //       let index = this.medicines.findIndex(_medicine=>_medicine.id == this.credentialsForm2.value['medicineWarehouse' + idx].medicine.id);
+  //       if(index > -1){
+  //         this.medicines[idx]['used'] = true;
+  //       }
+  //   })
+  // }
+
+  public currentMedicine: medicines = new medicines();
+
+  setCurrentMedicineId(medicine) {
+    if (medicine) {
+      this.currentMedicine = medicine;
+    }
+  }
+
   medicineChange(farmId: string, medicine: medicines, item, idx) {
     if (medicine) {
+      if (medicine.id != this.currentMedicine.id) {
+        if (this.currentMedicine.id) {
+          let index = this.medicines.findIndex(_medicine => _medicine.id == this.currentMedicine.id);
+          if (index > -1) {
+            this.medicines[index]['used'] = false;
+          }
+        }
+        let index = this.medicines.findIndex(_medicine => _medicine.id == medicine.id);
+        if (index > -1) {
+          this.medicines[index]['used'] = true;
+        }
+      }
+      // this.checkDuplicateMedicine();
       this.util.openBackDrop();
       this.warehouseProvider.getMedicineWarehouseOfMedicine(farmId, medicine.id)
         .then((medicineWarehouses: Array<medicineWarehouse>) => {
@@ -236,6 +266,13 @@ export class UsedMedicineInputPage {
   remove_usedMedicine(idx) {
     // this.issuesList.splice(idx, 1);
     // this.credentialsForm2.value['issueId' + idx].setValue('');
+    if (this.credentialsForm2.value['medicine' + idx]) {
+      let index = this.medicines.findIndex(_medicine => _medicine.id == this.credentialsForm2.value['medicine' + idx].id);
+      if (index > -1) {
+        this.medicines[index]['used'] = false;
+      }
+    }
+    // this.checkDuplicateMedicine();
 
     this.credentialsForm2.removeControl('medicine' + idx);
     this.credentialsForm2.removeControl('medicineWarehouse' + idx);
@@ -261,7 +298,6 @@ export class UsedMedicineInputPage {
         e.description = this.description;
         e.employee = this.employee;
       })
-
 
       this.usedMedicineList = this.usedMedicineList.filter((used_medicine) => {
         return (used_medicine.medicine &&
@@ -309,29 +345,31 @@ export class UsedMedicineInputPage {
         let pigs = this.deployData.get_pigs_by_sectionId(this.sectionId);
         let usedMedicineParams: Array<usedMedicine> = [];
 
-        pigs.forEach(pig => {
-          this.usedMedicineList.forEach(item => {
-            let temp: usedMedicine = this.util.deepClone(item);
-            temp.forPigId = pig;
-            usedMedicineParams.push(temp);
-          })
-        });
+        if (pigs && pigs.length) {
+          pigs.forEach(pig => {
+            this.usedMedicineList.forEach(item => {
+              let temp: usedMedicine = this.util.deepClone(item);
+              temp.forPigId = pig;
+              temp.quantity = item.quantity / pigs.length;
+              usedMedicineParams.push(temp);
+            })
+          });
 
+          this.activitiesProvider.createUsedMedicineList(usedMedicineParams)
+            .then((newUsedMedicineList) => {
+              if (newUsedMedicineList) {
+                this.navParams.get('callback')(newUsedMedicineList);
+                this.navCtrl.pop();
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+        } else {
+          this.util.showToast('Không tìm thấy heo nào trong khu để ghi nhận xử lý');
+        }
 
-        this.activitiesProvider.createUsedMedicineList(usedMedicineParams)
-          .then((newUsedMedicineList) => {
-            if (newUsedMedicineList) {
-              this.navParams.get('callback')(newUsedMedicineList);
-              this.navCtrl.pop();
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-          })
       }
-
-
-
     }
   }
 }

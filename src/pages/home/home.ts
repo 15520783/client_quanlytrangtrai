@@ -186,7 +186,8 @@ export class HomePage {
 
 
   sync() {
-    this.farmProvider.updated_flag =
+      this.userProvider.updated_flag = 
+      this.farmProvider.updated_flag =
       this.pigProvider.updated_flag =
       this.employeeProvider.updated_flag =
       this.sectionProvider.updated_flag =
@@ -203,7 +204,9 @@ export class HomePage {
       .then((res: any) => {
         if (res.success) {
           this.getRolePermission().then(() => {
+            this.userProvider.syncSchedule();
             this.farmProvider.sync();
+            this.settingProvider.sync();
             this.pigProvider.sync();
 
             if (this.userProvider.rolePermission.ROLE_xem_danh_sach_nhan_vien != null) {
@@ -217,8 +220,6 @@ export class HomePage {
               this.warehouseProvider.sync();
             } else this.warehouseProvider.updated_flag = true;
 
-            this.settingProvider.sync();
-            this.sectionProvider.sync();
           })
         }
       })
@@ -237,7 +238,7 @@ export class HomePage {
 
   checkUpdate() {
     if (
-      // this.userProvider.updated_flag &&
+      this.userProvider.updated_flag &&
       this.farmProvider.updated_flag &&
       this.pigProvider.updated_flag &&
       this.employeeProvider.updated_flag &&

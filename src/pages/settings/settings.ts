@@ -11,7 +11,9 @@ import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { DiseasesRole } from '../../role-input/diseases';
 import { EmployeesProvider } from '../../providers/employees/employees';
 import { FarmTypesRole } from '../../role-input/farm_type';
+import { FoodRole } from '../../role-input/food';
 import { FoodTypeRole } from '../../role-input/food_type';
+import { FoodUnitsRole } from '../../role-input/food_unit';
 import { HealthStatusRole } from '../../role-input/healthStatus';
 import { PartnersRole } from '../../role-input/partner';
 import { PregnancyStatusRole } from '../../role-input/pregnancy_status';
@@ -82,7 +84,7 @@ export class SettingsPage {
       customers: {
         title: 'Danh sách khách hàng',
         placeholderSearch: 'Tìm kiếm khách hàng',
-        filter_default: ["name","typeName","groupName", "phone", "email", "address", "companyAddress", "fax", "bank", "description"],
+        filter_default: ["name", "typeName", "groupName", "phone", "email", "address", "companyAddress", "fax", "bank", "description"],
         attributes: [
           { name: "typeName", label: 'Loại khách hàng' },
           { name: "groupName", label: 'Nhóm khách hàng' },
@@ -99,10 +101,10 @@ export class SettingsPage {
         roleInput: new CustomerRole(this.settingProvider, this.deployData),
         customData(customerRole: Array<customers>) {
           customerRole.forEach((role) => {
-            role['typeId'] = role.type?role.type.id:'';
-            role['groupId'] = role.type?role.group.id:'';
-            role['typeName'] = role.type?role.type.name:'';
-            role['groupName'] = role.group?role.group.name:'';
+            role['typeId'] = role.type ? role.type.id : '';
+            role['groupId'] = role.type ? role.group.id : '';
+            role['typeName'] = role.type ? role.type.name : '';
+            role['groupName'] = role.group ? role.group.name : '';
           })
         }
       },
@@ -173,7 +175,7 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.healthStatus,
-        roleInput: new HealthStatusRole(this.settingProvider,this.deployData),
+        roleInput: new HealthStatusRole(this.settingProvider, this.deployData),
       },
       diseases: {
         title: 'Danh sách bệnh',
@@ -230,26 +232,34 @@ export class SettingsPage {
       foodUnits: {
         title: 'Danh sách đơn vị cám',
         placeholderSearch: 'Tìm kiếm đơn vị cám',
-        filter_default: ["name", "description"],
+        filter_default: ["name", "quantity", "description"],
         attributes: [
+          { name: "quantity", label: 'Trọng lượng( kg )' },
           { name: "description", label: 'Mô tả' },
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.foodUnits,
+        roleInput: new FoodUnitsRole(this.settingProvider),
       },
       foods: {
-        title: 'Danh sách thức ăn cho heo',
-        placeholderSearch: 'Tìm kiếm thức ăn',
+        title: 'Danh sách cám cho heo',
+        placeholderSearch: 'Tìm kiếm cám',
         filter_default: ["name", "foodCode", "typeName", "useFor", "guide", "description"],
         attributes: [
-          { name: "foodCode", label: 'Mã thức ăn' },
-          { name: "typeName", label: 'Loại thức ăn' },
+          { name: "foodCode", label: 'Mã cám' },
+          { name: "typeName", label: 'Loại cám' },
           { name: "useFor", label: 'Dùng cho' },
           { name: "guide", label: 'Hướng dẫn' },
           { name: "description", label: 'Mô tả' },
         ],
         mainAttribute: 'name',
         data: this.foods_temp,
+        roleInput: new FoodRole(this.settingProvider,this.deployData),
+        customData(customerRole: Array<customers>) {
+          customerRole.forEach((role) => {
+            role['typeId'] = role.type ? role.type.id : '';
+          })
+        }
       },
       medicineType: {
         title: 'Danh sách nhóm thuốc',

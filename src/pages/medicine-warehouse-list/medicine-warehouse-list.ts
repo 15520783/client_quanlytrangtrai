@@ -29,10 +29,9 @@ export class MedicineWarehouseListPage {
     { name: "medicineTypeName", label: 'Loại thuốc' },
     { name: "medicineName", label: 'Tên thuốc' },
     { name: "invoiceNo", label: 'Số chứng từ' },
-    { name: "quantity", label: 'quantity' },
+    { name: "quantityDisplay", label: 'Số lượng nhập' },
     { name: "unitName", label: 'Đơn vị' },
-    { name: "total", label: 'total' },
-    { name: "used", label: 'used' },
+    { name: "usedDisplay", label: 'Đã dùng' },
     { name: "remainDisplay", label: 'Tồn kho' },
     { name: "manufacturer", label: 'Nhà sản xuất' },
     { name: "ImportDisplay", label: 'Ngày nhập' },
@@ -92,6 +91,7 @@ export class MedicineWarehouseListPage {
     this.medicineWarehouses.forEach((element) => {
       element['warehouseName'] = element.warehouse.name;
       element['medicineTypeName'] = element.medicine.type.name;
+      element['medicineName'] = element.medicine.name;
       element['unitName'] = element.unit.name;
       element['invoiceNo'] = element.invoice.invoiceNo;
       element['manufacturer'] = element.invoice.source.name;
@@ -99,7 +99,9 @@ export class MedicineWarehouseListPage {
       element['mfgDateDisplay'] = this.util.convertDate(element.mfgDate);
       element['expiryDateDisplay'] = this.util.convertDate(element.expiryDate);
       // element['remainDisplay'] = (parseInt(element.remain) * parseInt(element.unit.quantity)) + ' ' + this.units[element.unit.baseUnit].name;
-      element['remainDisplay'] = this.deployData.show_quantity_remain_medicine(parseFloat(element.remain),element.unit);
+      element['remainDisplay'] = this.deployData.show_quantity_medicine(parseFloat(element.remain), element.unit);
+      element['usedDisplay'] = this.deployData.show_quantity_medicine(parseFloat(element.used), element.unit);
+      element['quantityDisplay'] = this.deployData.show_quantity_medicine(parseFloat(element.quantity), element.unit);
     })
     this.filterProvider.input = this.medicineWarehouses;
     this.filterProvider.searchText = searchItem;

@@ -1,13 +1,13 @@
+import { IonicPage, MenuController, NavController, NavParams, Platform, ViewController } from 'ionic-angular';
+
+import { CONFIG } from '../../common/const';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController, ViewController, Platform } from 'ionic-angular';
-import { FormControl } from '@angular/forms';
-import { medicines } from '../../common/entity';
-import { FilterProvider } from '../../providers/filter/filter';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { FilterProvider } from '../../providers/filter/filter';
+import { FormControl } from '@angular/forms';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { Utils } from '../../common/utils';
-import { CONFIG } from '../../common/const';
-
+import { medicines } from '../../common/entity';
 
 @IonicPage()
 @Component({
@@ -45,7 +45,7 @@ export class MedicineListPage {
 
   public visible_items: Array<any> = [];
 
-  
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -64,7 +64,7 @@ export class MedicineListPage {
       this.medicines = this.navParams.data.medicines;
     }
   }
-  
+
   ionViewDidLoad() {
     this.setFilteredItems();
   }
@@ -104,7 +104,8 @@ export class MedicineListPage {
 
   select(item) {
     if (this.isSelectMode) {
-      this.viewCtrl.dismiss(item);
+      if (!item.used)
+        this.viewCtrl.dismiss(item);
     }
   }
 }
