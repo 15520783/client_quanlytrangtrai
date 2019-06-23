@@ -137,6 +137,27 @@ export class SettingsProvider {
       .toPromise();
   }
 
+  createMatingRole(objBody){
+    return this.http.post(API.CREATE_MATING_ROLE,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  updateMatingRole(objBody){
+    return this.http.put(API.UPDATE_MATING_ROLE,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  deleteMatingRole(objBody){
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http.delete(API.DELETE_MATING_ROLE, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
 
   createNewBreedingType(objBody: breedingType) {
     return this.http
@@ -183,6 +204,39 @@ export class SettingsProvider {
       .toPromise();
   }
 
+  /**
+   * Tạo mới một triệu chứng lâm sàn
+   * @param objBody 
+   */
+  createNewIssue(objBody) {
+    return this.http.post(API.CREATE_ISSUE, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Cập nhật triệu chứng lâm sàn
+   * @param objBody 
+   */
+  updateIssue(objBody) {
+    return this.http.put(API.UPDATE_ISSUE, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Xóa triệu chứng lâm sàn
+   * @param objBody 
+   */
+  delelteIssue(objBody){
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http.delete(API.DELETE_ISSUE, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
 
   /**
    * Tạo mới bệnh
@@ -423,20 +477,31 @@ export class SettingsProvider {
       .toPromise();
   }
 
-
-  createNewFoodType(objBody){
-    return this.http.post(API.CREATE_FOOD_TYPE,objBody)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+  /**
+   * Tạo mới loại cám
+   * @param objBody 
+   */
+  createNewFoodType(objBody) {
+    return this.http.post(API.CREATE_FOOD_TYPE, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
-  updateFoodType(objBody){
-    return this.http.put(API.CREATE_FOOD_TYPE,objBody)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+  /**
+   * Cập nhật loại cám
+   * @param objBody 
+   */
+  updateFoodType(objBody) {
+    return this.http.put(API.CREATE_FOOD_TYPE, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
-  deleteFoodType(objBody){
+  /**
+   * Xóa loại cám
+   * @param objBody 
+   */
+  deleteFoodType(objBody) {
     const options = {
       headers: new HttpHeaders(),
       body: objBody
@@ -445,20 +510,32 @@ export class SettingsProvider {
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise();
   }
-  
-  createNewFoodUnit(objBody){
-    return this.http.post(API.CREATE_FOOD_UNIT,objBody)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+
+  /**
+   * Tạo mới đơn vị cám
+   * @param objBody 
+   */
+  createNewFoodUnit(objBody) {
+    return this.http.post(API.CREATE_FOOD_UNIT, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
-  updateFoodUnit(objBody){
-    return this.http.put(API.UPDATE_FOOD_UNIT,objBody)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+  /**
+   * Cập nhật đơn vị cám
+   * @param objBody 
+   */
+  updateFoodUnit(objBody) {
+    return this.http.put(API.UPDATE_FOOD_UNIT, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
-  deleteFoodUnit(objBody){
+  /**
+   * Xóa đơn vị cám
+   * @param objBody 
+   */
+  deleteFoodUnit(objBody) {
     const options = {
       headers: new HttpHeaders(),
       body: objBody
@@ -472,27 +549,27 @@ export class SettingsProvider {
    * Tạo mới cám
    * @param objBody 
    */
-  createNewFood(objBody){
-    return this.http.post(API.CREATE_FOOD,objBody)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+  createNewFood(objBody) {
+    return this.http.post(API.CREATE_FOOD, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
   /**
    * Cập nhật cám
    * @param objBody 
    */
-  updateFood(objBody){
-    return this.http.put(API.UPDATE_FOOD,objBody)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+  updateFood(objBody) {
+    return this.http.put(API.UPDATE_FOOD, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
   /**
    * Xóa cám
    * @param objBody 
    */
-  deleteFood(objBody){
+  deleteFood(objBody) {
     const options = {
       headers: new HttpHeaders(),
       body: objBody
@@ -502,19 +579,177 @@ export class SettingsProvider {
       .toPromise();
   }
 
-  createNewWarehouseType(objBody){
-    return this.http.post(API.CREATE_WAREHOUSE_TYPE,objBody)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+  /**
+   * Tạo mới loại thuốc
+   * @param objBody 
+   */
+  createNewMedicineType(objBody) {
+    return this.http.post(API.CREATE_MEDICINE_TYPE, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
-  updateWarehouseType(objBody){
-    return this.http.put(API.UPDATE_WAREHOUSE_TYPE,objBody)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+  /**
+   * Cập nhật loại thuốc
+   * @param objBody 
+   */
+  updateMedicineType(objBody) {
+    return this.http.put(API.UPDATE_MEDICINE_TYPE, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
-  deleteWarehouseType(objBody){
+  /**
+   * Xóa loại thuốc
+   * @param objBody 
+   */
+  deleteMedicineType(objBody) {
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http.delete(API.DELETE_MEDICINE_TYPE, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Tạo mới đơn vị thuốc
+   * @param objBody 
+   */
+  createNewMedicineUnit(objBody) {
+    return this.http.post(API.CREATE_MEDICINE_UNIT, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Cập nhật đơn vị thuốc
+   * @param objBody 
+   */
+  updateMedicineUnit(objBody) {
+    return this.http.put(API.UPDATE_MEDICINE_UNIT, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Xóa đơn vị thuốc
+   * @param objBody 
+   */
+  deleteMedicineUnit(objBody) {
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http.delete(API.DELETE_MEDICINE_UNIT, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Tạo mới thuốc
+   * @param objBody 
+   */
+  createNewMedicine(objBody) {
+    return this.http.post(API.CREATE_MEDICINE, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Cập nhật thuốc
+   * @param objBody 
+   */
+  updateMedicne(objBody) {
+    return this.http.put(API.UPDATE_MEDICINE, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Xóa thuốc
+   * @param objBody 
+   */
+  deleteMedicine(objBody) {
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http.delete(API.DELETE_MEDICINE, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  createNewGentialType(objBody) {
+    return this.http.post(API.CREATE_GENTIAL_TYPE, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  updateGentialType(objBody) {
+    return this.http.put(API.UPDATE_GENTIAL_TYPE, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  deleteGentialType(objBody) {
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http.delete(API.DELETE_GENTIAL_TYPE, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Tạo mới loại chân
+   * @param objBody 
+   */
+  createNewFootType(objBody) {
+    return this.http.post(API.CREATE_FOOT_TYPE, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Cập nhật loại chân
+   * @param objBody 
+   */
+  updateFootType(objBody) {
+    return this.http.put(API.UPDATE_FOOT_TYPE, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Xóa loại chân
+   * @param objBody 
+   */
+  deleteFootType(objBody) {
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http.delete(API.DELETE_FOOT_TYPE, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  createNewWarehouseType(objBody) {
+    return this.http.post(API.CREATE_WAREHOUSE_TYPE, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  updateWarehouseType(objBody) {
+    return this.http.put(API.UPDATE_WAREHOUSE_TYPE, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  deleteWarehouseType(objBody) {
     const options = {
       headers: new HttpHeaders(),
       body: objBody
@@ -547,6 +782,73 @@ export class SettingsProvider {
       .toPromise();
   }
 
+  /**
+   * Tạo mới chức vụ
+   * @param objBody 
+   */
+  createNewRegency(objBody){
+    return this.http.post(API.CREATE_REGENCY,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  /**
+   * Cập nhật chức vụ
+   * @param objBody 
+   */
+  updateRegency(objBody){
+    return this.http.put(API.UPDATE_REGENCY,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  /**
+   * Xóa chức vụ
+   * @param objBody 
+   */
+  deleteRegency(objBody){
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http.delete(API.DELETE_REGENCY, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  /**
+   * Tạo mới phân quyền
+   * @param objBody 
+   */
+  createNewRole(objBody){
+    return this.http.post(API.CREATE_ROLE,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  /**
+   * Cập nhật phân quyền
+   * @param objBody 
+   */
+  updateRole(objBody){
+    return this.http.put(API.UPDATE_ROLE,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  /**
+   * Xóa phân quyền
+   * @param objBody 
+   */
+  deleteRole(objBody){
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http.delete(API.DELETE_ROLE, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
 
   /**
    * Lấy danh sách quyền của role

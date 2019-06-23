@@ -401,6 +401,22 @@ export class DeployDataProvider {
     return medicine_select;
   }
 
+   /**
+   * Lấy danh sách thuốc cho ion-select
+   */
+  get_medicine_type_list_for_select() {
+    let medicine_type_select = [];
+    if (this.settingProvider.setting) {
+      this.settingProvider.setting.medicineType.forEach(type => {
+        medicine_type_select.push({
+          name: type.name,
+          value: type.id
+        })
+      })
+    }
+    return medicine_type_select;
+  }
+
   /**
    * Lấy danh sách đơn vị thuốc cho ion-select
    */
@@ -1065,6 +1081,19 @@ export class DeployDataProvider {
       let idx = this.settingProvider.setting.medicines.findIndex(medicine => medicine.id == medicineId);
       if (idx > -1)
         return this.settingProvider.setting.medicines[idx];
+      else return null;
+    } else return null;
+  }
+
+  /**
+   * Lấy thông tin loại thuốc thông qua id
+   * @param medicineId 
+   */
+  get_medicineType_by_id(medicineTypeId: string) {
+    if (this.settingProvider.setting) {
+      let idx = this.settingProvider.setting.medicineType.findIndex(type => type.id == medicineTypeId);
+      if (idx > -1)
+        return this.settingProvider.setting.medicineType[idx];
       else return null;
     } else return null;
   }

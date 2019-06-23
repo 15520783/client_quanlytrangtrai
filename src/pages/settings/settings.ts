@@ -1,6 +1,6 @@
 import { Component, Renderer, ViewChild } from '@angular/core';
 import { Events, IonicPage, NavController, NavParams, Platform, Slides } from 'ionic-angular';
-import { customers, matingRole } from '../../common/entity';
+import { customers, matingRole, medicineUnits } from '../../common/entity';
 
 import { BreedingTypesRole } from '../../role-input/breeding_type';
 import { BreedsRole } from '../../role-input/breeds';
@@ -14,9 +14,18 @@ import { FarmTypesRole } from '../../role-input/farm_type';
 import { FoodRole } from '../../role-input/food';
 import { FoodTypeRole } from '../../role-input/food_type';
 import { FoodUnitsRole } from '../../role-input/food_unit';
+import { FootTypeRole } from '../../role-input/footType';
+import { GentialTypeRole } from '../../role-input/gentialType';
 import { HealthStatusRole } from '../../role-input/healthStatus';
+import { IssueRole } from '../../role-input/issue';
+import { MatingRoleRole } from '../../role-input/mating_role';
+import { MedicineRole } from '../../role-input/medicine';
+import { MedicineTypeRole } from '../../role-input/medicine_type';
+import { MedicineUnitRole } from '../../role-input/medicine_unit';
 import { PartnersRole } from '../../role-input/partner';
 import { PregnancyStatusRole } from '../../role-input/pregnancy_status';
+import { RegencyRole } from '../../role-input/regency';
+import { RolePermissionRole } from '../../role-input/role';
 import { SettingRolePage } from '../setting-role/setting-role';
 import { SettingUtilComponent } from '../../components/setting-util/setting-util';
 import { SettingsProvider } from '../../providers/settings/settings';
@@ -31,7 +40,6 @@ import { WarehouseTyperole } from '../../role-input/warehouse_type';
 
 export class SettingsPage {
   @ViewChild('slider') slider: Slides;
-
 
   public list_settings: any;
   public list_keys: any = [];
@@ -48,6 +56,7 @@ export class SettingsPage {
     public platform: Platform,
     public deployData: DeployDataProvider
   ) {
+    let unit_medicine_util = this.deployData.get_object_list_key_of_medicineUnit();
     this.settingProvider.setting.foods.forEach((food, idx) => {
       this.foods_temp.push(food);
       this.foods_temp[idx].typeName = food.type.name;
@@ -254,7 +263,7 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.foods_temp,
-        roleInput: new FoodRole(this.settingProvider,this.deployData),
+        roleInput: new FoodRole(this.settingProvider, this.deployData),
         customData(customerRole: Array<customers>) {
           customerRole.forEach((role) => {
             role['typeId'] = role.type ? role.type.id : '';
@@ -262,25 +271,32 @@ export class SettingsPage {
         }
       },
       medicineType: {
-        title: 'Danh sách nhóm thuốc',
-        placeholderSearch: 'Tìm kiếm nhóm thuốc',
+        title: 'Danh sách loại thuốc',
+        placeholderSearch: 'Tìm kiếm loại thuốc',
         filter_default: ["name", "description"],
         attributes: [
           { name: "description", label: 'Mô tả' },
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.medicineType,
+        roleInput: new MedicineTypeRole(this.settingProvider),
       },
       medicineUnits: {
         title: 'Danh sách đơn vị thuốc',
         placeholderSearch: 'Tìm kiếm đơn vị thuốc',
         filter_default: ["name", "quantity", "description"],
         attributes: [
-          { name: "quantity", label: 'Số lượng' },
+          { name: "quantityDisplay", label: 'Trọng lượng' },
           { name: "description", label: 'Mô tả' },
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.medicineUnits,
+        roleInput: new MedicineUnitRole(this.settingProvider, this.deployData),
+        customData(medicineUnitRole: Array<medicineUnits>) {
+          medicineUnitRole.forEach((e) => {
+            e['quantityDisplay'] = e.quantity + ' ( ' + unit_medicine_util[e.baseUnit].name + ' ) ';
+          })
+        }
       },
       medicines: {
         title: 'Danh sách thuốc',
@@ -295,7 +311,7 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.medicines_temp,
-
+        roleInput: new MedicineRole(this.settingProvider, this.deployData),
       },
       // priceCodes: {
       //   title: 'Danh sách mã sản phẩm',
@@ -316,6 +332,7 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.footType,
+        roleInput: new FootTypeRole(this.settingProvider),
       },
       gentialType: {
         title: 'Danh sách loại bộ phận sinh dục',
@@ -326,19 +343,21 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.gentialType,
+        roleInput: new GentialTypeRole(this.settingProvider),
       },
       issues: {
-        title: 'Danh sách lâm sàn',
+        title: 'Danh sách triệu chứng lâm sàn',
         placeholderSearch: 'Tìm kiếm lâm sàn',
         filter_default: ["name", "symptom", "lesions", "description"],
         attributes: [
+          { name: "level", label: 'Mức độ' },
           { name: "agent", label: 'Tác nhân' },
-          { name: "symptom", label: 'Triệu chứng' },
           { name: "lesions", label: 'Đặc điểm' },
           { name: "description", label: 'Mô tả' },
         ],
-        mainAttribute: 'name',
+        mainAttribute: 'symptom',
         data: this.settingProvider.setting.issues,
+        roleInput: new IssueRole(this.settingProvider),
       },
       status: {
         title: 'Danh sách trạng thái heo',
@@ -372,6 +391,7 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.regencies,
+        roleInput: new RegencyRole(this.settingProvider),
       },
       roles: {
         title: 'Danh sách phân quyền',
@@ -382,6 +402,7 @@ export class SettingsPage {
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.roles,
+        roleInput: new RolePermissionRole(this.settingProvider),
         extraButtons: [
           {
             title: 'Thiết lập phân quyền',
@@ -400,12 +421,17 @@ export class SettingsPage {
           { name: "fatherBreedName", label: 'Giống đực' },
           { name: "motherBreedName", label: 'Giống cái' },
           { name: "childBreedName", label: 'Kết quả phối' },
-          { name: "birthStatusEstimate", label: 'Trạng thái sinh dự kiến' },
+          // { name: "birthStatusEstimate", label: 'Trạng thái sinh dự kiến' },
+          { name: "description", label: 'Mô tả' },
         ],
         mainAttribute: 'name',
         data: this.settingProvider.setting.matingRoles,
+        roleInput: new MatingRoleRole(this.settingProvider, this.deployData),
         customData(matingRoles: Array<matingRole>) {
           matingRoles.forEach((role) => {
+            role.fatherId = role.father.id;
+            role.motherId = role.mother.id;
+            role.childId = role.child.id;
             role['fatherBreedName'] = role.father.name.concat('-').concat(role.father.symbol);
             role['motherBreedName'] = role.mother.name.concat('-').concat(role.mother.symbol);
             role['childBreedName'] = role.child.name.concat('-').concat(role.child.symbol);

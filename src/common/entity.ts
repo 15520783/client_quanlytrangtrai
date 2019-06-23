@@ -321,6 +321,7 @@ class foodUnits extends base {
 
 class medicines extends base {
 	medicineCode: string = '';
+	typeId:string = '';
 	type: medicineType = new medicineType();
 	name: string = '';
 	useFor: string = '';
@@ -595,6 +596,9 @@ class sperms extends base {
 }
 
 class matingRole extends base {
+	fatherId:string = '';
+	motherId:string = '';
+	childId:string = '';
 	father: breeds = new breeds();
 	mother: breeds = new breeds();
 	child: breeds = new breeds();

@@ -40,6 +40,15 @@ const SETTING_STORAGE_KEY = {
     FOOD_UNIT:'foodUnits',
     FOOD:'foods',
     WAREHOUSE_TYPE:'warehouseTypes',
+    MEDICINE_TYPE:'medicineType',
+    MEDICINE_UNIT:'medicineUnits',
+    MEDICINE:'medicines',
+    GENTIAL_TYPE:'gentialType',
+    FOOT_TYPE:'footType',
+    ISSUE:'issues',
+    REGENCIES:'regencies',
+    ROLE:'roles',
+    MATING_ROLE:'matingRoles'
 }
 
 const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -343,6 +352,26 @@ const API = {
     UPDATE_FOOD:'/api/foods/',
     DELETE_FOOD:'/api/foods/',
 
+    CREATE_MEDICINE_TYPE:'/api/medicinetype/',
+    UPDATE_MEDICINE_TYPE:'/api/medicinetype/',
+    DELETE_MEDICINE_TYPE:'/api/medicinetype/',
+
+    CREATE_MEDICINE_UNIT:'/api/medicineunits/',
+    UPDATE_MEDICINE_UNIT:'/api/medicineunits/',
+    DELETE_MEDICINE_UNIT:'/api/medicineunits/',
+
+    CREATE_MEDICINE:'/api/medicines/',
+    UPDATE_MEDICINE:'/api/medicines/',
+    DELETE_MEDICINE:'/api/medicines/',
+
+    CREATE_GENTIAL_TYPE:'/api/gentialtype/',
+    UPDATE_GENTIAL_TYPE:'/api/gentialtype/',
+    DELETE_GENTIAL_TYPE:'/api/gentialtype/',
+
+    CREATE_FOOT_TYPE:'/api/foottype/',
+    UPDATE_FOOT_TYPE:'/api/foottype/',
+    DELETE_FOOT_TYPE:'/api/foottype/',
+
     CREATE_HEALTH_STATUS:'/api/healthstatus/',
     UPDATE_HEALTH_STATUS:'/api/healthstatus/',
     DELETE_HEALTH_STATUS:'/api/healthstatus/',
@@ -354,6 +383,10 @@ const API = {
     CREATE_PIG_STATUS: '/api/status/',
     DELETE_PIG_STATUS: '/api/status/',
     UPDATE_PIG_STATUS: '/api/status/',
+
+    CREATE_ISSUE:'/api/issues/',
+    UPDATE_ISSUE:'/api/issues/',
+    DELETE_ISSUE:'/api/issues/',
 
     CREATE_DISEASE: '/api/diseases/',
     UPDATE_DISEASE: '/api/diseases/',
@@ -397,6 +430,10 @@ const API = {
     UPDATE_PIG: '/api/warehousetype/',
     DELETE_PIG: '/api/warehousetype/',
 
+    CREATE_MATING_ROLE:'/api/matingroles/',
+    UPDATE_MATING_ROLE:'/api/matingroles/',
+    DELETE_MATING_ROLE:'/api/matingroles/',
+
     CREATE_BREEDING: '/api/breedings/',
     UPDATE_BREEDING: '/api/breedings/',
     DELETE_BREEDING: '/api/breedings/',
@@ -419,6 +456,14 @@ const API = {
     CREATE_FEEDS: '/api/feeds/feedlist/',
 
     CREATE_USED_MEDICINE_LIST: '/api/usedmedicine/',
+
+    CREATE_REGENCY:'/api/regencies/',
+    UPDATE_REGENCY:'/api/regencies/',
+    DELETE_REGENCY:'/api/regencies/',
+
+    CREATE_ROLE:'/api/roles/',
+    UPDATE_ROLE:'/api/roles/',
+    DELETE_ROLE:'/api/roles/',
 
     CREATE_SCHEDULE: '/api/schedule/',
     UPDATE_SCHEDULE: '/api/schedule/',
