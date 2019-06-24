@@ -114,7 +114,7 @@ export class IssuePigListPage {
     if (this.sections.length) {
       this.selectedSection = this.sections[0].value;
       this.sections[0].selected = true;
-      this.issues = this.issue_groupBySection.get(this.selectedSection) ? this.issue_groupBySection.get(this.selectedSection) : [];
+      this.issues = (this.issue_groupBySection && this.issue_groupBySection.get(this.selectedSection)) ? this.issue_groupBySection.get(this.selectedSection) : [];
       this.setFilteredItems();
     }
   }
@@ -129,7 +129,7 @@ export class IssuePigListPage {
     if (this.sections.length) {
       this.selectedSection = this.sections[0].value;
       this.sections[0].selected = true;
-      this.issues = this.issue_groupBySection.get(this.selectedSection) ? this.issue_groupBySection.get(this.selectedSection) : [];
+      this.issues = (this.issue_groupBySection && this.issue_groupBySection.get(this.selectedSection)) ? this.issue_groupBySection.get(this.selectedSection) : [];
       this.setFilteredItems();
     } else {
       this.sections = [];
@@ -224,7 +224,7 @@ export class IssuePigListPage {
     })
     section.selected = true;
     this.selectedSection = section.id;
-    this.issues = this.issue_groupBySection.get(this.selectedSection) ? this.issue_groupBySection.get(this.selectedSection) : [];
+    this.issues = (this.issue_groupBySection && this.issue_groupBySection.get(this.selectedSection)) ? this.issue_groupBySection.get(this.selectedSection) : [];
     this.setFilteredItems();
   }
 
@@ -240,7 +240,7 @@ export class IssuePigListPage {
       if (data) {
         this.getAllIssuePigs()
           .then((issuesPigs) => {
-            this.issues = this.issue_groupBySection.get(this.selectedSection) ? this.issue_groupBySection.get(this.selectedSection) : [];
+            this.issues = (this.issue_groupBySection && this.issue_groupBySection.get(this.selectedSection)) ? this.issue_groupBySection.get(this.selectedSection) : [];
             this.setFilteredItems();
           })
       }
@@ -294,7 +294,7 @@ export class IssuePigListPage {
       if (data) {
         this.getAllIssuePigs()
           .then((issuesPigs) => {
-            this.issues = this.issue_groupBySection.get(this.selectedSection) ? this.issue_groupBySection.get(this.selectedSection) : [];
+            this.issues = (this.issue_groupBySection && this.issue_groupBySection.get(this.selectedSection)) ? this.issue_groupBySection.get(this.selectedSection) : [];
             this.setFilteredItems();
           })
       }
@@ -304,7 +304,7 @@ export class IssuePigListPage {
     })
     section.selected = true;
     this.selectedSection = section.id;
-    this.issues = this.issue_groupBySection.get(this.selectedSection) ? this.issue_groupBySection.get(this.selectedSection) : [];
+    this.issues = (this.issue_groupBySection && this.issue_groupBySection.get(this.selectedSection)) ? this.issue_groupBySection.get(this.selectedSection) : [];
     this.navCtrl.push(IssuePigListComponent, {
       issues: this.issues,
       selectedFarm: this.selectedFarm,
@@ -326,7 +326,7 @@ export class IssuePigListPage {
           if(idx > -1){
             this.issuesPigList.splice(idx,1);
             this.issue_groupBySection = this.util.groupBy(this.issuesPigList, issue => issue.pig.house.section.id);
-            this.issues = this.issue_groupBySection.get(this.selectedSection) ? this.issue_groupBySection.get(this.selectedSection) : [];
+            this.issues = (this.issue_groupBySection && this.issue_groupBySection.get(this.selectedSection)) ? this.issue_groupBySection.get(this.selectedSection) : [];
             this.setFilteredItems();
           }
         }
@@ -346,7 +346,7 @@ export class IssuePigListPage {
       if(issues && issues.length){
         this.getAllIssuePigs()
         .then((issuesPigs) => {
-          this.issues = this.issue_groupBySection.get(this.selectedSection) ? this.issue_groupBySection.get(this.selectedSection) : [];
+          this.issues = (this.issue_groupBySection && this.issue_groupBySection.get(this.selectedSection)) ? this.issue_groupBySection.get(this.selectedSection) : [];
           this.setFilteredItems();
         })
       }

@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Events, IonicPage, Menu, ModalController, NavController, NavParams, Platform, Slides } from 'ionic-angular';
-import { farm, house, pig } from '../../common/entity';
+import { farm, pig } from '../../common/entity';
 
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { EmployeesProvider } from '../../providers/employees/employees';
@@ -28,7 +28,7 @@ export class FarmInfomationPage {
     "Quy mô trang trại",
     "Quy mô các khu",
     "Cơ cấu đàn nái",
-    "Cơ cấu đàn nộc",
+    "Cơ cấu đàn nọc",
     "Cơ cấu đàn heo con"];
 
   public farm: farm = new farm();
@@ -209,7 +209,7 @@ export class FarmInfomationPage {
     this.chartProvider.createPieChart(document.getElementById('chartMain'), data, '', '');
     this.chartProvider.createBarchart(document.getElementById('barChart'), dataBarChart);
     this.chartProvider.createPieChart(document.getElementById('chart1'), data_co_cau_dan_nai, 'Cơ cấu đàn nái', '');
-    this.chartProvider.createPieChart(document.getElementById('chart2'), data_co_cau_dan_noc, 'Cơ cấu đàn nộc', '');
+    this.chartProvider.createPieChart(document.getElementById('chart2'), data_co_cau_dan_noc, 'Cơ cấu đàn nọc', '');
     this.chartProvider.createPieChart(document.getElementById('chart3'), data_co_cau_dan_heo_con, 'Cơ cấu đàn heo con', '');
   }
 

@@ -71,6 +71,11 @@ export class MatingListPage {
 
     if (this.navParams.data.matings) {
       this.matings = this.navParams.data.matings;
+      if (this.navParams.data.farmId) {
+        this.matings = this.matings.filter((mating: mating) => {
+          return mating.mother.house.section.farm.id == this.navParams.data.farmId ? true : false;
+        })
+      }
       this.setFilteredItems();
     } else {
       this.getMatingList()
@@ -137,6 +142,12 @@ export class MatingListPage {
           } else {
             this.matings = data.matings.filter((mating) => {
               return mating.mother.house.section.typeId == this.sectionType.id ? true : false;
+            })
+          }
+          
+          if (this.navParams.data.farmId) {
+            this.matings = this.matings.filter((mating: mating) => {
+              return mating.mother.house.section.farm.id == this.navParams.data.farmId ? true : false;
             })
           }
           // this.initialMatings();

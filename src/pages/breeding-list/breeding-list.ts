@@ -69,6 +69,11 @@ export class BreedingListPage {
 
     if (this.navParams.data.breedings) {
       this.breedings = this.navParams.data.breedings;
+      if(this.navParams.data.farmId){
+        this.breedings = this.breedings.filter((breeding:breedings)=>{
+          return breeding.pig.house.section.farm.id == this.navParams.data.farmId ? true:false;
+        })
+      }
       this.setFilteredItems();
     } else {
       this.getBreedingList()
@@ -122,6 +127,11 @@ export class BreedingListPage {
       .then((breedings: Array<breedings>) => {
         if (breedings && breedings.length) {
           this.breedings = this.deployData.get_breedings_of_section(this.sectionType.id, breedings);
+          if(this.navParams.data.farmId){
+            this.breedings = this.breedings.filter((breeding:breedings)=>{
+              return breeding.pig.house.section.farm.id == this.navParams.data.farmId ? true:false;
+            })
+          }
         }
         this.util.closeBackDrop();
         return breedings;

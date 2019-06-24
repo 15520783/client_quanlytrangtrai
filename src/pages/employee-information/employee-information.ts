@@ -26,7 +26,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 })
 export class EmployeeInformationPage {
   @ViewChild('slider') slider: Slides;
-  @ViewChild('content') content:Content;
+  @ViewChild('content') content: Content;
 
   public employee: employee;
   public users: Array<user> = [];
@@ -119,7 +119,7 @@ export class EmployeeInformationPage {
 
   initSchedule() {
     this.schedules.forEach((schedule) => {
-      let today = new Date(new Date().getFullYear()+'/'+(new Date().getMonth()+1) +'/'+new Date().getDate());
+      let today = new Date(new Date().getFullYear() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getDate());
       if (schedule) {
         this.events.push({
           id: schedule.id,
@@ -129,8 +129,11 @@ export class EmployeeInformationPage {
           employee: schedule.employee,
           schedule: schedule,
           backgroundColor: (new Date(schedule.date) >= today) ?
-            (schedule.employee ? '#32db64' : '#01c2fa') : '#f53d3d',
-          borderColor: (new Date(schedule.date) >= today) ? (schedule.employee ? '#32db64' : '#01c2fa') : '#f53d3d'
+            (schedule.employee ?
+              (schedule.status == VARIABLE.SCHEDULE_STATUS.COMPLETE.name ? VARIABLE.SCHEDULE_STATUS.COMPLETE.color : VARIABLE.SCHEDULE_STATUS.ASSIGNED.color) : VARIABLE.SCHEDULE_STATUS.NOT_ASSIGNED.color) : VARIABLE.SCHEDULE_STATUS.OVERDUE.color,
+          borderColor: (new Date(schedule.date) >= today) ?
+            (schedule.employee ?
+              (schedule.status == VARIABLE.SCHEDULE_STATUS.COMPLETE.name ? VARIABLE.SCHEDULE_STATUS.COMPLETE.color : VARIABLE.SCHEDULE_STATUS.ASSIGNED.color) : VARIABLE.SCHEDULE_STATUS.NOT_ASSIGNED.color) : VARIABLE.SCHEDULE_STATUS.OVERDUE.color
         })
       }
     })
@@ -150,26 +153,15 @@ export class EmployeeInformationPage {
   ngOnInit() {
 
   }
-  
-  handleEventClick(model) { // handler method
-    // let callbackRemove = (schedule: schedule) => {
-    //   if (schedule) {
-    //     let idx = this.events.findIndex(_event => _event.id == schedule.id);
-    //     if (idx > -1) {
-    //       this.events.splice(idx, 1);
-    //     }
-    //     modal.dismiss();
-    //     this.eventEmitter.publish('home:reloadSchedule');
-    //   }
-    // }
 
+  handleEventClick(model) { // handler method
     let callbackUpdate = (schedule: schedule) => {
       if (schedule) {
         this.activitiesProvider.updateSchedule(schedule)
           .then((updated_schedule: schedule) => {
             modal.dismiss();
-            let active_idx = this.navCtrl.getActive().index; 
-            this.navCtrl.push(this.navCtrl.getActive().component,this.navParams.data);
+            let active_idx = this.navCtrl.getActive().index;
+            this.navCtrl.push(this.navCtrl.getActive().component, this.navParams.data);
             this.navCtrl.remove(active_idx);
             // this.navCtrl.setPages(this.navCtrl.getActive().component,this.navParams.data);
           })

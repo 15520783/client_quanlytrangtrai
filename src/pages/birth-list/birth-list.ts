@@ -1,8 +1,9 @@
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 
 import { ActivitiesProvider } from '../../providers/activities/activities';
 import { BirthChildDetailPage } from '../birth-child-detail/birth-child-detail';
 import { Component } from '@angular/core';
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { FilterProvider } from '../../providers/filter/filter';
 import { FormControl } from '@angular/forms';
 import { UserProvider } from '../../providers/user/user';
@@ -18,6 +19,7 @@ export class BirthListPage {
 
   public births: Array<births> = [];
   public sectionType: any;
+  public farmId: string;
 
   public mainAttribute = "pigCode";
   public attributes = [
@@ -28,7 +30,7 @@ export class BirthListPage {
     { name: "dateMating", label: 'Ngày phối' },
     { name: "dateBirth", label: 'Ngày sinh' },
     { name: "parities", label: 'Lứa đẻ' },
-    { name: "fetalWeight", label: 'Trọng lượng bào thai',unit:'(kg)' },
+    { name: "fetalWeight", label: 'Trọng lượng bào thai', unit: '(kg)' },
     { name: "borning", label: 'Số con sinh ra' },
     { name: "dieBeforeBorning", label: 'Chết trong khi sinh' },
     { name: "dieBorning", label: 'Chết khi sinh' },
@@ -54,16 +56,27 @@ export class BirthListPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public filterProvider: FilterProvider,
-    public util:Utils,
-    public activitiesProvider:ActivitiesProvider,
-    public userProvider:UserProvider
+    public util: Utils,
+    public activitiesProvider: ActivitiesProvider,
+    public userProvider: UserProvider,
+    public deployProvider: DeployDataProvider,
+    public platform: Platform
   ) {
+    if (this.navParams.data.farmId) {
+      this.farmId = this.navParams.data.farmId;
+    }
+
     if (this.navParams.data.sectionType) {
       this.sectionType = this.navParams.data.sectionType;
     }
 
     if (this.navParams.data.births) {
       this.births = this.navParams.data.births;
+      if (this.farmId) {
+        this.births = this.births.filter((birth: births) => {
+          return birth.mating.mother.house.section.farm.id == this.farmId ? true : false;
+        })
+      }
       this.setFilteredItems();
     } else {
       this.getBirthList()
@@ -128,6 +141,11 @@ export class BirthListPage {
       .then((births: Array<births>) => {
         if (births && births.length) {
           this.births = births;
+          if (this.navParams.data.farmId) {
+            this.births = this.births.filter((birth: births) => {
+              return birth.mating.mother.house.section.farm.id == this.navParams.data.farmId ? true : false;
+            })
+          }
         }
         this.util.closeBackDrop();
         return births;
@@ -137,7 +155,7 @@ export class BirthListPage {
       })
   }
 
-  viewDetail(item){
-    this.navCtrl.push(BirthChildDetailPage,{birth:item});
+  viewDetail(item) {
+    this.navCtrl.push(BirthChildDetailPage, { birth: item });
   }
 }

@@ -1,4 +1,11 @@
 page-activities {
+    .input-select{
+        ion-select{
+            font-size: 20px!important;
+            color:white!important;
+        }
+    }
+    
     .card-header{
         background:linear-gradient(to right,$themeColor2,$light-tint)
     }

@@ -93,36 +93,36 @@
   </ion-header>
   <ion-content>
     <ion-list>
-      <ion-item>
-        <ion-label stacked>Giống</ion-label>
-        <ion-select interface="popover" title="Giống" mode="ios" okText="Chọn" cancelText="Hủy"
-          [selectOptions]="customAlertOptions" (ionChange)="filterBreed($event)" placeholder="Tất cả">
-          <ion-option [value]="''">Tất cả</ion-option>
-          <ion-option *ngFor="let item of breedFilter" [value]="item.value">{{item.name}}</ion-option>
-        </ion-select>
-      </ion-item>
-      <ion-item>
+      <!-- <ion-item>
         <ion-label stacked>Trang trại</ion-label>
-        <ion-select interface="popover" title="Giống" mode="ios" [selectOptions]="customAlertOptions"
+        <ion-select interface="popover" title="Trang trại" mode="ios" [selectOptions]="customAlertOptions"
           (ionChange)="filterFarm($event)" placeholder="Tất cả">
           <ion-option [value]="''">Tất cả</ion-option>
           <ion-option *ngFor="let item of farmFilter" [value]="item.value">{{item.name}}</ion-option>
         </ion-select>
-      </ion-item>
+      </ion-item> -->
       <ion-item>
         <ion-label stacked>Khu</ion-label>
-        <ion-select interface="popover" title="Giống" mode="ios" [selectOptions]="customAlertOptions"
+        <ion-select interface="popover" title="Khu" mode="ios" [selectOptions]="customAlertOptions"
           (ionChange)="filterSection($event)" placeholder="Tất cả">
           <ion-option [value]="''">Tất cả</ion-option>
           <ion-option *ngFor="let item of sectionFilter" [value]="item.value">{{item.name}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item>
-        <ion-label stacked>Khu</ion-label>
-        <ion-select interface="popover" title="Giống" mode="ios" [selectOptions]="customAlertOptions"
+        <ion-label stacked>Chuồng</ion-label>
+        <ion-select interface="popover" title="Chuồng" mode="ios" [selectOptions]="customAlertOptions"
           (ionChange)="filterHouse($event)" placeholder="Tất cả">
           <ion-option [value]="''">Tất cả</ion-option>
           <ion-option *ngFor="let item of houseFilter" [value]="item.value">{{item.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Giống</ion-label>
+        <ion-select interface="popover" title="Giống" mode="ios" okText="Chọn" cancelText="Hủy"
+          [selectOptions]="customAlertOptions" (ionChange)="filterBreed($event)" placeholder="Tất cả">
+          <ion-option [value]="''">Tất cả</ion-option>
+          <ion-option *ngFor="let item of breedFilter" [value]="item.value">{{item.name}}</ion-option>
         </ion-select>
       </ion-item>
       <!-- <ion-item>

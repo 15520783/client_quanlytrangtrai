@@ -7,6 +7,7 @@ import { EmployeesProvider } from '../../providers/employees/employees';
 import { FcmProvider } from '../../providers/fcm/fcm';
 import { ScheduleInputPage } from '../../pages/schedule-input/schedule-input';
 import { Utils } from '../../common/utils';
+import { VARIABLE } from '../../common/const';
 
 export class Schedule {
   name: string = '';
@@ -23,6 +24,7 @@ export class Schedule {
 export class SchelduleDetailComponent {
 
   public schedule: schedule = new schedule();
+  public personalMode:boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -35,6 +37,9 @@ export class SchelduleDetailComponent {
     if (this.navParams.data.schedule) {
       this.schedule = this.navParams.data.schedule;
       this.schedule['dateDisplay'] = this.util.convertDate(this.schedule.date);
+    }
+    if(this.navParams.data.personalMode){
+      this.personalMode = this.navParams.data.personalMode;
     }
   }
 
@@ -141,4 +146,17 @@ export class SchelduleDetailComponent {
     })
   }
 
+  confirmCompleteSchedule(){
+    this.schedule.status = VARIABLE.SCHEDULE_STATUS.COMPLETE.name;
+    this.activitiesProvider.updateSchedule(this.schedule)
+    .then((updated_schedule:schedule)=>{
+      if(updated_schedule){
+        this.navParams.get('callbackUpdate')(updated_schedule);
+      }
+    })
+    .catch((err)=>{
+      console.log(err);
+      return err;
+    })
+  }
 }

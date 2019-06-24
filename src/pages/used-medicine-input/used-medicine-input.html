@@ -164,16 +164,18 @@
       <span *ngFor="let usedMedicine of usedMedicineList;let idx = index">
         <ion-item-sliding border-sliding *ngIf="credentialsForm2.controls['medicine'+idx]">
           <ion-item>
-            <input-select-target 
-              [(validControl)]="credentialsForm2.controls['medicine'+idx]" 
-              [active]="submitAttempt"
-              [placeholder]="'Chọn thuốc'" 
-              [label]="'Chọn thuốc'" [(data)]="medicines"
-              [errorMessage_Required]="'Thuốc là hạng mục bắt buộc'" 
-              [targertCmp]="'medicines'"
-              (valueChange)="medicineChange(farmId,$event,usedMedicine,idx)">
-            </input-select-target>
-  
+            <span (tap)="setCurrentMedicineId(credentialsForm2.value['medicine'+idx])">
+              <input-select-target 
+                [(validControl)]="credentialsForm2.controls['medicine'+idx]" 
+                [active]="submitAttempt"
+                [placeholder]="'Chọn thuốc'" 
+                [label]="'Chọn thuốc'" [(data)]="medicines"
+                [errorMessage_Required]="'Thuốc là hạng mục bắt buộc'" 
+                [targertCmp]="'medicines'"
+                (valueChange)="medicineChange(farmId,$event,usedMedicine,idx)">
+              </input-select-target>
+            </span>
+
             <input-select-target 
               [(validControl)]="credentialsForm2.controls['medicineWarehouse'+idx]" 
               [active]="submitAttempt"
@@ -181,7 +183,7 @@
               [errorMessage_Required]="'Nguồn lấy thuốc là hạng mục bắt buộc'" 
               [label]="'Nguồn thuốc'" [(data)]="usedMedicine.medicineWarehouseList"
               [targertCmp]="'medicineWarehouses'"
-              (valueChange)="medicineWarehouseChange($event,usedMedicine)">
+              (valueChange)="changeMedicineWarehouse($event,usedMedicine)">
             </input-select-target>
   
             <input-select 

@@ -173,9 +173,11 @@ export class DatePlanPage {
           employee: schedule.employee,
           schedule: schedule,
           backgroundColor: (new Date(schedule.date) >= today) ?
-            (schedule.employee ? VARIABLE.SCHEDULE_STATUS.ASSIGNED.color : VARIABLE.SCHEDULE_STATUS.NOT_ASSIGNED.color) : VARIABLE.SCHEDULE_STATUS.OVERDUE.color,
+            (schedule.employee ?
+              (schedule.status == VARIABLE.SCHEDULE_STATUS.COMPLETE.name ? VARIABLE.SCHEDULE_STATUS.COMPLETE.color : VARIABLE.SCHEDULE_STATUS.ASSIGNED.color) : VARIABLE.SCHEDULE_STATUS.NOT_ASSIGNED.color) : VARIABLE.SCHEDULE_STATUS.OVERDUE.color,
           borderColor: (new Date(schedule.date) >= today) ?
-            (schedule.employee ? VARIABLE.SCHEDULE_STATUS.ASSIGNED.color : VARIABLE.SCHEDULE_STATUS.NOT_ASSIGNED.color) : VARIABLE.SCHEDULE_STATUS.OVERDUE.color
+            (schedule.employee ?
+              (schedule.status == VARIABLE.SCHEDULE_STATUS.COMPLETE.name ? VARIABLE.SCHEDULE_STATUS.COMPLETE.color : VARIABLE.SCHEDULE_STATUS.ASSIGNED.color) : VARIABLE.SCHEDULE_STATUS.NOT_ASSIGNED.color) : VARIABLE.SCHEDULE_STATUS.OVERDUE.color
         })
       }
     })

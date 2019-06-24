@@ -30,8 +30,8 @@
             </ion-col>
             <ion-col col-2 *ngIf="platform.is('core')">
               <ion-row>
-                <button text-wrap *ngIf="UserProvider.rolePermission.ROLE_them_chung_tu_nhap_heo_trong_he_thong!=null"
-                  small no-margin ion-button item-end mode='ios' color="main" (tap)="viewAndCreateInvoice(item)">Duyệt
+                <button text-wrap *ngIf="userProvider.rolePermission.ROLE_them_chung_tu_nhap_heo_trong_he_thong!=null"
+                  no-margin ion-button item-end mode='ios' color="main" (tap)="viewAndCreateInvoice(item)">Duyệt
                   danh sách heo & Lập phiếu nhập
                 </button>
                 <!-- <button small no-margin ion-button item-end mode='ios' color="secondary" (tap)="createNewInvoice(item)">Lập phiếu nhập</button> -->

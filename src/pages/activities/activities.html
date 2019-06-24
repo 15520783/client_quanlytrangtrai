@@ -1,13 +1,17 @@
 <ion-header>
-  <header [title]="'Hoạt động'">
-  </header>
+  <header [title]="'Hoạt động'"></header>
 </ion-header>
 <ion-content *ngIf="platform.is('core')">
   <ion-row>
     <ion-col col-lg-3 col-md-4>
       <ion-card mode='ios'>
-        <ion-card-header>Danh sách hoạt động</ion-card-header>
+        <ion-card-header no-padding>
+          <input-select class="input-select" [value]="selectedFarm" [placeholder]="'Chọn trang trại'" [(data)]="farms"
+            (changeValue)="changeFarm($event)">
+          </input-select>
+        </ion-card-header>
         <ion-card-content class="ion-card-content-list-setting" no-padding>
+          <ion-item-divider sticky="true">Danh sách các khu</ion-item-divider>
           <ion-list *ngFor="let p of pages" no-lines no-margin>
             <button ion-item (click)="openPage(p);p.expand=!p.expand;" [attr.active]="p.active?'':null" no-lines>
               <ion-icon item-start [name]="p.icon"></ion-icon>
@@ -20,8 +24,7 @@
             <expandable [expanded]="p.expand" *ngIf="p.components">
               <ion-list>
                 <span *ngFor="let component of p.components">
-                  <button ion-item *ngIf="component!=null" 
-                    (click)="openComponent(component)"
+                  <button ion-item *ngIf="component!=null" (click)="openComponent(component)"
                     [attr.active]="component.active?'':null">{{component.name}}
                   </button>
                 </span>
@@ -53,9 +56,7 @@
     <expandable [expanded]="p.expand" *ngIf="p.components">
       <ion-list>
         <span *ngFor="let component of p.components">
-          <button ion-item  
-            *ngIf="component!=null"
-            (click)="openComponent(component)"
+          <button ion-item *ngIf="component!=null" (click)="openComponent(component)"
             [attr.active]="component.active?'':null">
             {{component.name}}
           </button>

@@ -76,7 +76,12 @@ const PERMISSIONS = {
         "ROLE_xem_thong_tin_chuong": {
             "id": "16",
             "name": "Xem thông tin chuồng",
-            "api": "/api/houses/{id}"
+            "api": "/api/houses/"
+        },
+        "ROLE_cap_nhat_chuong": {
+            "id":"125",
+            "name": "Cập nhật chuồng",
+            "api": "/api/houses/"
         },
         "ROLE_xoa_chuong": {
             "id": "17",
@@ -141,7 +146,17 @@ const PERMISSIONS = {
             "id": "28",
             "name": "Xem thông tin nhân viên",
             "api": "/api/employees/{id}"
-        }
+        },
+        "ROLE_xem_lich_bieu_nhan_vien": {
+            "id": "123",
+            "name": "Xem danh sách lịch biểu nhân viên",
+            "api": "/api/schedule/employee/"
+        },
+        "ROLE_xem_danh_sach_tai_khoan_nhan_vien": {
+            "id": "124",
+            "name": "Xem danh sách tài khoản nhân viên",
+            "api": "/api/users/employee"
+        },
     },
     "quan_ly_danh_sach_doi_tac": {
         "ROLE_xem_danh_sach_doi_tac": {
@@ -209,27 +224,27 @@ const PERMISSIONS = {
     },
     "quan_ly_lam_san":{
         "ROLE_xem_danh_sach_ghi_nhan_van_de_heo":{
-            "id":"",
+            "id":"145",
             "name":"Xem danh sách ghi nhận vấn đề heo",
             "api":"/api/issuespigs/list"
         },
         "ROLE_xem_goi_y_chuan_doan":{
-            "id":"",
+            "id":"146",
             "name":"Xem gợi ý chuẩn đoán",
             "api":"/api/issuespigs/forecastdiseases"
         },
         "ROLE_xoa_ghi_nhan_van_de_heo":{
-            "id":"",
+            "id":"147",
             "name":"Xóa ghi nhận vấn đề heo",
             "api":"/api/issuespigs/"
         },
         "ROLE_xu_ly_van_de_heo":{
-            "id":"",
+            "id":"148",
             "name":"Xử lí vấn đề của heo",
             "api":"/api/usedmedicine/"
         },
         "ROLE_xac_nhan_hoan_tat_xu_ly":{
-            "id":"",
+            "id":"149",
             "name":"Xác nhận hoàn tất xử lý",
             "api":"/api/issuespigs/updateall/"
         }
@@ -243,32 +258,32 @@ const PERMISSIONS = {
         },
 
         "ROLE_quan_ly_chung_tu_nhap_heo_trong_he_thong": {
-            "id":"",
+            "id":"126",
             "name": "Quản lý chứng từ nhập heo trong hệ thống",
             "api": ""
         },
         "ROLE_quan_ly_chung_tu_nhap_heo_ngoai_he_thong": {
-            "id":"",
+            "id":"127",
             "name": "Quản lý chứng từ nhập heo ngoài hệ thống",
             "api": ""
         },
         "ROLE_quan_ly_chung_tu_xuat_ban_heo": {
-            "id":"",
+            "id":"128",
             "name": "Quản lý chứng từ xuất bán heo",
             "api": ""
         },
         "ROLE_quan_ly_chung_tu_xuat_heo_trong_he_thong": {
-            "id":"",
+            "id":"129",
             "name": "Quản lý chứng từ xuất heo trong hệ thống",
             "api": ""
         },
         "ROLE_quan_ly_chung_tu_nhap_cam": {
-            "id":"",
+            "id":"130",
             "name": "Quản lý chứng từ nhập cám",
             "api": ""
         },
         "ROLE_quan_ly_chung_tu_nhap_thuoc": {
-            "id":"",
+            "id":"131",
             "name": "Quản lý chứng từ nhập thuốc",
             "api": ""
         },
@@ -385,7 +400,7 @@ const PERMISSIONS = {
             "api": "/api/invoicesproduct/"
         },
         "ROLE_xac_nhan_hoan_tat_chung_tu_nhap_cam": {
-            "id":"",
+            "id":"139",
             "name": "Xác nhận hoàn tất chứng từ nhập cám",
             "api": "/api/invoicesproduct/"
         },
@@ -420,7 +435,7 @@ const PERMISSIONS = {
             "api": "/api/invoicespig/"
         },
         "ROLE_xac_nhan_hoan_tat_chung_tu_nhap_thuoc": {
-            "id":"",
+            "id":"140",
             "name": "Xác nhận hoàn tất chứng từ nhập thuốc",
             "api": "/api/invoicesproduct/"
         },
@@ -440,33 +455,33 @@ const PERMISSIONS = {
             "api": "/api/medicinewarehouse/"
         },
         "ROLE_them_chung_tu_xuat_ban_heo":{
-            "id":"",
+            "id":"133",
             "name":"Thêm chứng từ xuất bán heo",
             "api":""
         },
         "ROLE_xoa_chung_tu_xuat_ban_heo": {
-            "id":"",
+            "id":"134",
             "name": "Xóa chứng từ xuất bán heo",
             "api": "/api/invoicespig/"
         },
         "ROLE_cap_nhat_chung_tu_xuat_ban_heo": {
-            "id":"",
+            "id":"135",
             "name": "Cập nhật chứng từ xuất bán heo",
             "api": "/api/invoicespig/"
         },
         "ROLE_xac_nhan_hoan_tat_chung_tu_xuat_ban_heo": {
-            "id":"",
+            "id":"136",
             "name": "Xác nhận xuất heo chứng từ xuất bán heo",
             "api": "/api/invoicespig/"
         },
         "ROLE_them_chi_tiet_chung_tu_xuat_ban_heo": {
-            "id":"",
+            "id":"137",
             "name": "Thêm chi tiết chứng từ xuất bán heo",
             "api": "/api/invoicepigdetail/pigsinvoicepigdetail/"
         },
     
         "ROLE_xoa_chi_tiet_chung_tu_xuat_ban_heo": {
-            "id":"",
+            "id":"138",
             "name": "Xóa chi tiết chứng từ xuất bán heo",
             "api": "/api/invoicepigdetail/onlyinvoicedetail/"
         }
@@ -618,12 +633,12 @@ const PERMISSIONS = {
             "api": "/api/invoicepigdetail/pigsinvoicepigdetail/"
         },
         "ROLE_xem_danh_sach_ghi_nhan_heo_de": {
-            "id":"",
+            "id":"143",
             "name": "Xem danh sách ghi nhận heo đẻ",
             "api": "/api/births/list"
         },
         "ROLE_xem_danh_sach_dan_heo_con": {
-            "id":"",
+            "id":"144",
             "name": "Xem danh sách ghi nhận heo con",
             "api": ""
         },
@@ -634,14 +649,20 @@ const PERMISSIONS = {
         },
 
         "ROLE_phan_loai_danh_gia_chat_luong_heo": {
-            "id":"",
+            "id":"141",
             "name": "Phân loại đánh giá chất lượng heo",
             "api": "/api/minings/"
         },
         "ROLE_luu_ghi_nhan_danh_gia_chat_luong_heo": {
-            "id":"",
+            "id":"142",
             "name": "Lưu ghi nhận đánh giá chất lượng heo",
             "api": "/api/minings/update/"
+        },
+
+        "ROLE_xem_danh_chung_tu_chuyen_heo_den": {
+            "id":"132",
+            "name": "Xem danh sách chứng từ chuyển heo đến",
+            "api": "/api/invoicespig/forwarding/list"
         },
     },
     "quan_ly_thiet_lap": {
@@ -729,19 +750,24 @@ const PERMISSIONS = {
             "name": "Xem bảng kế hoạch",
         },
         "ROLE_tao_moi_ke_hoach":{
-            "id":"",
+            "id":"150",
             "name":"Tạo mới kế hoạch",
             "api":"/api/schedule/"
         },
         "ROLE_xoa_ke_hoach":{
-            "id":"",
+            "id":"151",
             "name":"Xóa kế hoạch",
             "api":"/api/schedule/"
         },
         "ROLE_gui_thong_bao_ke_hoach":{
-            "id":"",
+            "id":"152",
             "name":"Gửi thông báo kế hoạch",
             "api":"/api/mail/sendemailnotification/"
+        },
+        "ROLE_xac_nhan_hoan_tat_ke_hoach":{
+            "id":"153",
+            "name":"Xác nhận hoàn tất kế hoạch",
+            "api":"/api/schedule/"
         }
     }
 }

@@ -1,4 +1,4 @@
-import { CONFIG, MESSAGE, VARIABLE } from '../../common/const';
+import { CONFIG, KEY, MESSAGE, VARIABLE } from '../../common/const';
 import { Component, Input, ViewChild } from '@angular/core';
 import { Events, IonicPage, Menu, MenuController, NavController, NavParams, Platform } from 'ionic-angular';
 
@@ -23,6 +23,7 @@ export class PigListSectionPage {
   @Input() pigs: Array<pig> = [];
   @Input() sectionTypeId: string = '';
   @Input() statusFilter: any = [];
+  @Input() farmId: string = '';
 
   public breed: any = {};
   public breedFilter: any = [];
@@ -79,21 +80,35 @@ export class PigListSectionPage {
       this.gender[gender.value] = gender;
     })
 
-    this.sectionTypeId = this.navParams.data.sectionType.id;
+
+    if (this.navParams.data.farmId && this.navParams.data.sectionType.id) {
+      this.farmId = this.navParams.data.farmId;
+      this.sectionTypeId = this.navParams.data.sectionType.id;
+    }
+
     this.util.openBackDrop();
-    this.pigProvider.getPigs().then((data) => {
-      if (this.navParams.data) {
-        this.pigs = this.navParams.data.getPigs(this.deployData);
-        if (this.navParams.data.statusFilter) {
-          this.statusFilter = this.navParams.data.statusFilter;
+    this.pigProvider.getPigs()
+      .then((data) => {
+        if (this.navParams.data) {
+          this.pigs = this.navParams.data.getPigs(this.deployData).filter((pig:pig)=>{
+            return this.houses[pig.houseId].section.farm.id == this.farmId ? true:false;
+          });
+
+          this.sectionFilter = this.deployData.get_sections_by_sectionType_of_farm(this.farmId, this.sectionTypeId);
+          this.sectionFilter.forEach(section => {
+            section.value = section.id;
+          })
+
+          if (this.navParams.data.statusFilter) {
+            this.statusFilter = this.navParams.data.statusFilter;
+          }
         }
-      }
-      this.setFilteredItems();
-      this.util.closeBackDrop();
-    })
+        this.setFilteredItems();
+        this.util.closeBackDrop();
+      })
       .catch((err) => {
         this.util.closeBackDrop().then((sth) => {
-          this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].ERROR_OCCUR)
+          this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].ERROR_OCCUR);
         })
       })
 
@@ -201,19 +216,18 @@ export class PigListSectionPage {
     this.setFilteredItems();
   }
 
-  filterFarm(farmId) {
-    if (farmId) {
-      this.filterProvider.searchWithInclude.farmId = [farmId];
-      this.sectionFilter = this.deployData.get_sections_by_sectionType_of_farm(farmId, this.sectionTypeId);
-      this.sectionFilter.forEach(section => {
-        section.value = section.id;
-      })
-      console.log(this.sectionFilter);
-    }
-    else
-      this.filterProvider.searchWithInclude.farmId = [];
-    this.setFilteredItems();
-  }
+  // filterFarm(farmId) {
+  //   if (farmId) {
+  //     this.filterProvider.searchWithInclude.farmId = [farmId];
+  //     this.sectionFilter = this.deployData.get_sections_by_sectionType_of_farm(farmId, this.sectionTypeId);
+  //     this.sectionFilter.forEach(section => {
+  //       section.value = section.id;
+  //     })
+  //   }
+  //   else
+  //     this.filterProvider.searchWithInclude.farmId = [];
+  //   this.setFilteredItems();
+  // }
 
   filterSection(sectionId) {
     if (sectionId) {

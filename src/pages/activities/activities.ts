@@ -34,6 +34,8 @@ export class ActivitiesPage {
     public events: Events,
     public userProvider: UserProvider
   ) {
+    this.init();
+
     this.components = {
       list_pig_khu_cach_ly: {
         name: 'Danh sách heo tại khu', component: PigListSectionPage, active: false,
@@ -502,24 +504,30 @@ export class ActivitiesPage {
 
     if (this.pages && this.pages.length) {
       this.pages[0].active = true;
+      this.pages[0].expand = true;
       this.pages[0].components[0].active = true;
       this.rootPage = this.pages[0].components[0].component;
       if (this.pages[0].components[0].data.hasOwnProperty('getPigs')) {
         this.pages[0].components[0].data['pigs'] = this.pages[0].components[0].data.getPigs(this.deployData);
       }
+      this.pages[0].components[0].data['farmId'] = this.selectedFarm;
       this.rootParam = this.pages[0].components[0].data;
     }
   }
 
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ActivitiesPage');
     this.init();
   }
 
   public sectionId: string = '6';
+  public farms:Array<any> = [];
+  public selectedFarm:string;
 
   init() {
+    this.farms = this.deployData.get_farm_list_for_select();
+    this.selectedFarm = this.farms[0].value;
+    
     this.sectionId = this.deployData.get_section_list_for_select()[0].value;
     this.events.publish('activities:PigOut');
   }
@@ -544,14 +552,39 @@ export class ActivitiesPage {
       if (componentObj.data.hasOwnProperty('getPigs')) {
         componentObj.data['pigs'] = componentObj.data.getPigs(this.deployData);
       }
+      componentObj.data['farmId'] = this.selectedFarm;
+
       this.nav.setRoot(componentObj.component, componentObj.data)
     }
     else {
       if (componentObj.data.hasOwnProperty('getPigs')) {
         componentObj.data['pigs'] = componentObj.data.getPigs(this.deployData);
       }
+      componentObj.data['farmId'] = this.selectedFarm;
+
       this.navCtrl.push(componentObj.component, componentObj.data)
     }
   }
 
+  changeFarm(farm){
+    this.pages.forEach(page => {
+      page.active = false;
+      page.expand = false;
+      page.components.forEach((component)=>{
+        component.active = false;
+      })
+    });
+    
+    this.selectedFarm = farm.valueId;
+    if (this.pages && this.pages.length) {
+      this.pages[0].active = true;
+      this.pages[0].expand = true;
+      this.pages[0].components[0].active = true;
+      if (this.pages[0].components[0].data.hasOwnProperty('getPigs')) {
+        this.pages[0].components[0].data['pigs'] = this.pages[0].components[0].data.getPigs(this.deployData);
+      }
+      this.pages[0].components[0].data['farmId'] = this.selectedFarm;
+      this.nav.setRoot(this.pages[0].components[0].component, this.pages[0].components[0].data)
+    }
+  }
 } 

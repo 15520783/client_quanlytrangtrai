@@ -2,7 +2,7 @@
 <ion-header no-border>
 </ion-header>
 
-<ion-content no-bounce padding #content (ngSubmit)="onSubmit()" showWhen="ios,android">
+<ion-content no-bounce padding #content (ngSubmit)="onSubmit()" *ngIf="!platform.is('core')">
   <ion-row margin justify-content-center align-items-center>
     <ion-col align-self-start>
     </ion-col>
@@ -59,22 +59,10 @@
         style="background: rgba(50, 211, 152,0.8)!important;" padding [disabled]="wait">Đăng nhập</button>
     </ion-col>
   </ion-row>
-  <!-- <ion-row *ngIf="wait">
-    <ion-col text-center>
-      <ion-spinner color="secondary"></ion-spinner>
-    </ion-col>
-  </ion-row> -->
-  <!-- <ion-row>
-    <ion-col text-center>
-      <button ion-button clear color="light" font10>
-        Quên mật khẩu?
-      </button>
-    </ion-col>
-  </ion-row> -->
 </ion-content>
 
 
-<ion-content class="browser" no-bounce (ngSubmit)="onSubmit()" showWhen="core">
+<ion-content class="browser" no-bounce (ngSubmit)="onSubmit()" *ngIf="platform.is('core')">
   <ion-row justify-content-center align-items-center>
     <ion-col align-self-left></ion-col>
     <ion-col text-center col-md-2 col-sm-4 align-self-center>
@@ -129,18 +117,6 @@
             </button>
           </ion-col>
         </ion-row>
-        <!-- <ion-row *ngIf="wait">
-          <ion-col text-center>
-            <ion-spinner color="secondary"></ion-spinner>
-          </ion-col>
-        </ion-row> -->
-        <!-- <ion-row>
-          <ion-col text-center>
-            <button ion-button clear color="light" font10>
-              Forgot your password?
-            </button>
-          </ion-col>
-        </ion-row> -->
       </form>
     </ion-col>
   </ion-row>

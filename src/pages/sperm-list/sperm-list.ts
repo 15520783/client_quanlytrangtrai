@@ -37,6 +37,8 @@ export class SpermListPage {
   public mainAttribute = "breedName";
   public attributes = [
     { name: "pigCode", label: 'Mã heo' },
+    { name: "farmName", label: 'Trang trại' },
+    { name: "sectionName", label: 'Khu' },
     { name: "houseName", label: 'Nhà' },
     { name: "dateDisplay", label: 'Ngày lấy tinh' },
     { name: "spermCount", label: 'Số lần lấy' },
@@ -51,7 +53,7 @@ export class SpermListPage {
   ];
 
   public placeholderSearch: string = 'Tìm kiếm heo'
-  public filter_default: Array<string> = ["breedName", "pigCode"];
+  public filter_default: Array<string> = ["breedName", "pigCode","farmName","sectionName","houseName","dateDisplay"];
 
   public page_Idx: number = 1;
   public page_Total: number = 0;
@@ -85,6 +87,11 @@ export class SpermListPage {
 
     if (this.navParams.data.sperms) {
       this.sperms = this.navParams.data.sperms;
+      if(this.navParams.data.farmId){
+        this.sperms = this.sperms.filter((sperm:sperms)=>{
+          return sperm.pig.house.section.farm.id == this.navParams.data.farmId ? true : false;
+        })
+      }
       this.initialSperms();
       this.setFilteredItems();
     } else {
@@ -144,6 +151,11 @@ export class SpermListPage {
       .then((sperms: Array<sperms>) => {
         if (sperms && sperms.length) {
           this.sperms = this.deployData.get_sperms_of_section(this.sectionType.id, sperms);
+          if(this.navParams.data.farmId){
+            this.sperms = this.sperms.filter((sperm:sperms)=>{
+              return sperm.pig.house.section.farm.id == this.navParams.data.farmId ? true : false;
+            })
+          }
           this.initialSperms();
         } 
         this.util.closeBackDrop();
@@ -159,6 +171,8 @@ export class SpermListPage {
     this.sperms.forEach((sperm) => {
       sperm['breedName'] = sperm.pig.breed.name + ' ' + sperm.pig.breed.symbol;
       sperm['pigCode'] = sperm.pig.pigCode;
+      sperm['farmName'] = sperm.pig.house.section.farm.name;
+      sperm['sectionName'] = sperm.pig.house.section.name;
       sperm['houseName'] = sperm.pig['house'].name;
       sperm['dateDisplay'] = this.util.convertDate(sperm.date);
       sperm['breedId'] = sperm.pig.breed.id;

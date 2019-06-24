@@ -26,6 +26,7 @@ export class SettingUtilComponent {
   @Input() removeButtonLabel: string = 'Xóa';
   @Input() roleInput: any;
   @Input() extraButtons: any;
+  @Input() permission: any;
 
   // @Input() options: {
   //   data: Array<any>,
@@ -70,6 +71,7 @@ export class SettingUtilComponent {
   }
 
   init() {
+    this.options.permission != null ? this.permission = this.options.permission : null;
     this.options.mainAttribute ? this.mainAttribute = this.options.mainAttribute : this.mainAttribute;
     this.options.data.length ? this.data = this.options.data : this.data;
     this.options.hasOwnProperty('customData') ? this.options.customData(this.data) : null;
