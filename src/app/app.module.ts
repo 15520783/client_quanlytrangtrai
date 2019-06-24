@@ -37,6 +37,7 @@ import { FarmsPage } from '../pages/farms/farms';
 import { FarmsProvider } from '../providers/farms/farms';
 import { FcmProvider } from '../providers/fcm/fcm';
 import { FeedInputPage } from '../pages/feed-input/feed-input';
+import { FeedingHistoryPage } from '../pages/feeding-history/feeding-history';
 import { FilterProvider } from '../providers/filter/filter';
 import { Firebase } from '@ionic-native/firebase';
 import { FoodInvoiceDetailPage } from '../pages/food-invoice-detail/food-invoice-detail';
@@ -120,6 +121,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { TestInputPage } from '../pages/test-input/test-input';
 import { Toast } from '@ionic-native/toast';
 import { TokenInterceptor } from './interceptor';
+import { UsedMedicineHistoryPage } from '../pages/used-medicine-history/used-medicine-history';
 import { UsedMedicineInputPage } from '../pages/used-medicine-input/used-medicine-input';
 import { UserAccountListPage } from '../pages/user-account-list/user-account-list';
 import { UserInfoPage } from '../pages/user-info/user-info';
@@ -205,7 +207,9 @@ const Pages = [
   ReviewOffsetPigPage,
   SectionInputPage,
   UserInfoPage,
-  SettingConfigPage
+  SettingConfigPage,
+  FeedingHistoryPage,
+  UsedMedicineHistoryPage
 ]
 
 const Components = [
@@ -283,7 +287,7 @@ export const firebaseConfig = {
     IonicModule.forRoot(MyApp, {
       menuType: 'push',
       tabsPlacement: 'top',
-      iconMode: 'ios',  
+      iconMode: 'ios',
       activator: 'ripple'
     }),
     FullCalendarModule,

@@ -121,16 +121,6 @@ export class WarehousesProvider {
       }
       return new_warehouse;
     })
-    // .then((new_warehouse)=>{
-    //   if(new_warehouse){
-    //     this.util.getKey(KEY.WAREHOUSES).then((warehouses:Array<warehouse>)=>{
-    //       warehouses.push(new_warehouse);
-    //       this.util.setKey(KEY.WAREHOUSES,warehouses);
-    //     })
-    //     this.warehouses.push(new_warehouse);
-    //   }
-    //   return new_warehouse;
-    // })
   }
 
   /**
@@ -214,5 +204,17 @@ export class WarehousesProvider {
         })
       }
     }
+  }
+
+  getAllFeedSOfFoodWarehouse(foodWarehouseId){
+    return this.http.get(API.GET_FEEDS_OF_FOODWAREHOUSE+foodWarehouseId)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  getAllUsedMedicineOfMedicineWarehouse(medicineWarehouseId){
+    return this.http.get(API.GET_USED_MEDICINE_OF_MEDICINEWAREHOUSE+medicineWarehouseId)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
   }
 }

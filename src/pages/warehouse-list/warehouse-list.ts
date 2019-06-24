@@ -87,7 +87,8 @@ export class WarehouseListPage {
     this.data.forEach((warehouse: warehouse) => {
       warehouse['typeName'] = warehouse.type ? warehouse.type.name : '';
       warehouse['managerName'] = warehouse.manager.name;
-      warehouse['houseName'] = warehouse.manager.farm.name;
+      // warehouse['houseName'] = warehouse.manager.farm.name;
+      warehouse['farmName'] = warehouse.manager.farm.name;
     })
     this.filterProvider.input = this.data;
     this.filterProvider.searchText = searchItem;

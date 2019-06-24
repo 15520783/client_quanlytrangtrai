@@ -23,7 +23,8 @@
                     [label] = "'Chuồng'"
                     [active]= "submitAttempt"
                     [placeholder]="'Chọn chuồng'"
-                    [(data)]="houses">
+                    [(data)]="houses"
+                    (changeValue)="houseChange($event)">
         </input-select>
         <input-date [(validControl)] = "credentialsForm.controls.date"
                     [errorMessage_Required]  ="'Ngày xuất là hạng mục bắt buộc.'"
@@ -50,7 +51,9 @@
                     [placeholder]="'Nhập thông tin mô tả'"
                     [active]= "submitAttempt">
         </input-text>
-
+        <ion-item *ngIf="pigs && pigs.length">
+          <p ion-text color="secondary">Tổng số heo tại chuồng: {{pigs.length}}</p>
+        </ion-item>
         <!-- <input-text [(validControl)] = "credentialsForm.controls.position"
                     [errorMessage_Required]  = "'Vị trí là hạng mục bắt buộc'"
                     [label] = "'Vị trí'"

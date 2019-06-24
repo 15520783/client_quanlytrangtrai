@@ -38,7 +38,7 @@ export class PigListSectionPage {
   public attributes = [
     { name: "breedName", label: 'Giống' },
     { name: "farmName", label: 'Trang trại' },
-    { name: "houseName", label: 'Nhà' },
+    { name: "houseName", label: 'Chuồng' },
     { name: "sectionName", label: 'Khu' },
     { name: "genderName", label: 'Giới tính' },
     { name: "birthdayDisplay", label: 'Ngày sinh' },

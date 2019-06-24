@@ -103,9 +103,14 @@
                     </ion-col>
                   </ion-row>
                 </ion-col>
-                <!-- <ion-col col-lg-2 col-md-3 col-sm-3>
-                    <button ion-button mode='ios' block color="secondary" text-wrap>Chuyển thuốc</button>
-                  </ion-col> -->
+                <ion-col col-lg-2 col-md-3 col-sm-3>
+                  <ion-row>
+                    <ion-col col-12>
+                      <button (tap)="viewUsedMedicineHistory(item)" small ion-button mode='ios' block color="secondary"
+                        text-wrap>Lịch sử sử dụng</button>
+                    </ion-col>
+                  </ion-row>
+                </ion-col>
               </ion-row>
             </ion-item>
           </ion-list>
@@ -182,6 +187,10 @@
               </ion-col>
             </ion-row>
           </ion-item>
+          <ion-item-options side="right">
+            <button text-wrap ion-button (tap)="viewUsedMedicineHistory(item)" color="secondary" style="font-size: 10px">Lịch
+              sử sử dụng</button>
+          </ion-item-options>
         </ion-item-sliding>
       </ion-list>
     </ion-slide>

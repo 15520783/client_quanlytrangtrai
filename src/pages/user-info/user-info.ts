@@ -1,10 +1,12 @@
+import { AlertController, IonicPage, ModalController, NavController, NavParams, Platform, Slides } from 'ionic-angular';
 import { CONFIG, KEY, MESSAGE, VARIABLE } from '../../common/const';
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, ModalController, NavController, NavParams, Platform, Slides } from 'ionic-angular';
-import { schedule, user } from '../../common/entity';
+import { employee, schedule, user } from '../../common/entity';
 
 import { ActivitiesProvider } from '../../providers/activities/activities';
 import { CalendarComponent } from 'ng-fullcalendar';
+import { EmployeeInputPage } from '../employee-input/employee-input';
+import { EmployeesProvider } from '../../providers/employees/employees';
 import { OptionsInput } from '@fullcalendar/core';
 import { SchelduleDetailComponent } from '../../components/scheldule-detail/scheldule-detail';
 import { UserProvider } from '../../providers/user/user';
@@ -42,7 +44,9 @@ export class UserInfoPage {
     public userProvider: UserProvider,
     public platform: Platform,
     public activitiesProvider: ActivitiesProvider,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    public employeeProvider:EmployeesProvider,
+    public alertCtrl:AlertController
   ) {
     if (this.navParams.data.user) {
       this.userAccount = this.navParams.data.user;
@@ -198,5 +202,82 @@ export class UserInfoPage {
       this.month = button.data.getMonth() + 1;
       this.year = button.data.getFullYear();
     }
+  }
+
+  edit() {
+    let callback = (employee:employee) =>{
+      if(employee){
+        console.log(employee);
+        this.employeeProvider.updateEmployee(employee)
+        .then((updated_employee:employee)=>{
+          if(updated_employee){
+            this.util.setKey(KEY.EMPLOYEE_USER,updated_employee);
+            this.userAccount.employee = updated_employee;
+            this.init();
+          }
+          this.navCtrl.pop();
+        })
+        .catch((err)=>{
+          console.log(err);
+          return err;
+        })
+      }
+    }
+
+    this.navCtrl.push(EmployeeInputPage, { employee: this.userAccount.employee, personalMode: true ,title:'Cập nhật thông tin',callback:callback});
+  }
+
+  changePassword() {
+    let alert = this.alertCtrl.create({
+      title: 'Đổi mật khẩu',
+      message: '',
+      inputs: [
+        {
+          name: 'password',
+          placeholder: 'Nhập mật khẩu mới',
+          type: 'password'
+        },
+        {
+          name: 'repeatPassword',
+          placeholder: 'Nhập lại mật khẩu',
+          type: 'password'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Xác nhận',
+          handler: data => {
+            if (!data.password || !data.repeatPassword) {
+              this.util.showToast('Mật khẩu không thể để trống');
+            } else {
+              if (data.password.length > 1000 || data.repeatPassword.length > 1000) {
+                this.util.showToast('Mật khẩu không thể vượt quá 1000 ký tự');
+              } else {
+                if (data.password == data.repeatPassword) {
+                  this.userAccount.password = data.password;
+                  this.userProvider.updatePassword(this.userAccount)
+                    .then((updated_user: user) => {
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    })
+                }
+                else {
+                  this.util.showToast('Mật khẩu xác nhận không khớp.');
+                }
+              }
+            }
+          }
+        },
+        {
+          text: 'Hủy',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    })
+    alert.present();
   }
 }

@@ -282,6 +282,8 @@ const API = {
     GET_FORECASTED_DISEASES: '/api/issuespigs/forecastdiseases',    //{idfarm}/{idsection}
     GET_MEDICINES_OF_DISEASE: '/api/medicinedisease/disease',  //{diseaseId}
     GET_MEDICINEWAREHOUSE_OF_MEDICINE: '/api/medicinewarehouse/medicine', //{{medicineId}}
+    GET_FEEDS_OF_FOODWAREHOUSE:'/api/feeds/foodwarehouse/',
+    GET_USED_MEDICINE_OF_MEDICINEWAREHOUSE:'/api/usedmedicine/medicinewarehouse/',
     GET_USER_ACCOUNT_OF_EMPLOYEE: '/api/users/employee', //{empId}
     GET_SCHEDULE_OF_EMPLOYEE: '/api/schedule/employee/',  //{empId}
     GET_PERMISSION_OF_ROLE: '/api/rolepermission/role/', //{roleId}

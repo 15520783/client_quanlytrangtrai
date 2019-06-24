@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { feeds, foodWareHouse, employee, foodUnits } from '../../common/entity';
-import { ValidateNumber } from '../../validators/number.validator';
-import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
-import { Utils } from '../../common/utils';
-import { KEY } from '../../common/const';
+import { employee, feeds, foodUnits, foodWareHouse, pig } from '../../common/entity';
+
 import { ActivitiesProvider } from '../../providers/activities/activities';
+import { Component } from '@angular/core';
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { KEY } from '../../common/const';
+import { Utils } from '../../common/utils';
+import { ValidateNumber } from '../../validators/number.validator';
 
 @IonicPage()
 @Component({
@@ -17,6 +18,7 @@ export class FeedInputPage {
 
   public credentialsForm: FormGroup;
   public submitAttempt: boolean = false;
+  public pigs: Array<pig> = [];
 
   public feeds: Array<feeds> = [];
   public foodWareHouse = new foodWareHouse();
@@ -47,29 +49,23 @@ export class FeedInputPage {
       quantity: [this.quantity, Validators.compose([Validators.required, ValidateNumber])],
       unit: [this.unit, Validators.compose([Validators.required, Validators.maxLength(1000)])],
       description: [this.description, Validators.compose([Validators.required, Validators.maxLength(1000)])],
-
-      // section_id: [this.house.section.id, Validators.compose([Validators.required, Validators.maxLength(1000)])],
-      // type_id: [this.house.typeId, Validators.compose([Validators.required])],
-      // houseCode: [this.house.houseCode, Validators.compose([Validators.required, Validators.maxLength(1000)])],
-      // name: [this.house.name, Validators.compose([Validators.required, Validators.maxLength(1000)])],
-      // position: [this.house.position, Validators.compose([Validators.required, Validators.maxLength(1000)])],
-      // founding: [this.house.founding, Validators.compose([Validators.required])],
-      // manager:[this.house.manager,Validators.compose([Validators.required])],
-      // status: this.house.status,
-      // description: [this.house.description, Validators.compose([Validators.required, Validators.maxLength(1000)])],
     });
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad FeedInputPage');
   }
 
 
   sectionChange(e) {
+    this.pigs = [];
     this.houses = this.deployData.get_houses_of_section(e.valueId);
     this.houses.forEach((house) => {
       house['value'] = house.id;
     });
+  }
+
+  houseChange(house) {
+    this.pigs = this.deployData.get_pigs_of_house(house.valueId);
   }
 
   public foodUnits: any = {};
@@ -82,7 +78,6 @@ export class FeedInputPage {
     this.units = this.deployData.get_foodUnit_list_for_select();
     this.unit = this.units[0].value;
     if (this.navParams.data.foodWareHouse) {
-      console.log(this.navParams.data.foodWareHouse);
       this.foodWareHouse = this.navParams.data.foodWareHouse;
       console.log(this.foodWareHouse);
     }
@@ -94,33 +89,47 @@ export class FeedInputPage {
     }
   }
 
+
+
   onSubmit() {
     this.submitAttempt = true;
     if (this.credentialsForm.valid) {
       this.houseId = this.credentialsForm.value.houseId;
       this.unit = this.credentialsForm.value.unit;
       this.quantity = this.credentialsForm.value.quantity;
-      let pigs = this.deployData.get_pigs_of_house(this.houseId)
+      let pigs = this.deployData.get_pigs_of_house(this.houseId);
       let foodUnit: foodUnits = this.foodUnits[this.unit];
       this.date = this.credentialsForm.value.date;
       this.description = this.credentialsForm.value.description;
-      pigs.forEach((pig) => {
-        let feed = new feeds();
-        feed.foodWarehouse = this.foodWareHouse;
-        feed.pig = pig;
-        feed.employee = this.employee;
-        feed.date = this.date;
-        feed.quantity = (foodUnit.quantity * this.quantity) / pigs.length;
-        feed.unit = this.unit;
-        feed.description = this.description;
-        this.feeds.push(feed)
-      })
-      this.activitiesProvider.createFeeds(this.feeds)
-        .then((feeds) => {
-          console.log(feeds);
-          this.navCtrl.pop();
+
+      let used_quantity = this.quantity * foodUnit.quantity;
+      let remain_quantity = parseFloat(this.foodWareHouse.remain) * this.foodWareHouse.unit.quantity;
+      if (used_quantity > remain_quantity) {
+        this.util.showToast('Số lượng tồn kho không đủ');
+      } else {
+
+        this.feeds = [];
+        pigs.forEach((pig) => {
+          let feed = new feeds();
+          feed.foodWarehouse = this.foodWareHouse;
+          feed.pig = pig;
+          feed.employee = this.employee;
+          feed.date = this.date;
+          feed.quantity = this.quantity / pigs.length;
+          feed.unit = this.unit;
+          feed.description = this.description;
+          this.feeds.push(feed);
         })
-        .catch((err) => { })
+
+
+        this.activitiesProvider.createFeeds(this.feeds)
+          .then((feeds) => {
+            this.navCtrl.pop();
+            this.navParams.get('callback')(feeds);
+          })
+          .catch((err) => { })
+      }
+
     }
 
     // this.navParams.get('callback')(this.house);

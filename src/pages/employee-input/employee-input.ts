@@ -6,8 +6,10 @@ import { Component } from '@angular/core';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { FarmsProvider } from '../../providers/farms/farms';
 import { SettingsProvider } from '../../providers/settings/settings';
+import { UserProvider } from '../../providers/user/user';
 import { VARIABLE } from '../../common/const';
 import { ValidateEmail } from '../../validators/email.validator';
+import { ValidateNumber } from '../../validators/number.validator';
 
 @IonicPage()
 @Component({
@@ -18,10 +20,12 @@ export class EmployeeInputPage {
 
   public credentialsForm: FormGroup;
   public submitAttempt: boolean = false;
+  public personalMode: boolean = false;
+  public title: string = 'Nhập thông tin nhân viên';
 
   public RegencyTypes: any = [];
 
-  public genders: any ;
+  public genders: any;
 
   // public status: any = [
   //   { name: 'Trạng thái 1', value: 1 },
@@ -39,19 +43,28 @@ export class EmployeeInputPage {
     private formBuilder: FormBuilder,
     public farmProvider: FarmsProvider,
     public settingProvider: SettingsProvider,
-    public deployData:DeployDataProvider
+    public deployData: DeployDataProvider,
+    public userProvider: UserProvider
   ) {
-    this.RegencyTypes= this.settingProvider.setting.regencies;
+    this.RegencyTypes = this.settingProvider.setting.regencies;
     this.RegencyTypes.forEach(element => {
       element['value'] = element.id;
     });
 
     this.genders = VARIABLE.GENDER_EMPLOYEE;
 
-    if(this.navParams.data.employee){
+    if (this.navParams.data.employee) {
       this.employee = this.navParams.data.employee;
       this.employee.birthday = new Date(this.employee.birthday).toISOString();
       this.employee.dateJoin = new Date(this.employee.dateJoin).toISOString();
+    }
+
+    if (this.navParams.data.personalMode) {
+      this.personalMode = true;
+    }
+
+    if (this.navParams.data.title) {
+      this.title = this.navParams.data.title;
     }
 
     this.farms = this.deployData.get_farm_list_for_select();
@@ -64,9 +77,8 @@ export class EmployeeInputPage {
       birthday: [this.employee.birthday, Validators.compose([Validators.required])],
       address: [this.employee.address, Validators.compose([Validators.required, Validators.maxLength(1000)])],
       email: [this.employee.email, Validators.compose([Validators.required, Validators.maxLength(1000), ValidateEmail])],
-      cmnd: [this.employee.cmnd, Validators.compose([Validators.required, Validators.maxLength(13)])],
+      cmnd: [this.employee.cmnd, Validators.compose([Validators.required, Validators.maxLength(13),ValidateNumber])],
       dateJoin: [this.employee.dateJoin, Validators.compose([Validators.required])],
-      // status: [this.employee.status, Validators.compose([Validators.required])]
     });
   }
 
@@ -75,9 +87,9 @@ export class EmployeeInputPage {
 
   onSubmit() {
     this.submitAttempt = true;
-    if(this.credentialsForm.valid){
-      Object.keys(this.credentialsForm.value).forEach((attr)=>{
-        this.employee[attr]= this.credentialsForm.value[attr];
+    if (this.credentialsForm.valid) {
+      Object.keys(this.credentialsForm.value).forEach((attr) => {
+        this.employee[attr] = this.credentialsForm.value[attr];
       })
 
       this.employee.regency.id = this.employee['regency_id'];

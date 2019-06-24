@@ -742,6 +742,44 @@ const PERMISSIONS = {
         "ROLE_thiet_lap_luat_phoi": {
             "id": "121",
             "name": "Thiết lập luật phối"
+        },
+        "ROLE_thiet_lap_danh_sach_loai_kho":{
+            "id":"155",
+            "name":"Thiết lập danh sách loại kho"
+        },
+        "ROLE_thiet_lap_danh_sach_loai_khach_hang":{
+            "id":"156",
+            "name":"Thiết lập danh sách loại khách hàng"
+        },
+        
+        "ROLE_thiet_lap_danh_sach_nhóm_khach_hang":{
+            "id":"157",
+            "name":"Thiết lập danh sách nhóm khách hàng"
+        },
+        
+        "ROLE_thiet_lap_danh_sach_khach_hang":{
+            "id":"158",
+            "name":"Thiết lập danh sách khách hàng"
+        },
+        
+        "ROLE_thiet_lap_danh_sach_doi_tac":{
+            "id":"159",
+            "name":"Thiết lập danh sách đối tác"
+        },
+        
+        "ROLE_thiet_lap_danh_sach_don_vi_thuoc":{
+            "id":"160",
+            "name":"Thiết lập danh sách đơn vị thuốc"
+        },
+        
+        "ROLE_thiet_lap_danh_sach_trieu_chung_lam_San":{
+            "id":"161",
+            "name":"Thiết lập danh sách triệu chứng lâm sàn"
+        },
+        
+        "ROLE_thiet_lap_danh_sach_phan_quyen":{
+            "id":"162",
+            "name":"Thiết lập danh sách phân quyền"
         }
     },
     "quan_ly_bang_ke_hoach": {

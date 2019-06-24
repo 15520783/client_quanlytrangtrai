@@ -4,6 +4,7 @@ import { medicineWarehouse, warehouse } from '../../common/entity';
 
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { SettingInputUtilComponent } from '../../components/setting-input-util/setting-input-util';
+import { UsedMedicineHistoryPage } from '../used-medicine-history/used-medicine-history';
 import { UserProvider } from '../../providers/user/user';
 import { Utils } from '../../common/utils';
 import { VARIABLE } from '../../common/const';
@@ -113,5 +114,9 @@ export class MedicineWarehouseInformationPage {
         }
       })
       .catch((err: Error) => { })
+  }
+
+  viewUsedMedicineHistory(item:medicineWarehouse){
+    this.navCtrl.push(UsedMedicineHistoryPage, { medicineWareHouse: item });
   }
 }

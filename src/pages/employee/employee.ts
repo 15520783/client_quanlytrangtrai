@@ -1,7 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
-import { Content, Events, IonicPage, Menu, ModalController, NavController, NavParams, Platform } from 'ionic-angular';
+import { Content, Events, IonicPage, Menu, MenuController, ModalController, NavController, NavParams, Platform } from 'ionic-angular';
 import { KEY, VARIABLE } from '../../common/const';
 
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { EmployeeInformationPage } from '../employee-information/employee-information';
 import { EmployeeInputPage } from '../employee-input/employee-input';
 import { EmployeesProvider } from '../../providers/employees/employees';
@@ -24,7 +25,7 @@ export class EmployeePage {
   public page_Total: number = 0;
   public rows: Array<employee> = [];
   public cols: any = [];
-  public filter_default: any = ["name", "address", "email", "birthday","regencyName","cmnd","dateJoinDisplay","genderName"];
+  public filter_default: any = ["name", "address", "email", "birthday", "regencyName", "cmnd", "dateJoinDisplay", "genderName"];
   protected visible_items: Array<employee> = [];
 
   protected searchControl: FormControl = new FormControl();
@@ -39,8 +40,11 @@ export class EmployeePage {
     public filterProvider: FilterProvider,
     public modalCtrl: ModalController,
     public events: Events,
-    public userProvider: UserProvider
+    public userProvider: UserProvider,
+    public menuCtrl: MenuController,
+    public deployData: DeployDataProvider
   ) {
+    this.init();
   }
 
   ionViewDidLoad() {
@@ -99,11 +103,14 @@ export class EmployeePage {
   }
 
   public filterItems(searchItem) {
-    let employees:Array<employee> = this.util.deepClone(this.employeeProvider.employees);
+    let employees: Array<employee> = this.util.deepClone(this.employeeProvider.employees);
     employees.forEach(e => {
       e['regencyName'] = e.regency.name;
       e['dateJoinDisplay'] = this.util.convertDate(e.dateJoin);
       e['genderName'] = VARIABLE.GENDER_EMPLOYEE[e.gender].name;
+      e['farmId'] = e.farm.id;
+      e['farmName'] = e.farm.name;
+      e['regencyId'] = e.regency.id;
     });
     this.filterProvider.input = employees;
     this.filterProvider.searchText = searchItem;
@@ -173,4 +180,41 @@ export class EmployeePage {
   }
 
 
+  openFilter() {
+    this.menuFilter.enable(true);
+    this.menuFilter.open();
+  }
+
+  closeFilter() {
+    this.menuCtrl.close();
+  }
+
+  public farmFilter: Array<any> = [];
+  public regencyFilter: Array<any> = [];
+
+  init() {
+    this.farmFilter = this.deployData.get_farm_list_for_select();
+    this.regencyFilter = this.deployData.get_regency_list_for_select();
+  }
+
+  filterFarm(farmId) {
+    if (farmId)
+      this.filterProvider.searchWithInclude.farmId = [farmId];
+    else
+      this.filterProvider.searchWithInclude.farmId = [];
+    this.setFilteredItems();
+  }
+
+  filterRegency(regencyId) {
+    if (regencyId)
+      this.filterProvider.searchWithInclude.regencyId = [regencyId];
+    else
+      this.filterProvider.searchWithInclude.regencyId = [];
+    this.setFilteredItems();
+  }
+
+  customAlertOptions: any = {
+    translucent: true,
+    cssClass: 'ion-alert'
+  };
 }

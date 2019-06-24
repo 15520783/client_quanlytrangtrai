@@ -15,7 +15,7 @@
                 <ion-col align-self-center col-2>
                   <ion-icon name="app-item-setting" font28></ion-icon>
                 </ion-col>
-                <ion-col col-10>
+                <ion-col col-10 *ngIf="list_settings[key]">
                   <h2 text-wrap>{{list_settings[key].title}}</h2>
                 </ion-col>
               </ion-row>
@@ -28,7 +28,7 @@
     <ion-col col-lg-9 col-md-8 no-padding>
       <ion-slides paper="true" #slider>
         <ion-slide *ngFor="let key of list_keys">
-          <setting-util *ngIf="list_settings[key].data" [options]='list_settings[key]'
+          <setting-util *ngIf="list_settings[key] && list_settings[key].data" [options]='list_settings[key]'
             (clickAddButton)="create(list_settings[key])" (clickEditButton)="edit(list_settings[key],$event)"
             (clickRemoveButton)="list_settings[key].remove($event)">
           </setting-util>

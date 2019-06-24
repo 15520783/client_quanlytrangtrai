@@ -1,9 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { Events, IonicPage, NavController, NavParams, Platform, Slides } from 'ionic-angular';
-import { foodWareHouse, warehouse } from '../../common/entity';
+import { feeds, foodWareHouse, warehouse } from '../../common/entity';
 
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { FeedInputPage } from '../feed-input/feed-input';
+import { FeedingHistoryPage } from '../feeding-history/feeding-history';
 import { SettingInputUtilComponent } from '../../components/setting-input-util/setting-input-util';
 import { UserProvider } from '../../providers/user/user';
 import { Utils } from '../../common/utils';
@@ -29,9 +30,9 @@ export class WarehouseInformationPage {
     public warehouseProvider: WarehousesProvider,
     public deployData: DeployDataProvider,
     public util: Utils,
-    public event:Events,
-    public userProvider:UserProvider,
-    public platform:Platform
+    public event: Events,
+    public userProvider: UserProvider,
+    public platform: Platform
   ) {
     if (this.navParams.data.warehouse) {
       this.warehouse = this.navParams.data.warehouse;
@@ -57,6 +58,14 @@ export class WarehouseInformationPage {
           this.food_warehouses = data.filter((foodwarehouse) => {
             return foodwarehouse.warehouse.id == this.warehouse.id;
           })
+
+          this.food_warehouses.forEach((e: foodWareHouse) => {
+            e['quantityName'] = this.deployData.show_quantity_food(parseFloat(e.quantity), e.unit);
+            e['usedName'] = this.deployData.show_quantity_food(parseFloat(e.used), e.unit);
+            e['remainName'] = this.deployData.show_quantity_food(parseFloat(e.remain), e.unit);
+            e['mfgDateDisplay'] = this.util.convertDate(e.mfgDate);
+            e['expiryDateDisplay'] = this.util.convertDate(e.expiryDate);
+          })
         }
         this.util.closeBackDrop();
       })
@@ -75,10 +84,21 @@ export class WarehouseInformationPage {
   }
 
   exportFood(item: foodWareHouse) {
+    let callback = (feeds: Array<feeds>) => {
+      if (feeds && feeds.length) {
+        this.getAllFoodWarehouse();
+      }
+    }
+
     this.navCtrl.push(FeedInputPage, {
       farmId: item.warehouse.manager.farm.id,
-      foodWareHouse: item
+      foodWareHouse: item,
+      callback: callback
     });
+  }
+
+  viewFeedingHistory(item: foodWareHouse) {
+    this.navCtrl.push(FeedingHistoryPage, { foodWareHouse: item });
   }
 
 
@@ -86,7 +106,7 @@ export class WarehouseInformationPage {
     let callback = (data: warehouse) => {
       if (data) {
         this.warehouse = data;
-        this.event.publish('warehousesPage:OnChange',(this.warehouse));
+        this.event.publish('warehousesPage:OnChange', (this.warehouse));
         this.navCtrl.pop();
       }
     }
@@ -98,7 +118,7 @@ export class WarehouseInformationPage {
       return man.regency.id == VARIABLE.REGENCIES.quan_ly_kho.id ? true : false;
     })
 
-    let roleInput = new WarehouseRole(this.deployData, this.warehouseProvider,man_Of_Warehouse);
+    let roleInput = new WarehouseRole(this.deployData, this.warehouseProvider, man_Of_Warehouse);
     roleInput.object = this.warehouse;
     roleInput.object['typeId'] = this.warehouse.type.id;
     roleInput.object['managerId'] = this.warehouse.manager.id;
@@ -112,11 +132,11 @@ export class WarehouseInformationPage {
   }
 
   remove() {
-    let roleInput = new WarehouseRole(this.deployData, this.warehouseProvider,[]);
+    let roleInput = new WarehouseRole(this.deployData, this.warehouseProvider, []);
     roleInput.delete(this.warehouse)
       .then((isOK: boolean) => {
         if (isOK) {
-          this.event.publish('warehousesPage:OnChange',(this.warehouse));
+          this.event.publish('warehousesPage:OnChange', (this.warehouse));
           this.navCtrl.pop();
         }
       })

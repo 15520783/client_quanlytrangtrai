@@ -7,7 +7,7 @@
                 <ion-icon name="arrow-back"></ion-icon>
               </button>
             </ion-buttons> -->
-          <ion-title style="padding: 0px!important">Nhập thông tin nhân viên</ion-title>
+          <ion-title style="padding: 0px!important">{{title}}</ion-title>
         </ion-toolbar>
     </ion-navbar>
   </ion-header>
@@ -27,6 +27,7 @@
                       [label] = "'Chức vị'"
                       [active]= "submitAttempt"
                       [placeholder]="'Chọn chức vụ'"
+                      [disabled]="personalMode?true:false"
                       [(data)]="RegencyTypes">
         </input-select>
         <input-select [(validControl)] = "credentialsForm.controls.farm_id"
@@ -34,6 +35,7 @@
                     [label] = "'Trang trại'"
                     [active]= "submitAttempt"
                     [placeholder]="'Chọn trang trại'"
+                    [disabled]="personalMode?true:false"
                     [(data)]="farms">
         </input-select>
         <input-select [(validControl)] = "credentialsForm.controls.gender"
@@ -67,7 +69,8 @@
         <input-text [(validControl)] = "credentialsForm.controls.cmnd"
                     [type] = "'text'"
                     [errorMessage_Required]  = "'Chứng minh nhân dân là hạng mục bắt buộc'"
-                    [errorMessage_Maxlength]  = "'Chứng minh nhân dân không được vượt quá 1000 kí tự.'"
+                    [errorMessage_Maxlength]  = "'Chứng minh nhân dân không được vượt quá 13 kí tự.'"
+                    [errorMessage_ValidNumber] = "'Chứng minh nhân dân nhập vào không hợp lệ'"
                     [label] = "'Chứng minh nhân dân'"
                     [placeholder]="'Nhập chứng minh nhân dân'"
                     [active]= "submitAttempt">
@@ -76,21 +79,9 @@
                     [errorMessage_Required]  ="'Ngày vào làm là hạng mục bắt buộc.'"
                     [label] = "'Ngày vào làm'"
                     [placeholder]="'dd/mm/yyyy'"
+                    [disabled]="personalMode?true:false"
                     [active]= "submitAttempt">
         </input-date>
-        <!-- <input-date [(validControl)] = "credentialsForm.controls.date_off"
-                    [errorMessage_Required]  ="'Ngày thôi việc là hạng mục bắt buộc.'"
-                    [label] = "'Ngày thôi việc'"
-                    [placeholder]="'dd/mm/yyyy'"
-                    [active]= "submitAttempt">
-        </input-date> -->
-        <!-- <input-select [(validControl)] = "credentialsForm.controls.status"
-                      [errorMessage_Required]  ="'Trạng thái là hạng mục bắt buộc.'"
-                      [label] = "'Trạng thái'"
-                      [active]= "submitAttempt"
-                      [placeholder]="'Chọn trạng thái'"
-                      [(data)]="status">
-        </input-select> -->
       </ion-list>
     </form>
   </ion-content>

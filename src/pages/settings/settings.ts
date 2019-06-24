@@ -56,7 +56,7 @@ export class SettingsPage {
     public settingProvider: SettingsProvider,
     public platform: Platform,
     public deployData: DeployDataProvider,
-    public userProvider:UserProvider
+    public userProvider: UserProvider
   ) {
     let unit_medicine_util = this.deployData.get_object_list_key_of_medicineUnit();
     this.settingProvider.setting.foods.forEach((food, idx) => {
@@ -149,7 +149,7 @@ export class SettingsPage {
         mainAttribute: 'name',
         data: this.settingProvider.setting.pregnancyStatus,
         roleInput: new PregnancyStatusRole(this.settingProvider),
-        permission:this.userProvider.rolePermission.ROLE_thiet_lap_trang_thai_mang_thai
+        permission: this.userProvider.rolePermission.ROLE_thiet_lap_trang_thai_mang_thai
       },
       breeds: {
         title: 'Danh sách giống',
@@ -166,7 +166,7 @@ export class SettingsPage {
         mainAttribute: 'name',
         data: this.settingProvider.setting.breeds,
         roleInput: new BreedsRole(this.settingProvider),
-        permission:this.userProvider.rolePermission.ROLE_thiet_lap_danh_sach_giong
+        permission: this.userProvider.rolePermission.ROLE_thiet_lap_danh_sach_giong
       },
       breedingType: {
         title: 'Loại lên giống',
@@ -178,7 +178,7 @@ export class SettingsPage {
         mainAttribute: 'name',
         data: this.settingProvider.setting.breedingType,
         roleInput: new BreedingTypesRole(this.settingProvider),
-        permission:this.userProvider.rolePermission.ROLE_thiet_lap_loai_len_giong
+        permission: this.userProvider.rolePermission.ROLE_thiet_lap_loai_len_giong
       },
       healthStatus: {
         title: 'Trạng thái sức khỏe',
@@ -190,7 +190,7 @@ export class SettingsPage {
         mainAttribute: 'name',
         data: this.settingProvider.setting.healthStatus,
         roleInput: new HealthStatusRole(this.settingProvider, this.deployData),
-        permission:this.userProvider.rolePermission.ROLE_thiet_lap_trang_thai_suc_khoe
+        permission: this.userProvider.rolePermission.ROLE_thiet_lap_trang_thai_suc_khoe
       },
       diseases: {
         title: 'Danh sách bệnh',
@@ -210,7 +210,7 @@ export class SettingsPage {
         extraButtons: [
           { title: 'Thiết lập lâm sàng', color: 'main', component: null }
         ],
-        permission:this.userProvider.rolePermission.ROLE_thiet_lap_danh_sach_benh
+        permission: this.userProvider.rolePermission.ROLE_thiet_lap_danh_sach_benh
       },
       farmTypes: {
         title: 'Danh sách loại trang trại',
@@ -222,7 +222,7 @@ export class SettingsPage {
         mainAttribute: 'name',
         data: this.settingProvider.setting.farmTypes,
         roleInput: new FarmTypesRole(this.settingProvider),
-        permission:this.userProvider.rolePermission.ROLE_thiet_lap_danh_sach_loai_trang_trai
+        permission: this.userProvider.rolePermission.ROLE_thiet_lap_danh_sach_loai_trang_trai
       },
       warehouseTypes: {
         title: 'Danh sách loại kho',
@@ -234,7 +234,7 @@ export class SettingsPage {
         mainAttribute: 'name',
         data: this.settingProvider.setting.warehouseTypes,
         roleInput: new WarehouseTyperole(this.settingProvider),
-        permission:this.userProvider.rolePermission.ROLE_thiet_lap_danh_sach_loai_trang_trai
+        permission: this.userProvider.rolePermission.ROLE_thiet_lap_danh_sach_loai_trang_trai
       },
       foodType: {
         title: 'Danh sách loại thức ăn',
@@ -246,7 +246,7 @@ export class SettingsPage {
         mainAttribute: 'name',
         data: this.settingProvider.setting.foodType,
         roleInput: new FoodTypeRole(this.settingProvider),
-        permission:this.userProvider.rolePermission.ROLE_thiet_lap_danh_sach_loai_thuc_an
+        permission: this.userProvider.rolePermission.ROLE_thiet_lap_danh_sach_loai_thuc_an
       },
       foodUnits: {
         title: 'Danh sách đơn vị cám',
@@ -259,7 +259,7 @@ export class SettingsPage {
         mainAttribute: 'name',
         data: this.settingProvider.setting.foodUnits,
         roleInput: new FoodUnitsRole(this.settingProvider),
-        permission:this.userProvider.rolePermission.ROLE_thiet_lap_don_vi_cam
+        permission: this.userProvider.rolePermission.ROLE_thiet_lap_don_vi_cam
       },
       foods: {
         title: 'Danh sách cám cho heo',
@@ -280,7 +280,7 @@ export class SettingsPage {
             role['typeId'] = role.type ? role.type.id : '';
           })
         },
-        permission:this.userProvider.rolePermission.ROLE_thiet_lap_danh_sach_cam
+        permission: this.userProvider.rolePermission.ROLE_thiet_lap_danh_sach_cam
       },
       medicineType: {
         title: 'Danh sách loại thuốc',
@@ -292,7 +292,7 @@ export class SettingsPage {
         mainAttribute: 'name',
         data: this.settingProvider.setting.medicineType,
         roleInput: new MedicineTypeRole(this.settingProvider),
-        permission:this.userProvider.rolePermission.ROLE_thiet_lap_nhom_thuoc
+        permission: this.userProvider.rolePermission.ROLE_thiet_lap_nhom_thuoc
       },
       medicineUnits: {
         title: 'Danh sách đơn vị thuốc',
@@ -325,7 +325,7 @@ export class SettingsPage {
         mainAttribute: 'name',
         data: this.medicines_temp,
         roleInput: new MedicineRole(this.settingProvider, this.deployData),
-        permission:this.userProvider.rolePermission.ROLE_thiet_lap_danh_sach_thuoc
+        permission: this.userProvider.rolePermission.ROLE_thiet_lap_danh_sach_thuoc
       },
       footType: {
         title: 'Danh sách loại chân',
@@ -337,7 +337,7 @@ export class SettingsPage {
         mainAttribute: 'name',
         data: this.settingProvider.setting.footType,
         roleInput: new FootTypeRole(this.settingProvider),
-        permission:this.userProvider.rolePermission.ROLE_thiet_lap_loai_chan
+        permission: this.userProvider.rolePermission.ROLE_thiet_lap_loai_chan
       },
       gentialType: {
         title: 'Danh sách loại bộ phận sinh dục',
@@ -349,7 +349,7 @@ export class SettingsPage {
         mainAttribute: 'name',
         data: this.settingProvider.setting.gentialType,
         roleInput: new GentialTypeRole(this.settingProvider),
-        permission:this.userProvider.rolePermission.ROLE_thiet_lap_loai_bo_phan_sinh_duc
+        permission: this.userProvider.rolePermission.ROLE_thiet_lap_loai_bo_phan_sinh_duc
       },
       issues: {
         title: 'Danh sách triệu chứng lâm sàn',
@@ -377,7 +377,7 @@ export class SettingsPage {
         mainAttribute: 'name',
         data: this.settingProvider.setting.status,
         roleInput: new StatusPigRole(this.settingProvider, this.deployData),
-        permission:this.userProvider.rolePermission.ROLE_thiet_lap_danh_sach_trang_thai_heo
+        permission: this.userProvider.rolePermission.ROLE_thiet_lap_danh_sach_trang_thai_heo
       },
       // rounds: {
       //   title: 'Danh sách lứa',
@@ -399,7 +399,7 @@ export class SettingsPage {
         mainAttribute: 'name',
         data: this.settingProvider.setting.regencies,
         roleInput: new RegencyRole(this.settingProvider),
-        permission:this.userProvider.rolePermission.ROLE_thiet_lap_danh_sach_chuc_vu
+        permission: this.userProvider.rolePermission.ROLE_thiet_lap_danh_sach_chuc_vu
       },
       roles: {
         title: 'Danh sách phân quyền',
@@ -443,9 +443,9 @@ export class SettingsPage {
             role['motherBreedName'] = role.mother.name.concat('-').concat(role.mother.symbol);
             role['childBreedName'] = role.child.name.concat('-').concat(role.child.symbol);
           })
-        }
+        },
+        permission: this.userProvider.rolePermission.ROLE_thiet_lap_luat_phoi
       },
-      permission:this.userProvider.rolePermission.ROLE_thiet_lap_luat_phoi
     }
 
     this.list_keys = Object.keys(this.list_settings);

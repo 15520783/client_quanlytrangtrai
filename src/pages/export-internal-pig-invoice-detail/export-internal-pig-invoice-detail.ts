@@ -64,6 +64,9 @@ export class ExportInternalPigInvoiceDetailPage {
       this.canCheckComplete = true;
       this.canEditInvoice = true;
     }
+    // else if(this.invoice.status == VARIABLE.INVOICE_STATUS.FORWARDING){
+    //   this.canCheckComplete = false;
+    // }
   }
 
   ionViewDidLoad() {

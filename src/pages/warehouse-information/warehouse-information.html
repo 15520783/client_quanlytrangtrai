@@ -76,34 +76,41 @@
                           *ngIf="item.invoice">{{item.invoice.importDate| date:'dd/MM/yyyy'}}</span></p>
                     </ion-col>
                     <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>Số lượng nhập:</b> {{item.quantity}}</p>
+                      <p text-wrap><b>Số lượng nhập:</b> {{item.quantityName}}</p>
                     </ion-col>
                     <ion-col col-3 col-md-6 col-sm-12>
                       <p text-wrap><b>Đơn vị:</b> {{item.unit.name}}</p>
                     </ion-col>
-                    <ion-col col-3 col-md-6 col-sm-12>
+                    <!-- <ion-col col-3 col-md-6 col-sm-12>
                       <p text-wrap><b>Tổng:</b> {{item.total}}</p>
+                    </ion-col> -->
+                    <ion-col col-3 col-md-6 col-sm-12>
+                      <p text-wrap><b>Đã dùng:</b> {{item.usedName}}</p>
                     </ion-col>
                     <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>Đã dùng:</b> {{item.used}}</p>
-                    </ion-col>
-                    <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>Tồn:</b> {{item.remain}}</p>
+                      <p text-wrap><b>Tồn:</b> {{item.remainName}}</p>
                     </ion-col>
                     <ion-col col-3 col-md-6 col-sm-12>
                       <p text-wrap><b>Nhà sản xuất:</b> {{item.manufacturer}}</p>
                     </ion-col>
                     <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>Ngày sản xuất:</b> {{item.mfgDate}}</p>
+                      <p text-wrap><b>Ngày sản xuất:</b> {{item.mfgDateDisplay}}</p>
                     </ion-col>
                     <ion-col col-3 col-md-6 col-sm-12>
-                      <p text-wrap><b>Hạn sử dụng:</b> {{item.expiryDate}}</p>
+                      <p text-wrap><b>Hạn sử dụng:</b> {{item.expiryDateDisplay}}</p>
                     </ion-col>
                   </ion-row>
                 </ion-col>
                 <ion-col col-lg-2 col-md-3 col-sm-3>
-                  <button *ngIf="userProvider.rolePermission.ROLE_xuat_cam_cho_heo_an!=null" small ion-button mode='ios'
-                    block color="secondary" text-wrap (tap)="exportFood(item)">Xuất cám</button>
+                  <ion-row>
+                    <ion-col col-12>
+                      <button *ngIf="userProvider.rolePermission.ROLE_xuat_cam_cho_heo_an!=null" small ion-button
+                        mode='ios' block color="secondary" text-wrap (tap)="exportFood(item)">Xuất cám</button>
+                    </ion-col>
+                    <ion-col col-12>
+                      <button (tap)="viewFeedingHistory(item)" small ion-button mode='ios' block color="secondary" text-wrap>Lịch sử sử dụng</button>
+                    </ion-col>
+                  </ion-row>
                 </ion-col>
               </ion-row>
             </ion-item>
@@ -158,32 +165,34 @@
                 <h2><b>{{item.food.name}}</b></h2>
               </ion-col>
               <ion-col col-7>
-                <p><b>Số lượng nhập:</b> {{item.quantity}}</p>
+                <p><b>Số lượng nhập:</b> {{item.quantityName}}</p>
               </ion-col>
-              <ion-col>
+              <!-- <ion-col>
                 <p><b>Tổng:</b> {{item.total}}</p>
-              </ion-col>
+              </ion-col> -->
               <ion-col col-7>
-                <p><b>Đã dùng:</b> {{item.used}}</p>
+                <p><b>Đã dùng:</b> {{item.usedName}}</p>
               </ion-col>
               <ion-col>
-                <p><b>Tồn:</b> {{item.remain}}</p>
+                <p><b>Tồn:</b> {{item.remainName}}</p>
               </ion-col>
               <ion-col col-12>
                 <p><b>Ngày nhập:</b> <span *ngIf="item.invoice">{{item.invoice.importDate | date:'dd/MM/yyyy'}}</span>
                 </p>
               </ion-col>
               <ion-col col-12>
-                <p><b>Ngày sản xuất:</b> {{item.mfgDate | date:'dd/MM/yyyy'}}</p>
+                <p><b>Ngày sản xuất:</b> {{item.mfgDateDisplay}}</p>
               </ion-col>
               <ion-col col-12>
-                <p><b>Hạn sử dụng:</b> {{item.expiryDate | date:'dd/MM/yyyy'}}</p>
+                <p><b>Hạn sử dụng:</b> {{item.expiryDateDisplay}}</p>
               </ion-col>
             </ion-row>
           </ion-item>
           <ion-item-options side="right">
             <button *ngIf="userProvider.rolePermission.ROLE_xuat_cam_cho_heo_an!=null" text-wrap ion-button
               color="secondary" (tap)="exportFood(item)" style="font-size: 10px">Xuất cám</button>
+              <button  text-wrap ion-button (tap)="viewFeedingHistory(item)"
+              color="secondary"  style="font-size: 10px">Lịch sử sử dụng</button>
           </ion-item-options>
         </ion-item-sliding>
       </ion-list>
@@ -197,7 +206,7 @@
     <ion-fab-list side="top" style="right:0px">
       <button *ngIf="userProvider.rolePermission.ROLE_xem_lich_su_xuat_cam!=null" data-balloon-visible
         data-balloon-length="medium" data-balloon="Xem lich sử xuất, sử dụng" data-balloon-pos="left" ion-fab
-        color="main" >
+        color="main">
         <ion-icon name="md-information"></ion-icon>
       </button>
       <button (tap)="edit()" *ngIf="userProvider.rolePermission.ROLE_cap_nhat_kho!=null" data-balloon-visible
