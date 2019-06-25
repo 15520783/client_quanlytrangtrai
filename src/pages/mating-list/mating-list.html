@@ -42,7 +42,7 @@
                 </p>
               </ion-col>
             </ion-row>
-            <ion-row *ngIf="platform.is('core')">
+            <ion-row *ngIf="platform.is('core') && !viewMode">
               <button 
                 small ion-button item-end mode='ios' color="secondary"
                 *ngIf="userProvider.rolePermission.ROLE_cap_nhat_thong_tin_phoi_giong!=null && item.status == statusMating.PROCESSING.codeName" 
@@ -70,7 +70,7 @@
                 (tap)="birth_input(item)">Nhập thông tin heo đẻ</button>
             </ion-row>
           </ion-item>
-          <ion-item-options side="right" *ngIf="!platform.is('core')">
+          <ion-item-options side="right" *ngIf="!platform.is('core') && !viewMode">
             <button   *ngIf="userProvider.rolePermission.ROLE_cap_nhat_thong_tin_phoi_giong!=null && item.status == statusMating.PROCESSING.codeName" 
                       (tap)="edit(item)" 
                       text-wrap ion-button color="secondary" 

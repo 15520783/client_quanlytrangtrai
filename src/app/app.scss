@@ -47,9 +47,9 @@ ion-content {
     overflow: -moz-scrollbars-none; // Firefox
   }
 
-  // .scroll-content::-webkit-scrollbar{
-  //     display: none;// Safari and Chrome
-  // }
+  .scroll-content::-webkit-scrollbar{
+      display: none;// Safari and Chrome
+  }
 }
 
 ion-menu {
@@ -72,6 +72,11 @@ ion-menu {
       background: linear-gradient(to right, $themeColor2);
     }
   }
+}
+
+[scroll]{
+  height: 100%;
+  overflow-y: scroll;
 }
 
 [mt-5] {

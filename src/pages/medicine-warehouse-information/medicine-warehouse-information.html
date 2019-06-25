@@ -83,9 +83,9 @@
                     <ion-col col-3 col-md-6 col-sm-12>
                       <p text-wrap><b>Đơn vị:</b> {{item.unit.name}}</p>
                     </ion-col>
-                    <ion-col col-3 col-md-6 col-sm-12>
+                    <!-- <ion-col col-3 col-md-6 col-sm-12>
                       <p text-wrap><b>Tổng:</b> {{item.total}}</p>
-                    </ion-col>
+                    </ion-col> -->
                     <ion-col col-3 col-md-6 col-sm-12>
                       <p text-wrap><b>Đã dùng:</b> {{item.used}}</p>
                     </ion-col>
@@ -141,10 +141,10 @@
           <ion-label stacked>Phụ trách kho</ion-label>
           <ion-input text-wrap type="text" readonly [(ngModel)]="warehouse.manager.name"></ion-input>
         </ion-item>
-        <ion-item>
+        <!-- <ion-item>
           <ion-label stacked>Tổng thuốc</ion-label>
           <ion-input text-wrap type="text" readonly></ion-input>
-        </ion-item>
+        </ion-item> -->
         <ion-item>
           <ion-label stacked>Mô tả</ion-label>
           <ion-input text-wrap type="text" readonly [(ngModel)]="warehouse.description"></ion-input>
@@ -166,9 +166,9 @@
               <ion-col col-7>
                 <p><b>Số lượng nhập:</b> {{item.quantity}}</p>
               </ion-col>
-              <ion-col>
+              <!-- <ion-col>
                 <p><b>Tổng:</b> {{item.total}}</p>
-              </ion-col>
+              </ion-col> -->
               <ion-col col-7>
                 <p><b>Đã dùng:</b> {{item.used}}</p>
               </ion-col>

@@ -31,14 +31,14 @@
                 <p style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}} </p>
               </ion-col>
             </ion-row>
-            <ion-row>
+            <ion-row *ngIf="!viewMode">
               <button *ngIf="userProvider.rolePermission.ROLE_cap_nhat_thong_tin_len_giong!=null" showWhen="core" small ion-button item-end mode='ios' color="main"
                 (tap)="edit(item)">Sửa</button>
               <button *ngIf="userProvider.rolePermission.ROLE_xoa_thong_tin_len_giong!=null" showWhen="core" small ion-button item-end mode='ios' color="danger"
                 (tap)="remove(item)">Xóa</button>
             </ion-row>
           </ion-item>
-          <ion-item-options side="right" *ngIf="!platform.is('core')">
+          <ion-item-options side="right" *ngIf="!platform.is('core') && !viewMode">
             <button *ngIf="userProvider.rolePermission.ROLE_cap_nhat_thong_tin_len_giong!=null" text-wrap ion-button color="main" (tap)="edit(item)" style="font-size: 10px">Sửa</button>
             <button *ngIf="userProvider.rolePermission.ROLE_xoa_thong_tin_len_giong!=null" text-wrap ion-button color="danger" (tap)="remove(item)" style="font-size: 10px">Xóa</button>
           </ion-item-options>

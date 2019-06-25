@@ -19,6 +19,7 @@ import { sperms } from '../../common/entity';
 export class SpermListPage {
   @ViewChild('menuFilter') menuFilter: Menu;
   @ViewChild('content') content: Content;
+  public viewMode:boolean = false;
 
   public isSelectMode: boolean = false;
 
@@ -76,6 +77,9 @@ export class SpermListPage {
     public platform: Platform,
     public userProvider:UserProvider
   ) {
+    if(this.navParams.data.viewMode){
+      this.viewMode = true;
+    }
     if (this.navParams.data.sectionType) {
       this.sectionType = this.navParams.data.sectionType;
     }

@@ -428,9 +428,9 @@ const API = {
     UPDATE_WAREHOUSE_TYPE: '/api/warehousetype/',
     DELETE_WAREHOUSE_TYPE: '/api/warehousetype/',
 
-    CREATE_PIG: '/api/warehousetype/',
-    UPDATE_PIG: '/api/warehousetype/',
-    DELETE_PIG: '/api/warehousetype/',
+    CREATE_PIG: '/api/pigs/',
+    UPDATE_PIG: '/api/pigs/',
+    DELETE_PIG: '/api/pigs/',
 
     CREATE_MATING_ROLE:'/api/matingroles/',
     UPDATE_MATING_ROLE:'/api/matingroles/',

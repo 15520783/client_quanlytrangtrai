@@ -40,12 +40,12 @@
                     *ngIf="attr.unit">{{attr.unit}}</span></p>
               </ion-col>
             </ion-row>
-            <ion-row >
+            <ion-row *ngIf="!viewMode">
               <button *ngIf="userProvider.rolePermission.ROLE_cap_nhat_thong_tin_khai_thac_tinh_heo!=null && !isSelectMode" showWhen="core" small ion-button item-end mode='ios' color="main" (tap)="edit(item)">Sửa</button>
               <button *ngIf="userProvider.rolePermission.ROLE_xoa_thong_tin_khai_thac_tinh_heo!=null && !isSelectMode" showWhen="core" small ion-button item-end mode='ios' color="danger" (tap)="remove(item)">Xóa</button>
             </ion-row>
           </ion-item>
-          <ion-item-options side="right" *ngIf="!platform.is('core')">
+          <ion-item-options side="right" *ngIf="!platform.is('core') && !viewMode">
             <button *ngIf="userProvider.rolePermission.ROLE_cap_nhat_thong_tin_khai_thac_tinh_heo!=null && !isSelectMode" text-wrap ion-button color="main" (tap)="edit(item)" style="font-size: 10px">Sửa</button>
             <button *ngIf="userProvider.rolePermission.ROLE_xoa_thong_tin_khai_thac_tinh_heo!=null && !isSelectMode" text-wrap ion-button color="danger" (tap)="remove(item)" style="font-size: 10px">Xóa</button>
           </ion-item-options>

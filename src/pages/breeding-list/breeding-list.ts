@@ -17,7 +17,7 @@ import { breedings } from '../../common/entity';
   templateUrl: 'breeding-list.html',
 })
 export class BreedingListPage {
-
+  public viewMode:boolean = false;
   public breedings: Array<breedings> = [];
   public breedingTypes: any = {};
   public sectionType: any;
@@ -62,9 +62,13 @@ export class BreedingListPage {
     public events: Events,
     public pigProvider: PigsProvider,
     public util: Utils) {
+    console.log(this.navParams.data);
     this.breedingTypes = this.deployData.get_object_list_key_of_breedingTypes();
     if (this.navParams.data.sectionType) {
       this.sectionType = this.navParams.data.sectionType;
+    }
+    if(this.navParams.data.viewMode){
+      this.viewMode = true;
     }
 
     if (this.navParams.data.breedings) {

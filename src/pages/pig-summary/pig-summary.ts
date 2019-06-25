@@ -115,7 +115,7 @@ export class PigSummaryPage {
       });
       page.active = true;
       if (page.component) {
-        console.log(this.data);
+        this.data.viewMode = true;
         this.nav.setRoot(page.component, this.data);
       }
     }

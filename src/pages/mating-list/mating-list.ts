@@ -20,6 +20,8 @@ import { VARIABLE } from '../../common/const';
 })
 export class MatingListPage {
 
+  public viewMode:boolean = false;
+
   public matings: Array<mating> = [];
   public matingDetails: any = {};
   public sectionType: any;
@@ -41,7 +43,7 @@ export class MatingListPage {
     { name: "description", label: 'Ghi chú' },
   ];
 
-  public placeholderSearch: string = 'Tìm kiếm ghi nhận lên giống'
+  public placeholderSearch: string = 'Tìm kiếm ghi nhận phối giống'
   public filter_default: Array<string> = ["pigCodeMother", "pigCodeFather", "breedMotherName", "breedFatherName", "farmName", "statusName", "birthdayDisplay", "description"];
 
   public page_Idx: number = 1;
@@ -64,6 +66,9 @@ export class MatingListPage {
     public util: Utils,
     public userProvider: UserProvider
   ) {
+    if(this.navParams.data.viewMode){
+      this.viewMode = true;
+    }
     if (this.navParams.data.sectionType) {
       this.sectionType = this.navParams.data.sectionType;
     }

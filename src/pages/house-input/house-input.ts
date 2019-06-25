@@ -21,24 +21,22 @@ export class HouseInputPage {
     public navParams: NavParams,
     private formBuilder: FormBuilder
   ) {
-    if(this.navParams.data.house){
+    if (this.navParams.data.house) {
       this.house = this.navParams.data.house;
       this.house.founding = new Date(this.house.founding).toISOString();
     }
-    if(this.navParams.data.section){
+    if (this.navParams.data.section) {
       this.house.section = this.navParams.data.section;
     }
 
     this.credentialsForm = this.formBuilder.group({
       section_id: [this.house.section.id, Validators.compose([Validators.required, Validators.maxLength(1000)])],
-      // type_id: [this.house.typeId, Validators.compose([Validators.required])],
       houseCode: [this.house.houseCode, Validators.compose([Validators.required, Validators.maxLength(1000)])],
-      name: [this.house.name, Validators.compose([Validators.required,Validators.maxLength(1000)])],
-      position:[this.house.position, Validators.compose([Validators.required,Validators.maxLength(1000)])],
-      founding:[this.house.founding, Validators.compose([Validators.required])],
-      // manager:[this.house.manager,Validators.compose([Validators.required])],
-      status:this.house.status,
-      description:[this.house.description,Validators.compose([Validators.required, Validators.maxLength(1000)])],
+      name: [this.house.name, Validators.compose([Validators.required, Validators.maxLength(1000)])],
+      position: [this.house.position, Validators.compose([Validators.required, Validators.maxLength(1000)])],
+      founding: [this.house.founding, Validators.compose([Validators.required])],
+      status: this.house.status,
+      description: [this.house.description, Validators.compose([Validators.required, Validators.maxLength(1000)])],
     });
   }
 
@@ -46,13 +44,13 @@ export class HouseInputPage {
     console.log('ionViewDidLoad HouseInputPage');
   }
 
-  onSubmit(){
+  onSubmit() {
     this.submitAttempt = true;
-    if(this.credentialsForm.valid){
-      Object.keys(this.credentialsForm.value).forEach((attr)=>{
+    if (this.credentialsForm.valid) {
+      Object.keys(this.credentialsForm.value).forEach((attr) => {
         this.house[attr] = this.credentialsForm.value[attr];
       })
+      this.navParams.get('callback')(this.house);
     }
-    this.navParams.get('callback')(this.house);
   }
 }
