@@ -752,7 +752,7 @@ const PERMISSIONS = {
             "name":"Thiết lập danh sách loại khách hàng"
         },
         
-        "ROLE_thiet_lap_danh_sach_nhóm_khach_hang":{
+        "ROLE_thiet_lap_danh_sach_nhom_khach_hang":{
             "id":"157",
             "name":"Thiết lập danh sách nhóm khách hàng"
         },

@@ -197,7 +197,7 @@ export class PigInputPage {
       })
       this.settingProvider.setting.status.forEach((status) => {
         this.status.push({
-          name: status.name + " - Trạng thái trước " + statusCode[status.previousStatus],
+          name: status.description?status.description:'Không xác định' + " - Trạng thái trước " + statusCode[status.previousStatus],
           value: status.id
         })
       })

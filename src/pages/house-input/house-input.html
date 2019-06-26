@@ -7,7 +7,7 @@
                 <ion-icon name="arrow-back"></ion-icon>
               </button>
             </ion-buttons> -->
-          <ion-title style="padding: 0px!important">Nhập thông tin nhà</ion-title>
+          <ion-title style="padding: 0px!important">Nhập thông tin chuồng</ion-title>
         </ion-toolbar>
     </ion-navbar>
   </ion-header>
@@ -16,30 +16,30 @@
     <form action="" (ngSubmit)="onSubmit()" style="padding-bottom: 10vH">
       <ion-list >
         <input-text [(validControl)] = "credentialsForm.controls.name"
-                    [errorMessage_Required]  = "'Tên nhà là hạng mục bắt buộc.'"
-                    [errorMessage_Maxlength]  = "'Tên nhà không được vượt quá 1000 kí tự.'"
-                    [label] = "'Tên nhà'"
-                    [placeholder]="'Nhập tên nhà'"
+                    [errorMessage_Required]  = "'Tên chuồng là hạng mục bắt buộc.'"
+                    [errorMessage_Maxlength]  = "'Tên chuồng không được vượt quá 1000 kí tự.'"
+                    [label] = "'Tên chuồng'"
+                    [placeholder]="'Nhập tên chuồng'"
                     [active]= "submitAttempt">
         </input-text>
         <!-- <input-select [(validControl)] = "credentialsForm.controls.type_id"
-                    [errorMessage_Required]  ="'Loại nhà là hạng mục bắt buộc.'"
-                    [label] = "'Loại nhà'"
+                    [errorMessage_Required]  ="'Loại chuồng là hạng mục bắt buộc.'"
+                    [label] = "'Loại chuồng'"
                     [active]= "submitAttempt"
-                    [placeholder]="'Chọn loại nhà'"
+                    [placeholder]="'Chọn loại chuồng'"
                     [(data)]="HouseTypes">
         </input-select> -->
         <input-text [(validControl)] = "credentialsForm.controls.houseCode"
-                    [errorMessage_Required]  = "'Mã nhà là hạng mục bắt buộc'"
-                    [errorMessage_Maxlength]  = "'Mã nhà không được vượt quá 1000 kí tự.'"
-                    [label] = "'Mã nhà'"
-                    [placeholder]="'Nhập mã nhà'"
+                    [errorMessage_Required]  = "'Mã chuồng là hạng mục bắt buộc'"
+                    [errorMessage_Maxlength]  = "'Mã chuồng không được vượt quá 1000 kí tự.'"
+                    [label] = "'Mã chuồng'"
+                    [placeholder]="'Nhập mã chuồng'"
                     [active]= "submitAttempt">
         </input-text>
         <input-text [(validControl)] = "credentialsForm.controls.position"
                     [errorMessage_Required]  = "'Vị trí là hạng mục bắt buộc'"
                     [label] = "'Vị trí'"
-                    [placeholder]="'Nhập vị trí nhà'"
+                    [placeholder]="'Nhập vị trí chuồng'"
                     [active]= "submitAttempt">
         </input-text>
         <input-date [(validControl)] = "credentialsForm.controls.founding"

@@ -29,16 +29,12 @@ export class UserAccountListPage {
 
   public mainAttribute = "username";
   public attributes = [
-    { name: "email", label: 'Email' },
-    // { name: "activate", label: 'Trạng thái kích hoạt' },
-    // { name: "lastActivate", label: 'Last active' },
-    // { name: "login", label: 'Login' },
     { name: "roleName", label: 'Phân quyền' },
     {name:"createAtDisplay",label:'Ngày tạo'}
   ];
 
   public placeholderSearch: string = 'Tìm kiếm tài khoản'
-  public filter_default: Array<string> = ["username", "email", "roleName","createAtDisplay"];
+  public filter_default: Array<string> = ["username", "roleName","createAtDisplay"];
 
   public page_Idx: number = 1;
   public page_Total: number = 0;

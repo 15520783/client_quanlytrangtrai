@@ -116,6 +116,19 @@ const VARIABLE = {
         NEWBORN: "12",
         WAIT_FOR_TRANSFER: "13"
     },
+    STATUS_CODE_NAME:{
+        "UNKNOW":"Không xác định",
+        "MATED":"Đã phối",
+        "RETURN":"Trả lại",
+        "ABORTION":"Sẩy thải",
+        "GROWING":"Đang lớn",
+        "WAIT_FOR_SALE":"Chờ bán",
+        "WAIT_FOR_MATING":"Chờ phối",
+        "SOLD":"Đã bán",
+        "MATING":"Đang phối",
+        "NEWBORN":"Mới sinh",
+        "WAIT_FOR_TRANSFER":"Chờ chuyển trại"
+    },
     INVOICE_ID: {
         '31': '4',
         '32': '5',

@@ -80,6 +80,7 @@ export class SettingsPage {
         mainAttribute: 'name',
         data: this.settingProvider.setting.customerTypes,
         roleInput: new CustomerTypesRole(this.settingProvider),
+        permission: this.userProvider.rolePermission.ROLE_thiet_lap_danh_sach_loai_khach_hang
       },
       customerGroups: {
         title: 'Danh sách nhóm khách hàng',
@@ -91,6 +92,7 @@ export class SettingsPage {
         mainAttribute: 'name',
         data: this.settingProvider.setting.customerGroups,
         roleInput: new CustomerGroupsRole(this.settingProvider),
+        permission: this.userProvider.rolePermission.ROLE_thiet_lap_danh_sach_nhom_khach_hang
       },
       customers: {
         title: 'Danh sách khách hàng',
@@ -110,6 +112,7 @@ export class SettingsPage {
         mainAttribute: 'name',
         data: this.settingProvider.setting.customers,
         roleInput: new CustomerRole(this.settingProvider, this.deployData),
+        permission: this.userProvider.rolePermission.ROLE_thiet_lap_danh_sach_khach_hang,
         customData(customerRole: Array<customers>) {
           customerRole.forEach((role) => {
             role['typeId'] = role.type ? role.type.id : '';
@@ -138,6 +141,7 @@ export class SettingsPage {
         mainAttribute: 'name',
         data: this.settingProvider.setting.partners,
         roleInput: new PartnersRole(this.settingProvider, this.deployData),
+        permission: this.userProvider.rolePermission.ROLE_thiet_lap_danh_sach_doi_tac
       },
       pregnancyStatus: {
         title: 'Trạng thái mang thai',
@@ -234,7 +238,7 @@ export class SettingsPage {
         mainAttribute: 'name',
         data: this.settingProvider.setting.warehouseTypes,
         roleInput: new WarehouseTyperole(this.settingProvider),
-        permission: this.userProvider.rolePermission.ROLE_thiet_lap_danh_sach_loai_trang_trai
+        permission: this.userProvider.rolePermission.ROLE_thiet_lap_danh_sach_loai_kho
       },
       foodType: {
         title: 'Danh sách loại thức ăn',
@@ -310,6 +314,7 @@ export class SettingsPage {
             e['quantityDisplay'] = e.quantity + ' ( ' + unit_medicine_util[e.baseUnit].name + ' ) ';
           })
         },
+        permission: this.userProvider.rolePermission.ROLE_thiet_lap_danh_sach_don_vi_thuoc
       },
       medicines: {
         title: 'Danh sách thuốc',
@@ -364,6 +369,7 @@ export class SettingsPage {
         mainAttribute: 'symptom',
         data: this.settingProvider.setting.issues,
         roleInput: new IssueRole(this.settingProvider),
+        permission: this.userProvider.rolePermission.ROLE_thiet_lap_danh_sach_trieu_chung_lam_San
       },
       status: {
         title: 'Danh sách trạng thái heo',
@@ -411,6 +417,7 @@ export class SettingsPage {
         mainAttribute: 'name',
         data: this.settingProvider.setting.roles,
         roleInput: new RolePermissionRole(this.settingProvider),
+        permission: this.userProvider.rolePermission.ROLE_thiet_lap_danh_sach_phan_quyen,
         extraButtons: [
           {
             title: 'Thiết lập phân quyền',

@@ -102,7 +102,7 @@ export class HouseInfomationPage {
         selected: false
       },
     ]
-    this.chartProvider.createPieChart(document.getElementById('chartSummary'), data, 'Quy mô khu', '');
+    this.chartProvider.createPieChart(document.getElementById('chartSummary'), data, 'Quy mô chuồng', '');
   }
 
 

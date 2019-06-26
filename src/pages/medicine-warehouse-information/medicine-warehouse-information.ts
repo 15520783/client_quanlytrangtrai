@@ -57,6 +57,14 @@ export class MedicineWarehouseInformationPage {
           this.medicine_warehouses = data.filter((medicineWarehouse) => {
             return medicineWarehouse.warehouse.id == this.warehouse.id;
           })
+
+          this.medicine_warehouses.forEach((e: medicineWarehouse) => {
+            e['quantityName'] = this.deployData.show_quantity_medicine(parseFloat(e.quantity), e.unit);
+            e['usedName'] = this.deployData.show_quantity_medicine(parseFloat(e.used), e.unit);
+            e['remainName'] = this.deployData.show_quantity_medicine(parseFloat(e.remain), e.unit);
+            e['mfgDateDisplay'] = this.util.convertDate(e.mfgDate);
+            e['expiryDateDisplay'] = this.util.convertDate(e.expiryDate);
+          })
         }
         this.util.closeBackDrop();
       })

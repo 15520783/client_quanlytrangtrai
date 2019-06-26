@@ -1,11 +1,11 @@
 <ion-header>
     <ion-navbar>
       <ion-toolbar>
-        <ion-buttons left showWhen="ios,android">
+        <!-- <ion-buttons left showWhen="ios,android">
           <button navPop ion-button icon-only>
             <ion-icon name="arrow-back"></ion-icon>
           </button>
-        </ion-buttons>
+        </ion-buttons> -->
         <ion-searchbar col-md-7 mode="ios" animated="true" debounce="500" [placeholder]="placeholderSearch"
           [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="setFilteredItems()">
         </ion-searchbar>

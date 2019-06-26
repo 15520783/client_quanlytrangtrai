@@ -91,7 +91,7 @@ export class UserInfoPage {
 
   ionViewDidLoad() {
     this.util.openBackDrop();
-    this.userProvider.getSchedule()
+    this.userProvider.getPersonalSchedule()
       .then((schedules: Array<schedule>) => {
         this.util.closeBackDrop();
         if (schedules && schedules.length) {

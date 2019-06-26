@@ -94,7 +94,7 @@ export class UserProvider {
 
   getSchedule() {
     return this.http
-      .get(API.GET_SCHEDULE_OF_EMPLOYEE+this.user.id)
+      .get(API.GET_SCHEDULE)
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise();
   }

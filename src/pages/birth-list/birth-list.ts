@@ -40,7 +40,7 @@ export class BirthListPage {
     { name: "selected", label: 'Chọn nuôi' },
   ];
 
-  public placeholderSearch: string = 'Tìm kiếm ghi nhận lên giống'
+  public placeholderSearch: string = 'Tìm kiếm ghi nhận heo đẻ'
   public filter_default: Array<string> = ["pigCode", "breedName", "farmName", "sectionName", "houseName", "statusName", "birthdayDisplay", "description"];
 
   public page_Idx: number = 1;

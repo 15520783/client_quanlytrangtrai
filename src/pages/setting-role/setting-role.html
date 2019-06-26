@@ -1,6 +1,9 @@
 <ion-header>
-  <header [title]="'Thiết lập'">
-  </header>
+  <!-- <header [title]="'Thiết lập'">
+  </header> -->
+  <ion-navbar>
+    <ion-title>Thiết lập phân quyền</ion-title>
+  </ion-navbar>
 </ion-header>
 <ion-content *ngIf="platform.is('core')">
   <ion-row style="height: 100%;overflow: hidden;">
@@ -11,7 +14,7 @@
           <ion-title text-left>Danh sách thiết lập</ion-title>
         </ion-navbar>
       </ion-header>
-      <ion-content>
+      <ion-content *ngIf="platform.is('core')">
         <ion-list>
           <button *ngFor="let key of listMainKey;let idx= index" [attr.active]="idx === slider.realIndex? '':null"
             ion-item (tap)="scrollToView(idx)">
@@ -26,8 +29,6 @@
           </button>
         </ion-list>
       </ion-content>
-
-
       <!-- <ion-card mode='ios'>
         <ion-card-header>Danh sách thiết lập</ion-card-header>
         <ion-card-content class="ion-card-content-list-setting" no-padding>
@@ -77,6 +78,23 @@
   </ion-row>
 </ion-content>
 
+<ion-content *ngIf="!platform.is('core')">
+  <ion-list>
+    <ion-item-group  *ngFor="let key of listMainKey;let idx= index">
+      <ion-item-divider color="light" text-left text-weight sticky="true">
+          {{MainRolePermission[key].name}}
+      </ion-item-divider>
+      <span *ngFor="let item of rolePermission[MainRolePermission[key].codeName]">
+        <ion-item>
+          <ion-label>{{item.name}}</ion-label>
+          <ion-checkbox [checked]="permissionObjectKey[item.id]?true:false" [(ngModel)]="item.granted">
+          </ion-checkbox>
+        </ion-item>
+      </span>
+    </ion-item-group>
+  </ion-list>
+</ion-content>
+
 <ion-footer no-border showWhen="core">
   <ion-toolbar toolbar-transparent text-right showWhen="core">
     <button type="submit" ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
@@ -84,9 +102,9 @@
   </ion-toolbar>
 </ion-footer>
 
-<!-- <ion-footer no-border no-padding showWhen="ios,android">
+<ion-footer no-border no-padding showWhen="ios,android">
   <button type="submit" no-margin full block ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
-</ion-footer> -->
+</ion-footer>
 
 <!-- <ion-content *ngIf="!platform.is('core')">
     <ion-item-divider sticky="true">Danh sách thiết lập</ion-item-divider>

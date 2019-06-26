@@ -31,7 +31,7 @@ export class SettingRolePage {
     public userProvider: UserProvider,
     public platform: Platform,
     public settingProvider: SettingsProvider,
-    public util: Utils
+    public util: Utils,
   ) {
     if (this.navParams.data) {
       this.role = this.navParams.data;

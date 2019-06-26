@@ -1,5 +1,9 @@
 <ion-header>
-  <header [title]="'Hoạt động'"></header>
+  <header [title]="'Hoạt động'">
+    <input-select *ngIf="!platform.is('core')" class="input-select" [value]="selectedFarm" [placeholder]="'Chọn trang trại'" [(data)]="farms"
+      (changeValue)="changeFarm($event)">
+    </input-select>
+  </header>
 </ion-header>
 <ion-content *ngIf="platform.is('core')">
   <ion-row>

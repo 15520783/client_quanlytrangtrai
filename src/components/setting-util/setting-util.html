@@ -36,7 +36,7 @@
         <button ion-button color="main" (tap)="edit(item)">Sửa</button>
         <button ion-button color="danger" (tap)="remove(item)">Xóa</button>
         <span *ngIf="extraButtons">
-          <button *ngFor="let button of extraButtons" ion-button [color]="button.color">{{button.title}}</button>
+          <button *ngFor="let button of extraButtons" ion-button [color]="button.color" (tap)="button.handler(navCtrl,item)">{{button.title}}</button>
         </span>
       </ion-item-options>
     </ion-item-sliding>
