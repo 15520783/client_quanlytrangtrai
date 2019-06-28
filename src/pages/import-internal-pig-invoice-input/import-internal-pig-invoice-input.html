@@ -70,7 +70,7 @@
   <ion-footer *ngIf="userProvider.rolePermission.ROLE_them_chung_tu_nhap_heo_trong_he_thong!=null" no-border showWhen="core">
     <ion-toolbar toolbar-transparent text-right>
       <button type="submit" ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
-      <button ion-button mode='ios' color="danger">Hủy</button>
+      <cancel-button></cancel-button>
     </ion-toolbar>
   </ion-footer>
   

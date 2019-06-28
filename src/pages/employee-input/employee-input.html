@@ -2,11 +2,6 @@
 <ion-header>
     <ion-navbar>
         <ion-toolbar toolbar-transparent no-border class="custom-toolbar" >
-            <!-- <ion-buttons left>
-              <button navPop ion-button icon-only>
-                <ion-icon name="arrow-back"></ion-icon>
-              </button>
-            </ion-buttons> -->
           <ion-title style="padding: 0px!important">{{title}}</ion-title>
         </ion-toolbar>
     </ion-navbar>
@@ -90,7 +85,7 @@
   <ion-footer no-border showWhen="core">
     <ion-toolbar toolbar-transparent text-right showWhen="core">
         <button type="submit"  ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
-        <button ion-button   mode='ios' color="danger">Hủy</button>
+        <cancel-button></cancel-button>
     </ion-toolbar>
   </ion-footer>
   

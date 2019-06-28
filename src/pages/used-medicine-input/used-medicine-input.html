@@ -219,6 +219,7 @@
 </ion-content>
 <ion-footer no-border no-padding *ngIf="!platform.is('core')">
   <button type="submit" no-margin full block ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
+  <cancel-button></cancel-button>
 </ion-footer>
 
 <span *ngIf="!platform.is('core')">

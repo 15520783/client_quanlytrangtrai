@@ -54,22 +54,6 @@
         <ion-item *ngIf="pigs && pigs.length">
           <p ion-text color="secondary">Tổng số heo tại chuồng: {{pigs.length}}</p>
         </ion-item>
-        <!-- <input-text [(validControl)] = "credentialsForm.controls.position"
-                    [errorMessage_Required]  = "'Vị trí là hạng mục bắt buộc'"
-                    [label] = "'Vị trí'"
-                    [placeholder]="'Nhập vị trí nhà'"
-                    [active]= "submitAttempt">
-        </input-text>-->
-        
-        <!-- <input-select-target
-                    [(validControl)] = "credentialsForm.controls.manager"
-                    [errorMessage_Required]  ="'Nhân viên quản lý là hạng mục bắt buộc.'"
-                    [active]= "submitAttempt"
-                    [placeholder]="'Chọn nhân viên'"
-                    [label]="'Nhân viên quản lý'"
-                    [targertCmp]="'employee'">
-        </input-select-target> -->
-        
       </ion-list>
     </form>
   </ion-content>
@@ -77,7 +61,7 @@
   <ion-footer no-border showWhen="core">
     <ion-toolbar toolbar-transparent text-right showWhen="core">
         <button type="submit"  ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
-        <button ion-button   mode='ios' color="danger">Hủy</button>
+        <cancel-button></cancel-button>
     </ion-toolbar>
   </ion-footer>
   

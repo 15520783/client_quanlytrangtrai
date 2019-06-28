@@ -15,6 +15,7 @@ import { BirthListPage } from '../pages/birth-list/birth-list';
 import { BreedingInputPage } from '../pages/breeding-input/breeding-input';
 import { BreedingListPage } from '../pages/breeding-list/breeding-list';
 import { BrowserModule } from '@angular/platform-browser';
+import { CancelButtonComponent } from '../components/cancel-button/cancel-button';
 import { ChildPigInputPage } from '../pages/child-pig-input/child-pig-input';
 import { DatePipe } from '@angular/common';
 import { DatePlanPage } from '../pages/date-plan/date-plan';
@@ -238,6 +239,7 @@ const Components = [
   ListFabButtonPigComponent,
   ExportInternalPigInvoiceComponent,
   IssuePigListComponent,
+  CancelButtonComponent
 ]
 
 const Providers = [
