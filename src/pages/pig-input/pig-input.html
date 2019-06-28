@@ -61,11 +61,13 @@
             [(data)]="genders">
           </input-select>
           <input-select-target [(validControl)]="credentialsForm.controls.originFatherId"
+            [disabled]="UpdateMode"
             [active]="submitAttempt"
             [placeholder]="'Chọn heo cha'" [label]="'Heo cha'" 
             [targertCmp]="'pigs'">
           </input-select-target>
           <input-select-target [(validControl)]="credentialsForm.controls.originMotherId"
+            [disabled]="UpdateMode"
             [active]="submitAttempt"
             [placeholder]="'Chọn heo mẹ'" [label]="'Heo mẹ'" 
             [targertCmp]="'pigs'">
@@ -83,11 +85,7 @@
             [attr.col-md-12]="platform.is('core')?'':null"
             [attr.col-sm-12]="platform.is('core')?'':null"
             [attr.col-12]="!platform.is('core')?'':null">
-          <!-- <input-select [(validControl)]="credentialsForm.controls.roundId"
-            [errorMessage_Required]="'Lứa là hạng mục bắt buộc.'" [label]="'Lứa'" 
-            [active]="submitAttempt"
-            [placeholder]="'Chọn lứa'" [(data)]="rounds">
-          </input-select> -->
+
           <input-text [(validControl)]="credentialsForm.controls.receiveWeight"
             [label]="'Trọng lượng NCC'"
             [placeholder]="'Nhập Trọng lượng NCC'" 

@@ -87,7 +87,9 @@ export class PigInfomationPage {
         .then((updated_pig:pig)=>{
           if(updated_pig){
             this.pigProvider.updatedPig(pig);
-            this.navParams.get('callbackUpdate')(updated_pig);
+            if(this.navParams.data.callbackUpdate){
+              this.navParams.data.callbackUpdate(updated_pig);
+            }
             this.pig = updated_pig;
             this.init();
           }

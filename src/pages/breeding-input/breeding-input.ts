@@ -1,11 +1,11 @@
+import { CONFIG, MESSAGE } from '../../common/const';
+import { Events, IonicPage, NavController, NavParams } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { breedings } from '../../common/entity';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { Utils } from '../../common/utils';
-import { MESSAGE, CONFIG } from '../../common/const';
-
+import { breedings } from '../../common/entity';
 
 @IonicPage()
 @Component({
@@ -40,7 +40,7 @@ export class BreedingInputPage {
       date: [this.breeding.date, Validators.compose([Validators.required])],
       logId: this.breeding.logId,
       typeId: [this.breeding.typeId, Validators.compose([Validators.required])],
-      description: [this.breeding.description, Validators.compose([Validators.required])],
+      description: this.breeding.description,
       breedingCount: this.breeding.breedingCount,
       breedingNext: [this.breeding.breedingNext, Validators.compose([Validators.required])],
       matingEstimate: [this.breeding.matingEstimate, Validators.compose([Validators.required])],

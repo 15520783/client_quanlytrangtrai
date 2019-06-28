@@ -39,7 +39,7 @@ export class InvoicesProvider {
    */
   getAllForwardingPigInvoices() {
     return this.http
-      .get<{ invoicesPig: Array<invoicesPig>, invoicePigDetail: Array<invoicePigDetail>, pigs:Array<pig> }>(API.GET_ALL_FORWARDING_PIG_INVOICE)
+      .get<{ invoicesPig: Array<invoicesPig>, invoicePigDetail: Array<invoicePigDetail>, pigs: Array<pig> }>(API.GET_ALL_FORWARDING_PIG_INVOICE)
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise();
   }
@@ -59,11 +59,11 @@ export class InvoicesProvider {
    * Tạo chứng từ nhập heo vào hệ thống
    * @param objBody 
    */
-  createImportInternalPigInvoice(objBody:{invoicesPig:invoicesPig,invoicesPigUpdate:invoicesPig,pigsList:Array<pig>}){
+  createImportInternalPigInvoice(objBody: { invoicesPig: invoicesPig, invoicesPigUpdate: invoicesPig, pigsList: Array<pig> }) {
     return this.http
-    .post<{pigsList:Array<pig>,invoicesPig:invoicesPig,invoicePigDetailList:invoicePigDetail}>(API.CREATE_IMPORT_INTERNAL_PIG_INVOICE,objBody)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+      .post<{ pigsList: Array<pig>, invoicesPig: invoicesPig, invoicePigDetailList: invoicePigDetail }>(API.CREATE_IMPORT_INTERNAL_PIG_INVOICE, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
   /**
@@ -106,11 +106,11 @@ export class InvoicesProvider {
    * Cập nhật một chứng từ cám,thuốc
    * @param objBody 
    */
-  updateProductInvoice(objBody:invoicesProduct){
+  updateProductInvoice(objBody: invoicesProduct) {
     return this.http
-    .put(API.UPDATE_PRODUCT_INVOICE,objBody)
-    .timeout(CONFIG.DEFAULT_TIMEOUT)
-    .toPromise();
+      .put(API.UPDATE_PRODUCT_INVOICE, objBody)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 
   /**
@@ -191,7 +191,7 @@ export class InvoicesProvider {
    * Xóa chi tiết cám
    * @param objBody 
    */
-  removeFoodWarehouse(objBody:foodWareHouse){
+  removeFoodWarehouse(objBody: foodWareHouse) {
     const options = {
       headers: new HttpHeaders(),
       body: objBody
@@ -202,11 +202,11 @@ export class InvoicesProvider {
       .toPromise();
   }
 
-   /**
-   * Xóa chi tiết thuốc
-   * @param objBody 
-   */
-  removeMedicineWarehouse(objBody:medicineWarehouse){
+  /**
+  * Xóa chi tiết thuốc
+  * @param objBody 
+  */
+  removeMedicineWarehouse(objBody: medicineWarehouse) {
     const options = {
       headers: new HttpHeaders(),
       body: objBody
@@ -233,15 +233,15 @@ export class InvoicesProvider {
       .post<{ invoicePigDetail: invoicePigDetail, pigs: pig }>(API.CREATE_PIG_INVOICE_DETAIL, objBody)
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise();
-      // .then((response) => {
-      //   if (response && response.pigs && response.invoicePigDetail) {
-      //     this.util.getKey(KEY.PIGS).then((pigs: Array<pig>) => {
-      //       pigs.push(response.pigs);
-      //       this.util.setKey(KEY.PIGS, pigs);
-      //     })
-      //   }
-      //   return response;
-      // })
+    // .then((response) => {
+    //   if (response && response.pigs && response.invoicePigDetail) {
+    //     this.util.getKey(KEY.PIGS).then((pigs: Array<pig>) => {
+    //       pigs.push(response.pigs);
+    //       this.util.setKey(KEY.PIGS, pigs);
+    //     })
+    //   }
+    //   return response;
+    // })
   }
 
 
@@ -297,10 +297,10 @@ export class InvoicesProvider {
    * Cập nhật chi tiết chứng từ heo (cập nhật ngày 29/06/2019)
    * @param objBody 
    */
-  updatePigInvoiceDetail(objBody:{pigs:pig,invoicesPig:invoicesPig}){
+  updatePigInvoiceDetail(objBody: { pigs: pig, invoicesPig: invoicesPig }) {
     return this.http
-    .put<{pigs:pig,invoicesPig:invoicesPig}>(API.UPDATE_PIG_INVOICE_DETAIL,objBody)
-    .toPromise();
+      .put<{ pigs: pig, invoicesPig: invoicesPig }>(API.UPDATE_PIG_INVOICE_DETAIL, objBody)
+      .toPromise();
   }
 
 
@@ -321,5 +321,17 @@ export class InvoicesProvider {
   publishUpdateEvent() {
     this.updated_flag = true;
     this.events.publish('updated');
+  }
+
+  getInvoicePigById(id: string) {
+    return this.http.get(API.GET_INVOICE_PIG_BY_ID + id)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+  getInvoiceProductById(id: string) {
+    return this.http.get(API.GET_INVOICE_PRODUCT_BY_ID + id)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
   }
 }

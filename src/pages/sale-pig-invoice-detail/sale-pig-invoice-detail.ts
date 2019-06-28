@@ -84,18 +84,35 @@ export class SalePigInvoiceDetailPage {
           this.invoice['destination'] = this.deployData.get_customer_by_id(this.invoice.destinationId);
           this.invoice['exportDateDisplay'] = this.util.convertDate(this.invoice.exportDate);
           this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
-        }else{
-          this.invoice.quantity = 0;
-          this.invoice.totalPrice = 0;
-          this.invoice.totalWeight = 0;
+          this.navParams.data.callbackUpdate(this.invoice);
         }
-        this.navParams.data.callbackUpdate(this.invoice);
         this.util.closeBackDrop()
       })
       .catch((err: Error) => {
         this.util.closeBackDrop().then(() => {
           this.util.showToast('Dữ liệu chưa được tải về. Vui lòng kiểm tra kết nối');
         })
+      })
+  }
+
+  getInvoice() {
+    this.util.openBackDrop();
+    this.invoiceProvider.getInvoicePigById(this.invoice.id)
+      .then((invoice: invoicesPig) => {
+        if (invoice) {
+          this.invoice = invoice;
+          this.invoice['source'] = this.deployData.get_farm_by_id(this.invoice.sourceId);
+          this.invoice['destination'] = this.deployData.get_customer_by_id(this.invoice.destinationId);
+          this.invoice['exportDateDisplay'] = this.util.convertDate(this.invoice.exportDate);
+          this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
+          this.navParams.data.callbackUpdate(this.invoice);
+        }
+        this.util.closeBackDrop();
+      })
+      .catch(err => {
+        this.util.closeBackDrop();
+        console.log(err);
+        return err;
       })
   }
 
@@ -112,34 +129,6 @@ export class SalePigInvoiceDetailPage {
   selectedTab(index) {
     this.slider.slideTo(index);
   }
-
-  // /**
-  //  * Nhập heo vào chứng từ
-  //  */
-  // input_pig() {
-  //   let statusPigValiable = this.settingProvider.setting.status.filter((status) => {
-  //     return status.previousStatus == '0' ? true : false;
-  //   })
-
-  //   let callback = (pig: pig) => {
-  //     this.invoiceProvider.createPigInvoiceDetail({
-  //       pigs: this.deployData.get_pig_object_to_send_request(pig),
-  //       invoicesPig: this.invoice
-  //     })
-  //       .then((response) => {
-  //         if (response && response.pigs && response.invoicePigDetail) {
-  //           this.pigs[response.pigs.id] = response.pigs;
-  //           this.pigProvider.pigs.push(response.pigs);
-  //           this.details.push(response.invoicePigDetail);
-  //         }
-  //         this.navCtrl.pop();
-  //       })
-  //       .catch((err: Error) => { })
-  //   }
-
-  //   this.navCtrl.push(PigInputPage, { statusPigValiable: statusPigValiable, callback: callback });
-  // }
-
 
   /**
    * Chỉnh sửa chứng từ
@@ -245,6 +234,7 @@ export class SalePigInvoiceDetailPage {
             statusPig[pig.statusId].code != VARIABLE.STATUS_PIG.WAIT_FOR_SALE &&
             statusPig[pig.statusId].code != VARIABLE.STATUS_PIG.WAIT_FOR_MATING &&
             statusPig[pig.statusId].code != VARIABLE.STATUS_PIG.MATING &&
+            statusPig[pig.statusId].code != VARIABLE.STATUS_PIG.UNKNOW &&
             houses[pig.houseId].section.farm.id == this.invoice.sourceId) ? true : false;
         });
         this.util.closeBackDrop();
@@ -259,8 +249,6 @@ export class SalePigInvoiceDetailPage {
               .then((response) => {
                 if (response && response.pigs && response.invoicePigDetail) {
                   this.pigProvider.updatedPig(response.pigs);
-                  // this.pigs[response.pigs.id] = response.pigs;
-                  // this.details.push(response.invoicePigDetail);
                   this.getDetails();
                 }
               })
@@ -286,16 +274,12 @@ export class SalePigInvoiceDetailPage {
     this.invoiceProvider.removePigInvoiceDetail(invoiceDetail)
       .then((isOK_detail) => {
         if (isOK_detail) {
-          // let idx = this.details.findIndex(detail => detail.id == invoiceDetail.id);
-          // if (idx > -1) {
-            // this.details.splice(idx, 1);
-            this.getDetails();
             let statusSaleWaiting = this.deployData.get_status_by_id(this.pigs[invoiceDetail.objectId].statusId);
             let pig = this.util.deepClone(this.pigs[invoiceDetail.objectId]);
             pig.statusId = statusSaleWaiting.previousStatus;
             this.pigs[invoiceDetail.objectId] = pig;
             this.pigProvider.updatedPig(pig);
-          // }
+            this.getInvoice();
         }
       })
       .catch((err: Error) => { })
@@ -315,11 +299,6 @@ export class SalePigInvoiceDetailPage {
           if (res.pigs) {
             this.pigProvider.updatedPig(res.pigs);
             this.getDetails();
-            // this.invoice = res.invoicesPig;
-            // this.invoice['source'] = this.deployData.get_farm_by_id(this.invoice.sourceId);
-            // this.invoice['destination'] = this.deployData.get_customer_by_id(this.invoice.destinationId);
-            // this.invoice['exportDateDisplay'] = this.util.convertDate(this.invoice.exportDate);
-            // this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
           }
           this.navCtrl.pop();
         })

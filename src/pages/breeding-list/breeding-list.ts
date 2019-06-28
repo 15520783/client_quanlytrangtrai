@@ -157,7 +157,7 @@ export class BreedingListPage {
       breeding['breedingNextDisplay'] = breeding.breedingNext ? this.util.convertDate(breeding.breedingNext) : 'Chưa xác định';
       breeding['matingEstimateDisplay'] = breeding.matingEstimate ? this.util.convertDate(breeding.matingEstimate) : 'Chưa xác định';
       breeding['matingRealDisplay'] = breeding.matingReal ? this.util.convertDate(breeding.matingReal) : 'Chưa phối';
-      breeding['statusName'] = breeding.pig.status.name;
+      breeding['statusName'] = breeding.pig.status.description;
       breeding['typeBreedingName'] = this.breedingTypes[breeding.typeId].name;
     })
   }

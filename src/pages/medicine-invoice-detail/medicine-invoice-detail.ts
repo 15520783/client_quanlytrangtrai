@@ -78,8 +78,6 @@ export class MedicineInvoiceDetailPage {
           this.invoice['importDateDisplay'] = this.util.convertDate(this.invoice.importDate);
           this.invoice['updateAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
           this.navParams.data.callback(this.invoice);
-        }else{
-          this.invoice.price = 0;
         }
         this.util.closeBackDrop();
       })
@@ -89,6 +87,25 @@ export class MedicineInvoiceDetailPage {
           this.util.showToast('Dữ liệu chưa được tải về. Vui lòng kiểm tra kết nối');
         })
       })
+  }
+
+  getInvoice(){
+    this.util.openBackDrop();
+    this.invoiceProvider.getInvoiceProductById(this.invoice.id)
+    .then((invoice:invoicesProduct)=>{
+      if(invoice){
+        this.invoice = invoice;
+        this.invoice['importDateDisplay'] = this.util.convertDate(this.invoice.importDate);
+        this.invoice['updateAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
+        this.navParams.data.callback(this.invoice);
+      }
+      this.util.closeBackDrop();
+    })
+    .catch((err)=>{
+      console.log(err);
+      this.util.closeBackDrop();
+      return err;
+    })
   }
 
   input_medicine() {
@@ -142,8 +159,6 @@ export class MedicineInvoiceDetailPage {
     let callback = data => {
       if (data) {
         this.invoice = data;
-        // this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destination.id);
-        // this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.source.id);
         this.navParams.get('callback')(this.invoice);
         this.navCtrl.pop();
       }
@@ -173,8 +188,6 @@ export class MedicineInvoiceDetailPage {
       .then((updatedInvoice: invoicesProduct) => {
         if (updatedInvoice) {
           this.invoice = updatedInvoice;
-          // this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
-          // this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.sourceId);
           this.canCheckComplete = false;
           this.canEditInvoice = false;
           this.navParams.get('callback')(this.invoice);
@@ -188,7 +201,11 @@ export class MedicineInvoiceDetailPage {
     this.invoiceProvider.removeMedicineWarehouse(item)
       .then((isOK: boolean) => {
         if (isOK) {
-          this.getDetails();
+          let idx = this.details.findIndex(_detail=>_detail.id == item.id);
+          if(idx > -1){
+            this.details.splice(idx,1);
+            this.getInvoice();
+          }
         }
       })
       .catch((err) => {

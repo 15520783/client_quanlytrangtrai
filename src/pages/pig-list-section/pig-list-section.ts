@@ -148,7 +148,7 @@ export class PigListSectionPage {
       pig['sectionName'] = this.houses[pig.houseId] ? this.houses[pig.houseId].section.name : '';
       pig['houseName'] = this.houses[pig.houseId] ? this.houses[pig.houseId].name : '';
       pig['farmName'] = this.houses[pig.houseId].section.farm ? this.houses[pig.houseId].section.farm.name : '';
-      pig['statusName'] = this.status[pig.statusId] ? this.status[pig.statusId].name : '';
+      pig['statusName'] = this.status[pig.statusId] ? this.status[pig.statusId].description : '';
       pig['statusCode'] = this.status[pig.statusId] ? (this.status[pig.statusId].code).toString() : '';
       pig['birthdayDisplay'] = this.util.convertDate(pig.birthday);
       pig['genderName'] = this.gender[pig.gender] ? this.gender[pig.gender].name : '';

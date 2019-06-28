@@ -26,6 +26,7 @@
       weaning.includes((sectionTypeId).toString()) 
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_TRANSFER
+      && statusObjectKey[pig.statusId].code != statusPig.UNKNOW
       && (statusObjectKey[pig.statusId].code == statusPig.FARROWING || statusObjectKey[pig.statusId].code == statusPig.NEWBORN)"
       data-balloon-visible data-balloon-length="medium" 
       data-balloon="Thêm vào danh sách cai sữa"
@@ -49,6 +50,7 @@
       *ngIf="userProvider.rolePermission.ROLE_ghi_nhan_phoi_giong!=null 
       && mating.includes((sectionTypeId).toString()) 
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE 
+      && statusObjectKey[pig.statusId].code != statusPig.UNKNOW
       && pig.gender == gender.FEMALE
       && statusObjectKey[pig.statusId].code == statusPig.WAIT_FOR_MATING"
       data-balloon-visible data-balloon-length="medium" 
@@ -62,6 +64,7 @@
       && breeding.includes((sectionTypeId).toString()) 
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE 
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_MATING 
+      && statusObjectKey[pig.statusId].code != statusPig.UNKNOW
       && pig.gender == gender.FEMALE"
       data-balloon-visible data-balloon-length="medium" 
       data-balloon="Lên giống"
@@ -73,6 +76,7 @@
       *ngIf="userProvider.rolePermission.ROLE_khai_thac_tinh_heo!=null 
       && sperm.includes((sectionTypeId).toString()) 
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE 
+      && statusObjectKey[pig.statusId].code != statusPig.UNKNOW
       && pig.gender == gender.MALE"
       data-balloon-visible data-balloon-length="medium" 
       data-balloon="Khai thác tinh heo"

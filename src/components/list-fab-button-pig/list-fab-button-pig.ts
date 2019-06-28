@@ -35,6 +35,8 @@ export class ListFabButtonPigComponent {
   public weaning;
   public review_offset;
 
+  public move_local = [];
+
   constructor(
     public deployData: DeployDataProvider,
     public activitiesProvider: ActivitiesProvider,
@@ -103,6 +105,42 @@ export class ListFabButtonPigComponent {
 
   ngOnInit(): void {
     this.statusObjectKey = this.deployData.get_object_list_key_of_status();
+
+    switch ((this.sectionTypeId).toString()) {
+      case VARIABLE.SECTION_TYPE[1].id: {
+        VARIABLE.SECTION_TYPE.forEach(e => {
+          this.move_local.push(e.id)
+        })
+        break;
+      }
+      case VARIABLE.SECTION_TYPE[2].id: {
+        this.move_local = [VARIABLE.SECTION_TYPE[2].id,VARIABLE.SECTION_TYPE[3].id];
+        break;
+      }
+      case VARIABLE.SECTION_TYPE[3].id: {
+        this.move_local = [VARIABLE.SECTION_TYPE[3].id,VARIABLE.SECTION_TYPE[4].id]
+        break;
+      }
+      case VARIABLE.SECTION_TYPE[4].id: {
+        this.move_local = [VARIABLE.SECTION_TYPE[4].id,VARIABLE.SECTION_TYPE[3].id, VARIABLE.SECTION_TYPE[4].id];
+        break;
+      }
+      case VARIABLE.SECTION_TYPE[5].id: {
+        this.move_local = [VARIABLE.SECTION_TYPE[5].id,VARIABLE.SECTION_TYPE[3].id, VARIABLE.SECTION_TYPE[6].id];
+        break;
+      }
+      case VARIABLE.SECTION_TYPE[6].id: {
+        this.move_local = [VARIABLE.SECTION_TYPE[6].id,VARIABLE.SECTION_TYPE[7].id];
+        break;
+      }
+      case VARIABLE.SECTION_TYPE[7].id: {
+        this.move_local = [VARIABLE.SECTION_TYPE[7].id,VARIABLE.SECTION_TYPE[1].id];
+        break;
+      }
+      default:
+        this.move_local = [];
+        break;
+    }
   }
 
   /**
@@ -242,7 +280,12 @@ export class ListFabButtonPigComponent {
         .catch((err: Error) => { })
     }
     this.closeFabList();
-    this.navCtrl.push(PigInputPage, { pigId: this.pig.id, isTransferSection: true, callback: callback })
+    this.navCtrl.push(PigInputPage, { 
+      pigId: this.pig.id, 
+      isTransferSection: true, 
+      requiredSectionType: this.move_local,
+      callback: callback 
+    })
   }
 
   /**

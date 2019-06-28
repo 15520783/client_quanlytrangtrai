@@ -301,6 +301,8 @@ const API = {
     GET_SCHEDULE_OF_EMPLOYEE: '/api/schedule/employee/',  //{empId}
     GET_PERMISSION_OF_ROLE: '/api/rolepermission/role/', //{roleId}
     GET_ALL_PERMISSION: '/api/permission/list',
+    GET_INVOICE_PIG_BY_ID:'/api/invoicespig/one/',//{id}
+    GET_INVOICE_PRODUCT_BY_ID:'/api/invoicesproduct/one/', //{id}
 
     PUSH_NOTIFICATION: 'https://fcm.googleapis.com/fcm/send',
     SEND_EMAIL: '/api/mail/sendemailnotification/', //{email}/{scheduleid}

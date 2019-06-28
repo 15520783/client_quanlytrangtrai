@@ -84,16 +84,23 @@ export class PigInputPage {
       this.deployData.get_sections_of_farm(house.section.farm.id).forEach((section) => {
         this.sections.push({
           name: section.name,
+          typeId: section.typeId,
           value: section.id
         })
-      })
+      });
 
       this.deployData.get_houses_of_section(house.section.id).forEach((house) => {
         this.houses.push({
           name: house.name,
           value: house.id
         })
-      })
+      });
+
+      if (this.navParams.data.requiredSectionType) {
+        this.sections = this.sections.filter(section => {
+          return this.navParams.data.requiredSectionType.includes((section.typeId).toString()) == true ? true : false;
+        });
+      }
 
       let mother = this.deployData.get_pig_by_pig_code(this.pig.originMother);
       let father = this.deployData.get_pig_by_pig_code(this.pig.originFather);
@@ -105,16 +112,17 @@ export class PigInputPage {
       Object.keys(this.credentialsForm.value).forEach((attr) => {
         this.credentialsForm.controls[attr].setValue(this.pig[attr]);
       });
-    }
+      if (this.navParams.data.isTransferSection) {
+        this.credentialsForm.controls.pigCode.disable();
+        this.credentialsForm.controls.farmId.disable();
+        this.credentialsForm.controls.breedId.disable();
+        this.credentialsForm.controls.originFatherId.disable();
+        this.credentialsForm.controls.originMotherId.disable();
+        this.credentialsForm.controls.gender.disable();
+        this.credentialsForm.controls.birthday.disable();
+      }
 
-    if (this.navParams.data.isTransferSection) {
-      this.credentialsForm.controls.pigCode.disable();
-      this.credentialsForm.controls.farmId.disable();
-      this.credentialsForm.controls.breedId.disable();
-      this.credentialsForm.controls.originFatherId.disable();
-      this.credentialsForm.controls.originMotherId.disable();
-      this.credentialsForm.controls.gender.disable();
-      this.credentialsForm.controls.birthday.disable();
+
     }
   }
 

@@ -30,8 +30,8 @@ export class ExternalPigInvoiceDetailPage {
   public gentials: any;
   public foots: any;
   public healStatus: any;
-  public breeds:any;
-  public gender:any;
+  public breeds: any;
+  public gender: any;
 
   canCheckComplete: boolean = false;
   canEditInvoice: boolean = false;
@@ -75,7 +75,7 @@ export class ExternalPigInvoiceDetailPage {
     this.getDetails();
   }
 
-  getDetails(){
+  getDetails() {
     this.util.openBackDrop();
     this.invoiceProvider.getPigInvoiceDetail(this.navParams.data.invoice.id)
       .then((details: Array<invoicePigDetail>) => {
@@ -86,18 +86,35 @@ export class ExternalPigInvoiceDetailPage {
           this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.sourceId);
           this.invoice['importDateDisplay'] = this.util.convertDate(this.invoice.importDate);
           this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
-        }else{
-          this.invoice.totalPrice = 0;
-          this.invoice.totalWeight = 0;
-          this.invoice.quantity = 0;
+          this.navParams.data.callback(this.invoice);
         }
-        this.navParams.data.callback(this.invoice);
         this.util.closeBackDrop()
       })
       .catch((err: Error) => {
         this.util.closeBackDrop().then(() => {
           this.util.showToast('Dữ liệu chưa được tải về. Vui lòng kiểm tra kết nối');
         })
+      })
+  }
+
+  getInvoice() {
+    this.util.openBackDrop();
+    this.invoiceProvider.getInvoicePigById(this.invoice.id)
+      .then((invoice: invoicesPig) => {
+        if (invoice) {
+          this.invoice = invoice;
+          this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
+          this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.sourceId);
+          this.invoice['importDateDisplay'] = this.util.convertDate(this.invoice.importDate);
+          this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
+          this.navParams.data.callback(this.invoice);
+        }
+        this.util.closeBackDrop();
+      })
+      .catch(err => {
+        this.util.closeBackDrop();
+        console.log(err);
+        return err;
       })
   }
 
@@ -119,10 +136,6 @@ export class ExternalPigInvoiceDetailPage {
    * Nhập heo vào chứng từ
    */
   input_pig() {
-    // let statusPigValiable = this.settingProvider.setting.status.filter((status) => {
-    //   return status.previousStatus == '0' ? true : false;
-    // })
-
     let callback = (pig: pig) => {
       let idx = this.pigProvider.pigs.findIndex(_pig => _pig.pigCode == pig.pigCode);
       if (idx > -1) {
@@ -136,7 +149,7 @@ export class ExternalPigInvoiceDetailPage {
             if (response && response.pigs && response.invoicePigDetail) {
               this.pigs[response.pigs.id] = response.pigs;
               this.pigProvider.updatedPig(response.pigs);
-              this.details.push(response.invoicePigDetail);
+              this.getDetails();
             }
             this.navCtrl.pop();
           })
@@ -157,12 +170,6 @@ export class ExternalPigInvoiceDetailPage {
   edit(item: invoicePigDetail) {
     let callback = (pig: pig) => {
       pig = this.deployData.get_pig_object_to_send_request(pig);
-      // this.pigProvider.updatePig(pig)
-      //   .then((pig) => {
-      //     this.pigs[pig.id] = pig;
-      //     this.navCtrl.pop();
-      //   })
-      //   .catch((err: Error) => { })
       this.invoiceProvider.updatePigInvoiceDetail({
         pigs: pig,
         invoicesPig: this.invoice
@@ -170,17 +177,11 @@ export class ExternalPigInvoiceDetailPage {
         .then((res) => {
           if (res.pigs) {
             this.pigProvider.updatedPig(res.pigs);
-            // this.invoice = res.invoicesPig;
-            // this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
-            // this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.sourceId);
-            // this.invoice['importDateDisplay'] = this.util.convertDate(this.invoice.importDate);
-            // this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
-            // this.navParams.get('callback')(this.invoice)
             this.getDetails();
           }
           this.navCtrl.pop();
         })
-        .catch(err=>{
+        .catch(err => {
           console.log(err);
           return err;
         })
@@ -197,19 +198,11 @@ export class ExternalPigInvoiceDetailPage {
     this.invoiceProvider.removeExternalImportPigInvoiceDetail(invoiceDetail)
       .then((isOK_detail) => {
         if (isOK_detail) {
-          this.getDetails();
           this.pigProvider.removedPig(this.pigs[invoiceDetail.objectId]);
-          // let idx = this.details.findIndex(detail => detail.id == invoiceDetail.id);
-          // if (idx > -1)
-          //   this.details.splice(idx, 1);
-          // this.util.getKey(KEY.PIGS).then((pigs: Array<pig>) => {
-          //   let idx = pigs.findIndex(pig => pig.id == invoiceDetail.objectId);
-          //   if (idx > -1)
-          //     pigs.splice(idx, 1);
-          //   this.util.setKey(KEY.PIGS, pigs).then(() => {
-          //     this.pigProvider.pigs = pigs;
-          //   });
-          // })
+          let idx = this.details.findIndex(detail => detail.id == invoiceDetail.id);
+          if (idx > -1)
+            this.details.splice(idx, 1);
+          this.getInvoice();
         }
       })
       .catch((err: Error) => { })

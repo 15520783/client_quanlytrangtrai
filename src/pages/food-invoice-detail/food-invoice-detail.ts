@@ -67,7 +67,7 @@ export class FoodInvoiceDetailPage {
     this.getDetails();
   }
 
-  getDetails(){
+  getDetails() {
     this.util.openBackDrop();
     this.invoiceProvider.getFoodWarehouse(this.navParams.data.invoice.id)
       .then((details: Array<foodWareHouse>) => {
@@ -77,8 +77,6 @@ export class FoodInvoiceDetailPage {
           this.invoice['importDateDisplay'] = this.util.convertDate(this.invoice.importDate);
           this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
           this.navParams.data.callback(this.details[0].invoice);
-        }else{
-          this.invoice.price = 0;
         }
         this.util.closeBackDrop();
       })
@@ -87,6 +85,25 @@ export class FoodInvoiceDetailPage {
         this.util.closeBackDrop().then(() => {
           this.util.showToast('Dữ liệu chưa được tải về. Vui lòng kiểm tra kết nối');
         })
+      })
+  }
+
+  getInvoice() {
+    this.util.openBackDrop();
+    this.invoiceProvider.getInvoiceProductById(this.invoice.id)
+      .then((invoice: invoicesProduct) => {
+        if (invoice) {
+          this.invoice = invoice;
+          this.invoice['importDateDisplay'] = this.util.convertDate(this.invoice.importDate);
+          this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
+          this.navParams.data.callback(this.details[0].invoice);
+        }
+        this.util.closeBackDrop();
+      })
+      .catch((err) => {
+        console.log(err);
+        this.util.closeBackDrop();
+        return err;
       })
   }
 
@@ -144,8 +161,6 @@ export class FoodInvoiceDetailPage {
     let callback = data => {
       if (data) {
         this.invoice = data;
-        // this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destination.id);
-        // this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.source.id);
         this.navParams.get('callback')(this.invoice);
         this.navCtrl.pop();
       }
@@ -175,8 +190,6 @@ export class FoodInvoiceDetailPage {
       .then((updatedInvoice: invoicesProduct) => {
         if (updatedInvoice) {
           this.invoice = updatedInvoice;
-          // this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
-          // this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.sourceId);
           this.canCheckComplete = false;
           this.canEditInvoice = false;
           this.navParams.get('callback')(this.invoice);
@@ -186,11 +199,14 @@ export class FoodInvoiceDetailPage {
   }
 
 
-  removeInvoicesDetail(item) {
+  removeInvoicesDetail(item: foodWareHouse) {
     this.invoiceProvider.removeFoodWarehouse(item)
       .then((isOK: boolean) => {
         if (isOK) {
-          this.getDetails();
+          let idx = this.details.findIndex(_detail => _detail.id == item.id);
+          if (idx > -1) {
+            this.details.splice(idx, 1);
+          }
         }
       })
       .catch((err) => {

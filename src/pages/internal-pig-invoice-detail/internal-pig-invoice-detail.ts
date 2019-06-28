@@ -97,10 +97,7 @@ export class InternalPigInvoiceDetailPage {
           this.invoice['importDateDisplay'] = this.util.convertDate(this.invoice.importDate);
           this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
           this.navParams.get('callback')(this.invoice);
-        }else{
-          this.invoice.quantity = 0;
-          this.invoice.totalWeight = 0;
-        }
+        } 
         this.util.closeBackDrop();
       })
       .catch((err: Error) => {
@@ -110,6 +107,8 @@ export class InternalPigInvoiceDetailPage {
         })
       })
   }
+
+  
 
   removeInvoice() {
     this.invoiceProvider.removePigInvoice(this.invoice)
@@ -177,12 +176,6 @@ export class InternalPigInvoiceDetailPage {
   edit(item: invoicePigDetail) {
     let callback = (pig: pig) => {
       pig = this.deployData.get_pig_object_to_send_request(pig);
-      // this.pigProvider.updatePig(pig)
-      //   .then((pig) => {
-      //     this.pigs[pig.id] = pig;
-      //     this.navCtrl.pop();
-      //   })
-      //   .catch((err: Error) => { })
       this.invoiceProvider.updatePigInvoiceDetail({
         pigs: pig,
         invoicesPig: this.invoice
@@ -191,12 +184,6 @@ export class InternalPigInvoiceDetailPage {
           if (res.pigs) {
             this.pigProvider.updatedPig(res.pigs);
             this.getDetails();
-            // this.invoice = res.invoicesPig;
-            // this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
-            // this.invoice['source'] = this.deployData.get_farm_by_id(this.invoice.sourceId);
-            // this.invoice['importDateDisplay'] = this.util.convertDate(this.invoice.importDate);
-            // this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
-            // this.navParams.get('callback')(this.invoice)
           }
           this.navCtrl.pop();
         })

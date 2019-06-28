@@ -41,6 +41,8 @@ export class OptionListPigSectionComponent {
   public gender;
   public statusObjectKey: any = {};
 
+  public move_local = [];
+
   constructor(
     public pigProvider: PigsProvider,
     public deployData: DeployDataProvider,
@@ -104,14 +106,12 @@ export class OptionListPigSectionComponent {
       VARIABLE.SECTION_TYPE[5].id
     ]
 
-    this.sectionTypeId = VARIABLE.SECTION_TYPE[this.sectionTypeId];
+    // this.sectionTypeId = VARIABLE.SECTION_TYPE[this.sectionTypeId];
+
   }
 
-  public move_local = [
-    VARIABLE.SECTION_TYPE[1].id,
-    VARIABLE.SECTION_TYPE[2].id,
-    VARIABLE.SECTION_TYPE[3].id,
-  ]
+
+
 
   public review_offset = [
     VARIABLE.SECTION_TYPE[7].id
@@ -120,13 +120,49 @@ export class OptionListPigSectionComponent {
   ngOnInit(): void {
     this.statusObjectKey = this.deployData.get_object_list_key_of_status();
     this.statusTarget = this.deployData.get_status_by_id(this.pig.statusId);
+
+    switch ((this.sectionTypeId).toString()) {
+      case VARIABLE.SECTION_TYPE[1].id: {
+        VARIABLE.SECTION_TYPE.forEach(e => {
+          this.move_local.push(e.id)
+        })
+        break;
+      }
+      case VARIABLE.SECTION_TYPE[2].id: {
+        this.move_local = [VARIABLE.SECTION_TYPE[2].id,VARIABLE.SECTION_TYPE[3].id];
+        break;
+      }
+      case VARIABLE.SECTION_TYPE[3].id: {
+        this.move_local = [VARIABLE.SECTION_TYPE[3].id,VARIABLE.SECTION_TYPE[4].id]
+        break;
+      }
+      case VARIABLE.SECTION_TYPE[4].id: {
+        this.move_local = [VARIABLE.SECTION_TYPE[4].id,VARIABLE.SECTION_TYPE[3].id, VARIABLE.SECTION_TYPE[4].id];
+        break;
+      }
+      case VARIABLE.SECTION_TYPE[5].id: {
+        this.move_local = [VARIABLE.SECTION_TYPE[5].id,VARIABLE.SECTION_TYPE[3].id, VARIABLE.SECTION_TYPE[6].id];
+        break;
+      }
+      case VARIABLE.SECTION_TYPE[6].id: {
+        this.move_local = [VARIABLE.SECTION_TYPE[6].id,VARIABLE.SECTION_TYPE[7].id];
+        break;
+      }
+      case VARIABLE.SECTION_TYPE[7].id: {
+        this.move_local = [VARIABLE.SECTION_TYPE[7].id,VARIABLE.SECTION_TYPE[1].id];
+        break;
+      }
+      default:
+        this.move_local = [];
+        break;
+    }
   }
 
   @Output() pigChange = new EventEmitter();
 
   viewDetail() {
 
-    this.navCtrl.push(PigSummaryPage, { pig: this.pig});
+    this.navCtrl.push(PigSummaryPage, { pig: this.pig });
   }
 
   /**
@@ -164,7 +200,6 @@ export class OptionListPigSectionComponent {
 
             this.pig.status
             this.publishPigChangeEvent(this.pig);
-            console.log(newSperm);
           }
           this.navCtrl.pop();
         })
@@ -304,7 +339,12 @@ export class OptionListPigSectionComponent {
         .catch((err: Error) => { })
     }
 
-    this.navCtrl.push(PigInputPage, { pigId: this.pig.id, isTransferSection: true, callback: callback })
+    this.navCtrl.push(PigInputPage, {
+      pigId: this.pig.id,
+      isTransferSection: true,
+      requiredSectionType: this.move_local,
+      callback: callback
+    })
   }
 
   /**
@@ -328,7 +368,6 @@ export class OptionListPigSectionComponent {
         this.activitiesProvider.createIssuePig(issuesPig)
           .then((newIssuesPig: Array<issuesPigs>) => {
             if (newIssuesPig) {
-              console.log(newIssuesPig);
             }
             this.navCtrl.pop();
           })

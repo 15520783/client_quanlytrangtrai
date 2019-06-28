@@ -72,6 +72,7 @@
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE 
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_MATING 
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_TRANSFER
+      && statusObjectKey[pig.statusId].code != statusPig.UNKNOW
       && pig.gender == gender.FEMALE"
       small ion-button item-end mode='ios' color="secondary"
       (tap)="breeding_input()">Lên giống</button>
@@ -84,6 +85,7 @@
       && sperm.includes(sectionTypeId) 
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_TRANSFER
+      && statusObjectKey[pig.statusId].code != statusPig.UNKNOW
       && pig.gender == gender.MALE"
       small ion-button item-end mode='ios' color="secondary"
       (tap)="sperm_input()">Khai thác tinh heo</button>
@@ -96,6 +98,7 @@
       && mating.includes(sectionTypeId) 
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_TRANSFER
+      && statusObjectKey[pig.statusId].code != statusPig.UNKNOW
       && pig.gender == gender.FEMALE
       && statusObjectKey[pig.statusId].code == statusPig.WAIT_FOR_MATING"
       small ion-button item-end mode='ios' color="secondary"
@@ -109,6 +112,7 @@
       weaning.includes(sectionTypeId) 
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_SALE
       && statusObjectKey[pig.statusId].code != statusPig.WAIT_FOR_TRANSFER
+      && statusObjectKey[pig.statusId].code != statusPig.UNKNOW
       && (statusObjectKey[pig.statusId].code == statusPig.FARROWING || statusObjectKey[pig.statusId].code == statusPig.NEWBORN)"
       small ion-button item-end mode='ios' color="secondary"
       (tap)="weaningMarked()">Thêm vào danh sách cai sữa</button>
