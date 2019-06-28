@@ -66,15 +66,34 @@ export class EmployeeInformationPage {
   }
 
   ionViewDidLoad() {
-    this.util.openBackDrop();
-
     /**
      * Lấy danh sách user
      */
-    this.employeeProvider.getScheduleOfEmployee(this.employee.id)
-      .then((schedules: Array<schedule>) => {
-        if (schedules)
-          this.schedules = schedules;
+    if (this.userProvider.rolePermission.ROLE_xem_lich_bieu_nhan_vien != null) {
+      this.util.openBackDrop();
+      this.employeeProvider.getScheduleOfEmployee(this.employee.id)
+        .then((schedules: Array<schedule>) => {
+          if (schedules) {
+            this.schedules = schedules;
+            this.initSchedule();
+          }
+          if (this.userProvider.rolePermission.ROLE_xem_danh_sach_tai_khoan_nhan_vien != null) {
+            return this.employeeProvider.getUserAccountsOfEmployee(this.employee.id)
+              .then((users: Array<user>) => {
+                if (users) {
+                  this.users = users;
+                }
+                this.util.closeBackDrop();
+              })
+          }
+        })
+        .catch((err) => {
+          this.util.closeBackDrop();
+          return err;
+        })
+    } else {
+      if (this.userProvider.rolePermission.ROLE_xem_danh_sach_tai_khoan_nhan_vien != null) {
+        this.util.openBackDrop();
         return this.employeeProvider.getUserAccountsOfEmployee(this.employee.id)
           .then((users: Array<user>) => {
             if (users) {
@@ -82,39 +101,12 @@ export class EmployeeInformationPage {
             }
             this.util.closeBackDrop();
           })
-          .then(() => {
-            this.initSchedule();
-            this.options = {
-              schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-              selectable: true,
-              defaultView: this.platform.is('core') ? "dayGridMonth" : "listWeek",
-              header: {
-                left: 'today prev,next',
-                right: this.platform.is('core') ? 'dayGridMonth,listWeek' : 'dayGridWeek,listWeek'
-              },
-              height: 'parent',
-              fixedWeekCount: false,
-              editable: true,
-              contentHeight: this.platform.is('core') ? 400 : 400,
-              plugins: this.calendarPlugins,
-              weekends: true,
-              locale: 'vi',
-              timeZone: 'UTC',
-              // isRTL: false,
-              eventLimit: true,
-              displayEventTime: false,
-              views: {
-                timeGrid: {
-                  eventLimit: 0,
-                }
-              },
-              events: this.events
-            }
+          .catch((err) => {
+            this.util.closeBackDrop();
+            return err;
           })
-      })
-      .catch((err) => {
-        this.util.closeBackDrop();
-      })
+      }
+    }
   }
 
   initSchedule() {
@@ -135,6 +127,33 @@ export class EmployeeInformationPage {
             (schedule.employee ?
               (schedule.status == VARIABLE.SCHEDULE_STATUS.COMPLETE.name ? VARIABLE.SCHEDULE_STATUS.COMPLETE.color : VARIABLE.SCHEDULE_STATUS.ASSIGNED.color) : VARIABLE.SCHEDULE_STATUS.NOT_ASSIGNED.color) : VARIABLE.SCHEDULE_STATUS.OVERDUE.color
         })
+      }
+
+      this.options = {
+        schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
+        selectable: true,
+        defaultView: this.platform.is('core') ? "dayGridMonth" : "listWeek",
+        header: {
+          left: 'today prev,next',
+          right: this.platform.is('core') ? 'dayGridMonth,listWeek' : 'dayGridWeek,listWeek'
+        },
+        height: 'parent',
+        fixedWeekCount: false,
+        editable: true,
+        contentHeight: this.platform.is('core') ? 400 : 400,
+        plugins: this.calendarPlugins,
+        weekends: true,
+        locale: 'vi',
+        timeZone: 'UTC',
+        // isRTL: false,
+        eventLimit: true,
+        displayEventTime: false,
+        views: {
+          timeGrid: {
+            eventLimit: 0,
+          }
+        },
+        events: this.events
       }
     })
   }

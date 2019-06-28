@@ -161,12 +161,14 @@ export class InputPigToInternalInvoicePage {
         value: foot.id
       })
     })
+
     this.settingProvider.setting.gentialType.forEach((gential) => {
       this.gentialType.push({
         name: gential.name,
         value: gential.id
       })
     })
+    
     this.settingProvider.setting.healthStatus.forEach((healthStatus) => {
       this.health_status.push({
         name: healthStatus.name,
@@ -230,7 +232,10 @@ export class InputPigToInternalInvoicePage {
   changePig(e) {
     // this.sections = this.deployData.get_section_list_for_select();
     // this.houses = this.deployData.get_house_list_for_select();
-
+    this.houses = [];
+    this.sections = [];
+    this.farms = [];
+    this.farms = this.deployData.get_farm_list_for_select();
     this.pig = this.deployData.get_pig_by_id(e.id);
     let house: any = this.deployData.get_house_by_id(this.pig.houseId);
 

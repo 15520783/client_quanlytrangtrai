@@ -41,6 +41,7 @@
           [active]="submitAttempt">
         </input-date>
         <input-select 
+          [disabled]="editMode?true:false"
           [(validControl)]="credentialsForm.controls.destinationId"
           [errorMessage_Required]="'Trang trại nhận là hạng mục bắt buộc'" 
           [label]="'Trang trại nhận'" [active]="submitAttempt"
@@ -55,7 +56,7 @@
           [placeholder]="'Chọn khu nhận'" [(data)]="sections"
           (changeValue)="sectionChange($event)">
         </input-select>
-        <input-select 
+        <input-select
           *ngIf="!editMode"
           [(validControl)]="credentialsForm.controls.houseId"
           [errorMessage_Required]="'Chuồng là hạng mục bắt buộc'" 

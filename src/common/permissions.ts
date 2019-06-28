@@ -225,7 +225,7 @@ const PERMISSIONS = {
     "quan_ly_lam_san":{
         "ROLE_xem_danh_sach_ghi_nhan_van_de_heo":{
             "id":"145",
-            "name":"Xem danh sách ghi nhận vấn đề heo",
+            "name":"Xem danh sách ghi nhận vấn đề heo ( Quản lý lâm sàn)",
             "api":"/api/issuespigs/list"
         },
         "ROLE_xem_goi_y_chuan_doan":{

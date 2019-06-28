@@ -56,7 +56,7 @@
         <ion-col col-2 [attr.col-6]="!platform.is('core')?'':null" >
           <p><b>Giống</b>: {{breeds[item.breedId].name}}</p>
         </ion-col>
-        <ion-col col-2  [attr.col-6]="!platform.is('core')?'':null">
+        <ion-col col-2  [attr.col-6]="!platform.is('core')?'':null" *ngIf="status[item.statusId]">
           <p ><b>Trạng thái:</b> {{status[item.statusId].name}}</p>
         </ion-col>
         <ion-col  [attr.col-6]="!platform.is('core')?'':null">
@@ -101,7 +101,7 @@
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 
-  <ion-fab bottom right showWhen="android,windows,ios">
+  <ion-fab bottom right *ngIf="!platform.is('core')">
     <button ion-fab>
       <ion-icon name="ios-arrow-up"></ion-icon>
     </button>

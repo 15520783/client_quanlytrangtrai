@@ -126,7 +126,7 @@ export class HomePage {
       },
       {
         title: 'Quản lý lâm sàn', component: IssuePigListPage, icon: 'app-medicine-manager', active: false,
-        show: true
+        show: this.userProvider.rolePermission.ROLE_xem_danh_sach_ghi_nhan_van_de_heo != null ? true : false
       },
       {
         title: 'Hoạt động', component: ActivitiesPage, icon: 'app-activities', active: false,
@@ -270,35 +270,33 @@ export class HomePage {
                 let idx = pigs.findIndex(pig => pig.pigCode == target.id);
                 if (idx > -1) {
                   this.navCtrl.push(PigSummaryPage, { pig: pigs[idx] }).then(() => {
-                    this.util.closeBackDrop();
                   });
                 } else {
                   this.util.showToastInform('Không tìm thấy đối tượng');
                 }
+                this.util.closeBackDrop();
               })
             } else if (target.type == VARIABLE.OBJECT_BARCODE_TYPE.HOUSE) {
               this.util.getKey(KEY.HOUSES).then((houses: Array<house>) => {
                 let idx = houses.findIndex(house => house.id == target.id);
                 if (idx > -1) {
                   this.navCtrl.push(HouseInfomationPage, { house: houses[idx] }).then(() => {
-                    this.util.closeBackDrop();
                   });
                 } else {
                   this.util.showToastInform('Không tìm thấy đối tượng');
                 }
+                this.util.closeBackDrop();
               })
             } else {
               this.util.closeBackDrop();
               this.util.showToastInform('Không tìm thấy đối tượng');
             }
           } else {
-            this.util.closeBackDrop();
             this.util.showToastInform('Không tìm thấy đối tượng');
           }
         })
         .catch((err: Error) => {
           console.log(err);
-          this.util.closeBackDrop();
           this.util.showToastInform('Không tìm thấy đối tượng');
         })
     }

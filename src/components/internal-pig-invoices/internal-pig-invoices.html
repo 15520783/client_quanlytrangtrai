@@ -31,9 +31,9 @@
             <ion-col *ngFor="let attr of attributes" col-6 text-wrap>
             <p *ngIf = "attr.usingBadge"  style="padding:5px!important">
               <b>{{attr.label}}:</b> 
-              <ion-badge [color]="item.color">{{item[attr.name]}}</ion-badge>
+              <ion-badge [color]="item.color">{{item[attr.name]}} <span *ngIf="attr.unit">{{attr.unit}}</span></ion-badge>
             </p>
-            <p *ngIf = "!attr.usingBadge" style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
+            <p *ngIf = "!attr.usingBadge" style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}} <span *ngIf="attr.unit">{{attr.unit}}</span></p>
             </ion-col>
           </ion-row>
         </button>

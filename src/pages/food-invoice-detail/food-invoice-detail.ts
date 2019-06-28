@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Events, IonicPage, NavController, NavParams, Slides, ViewController } from 'ionic-angular';
-import { foodWareHouse, invoicesProduct } from '../../common/entity';
+import { foodWareHouse, invoicePigDetail, invoicesProduct } from '../../common/entity';
 
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { FoodInvoiceRole } from '../../role-input/foodInvoice';
@@ -39,8 +39,8 @@ export class FoodInvoiceDetailPage {
   ) {
     if (this.navParams.data.invoice) {
       this.invoice = this.navParams.data.invoice;
-      // this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destination.id);
-      // this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.source.id);
+      this.invoice['importDateDisplay'] = this.util.convertDate(this.invoice.importDate);
+      this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
     }
 
     if (this.invoice.status != VARIABLE.INVOICE_STATUS.COMPLETE) {
@@ -64,11 +64,21 @@ export class FoodInvoiceDetailPage {
   }
 
   ionViewDidLoad() {
+    this.getDetails();
+  }
+
+  getDetails(){
     this.util.openBackDrop();
     this.invoiceProvider.getFoodWarehouse(this.navParams.data.invoice.id)
-      .then((details: any) => {
+      .then((details: Array<foodWareHouse>) => {
+        this.details = details;
         if (details.length) {
-          this.details = details;
+          this.invoice = this.details[0].invoice;
+          this.invoice['importDateDisplay'] = this.util.convertDate(this.invoice.importDate);
+          this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
+          this.navParams.data.callback(this.details[0].invoice);
+        }else{
+          this.invoice.price = 0;
         }
         this.util.closeBackDrop();
       })
@@ -80,6 +90,7 @@ export class FoodInvoiceDetailPage {
       })
   }
 
+
   /**
    * Nhập cám chi tiết thuộc chứng từ
    */
@@ -89,7 +100,7 @@ export class FoodInvoiceDetailPage {
       this.invoiceProvider.createFoodWareHouse(foodWarehouse)
         .then((foodhouse: foodWareHouse) => {
           if (foodhouse) {
-            this.details.push(foodhouse);
+            this.getDetails();
           }
           this.navCtrl.pop();
         })
@@ -116,7 +127,7 @@ export class FoodInvoiceDetailPage {
       this.invoiceProvider.updateFoodWareHouse(foodWarehouse)
         .then((foodhouse: foodWareHouse) => {
           if (foodhouse) {
-            item = foodhouse;
+            this.getDetails();
           }
           this.navCtrl.pop();
         })
@@ -130,7 +141,7 @@ export class FoodInvoiceDetailPage {
    * Chỉnh sửa chứng từ
    */
   editInvoice() {
-    let callback = data =>{
+    let callback = data => {
       if (data) {
         this.invoice = data;
         // this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destination.id);
@@ -140,7 +151,7 @@ export class FoodInvoiceDetailPage {
       }
     }
 
-    let roleInput = new FoodInvoiceRole(this.deployData,this.userProvider, this.invoiceProvider);
+    let roleInput = new FoodInvoiceRole(this.deployData, this.userProvider, this.invoiceProvider);
     roleInput.object = this.util.deepClone(this.invoice);
     roleInput.object.sourceId = roleInput.object.source.id;
     roleInput.object.destinationId = roleInput.object.destination.id;
@@ -149,7 +160,7 @@ export class FoodInvoiceDetailPage {
       {
         editMode: true,
         roleInput: roleInput,
-        callback:callback
+        callback: callback
       }
     )
   }
@@ -175,7 +186,16 @@ export class FoodInvoiceDetailPage {
   }
 
 
-  removeInvoicesDetail(item){
-
+  removeInvoicesDetail(item) {
+    this.invoiceProvider.removeFoodWarehouse(item)
+      .then((isOK: boolean) => {
+        if (isOK) {
+          this.getDetails();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        return err;
+      })
   }
 }

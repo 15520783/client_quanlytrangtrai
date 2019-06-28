@@ -30,7 +30,7 @@ export class FoodInvoicesComponent {
     { name: "sourceName", label: 'Nguồn cung cấp' },
     { name: "destinationName", label: 'Nơi nhận' },
     { name: "importDateDisplay", label: 'Ngày nhập' },
-    { name: "price", label: 'Tổng giá' },
+    { name: "price", label: 'Tổng giá' ,unit:' vnd '},
     { name: "statusName", label: 'Trạng thái', usingBadge: true },
     { name: "createBy", label: 'Người lập' }
   ];

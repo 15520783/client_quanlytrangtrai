@@ -36,7 +36,7 @@ export class MedicineInvoiceDetailPage {
     public util: Utils,
     public events: Events,
     public viewCtrl: ViewController,
-    public userProvider:UserProvider
+    public userProvider: UserProvider
   ) {
     if (this.navParams.data.invoice) {
       this.invoice = this.navParams.data.invoice;
@@ -65,11 +65,21 @@ export class MedicineInvoiceDetailPage {
   }
 
   ionViewDidLoad() {
+    this.getDetails();
+  }
+
+  getDetails() {
     this.util.openBackDrop();
     this.invoiceProvider.getMedicineWarehouse(this.navParams.data.invoice.id)
       .then((details: any) => {
+        this.details = details;
         if (details.length) {
-          this.details = details;
+          this.invoice = this.details[0].invoice;
+          this.invoice['importDateDisplay'] = this.util.convertDate(this.invoice.importDate);
+          this.invoice['updateAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
+          this.navParams.data.callback(this.invoice);
+        }else{
+          this.invoice.price = 0;
         }
         this.util.closeBackDrop();
       })
@@ -87,7 +97,7 @@ export class MedicineInvoiceDetailPage {
       this.invoiceProvider.createMedicineWarehouse(medicineWarehouse)
         .then((new_medicineWarehouse: medicineWarehouse) => {
           if (new_medicineWarehouse) {
-            this.details.push(new_medicineWarehouse);
+            this.getDetails();
           }
           this.navCtrl.pop();
         })
@@ -115,7 +125,7 @@ export class MedicineInvoiceDetailPage {
       this.invoiceProvider.updateMedicineWarehouse(medicineWarehouse)
         .then((updated_medicineWarehouse: medicineWarehouse) => {
           if (updated_medicineWarehouse) {
-            item = updated_medicineWarehouse;
+            this.getDetails();
           }
           this.navCtrl.pop();
         })
@@ -124,12 +134,12 @@ export class MedicineInvoiceDetailPage {
     this.navCtrl.push(MedicineWarehouseInputPage, { medicineWarehouse: item, callback: callback })
   }
 
-  
+
   /**
    * Chỉnh sửa chứng từ
    */
   editInvoice() {
-    let callback = data =>{
+    let callback = data => {
       if (data) {
         this.invoice = data;
         // this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destination.id);
@@ -139,7 +149,7 @@ export class MedicineInvoiceDetailPage {
       }
     }
 
-    let roleInput = new MedicineInvoiceRole(this.deployData,this.userProvider, this.invoiceProvider);
+    let roleInput = new MedicineInvoiceRole(this.deployData, this.userProvider, this.invoiceProvider);
     roleInput.object = this.util.deepClone(this.invoice);
     roleInput.object.sourceId = roleInput.object.source.id;
     roleInput.object.destinationId = roleInput.object.destination.id;
@@ -148,7 +158,7 @@ export class MedicineInvoiceDetailPage {
       {
         editMode: true,
         roleInput: roleInput,
-        callback:callback
+        callback: callback
       }
     )
   }
@@ -173,7 +183,17 @@ export class MedicineInvoiceDetailPage {
       .catch((err: Error) => { })
   }
 
-  removeInvoicesDetail(item){
 
+  removeInvoicesDetail(item) {
+    this.invoiceProvider.removeMedicineWarehouse(item)
+      .then((isOK: boolean) => {
+        if (isOK) {
+          this.getDetails();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        return err;
+      })
   }
 }

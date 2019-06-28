@@ -123,6 +123,25 @@ export class ExternalPigInvoiceRole {
             //     data: null
             // },
             {
+                name: 'unitPrice',
+                label: 'Đơn giá / kg',
+                placeholder: 'Nhập đơn giá',
+                isRequire: true,
+                isMaxlength: false,
+                isMailFormat: false,
+                isNumber: true,
+                maxlength: 1000,
+                message: {
+                    isMailFormat: '',
+                    isRequire: 'Đơn giá là hạng mục bắt buộc',
+                    isNumber: 'Đơn giá là hạng mục số',
+                    isMaxlength: 'Đơn giá không được vượt quá 1000 ký tự'
+                },
+                type: "input-text",
+                value: this.object.unitPrice,
+                data: null
+            },
+            {
                 name: 'destinationId',
                 label: 'Nơi nhận (Trang trại)',
                 placeholder: 'Chọn nơi nhận',

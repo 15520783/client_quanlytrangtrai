@@ -35,7 +35,7 @@
           </ion-col>
           <ion-col col-md-6 col-sm-12>
             <ion-item>
-              <ion-label stacked>Nhà</ion-label>
+              <ion-label stacked>Chuồng</ion-label>
               <ion-select [(ngModel)]="houseFilter" multiple="true" interface="alert" title="Giới tính" mode="ios"
                 okText="Duyệt" cancelText="Hủy" [selectOptions]="customAlertOptions" placeholder="Tất cả"
                 (ionChange)="setFilteredItems()">
@@ -87,7 +87,13 @@
           <p><b>Giống:</b>{{breeds[item.breedId]?breeds[item.breedId].name + ' ' + breeds[item.breedId].symbol:''}}</p>
         </ion-col>
         <ion-col [attr.col-4]="platform.is('core') ? '':null" [attr.col-6]="!platform.is('core')?'':null">
-          <p><b>Nhà:</b> {{item.houseId}}</p>
+          <p><b>Trang trại:</b> {{houses_util[item.houseId].section.farm.name}}</p>
+        </ion-col>
+        <ion-col [attr.col-4]="platform.is('core') ? '':null" [attr.col-6]="!platform.is('core')?'':null">
+          <p><b>Khu:</b> {{houses_util[item.houseId].section.name}}</p>
+        </ion-col>
+        <ion-col [attr.col-4]="platform.is('core') ? '':null" [attr.col-6]="!platform.is('core')?'':null">
+          <p><b>Chuồng:</b> {{houses_util[item.houseId].name}}</p>
         </ion-col>
         <ion-col [attr.col-4]="platform.is('core') ? '':null" [attr.col-6]="!platform.is('core')?'':null">
           <p><b>Cân nặng:</b> {{item.originWeight}}</p>
@@ -124,7 +130,13 @@
             </p>
           </ion-col>
           <ion-col [attr.col-4]="platform.is('core') ? '':null" [attr.col-6]="!platform.is('core')?'':null">
-            <p><b>Nhà:</b> {{item.houseId}}</p>
+            <p><b>Trang trại:</b> {{houses_util[item.houseId].section.farm.name}}</p>
+          </ion-col>
+          <ion-col [attr.col-4]="platform.is('core') ? '':null" [attr.col-6]="!platform.is('core')?'':null">
+            <p><b>Khu:</b> {{houses_util[item.houseId].section.name}}</p>
+          </ion-col>
+          <ion-col [attr.col-4]="platform.is('core') ? '':null" [attr.col-6]="!platform.is('core')?'':null">
+            <p><b>Chuồng:</b> {{houses_util[item.houseId].name}}</p>
           </ion-col>
           <ion-col [attr.col-4]="platform.is('core') ? '':null" [attr.col-6]="!platform.is('core')?'':null">
             <p><b>Cân nặng:</b> {{item.originWeight}}</p>
@@ -155,6 +167,18 @@
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Đang tải dữ liệu...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
+
+  <ion-fab bottom right *ngIf="!platform.is('core')">
+    <button ion-fab>
+      <ion-icon name="ios-arrow-up"></ion-icon>
+    </button>
+    <ion-fab-list side="top" style="right:0px">
+      <button (tap)="scan()" data-balloon-visible data-balloon-length="medium" data-balloon="Quét mã QR"
+        data-balloon-pos="left" ion-fab color="main">
+        <ion-icon name="app-qr-scanner"></ion-icon>
+      </button>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>
 
 <ion-footer no-border showWhen="core" *ngIf="FooterButtons.length">

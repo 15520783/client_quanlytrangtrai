@@ -187,6 +187,36 @@ export class InvoicesProvider {
       .toPromise();
   }
 
+  /**
+   * Xóa chi tiết cám
+   * @param objBody 
+   */
+  removeFoodWarehouse(objBody:foodWareHouse){
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http
+      .delete(API.DELETE_FOOD_WAREHOUSE, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
+   /**
+   * Xóa chi tiết thuốc
+   * @param objBody 
+   */
+  removeMedicineWarehouse(objBody:medicineWarehouse){
+    const options = {
+      headers: new HttpHeaders(),
+      body: objBody
+    };
+    return this.http
+      .delete(API.DELETE_MEDICNE_WAREHOUSE, options)
+      .timeout(CONFIG.DEFAULT_TIMEOUT)
+      .toPromise();
+  }
+
 
   /**
    * Tạo mới chi tiết của chứng từ heo (trong trường hợp tạo mới heo hoặc cập nhật lại heo)
@@ -260,6 +290,17 @@ export class InvoicesProvider {
       .put(API.UPDATE_MEDICINE_WAREHOUSE, objBody)
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise();
+  }
+
+
+  /**
+   * Cập nhật chi tiết chứng từ heo (cập nhật ngày 29/06/2019)
+   * @param objBody 
+   */
+  updatePigInvoiceDetail(objBody:{pigs:pig,invoicesPig:invoicesPig}){
+    return this.http
+    .put<{pigs:pig,invoicesPig:invoicesPig}>(API.UPDATE_PIG_INVOICE_DETAIL,objBody)
+    .toPromise();
   }
 
 

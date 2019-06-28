@@ -34,7 +34,8 @@ export class InternalPigInvoicesComponent {
     { name: "sourceName", label: 'Nguồn cung cấp' },
     { name: "destinationName", label: 'Nơi nhận' },
     { name: "importDateDisplay", label: 'Ngày nhập' },
-    { name: "quantity", label: 'Tổng số heo' },
+    { name: "quantity", label: 'Tổng số heo' , unit:' con '},
+    { name: "totalWeight", label: 'Tổng khối lượng' , unit:' kg '},
     { name: "statusName", label: 'Trạng thái', usingBadge: true },
     { name: "createBy", label: 'Người lập' }
   ];
@@ -104,23 +105,23 @@ export class InternalPigInvoicesComponent {
       invoice['statusName'] = VARIABLE.INVOICE_STATUS.PROCCESSING == invoice.status
         ? 'Đang xử lí' : (VARIABLE.INVOICE_STATUS.COMPLETE == invoice.status ? 'Hoàn tất' : 'Chưa xác định');
 
-      switch(invoice.status){
-        case VARIABLE.INVOICE_STATUS.COMPLETE:{
+      switch (invoice.status) {
+        case VARIABLE.INVOICE_STATUS.COMPLETE: {
           invoice['color'] = 'secondary';
           break;
         }
 
-        case VARIABLE.INVOICE_STATUS.PROCCESSING:{
+        case VARIABLE.INVOICE_STATUS.PROCCESSING: {
           invoice['color'] = 'main';
           break;
         }
 
-        case VARIABLE.INVOICE_STATUS.FORWARDING:{
+        case VARIABLE.INVOICE_STATUS.FORWARDING: {
           invoice['color'] = 'warning';
           break;
         }
 
-        default:{
+        default: {
           invoice['color'] = 'danger';
           break;
         }
@@ -195,7 +196,13 @@ export class InternalPigInvoicesComponent {
    * Xem danh sách chứng từ chuyển heo đến trang trại
    */
   viewListForwarding() {
-    this.navCtrl.push(ForwardingPigInvoiceListPage);
+    let callback = (invoice: invoicesPig) => {
+      if (invoice) {
+        this.invoices.push(invoice);
+        this.setFilteredItems();
+      }
+    }
+    this.navCtrl.push(ForwardingPigInvoiceListPage, { callback: callback });
   }
 
 

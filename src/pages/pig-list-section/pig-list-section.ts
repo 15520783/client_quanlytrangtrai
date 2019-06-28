@@ -2,6 +2,7 @@ import { CONFIG, KEY, MESSAGE, VARIABLE } from '../../common/const';
 import { Component, Input, ViewChild } from '@angular/core';
 import { Events, IonicPage, Menu, MenuController, NavController, NavParams, Platform } from 'ionic-angular';
 
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { FilterProvider } from '../../providers/filter/filter';
 import { FormControl } from '@angular/forms';
@@ -67,7 +68,8 @@ export class PigListSectionPage {
     public menuCtrl: MenuController,
     public util: Utils,
     public platform: Platform,
-    public pigProvider: PigsProvider
+    public pigProvider: PigsProvider,
+    public scanner: BarcodeScanner
   ) {
 
     this.breed = this.deployData.get_object_list_key_of_breeds();
@@ -90,8 +92,8 @@ export class PigListSectionPage {
     this.pigProvider.getPigs()
       .then((data) => {
         if (this.navParams.data) {
-          this.pigs = this.navParams.data.getPigs(this.deployData).filter((pig:pig)=>{
-            return this.houses[pig.houseId].section.farm.id == this.farmId ? true:false;
+          this.pigs = this.navParams.data.getPigs(this.deployData).filter((pig: pig) => {
+            return this.houses[pig.houseId].section.farm.id == this.farmId ? true : false;
           });
 
           this.sectionFilter = this.deployData.get_sections_by_sectionType_of_farm(this.farmId, this.sectionTypeId);
@@ -277,5 +279,37 @@ export class PigListSectionPage {
       }
     }
     this.navCtrl.push(PigSummaryPage, { pig: item, callbackUpdate: callbackUpdate, callbackRemove: callbackRemove });
+  }
+
+  scan() {
+    if (this.platform.is('android') || this.platform.is('ios')) {
+      this.scanner.scan()
+        .then((result: any) => {
+          if (result.text) {
+            this.util.openBackDrop();
+            let target = JSON.parse(result.text);
+            if (target.type == VARIABLE.OBJECT_BARCODE_TYPE.PIG) {
+              let idx = this.pigs.findIndex(pig => pig.pigCode == target.id);
+              if (idx > -1) {
+                this.visible_items = [this.pigs[idx]];
+                this.viewInfo(this.pigs[idx]);
+              } else {
+                this.util.showToastInform('Không tìm thấy đối tượng');
+              }
+              this.util.closeBackDrop();
+            } else {
+              this.util.closeBackDrop();
+              this.util.showToastInform('Không tìm thấy đối tượng');
+            }
+          } else {
+            this.util.showToastInform('Không tìm thấy đối tượng');
+          }
+        })
+        .catch((err: Error) => {
+          console.log(err);
+          // this.util.closeBackDrop();
+          this.util.showToastInform('Không tìm thấy đối tượng');
+        })
+    }
   }
 }

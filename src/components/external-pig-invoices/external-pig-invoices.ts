@@ -33,8 +33,10 @@ export class ExternalPigInvoicesComponent {
     { name: "sourceName", label: 'Nguồn cung cấp' },
     { name: "destinationName", label: 'Nơi nhận' },
     { name: "importDateDisplay", label: 'Ngày nhập' },
-    { name: "quantity", label: 'Tổng số heo' },
-    { name: "totalWeight", label: 'Tổng trọng lượng' },
+    { name: "quantity", label: 'Tổng số heo' , unit: ' con '},
+    { name: "totalWeight", label: 'Tổng trọng lượng',unit: ' kg ' },
+    { name: "unitPrice", label: 'Đơn giá / kg',unit: ' vnd ' },
+    { name: "totalPrice", label: 'Tổng giá',unit: ' vnd ' },
     { name: "statusName", label: 'Trạng thái', usingBadge: true },
     { name: "createBy", label: 'Người lập' }
   ];

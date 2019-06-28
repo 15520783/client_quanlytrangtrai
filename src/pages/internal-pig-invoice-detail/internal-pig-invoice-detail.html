@@ -55,15 +55,19 @@
             </ion-item>
             <ion-item>
               <ion-label stacked>Ngày nhập:</ion-label>
-              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.importDate"></ion-input>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.importDateDisplay"></ion-input>
             </ion-item>
             <ion-item>
               <ion-label stacked>Ngày cập nhật:</ion-label>
-              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.updatedAt"></ion-input>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.updatedAtDisplay"></ion-input>
             </ion-item>
             <ion-item>
               <ion-label stacked>Tổng số heo theo chứng từ:</ion-label>
               <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.quantity"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Tổng trọng lượng (kg):</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.totalWeight"></ion-input>
             </ion-item>
           </ion-list>
         </ion-card-content>
@@ -99,28 +103,19 @@
                         <p text-wrap><b>Ngày sinh:</b>{{pigs[item.objectId].birthday|date:'dd/MM/yyyy'}}</p>
                       </ion-col>
                       <ion-col col-lg-3 col-md-6 col-sm-12>
-                        <p text-wrap><b>Nhà:</b>{{house[pigs[item.objectId].houseId].name}}</p>
+                        <p text-wrap><b>Trang trại:</b>{{house[pigs[item.objectId].houseId].section.farm.name}}</p>
                       </ion-col>
                       <ion-col col-lg-3 col-md-6 col-sm-12>
                         <p text-wrap><b>Khu:</b>{{house[pigs[item.objectId].houseId].section.name}}</p>
                       </ion-col>
                       <ion-col col-lg-3 col-md-6 col-sm-12>
-                        <p text-wrap><b>BPSD:</b>{{gentials[pigs[item.objectId].gentialTypeId].name}}</p>
-                      </ion-col>
-                      <ion-col col-lg-3 col-md-6 col-sm-12>
-                        <p text-wrap><b>Chân:</b>{{foots[pigs[item.objectId].footTypeId].name}}</p>
-                      </ion-col>
-                      <ion-col col-lg-3 col-md-6 col-sm-12>
-                        <p text-wrap><b>Điểm TT:</b>{{pigs[item.objectId].healthPoint}}</p>
+                        <p text-wrap><b>Nhà:</b>{{house[pigs[item.objectId].houseId].name}}</p>
                       </ion-col>
                       <ion-col col-lg-3 col-md-6 col-sm-12>
                         <p text-wrap><b>Sức khỏe:</b>{{healStatus[pigs[item.objectId].healthStatusId].name}}</p>
                       </ion-col>
                       <ion-col col-lg-3 col-md-6 col-sm-12>
-                        <p text-wrap><b>TL từ NCC:</b>{{pigs[item.objectId].originWeight}}</p>
-                      </ion-col>
-                      <ion-col col-lg-3 col-md-6 col-sm-12>
-                        <p text-wrap><b>TL tại trại:</b>{{pigs[item.objectId].receiveWeight}}</p>
+                        <p text-wrap><b>Trọng lượng ( kg ):</b>{{pigs[item.objectId].originWeight}}</p>
                       </ion-col>
                     </ion-row>
                   </ion-col>
@@ -162,15 +157,19 @@
         </ion-item>
         <ion-item>
           <ion-label stacked>Ngày nhập:</ion-label>
-          <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.importDate"></ion-input>
+          <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.importDateDisplay"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label stacked>Ngày cập nhật:</ion-label>
-          <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.updatedAt"></ion-input>
+          <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.updatedAtDisplay"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label stacked>Tổng số heo theo chứng từ:</ion-label>
           <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.quantity"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Tổng trọng lượng (kg):</ion-label>
+          <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.totalWeight"></ion-input>
         </ion-item>
       </ion-list>
     </ion-slide>
@@ -198,28 +197,19 @@
                     <p><b>Ngày sinh:</b>{{pigs[item.objectId].birthday|date:'dd/MM/yyyy'}}</p>
                   </ion-col>
                   <ion-col col-lg-3 col-md-6 col-sm-12>
-                    <p><b>Nhà:</b>{{house[pigs[item.objectId].houseId].name}}</p>
+                    <p><b>Trang trại:</b>{{house[pigs[item.objectId].houseId].section.farm.name}}</p>
                   </ion-col>
                   <ion-col col-lg-3 col-md-6 col-sm-12>
                     <p><b>Khu:</b>{{house[pigs[item.objectId].houseId].section.name}}</p>
                   </ion-col>
                   <ion-col col-lg-3 col-md-6 col-sm-12>
-                    <p><b>BPSD:</b>{{gentials[pigs[item.objectId].gentialTypeId].name}}</p>
-                  </ion-col>
-                  <ion-col col-lg-3 col-md-6 col-sm-12>
-                    <p><b>Chân:</b>{{foots[pigs[item.objectId].footTypeId].name}}</p>
-                  </ion-col>
-                  <ion-col col-lg-3 col-md-6 col-sm-12>
-                    <p><b>Điểm TT:</b>{{pigs[item.objectId].healthPoint}}</p>
+                    <p><b>Nhà:</b>{{house[pigs[item.objectId].houseId].name}}</p>
                   </ion-col>
                   <ion-col col-lg-3 col-md-6 col-sm-12>
                     <p><b>Sức khỏe:</b>{{healStatus[pigs[item.objectId].healthStatusId].name}}</p>
                   </ion-col>
                   <ion-col col-lg-3 col-md-6 col-sm-12>
-                    <p><b>TL từ NCC:</b>{{pigs[item.objectId].originWeight}}</p>
-                  </ion-col>
-                  <ion-col col-lg-3 col-md-6 col-sm-12>
-                    <p><b>TL tại trại:</b>{{pigs[item.objectId].receiveWeight}}</p>
+                    <p><b>Trọng lượng ( kg ):</b>{{pigs[item.objectId].originWeight}}</p>
                   </ion-col>
                 </ion-row>
               </ion-col>

@@ -45,11 +45,11 @@
             </ion-item>
             <ion-item>
               <ion-label stacked>Ngày nhập:</ion-label>
-              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.importDate"></ion-input>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.importDateDisplay"></ion-input>
             </ion-item>
             <ion-item>
               <ion-label stacked>Ngày cập nhật:</ion-label>
-              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.updatedAt"></ion-input>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.updatedAtDisplay"></ion-input>
             </ion-item>
             <ion-item>
               <ion-label stacked>Tổng giá:</ion-label>
@@ -89,7 +89,16 @@
                         <p text-wrap><b>Nhà sản xuất:</b>{{item.manufacturer}}</p>
                       </ion-col>
                       <ion-col col-lg-3 col-md-6 col-sm-12>
-                        <p text-wrap><b>Số lượng:</b>{{item.quantity}}</p>
+                        <p text-wrap><b>Đơn vị tính:</b>{{item.unit.name}}</p>
+                      </ion-col>
+                      <ion-col col-lg-3 col-md-6 col-sm-12>
+                        <p text-wrap><b>Số lượng:</b>{{item.total}}</p>
+                      </ion-col>
+                      <ion-col col-lg-3 col-md-6 col-sm-12>
+                        <p text-wrap><b>Đơn giá:</b>{{item.unitPrice}}</p>
+                      </ion-col>
+                      <ion-col col-lg-3 col-md-6 col-sm-12>
+                        <p text-wrap><b>Thành tiền:</b>{{item.totalPrice}}</p>
                       </ion-col>
                       <ion-col col-lg-3 col-md-6 col-sm-12>
                         <p text-wrap><b>Ngày sản xuất:</b>{{item.mfgDate}}</p>
@@ -138,11 +147,11 @@
         </ion-item>
         <ion-item>
           <ion-label stacked>Ngày nhập:</ion-label>
-          <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.importDate"></ion-input>
+          <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.importDateDisplay"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label stacked>Ngày cập nhật:</ion-label>
-          <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.updatedAt"></ion-input>
+          <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.updatedAtDisplay"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label stacked>Tổng giá:</ion-label>
@@ -174,7 +183,16 @@
                     <p><b>Nhà sản xuất:</b>{{item.manufacturer}}</p>
                   </ion-col>
                   <ion-col col-lg-3 col-md-6 col-sm-12>
-                    <p><b>Số lượng:</b>{{item.quantity}}</p>
+                    <p><b>Đơn vị tính:</b>{{item.unit.name}}</p>
+                  </ion-col>
+                  <ion-col col-lg-3 col-md-6 col-sm-12>
+                    <p><b>Số lượng:</b>{{item.total}}</p>
+                  </ion-col>
+                  <ion-col col-lg-3 col-md-6 col-sm-12>
+                    <p><b>Đơn giá:</b>{{item.unitPrice}}</p>
+                  </ion-col>
+                  <ion-col col-lg-3 col-md-6 col-sm-12>
+                    <p><b>Thành tiền:</b>{{item.totalPrice}}</p>
                   </ion-col>
                   <ion-col col-lg-3 col-md-6 col-sm-12>
                     <p><b>Ngày sản xuất:</b>{{item.mfgDate}}</p>

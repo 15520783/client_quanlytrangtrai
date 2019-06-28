@@ -1,10 +1,11 @@
+import { Events, IonicPage, ModalController, NavController, NavParams, Platform, ViewController } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, ModalController, Events, ViewController } from 'ionic-angular';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { foodWareHouse } from '../../common/entity';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { ValidateNumber } from '../../validators/number.validator';
+import { foodWareHouse } from '../../common/entity';
 
 @IonicPage()
 @Component({
@@ -41,8 +42,10 @@ export class FoodWarehouseInputPage {
       invoice: this.foodWarehouse.invoice,
       parentId: this.foodWarehouse.parentId,
       unit_id: [this.foodWarehouse.unit_id, Validators.compose([Validators.required])],
-      quantity: [this.foodWarehouse.quantity, Validators.compose([Validators.required, ValidateNumber])],
-      total: this.foodWarehouse.total,
+      quantity: this.foodWarehouse.quantity,
+      unitPrice:[this.foodWarehouse.unitPrice,Validators.compose([Validators.required,ValidateNumber])],
+      totalPrice:this.foodWarehouse.totalPrice,
+      total: [this.foodWarehouse.total, Validators.compose([Validators.required, ValidateNumber])],
       used: this.foodWarehouse.used,
       remain: this.foodWarehouse.remain,
       manufacturer: [this.foodWarehouse.manufacturer, Validators.compose([Validators.required])],

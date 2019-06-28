@@ -2,7 +2,7 @@
   <ion-item   (tap)="scrollTo()" 
               [attr.valid-mode] = "(validControl.valid && active)?'':null"
               [attr.err-mode]="(!validControl.valid && active)?'':null" >
-      <ion-label stacked>{{label}}</ion-label>
+      <ion-label stacked>{{label}} <span ion-text color="danger" *ngIf="errorMessage_Required"> * </span></ion-label>
       <ion-datetime [placeholder]="placeholder" 
       (ionChange)="datetimeChange($event)" 
       [formControl]="validControl" 

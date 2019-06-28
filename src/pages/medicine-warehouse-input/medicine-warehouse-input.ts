@@ -1,10 +1,11 @@
+import { Events, IonicPage, ModalController, NavController, NavParams, Platform, ViewController } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Events, ViewController, Platform } from 'ionic-angular';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { medicineWarehouse } from '../../common/entity';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { ValidateNumber } from '../../validators/number.validator';
+import { medicineWarehouse } from '../../common/entity';
 
 @IonicPage()
 @Component({
@@ -13,10 +14,10 @@ import { ValidateNumber } from '../../validators/number.validator';
 })
 export class MedicineWarehouseInputPage {
 
-  
+
   public credentialsForm: FormGroup;
   public submitAttempt: boolean = false;
-  public medicines:Array<any> = [];
+  public medicines: Array<any> = [];
 
   public medicineWarehouse = new medicineWarehouse();
 
@@ -40,13 +41,14 @@ export class MedicineWarehouseInputPage {
     this.credentialsForm = this.formBuilder.group({
       id: this.medicineWarehouse.id,
       warehouse_id: [this.medicineWarehouse.warehouse_id, Validators.compose([Validators.required])],
-      // medicine_id: [this.medicineWarehouse.medicine_id, Validators.compose([Validators.required])],
-      medicine: [this.medicineWarehouse.medicine, Validators.compose([Validators.required])],      
+      medicine: [this.medicineWarehouse.medicine, Validators.compose([Validators.required])],
       invoice: this.medicineWarehouse.invoice,
       parentId: this.medicineWarehouse.parentId,
       unit_id: [this.medicineWarehouse.unit_id, Validators.compose([Validators.required])],
-      quantity: [this.medicineWarehouse.quantity, Validators.compose([Validators.required, ValidateNumber])],
-      total: this.medicineWarehouse.total,
+      quantity: this.medicineWarehouse.quantity,
+      unitPrice: [this.medicineWarehouse.unitPrice, Validators.compose([Validators.required, ValidateNumber])],
+      totalPrice:this.medicineWarehouse.totalPrice,
+      total: [this.medicineWarehouse.total, Validators.compose([Validators.required, ValidateNumber])],
       used: this.medicineWarehouse.used,
       remain: this.medicineWarehouse.remain,
       manufacturer: [this.medicineWarehouse.manufacturer, Validators.compose([Validators.required])],
@@ -54,15 +56,15 @@ export class MedicineWarehouseInputPage {
       expiryDate: [this.medicineWarehouse.expiryDate, Validators.compose([Validators.required])],
     });
 
-    if(this.navParams.data.medicineWarehouse){
+    if (this.navParams.data.medicineWarehouse) {
       this.medicineWarehouse = this.navParams.data.medicineWarehouse;
       this.medicineWarehouse['farmId'] = this.medicineWarehouse.warehouse.manager.farm.id;
       this.medicineWarehouse.warehouse_id = this.medicineWarehouse.warehouse.id;
       // this.medicineWarehouse.medicine_id = this.medicineWarehouse.medicine.id;
       this.medicineWarehouse.medicine = this.medicineWarehouse.medicine;
       this.medicineWarehouse.unit_id = this.medicineWarehouse.unit.id;
-      this.medicineWarehouse.mfgDate = new Date (this.medicineWarehouse.mfgDate).toISOString();
-      this.medicineWarehouse.expiryDate = new Date (this.medicineWarehouse.expiryDate).toISOString();
+      this.medicineWarehouse.mfgDate = new Date(this.medicineWarehouse.mfgDate).toISOString();
+      this.medicineWarehouse.expiryDate = new Date(this.medicineWarehouse.expiryDate).toISOString();
 
       Object.keys(this.credentialsForm.value).forEach((attr) => {
         this.credentialsForm.controls[attr].setValue(this.medicineWarehouse[attr]);
@@ -77,8 +79,8 @@ export class MedicineWarehouseInputPage {
 
   onSubmit() {
     this.submitAttempt = true;
-    if(this.credentialsForm.valid){
-      Object.keys(this.credentialsForm.value).forEach((attr)=>{
+    if (this.credentialsForm.valid) {
+      Object.keys(this.credentialsForm.value).forEach((attr) => {
         this.medicineWarehouse[attr] = this.credentialsForm.value[attr];
       });
       this.navParams.get('callback')(this.medicineWarehouse);

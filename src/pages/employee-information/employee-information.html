@@ -5,8 +5,8 @@
     </ion-navbar>
     <ion-toolbar>
       <ion-segment [(ngModel)]="tab" scrollable>
-        <ion-segment-button value="0" (tap)="selectedTab(0)">Thông tin nhân viên</ion-segment-button>
-        <ion-segment-button value="1" (tap)="selectedTab(1)">Thông tin lịch biểu</ion-segment-button>
+        <ion-segment-button *ngIf="userProvider.rolePermission.ROLE_xem_thong_tin_nhan_vien!=null" value="0" (tap)="selectedTab(0)">Thông tin nhân viên</ion-segment-button>
+        <ion-segment-button *ngIf="userProvider.rolePermission.ROLE_xem_lich_bieu_nhan_vien!=null" value="1" (tap)="selectedTab(1)">Thông tin lịch biểu</ion-segment-button>
       </ion-segment>
     </ion-toolbar>
   </div>
@@ -64,7 +64,7 @@
           </ion-list>
         </ion-infinite-scroll>
       </ion-slide>
-      <ion-slide padding>
+      <ion-slide padding *ngIf="userProvider.rolePermission.ROLE_xem_lich_bieu_nhan_vien!=null">
         <div *ngIf="options">
           <ng-fullcalendar #fullcalendar [(options)]="options" (eventClick)="handleEventClick($event)"
             (dateClick)="handleDayClick($event)" (clickButton)="clickButton($event)" [(eventsModel)]="events">
@@ -83,7 +83,9 @@
         (tap)="removeEmployee()">
         <ion-icon name="md-trash"></ion-icon>
       </button>
-      <button data-balloon-visible data-balloon-length="medium" data-balloon="Xem danh sách tài khoản"
+      <button 
+        *ngIf="userProvider.rolePermission.ROLE_xem_danh_sach_tai_khoan_nhan_vien!=null"
+        data-balloon-visible data-balloon-length="medium" data-balloon="Xem danh sách tài khoản"
         data-balloon-pos="left" ion-fab color="main" (tap)="openUserList()">
         <ion-icon name="app-user-account"></ion-icon>
       </button>
@@ -116,7 +118,7 @@
               </ion-col>
             </ion-row>
           </button>
-          <button ion-item (tap)="scrollToView(1)">
+          <button ion-item (tap)="scrollToView(1)" *ngIf="userProvider.rolePermission.ROLE_xem_lich_bieu_nhan_vien!=null">
             <ion-row>
               <ion-col align-self-center col-2>
                 <ion-icon name="app-item-setting" font28></ion-icon>
@@ -126,7 +128,7 @@
               </ion-col>
             </ion-row>
           </button>
-          <button ion-item (tap)="scrollToView(2)">
+          <button ion-item (tap)="scrollToView(2)" *ngIf="userProvider.rolePermission.ROLE_xem_danh_sach_tai_khoan_nhan_vien!=null">
             <ion-row>
               <ion-col align-self-center col-2>
                 <ion-icon name="app-item-setting" font28></ion-icon>
@@ -216,7 +218,7 @@
             </ion-list>
           </ion-content>
         </ion-slide>
-        <ion-slide>
+        <ion-slide *ngIf="userProvider.rolePermission.ROLE_xem_lich_bieu_nhan_vien!=null">
           <ion-header>
             <ion-navbar>
               <ion-row>
@@ -238,7 +240,7 @@
           </ion-content>
         </ion-slide>
         <ion-slide>
-          <span *ngIf="users">
+          <span *ngIf="users && userProvider.rolePermission.ROLE_xem_danh_sach_tai_khoan_nhan_vien!=null">
             <page-user-account-list [setUsers]="users" [employeeId]="employee.id"></page-user-account-list>
           </span>
         </ion-slide>

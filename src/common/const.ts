@@ -426,6 +426,9 @@ const API = {
     CREATE_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/pigsinvoicepigdetail/',
     CREATE_IMPORT_INTERNAL_PIG_INVOICE: '/api/invoicespig/pigsinvoicepig/',
 
+    UPDATE_PIG_INVOICE_DETAIL:'/api/invoicepigdetail/updatepigininvoicepig/',
+
+
     DELETE_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/onlyinvoicedetail/',
     DELETE_EXTERNAL_IMPORT_PIG_INVOICE_DETAIL: '/api/invoicepigdetail/',
 
@@ -433,9 +436,11 @@ const API = {
 
     CREATE_FOOD_WAREHOUSE: '/api/foodwarehouse/',
     UPDATE_FOOD_WAREHOUSE: '/api/foodwarehouse/',
+    DELETE_FOOD_WAREHOUSE: '/api/foodwarehouse/',
 
     CREATE_MEDICINE_WAREHOUSE: '/api/medicinewarehouse/',
     UPDATE_MEDICINE_WAREHOUSE: '/api/medicinewarehouse/',
+    DELETE_MEDICNE_WAREHOUSE: '/api/medicinewarehouse/',
 
     CREATE_WAREHOUSE_TYPE: '/api/warehousetype/',
     UPDATE_WAREHOUSE_TYPE: '/api/warehousetype/',

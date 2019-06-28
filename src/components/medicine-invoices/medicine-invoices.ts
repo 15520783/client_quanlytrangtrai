@@ -30,7 +30,7 @@ export class MedicineInvoicesComponent {
     { name: "sourceName", label: 'Nguồn cung cấp' },
     { name: "destinationName", label: 'Nơi nhận' },
     { name: "importDateDisplay", label: 'Ngày nhập' },
-    { name: "price", label: 'Tổng giá' },
+    { name: "price", label: 'Tổng giá', unit:' vnd ' },
     { name: "statusName", label: 'Trạng thái', usingBadge: true },
     { name: "createBy", label: 'Người lập' }
   ];
@@ -149,6 +149,7 @@ export class MedicineInvoicesComponent {
       if (data) {
         this.invoices.push(data);
         this.setFilteredItems();
+        this.navCtrl.pop();
       }
     }
 
@@ -172,7 +173,7 @@ export class MedicineInvoicesComponent {
         if (idx > -1) {
           this.invoices[idx] = invoice;
           this.setFilteredItems();
-          this.navCtrl.pop();
+          // this.navCtrl.pop();
         }
       }
     }

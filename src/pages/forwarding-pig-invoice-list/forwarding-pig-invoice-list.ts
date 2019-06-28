@@ -239,7 +239,8 @@ export class ForwardingPigInvoiceListPage {
               this.navCtrl.pop().then(() => {
                 this.navCtrl.pop().then(() => {
                   this.navCtrl.pop().then(() => {
-                    this.events.publish('invoicesPage:sync');
+                    // this.events.publish('invoicesPage:sync');
+                    this.navParams.get('callback')(data.invoicesPig);
                   });
                 });
               })

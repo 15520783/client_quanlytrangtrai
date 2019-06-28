@@ -32,8 +32,8 @@ export class ExportInternalPigInvoiceComponent {
     { name: "sourceName", label: 'Nguồn cung cấp' },
     { name: "destinationName", label: 'Nơi nhận' },
     { name: "exportDateDisplay", label: 'Ngày xuất' },
-    { name: "quantity", label: 'Tổng số heo' },
-    { name: "totalWeight", label: 'Tổng trọng lượng' },
+    { name: "quantity", label: 'Tổng số heo',unit:' con ' },
+    { name: "totalWeight", label: 'Tổng trọng lượng', unit:' kg ' },
     { name: "statusName", label: 'Trạng thái', usingBadge: true },
     { name: "createBy", label: 'Người lập' }
   ];
@@ -72,7 +72,7 @@ export class ExportInternalPigInvoiceComponent {
     this.sourceFilter = this.deployData.get_farm_list_for_select();
     this.destinationFilter = this.deployData.get_all_farm_for_select();
 
-    this.roleInput = new ExportInternalPigInvoiceRole(this.deployData,this.userProvider,this.invoiceProvider);
+    this.roleInput = new ExportInternalPigInvoiceRole(this.deployData,this.userProvider,this.invoiceProvider,this.util);
     this.farms_util = this.deployData.get_object_list_key_of_farm();
 
     this.events.subscribe('invoicesReload', () => {

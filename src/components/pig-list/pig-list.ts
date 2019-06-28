@@ -2,11 +2,13 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
 import { Content, ModalController, NavController, NavParams, Platform, ViewController } from 'ionic-angular';
 import { house, pig } from '../../common/entity';
 
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { FilterProvider } from '../../providers/filter/filter';
 import { FormControl } from '@angular/forms';
 import { HousesProvider } from '../../providers/houses/houses';
 import { PigViewPage } from '../../tabs/pig-view/pig-view';
+import { Utils } from '../../common/utils';
 import { VARIABLE } from '../../common/const';
 
 @Component({
@@ -18,17 +20,18 @@ export class PigListComponent {
   @ViewChild('content') content: Content;
 
   @Output() closeMenuEvent = new EventEmitter();
-  @Input() title:string='';
+  @Input() title: string = '';
   @Input() data: Array<pig> = [];
   @Input() selectMode: boolean = false;
   @Input() viewMode: boolean = false;
-  @Input() canEdit:boolean = false;
-  @Input() FooterButtons:Array<{
-    label:string,
-    color:string,
-    callback:any
+  @Input() canEdit: boolean = false;
+  @Input() FooterButtons: Array<{
+    label: string,
+    color: string,
+    callback: any
   }> = [];
 
+  public houses_util: any = {};
 
   showFilter = false;
   public page_Idx: number = 1;
@@ -63,8 +66,11 @@ export class PigListComponent {
     public modalCtrl: ModalController,
     public viewCtrl: ViewController,
     public navCtrl: NavController,
-    public deployData: DeployDataProvider
+    public deployData: DeployDataProvider,
+    public util: Utils,
+    public scanner: BarcodeScanner
   ) {
+    this.houses_util = this.deployData.get_object_list_key_of_house();
     this.genders = VARIABLE.GENDER;
     this.breeds = this.deployData.get_object_list_key_of_breeds();
     this.statusPig = this.deployData.get_object_list_key_of_status();
@@ -74,14 +80,14 @@ export class PigListComponent {
       this.selectMode = this.navParams.data.selectMode;
       this.viewMode = this.navParams.data.viewMode;
     }
-    if(this.navParams.data.FooterButtons){
+    if (this.navParams.data.FooterButtons) {
       this.FooterButtons = this.navParams.data.FooterButtons;
     }
-    if(this.navParams.data.canEdit){
+    if (this.navParams.data.canEdit) {
       this.canEdit = this.navParams.data.canEdit;
     }
 
-    if(this.navParams.data.title){
+    if (this.navParams.data.title) {
       this.title = this.navParams.data.title;
     }
 
@@ -136,12 +142,6 @@ export class PigListComponent {
 
   viewDeltail(pig) {
     this.navCtrl.push(PigViewPage, { data: pig });
-    // const modal = this.modalCtrl.create(
-    //   PigViewPage, pig, {
-    //     cssClass: 'ion-modal'
-    //   }
-    // )
-    // modal.present();
   }
 
   scrollToTop() {
@@ -153,11 +153,43 @@ export class PigListComponent {
   }
 
 
-  changeActivePig(item){
+  changeActivePig(item) {
     item.notActive = !item.notActive;
     let idx = this.data.findIndex(_pig => _pig.id == item.id);
-    if(idx > -1){
+    if (idx > -1) {
       this.data['notActive'] = item.notActive;
+    }
+  }
+
+  scan() {
+    if (this.platform.is('android') || this.platform.is('ios')) {
+      this.scanner.scan()
+        .then((result: any) => {
+          if (result.text) {
+            this.util.openBackDrop();
+            let target = JSON.parse(result.text);
+            if (target.type == VARIABLE.OBJECT_BARCODE_TYPE.PIG) {
+              let idx = this.data.findIndex(pig => pig.pigCode == target.id);
+              if (idx > -1) {
+                this.visible_items = [this.data[idx]];
+                this.select(this.data[idx]);
+              } else {
+                this.util.showToastInform('Không tìm thấy đối tượng');
+              }
+              this.util.closeBackDrop();
+            } else {
+              this.util.closeBackDrop();
+              this.util.showToastInform('Không tìm thấy đối tượng');
+            }
+          } else {
+            this.util.showToastInform('Không tìm thấy đối tượng');
+          }
+        })
+        .catch((err: Error) => {
+          console.log(err);
+          // this.util.closeBackDrop();
+          this.util.showToastInform('Không tìm thấy đối tượng');
+        })
     }
   }
 }

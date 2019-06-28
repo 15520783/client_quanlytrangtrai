@@ -546,6 +546,8 @@ class foodWareHouse extends base {
 	mfgDate: any = '';
 	expiryDate: any = '';
 	images: string = '';
+	unitPrice:string = '0';
+	totalPrice:string = '0';
 }
 
 class medicineWarehouse extends base {
@@ -566,6 +568,8 @@ class medicineWarehouse extends base {
 	mfgDate: any = '';
 	expiryDate: any = '';
 	typeUse: string = '';
+	unitPrice:string = '0';
+	totalPrice:string = '0';
 }
 
 class breedings extends base {

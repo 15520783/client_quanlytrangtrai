@@ -1,6 +1,7 @@
 import { DeployDataProvider } from "../providers/deploy-data/deploy-data";
 import { InvoicesProvider } from "../providers/invoices/invoices";
 import { UserProvider } from "../providers/user/user";
+import { Utils } from "../common/utils";
 import { VARIABLE } from "../common/const";
 import { invoicesPig } from "../common/entity";
 
@@ -19,6 +20,7 @@ export class ExportInternalPigInvoiceRole {
         public deployData: DeployDataProvider,
         public userProvider:UserProvider,
         public invoiceProvider: InvoicesProvider,
+        public util:Utils
     ) {
         this.object.invoiceNo = VARIABLE.GENERNAL_INVOICE_ID.INTERNAL_EXPORT + Date.now();
         this.inputRole = [
@@ -130,6 +132,7 @@ export class ExportInternalPigInvoiceRole {
                 isMailFormat: false,
                 isNumber: false,
                 maxlength: 1000,
+                notUpdate:true,
                 message: {
                     isMailFormat: '',
                     isRequire: 'Nơi nhận là hạng mục bắt buộc',
@@ -147,23 +150,27 @@ export class ExportInternalPigInvoiceRole {
     }
 
     insert() {
-        this.object.employee = this.userProvider.user;
-        this.object.invoiceType = VARIABLE.INVOICE_PIG_TYPE.INTERNAL_EXPORT;
-        this.object.status = VARIABLE.INVOICE_STATUS.PROCCESSING;
-        let source = this.deployData.get_farm_by_id(this.object.sourceId);
-        let destination = this.deployData.get_farm_by_id(this.object.destinationId);
-        let source_manager = this.deployData.get_employee_by_id(this.object.destinationManager);
-        if (source) {
-            this.object.sourceAddress = source.address;
-            this.object.sourceManager = source.manager;
-            this.object.sourceManagerName = source_manager.name;
+        if(this.object.sourceId == this.object.destinationId){
+            this.util.showToast('Nguồn xuất heo và nhập heo không được trùng nhau')
+        }else{
+            this.object.employee = this.userProvider.user;
+            this.object.invoiceType = VARIABLE.INVOICE_PIG_TYPE.INTERNAL_EXPORT;
+            this.object.status = VARIABLE.INVOICE_STATUS.PROCCESSING;
+            let source = this.deployData.get_farm_by_id(this.object.sourceId);
+            let destination = this.deployData.get_farm_by_id(this.object.destinationId);
+            let source_manager = this.deployData.get_employee_by_id(this.object.destinationManager);
+            if (source) {
+                this.object.sourceAddress = source.address;
+                this.object.sourceManager = source.manager;
+                this.object.sourceManagerName = source_manager.name;
+            }
+            if (destination) {
+                this.object.destinationAddress = destination.address;
+                this.object.destinationManager = destination.manager;
+            }
+    
+            return this.invoiceProvider.createPigInvoice(this.object);
         }
-        if (destination) {
-            this.object.destinationAddress = destination.address;
-            this.object.destinationManager = destination.manager;
-        }
-
-        return this.invoiceProvider.createPigInvoice(this.object);
     }
 
     update() {

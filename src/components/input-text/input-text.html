@@ -1,6 +1,6 @@
 <span #input>  
   <ion-item  (tap)="scrollTo()"   pl-0 [attr.err-mode]="(!validControl.valid && active)?'':null">
-      <ion-label stacked>{{label}}</ion-label>
+      <ion-label stacked>{{label}} <span ion-text color="danger" *ngIf="errorMessage_Required"> * </span></ion-label>
         <ion-input *ngIf="!isTextArea"
             [readonly] = "readonly ? true:false"
             [type]="type" 

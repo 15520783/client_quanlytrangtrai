@@ -33,6 +33,7 @@
           </input-select-target>
 
           <input-select 
+            [disabled] = "true"
             [(validControl)]="credentialsForm.controls.farmId"
             [label]="'Trang trại'" 
             [active]="submitAttempt"
@@ -41,6 +42,7 @@
           </input-select>
 
           <input-select 
+            [disabled] = "true"
             [(validControl)]="credentialsForm.controls.sectionId"
             [label]="'Khu'" 
             [active]="submitAttempt"
@@ -49,14 +51,15 @@
           </input-select>
 
           <input-select 
+            [disabled] = "true"
             [(validControl)]="credentialsForm.controls.houseId"
             [errorMessage_Required]="'Chuồng là hạng mục bắt buộc.'" 
             [label]="'Chuồng'" [active]="submitAttempt"
             [placeholder]="'Chọn Chuồng'" [(data)]="houses">
           </input-select>
           <input-text [(validControl)]="credentialsForm.controls.originWeight"
-            [errorMessage_Required]="'Trọng lượng NCC là hạng mục bắt buộc.'" [label]="'Trọng lượng NCC'"
-            [placeholder]="'Nhập Trọng lượng NCC'" [active]="submitAttempt">
+            [errorMessage_Required]="'Trọng lượng tại trại là hạng mục bắt buộc.'" [label]="'Trọng lượng tại trại'"
+            [placeholder]="'Nhập Trọng lượng tại trại'" [active]="submitAttempt">
           </input-text>
           <!-- <input-select [(validControl)]="credentialsForm.controls.statusId"
             [errorMessage_Required]="'Hiện trạng là hạng mục bắt buộc.'" [label]="'Hiện trạng'" [active]="submitAttempt"

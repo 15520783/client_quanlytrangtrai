@@ -31,6 +31,9 @@ export class MyApp {
   rootPage: any;
   rootParams: any;
   splash: boolean = true;
+  public counter = 0;
+  lastBack: number;
+  allowClose: any;
 
   constructor(
     public platform: Platform,
@@ -52,7 +55,7 @@ export class MyApp {
     public util: Utils,
     public userProvider: UserProvider,
     public fcmProvider: FcmProvider,
-    public toastCtrl: ToastController,
+    public toastCtrl:ToastController
   ) {
     this.initializeApp();
   }
@@ -164,18 +167,18 @@ export class MyApp {
 
           this.pigProvider.sync();
 
-          if(this.userProvider.rolePermission.ROLE_xem_danh_sach_nhan_vien!=null){
+          if (this.userProvider.rolePermission.ROLE_xem_danh_sach_nhan_vien != null) {
             this.employeeProvider.sync();
-          }else this.employeeProvider.updated_flag = true;
+          } else this.employeeProvider.updated_flag = true;
 
           this.sectionProvider.sync();
           this.houseProvider.sync();
 
-          if(this.userProvider.rolePermission.ROLE_xem_danh_sach_kho!=null){
+          if (this.userProvider.rolePermission.ROLE_xem_danh_sach_kho != null) {
             this.warehouseProvider.sync();
-          }else this.warehouseProvider.updated_flag = true;
-          
-          
+          } else this.warehouseProvider.updated_flag = true;
+
+
           this.settingProvider.sync();
         }
       })
@@ -285,7 +288,7 @@ export class MyApp {
                   this.util.setKey(KEY.PERMISSIONS, data).then(() => {
                     this.userProvider.rolePermission = data;
                   });
-                  
+
                   this.intinial_sync();
                 }
               })

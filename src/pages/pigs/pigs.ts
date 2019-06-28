@@ -207,19 +207,24 @@ export class PigsPage {
   addNewPig() {
     let callback = (pig: pig) => {
       if (pig) {
-        let pigParam = this.deployData.get_pig_object_to_send_request(pig);
-        this.pigProvider.createPig(pigParam)
-          .then((newPig: pig) => {
-            if (newPig) {
-              this.pigProvider.updatedPig(newPig);
-              this.setFilteredItems();
-            }
-            this.navCtrl.pop();
-          })
-          .catch((err) => {
-            console.log(err);
-            return err;
-          })
+        let idx = this.pigProvider.pigs.findIndex(_pig => _pig.pigCode == pig.pigCode);
+        if (idx > -1) {
+          this.util.showToast('Số tai heo đã tồn tại trong hệ thống. Vui lòng kiểm tra lại')
+        } else {
+          let pigParam = this.deployData.get_pig_object_to_send_request(pig);
+          this.pigProvider.createPig(pigParam)
+            .then((newPig: pig) => {
+              if (newPig) {
+                this.pigProvider.updatedPig(newPig);
+                this.setFilteredItems();
+              }
+              this.navCtrl.pop();
+            })
+            .catch((err) => {
+              console.log(err);
+              return err;
+            })
+        }
       }
     }
     this.navCtrl.push(PigInputPage, { callback: callback });
@@ -253,7 +258,7 @@ export class PigsPage {
         })
         .catch((err: Error) => {
           console.log(err);
-          this.util.closeBackDrop();
+          // this.util.closeBackDrop();
           this.util.showToastInform('Không tìm thấy đối tượng');
         })
     }

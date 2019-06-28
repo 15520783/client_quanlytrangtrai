@@ -1,6 +1,6 @@
 import { Events, IonicPage, ModalController, NavController, NavParams, Platform, ViewController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { house, pig } from '../../common/entity';
+import { farm, house, pig, status } from '../../common/entity';
 
 import { Component } from '@angular/core';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
@@ -38,6 +38,9 @@ export class PigInputPage {
     public viewCtrl: ViewController,
     public util: Utils
   ) {
+    if (this.navParams.data.pigId) {
+      this.pig = this.deployData.get_pig_by_id(this.navParams.data.pigId);
+    }
     this.init();
     this.credentialsForm = this.formBuilder.group({
       id: this.pig.id,
@@ -74,9 +77,8 @@ export class PigInputPage {
     });
 
 
-    if (this.navParams.data.pigId) {
+    if (this.pig.id) {
       this.UpdateMode = true;
-      this.pig = this.deployData.get_pig_by_id(this.navParams.data.pigId);
       let house: house = this.deployData.get_house_by_id(this.pig.houseId);
 
       this.deployData.get_sections_of_farm(house.section.farm.id).forEach((section) => {
@@ -108,14 +110,11 @@ export class PigInputPage {
     if (this.navParams.data.isTransferSection) {
       this.credentialsForm.controls.pigCode.disable();
       this.credentialsForm.controls.farmId.disable();
-      // this.credentialsForm.controls.roundId.disable();
       this.credentialsForm.controls.breedId.disable();
       this.credentialsForm.controls.originFatherId.disable();
       this.credentialsForm.controls.originMotherId.disable();
       this.credentialsForm.controls.gender.disable();
       this.credentialsForm.controls.birthday.disable();
-      // this.credentialsForm.controls.priceCodeId.disable();
-      // this.credentialsForm.controls.statusId.disable();
     }
   }
 
@@ -133,8 +132,10 @@ export class PigInputPage {
     }
   }
 
+  public status_pig_util: any = {};
+
   public farms: Array<{ name: string, value: string }> = [];
-  public sections: Array<{ name: string, value: string }> = [];
+  public sections: Array<any> = [];
   public houses: Array<{ name: string, value: string }> = [];
   public breeds: Array<{ name: string, value: string }> = [];
   public health_points: Array<{ name: string, value: number }> = [];
@@ -148,7 +149,14 @@ export class PigInputPage {
   public status: Array<{ name: string, value: string }> = [];
 
   init() {
+    this.status_pig_util = this.deployData.get_object_list_key_of_status();
     this.farms = this.deployData.get_farm_list_for_select();
+    if (this.navParams.data.farmId) {
+      this.farms = this.farms.filter((farm) => {
+        return farm.value == this.navParams.data.farmId ? true : false;
+      })
+    }
+
     this.settingProvider.setting.breeds.forEach((breed) => {
       this.breeds.push({
         name: breed.name + ' - ' + breed.symbol,
@@ -195,12 +203,31 @@ export class PigInputPage {
       Object.keys(VARIABLE.STATUS_PIG).forEach((key) => {
         statusCode[VARIABLE.STATUS_PIG[key]] = key;
       })
-      this.settingProvider.setting.status.forEach((status) => {
+
+      let statusValiable = [];
+      if (this.pig.statusId) {
+        statusValiable = this.settingProvider.setting.status.filter((status: status) => {
+          return (status.previousStatus == this.status_pig_util[this.pig.statusId].code || status.id == this.pig.statusId) ? true : false;
+        });
+        console.log(statusValiable);
+      } else {
+        statusValiable = this.settingProvider.setting.status.filter((status: status) => {
+          return status.previousStatus == VARIABLE.STATUS_PIG.UNKNOW ? true : false;
+        });
+      }
+      statusValiable.forEach((status: status) => {
         this.status.push({
-          name: status.description?status.description:'Không xác định' + " - Trạng thái trước " + statusCode[status.previousStatus],
+          name: status.description,
           value: status.id
         })
       })
+
+      // this.settingProvider.setting.status.forEach((status) => {
+      //   this.status.push({
+      //     name: (status.description ? status.description : 'Không xác định') + " - Trạng thái trước " + statusCode[status.previousStatus],
+      //     value: status.id
+      //   })
+      // })
     }
 
     this.rounds.push({
@@ -230,9 +257,15 @@ export class PigInputPage {
       this.deployData.get_sections_of_farm(e.valueId).forEach((section) => {
         this.sections.push({
           name: section.name,
+          typeId: section.typeId,
           value: section.id
         })
       });
+      if (this.navParams.data.sectionTypeId) {
+        this.sections = this.sections.filter((section) => {
+          return section.typeId == this.navParams.data.sectionTypeId ? true : false;
+        })
+      }
     }
   }
 

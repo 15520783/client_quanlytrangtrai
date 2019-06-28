@@ -21,22 +21,21 @@
     <ion-item-divider custom-diviver sticky="true" showWhen="core">{{title}}</ion-item-divider>
     <ion-list *ngIf="platform.is('core')">
       <span *ngFor="let item of visible_items;let idx= index">
-        <ion-item-sliding *ngIf="statusFilter.length?(statusFilter.includes(item.statusCode)):true" >
+        <ion-item-sliding *ngIf="statusFilter.length?(statusFilter.includes(item.statusCode)):true">
           <ion-item>
             <ion-avatar item-start>
               <ion-icon name="app-pig-outline" font28></ion-icon>
             </ion-avatar>
             <h2 *ngIf="mainAttribute"><b>{{item[mainAttribute]}}</b></h2>
             <ion-row>
-              <ion-col *ngFor="let attr of attributes" 
-                  [attr.col-6]    ="!platform.is('core')"
-                  [attr.col-xl-3] ="platform.is('core')" 
-                  [attr.col-lg-3] ="platform.is('core')"
-                  [attr.col-md-4] ="platform.is('core')"
-                  [attr.col-sm-6] ="platform.is('core')"
-                  [attr.text-wrap]="platform.is('core')">
-                  <p *ngIf="attr.usingBadge" style="padding:5px!important"><b>{{attr.label}}:</b><ion-badge color="main">{{item[attr.name]}}</ion-badge></p>
-                  <p *ngIf="!attr.usingBadge"style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
+              <ion-col *ngFor="let attr of attributes" [attr.col-6]="!platform.is('core')"
+                [attr.col-xl-3]="platform.is('core')" [attr.col-lg-3]="platform.is('core')"
+                [attr.col-md-4]="platform.is('core')" [attr.col-sm-6]="platform.is('core')"
+                [attr.text-wrap]="platform.is('core')">
+                <p *ngIf="attr.usingBadge" style="padding:5px!important"><b>{{attr.label}}:</b>
+                  <ion-badge color="main">{{item[attr.name]}}</ion-badge>
+                </p>
+                <p *ngIf="!attr.usingBadge" style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
               </ion-col>
             </ion-row>
             <ion-row>
@@ -55,15 +54,14 @@
         </ion-avatar>
         <h2 *ngIf="mainAttribute"><b>{{item[mainAttribute]}}</b></h2>
         <ion-row>
-          <ion-col *ngFor="let attr of attributes" 
-              [attr.col-6]    ="!platform.is('core')"
-              [attr.col-xl-3] ="platform.is('core')" 
-              [attr.col-lg-3] ="platform.is('core')"
-              [attr.col-md-4] ="platform.is('core')"
-              [attr.col-sm-6] ="platform.is('core')"
-              [attr.text-wrap]="platform.is('core')">
-            <p *ngIf="attr.usingBadge" style="padding:5px!important"><b>{{attr.label}}:</b><ion-badge color="main">{{item[attr.name]}}</ion-badge></p>
-            <p *ngIf="!attr.usingBadge"style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
+          <ion-col *ngFor="let attr of attributes" [attr.col-6]="!platform.is('core')"
+            [attr.col-xl-3]="platform.is('core')" [attr.col-lg-3]="platform.is('core')"
+            [attr.col-md-4]="platform.is('core')" [attr.col-sm-6]="platform.is('core')"
+            [attr.text-wrap]="platform.is('core')">
+            <p *ngIf="attr.usingBadge" style="padding:5px!important"><b>{{attr.label}}:</b>
+              <ion-badge color="main">{{item[attr.name]}}</ion-badge>
+            </p>
+            <p *ngIf="!attr.usingBadge" style="padding:5px!important"><b>{{attr.label}}:</b> {{item[attr.name]}}</p>
           </ion-col>
         </ion-row>
       </button>
@@ -73,11 +71,18 @@
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </div>
-  <!-- <ion-fab bottom right showWhen="android,windows,ios" color="secondary">
-    <button ion-fab (tap)="add()">
-      <ion-icon name="add"></ion-icon>
+
+  <ion-fab bottom right *ngIf="!platform.is('core')">
+    <button ion-fab>
+      <ion-icon name="ios-arrow-up"></ion-icon>
     </button>
-  </ion-fab> -->
+    <ion-fab-list side="top" style="right:0px">
+      <button (tap)="scan()" data-balloon-visible data-balloon-length="medium" data-balloon="Quét mã QR"
+        data-balloon-pos="left" ion-fab color="main">
+        <ion-icon name="app-qr-scanner"></ion-icon>
+      </button>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>
 
 <ion-menu [content]="mycontent" side="right" #menuFilter sticky="true" type="overlay" width="500">

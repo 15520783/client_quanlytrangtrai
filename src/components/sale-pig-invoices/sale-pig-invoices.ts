@@ -28,11 +28,11 @@ export class SalePigInvoicesComponent {
     { name: "sourceName", label: 'Nguồn cung cấp' },
     { name: "destinationName", label: 'Nơi nhận' },
     { name: "exportDateDisplay", label: 'Ngày xuất bán' },
-    { name: "quantity", label: 'Tổng số heo' },
-    { name: "totalWeight", label: 'Tổng trọng lượng' },
+    { name: "quantity", label: 'Tổng số heo' , unit: ' con '},
     { name: "statusName", label: 'Trạng thái', usingBadge: true },
-    { name: "unitPrice", label: 'Đơn giá' },
-    { name: "totalPrice", label: 'Tổng giá' },
+    { name: "totalWeight", label: 'Tổng trọng lượng', unit:' kg ' },
+    { name: "unitPrice", label: 'Đơn giá / kg', unit: 'vnd' },
+    { name: "totalPrice", label: 'Tổng giá', unit: 'vnd' },
     { name: "createBy", label: 'Người lập' }
   ];
 

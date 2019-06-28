@@ -84,7 +84,7 @@
                     <ion-label stacked>Trạng thái mang thai :</ion-label>
                     <ion-input text-wrap type="text" readonly [(ngModel)]="pregnancyStatus.name"></ion-input>
                   </ion-item>
-                  <ion-item>
+                  <ion-item *ngIf="status[pig.statusId]">
                     <ion-label stacked>Hiện trạng :</ion-label>
                     <ion-input text-wrap type="text" readonly [(ngModel)]="status[pig.statusId].name"></ion-input>
                   </ion-item>
@@ -216,7 +216,7 @@
       <ion-label stacked>Trạng thái mang thai :</ion-label>
       <ion-input text-wrap type="text" readonly [(ngModel)]="pregnancyStatus.name"></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="status[pig.statusId]">
       <ion-label stacked>Hiện trạng :</ion-label>
       <ion-input text-wrap type="text" readonly [(ngModel)]="status[pig.statusId].name"></ion-input>
     </ion-item>

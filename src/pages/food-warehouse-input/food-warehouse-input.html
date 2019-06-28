@@ -10,6 +10,7 @@
     <form action="" (ngSubmit)="onSubmit()" style="padding-bottom: 10vH">
       <ion-list >
           <input-select 
+              [label] = "'Kho cám'"
               [(validControl)] = "credentialsForm.controls.warehouse_id"
               [errorMessage_Required]  ="'Kho là hạng mục bắt buộc.'"
               [active]= "submitAttempt"
@@ -19,6 +20,7 @@
           </input-select>
 
           <input-select 
+              [label] = "'Chọn cám'"
               [(validControl)] = "credentialsForm.controls.food_id"
               [errorMessage_Required]  ="'Cám là hạng mục bắt buộc.'"
               [active]= "submitAttempt"
@@ -27,6 +29,7 @@
           </input-select>
 
           <input-select 
+              [label] = "'Đơn vị tính'"
               [(validControl)] = "credentialsForm.controls.unit_id"
               [errorMessage_Required]  ="'Đơn vị là hạng mục bắt buộc.'"
               [active]= "submitAttempt"
@@ -35,11 +38,20 @@
           </input-select>
 
           <input-text 
-              [(validControl)] = "credentialsForm.controls.quantity"
+              [(validControl)] = "credentialsForm.controls.total"
               [errorMessage_Required]  = "'Số lượng là hạng mục bắt buộc.'"
               [errorMessage_ValidNumber] = "'Số lượng là hạng mục nhập số'"
               [label] = "'Số lượng'"
               [placeholder]="'Nhập số lượng'"
+              [active]= "submitAttempt">
+          </input-text>
+
+          <input-text 
+              [(validControl)] = "credentialsForm.controls.unitPrice"
+              [errorMessage_Required]  = "'Đơn giá là hạng mục bắt buộc.'"
+              [errorMessage_ValidNumber] = "'Đơn giá là hạng mục nhập số'"
+              [label] = "'Đơn giá'"
+              [placeholder]="'Nhập đơn giá'"
               [active]= "submitAttempt">
           </input-text>
 

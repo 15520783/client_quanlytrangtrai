@@ -4,6 +4,7 @@ import { Events, IonicPage, ModalController, NavController, NavParams, Slides, V
 import { invoicePigDetail, pig } from '../../common/entity';
 
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { InputPigToInternalInvoicePage } from '../input-pig-to-internal-invoice/input-pig-to-internal-invoice';
 import { InvoiceInputUtilComponent } from '../../components/invoice-input-util/invoice-input-util';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { PigListComponent } from '../../components/pig-list/pig-list';
@@ -28,9 +29,9 @@ export class SalePigInvoiceDetailPage {
   public details: Array<invoicePigDetail> = [];
   public pigs: any;
   public house: any;
-  public gentials: any;
-  public foots: any;
   public healStatus: any;
+  public breeds:any;
+  public gender:any;
 
   canCheckComplete: boolean = false;
   canEditInvoice: boolean = false;
@@ -46,19 +47,21 @@ export class SalePigInvoiceDetailPage {
     public viewCtrl: ViewController,
     public settingProvider: SettingsProvider,
     public modalCtrl: ModalController,
-    public userProvider:UserProvider
+    public userProvider: UserProvider
   ) {
     if (this.navParams.data.invoice) {
       this.invoice = this.navParams.data.invoice;
       this.invoice['source'] = this.deployData.get_farm_by_id(this.invoice.sourceId);
       this.invoice['destination'] = this.deployData.get_customer_by_id(this.invoice.destinationId);
+      this.invoice['exportDateDisplay'] = this.util.convertDate(this.invoice.exportDate);
+      this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
     }
 
     this.pigs = this.deployData.get_object_list_key_of_pig();
     this.house = this.deployData.get_object_list_key_of_house();
-    this.gentials = this.deployData.get_object_list_key_of_gential();
     this.healStatus = this.deployData.get_object_list_key_of_healthStatus();
-    this.foots = this.deployData.get_object_list_key_of_foot();
+    this.breeds = this.deployData.get_object_list_key_of_breeds();
+    this.gender = VARIABLE.GENDER;
 
     if (this.invoice.status != VARIABLE.INVOICE_STATUS.COMPLETE) {
       this.canCheckComplete = true;
@@ -67,12 +70,26 @@ export class SalePigInvoiceDetailPage {
   }
 
   ionViewDidLoad() {
+    this.getDetails();
+  }
+
+  getDetails() {
     this.util.openBackDrop();
     this.invoiceProvider.getPigInvoiceDetail(this.navParams.data.invoice.id)
       .then((details: any) => {
+        this.details = details;
         if (details.length) {
-          this.details = details;
+          this.invoice = this.details[0].invoice;
+          this.invoice['source'] = this.deployData.get_farm_by_id(this.invoice.sourceId);
+          this.invoice['destination'] = this.deployData.get_customer_by_id(this.invoice.destinationId);
+          this.invoice['exportDateDisplay'] = this.util.convertDate(this.invoice.exportDate);
+          this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
+        }else{
+          this.invoice.quantity = 0;
+          this.invoice.totalPrice = 0;
+          this.invoice.totalWeight = 0;
         }
+        this.navParams.data.callbackUpdate(this.invoice);
         this.util.closeBackDrop()
       })
       .catch((err: Error) => {
@@ -133,14 +150,16 @@ export class SalePigInvoiceDetailPage {
         this.invoice = data;
         this.invoice['source'] = this.deployData.get_farm_by_id(this.invoice.sourceId);
         this.invoice['destination'] = this.deployData.get_customer_by_id(this.invoice.destinationId);
+        this.invoice['exportDateDisplay'] = this.util.convertDate(this.invoice.exportDate);
+        this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
         this.navParams.get('callbackUpdate')(this.invoice);
         this.navCtrl.pop();
       }
     }
 
-    let roleInput = new SalePigInvoiceRole(this.deployData,this.userProvider, this.invoiceProvider);
+    let roleInput = new SalePigInvoiceRole(this.deployData, this.userProvider, this.invoiceProvider);
     roleInput.object = this.util.deepClone(this.invoice);
-    roleInput.object.importDate = new Date(roleInput.object.exportDate).toISOString();
+    roleInput.object.exportDate = new Date(roleInput.object.exportDate).toISOString();
     this.navCtrl.push(InvoiceInputUtilComponent,
       {
         editMode: true,
@@ -221,7 +240,8 @@ export class SalePigInvoiceDetailPage {
     this.pigProvider.getPigs()
       .then(() => {
         let salePigs = this.pigProvider.pigs.filter((pig) => {
-          return (statusPig[pig.statusId].code != VARIABLE.STATUS_PIG.WAIT_FOR_TRANSFER &&
+          return (statusPig[pig.statusId] &&
+            statusPig[pig.statusId].code != VARIABLE.STATUS_PIG.WAIT_FOR_TRANSFER &&
             statusPig[pig.statusId].code != VARIABLE.STATUS_PIG.WAIT_FOR_SALE &&
             statusPig[pig.statusId].code != VARIABLE.STATUS_PIG.WAIT_FOR_MATING &&
             statusPig[pig.statusId].code != VARIABLE.STATUS_PIG.MATING &&
@@ -239,8 +259,9 @@ export class SalePigInvoiceDetailPage {
               .then((response) => {
                 if (response && response.pigs && response.invoicePigDetail) {
                   this.pigProvider.updatedPig(response.pigs);
-                  this.pigs[response.pigs.id] = response.pigs;
-                  this.details.push(response.invoicePigDetail);
+                  // this.pigs[response.pigs.id] = response.pigs;
+                  // this.details.push(response.invoicePigDetail);
+                  this.getDetails();
                 }
               })
               .catch((err: Error) => { })
@@ -265,17 +286,51 @@ export class SalePigInvoiceDetailPage {
     this.invoiceProvider.removePigInvoiceDetail(invoiceDetail)
       .then((isOK_detail) => {
         if (isOK_detail) {
-          let idx = this.details.findIndex(detail => detail.id == invoiceDetail.id);
-          if (idx > -1) {
-            this.details.splice(idx, 1);
+          // let idx = this.details.findIndex(detail => detail.id == invoiceDetail.id);
+          // if (idx > -1) {
+            // this.details.splice(idx, 1);
+            this.getDetails();
             let statusSaleWaiting = this.deployData.get_status_by_id(this.pigs[invoiceDetail.objectId].statusId);
             let pig = this.util.deepClone(this.pigs[invoiceDetail.objectId]);
             pig.statusId = statusSaleWaiting.previousStatus;
             this.pigs[invoiceDetail.objectId] = pig;
             this.pigProvider.updatedPig(pig);
-          }
+          // }
         }
       })
       .catch((err: Error) => { })
+  }
+
+  /**
+   * Đánh giá lại heo thuộc chứng từ
+   */
+  edit(item: invoicePigDetail) {
+    let callback = (pig: pig) => {
+      pig = this.deployData.get_pig_object_to_send_request(pig);
+      this.invoiceProvider.updatePigInvoiceDetail({
+        pigs: pig,
+        invoicesPig: this.invoice
+      })
+        .then((res) => {
+          if (res.pigs) {
+            this.pigProvider.updatedPig(res.pigs);
+            this.getDetails();
+            // this.invoice = res.invoicesPig;
+            // this.invoice['source'] = this.deployData.get_farm_by_id(this.invoice.sourceId);
+            // this.invoice['destination'] = this.deployData.get_customer_by_id(this.invoice.destinationId);
+            // this.invoice['exportDateDisplay'] = this.util.convertDate(this.invoice.exportDate);
+            // this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
+          }
+          this.navCtrl.pop();
+        })
+        .catch(err => {
+          console.log(err);
+          return err;
+        })
+    }
+
+    let pig = this.deployData.get_pig_by_id(item.objectId);
+    let pigs = [pig];
+    this.navCtrl.push(InputPigToInternalInvoicePage, { pigs: pigs, pig: pig, callback: callback });
   }
 }

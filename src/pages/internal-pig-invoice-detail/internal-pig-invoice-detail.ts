@@ -44,14 +44,14 @@ export class InternalPigInvoiceDetailPage {
     public pigProvider: PigsProvider,
     public viewCtrl: ViewController,
     public userProvider: UserProvider,
-    public platform:Platform
+    public platform: Platform
   ) {
     if (this.navParams.data.invoice) {
       this.invoice = this.navParams.data.invoice;
-      // this.invoice.importDate = this.util.convertDate(this.invoice.importDate);
-      // this.invoice.updatedAt = this.util.convertDate(this.invoice.updatedAt);
       this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
       this.invoice['source'] = this.deployData.get_farm_by_id(this.invoice.sourceId);
+      this.invoice['importDateDisplay'] = this.util.convertDate(this.invoice.importDate);
+      this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
     }
     this.pigs = this.deployData.get_object_list_key_of_pig();
     this.house = this.deployData.get_object_list_key_of_house();
@@ -82,11 +82,24 @@ export class InternalPigInvoiceDetailPage {
   }
 
   ionViewDidLoad() {
+    this.getDetails();
+  }
+
+  getDetails() {
     this.util.openBackDrop();
     this.invoiceProvider.getPigInvoiceDetail(this.navParams.data.invoice.id)
-      .then((details: any) => {
+      .then((details: Array<invoicePigDetail>) => {
+        this.details = details;
         if (details.length) {
-          this.details = details;
+          this.invoice = details[0].invoice;
+          this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
+          this.invoice['source'] = this.deployData.get_farm_by_id(this.invoice.sourceId);
+          this.invoice['importDateDisplay'] = this.util.convertDate(this.invoice.importDate);
+          this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
+          this.navParams.get('callback')(this.invoice);
+        }else{
+          this.invoice.quantity = 0;
+          this.invoice.totalWeight = 0;
         }
         this.util.closeBackDrop();
       })
@@ -121,6 +134,8 @@ export class InternalPigInvoiceDetailPage {
             if (updatedInvoice) {
               updatedInvoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
               updatedInvoice['source'] = this.deployData.get_farm_by_id(this.invoice.sourceId);
+              updatedInvoice['importDisplay'] = this.util.convertDate(this.invoice.importDate);
+              updatedInvoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
               this.invoice = updatedInvoice;
               this.navParams.get('callback')(this.invoice);
             }
@@ -162,12 +177,33 @@ export class InternalPigInvoiceDetailPage {
   edit(item: invoicePigDetail) {
     let callback = (pig: pig) => {
       pig = this.deployData.get_pig_object_to_send_request(pig);
-      this.pigProvider.updatePig(pig)
-        .then((pig) => {
-          this.pigs[pig.id] = pig;
+      // this.pigProvider.updatePig(pig)
+      //   .then((pig) => {
+      //     this.pigs[pig.id] = pig;
+      //     this.navCtrl.pop();
+      //   })
+      //   .catch((err: Error) => { })
+      this.invoiceProvider.updatePigInvoiceDetail({
+        pigs: pig,
+        invoicesPig: this.invoice
+      })
+        .then((res) => {
+          if (res.pigs) {
+            this.pigProvider.updatedPig(res.pigs);
+            this.getDetails();
+            // this.invoice = res.invoicesPig;
+            // this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
+            // this.invoice['source'] = this.deployData.get_farm_by_id(this.invoice.sourceId);
+            // this.invoice['importDateDisplay'] = this.util.convertDate(this.invoice.importDate);
+            // this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
+            // this.navParams.get('callback')(this.invoice)
+          }
           this.navCtrl.pop();
         })
-        .catch((err: Error) => { })
+        .catch(err => {
+          console.log(err);
+          return err;
+        })
     }
 
     let pig = this.deployData.get_pig_by_id(item.objectId);
