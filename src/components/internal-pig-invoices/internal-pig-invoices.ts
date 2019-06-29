@@ -133,7 +133,7 @@ export class InternalPigInvoicesComponent {
 
     this.filterProvider.searchWithRange = {}
     return this.filterProvider.filter().sort((a: invoicesPig, b: invoicesPig) =>
-      (new Date(a.importDate) > new Date(b.importDate)) ? -1 : 1
+      (new Date(a.createdAt) > new Date(b.createdAt)) ? -1 : 1
     );
   }
 

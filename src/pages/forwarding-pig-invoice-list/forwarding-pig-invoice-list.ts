@@ -251,6 +251,7 @@ export class ForwardingPigInvoiceListPage {
 
       this.navCtrl.push(ImportInternalPigInvoiceInputPage, {
         sourceId: item.sourceId,
+        destinationId:item.destinationId,
         vehicleNumber: item.vehicleNumber,
         callback: callback
       });

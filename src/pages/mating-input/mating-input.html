@@ -19,6 +19,7 @@
       </input-select-target>
 
       <input-select 
+        [disabled] = "viewMode"
         [(validControl)]="credentialsForm.controls.typeId"
         [errorMessage_Required]="'Cách thức phối giống là hạng mục bắt buộc'" 
         [label]="'Cách thức phối giống'"
@@ -29,6 +30,7 @@
       </input-select>
 
       <input-select-target *ngIf="credentialsForm.value.typeId == 0"
+        [disabled] = "viewMode"
         [(validControl)]="credentialsForm.controls.fatherId"
         [errorMessage_Required]="'Heo nọc là hạng mục bắt buộc.'" 
         [active]="submitAttempt"
@@ -38,6 +40,7 @@
       </input-select-target>
 
       <input-select *ngIf="credentialsForm.value.typeId == 1"
+        [disabled] = "viewMode"
         [(validControl)]="credentialsForm.controls.fatherId"
         [errorMessage_Required]="'Giống là hạng mục bắt buộc'" 
         [label]="'Chọn giống'"
@@ -48,11 +51,13 @@
       </input-select>
 
       <input-date [(validControl)]="credentialsForm.controls.date"
+        [disabled] = "viewMode"
         [errorMessage_Required]="'Ngày phối là hạng mục bắt buộc.'" [label]="'Ngày phối giống'"
         [placeholder]="'dd/mm/yyyy'" [active]="submitAttempt">
       </input-date>
 
       <input-date [(validControl)]="credentialsForm.controls.birthEstimate"
+        [disabled] = "viewMode"
         [errorMessage_Required]="'Ngày sinh dự kiến là hạng mục bắt buộc.'" [label]="'Ngày sinh dự kiên'"
         [placeholder]="'dd/mm/yyyy'" [active]="submitAttempt">
       </input-date>
@@ -91,6 +96,7 @@
           </ion-row>
         </ion-item>
         <input-select-target [(validControl)]="credentialsFormExtra.controls.sperm1"
+          [disabled] = "viewMode"
           [errorMessage_Required]="'Liều tinh là hạng mục bắt buộc.'" [active]="submitAttempt"
           [placeholder]="'Chọn liều tinh'" [label]="'Liều tinh'" [targertCmp]="'sperms'" [data]="sperms"
           (valueChange)="showSperm1($event)">
@@ -99,9 +105,10 @@
           <ion-row><b>Thông tin liều tinh</b></ion-row>
           <ion-row><b>Ngày lấy tinh:</b>{{Sperm1.date}}</ion-row>
           <ion-row>
-            <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Lượng tinh:</b>{{Sperm1.volume}} (ml)</ion-col>
-            <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Số liều:</b>{{Sperm1.doses}}</ion-col>
-            <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Đã dùng:</b>{{Sperm1.used}} </ion-col>
+            <!-- <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Lượng tinh:</b>{{Sperm1.volume}} (ml)</ion-col> -->
+            <!-- <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Số liều:</b>{{Sperm1.doses}}</ion-col> -->
+            <!-- <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Đã dùng:</b>{{Sperm1.used}} </ion-col> -->
+            <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Mã heo:</b>{{Sperm1.pig.pigCode}}</ion-col>
             <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Hoạt lực:</b>{{Sperm1.activity}} %</ion-col>
             <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Nồng độ:</b>{{Sperm1.c}} (Triệu/ml)</ion-col>
             <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Tỷ lệ sống trung bình:</b>{{Sperm1.lifeAvg}} %</ion-col>
@@ -110,12 +117,17 @@
           </ion-row>
         </ion-item>
         <input-date [(validControl)]="credentialsFormExtra.controls.date1"
-          [errorMessage_Required]="'Ngày phối là hạng mục bắt buộc.'" [label]="'Ngày phối giống'"
+          [disabled] = "viewMode"
+          [errorMessage_Required]="'Ngày phối là hạng mục bắt buộc.'" 
+          [label]="'Ngày phối giống'"
           [placeholder]="'dd/mm/yyyy'" [active]="submitAttempt">
         </input-date>
         <input-select [(validControl)]="credentialsFormExtra.controls.insemination1"
-          [errorMessage_Required]="'Biểu hiện chịu đực là hạng mục bắt buộc'  " [label]="'Biểu hiện chịu đực'"
-          [active]="submitAttempt" [placeholder]="'Chọn biểu hiện chịu đực'" [(data)]="insemination">
+          [disabled] = "viewMode"
+          [errorMessage_Required]="'Biểu hiện chịu đực là hạng mục bắt buộc'  "
+          [label]="'Biểu hiện chịu đực'"
+          [active]="submitAttempt" [placeholder]="'Chọn biểu hiện chịu đực'" 
+          [(data)]="insemination">
         </input-select>
         <ion-item>
           <ion-row>
@@ -123,17 +135,22 @@
           </ion-row>
         </ion-item>
         <input-select-target [(validControl)]="credentialsFormExtra.controls.sperm2"
-          [errorMessage_Required]="'Liều tinh là hạng mục bắt buộc.'" [active]="submitAttempt"
-          [placeholder]="'Chọn liều tinh'" [label]="'Liều tinh'" [targertCmp]="'sperms'" [data]="sperms"
+          [disabled] = "viewMode"
+          [errorMessage_Required]="'Liều tinh là hạng mục bắt buộc.'" 
+          [active]="submitAttempt"
+          [placeholder]="'Chọn liều tinh'" 
+          [label]="'Liều tinh'" 
+          [targertCmp]="'sperms'" [data]="sperms"
           (valueChange)="showSperm2($event)">
         </input-select-target>
         <ion-item *ngIf="Sperm2">
             <ion-row><b>Thông tin liều tinh</b></ion-row>
-            <ion-row><b>Ngày lấy tinh:</b>{{Sperm2.date}}</ion-row>
+            <ion-row><b>Ngày lấy tinh:</b>{{util.convertDate(Sperm2.date)}}</ion-row>
             <ion-row>
-                <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Lượng tinh:</b>{{Sperm2.volume}} (ml)</ion-col>
-                <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Số liều:</b>{{Sperm2.doses}}</ion-col>
-                <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Đã dùng:</b>{{Sperm2.used}} </ion-col>
+                <!-- <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Lượng tinh:</b>{{Sperm2.volume}} (ml)</ion-col> -->
+                <!-- <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Số liều:</b>{{Sperm2.doses}}</ion-col> -->
+                <!-- <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Đã dùng:</b>{{Sperm2.used}} </ion-col> -->
+                <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Mã heo:</b>{{Sperm2.pig.pigCode}}</ion-col>
                 <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Hoạt lực:</b>{{Sperm2.activity}} %</ion-col>
                 <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Nồng độ:</b>{{Sperm2.c}} (Triệu/ml)</ion-col>
                 <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-6><b>Tỷ lệ sống trung bình:</b>{{Sperm2.lifeAvg}} %</ion-col>
@@ -142,12 +159,17 @@
             </ion-row>
           </ion-item>
         <input-date [(validControl)]="credentialsFormExtra.controls.date2"
-          [errorMessage_Required]="'Ngày phối là hạng mục bắt buộc.'" [label]="'Ngày phối giống'"
+          [disabled] = "viewMode"
+          [errorMessage_Required]="'Ngày phối là hạng mục bắt buộc.'" 
+          [label]="'Ngày phối giống'"
           [placeholder]="'dd/mm/yyyy'" [active]="submitAttempt">
         </input-date>
         <input-select [(validControl)]="credentialsFormExtra.controls.insemination2"
-          [errorMessage_Required]="'Biểu hiện chịu đực là hạng mục bắt buộc'" [label]="'Biểu hiện chịu đực'"
-          [active]="submitAttempt" [placeholder]="'Chọn biểu hiện chịu đực'" [(data)]="insemination">
+          [disabled] = "viewMode"
+          [errorMessage_Required]="'Biểu hiện chịu đực là hạng mục bắt buộc'" 
+          [label]="'Biểu hiện chịu đực'"
+          [active]="submitAttempt" [placeholder]="'Chọn biểu hiện chịu đực'" 
+          [(data)]="insemination">
         </input-select>
       </span>
       <ion-item *ngIf="sperms.length">
@@ -158,13 +180,15 @@
   </form>
 </ion-content>
 
-<ion-footer no-border showWhen="core">
-  <ion-toolbar toolbar-transparent text-right showWhen="core">
-    <button type="submit" ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
-    <cancel-button></cancel-button>
-  </ion-toolbar>
-</ion-footer>
+<span *ngIf="!viewMode">
+  <ion-footer no-border showWhen="core">
+    <ion-toolbar toolbar-transparent text-right showWhen="core">
+      <button type="submit" ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
+      <cancel-button></cancel-button>
+    </ion-toolbar>
+  </ion-footer>
 
-<ion-footer no-border no-padding showWhen="ios,android">
-  <button type="submit" no-margin full block ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
-</ion-footer>
+  <ion-footer no-border no-padding showWhen="ios,android">
+    <button type="submit" no-margin full block ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
+  </ion-footer>
+</span>

@@ -129,7 +129,7 @@ export class MedicineInvoicesComponent {
 
     this.filterProvider.searchWithRange = {}
     return this.filterProvider.filter().sort((a: invoicesProduct, b: invoicesProduct) =>
-      (new Date(a.importDate) > new Date(b.importDate)) ? -1 : 1
+      (new Date(a.createdAt) > new Date(b.createdAt)) ? -1 : 1
     );
   }
 

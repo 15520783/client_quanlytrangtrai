@@ -26,7 +26,7 @@
       <input-text [(validControl)] = "credentialsForm.controls.fetalWeight"
                   [errorMessage_Required]  = "'Trọng lượng bào thai là hạng mục bắt buộc'"
                   [errorMessage_ValidNumber]  = "'Trọng lượng bào thai là hạng mục nhập số'"
-                  [label] = "'Trọng lượng bào thai'"
+                  [label] = "'Trọng lượng bào thai (kg)'"
                   [placeholder]="'Nhập trọng lượng bào thai'"
                   [active]= "submitAttempt">
       </input-text>
@@ -65,7 +65,7 @@
                   [placeholder]="'Nhập số con dị tật'"
                   [active]= "submitAttempt">
       </input-text>
-      <input-text [(validControl)] = "credentialsForm.controls.smallReview"
+      <input-text [(validControl)] = "credentialsForm.controls.smallRemove"
                   [errorMessage_ValidNumber]  = "'Số con nhỏ loại là hạng mục nhập số'"
                   [errorMessage_Required]  = "'Số con nhỏ loại là hạng mục bắt buộc'"
                   [label] = "'Số con nhỏ loại'"

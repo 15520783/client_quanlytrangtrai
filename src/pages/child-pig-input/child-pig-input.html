@@ -44,7 +44,6 @@
           </input-select>
 
           <input-select-target [(validControl)]="credentialsForm.controls.originFatherId"
-            [errorMessage_Required]="'Heo cha là hạng mục bắt buộc.'" 
             [active]="submitAttempt"
             [placeholder]="'Chọn heo cha'" [label]="'Heo cha'" 
             [targertCmp]="'pigs'">
@@ -85,7 +84,6 @@
           </input-text>
 
           <input-text [(validControl)]="credentialsForm.controls.description"
-            [errorMessage_Required]="'Ghi chú là hạng mục bắt buộc'"
             [errorMessage_Maxlength]="'Ghi chú không được vượt quá 1000 kí tự.'" [label]="'Ghi chú'"
             [placeholder]="'Nhập thông tin mô tả'" [active]="submitAttempt">
           </input-text>

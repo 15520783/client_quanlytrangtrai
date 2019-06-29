@@ -34,11 +34,20 @@ export class BirthInputPage {
       this.birth.mating = this.navParams.data.mating;
     }
 
+    if (this.navParams.data.birth) {
+      this.birth = this.navParams.data.birth;
+      this.birth.date = new Date(this.birth.date).toISOString();
+    }
+
+    if (this.navParams.data.updateMode) {
+      this.updateMode = true;
+    }
+
     this.credentialsForm = this.formBuilder.group({
       id: this.birth.id,
       mating: this.birth.mating,
       date: [this.birth.date, Validators.compose([Validators.required])],
-      logId: this.birth.logId,
+      // logId: this.birth.logId,
       parities: this.birth.parities,
       borning: [this.birth.borning, Validators.compose([Validators.required, ValidateNumber])],
       fetalWeight: [this.birth.fetalWeight, Validators.compose([Validators.required, ValidateNumber])],
@@ -47,8 +56,8 @@ export class BirthInputPage {
       dieBorning: [this.birth.dieBorning, Validators.compose([Validators.required, ValidateNumber])],
       dieBlack: [this.birth.dieBlack, Validators.compose([Validators.required, ValidateNumber])],
       defect: [this.birth.defect, Validators.compose([Validators.required, ValidateNumber])],
-      smallReview: [this.birth.smallReview, Validators.compose([Validators.required, ValidateNumber])],
-      remain: this.birth.remain
+      smallRemove: [this.birth.smallRemove, Validators.compose([Validators.required, ValidateNumber])],
+      // remain: this.birth.remain
     });
   }
 
@@ -58,18 +67,29 @@ export class BirthInputPage {
       Object.keys(this.credentialsForm.value).forEach((attr) => {
         this.birth[attr] = this.credentialsForm.value[attr];
       });
-      
-      this.activitiesProvider.createBirth(this.birth)
-      .then((newBirth:births)=>{
-        if(newBirth){
-          this.navParams.get('callback')(newBirth);
-        }
-        this.navCtrl.pop();
-      })
-      .catch((err:Error)=>{
-        console.log(err);
-      })
+      if (!this.updateMode) {
+        this.activitiesProvider.createBirth(this.birth)
+          .then((newBirth: births) => {
+            if (newBirth) {
+              this.navParams.get('callback')(newBirth);
+            }
+            this.navCtrl.pop();
+          })
+          .catch((err: Error) => {
+            console.log(err);
+          })
+      }else{
+        this.activitiesProvider.updateBirth(this.birth)
+          .then((Birth: births) => {
+            if (Birth) {
+              this.navParams.get('callback')(Birth);
+            }
+            this.navCtrl.pop();
+          })
+          .catch((err: Error) => {
+            console.log(err);
+          })
+      }
     }
   }
-
 }

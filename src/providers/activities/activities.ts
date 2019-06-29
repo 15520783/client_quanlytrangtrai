@@ -185,6 +185,17 @@ export class ActivitiesProvider {
   }
 
   /**
+   * Cập nhật ghi nhận heo đẻ
+   * @param objBody 
+   */
+  updateBirth(objBody:births){
+    return this.http
+    .put(API.UPDATE_BIRTH,objBody)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
+
+  /**
    * Thêm mới vấn đề của heo
    * @param objBody 
    */

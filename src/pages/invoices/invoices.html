@@ -36,22 +36,22 @@
 
     <ion-col col-xl-9 col-lg-9 col-md-8 col-sm-8 no-padding>
       <ion-slides paper="true" #slider>
-        <ion-slide>
+        <ion-slide *ngIf="userProvider.rolePermission.ROLE_quan_ly_chung_tu_nhap_heo_trong_he_thong!=null">
           <internal-pig-invoices [(invoices)]="internalPigInvoices"></internal-pig-invoices>
         </ion-slide>
-        <ion-slide>
+        <ion-slide *ngIf="userProvider.rolePermission.ROLE_quan_ly_chung_tu_nhap_heo_ngoai_he_thong!=null">
           <external-pig-invoices [(invoices)]="externalPigInvoices"></external-pig-invoices>
         </ion-slide>
-        <ion-slide>
+        <ion-slide *ngIf="userProvider.rolePermission.ROLE_quan_ly_chung_tu_xuat_ban_heo!=null">
           <sale-pig-invoices [(invoices)]="saleInvoices"></sale-pig-invoices>
         </ion-slide>
-        <ion-slide>
+        <ion-slide *ngIf="userProvider.rolePermission.ROLE_quan_ly_chung_tu_xuat_heo_trong_he_thong != null">
           <export-internal-pig-invoice [(invoices)]="exportInternalPigInvoice"></export-internal-pig-invoice>
         </ion-slide>
-        <ion-slide>
+        <ion-slide *ngIf="userProvider.rolePermission.ROLE_quan_ly_chung_tu_nhap_cam != null">
           <food-invoices [(invoices)]="foodInvoices"></food-invoices>
         </ion-slide>
-        <ion-slide>
+        <ion-slide *ngIf="userProvider.rolePermission.ROLE_quan_ly_chung_tu_nhap_thuoc != null">
           <medicine-invoices [(invoices)]="medicineInvoices"></medicine-invoices>
         </ion-slide>
       </ion-slides>

@@ -8,6 +8,7 @@ import { InternalPigInvoicesComponent } from '../../components/internal-pig-invo
 import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { MedicineInvoicesComponent } from '../../components/medicine-invoices/medicine-invoices';
 import { SalePigInvoicesComponent } from '../../components/sale-pig-invoices/sale-pig-invoices';
+import { UserProvider } from '../../providers/user/user';
 import { Utils } from '../../common/utils';
 import { VARIABLE } from '../../common/const';
 
@@ -36,43 +37,55 @@ export class InvoicesPage {
     public renderer: Renderer,
     public invoicesProvider: InvoicesProvider,
     public util: Utils,
-    public events: Events
+    public events: Events,
+    public userProvider: UserProvider
   ) {
 
     this.events.subscribe('invoicesPage:sync', () => {
       this.getInvoices();
     });
 
-    this.list_invoice_type = {
-      internalPigInvoice: {
+    let role = this.userProvider.rolePermission;
+    if (role.ROLE_quan_ly_chung_tu_nhap_heo_trong_he_thong != null) {
+      this.list_invoice_type.internalPigInvoice = {
         title: 'Chứng từ nhập heo trong hệ thống',
         invoices: [],
-        component: InternalPigInvoicesComponent
-      },
-      externalPigInvoice: {
+        component: InternalPigInvoicesComponent,
+      }
+    }
+    if (role.ROLE_quan_ly_chung_tu_nhap_heo_ngoai_he_thong != null) {
+      this.list_invoice_type.externalPigInvoice = {
         title: 'Chứng từ nhập heo ngoài hệ thống',
         invoices: [],
         component: ExternalPigInvoicesComponent
-      },
-      salePigInvoice: {
+      }
+    }
+    if (role.ROLE_quan_ly_chung_tu_xuat_ban_heo != null) {
+      this.list_invoice_type.salePigInvoice = {
         title: 'Chứng từ xuất bán heo',
         invoices: [],
-        component: SalePigInvoicesComponent
-      },
-      exportInternalPigInvoice: {
+        component: SalePigInvoicesComponent,
+      }
+    }
+    if (role.ROLE_quan_ly_chung_tu_xuat_heo_trong_he_thong != null) {
+      this.list_invoice_type.exportInternalPigInvoice = {
         title: 'Chứng từ xuất heo trong hệ thống',
         invoices: [],
-        component: ExportInternalPigInvoiceComponent
-      },
-      foodInvoice: {
+        component: ExportInternalPigInvoiceComponent,
+      }
+    }
+    if (role.ROLE_quan_ly_chung_tu_nhap_cam != null) {
+      this.list_invoice_type.foodInvoice = {
         title: 'Chứng từ nhập cám',
         invoices: [],
-        component: FoodInvoicesComponent
-      },
-      medicineInvoice: {
+        component: FoodInvoicesComponent,
+      }
+    }
+    if (role.ROLE_quan_ly_chung_tu_nhap_thuoc != null) {
+      this.list_invoice_type.medicineInvoice = {
         title: 'Chứng từ nhập thuốc',
         invoices: [],
-        component: MedicineInvoicesComponent
+        component: MedicineInvoicesComponent,
       }
     }
 

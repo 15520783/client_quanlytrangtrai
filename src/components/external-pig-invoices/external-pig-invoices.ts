@@ -132,7 +132,7 @@ export class ExternalPigInvoicesComponent {
 
     this.filterProvider.searchWithRange = {};
     return this.filterProvider.filter().sort((a: invoicesPig, b: invoicesPig) =>
-      (new Date(a.importDate) > new Date(b.importDate)) ? -1 : 1
+      (new Date(a.createdAt) > new Date(b.createdAt)) ? -1 : 1
     );
   }
 
@@ -166,16 +166,6 @@ export class ExternalPigInvoicesComponent {
         callback: callback
       }
     )
-
-    // this.events.unsubscribe('callback');
-    // this.events.subscribe('callback', (data) => {
-    //   console.log('TEST', data);
-    //   if (data) {
-    //     this.invoices.push(data);
-    //     this.setFilteredItems();
-    //     this.events.unsubscribe('callback');
-    //   }
-    // })
   }
 
   input_pig(item) {

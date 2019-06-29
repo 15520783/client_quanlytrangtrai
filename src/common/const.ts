@@ -159,7 +159,7 @@ const VARIABLE = {
     ],
     MATING_STATUS: {
         PROCESSING: { id: 0, codeName: 'processing', name: 'Đang chờ lấy tinh lần 2' },
-        COMPLETE: { id: 1, codeName: 'finish', name: 'Hoàn tất' },
+        COMPLETE: { id: 1, codeName: 'finish', name: 'Hoàn tất phối giống' },
         FARROW: { id: 2, codeName: 'farrow', name: 'Mang thai' },
         ABORTION: { id: 3, codeName: 'abort', name: 'Sẩy thai' },
         BORNED: { id: 4, codeName: 'borned', name: 'Đã sinh' }
@@ -213,6 +213,10 @@ const VARIABLE = {
         QUAN_LY_DANH_SACH_CHUNG_TU: {
             codeName: "quan_ly_danh_sach_chung_tu",
             name: "Quản lý danh sách chứng từ"
+        },
+        QUAN_LY_LAM_SAN: {
+            codeName: "quan_ly_lam_san",
+            name: "Quản lý lâm sàn"
         },
         QUAN_LY_HOAT_DONG: {
             codeName: "quan_ly_hoat_dong",
@@ -474,6 +478,7 @@ const API = {
     DELETE_ISSUES_PIG: '/api/issuespigs/',
 
     CREATE_BIRTH: '/api/births/',
+    UPDATE_BIRTH: '/api/births/',
 
     CREATE_FEEDS: '/api/feeds/feedlist/',
 

@@ -190,6 +190,7 @@
             [active]="submitAttempt" [placeholder]="'Chọn loại lên giống'" [(data)]="breeding_types">
           </input-select> -->
           <input-select [(validControl)]="credentialsForm.controls.pregnancyStatusId"
+            [label]="'Trạng thái mang thai'"
             [errorMessage_Required]="'Trạng thái mang thai là hạng mục bắt buộc.'" 
             [active]="submitAttempt" 
             [placeholder]="'Chọn trạng thái mang thai'" 

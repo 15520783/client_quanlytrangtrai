@@ -137,7 +137,7 @@ export class OptionListPigSectionComponent {
         break;
       }
       case VARIABLE.SECTION_TYPE[4].id: {
-        this.move_local = [VARIABLE.SECTION_TYPE[4].id,VARIABLE.SECTION_TYPE[3].id, VARIABLE.SECTION_TYPE[4].id];
+        this.move_local = [VARIABLE.SECTION_TYPE[4].id,VARIABLE.SECTION_TYPE[3].id, VARIABLE.SECTION_TYPE[5].id];
         break;
       }
       case VARIABLE.SECTION_TYPE[5].id: {

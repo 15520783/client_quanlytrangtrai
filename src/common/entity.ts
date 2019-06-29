@@ -658,7 +658,7 @@ class usedMedicine extends base {
 class births extends base {
 	mating: mating = new mating();
 	date: any = '';
-	logId: string = '';  // bỏ
+	// logId: string = '';  // bỏ
 	parities: number = 0;
 	borning: number = 0;
 	fetalWeight: number = 0;
@@ -667,8 +667,8 @@ class births extends base {
 	dieBorning: number = 0;
 	dieBlack: number = 0;
 	defect: number = 0;
-	smallReview: number = 0;
-	remain: number = 0; // bỏ
+	smallRemove: number = 0;
+	// remain: number = 0; // bỏ
 }
 
 class feeds extends base {

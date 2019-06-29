@@ -35,10 +35,12 @@ export class ImportInternalPigInvoiceInputPage {
     public util: Utils,
     public userProvider:UserProvider
   ) {
-    this.init();
-    if (this.navParams.data.sourceId) {
+    if (this.navParams.data.sourceId && this.navParams.data.destinationId) {
       this.invoice.sourceId = this.navParams.data.sourceId;
+      this.invoice.destinationId = this.navParams.data.destinationId;
     }
+    this.init();
+
     if (this.navParams.data.vehicleNumber) {
       this.invoice.vehicleNumber = this.navParams.data.vehicleNumber;
     }
@@ -94,6 +96,13 @@ export class ImportInternalPigInvoiceInputPage {
 
   init() {
     this.farms = this.deployData.get_farm_list_for_select();
+    this.deployData.get_sections_of_farm(this.invoice.destinationId).forEach((section) => {
+      if (section.typeId == VARIABLE.SECTION_TYPE[1].id)
+        this.sections.push({
+          name: section.name,
+          value: section.id
+        })
+    });
   }
 
   farmChange(e) {

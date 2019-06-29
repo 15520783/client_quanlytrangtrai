@@ -20,7 +20,7 @@ import { VARIABLE } from '../../common/const';
 })
 export class MatingListPage {
 
-  public viewMode:boolean = false;
+  public viewMode: boolean = false;
 
   public matings: Array<mating> = [];
   public matingDetails: any = {};
@@ -31,6 +31,7 @@ export class MatingListPage {
 
   public mainAttribute = "dateDisplay";
   public attributes = [
+    { name: "typeName", label: 'Hình thức lên giống' },
     { name: "pigCodeMother", label: 'Mã heo nái' },
     { name: "breedMotherName", label: 'Giống heo nái' },
     { name: "pigCodeFather", label: 'Mã heo nọc' },
@@ -40,11 +41,11 @@ export class MatingListPage {
     { name: "houseName", label: 'Nhà' },
     { name: "statusName", label: 'Hiện trạng', usingBadge: true },
     { name: "birthEstimateDisplay", label: 'Dự kiến sinh' },
-    { name: "description", label: 'Ghi chú' },
+    { name: "description", label: 'Ghi chú' }
   ];
 
   public placeholderSearch: string = 'Tìm kiếm ghi nhận phối giống'
-  public filter_default: Array<string> = ["pigCodeMother", "pigCodeFather", "breedMotherName", "breedFatherName", "farmName", "statusName", "birthdayDisplay", "description"];
+  public filter_default: Array<string> = ["pigCodeMother", "pigCodeFather", "breedMotherName", "breedFatherName", "farmName", "statusName","dateDisplay","birthdayDisplay", "description"];
 
   public page_Idx: number = 1;
   public page_Total: number = 0;
@@ -66,7 +67,7 @@ export class MatingListPage {
     public util: Utils,
     public userProvider: UserProvider
   ) {
-    if(this.navParams.data.viewMode){
+    if (this.navParams.data.viewMode) {
       this.viewMode = true;
     }
     if (this.navParams.data.sectionType) {
@@ -149,7 +150,7 @@ export class MatingListPage {
               return mating.mother.house.section.typeId == this.sectionType.id ? true : false;
             })
           }
-          
+
           if (this.navParams.data.farmId) {
             this.matings = this.matings.filter((mating: mating) => {
               return mating.mother.house.section.farm.id == this.navParams.data.farmId ? true : false;
@@ -184,7 +185,47 @@ export class MatingListPage {
       mating['houseName'] = mating.mother['house'].name;
       mating['dateDisplay'] = this.util.convertDate(mating.date);
       mating['birthEstimateDisplay'] = mating.birthEstimate ? this.util.convertDate(mating.birthEstimate) : 'Chưa xác định';
-      mating['statusName'] = mating.status;
+      
+      switch(mating.type){
+        case VARIABLE.MATING_TYPE.IMMEDIATE.codeName:{
+          mating['typeName']= VARIABLE.MATING_TYPE.IMMEDIATE.name;
+          break;
+        }
+        case VARIABLE.MATING_TYPE.SPERM.codeName:{
+          mating['typeName']= VARIABLE.MATING_TYPE.SPERM.name;
+          break;
+        }
+        default:{
+          break;
+        }
+      }
+
+      switch (mating.status) {
+        case VARIABLE.MATING_STATUS.ABORTION.codeName: {
+          mating['statusName'] = VARIABLE.MATING_STATUS.ABORTION.name;
+          break;
+        }
+        case VARIABLE.MATING_STATUS.PROCESSING.codeName: {
+          mating['statusName'] = VARIABLE.MATING_STATUS.PROCESSING.name;
+          break;
+        }
+        case VARIABLE.MATING_STATUS.BORNED.codeName: {
+          mating['statusName'] = VARIABLE.MATING_STATUS.BORNED.name;
+          break;
+        }
+        case VARIABLE.MATING_STATUS.COMPLETE.codeName: {
+          mating['statusName'] = VARIABLE.MATING_STATUS.COMPLETE.name;
+          break;
+        }
+        case VARIABLE.MATING_STATUS.FARROW.codeName: {
+          mating['statusName'] = VARIABLE.MATING_STATUS.FARROW.name;
+          break;
+        }
+        default: {
+          mating['statusName'] = 'Không xác định'
+          break;
+        }
+      }
     })
   }
 
@@ -234,6 +275,15 @@ export class MatingListPage {
         })
     }
     this.navCtrl.push(MatingInputPage, { pig: item.mother, mating: item, matingDetails: this.matingDetails[item.id], callback: callback });
+  }
+
+  viewDetail(item) {
+    this.navCtrl.push(MatingInputPage, {
+      pig: item.mother,
+      mating: item,
+      matingDetails: this.matingDetails[item.id],
+      viewMode: true
+    });
   }
 
 
@@ -294,7 +344,8 @@ export class MatingListPage {
   birth_input(item: mating) {
     let callback = (newBirth: births) => {
       if (newBirth) {
-        mating['statusName'] = VARIABLE.MATING_STATUS.BORNED.codeName;
+        item['status'] = VARIABLE.MATING_STATUS.BORNED.codeName;
+        item['statusName'] = VARIABLE.MATING_STATUS.BORNED.name;
       }
     };
     this.navCtrl.push(BirthInputPage, { mating: item, callback: callback });

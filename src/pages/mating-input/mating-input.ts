@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { mating, pig, breeds, matingDetails, sperms } from '../../common/entity';
-import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { KEY, VARIABLE } from '../../common/const';
+import { breeds, mating, matingDetails, pig, sperms } from '../../common/entity';
+
 import { ActivitiesProvider } from '../../providers/activities/activities';
+import { Component } from '@angular/core';
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { Utils } from '../../common/utils';
-import { VARIABLE, KEY } from '../../common/const';
 
 @IonicPage()
 @Component({
@@ -34,6 +35,8 @@ export class MatingInputPage {
   public fatherBreed: breeds = new breeds();
   public motherBreed: breeds = new breeds();
   public resultMating: breeds = new breeds();
+
+  public viewMode: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -119,15 +122,21 @@ export class MatingInputPage {
           let matingDetails = this.navParams.data.matingDetails;
           if (this.navParams.data.matingDetails[0]) {
             this.credentialsFormExtra.controls.sperm1.setValue(matingDetails[0].sperm);
+            this.Sperm1 = matingDetails[0].sperm;
             this.credentialsFormExtra.controls.date1.setValue(new Date(matingDetails[0].date).toISOString());
             this.credentialsFormExtra.controls.insemination1.setValue(matingDetails[0].insemination);
           }
           if (this.navParams.data.matingDetails[1]) {
             this.credentialsFormExtra.controls.sperm2.setValue(matingDetails[1].sperm);
+            this.Sperm2 = matingDetails[1].sperm;
             this.credentialsFormExtra.controls.date2.setValue(new Date(matingDetails[1].date).toISOString());
             this.credentialsFormExtra.controls.insemination2.setValue(matingDetails[1].insemination);
           }
         }
+      }
+
+      if (this.navParams.data.viewMode) {
+        this.viewMode = true;
       }
     }
   }
@@ -175,6 +184,11 @@ export class MatingInputPage {
         this.matingDetail[1].sperm = this.credentialsFormExtra.value.sperm2;
         this.matingDetail[1].date = this.credentialsFormExtra.value.date2;
         this.matingDetail[1].insemination = this.credentialsFormExtra.value.insemination2;
+
+        // if(this.matingDetail[0].sperm.id == this.matingDetail[1].sperm.id){
+        //   if(this.matingDetail[0].sperm.)
+        // }
+
         if (this.credentialsFormExtra.valid) {
           this.navParams.get('callback')({
             mating: this.mating,
@@ -192,7 +206,6 @@ export class MatingInputPage {
 
 
   changeFatherBreed(eventValue: any) {
-    console.log(eventValue);
     if (this.credentialsForm.value.typeId == 0) {
       if (eventValue.breedId) {
         this.fatherBreed = this.breeds[eventValue.breedId];
@@ -202,7 +215,6 @@ export class MatingInputPage {
       if (eventValue.valueId) {
         this.getSperms();
         this.fatherBreed = this.breeds[eventValue.valueId];
-        console.log(this.fatherBreed.id + '-' + this.motherBreed.id);
         this.resultMating = this.matingRole[this.fatherBreed.id + '-' + this.motherBreed.id];
       }
     }

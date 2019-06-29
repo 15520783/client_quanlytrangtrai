@@ -2,6 +2,7 @@ import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 
 import { ActivitiesProvider } from '../../providers/activities/activities';
 import { BirthChildDetailPage } from '../birth-child-detail/birth-child-detail';
+import { BirthInputPage } from '../birth-input/birth-input';
 import { Component } from '@angular/core';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { FilterProvider } from '../../providers/filter/filter';
@@ -36,7 +37,7 @@ export class BirthListPage {
     { name: "dieBorning", label: 'Chết khi sinh' },
     { name: "dieBlack", label: 'Chết đen' },
     { name: "defect", label: 'Dị tật' },
-    { name: "smallReview", label: 'Nhỏ loại' },
+    { name: "smallRemove", label: 'Nhỏ loại' },
     { name: "selected", label: 'Chọn nuôi' },
   ];
 
@@ -154,8 +155,29 @@ export class BirthListPage {
         this.util.closeBackDrop();
       })
   }
-
+  /**
+   * Xem danh sách đàn heo con
+   * @param item 
+   */
   viewDetail(item) {
     this.navCtrl.push(BirthChildDetailPage, { birth: item });
+  }
+
+  /**
+   * Cập nhật thông tin heo đẻ
+   * @param item 
+   */
+  edit(item: births) {
+    let callback = (birth: births) => {
+      if (birth) {
+        item = birth;
+        this.setFilteredItems();
+      }
+    }
+    this.navCtrl.push(BirthInputPage, {
+      birth: item,
+      callback: callback,
+      updateMode: true
+    })
   }
 }

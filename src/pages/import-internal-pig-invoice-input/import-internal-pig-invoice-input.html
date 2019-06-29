@@ -18,7 +18,7 @@
           [(validControl)]="credentialsForm.controls.sourceId"
           [label]="'Trang trại chuyển đến'" 
           [active]="submitAttempt"
-          [disabled]="editMode?true:false"
+          [disabled]="true"
           [placeholder]="'Chọn trang trại'" [(data)]="farms">
         </input-select>
         <input-text
@@ -41,7 +41,7 @@
           [active]="submitAttempt">
         </input-date>
         <input-select 
-          [disabled]="editMode?true:false"
+          [disabled]="true"
           [(validControl)]="credentialsForm.controls.destinationId"
           [errorMessage_Required]="'Trang trại nhận là hạng mục bắt buộc'" 
           [label]="'Trang trại nhận'" [active]="submitAttempt"

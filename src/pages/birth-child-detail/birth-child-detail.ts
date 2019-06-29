@@ -60,7 +60,7 @@ export class BirthChildDetailPage {
     public invoiceProvider: InvoicesProvider,
     public pigProvider: PigsProvider,
     public platform: Platform,
-    public userProvider:UserProvider
+    public userProvider: UserProvider
   ) {
     this.init();
 
@@ -166,7 +166,7 @@ export class BirthChildDetailPage {
     this.navCtrl.push(ChildPigInputPage, { pig: item, callback: callback });
   }
 
-  remove(item:pig){
-    
+  remove(item: pig) {
+
   }
 }

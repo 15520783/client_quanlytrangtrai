@@ -13,7 +13,6 @@ import {
 import { Events } from 'ionic-angular';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { PERMISSIONS } from '../common/permissions';
 import { Utils } from '../common/utils';
 import { tap } from 'rxjs/operators';
 
@@ -44,7 +43,6 @@ export class TokenInterceptor implements HttpInterceptor {
         console.log('Error occur', error);
         if (request.method === 'POST' || request.method === 'PUT' || request.method === 'DELETE') {
           if (request.url !== CONFIG.SERVER_API.concat(API.LOGIN))
-            // this.util.closeLoading();
             this.util.closeBackDrop();
         }
 
