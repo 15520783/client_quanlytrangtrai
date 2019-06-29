@@ -154,7 +154,7 @@ export class MatingInputPage {
       .then((sperms: Array<sperms>) => {
         if (sperms) {
           this.sperms = sperms.filter((sperm: sperms) => {
-            return sperm.pig.breed.id == this.credentialsForm.value.fatherId || sperm.id == "0" ? true : false;
+            return sperm.pig.breed.id == this.credentialsForm.value.fatherId ? true : false;
           })
           if (!this.sperms.length) {
             this.util.showToastInform('Không tìm thấy liều tinh của giống được chọn.');
@@ -185,9 +185,11 @@ export class MatingInputPage {
         this.matingDetail[1].date = this.credentialsFormExtra.value.date2;
         this.matingDetail[1].insemination = this.credentialsFormExtra.value.insemination2;
 
-        // if(this.matingDetail[0].sperm.id == this.matingDetail[1].sperm.id){
-        //   if(this.matingDetail[0].sperm.)
-        // }
+        if(this.matingDetail[0].sperm.id == this.matingDetail[1].sperm.id){
+          if(this.matingDetail[0].sperm.doses < 2){
+            this.util.showToast('Số liều tinh của heo có mã '+this.matingDetail[0].sperm.pig.pigCode+' không đủ')
+          }
+        }
 
         if (this.credentialsFormExtra.valid) {
           this.navParams.get('callback')({

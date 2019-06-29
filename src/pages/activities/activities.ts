@@ -10,6 +10,7 @@ import { SpermListPage } from '../sperm-list/sperm-list';
 import { UserProvider } from '../../providers/user/user';
 import { Utils } from '../../common/utils';
 import { VARIABLE } from '../../common/const';
+import { pig } from '../../common/entity';
 
 @IonicPage()
 @Component({
@@ -141,16 +142,29 @@ export class ActivitiesPage {
           sectionType: VARIABLE.SECTION_TYPE[3]
         }
       },
-      list_mating_pig_khu_phoi: {
+      list_male_mated_pig_khu_phoi: {
         name: 'Danh sách heo nái đã phối', component: PigListSectionPage, active: false,
         data: {
           sectionType: VARIABLE.SECTION_TYPE[3],
           getPigs(deployData: DeployDataProvider) {
-            return deployData.get_mated_pig_of_section(VARIABLE.SECTION_TYPE[3].id)
+            return deployData.get_mated_pig_of_section(VARIABLE.SECTION_TYPE[3].id).filter((pig: pig) => {
+              return pig.gender == 2 ? true : false;
+            })
           },
           pigs: []
         },
-        pigs: []
+      },
+      list_female_mated_pig_khu_phoi: {
+        name: 'Danh sách heo nọc đã phối', component: PigListSectionPage, active: false,
+        data: {
+          sectionType: VARIABLE.SECTION_TYPE[3],
+          getPigs(deployData: DeployDataProvider) {
+            return deployData.get_mated_pig_of_section(VARIABLE.SECTION_TYPE[3].id).filter((pig: pig) => {
+              return pig.gender == 1 ? true : false;
+            })
+          },
+          pigs: []
+        },
       },
       list_mating_khu_phoi: {
         name: 'Danh sách giao phối', component: MatingListPage, active: false,
@@ -414,7 +428,7 @@ export class ActivitiesPage {
           this.components.list_pig_khu_noc,
           this.components.list_pig_for_sale_khu_noc,
           this.components.list_pig_for_transfer_khu_noc,
-          this.userProvider.rolePermission.ROLE_xem_danh_sach_khai_thac_tinh_heo!=null ? this.components.list_sperm_pig_khu_noc:null
+          this.userProvider.rolePermission.ROLE_xem_danh_sach_khai_thac_tinh_heo != null ? this.components.list_sperm_pig_khu_noc : null
         ],
         icon: 'app-activities', active: false, expand: false
       });
@@ -426,8 +440,9 @@ export class ActivitiesPage {
         components: [
           this.components.list_pig_khu_phoi,
           userProvider.rolePermission.ROLE_xem_danh_sach_len_giong != null ? this.components.list_pig_breeding_khu_phoi : null,
-          this.components.list_mating_pig_khu_phoi,
-          userProvider.rolePermission.ROLE_xem_danh_sach_phoi_giong != null ?this.components.list_mating_khu_phoi :null,
+          this.components.list_male_mated_pig_khu_phoi,
+          this.components.list_female_mated_pig_khu_phoi,
+          userProvider.rolePermission.ROLE_xem_danh_sach_phoi_giong != null ? this.components.list_mating_khu_phoi : null,
           this.components.list_pig_for_sale_khu_phoi,
           this.components.list_pig_for_transfer_khu_phoi
         ],
@@ -455,7 +470,7 @@ export class ActivitiesPage {
         title: 'Khu đẻ ',
         components: [
           this.components.list_pig_khu_de,
-          userProvider.rolePermission.ROLE_xem_danh_sach_phoi_giong != null ? this.components.list_mating_khu_de : null ,
+          userProvider.rolePermission.ROLE_xem_danh_sach_phoi_giong != null ? this.components.list_mating_khu_de : null,
           userProvider.rolePermission.ROLE_xem_danh_sach_ghi_nhan_heo_de != null ? this.components.list_birth_khu_de : null,
           this.components.list_weaning_pig_khu_de,
           this.components.list_growing_child_pig_khu_de,
@@ -521,13 +536,13 @@ export class ActivitiesPage {
   }
 
   public sectionId: string = '6';
-  public farms:Array<any> = [];
-  public selectedFarm:string;
+  public farms: Array<any> = [];
+  public selectedFarm: string;
 
   init() {
     this.farms = this.deployData.get_farm_list_for_select();
     this.selectedFarm = this.farms[0].value;
-    
+
     this.sectionId = this.deployData.get_section_list_for_select()[0].value;
     this.events.publish('activities:PigOut');
   }
@@ -566,15 +581,15 @@ export class ActivitiesPage {
     }
   }
 
-  changeFarm(farm){
+  changeFarm(farm) {
     this.pages.forEach(page => {
       page.active = false;
       page.expand = false;
-      page.components.forEach((component)=>{
+      page.components.forEach((component) => {
         component.active = false;
       })
     });
-    
+
     this.selectedFarm = farm.valueId;
     if (this.pages && this.pages.length) {
       this.pages[0].active = true;

@@ -45,7 +45,7 @@ export class SpermListPage {
     { name: "spermCount", label: 'Số lần lấy' },
     { name: "volume", label: 'Lượng tinh', unit: '(ml)' },
     { name: "doses", label: 'Số liều', unit: '' },
-    { name: "used", label: 'Lượng tinh đã dùng', unit: '(ml)' },
+    { name: "used", label: 'Liều tinh đã dùng', unit: ' (liều)' },
     { name: "activity", label: 'Hoạt lực', unit: '%' },
     { name: "c", label: 'Nồng độ', unit: '(Triệu/ml)' },
     { name: "lifeAvg", label: 'Tỉ lệ sống trung bình', unit: '%' },
