@@ -47,17 +47,15 @@ export class BirthInputPage {
       id: this.birth.id,
       mating: this.birth.mating,
       date: [this.birth.date, Validators.compose([Validators.required])],
-      // logId: this.birth.logId,
       parities: this.birth.parities,
-      borning: [this.birth.borning, Validators.compose([Validators.required, ValidateNumber])],
+      borning: this.birth.borning,
       fetalWeight: [this.birth.fetalWeight, Validators.compose([Validators.required, ValidateNumber])],
-      selected: [this.birth.selected, Validators.compose([Validators.required, ValidateNumber])],
+      selected: this.birth.selected,
       dieBeforeBorning: [this.birth.dieBeforeBorning, Validators.compose([Validators.required, ValidateNumber])],
       dieBorning: [this.birth.dieBorning, Validators.compose([Validators.required, ValidateNumber])],
       dieBlack: [this.birth.dieBlack, Validators.compose([Validators.required, ValidateNumber])],
       defect: [this.birth.defect, Validators.compose([Validators.required, ValidateNumber])],
       smallRemove: [this.birth.smallRemove, Validators.compose([Validators.required, ValidateNumber])],
-      // remain: this.birth.remain
     });
   }
 

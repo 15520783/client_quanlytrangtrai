@@ -16,13 +16,13 @@
                   [placeholder]="'dd/mm/yyyy'"
                   [active]= "submitAttempt">
       </input-date>
-      <input-text [(validControl)] = "credentialsForm.controls.borning"
+      <!-- <input-text [(validControl)] = "credentialsForm.controls.borning"
                   [errorMessage_ValidNumber]  = "'Tổng số con là hạng mục nhập số'"
                   [errorMessage_Required]  ="'Tổng số là hạng mục bắt buộc.'"
                   [label] = "'Tổng số con'"
                   [placeholder]="'Nhập tổng số con'"
                   [active]= "submitAttempt">
-      </input-text>
+      </input-text> -->
       <input-text [(validControl)] = "credentialsForm.controls.fetalWeight"
                   [errorMessage_Required]  = "'Trọng lượng bào thai là hạng mục bắt buộc'"
                   [errorMessage_ValidNumber]  = "'Trọng lượng bào thai là hạng mục nhập số'"
@@ -30,13 +30,13 @@
                   [placeholder]="'Nhập trọng lượng bào thai'"
                   [active]= "submitAttempt">
       </input-text>
-      <input-text [(validControl)] = "credentialsForm.controls.selected"
+      <!-- <input-text [(validControl)] = "credentialsForm.controls.selected"
                   [errorMessage_Required]  = "'Tổng số con được chọn là hạng mục bắt buộc'"
                   [errorMessage_ValidNumber]  = "'Tổng số con được chọn là hạng mục nhập số'"
                   [label] = "'Tổng số con được chọn'"
                   [placeholder]="'Nhập tổng số con được chọn'"
                   [active]= "submitAttempt">
-      </input-text>
+      </input-text> -->
       <input-text [(validControl)] = "credentialsForm.controls.dieBeforeBorning"
                   [errorMessage_ValidNumber]  = "'Số con chết trước khi sinh là hạng mục nhập số'"
                   [errorMessage_Required]  = "'Số con chết trước khi sinh là hạng mục bắt buộc'"

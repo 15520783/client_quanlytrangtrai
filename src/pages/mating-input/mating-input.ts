@@ -95,7 +95,7 @@ export class MatingInputPage {
       if (this.mating.type == VARIABLE.MATING_TYPE.IMMEDIATE.codeName)
         this.mating.typeId = VARIABLE.MATING_TYPE.IMMEDIATE.value;
       else
-        this.mating.typeId = VARIABLE.MATING_TYPE.SPERM.value;
+      this.mating.typeId = VARIABLE.MATING_TYPE.SPERM.value;
       this.mating.motherId = this.mating.mother.id;
       this.mating.fatherId = this.mating.fatherId;
       this.mating.date = new Date(this.mating.date).toISOString();
@@ -177,25 +177,81 @@ export class MatingInputPage {
         VARIABLE.MATING_TYPE.IMMEDIATE.codeName : VARIABLE.MATING_TYPE.SPERM.codeName;
 
       if (this.mating.typeId == VARIABLE.MATING_TYPE.SPERM.value) {
+        if( this.navParams.data.matingDetails && this.navParams.data.matingDetails[0] &&
+            this.navParams.data.matingDetails[0].id){
+          this.matingDetail[0].id = this.navParams.data.matingDetails[0].id;
+        }
         this.matingDetail[0].sperm = this.credentialsFormExtra.value.sperm1;
         this.matingDetail[0].date = this.credentialsFormExtra.value.date1;
         this.matingDetail[0].insemination = this.credentialsFormExtra.value.insemination1;
 
+        if( this.navParams.data.matingDetails && this.navParams.data.matingDetails[1] &&
+            this.navParams.data.matingDetails[1].id){
+          this.matingDetail[1].id = this.navParams.data.matingDetails[1].id;
+        }
         this.matingDetail[1].sperm = this.credentialsFormExtra.value.sperm2;
         this.matingDetail[1].date = this.credentialsFormExtra.value.date2;
         this.matingDetail[1].insemination = this.credentialsFormExtra.value.insemination2;
 
-        if(this.matingDetail[0].sperm.id == this.matingDetail[1].sperm.id){
-          if(this.matingDetail[0].sperm.doses < 2){
-            this.util.showToast('Số liều tinh của heo có mã '+this.matingDetail[0].sperm.pig.pigCode+' không đủ')
-          }
-        }
-
         if (this.credentialsFormExtra.valid) {
-          this.navParams.get('callback')({
-            mating: this.mating,
-            matingDetail: this.matingDetail
-          })
+          let err = false;
+          if (!this.updateMode) {
+            if (this.matingDetail[0].sperm.id == this.matingDetail[1].sperm.id) {
+              if (this.matingDetail[0].sperm.doses < 2) {
+                err = true;
+                this.util.showToast('Số liều tinh của heo có mã ' + this.matingDetail[0].sperm.pig.pigCode + ' không đủ');
+              }
+            } else {
+              if (this.matingDetail[0].sperm.doses < 1) {
+                err = true;
+                this.util.showToast('Số liều tinh của heo có mã ' + this.matingDetail[0].sperm.pig.pigCode + ' không đủ');
+              }
+              if (this.matingDetail[1].sperm.doses < 1) {
+                err = true;
+                this.util.showToast('Số liều tinh của heo có mã ' + this.matingDetail[0].sperm.pig.pigCode + ' không đủ');
+              }
+            }
+          } else {
+            if (this.matingDetail[0].sperm.id != this.navParams.data.matingDetail[0].sperm.id) {
+              if (this.matingDetail[1].sperm.id != this.navParams.data.matingDetail[1].sperm.id) {
+                if (this.matingDetail[0].sperm.id == this.matingDetail[1].sperm.id) {
+                  if (this.matingDetail[0].sperm.doses < 2) {
+                    err = true;
+                    this.util.showToast('Số liều tinh của heo có mã ' + this.matingDetail[0].sperm.pig.pigCode + ' không đủ');
+                  }
+                } else {
+                  if (this.matingDetail[0].sperm.doses < 1) {
+                    err = true;
+                    this.util.showToast('Số liều tinh của heo có mã ' + this.matingDetail[0].sperm.pig.pigCode + ' không đủ');
+                  }
+                  if (this.matingDetail[1].sperm.doses < 1) {
+                    err = true;
+                    this.util.showToast('Số liều tinh của heo có mã ' + this.matingDetail[0].sperm.pig.pigCode + ' không đủ');
+                  }
+                }
+              } else {
+                if (this.matingDetail[0].sperm.doses < 1) {
+                  err = true;
+                  this.util.showToast('Số liều tinh của heo có mã ' + this.matingDetail[0].sperm.pig.pigCode + ' không đủ');
+                }
+              }
+            } else {
+              if (this.matingDetail[1].sperm.id != this.navParams.data.matingDetail[1].sperm.id) {
+                if (this.matingDetail[1].sperm.doses < 1) {
+                  err = true;
+                  this.util.showToast('Số liều tinh của heo có mã ' + this.matingDetail[0].sperm.pig.pigCode + ' không đủ');
+                }
+              }
+            }
+          }
+
+          if(!err){
+            console.log(this.matingDetail);
+            this.navParams.get('callback')({
+              mating: this.mating,
+              matingDetail: this.matingDetail
+            })
+          }
         }
       } else {
         this.navParams.get('callback')({
