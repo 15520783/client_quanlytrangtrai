@@ -1,7 +1,6 @@
 import { InputObject, employee, warehouse } from "../common/entity";
 
 import { DeployDataProvider } from "../providers/deploy-data/deploy-data";
-import { VARIABLE } from "../common/const";
 import { WarehousesProvider } from "../providers/warehouses/warehouses";
 
 export class WarehouseRole {

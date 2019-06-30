@@ -1,6 +1,6 @@
 import { API, CONFIG, KEY } from '../../common/const';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { breedingType, breeds, customerGroups, customerType, customers, diseases, farmTypes, foodType, foodUnits, foods, footType, gentialType, healthStatus, issues, markTypes, matingRole, medicineType, medicineUnits, medicines, partners, permission, pregnancyStatus, priceCodes, regencies, rolepermission, roles, round, section, status, warehouse_type } from '../../common/entity';
+import { breedingType, breeds, customerGroups, customerType, customers, diseases, farmTypes, foodType, foodUnits, foods, footType, gentialType, healthStatus, issues, matingRole, medicineType, medicineUnits, medicines, partners, permission, pregnancyStatus, regencies, rolepermission, roles, status, warehouse_type } from '../../common/entity';
 
 import { Events } from 'ionic-angular';
 import { Injectable } from '@angular/core';

@@ -1,5 +1,5 @@
 import { KEY, VARIABLE } from '../../common/const';
-import { births, breedings, foodUnits, foodWareHouse, foods, mating, matingRole, medicineUnits, medicineWarehouse, pig, round, sperms, status } from '../../common/entity';
+import { births, breedings, foodUnits, foodWareHouse, mating, matingRole, medicineUnits, medicineWarehouse, pig, sperms, status } from '../../common/entity';
 
 import { EmployeesProvider } from '../employees/employees';
 import { FarmsProvider } from '../farms/farms';

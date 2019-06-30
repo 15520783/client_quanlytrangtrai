@@ -1,4 +1,4 @@
-import { CONFIG, KEY, MESSAGE, SETTING_KEY, VARIABLE } from '../../common/const';
+import { CONFIG, MESSAGE, SETTING_KEY, VARIABLE } from '../../common/const';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 

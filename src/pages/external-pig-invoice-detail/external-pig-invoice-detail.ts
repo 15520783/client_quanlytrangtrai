@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { Events, IonicPage, NavController, NavParams, Platform, Slides, ViewController } from 'ionic-angular';
-import { KEY, VARIABLE } from '../../common/const';
 import { invoicePigDetail, invoicesPig, pig } from '../../common/entity';
 
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
@@ -12,6 +11,7 @@ import { PigsProvider } from '../../providers/pigs/pigs';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { UserProvider } from '../../providers/user/user';
 import { Utils } from '../../common/utils';
+import { VARIABLE } from '../../common/const';
 
 @IonicPage()
 @Component({

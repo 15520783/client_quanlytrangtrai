@@ -1,4 +1,4 @@
-import { API, CONFIG, KEY, VARIABLE } from '../../common/const';
+import { API, CONFIG, KEY } from '../../common/const';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Events } from 'ionic-angular';

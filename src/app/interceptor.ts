@@ -68,7 +68,10 @@ export class TokenInterceptor implements HttpInterceptor {
           this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].PERMISSIONS_ERROR);
         }
         else if(MESSAGE[CONFIG.LANGUAGE_DEFAULT].ERROR_CHECK_REMAIN_PRODUCT_CODE.test(error.error)){
-          this.util.showToast('Số lượng tồn kho không đủ.');
+          this.util.showToast('Số lượng tồn kho không đủ. Vui lòng kiểm tra lại.');
+        }
+        else if(MESSAGE[CONFIG.LANGUAGE_DEFAULT].ERROR_CHECK_REMAIN_SPERM_CODE.test(error.error)){
+          this.util.showToast('Liều tinh còn lại không đủ. Vui lòng kiểm tra lại.');
         }
         else {
           this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].ERROR_OCCUR);

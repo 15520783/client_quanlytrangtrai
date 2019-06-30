@@ -1,4 +1,4 @@
-import { InputObject, foodType, foodUnits } from "../common/entity";
+import { InputObject, foodUnits } from "../common/entity";
 
 import { SETTING_STORAGE_KEY } from "../common/const";
 import { SettingsProvider } from "../providers/settings/settings";

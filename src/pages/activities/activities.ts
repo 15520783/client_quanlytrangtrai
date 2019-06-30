@@ -486,7 +486,6 @@ export class ActivitiesPage {
         title: 'Khu cai sữa',
         components: [
           this.components.list_pig_khu_cai_sua,
-          this.components.chuyen_heo_nen_khu_cai_sua,
           this.components.list_pig_for_sale_khu_cai_sua,
           this.components.list_pig_for_transfer_khu_cai_sua,
         ],
@@ -509,7 +508,7 @@ export class ActivitiesPage {
 
     if (this.userProvider.rolePermission.ROLE_quan_ly_heo_khu_8 != null) {
       this.pages.push({
-        title: 'Khu 8',
+        title: 'Khu chờ bán heo',
         components: [
           this.components.list_pig_khu_8
         ],

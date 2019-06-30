@@ -128,7 +128,7 @@ export class ActivitiesProvider {
    * Tạo hành động phối giống cho heo
    * @param objBody 
    */
-  createMating(objBody: { mating: mating, matingDetail: Array<matingDetails> }) {
+  createMating(objBody: { mating: mating, matingDetail: Array<matingDetails>,breeding:breedings }) {
     return this.http
       .post(API.CREATE_MATING, objBody)
       .timeout(CONFIG.DEFAULT_TIMEOUT)

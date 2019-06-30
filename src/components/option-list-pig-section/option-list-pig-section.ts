@@ -1,13 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Events, ModalController, NavController } from 'ionic-angular';
-import { breedings, issues, issuesPigs, mating, matingDetails, pig, sperms, status } from '../../common/entity';
+import { breedings, issues, issuesPigs, pig, sperms, status } from '../../common/entity';
 
 import { ActivitiesProvider } from '../../providers/activities/activities';
 import { BirthInputPage } from '../../pages/birth-input/birth-input';
 import { BreedingInputPage } from '../../pages/breeding-input/breeding-input';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { HealthInputPage } from '../../pages/health-input/health-input';
-import { MatingInputPage } from '../../pages/mating-input/mating-input';
 import { PigInputPage } from '../../pages/pig-input/pig-input';
 import { PigSummaryPage } from '../../pages/pig-summary/pig-summary';
 import { PigsProvider } from '../../providers/pigs/pigs';
@@ -129,27 +128,35 @@ export class OptionListPigSectionComponent {
         break;
       }
       case VARIABLE.SECTION_TYPE[2].id: {
-        this.move_local = [VARIABLE.SECTION_TYPE[2].id,VARIABLE.SECTION_TYPE[3].id];
+        this.move_local = [VARIABLE.SECTION_TYPE[2].id, VARIABLE.SECTION_TYPE[3].id];
         break;
       }
       case VARIABLE.SECTION_TYPE[3].id: {
-        this.move_local = [VARIABLE.SECTION_TYPE[3].id,VARIABLE.SECTION_TYPE[4].id]
+        if (this.pig.gender == 1) {
+          this.move_local = [VARIABLE.SECTION_TYPE[2].id, VARIABLE.SECTION_TYPE[3].id]
+        } else if (this.pig.gender == 2) {
+          this.move_local = [VARIABLE.SECTION_TYPE[3].id, VARIABLE.SECTION_TYPE[4].id]
+        }
         break;
       }
       case VARIABLE.SECTION_TYPE[4].id: {
-        this.move_local = [VARIABLE.SECTION_TYPE[4].id,VARIABLE.SECTION_TYPE[3].id, VARIABLE.SECTION_TYPE[5].id];
+        this.move_local = [VARIABLE.SECTION_TYPE[4].id, VARIABLE.SECTION_TYPE[3].id, VARIABLE.SECTION_TYPE[5].id];
         break;
       }
       case VARIABLE.SECTION_TYPE[5].id: {
-        this.move_local = [VARIABLE.SECTION_TYPE[5].id,VARIABLE.SECTION_TYPE[3].id, VARIABLE.SECTION_TYPE[6].id];
+        if (this.statusObjectKey[this.pig.statusId].code == this.statusPig.WEANING || this.statusObjectKey[this.pig.statusId].code == this.statusPig.FARROWING) {
+          this.move_local = [VARIABLE.SECTION_TYPE[5].id, VARIABLE.SECTION_TYPE[3].id];
+        } else if (this.statusObjectKey[this.pig.statusId].code == this.statusPig.GROWING) {
+          this.move_local = [VARIABLE.SECTION_TYPE[5].id,VARIABLE.SECTION_TYPE[6].id];
+        }
         break;
       }
       case VARIABLE.SECTION_TYPE[6].id: {
-        this.move_local = [VARIABLE.SECTION_TYPE[6].id,VARIABLE.SECTION_TYPE[7].id];
+        this.move_local = [VARIABLE.SECTION_TYPE[6].id, VARIABLE.SECTION_TYPE[7].id];
         break;
       }
       case VARIABLE.SECTION_TYPE[7].id: {
-        this.move_local = [VARIABLE.SECTION_TYPE[7].id,VARIABLE.SECTION_TYPE[1].id];
+        this.move_local = [VARIABLE.SECTION_TYPE[7].id, VARIABLE.SECTION_TYPE[1].id];
         break;
       }
       default:
@@ -211,41 +218,41 @@ export class OptionListPigSectionComponent {
   }
 
   /**
-   * Thêm thông tin lên giống
+   * Thêm thông tin phối giống
    */
-  mating_input() {
-    let callback = (data: { mating: mating, matingDetail: Array<matingDetails> }) => {
+  // mating_input() {
+  //   let callback = (data: { mating: mating, matingDetail: Array<matingDetails> }) => {
 
-      data.mating.mother = this.deployData.get_pig_by_id(data.mating.motherId);
-      if (data.mating.typeId == VARIABLE.MATING_TYPE.SPERM.value) {
-        if (data.matingDetail[1].sperm) {
-          data.mating.status = VARIABLE.MATING_STATUS.COMPLETE.codeName;
-        } else {
-          data.matingDetail.splice(1, 1);
-          data.mating.status = VARIABLE.MATING_STATUS.PROCESSING.codeName;
-        }
-      } else {
-        data.mating.status = VARIABLE.MATING_STATUS.COMPLETE.codeName;
-        data.mating.fatherId = this.deployData.get_pig_by_id(data.mating.fatherId).id;
-        data.matingDetail = [];
-      }
+  //     data.mating.mother = this.deployData.get_pig_by_id(data.mating.motherId);
+  //     if (data.mating.typeId == VARIABLE.MATING_TYPE.SPERM.value) {
+  //       if (data.matingDetail[1].sperm) {
+  //         data.mating.status = VARIABLE.MATING_STATUS.COMPLETE.codeName;
+  //       } else {
+  //         data.matingDetail.splice(1, 1);
+  //         data.mating.status = VARIABLE.MATING_STATUS.PROCESSING.codeName;
+  //       }
+  //     } else {
+  //       data.mating.status = VARIABLE.MATING_STATUS.COMPLETE.codeName;
+  //       data.mating.fatherId = this.deployData.get_pig_by_id(data.mating.fatherId).id;
+  //       data.matingDetail = [];
+  //     }
 
-      this.activitiesProvider.createMating(data)
-        .then((newMating: { mating: mating, matingDetail: Array<matingDetails> }) => {
-          if (newMating) {
-            this.navCtrl.pop();
-            this.pig.statusId = newMating.mating.mother.status.id;
-            this.pigProvider.updatedPig(this.pig);
-            this.publishPigChangeEvent(this.pig);
-          }
-        })
-        .catch((err: Error) => {
-          console.log(err);
-          return err;
-        })
-    }
-    this.navCtrl.push(MatingInputPage, { pig: this.pig, callback: callback });
-  }
+  //     this.activitiesProvider.createMating(data)
+  //       .then((newMating: { mating: mating, matingDetail: Array<matingDetails> }) => {
+  //         if (newMating) {
+  //           this.navCtrl.pop();
+  //           this.pig.statusId = newMating.mating.mother.status.id;
+  //           this.pigProvider.updatedPig(this.pig);
+  //           this.publishPigChangeEvent(this.pig);
+  //         }
+  //       })
+  //       .catch((err: Error) => {
+  //         console.log(err);
+  //         return err;
+  //       })
+  //   }
+  //   this.navCtrl.push(MatingInputPage, { pig: this.pig, callback: callback });
+  // }
 
   /**
    * Thêm vào danh sách chờ bán

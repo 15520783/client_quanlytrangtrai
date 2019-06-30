@@ -1,5 +1,3 @@
-import { extend } from "highcharts";
-
 export { base }
 export { user }
 export { farm }
@@ -55,9 +53,7 @@ class base {
 	updatedAt: any = '';
 	delFlag: boolean = false;
 
-	constructor() {
-
-	}
+	constructor() {}
 
 	setID(id: string) {
 		this.id = id;

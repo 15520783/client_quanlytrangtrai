@@ -54,7 +54,7 @@ export class BirthInputPage {
       dieBeforeBorning: [this.birth.dieBeforeBorning, Validators.compose([Validators.required, ValidateNumber])],
       dieBorning: [this.birth.dieBorning, Validators.compose([Validators.required, ValidateNumber])],
       dieBlack: [this.birth.dieBlack, Validators.compose([Validators.required, ValidateNumber])],
-      defect: [this.birth.defect, Validators.compose([Validators.required, ValidateNumber])],
+      // defect: [this.birth.defect, Validators.compose([Validators.required, ValidateNumber])],
       smallRemove: [this.birth.smallRemove, Validators.compose([Validators.required, ValidateNumber])],
     });
   }

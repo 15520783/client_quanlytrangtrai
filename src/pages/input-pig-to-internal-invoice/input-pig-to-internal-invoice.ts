@@ -38,7 +38,6 @@ export class InputPigToInternalInvoicePage {
 
     this.credentialsForm = this.formBuilder.group({
       id: ['', Validators.compose([Validators.required])],
-      // id: this.pig.id,
       farmId: '',
       sectionId: '',
       houseId: [this.pig.houseId, Validators.compose([Validators.required])],
@@ -57,8 +56,7 @@ export class InputPigToInternalInvoicePage {
       filet: [this.pig.filet, Validators.compose([Validators.required])],
       longBack: [this.pig.longBack, Validators.compose([Validators.required])],
       longBody: [this.pig.longBody, Validators.compose([Validators.required])],
-
-
+      createdAt: this.pig.createdAt
 
       // roundId: [this.pig.roundId, Validators.compose([Validators.required])],
       // breedId: [this.pig.breedId, Validators.compose([Validators.required])],

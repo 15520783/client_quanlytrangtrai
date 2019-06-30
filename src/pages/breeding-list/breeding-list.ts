@@ -1,4 +1,5 @@
 import { Events, IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { breedings, mating, matingDetails } from '../../common/entity';
 
 import { ActivitiesProvider } from '../../providers/activities/activities';
 import { BreedingInputPage } from '../breeding-input/breeding-input';
@@ -6,10 +7,11 @@ import { Component } from '@angular/core';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { FilterProvider } from '../../providers/filter/filter';
 import { FormControl } from '@angular/forms';
+import { MatingInputPage } from '../mating-input/mating-input';
 import { PigsProvider } from '../../providers/pigs/pigs';
 import { UserProvider } from '../../providers/user/user';
 import { Utils } from '../../common/utils';
-import { breedings } from '../../common/entity';
+import { VARIABLE } from '../../common/const';
 
 @IonicPage()
 @Component({
@@ -17,7 +19,7 @@ import { breedings } from '../../common/entity';
   templateUrl: 'breeding-list.html',
 })
 export class BreedingListPage {
-  public viewMode:boolean = false;
+  public viewMode: boolean = false;
   public breedings: Array<breedings> = [];
   public breedingTypes: any = {};
   public sectionType: any;
@@ -52,7 +54,7 @@ export class BreedingListPage {
   public visible_items: Array<any> = [];
 
   constructor(
-    public platform:Platform,
+    public platform: Platform,
     public navCtrl: NavController,
     public navParams: NavParams,
     public filterProvider: FilterProvider,
@@ -67,15 +69,15 @@ export class BreedingListPage {
     if (this.navParams.data.sectionType) {
       this.sectionType = this.navParams.data.sectionType;
     }
-    if(this.navParams.data.viewMode){
+    if (this.navParams.data.viewMode) {
       this.viewMode = true;
     }
 
     if (this.navParams.data.breedings) {
       this.breedings = this.navParams.data.breedings;
-      if(this.navParams.data.farmId){
-        this.breedings = this.breedings.filter((breeding:breedings)=>{
-          return breeding.pig.house.section.farm.id == this.navParams.data.farmId ? true:false;
+      if (this.navParams.data.farmId) {
+        this.breedings = this.breedings.filter((breeding: breedings) => {
+          return breeding.pig.house.section.farm.id == this.navParams.data.farmId ? true : false;
         })
       }
       this.setFilteredItems();
@@ -131,9 +133,9 @@ export class BreedingListPage {
       .then((breedings: Array<breedings>) => {
         if (breedings && breedings.length) {
           this.breedings = this.deployData.get_breedings_of_section(this.sectionType.id, breedings);
-          if(this.navParams.data.farmId){
-            this.breedings = this.breedings.filter((breeding:breedings)=>{
-              return breeding.pig.house.section.farm.id == this.navParams.data.farmId ? true:false;
+          if (this.navParams.data.farmId) {
+            this.breedings = this.breedings.filter((breeding: breedings) => {
+              return breeding.pig.house.section.farm.id == this.navParams.data.farmId ? true : false;
             })
           }
         }
@@ -204,4 +206,61 @@ export class BreedingListPage {
   }
 
 
+  /**
+   * Thêm thông tin phối giống
+   */
+  mating_input(item: breedings) {
+    let callback = (data: { mating: mating, matingDetail: Array<matingDetails> }) => {
+
+      data.mating.mother = this.deployData.get_pig_by_id(data.mating.motherId);
+      if (data.mating.typeId == VARIABLE.MATING_TYPE.SPERM.value) {
+        if (data.matingDetail[1].sperm) {
+          data.mating.status = VARIABLE.MATING_STATUS.COMPLETE.codeName;
+        } else {
+          data.matingDetail.splice(1, 1);
+          data.mating.status = VARIABLE.MATING_STATUS.PROCESSING.codeName;
+        }
+      } else {
+        data.mating.status = VARIABLE.MATING_STATUS.COMPLETE.codeName;
+        data.mating.fatherId = this.deployData.get_pig_by_id(data.mating.fatherId).id;
+        data.matingDetail = [];
+      }
+
+      data['breeding'] = this.util.deepClone(item);
+      data['breeding'].matingReal = data.mating.date;
+
+      this.activitiesProvider.createMating({
+        mating: data.mating,
+        matingDetail: data.matingDetail,
+        breeding: data['breeding']
+      })
+        .then((newMating: { mating: mating, matingDetail: Array<matingDetails>, breeding: breedings }) => {
+          if (newMating) {
+            let idx = this.breedings.findIndex(_breeding => _breeding.id == newMating.breeding.id);
+            if (idx > -1) {
+              this.breedings[idx] = newMating.breeding;
+              this.setFilteredItems();
+            }
+            this.navCtrl.pop();
+            pig.statusId = newMating.mating.mother.status.id;
+            this.pigProvider.updatedPig(pig);
+          }
+        })
+        .catch((err: Error) => {
+          console.log(err);
+          return err;
+        })
+    }
+
+    let pig = this.deployData.get_pig_by_id(item.pig.id);
+    if (pig) {
+      this.navCtrl.push(MatingInputPage, {
+        pig: pig,
+        callback: callback,
+        farmId: this.navParams.data.farmId
+      });
+    } else {
+      this.util.showToast('Không tìm thấy heo nái trong ghi nhận lên giống');
+    }
+  }
 }

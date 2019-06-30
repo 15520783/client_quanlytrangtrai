@@ -1,4 +1,4 @@
-import { Component, NgZone, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Content, IonicPage, ModalController, NavController, NavParams, Platform, Slides } from 'ionic-angular';
 import { employee, schedule, user } from '../../common/entity';
 

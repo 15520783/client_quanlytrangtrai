@@ -1,4 +1,4 @@
-import { InputObject, customers, healthStatus } from "../common/entity";
+import { InputObject, healthStatus } from "../common/entity";
 
 import { DeployDataProvider } from "../providers/deploy-data/deploy-data";
 import { SETTING_STORAGE_KEY } from "../common/const";

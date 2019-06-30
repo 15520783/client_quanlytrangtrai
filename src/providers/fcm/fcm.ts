@@ -1,18 +1,13 @@
-import { API, CONFIG, KEY } from '../../common/const';
+import { API, CONFIG } from '../../common/const';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ObjDataNotification, employee } from '../../common/entity';
 import { Platform, ToastController } from 'ionic-angular';
-import { map, tap } from 'rxjs/operators';
 
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Firebase } from '@ionic-native/firebase';
 import { Injectable } from '@angular/core';
+import { ObjDataNotification } from '../../common/entity';
 import { Utils } from '../../common/utils';
-
-interface notification {
-  id: String;
-  notification: String;
-}
+import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class FcmProvider {

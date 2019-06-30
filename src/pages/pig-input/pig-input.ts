@@ -73,7 +73,8 @@ export class PigInputPage {
       priceCodeId: [this.pig.priceCodeId],
       statusId: [this.pig.statusId, Validators.compose([Validators.required])],
       birthId: this.pig.birthId,
-      pigType: this.pig.pigType
+      pigType: this.pig.pigType,
+      createdAt: this.pig.createdAt
     });
 
 

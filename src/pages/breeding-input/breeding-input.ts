@@ -1,4 +1,3 @@
-import { CONFIG, MESSAGE } from '../../common/const';
 import { Events, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 

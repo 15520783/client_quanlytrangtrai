@@ -16,7 +16,6 @@ import { HousesProvider } from '../../providers/houses/houses';
 import { InvoicesPage } from '../invoices/invoices';
 import { IssuePigListPage } from '../issue-pig-list/issue-pig-list';
 import { PartnerProvider } from '../../providers/partner/partner';
-import { PartnersPage } from '../partners/partners';
 import { PigGroupsProvider } from '../../providers/pig-groups/pig-groups';
 import { PigSummaryPage } from '../pig-summary/pig-summary';
 import { PigsPage } from '../pigs/pigs';

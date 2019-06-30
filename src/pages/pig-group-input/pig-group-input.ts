@@ -1,15 +1,9 @@
-import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { group } from '../../common/entity';
-import { ValidateNumber } from '../../validators/number.validator';
 
-/**
- * Generated class for the PigGroupInputPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Component } from '@angular/core';
+import { ValidateNumber } from '../../validators/number.validator';
+import { group } from '../../common/entity';
 
 @IonicPage()
 @Component({

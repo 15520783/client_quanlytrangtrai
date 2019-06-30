@@ -96,7 +96,7 @@
           </ion-row>
         </ion-item>
         <input-select-target [(validControl)]="credentialsFormExtra.controls.sperm1"
-          [disabled] = "viewMode"
+          [disabled] = "viewMode || updateMode"
           [errorMessage_Required]="'Liều tinh là hạng mục bắt buộc.'" [active]="submitAttempt"
           [placeholder]="'Chọn liều tinh'" [label]="'Liều tinh'" [targertCmp]="'sperms'" [data]="sperms"
           (valueChange)="showSperm1($event)">

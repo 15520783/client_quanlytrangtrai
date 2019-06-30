@@ -1,4 +1,4 @@
-import { ActionSheetController, Content, IonicPage, Menu, ModalController, NavController, NavParams, Platform, Slides } from 'ionic-angular';
+import { ActionSheetController, IonicPage, Menu, ModalController, NavController, NavParams, Platform, Slides } from 'ionic-angular';
 import { Component, Renderer, ViewChild } from '@angular/core';
 import { house, pig } from '../../common/entity';
 

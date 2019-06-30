@@ -1,6 +1,6 @@
 import { CONFIG, MESSAGE, VARIABLE } from '../../common/const';
 import { Component, ViewChild } from '@angular/core';
-import { Events, IonicPage, ModalController, Nav, NavController, NavParams, Platform, PopoverController, ViewController } from 'ionic-angular';
+import { Events, IonicPage, ModalController, NavController, NavParams, Platform, PopoverController } from 'ionic-angular';
 import { breedings, mating, schedule } from '../../common/entity';
 
 import { ActivitiesProvider } from '../../providers/activities/activities';

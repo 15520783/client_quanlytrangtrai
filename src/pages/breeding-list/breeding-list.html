@@ -36,11 +36,14 @@
                 (tap)="edit(item)">Sửa</button>
               <button *ngIf="userProvider.rolePermission.ROLE_xoa_thong_tin_len_giong!=null" showWhen="core" small ion-button item-end mode='ios' color="danger"
                 (tap)="remove(item)">Xóa</button>
+              <button  showWhen="core" small ion-button item-end mode='ios' color="secondary" *ngIf="!item.matingReal"
+                (tap)="mating_input(item)">Phối giống</button>
             </ion-row>
           </ion-item>
           <ion-item-options side="right" *ngIf="!platform.is('core') && !viewMode">
             <button *ngIf="userProvider.rolePermission.ROLE_cap_nhat_thong_tin_len_giong!=null" text-wrap ion-button color="main" (tap)="edit(item)" style="font-size: 10px">Sửa</button>
             <button *ngIf="userProvider.rolePermission.ROLE_xoa_thong_tin_len_giong!=null" text-wrap ion-button color="danger" (tap)="remove(item)" style="font-size: 10px">Xóa</button>
+            <button *ngIf="!item.matingReal" text-wrap ion-button color="secondary" (tap)="mating_input(item)" style="font-size: 10px">Phối giống</button>
           </ion-item-options>
         </ion-item-sliding>
       </span>

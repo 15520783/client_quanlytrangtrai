@@ -5,8 +5,8 @@
     </ion-toolbar>
   </ion-navbar>
   <ion-toolbar showWhen="core" class="pl-10" text-left>
-    <button *ngIf="userProvider.rolePermission.ROLE_xem_lich_su_xuat_cam!=null" ion-button mode='ios'
-      color="secondary">Lịch sử xuất, sử dụng</button>
+    <!-- <button *ngIf="userProvider.rolePermission.ROLE_xem_lich_su_xuat_cam!=null" ion-button mode='ios'
+      color="secondary">Lịch sử xuất, sử dụng</button> -->
     <button *ngIf="userProvider.rolePermission.ROLE_cap_nhat_kho!=null" ion-button mode='ios' color="secondary"
       (tap)="edit()">Chỉnh sửa</button>
     <button *ngIf="userProvider.rolePermission.ROLE_xoa_kho!=null" ion-button mode='ios' color="danger"

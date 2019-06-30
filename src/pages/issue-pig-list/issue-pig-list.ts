@@ -1,7 +1,7 @@
 import { CONFIG, MESSAGE, VARIABLE } from '../../common/const';
 import { Component, Input } from '@angular/core';
 import { IonicPage, ModalController, NavController, NavParams, Platform } from 'ionic-angular';
-import { issues, issuesPigs, usedMedicine } from '../../common/entity';
+import { issuesPigs, usedMedicine } from '../../common/entity';
 
 import { ActivitiesProvider } from '../../providers/activities/activities';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';

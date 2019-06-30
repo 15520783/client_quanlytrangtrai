@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Events, IonicPage, NavController, NavParams, Slides, ViewController } from 'ionic-angular';
-import { foodWareHouse, invoicePigDetail, invoicesProduct } from '../../common/entity';
+import { foodWareHouse, invoicesProduct } from '../../common/entity';
 
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { FoodInvoiceRole } from '../../role-input/foodInvoice';

@@ -1,6 +1,6 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { Events, IonicPage, Nav, NavController, NavParams, Platform } from 'ionic-angular';
-import { breeds, footType, gentialType, healthStatus, house, pig, pregnancyStatus, priceCodes } from '../../common/entity';
+import { Events, IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { breeds, footType, gentialType, healthStatus, house, pig, pregnancyStatus } from '../../common/entity';
 
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { PigInputPage } from '../pig-input/pig-input';

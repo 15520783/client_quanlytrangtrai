@@ -1,6 +1,5 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { employee, farm } from '../../common/entity';
 
 import { Component } from '@angular/core';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
@@ -10,6 +9,7 @@ import { UserProvider } from '../../providers/user/user';
 import { VARIABLE } from '../../common/const';
 import { ValidateEmail } from '../../validators/email.validator';
 import { ValidateNumber } from '../../validators/number.validator';
+import { employee } from '../../common/entity';
 
 @IonicPage()
 @Component({

@@ -1,4 +1,4 @@
-import { API, CONFIG, KEY } from '../../common/const';
+import { API, CONFIG } from '../../common/const';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { foodWareHouse, invoicePigDetail, invoicesPig, invoicesProduct, medicineWarehouse, pig } from '../../common/entity';
 

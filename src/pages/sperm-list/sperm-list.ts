@@ -42,7 +42,6 @@ export class SpermListPage {
     { name: "sectionName", label: 'Khu' },
     { name: "houseName", label: 'Nhà' },
     { name: "dateDisplay", label: 'Ngày lấy tinh' },
-    { name: "spermCount", label: 'Số lần lấy' },
     { name: "volume", label: 'Lượng tinh', unit: '(ml)' },
     { name: "doses", label: 'Số liều', unit: '' },
     { name: "used", label: 'Liều tinh đã dùng', unit: ' (liều)' },
@@ -77,6 +76,7 @@ export class SpermListPage {
     public platform: Platform,
     public userProvider:UserProvider
   ) {
+    console.log(this.navParams.data);
     if(this.navParams.data.viewMode){
       this.viewMode = true;
     }
@@ -154,7 +154,8 @@ export class SpermListPage {
     return this.activitiesProvider.getAllSperms()
       .then((sperms: Array<sperms>) => {
         if (sperms && sperms.length) {
-          this.sperms = this.deployData.get_sperms_of_section(this.sectionType.id, sperms);
+          // this.sperms = this.deployData.get_sperms_of_section(this.sectionType.id, sperms);
+          this.sperms = sperms;
           if(this.navParams.data.farmId){
             this.sperms = this.sperms.filter((sperm:sperms)=>{
               return sperm.pig.house.section.farm.id == this.navParams.data.farmId ? true : false;

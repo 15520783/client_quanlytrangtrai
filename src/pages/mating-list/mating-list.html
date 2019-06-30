@@ -45,7 +45,7 @@
             <ion-row *ngIf="platform.is('core') && !viewMode">
               <button 
                 small ion-button item-end mode='ios' color="secondary"
-                (tap)="viewDetail(item)">Xem chi tiết lên giống</button>
+                (tap)="viewDetail(item)">Xem chi tiết phối giống</button>
               <button 
                 small ion-button item-end mode='ios' color="secondary"
                 *ngIf="userProvider.rolePermission.ROLE_cap_nhat_thong_tin_phoi_giong!=null && item.status == statusMating.PROCESSING.codeName" 

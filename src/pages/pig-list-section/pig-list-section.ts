@@ -1,4 +1,4 @@
-import { CONFIG, KEY, MESSAGE, VARIABLE } from '../../common/const';
+import { CONFIG, MESSAGE, VARIABLE } from '../../common/const';
 import { Component, Input, ViewChild } from '@angular/core';
 import { Events, IonicPage, Menu, MenuController, NavController, NavParams, Platform } from 'ionic-angular';
 

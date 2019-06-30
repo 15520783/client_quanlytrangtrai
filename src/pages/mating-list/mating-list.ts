@@ -45,7 +45,7 @@ export class MatingListPage {
   ];
 
   public placeholderSearch: string = 'Tìm kiếm ghi nhận phối giống'
-  public filter_default: Array<string> = ["pigCodeMother", "pigCodeFather", "breedMotherName", "breedFatherName", "farmName", "statusName","dateDisplay","birthdayDisplay", "description"];
+  public filter_default: Array<string> = ["pigCodeMother", "pigCodeFather", "breedMotherName", "breedFatherName", "farmName", "statusName", "dateDisplay", "birthdayDisplay", "description"];
 
   public page_Idx: number = 1;
   public page_Total: number = 0;
@@ -185,17 +185,17 @@ export class MatingListPage {
       mating['houseName'] = mating.mother['house'].name;
       mating['dateDisplay'] = this.util.convertDate(mating.date);
       mating['birthEstimateDisplay'] = mating.birthEstimate ? this.util.convertDate(mating.birthEstimate) : 'Chưa xác định';
-      
-      switch(mating.type){
-        case VARIABLE.MATING_TYPE.IMMEDIATE.codeName:{
-          mating['typeName']= VARIABLE.MATING_TYPE.IMMEDIATE.name;
+
+      switch (mating.type) {
+        case VARIABLE.MATING_TYPE.IMMEDIATE.codeName: {
+          mating['typeName'] = VARIABLE.MATING_TYPE.IMMEDIATE.name;
           break;
         }
-        case VARIABLE.MATING_TYPE.SPERM.codeName:{
-          mating['typeName']= VARIABLE.MATING_TYPE.SPERM.name;
+        case VARIABLE.MATING_TYPE.SPERM.codeName: {
+          mating['typeName'] = VARIABLE.MATING_TYPE.SPERM.name;
           break;
         }
-        default:{
+        default: {
           break;
         }
       }
@@ -274,7 +274,13 @@ export class MatingListPage {
           return err;
         })
     }
-    this.navCtrl.push(MatingInputPage, { pig: item.mother, mating: item, matingDetails: this.matingDetails[item.id], callback: callback });
+    this.navCtrl.push(MatingInputPage, {
+      pig: item.mother,
+      mating: this.util.deepClone(item),
+      matingDetails: this.matingDetails[item.id],
+      farmId: this.navParams.data.farmId,
+      callback: callback
+    });
   }
 
   viewDetail(item) {

@@ -1,9 +1,10 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { group } from '../../common/entity';
 import { API, CONFIG, KEY } from '../../common/const';
-import { Utils } from '../../common/utils';
+
 import { Events } from 'ionic-angular';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Utils } from '../../common/utils';
+import { group } from '../../common/entity';
 
 @Injectable()
 export class PigGroupsProvider {
