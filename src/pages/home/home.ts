@@ -42,7 +42,7 @@ export class HomePage {
   rootPage: any;
   pages: Array<any> = [];
   activeLogOut: boolean = false;
-  interval:any;
+  interval: any;
 
   public user: any = {};
 
@@ -92,12 +92,12 @@ export class HomePage {
     })
 
     /**Auto sync */
-    this.interval = CONFIG.SYNC_DELAY_DURATION ?  setInterval(() => {
+    this.interval = CONFIG.SYNC_DELAY_DURATION ? setInterval(() => {
       this.sync();
     }, CONFIG.SYNC_DELAY_DURATION) : null;
   }
 
-  init(){
+  init() {
     this.pages = [
       {
         title: 'Trang trại', component: FarmsPage, icon: 'app-farm', active: false,
@@ -146,7 +146,7 @@ export class HomePage {
     let showPage = this.pages.filter(page => {
       return page.show ? true : false;
     })
-    
+
     // this.rootPage = this.pages[0].component;
     // this.pages[0].active = true;
     this.rootPage = showPage[0].component;
@@ -185,7 +185,7 @@ export class HomePage {
 
 
   sync() {
-      this.userProvider.updated_flag = 
+    this.userProvider.updated_flag =
       this.farmProvider.updated_flag =
       this.pigProvider.updated_flag =
       this.employeeProvider.updated_flag =
@@ -379,6 +379,15 @@ export class HomePage {
       .then((user: user) => {
         if (user) {
           this.navCtrl.push(UserInfoPage, { user: user });
+        }
+      })
+  }
+
+  viewQuickSchedule() {
+    this.util.getKey(KEY.USER)
+      .then((user: user) => {
+        if (user) {
+          this.navCtrl.push(UserInfoPage, { user: user, openScheduleSpecial: true });
         }
       })
   }

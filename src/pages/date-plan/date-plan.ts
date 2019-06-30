@@ -225,18 +225,6 @@ export class DatePlanPage {
         this.activitiesProvider.createSchedule(schedule)
           .then((newSchedule: schedule) => {
             if (newSchedule) {
-              // this.schedules.push(newSchedule);
-              // this.events.push({
-              //   id: newSchedule.id,
-              //   title: newSchedule.name,
-              //   status: newSchedule.status,
-              //   date: this.GetFormattedDate(newSchedule.date) + " 07:00",
-              //   employee: newSchedule.employee,
-              //   backgroundColor: (new Date(newSchedule.date) >= new Date()) ?
-              //     (newSchedule.employee ? VARIABLE.SCHEDULE_STATUS.ASSIGNED.color : VARIABLE.SCHEDULE_STATUS.NOT_ASSIGNED.color) : VARIABLE.SCHEDULE_STATUS.OVERDUE.color,
-              //   borderColor: (new Date(newSchedule.date) >= new Date()) ?
-              //     (newSchedule.employee ? VARIABLE.SCHEDULE_STATUS.ASSIGNED.color : VARIABLE.SCHEDULE_STATUS.NOT_ASSIGNED.color) : VARIABLE.SCHEDULE_STATUS.OVERDUE.color
-              // })
               this.eventEmitter.publish('home:reloadSchedule');
             }
           })

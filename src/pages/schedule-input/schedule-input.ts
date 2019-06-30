@@ -46,6 +46,11 @@ export class ScheduleInputPage {
       this.dateInput = this.navParams.data.dateInput;
     }
 
+    if(this.navParams.data.employee){
+      this.schedule.employee = this.navParams.data.employee;
+      this.schedule.farmId = this.schedule.employee.farm.id;
+    }
+
     this.peopleForSchedule = [];
 
     this.credentialsForm = this.formBuilder.group({

@@ -113,7 +113,7 @@ export class SchelduleDetailComponent {
         this.navParams.get('callbackUpdate')(schedule);
       }
     }
-    this.navCtrl.push(ScheduleInputPage, { schedule: this.schedule, callback: callback });
+    this.navCtrl.push(ScheduleInputPage, { schedule: this.util.deepClone(this.schedule), callback: callback });
   }
 
   /**

@@ -129,6 +129,10 @@ export class UserInfoPage {
             },
             events: this.events
           }
+
+          if(this.navParams.data.openScheduleSpecial){
+            this.scrollToView(1);
+          }
         }
       })
       .catch(err => {

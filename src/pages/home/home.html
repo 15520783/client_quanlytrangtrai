@@ -19,7 +19,7 @@
         </ion-item>
       </ion-list>
       <ion-buttons right>
-        <button ion-button font20  style="position: relative!important;padding: 10px!important" >
+        <button (tap)="viewQuickSchedule()" ion-button font20  style="position: relative!important;padding: 10px!important" >
           <ion-icon name="md-notifications" font28>
             <ion-badge *ngIf="userProvider.schedules.length" color="danger" class="ion-badge-notification">{{userProvider.schedules.length}}</ion-badge>
           </ion-icon>

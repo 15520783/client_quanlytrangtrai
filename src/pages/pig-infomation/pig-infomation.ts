@@ -109,7 +109,8 @@ export class PigInfomationPage {
    * Xóa heo
    */
   remove(){
-    this.pigProvider.removePig(this.pig)
+    let pigParam = this.deployData.get_pig_object_to_send_request(this.util.deepClone(this.pig));
+    this.pigProvider.removePig(pigParam)
     .then((isOk)=>{
       if(isOk){
         this.pigProvider.removedPig(this.pig);

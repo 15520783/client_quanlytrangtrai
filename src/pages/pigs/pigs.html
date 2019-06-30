@@ -57,7 +57,7 @@
           <p><b>Giống</b>: {{breeds[item.breedId].name}}</p>
         </ion-col>
         <ion-col col-2  [attr.col-6]="!platform.is('core')?'':null" *ngIf="status[item.statusId]">
-          <p ><b>Trạng thái:</b> {{status[item.statusId].name}}</p>
+          <p ><b>Trạng thái:</b> {{status[item.statusId].description}}</p>
         </ion-col>
         <ion-col  [attr.col-6]="!platform.is('core')?'':null">
           <p><b>Cân nặng:</b>

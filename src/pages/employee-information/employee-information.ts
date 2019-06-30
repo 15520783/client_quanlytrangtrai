@@ -7,6 +7,7 @@ import { CalendarComponent } from 'ng-fullcalendar';
 import { EmployeeInputPage } from '../employee-input/employee-input';
 import { EmployeesProvider } from '../../providers/employees/employees';
 import { OptionsInput } from '@fullcalendar/core';
+import { ScheduleInputPage } from '../schedule-input/schedule-input';
 import { SchelduleDetailComponent } from '../../components/scheldule-detail/scheldule-detail';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { UserAccountListPage } from '../user-account-list/user-account-list';
@@ -190,6 +191,8 @@ export class EmployeeInformationPage {
       }
     }
 
+    
+
 
     let modal = this.modalCtrl.create(SchelduleDetailComponent, {
       schedule: model.event.extendedProps.schedule,
@@ -201,7 +204,25 @@ export class EmployeeInformationPage {
   }
 
   handleDayClick(event) {
-    console.log(event);
+    let callback = (schedule: schedule) => {
+      if (schedule) {
+        this.activitiesProvider.createSchedule(schedule)
+          .then((newSchedule: schedule) => {
+            if (newSchedule) {
+              modal.dismiss();
+              let active_idx = this.navCtrl.getActive().index;
+              this.navCtrl.push(this.navCtrl.getActive().component, this.navParams.data);
+              this.navCtrl.remove(active_idx);
+            }
+          })
+          .catch((err) => {
+            return err;
+          })
+      }
+    }
+
+    let modal = this.modalCtrl.create(ScheduleInputPage, { dateInput: event.dateStr,employee:this.util.deepClone(this.employee), callback: callback });
+    modal.present();
   }
 
   scrollToView(idx: number) {
