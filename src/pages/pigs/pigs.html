@@ -152,13 +152,22 @@
           <ion-option *ngFor="let item of farmFilters" [value]="item.value">{{item.name}}</ion-option>
         </ion-select>
       </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Khu</ion-label>
+        <ion-select interface="popover" title="Khu" mode="ios" okText="Chọn" cancelText="Hủy"
+          [selectOptions]="customAlertOptions" (ionChange)="filterSection($event)" placeholder="Tất cả">
+          <ion-option [value]="''">Tất cả</ion-option>
+          <ion-option *ngFor="let item of filterSections" [value]="item.value">{{item.name}}</ion-option>
+        </ion-select>
+      </ion-item>
   
       <ion-item>
         <ion-label stacked>Chuồng</ion-label>
-        <ion-select [(ngModel)]="houseFilter" multiple="true" interface="alert" title="Giới tính" mode="ios"
-          okText="Duyệt" cancelText="Hủy" [selectOptions]="customAlertOptions" placeholder="Tất cả"
-          (ionChange)="setFilteredItems()">
-          <ion-option *ngFor="let house of houses" [value]="house.id">{{house.name}}</ion-option>
+        <ion-select interface="popover" title="Khu" mode="ios" okText="Chọn" cancelText="Hủy"
+          [selectOptions]="customAlertOptions" (ionChange)="filterHouse($event)" placeholder="Tất cả">
+          <ion-option [value]="''">Tất cả</ion-option>
+          <ion-option *ngFor="let item of filterHouses" [value]="item.value">{{item.name}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item>

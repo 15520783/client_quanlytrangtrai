@@ -60,15 +60,15 @@ export class RolePermissionRole {
 
 
     insert() {
-        return this.settingProvider.createMatingRole(this.object)
+        return this.settingProvider.createNewRole(this.object)
     }
 
     delete(object) {
-        return this.settingProvider.deleteMatingRole(object);
+        return this.settingProvider.deleteRole(object);
     }
 
     update() {
-        return this.settingProvider.updateMatingRole(this.object);
+        return this.settingProvider.updateRole(this.object);
     }
 
     clear() {

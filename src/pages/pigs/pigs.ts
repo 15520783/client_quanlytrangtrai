@@ -41,6 +41,8 @@ export class PigsPage {
 
   public genderFilter = [];
   public houseFilter = [];
+  public farmFilter = [];
+  public sectionFilter = [];
 
   protected searchControl: FormControl = new FormControl();
   protected searchTerm: string = '';
@@ -143,10 +145,13 @@ export class PigsPage {
     let pigs = this.util.deepClone(this.pigProvider.pigs);
     pigs.forEach(pig => {
       pig.farmId = this.house[pig.houseId].section.farm.id;
+      pig.sectionId = this.house[pig.houseId].section.id;
     });
     this.filterProvider.input = pigs;
     this.filterProvider.searchWithInclude.gender = this.genderFilter;
-    this.filterProvider.searchWithInclude.house_id = this.houseFilter;
+    this.filterProvider.searchWithInclude.farmId = this.farmFilter;
+    this.filterProvider.searchWithInclude.sectionId = this.sectionFilter;
+    this.filterProvider.searchWithInclude.houseId = this.houseFilter;
     this.filterProvider.searchText = searchItem;
     this.filterProvider.searchWithText = this.filter_default;
     this.filterProvider.searchWithRange = {
@@ -268,12 +273,40 @@ export class PigsPage {
     this.events.publish('sync', true);
   }
 
+  public filterSections: Array<any> = [];
+  public filterHouses:Array<any> = [];
 
   filterFarm(farmId) {
-    if (farmId)
-      this.filterProvider.searchWithInclude.farmId = [farmId];
-    else
-      this.filterProvider.searchWithInclude.farmId = [];
+    this.filterSections = this.deployData.get_sections_of_farm(farmId);
+    this.filterSections.forEach((e) => {
+      e['value'] = e.id;
+    })
+    this.farmFilter = farmId ? [farmId] : [];
+    this.sectionFilter = [];
+    this.houseFilter = [];
     this.setFilteredItems();
   }
+
+  filterSection(sectionId) {
+    this.filterHouses = this.deployData.get_houses_of_section(sectionId);
+    this.filterHouses.forEach((e) => {
+      e['value'] = e.id;
+    })
+    this.sectionFilter = sectionId ? [sectionId] : [];
+    this.houseFilter = [];
+    this.setFilteredItems();
+  }
+
+  filterHouse(houseId){
+    this.houseFilter = houseId ? [houseId] : [];
+    this.setFilteredItems();
+  }
+
+  // filterFarm(farmId) {
+  //   if (farmId)
+  //     this.filterProvider.searchWithInclude.farmId = [farmId];
+  //   else
+  //     this.filterProvider.searchWithInclude.farmId = [];
+  //   this.setFilteredItems();
+  // }
 }
