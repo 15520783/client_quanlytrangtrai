@@ -26,7 +26,9 @@ export class SectionInputPage {
     private formBuilder: FormBuilder,
     public deployData: DeployDataProvider
   ) {
-    this.typeSections = VARIABLE.SECTION_TYPE;
+    this.typeSections = VARIABLE.SECTION_TYPE.filter((e)=>{
+      return e.id != '0' ? true:false;
+    });
     if (this.navParams.data.section) {
       this.section = this.navParams.data.section;
       this.section.founding = new Date(this.section.founding).toISOString();

@@ -90,7 +90,7 @@ const VARIABLE = {
         MEDICINE: 'medicine'
     },
     SECTION_TYPE: [
-        // { id: '0', value: '0', name: 'Chưa xác định' },
+        { id: '0', value: '0', name: 'Chưa xác định' },
         { id: '1', value: '1', name: 'Khu cách ly' },
         { id: '2', value: '2', name: 'Khu nọc' },
         { id: '3', value: '3', name: 'Khu phối' },
