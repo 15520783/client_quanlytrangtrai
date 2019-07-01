@@ -160,7 +160,16 @@ export class BirthListPage {
    * @param item 
    */
   viewDetail(item) {
-    this.navCtrl.push(BirthChildDetailPage, { birth: item });
+    let callback = (data:any) =>{
+      if(data){
+        this.getBirthList()
+        .then((data) => {
+          this.setFilteredItems();
+        });
+      }
+    }
+
+    this.navCtrl.push(BirthChildDetailPage, { birth: item ,callback:callback});
   }
 
   /**

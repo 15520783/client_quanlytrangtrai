@@ -25,7 +25,7 @@ export class BirthChildDetailPage {
   public breeds: any;
   public houses: any;
   public status: any;
-  public gender:any;
+  public gender: any;
 
 
   public mainAttribute = "pigCode";
@@ -54,6 +54,8 @@ export class BirthChildDetailPage {
 
   public visible_items: Array<any> = [];
 
+  public canAddChild: boolean = false;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -63,13 +65,17 @@ export class BirthChildDetailPage {
     public pigProvider: PigsProvider,
     public platform: Platform,
     public userProvider: UserProvider,
-    public util:Utils
+    public util: Utils
   ) {
     this.init();
 
     if (this.navParams.data.birth) {
       this.birth = this.navParams.data.birth;
       this.pigs = this.deployData.get_child_pig_of_birth(this.birth);
+      console.log(this.birth.mating.mother.house.section.typeId);
+      if (this.birth.mating.mother.house.section.typeId == VARIABLE.SECTION_TYPE[5].id) {
+        this.canAddChild = true;
+      }
       this.setFilteredItems();
     }
   }
@@ -86,7 +92,7 @@ export class BirthChildDetailPage {
 
   public filterItems(searchItem) {
     this.pigs.forEach((pig) => {
-      pig['breedName'] = this.breeds[pig.breedId]?this.breeds[pig.breedId].name+' '+this.breeds[pig.breedId].symbol:'Không xác định';
+      pig['breedName'] = this.breeds[pig.breedId] ? this.breeds[pig.breedId].name + ' ' + this.breeds[pig.breedId].symbol : 'Không xác định';
       pig['farmName'] = this.houses[pig.houseId].section.farm.name;
       pig['sectionName'] = this.houses[pig.houseId].section.name;
       pig['houseName'] = this.houses[pig.houseId].name;
@@ -140,6 +146,7 @@ export class BirthChildDetailPage {
               this.pigProvider.updatedPig(response.pigs)
               this.pigs.push(response.pigs);
               this.setFilteredItems();
+              this.navParams.data.callback(true);
             }
             this.navCtrl.pop();
           })

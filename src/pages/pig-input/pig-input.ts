@@ -108,8 +108,8 @@ export class PigInputPage {
       let father = this.deployData.get_pig_by_pig_code(this.pig.originFather);
       this.pig['farmId'] = house.section.farm.id;
       this.pig['sectionId'] = house.section.id;
-      this.pig['originFatherId'] = mother ? father.id : '';
-      this.pig['originMotherId'] = father ? mother.id : '';
+      this.pig['originFatherId'] = mother ? mother.id : '';
+      this.pig['originMotherId'] = father ? father.id : '';
       this.pig['birthday'] = new Date(this.pig.birthday).toISOString();
       Object.keys(this.credentialsForm.value).forEach((attr) => {
         this.credentialsForm.controls[attr].setValue(this.pig[attr]);

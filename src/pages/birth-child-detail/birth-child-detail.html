@@ -9,8 +9,9 @@
 </ion-header>
 <ion-content #contentExternalInvoice class="setting-util-component">
   <div id="content">
-    <ion-item-divider *ngIf="userProvider.rolePermission.ROLE_nhap_heo_con!=null" custom-diviver sticky="true" showWhen="core">
-      <ion-row>
+    <ion-item-divider *ngIf="userProvider.rolePermission.ROLE_nhap_heo_con!=null" custom-diviver sticky="true"
+      showWhen="core">
+      <ion-row *ngIf="canAddChild">
         <button no-margin ion-button item-end mode='ios' color="secondary" (tap)="input_child()">Nhập heo con</button>
       </ion-row>
     </ion-item-divider>
@@ -29,9 +30,12 @@
           </ion-row>
           <ion-row>
             <button showWhen="core" small ion-button item-end mode='ios' color="main" (tap)="edit(item)">Sửa</button>
-            <button showWhen="core" small ion-button item-end mode='ios' color="danger" (tap)="remove(item)">Xóa</button>
+            <!-- <button showWhen="core" small ion-button item-end mode='ios' color="danger" (tap)="remove(item)">Xóa</button> -->
           </ion-row>
         </ion-item>
+        <ion-item-options side="right" *ngIf="!platform.is('core') ">
+          <button text-wrap ion-button color="main" (tap)="edit(item)" style="font-size: 10px">Sửa</button>
+        </ion-item-options>
       </ion-item-sliding>
     </ion-list>
     <ion-infinite-scroll (ionInfinite)="loadData($event)" *ngIf="page_Idx!==page_Total">
@@ -44,10 +48,8 @@
       <ion-icon name="ios-arrow-up"></ion-icon>
     </button>
     <ion-fab-list side="top" style="right:0px">
-      <button *ngIf="userProvider.rolePermission.ROLE_nhap_heo_con!=null" 
-        color="main" ion-fab
-        (tap)="input_child()" data-balloon-visible data-balloon-length="medium" data-balloon="Nhập heo con"
-        data-balloon-pos="left" ion-fab>
+      <button *ngIf="userProvider.rolePermission.ROLE_nhap_heo_con!=null" color="main" ion-fab (tap)="input_child()"
+        data-balloon-visible data-balloon-length="medium" data-balloon="Nhập heo con" data-balloon-pos="left" ion-fab>
         <ion-icon name="md-add"></ion-icon>
       </button>
     </ion-fab-list>

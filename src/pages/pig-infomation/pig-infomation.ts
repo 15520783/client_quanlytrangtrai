@@ -114,7 +114,9 @@ export class PigInfomationPage {
     .then((isOk)=>{
       if(isOk){
         this.pigProvider.removedPig(this.pig);
-        this.navParams.get('callbackRemove')(this.pig);
+        if(this.navParams.data.callbackRemove){
+          this.navParams.get('callbackRemove')(this.pig);
+        }
       }
     })
     .catch((err)=>{

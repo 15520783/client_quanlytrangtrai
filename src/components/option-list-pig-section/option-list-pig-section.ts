@@ -128,35 +128,35 @@ export class OptionListPigSectionComponent {
         break;
       }
       case VARIABLE.SECTION_TYPE[2].id: {
-        this.move_local = [VARIABLE.SECTION_TYPE[2].id, VARIABLE.SECTION_TYPE[3].id];
+        this.move_local = [VARIABLE.SECTION_TYPE[1].id,VARIABLE.SECTION_TYPE[2].id, VARIABLE.SECTION_TYPE[3].id];
         break;
       }
       case VARIABLE.SECTION_TYPE[3].id: {
         if (this.pig.gender == 1) {
-          this.move_local = [VARIABLE.SECTION_TYPE[2].id, VARIABLE.SECTION_TYPE[3].id]
+          this.move_local = [VARIABLE.SECTION_TYPE[1].id,VARIABLE.SECTION_TYPE[2].id, VARIABLE.SECTION_TYPE[3].id]
         } else if (this.pig.gender == 2) {
-          this.move_local = [VARIABLE.SECTION_TYPE[3].id, VARIABLE.SECTION_TYPE[4].id]
+          this.move_local = [VARIABLE.SECTION_TYPE[1].id,VARIABLE.SECTION_TYPE[3].id, VARIABLE.SECTION_TYPE[4].id]
         }
         break;
       }
       case VARIABLE.SECTION_TYPE[4].id: {
-        this.move_local = [VARIABLE.SECTION_TYPE[4].id, VARIABLE.SECTION_TYPE[3].id, VARIABLE.SECTION_TYPE[5].id];
+        this.move_local = [VARIABLE.SECTION_TYPE[1].id,VARIABLE.SECTION_TYPE[4].id, VARIABLE.SECTION_TYPE[3].id, VARIABLE.SECTION_TYPE[5].id];
         break;
       }
       case VARIABLE.SECTION_TYPE[5].id: {
         if (this.statusTarget.code == VARIABLE.STATUS_PIG.WEANING || this.statusTarget.code == VARIABLE.STATUS_PIG.FARROWING) {
-          this.move_local = [VARIABLE.SECTION_TYPE[5].id, VARIABLE.SECTION_TYPE[3].id];
+          this.move_local = [VARIABLE.SECTION_TYPE[1].id,VARIABLE.SECTION_TYPE[5].id, VARIABLE.SECTION_TYPE[3].id];
         } else if (this.statusTarget.code == VARIABLE.STATUS_PIG.GROWING) {
-          this.move_local = [VARIABLE.SECTION_TYPE[5].id,VARIABLE.SECTION_TYPE[6].id];
+          this.move_local = [VARIABLE.SECTION_TYPE[1].id,VARIABLE.SECTION_TYPE[5].id,VARIABLE.SECTION_TYPE[6].id];
         }
         break;
       }
       case VARIABLE.SECTION_TYPE[6].id: {
-        this.move_local = [VARIABLE.SECTION_TYPE[6].id, VARIABLE.SECTION_TYPE[7].id];
+        this.move_local = [VARIABLE.SECTION_TYPE[1].id,VARIABLE.SECTION_TYPE[6].id, VARIABLE.SECTION_TYPE[7].id];
         break;
       }
       case VARIABLE.SECTION_TYPE[7].id: {
-        this.move_local = [VARIABLE.SECTION_TYPE[7].id, VARIABLE.SECTION_TYPE[1].id];
+        this.move_local = [VARIABLE.SECTION_TYPE[1].id,VARIABLE.SECTION_TYPE[7].id, VARIABLE.SECTION_TYPE[1].id];
         break;
       }
       default:
