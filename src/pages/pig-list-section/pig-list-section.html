@@ -17,7 +17,7 @@
 </ion-header>
 
 <ion-content #contentExternalInvoice class="setting-util-component">
-  <div id="content" style="height: 100%;overflow-y: scroll">
+  <div id="content" style="height: 100%">
     <ion-item-divider custom-diviver sticky="true" showWhen="core">{{title}}</ion-item-divider>
     <ion-list *ngIf="platform.is('core')">
       <span *ngFor="let item of visible_items;let idx= index">
