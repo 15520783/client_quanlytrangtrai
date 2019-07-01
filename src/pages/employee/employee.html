@@ -45,7 +45,7 @@
           <p><b>Trang trại:</b> {{item.farmName}}</p>
         </ion-col >
         <ion-col [attr.col-3]="platform.is('core')?'':null" [attr.col-6]="!platform.is('core')?'':null" text-wrap>
-          <p><b>Ngày sinh:</b> {{item.birthday|date:'dd/MM/yyyy'}}</p>
+          <p><b>Ngày sinh:</b> {{item.birthdayDisplay}}</p>
         </ion-col >
         <ion-col [attr.col-3]="platform.is('core')?'':null" [attr.col-6]="!platform.is('core')?'':null" text-wrap>
           <p><b>Giới tính:</b> {{item.genderName}}</p>

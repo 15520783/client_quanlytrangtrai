@@ -107,6 +107,7 @@ export class EmployeePage {
     employees.forEach(e => {
       e['regencyName'] = e.regency.name;
       e['dateJoinDisplay'] = this.util.convertDate(e.dateJoin);
+      e['birthdayDisplay'] = this.util.convertDate(e.birthday);
       e['genderName'] = VARIABLE.GENDER_EMPLOYEE[e.gender].name;
       e['farmId'] = e.farm.id;
       e['farmName'] = e.farm.name;

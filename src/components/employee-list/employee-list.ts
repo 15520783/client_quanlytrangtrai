@@ -69,6 +69,7 @@ export class EmployeeListComponent {
           e['regencyName'] = e.regency.name;
           e['dateJoinDisplay'] = this.util.convertDate(e.dateJoin);
           e['genderName'] = VARIABLE.GENDER_EMPLOYEE[e.gender].name;
+          e['birthdayDisplay'] = this.util.convertDate(e.birthday);
       })
       this.filterProvider.input = this.data;
       this.filterProvider.searchText = searchItem;
