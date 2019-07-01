@@ -143,8 +143,17 @@ export class InternalPigInvoiceRole {
 
     insert() {
         this.object.invoiceType = VARIABLE.INVOICE_PIG_TYPE.INTERNAL_IMPORT;
+        let source = this.deployData.get_farm_by_id(this.object.sourceId);
         let destination = this.deployData.get_farm_by_id(this.object.destinationId);
-        let des_manager = this.deployData.get_employee_by_id(this.object.destinationManager);
+        let source_manager = this.deployData.get_employee_by_id(source.manager);
+        let des_manager = this.deployData.get_employee_by_id(destination.manager);
+        if(source){
+            this.object.sourceAddress = source.address;
+            this.object.sourceManager = source.manager;
+        }
+        if(source_manager){
+            this.object.sourceManagerName = source_manager.name;
+        }
         if (destination) {
             this.object.destinationAddress = destination.address;
             this.object.destinationManager = destination.manager;

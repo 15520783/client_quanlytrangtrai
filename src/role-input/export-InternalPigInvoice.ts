@@ -158,11 +158,11 @@ export class ExportInternalPigInvoiceRole {
             this.object.status = VARIABLE.INVOICE_STATUS.PROCCESSING;
             let source = this.deployData.get_farm_by_id(this.object.sourceId);
             let destination = this.deployData.get_farm_by_id(this.object.destinationId);
-            let source_manager = this.deployData.get_employee_by_id(this.object.destinationManager);
+            let source_manager = this.deployData.get_employee_by_id(source.manager);
             if (source) {
                 this.object.sourceAddress = source.address;
                 this.object.sourceManager = source.manager;
-                this.object.sourceManagerName = source_manager.name;
+                this.object.sourceManagerName = source_manager?source_manager.name:'';
             }
             if (destination) {
                 this.object.destinationAddress = destination.address;
@@ -178,11 +178,11 @@ export class ExportInternalPigInvoiceRole {
         this.object.status = VARIABLE.INVOICE_STATUS.PROCCESSING;
         let source = this.deployData.get_farm_by_id(this.object.sourceId);
         let destination = this.deployData.get_farm_by_id(this.object.destinationId);
-        let source_manager = this.deployData.get_employee_by_id(this.object.destinationManager);
+        let source_manager = this.deployData.get_employee_by_id(source.manager);
         if (source) {
             this.object.sourceAddress = source.name;
             this.object.sourceManager = source.manager;
-            this.object.sourceManagerName = source_manager.name;
+            this.object.sourceManagerName = source_manager?source_manager.name:'';
         }
         if (destination) {
             this.object.destinationAddress = destination.name;

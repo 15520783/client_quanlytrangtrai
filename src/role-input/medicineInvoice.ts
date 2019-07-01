@@ -112,7 +112,7 @@ export class MedicineInvoiceRole {
         this.object.status = VARIABLE.INVOICE_STATUS.PROCCESSING;
         let source = this.deployData.get_partner_by_id(this.object.sourceId);
         let destination = this.deployData.get_farm_by_id(this.object.destinationId);
-        let des_manager = this.deployData.get_employee_by_id(this.object.destinationManager);
+        let des_manager = this.deployData.get_employee_by_id(destination.manager);
         if (source) {
             this.object.sourceManagerName = source.manager;
             this.object.source = source;
@@ -132,7 +132,7 @@ export class MedicineInvoiceRole {
         this.object.status = VARIABLE.INVOICE_STATUS.PROCCESSING;
         let source = this.deployData.get_partner_by_id(this.object.sourceId);
         let destination = this.deployData.get_farm_by_id(this.object.destinationId);
-        let des_manager = this.deployData.get_employee_by_id(this.object.destinationManager);
+        let des_manager = this.deployData.get_employee_by_id(destination.manager);
         if (source) {
             this.object.sourceManagerName = source.manager;
             this.object.source = source;

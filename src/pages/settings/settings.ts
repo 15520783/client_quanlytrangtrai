@@ -211,9 +211,9 @@ export class SettingsPage {
         mainAttribute: 'name',
         data: this.settingProvider.setting.diseases,
         roleInput: new DiseasesRole(this.settingProvider),
-        extraButtons: [
-          { title: 'Thiết lập lâm sàng', color: 'main', component: null }
-        ],
+        // extraButtons: [
+        //   { title: 'Thiết lập lâm sàng', color: 'main', component: null }
+        // ],
         permission: this.userProvider.rolePermission.ROLE_thiet_lap_danh_sach_benh
       },
       farmTypes: {

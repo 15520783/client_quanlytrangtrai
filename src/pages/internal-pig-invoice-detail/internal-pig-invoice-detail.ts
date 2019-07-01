@@ -131,8 +131,17 @@ export class InternalPigInvoiceDetailPage {
         this.invoiceProvider.updatePigInvoice(data.invoice)
           .then((updatedInvoice: invoicesPig) => {
             if (updatedInvoice) {
-              updatedInvoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
-              updatedInvoice['source'] = this.deployData.get_farm_by_id(this.invoice.sourceId);
+              let destination = this.deployData.get_farm_by_id(this.invoice.destinationId);
+              let source = this.deployData.get_farm_by_id(this.invoice.sourceId);
+              let des_manager = this.deployData.get_employee_by_id(destination.manager);
+              let source_manager = this.deployData.get_employee_by_id(source.manager);
+
+              updatedInvoice['destination'] = destination;
+              updatedInvoice['source'] = source;
+              updatedInvoice.destinationAddress = destination.address;
+              updatedInvoice.destinationManager = destination.manager;
+              updatedInvoice.destinationManagerName = des_manager.name;
+              updatedInvoice.sourceManagerName = source_manager.name;
               updatedInvoice['importDisplay'] = this.util.convertDate(this.invoice.importDate);
               updatedInvoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
               this.invoice = updatedInvoice;

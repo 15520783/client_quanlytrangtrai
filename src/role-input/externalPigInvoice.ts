@@ -174,6 +174,7 @@ export class ExternalPigInvoiceRole {
         if (source) {
             this.object.sourceAddress = source.address;
             this.object.sourceManager = null;
+            this.object.sourceManagerName = source.manager;
         }
         if(destination){
             this.object.destinationAddress = destination.address;
@@ -194,6 +195,7 @@ export class ExternalPigInvoiceRole {
         if (source) {
             this.object.sourceAddress = source.address;
             this.object.sourceManager = null;
+            this.object.sourceManagerName = source.manager;
         }
         if(destination){
             this.object.destinationAddress = destination.address;
