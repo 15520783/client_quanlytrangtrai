@@ -134,7 +134,12 @@ export class UserInfoPage {
           events: this.events
         }
         if (this.navParams.data.openScheduleSpecial) {
-          this.scrollToView(1);
+          if(this.slider){
+            this.scrollToView(1);
+          }else{
+            this.slider1.autoHeight = true;
+            this.selectedTab(1);
+          }
         }
       })
       .catch(err => {

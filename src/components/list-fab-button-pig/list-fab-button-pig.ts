@@ -104,6 +104,7 @@ export class ListFabButtonPigComponent {
 
   ngOnInit(): void {
     this.statusObjectKey = this.deployData.get_object_list_key_of_status();
+    let statusTarget = this.deployData.get_status_by_id(this.pig.statusId);
 
     switch ((this.sectionTypeId).toString()) {
       case VARIABLE.SECTION_TYPE[1].id: {
@@ -129,9 +130,9 @@ export class ListFabButtonPigComponent {
         break;
       }
       case VARIABLE.SECTION_TYPE[5].id: {
-        if (this.statusObjectKey[this.pig.statusId].code == this.statusPig.WEANING || this.statusObjectKey[this.pig.statusId].code == this.statusPig.FARROWING) {
+        if (statusTarget.code == VARIABLE.STATUS_PIG.WEANING || statusTarget.code == VARIABLE.STATUS_PIG.FARROWING) {
           this.move_local = [VARIABLE.SECTION_TYPE[5].id, VARIABLE.SECTION_TYPE[3].id];
-        } else if (this.statusObjectKey[this.pig.statusId].code == this.statusPig.GROWING) {
+        } else if (statusTarget.code == VARIABLE.STATUS_PIG.GROWING) {
           this.move_local = [VARIABLE.SECTION_TYPE[5].id,VARIABLE.SECTION_TYPE[6].id];
         }
         break;

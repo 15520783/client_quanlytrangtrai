@@ -86,7 +86,7 @@
             </button>
             <button   *ngIf="userProvider.rolePermission.ROLE_xoa_thong_tin_phoi_giong!=null && item.status == statusMating.PROCESSING.codeName" 
                       (tap)="remove(item)"
-                      text-wrap ion-button color="main" 
+                      text-wrap ion-button color="danger" 
                       style="font-size: 10px">Xóa
             </button>
             <button   *ngIf="userProvider.rolePermission.ROLE_xac_nhan_heo_mang_thai!=null && item.status == statusMating.COMPLETE.codeName && sectionType.id == section[4].id" 

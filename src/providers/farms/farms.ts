@@ -30,6 +30,9 @@ export class FarmsProvider {
       .timeout(CONFIG.DEFAULT_TIMEOUT).toPromise()
       .then((data: Array<farm>) => {
         if (data.length) {
+          data = data.filter((farm: farm) => {
+            return farm.id != '0' ? true : false;
+          })
           data.sort((a, b) => {
             return a.createdAt < b.createdAt ? -1 : 1;
           })

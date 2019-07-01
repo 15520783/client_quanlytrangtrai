@@ -144,9 +144,9 @@ export class OptionListPigSectionComponent {
         break;
       }
       case VARIABLE.SECTION_TYPE[5].id: {
-        if (this.statusObjectKey[this.pig.statusId].code == this.statusPig.WEANING || this.statusObjectKey[this.pig.statusId].code == this.statusPig.FARROWING) {
+        if (this.statusTarget.code == VARIABLE.STATUS_PIG.WEANING || this.statusTarget.code == VARIABLE.STATUS_PIG.FARROWING) {
           this.move_local = [VARIABLE.SECTION_TYPE[5].id, VARIABLE.SECTION_TYPE[3].id];
-        } else if (this.statusObjectKey[this.pig.statusId].code == this.statusPig.GROWING) {
+        } else if (this.statusTarget.code == VARIABLE.STATUS_PIG.GROWING) {
           this.move_local = [VARIABLE.SECTION_TYPE[5].id,VARIABLE.SECTION_TYPE[6].id];
         }
         break;
