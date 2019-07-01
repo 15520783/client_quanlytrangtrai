@@ -99,6 +99,7 @@
                       [errorMessage_Required]  ="'Đơn vị là hạng mục bắt buộc.'"
                       [active]= "submitAttempt"
                       [placeholder]="'Chọn đơn vị'"
+                      [label]="'Đơn vị'"
                       [(data)]="usedMedicine.unitsData">
                     </input-select>
 
@@ -196,6 +197,7 @@
               [(validControl)]="credentialsForm2.controls['unit'+idx]" 
               [errorMessage_Required]  ="'Đơn vị là hạng mục bắt buộc.'"
               [active]= "submitAttempt"
+              [label]="'Đơn vị'"
               [placeholder]="'Chọn đơn vị'"
               [(data)]="usedMedicine.unitsData">
             </input-select>
@@ -214,15 +216,12 @@
           </ion-item-options>
         </ion-item-sliding>
       </span> 
-      
     </ion-list> 
-    
     <ion-item>
       <button ion-button color="secondary" mode='ios' small (tap)="add_usedMedicine()">Thêm thuốc</button>
     </ion-item>
   </form>
 
-  
 </ion-content>
 <ion-footer no-border no-padding *ngIf="!platform.is('core')">
   <button type="submit" no-margin full block ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu</button>
