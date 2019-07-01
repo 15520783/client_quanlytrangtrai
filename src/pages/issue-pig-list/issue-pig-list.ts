@@ -204,7 +204,7 @@ export class IssuePigListPage {
     this.util.openBackDrop();
     return this.activitiesProvider.getIssuePigOfFarms()
       .then((issues:Array<issuesPigs>) => {
-        if (issues && issues.length) {
+        if (issues) {
           this.issuesPigList = issues;
           this.issue_groupBySection = this.util.groupBy(this.issuesPigList, issue => issue.pig.house.section.id);
         }

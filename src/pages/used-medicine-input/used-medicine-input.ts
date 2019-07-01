@@ -1,8 +1,8 @@
-import { CONFIG, KEY, MESSAGE } from '../../common/const';
+import { CONFIG, KEY, MESSAGE, VARIABLE } from '../../common/const';
 import { Component, ViewChild } from '@angular/core';
 import { Content, Events, IonicPage, Menu, MenuController, ModalController, NavController, NavParams, Platform } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { diseases, employee, issues, medicineUnits, medicineWarehouse, medicines, usedMedicine } from '../../common/entity';
+import { diseases, employee, issues, medicineUnits, medicineWarehouse, medicines, pig, usedMedicine } from '../../common/entity';
 
 import { ActivitiesProvider } from '../../providers/activities/activities';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
@@ -49,6 +49,8 @@ export class UsedMedicineInputPage {
   public disease: diseases;
   public description: string = '';
 
+  public total_pig: number;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -83,6 +85,7 @@ export class UsedMedicineInputPage {
     if (this.navParams.data.farmId && this.navParams.data.sectionId) {
       this.sectionId = this.navParams.data.sectionId;
       this.farmId = this.navParams.data.farmId;
+      this.total_pig = this.deployData.get_pigs_by_sectionId(this.sectionId).length;
     }
 
     if (this.navParams.data.issues && this.navParams.data.groupByIssues) {
@@ -230,6 +233,9 @@ export class UsedMedicineInputPage {
       this.warehouseProvider.getMedicineWarehouseOfMedicine(farmId, medicine.id)
         .then((medicineWarehouses: Array<medicineWarehouse>) => {
           if (medicineWarehouses) {
+            medicineWarehouses = medicineWarehouses.filter(e => {
+              return e.invoice.status == VARIABLE.INVOICE_STATUS.COMPLETE ? true : false;
+            })
             item['unitsData'] = [];
             item['medicineWarehouseList'] = medicineWarehouses;
             this.credentialsForm2.controls['medicineWarehouse' + idx].setValue(null);

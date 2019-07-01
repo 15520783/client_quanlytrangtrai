@@ -56,7 +56,7 @@ export class WarehouseInformationPage {
       .then((data: Array<foodWareHouse>) => {
         if (data) {
           this.food_warehouses = data.filter((foodwarehouse) => {
-            return foodwarehouse.warehouse.id == this.warehouse.id;
+            return (foodwarehouse.warehouse.id == this.warehouse.id && foodwarehouse.invoice.status == VARIABLE.INVOICE_STATUS.COMPLETE) ? true : false;
           })
 
           this.food_warehouses.forEach((e: foodWareHouse) => {

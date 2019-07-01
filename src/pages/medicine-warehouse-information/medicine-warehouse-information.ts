@@ -29,10 +29,10 @@ export class MedicineWarehouseInformationPage {
     public navParams: NavParams,
     public warehouseProvider: WarehousesProvider,
     public util: Utils,
-    public event:Events,
-    public deployData:DeployDataProvider,
-    public userProvider:UserProvider,
-    public platform:Platform
+    public event: Events,
+    public deployData: DeployDataProvider,
+    public userProvider: UserProvider,
+    public platform: Platform
   ) {
     if (this.navParams.data.warehouse) {
       this.warehouse = this.navParams.data.warehouse;
@@ -55,7 +55,7 @@ export class MedicineWarehouseInformationPage {
       .then((data: Array<medicineWarehouse>) => {
         if (data) {
           this.medicine_warehouses = data.filter((medicineWarehouse) => {
-            return medicineWarehouse.warehouse.id == this.warehouse.id;
+            return (medicineWarehouse.warehouse.id == this.warehouse.id && medicineWarehouse.invoice.status == VARIABLE.INVOICE_STATUS.COMPLETE) ? true : false;
           })
 
           this.medicine_warehouses.forEach((e: medicineWarehouse) => {
@@ -87,7 +87,7 @@ export class MedicineWarehouseInformationPage {
     let callback = (data: warehouse) => {
       if (data) {
         this.warehouse = data;
-        this.event.publish('warehousesPage:OnChange',(this.warehouse));
+        this.event.publish('warehousesPage:OnChange', (this.warehouse));
         this.navCtrl.pop();
       }
     }
@@ -99,7 +99,7 @@ export class MedicineWarehouseInformationPage {
       return man.regency.id == VARIABLE.REGENCIES.quan_ly_kho.id ? true : false;
     })
 
-    let roleInput = new WarehouseRole(this.deployData, this.warehouseProvider,man_Of_Warehouse);
+    let roleInput = new WarehouseRole(this.deployData, this.warehouseProvider, man_Of_Warehouse);
     roleInput.object = this.warehouse;
     roleInput.object['typeId'] = this.warehouse.type.id;
     roleInput.object['managerId'] = this.warehouse.manager.id;
@@ -113,18 +113,18 @@ export class MedicineWarehouseInformationPage {
   }
 
   remove() {
-    let roleInput = new WarehouseRole(this.deployData, this.warehouseProvider,[]);
+    let roleInput = new WarehouseRole(this.deployData, this.warehouseProvider, []);
     roleInput.delete(this.warehouse)
       .then((isOK: boolean) => {
         if (isOK) {
-          this.event.publish('warehousesPage:OnChange',(this.warehouse));
+          this.event.publish('warehousesPage:OnChange', (this.warehouse));
           this.navCtrl.pop();
         }
       })
       .catch((err: Error) => { })
   }
 
-  viewUsedMedicineHistory(item:medicineWarehouse){
+  viewUsedMedicineHistory(item: medicineWarehouse) {
     this.navCtrl.push(UsedMedicineHistoryPage, { medicineWareHouse: item });
   }
 }

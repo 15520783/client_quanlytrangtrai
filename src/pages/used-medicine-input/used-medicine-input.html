@@ -64,6 +64,9 @@
               [label]="'Mô tả'"
               [placeholder]="'Nhập thông tin mô tả'" [active]="submitAttempt">
             </input-text>
+            <ion-item *ngIf="total_pig">
+              <p ion-text color="secondary">Tổng số heo tại khu: {{total_pig}}</p>
+            </ion-item>
             <ion-item>
               <p><b>Danh sách thuốc xử lý</b></p>
             </ion-item>
@@ -157,6 +160,9 @@
         [placeholder]="'Nhập thông tin mô tả'" [active]="submitAttempt">
       </input-text>
     </ion-list>
+    <ion-item *ngIf="total_pig">
+      <p ion-text color="secondary">Tổng số heo tại khu: {{total_pig}}</p>
+    </ion-item>
     <ion-item>
       <p><b>Danh sách thuốc xử lý</b></p>
     </ion-item>
@@ -208,6 +214,7 @@
           </ion-item-options>
         </ion-item-sliding>
       </span> 
+      
     </ion-list> 
     
     <ion-item>
