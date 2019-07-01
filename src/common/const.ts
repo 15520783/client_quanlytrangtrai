@@ -81,8 +81,8 @@ const VARIABLE = {
         3: { id: 3, name: 'Đực thiến' }
     },
     GENDER_EMPLOYEE: [
-        { name: 'Nữ', value: '1' },
-        { name: 'Nam', value: '0' }
+        { name: 'Nữ', value: '0' },
+        { name: 'Nam', value: '1' }
     ]
     ,
     INVOICE_PRODUCT_TYPE: {

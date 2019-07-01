@@ -73,6 +73,10 @@ export class FarmsPage {
                 return farm.id == this.userProvider.user.farm.id;
               });
             }
+
+            this.farms = this.farms.filter(farm=>{
+              return farm.id != 0 ? true:false;
+            })
             this.getSummary();
           }
           // this.util.closeBackDrop();
@@ -92,6 +96,9 @@ export class FarmsPage {
                       return farm.id == this.userProvider.user.farm.id;
                     });
                   }
+                  this.farms = this.farms.filter(farm=>{
+                    return farm.id != 0 ? true:false;
+                  })
                   return this.getSummary();
                 }
               }
@@ -108,6 +115,9 @@ export class FarmsPage {
             return farm.id == this.userProvider.user.farm.id;
           });
         }
+        this.farms = this.farms.filter(farm=>{
+          return farm.id != 0 ? true:false;
+        })
         this.getSummary();
       } else this.farms = [];
     }
