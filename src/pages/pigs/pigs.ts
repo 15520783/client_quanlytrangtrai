@@ -36,7 +36,7 @@ export class PigsPage {
   public page_Total: number = 0;
   public rows: Array<pig> = [];
   public cols: any = [];
-  public filter_default: any = ["pigCode", "birthday", "gender", "healthPoint", "originWeight"];
+  public filter_default: any = ["pigCode", "birthday", "gender", "healthPoint", "originWeight", "breedName"];
   public dualValue2 = { lower: 0, upper: 500 };
 
   public genderFilter = [];
@@ -144,8 +144,12 @@ export class PigsPage {
   public filterItems(searchItem) {
     let pigs = this.util.deepClone(this.pigProvider.pigs);
     pigs.forEach(pig => {
-      pig.farmId = this.house[pig.houseId].section.farm.id;
-      pig.sectionId = this.house[pig.houseId].section.id;
+      if (!this.house[pig.houseId]) {
+        console.log(pig);
+      }
+      pig.farmId = this.house[pig.houseId] ? this.house[pig.houseId].section.farm.id : '';
+      pig.sectionId = this.house[pig.houseId] ? this.house[pig.houseId].section.id : '';
+      pig.breedName = this.breeds[pig.breedId] ? this.breeds[pig.breedId].name + ' ' + this.breeds[pig.breedId].symbol : '';
     });
     this.filterProvider.input = pigs;
     this.filterProvider.searchWithInclude.gender = this.genderFilter;
@@ -248,13 +252,14 @@ export class PigsPage {
                 let idx = pigs.findIndex(pig => pig.pigCode == target.id);
                 if (idx > -1) {
                   this.navCtrl.push(PigSummaryPage, { pig: pigs[idx] }).then(() => {
-                    this.util.closeBackDrop();
                   });
                 } else {
                   this.util.showToastInform('Không tìm thấy đối tượng');
                 }
+                this.util.closeBackDrop();
               })
             } else {
+              this.util.closeBackDrop();
               this.util.showToastInform('Không tìm thấy đối tượng');
             }
           } else {
@@ -263,7 +268,6 @@ export class PigsPage {
         })
         .catch((err: Error) => {
           console.log(err);
-          // this.util.closeBackDrop();
           this.util.showToastInform('Không tìm thấy đối tượng');
         })
     }
@@ -274,7 +278,7 @@ export class PigsPage {
   }
 
   public filterSections: Array<any> = [];
-  public filterHouses:Array<any> = [];
+  public filterHouses: Array<any> = [];
 
   filterFarm(farmId) {
     this.filterSections = this.deployData.get_sections_of_farm(farmId);
@@ -297,7 +301,7 @@ export class PigsPage {
     this.setFilteredItems();
   }
 
-  filterHouse(houseId){
+  filterHouse(houseId) {
     this.houseFilter = houseId ? [houseId] : [];
     this.setFilteredItems();
   }

@@ -70,6 +70,7 @@ export class PigInputPage {
       longBack: [this.pig.longBack, Validators.compose([Validators.required, ValidateNumber])],
       longBody: [this.pig.longBody, Validators.compose([Validators.required, ValidateNumber])],
       pregnancyStatusId: [this.pig.pregnancyStatusId, Validators.compose([Validators.required])],
+      index:[this.pig.index,Validators.compose([Validators.required,ValidateNumber])],
       priceCodeId: [this.pig.priceCodeId],
       statusId: [this.pig.statusId, Validators.compose([Validators.required])],
       birthId: this.pig.birthId,

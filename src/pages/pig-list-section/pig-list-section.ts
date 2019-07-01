@@ -307,7 +307,6 @@ export class PigListSectionPage {
         })
         .catch((err: Error) => {
           console.log(err);
-          // this.util.closeBackDrop();
           this.util.showToastInform('Không tìm thấy đối tượng');
         })
     }

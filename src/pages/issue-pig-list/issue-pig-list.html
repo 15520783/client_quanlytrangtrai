@@ -42,7 +42,7 @@
                   {{issue_groupBySection.get(section.id).length + ' vấn đề được phát hiện'}}
                 </p>
               </ion-row>
-              <ion-row *ngIf="issue_groupBySection && !issue_groupBySection.get(section.id)" align-items-center>
+              <ion-row *ngIf="!issue_groupBySection || !issue_groupBySection.get(section.id)" align-items-center>
                 <p ion-text color="secondary">Không có vấn đề nào được phát hiện</p>
               </ion-row>
             </button>
@@ -134,13 +134,13 @@
             <ion-col col-12>
               <h2 text-wrap>{{section.name}}</h2>
             </ion-col>
-            <ion-col col-12  *ngIf="issue_groupBySection.get(section.id)">
+            <ion-col col-12  *ngIf="issue_groupBySection && issue_groupBySection.get(section.id)">
               <p ion-text color="danger">
                 <ion-icon style="font-size: 20px" name="ios-warning"></ion-icon>
                 {{issue_groupBySection.get(section.id).length + ' vấn đề được phát hiện'}}
               </p>
             </ion-col>
-            <ion-col *ngIf="!issue_groupBySection.get(section.id)" align-items-center>
+            <ion-col *ngIf="!issue_groupBySection || !issue_groupBySection.get(section.id)" align-items-center>
               <p ion-text color="secondary">Không có vấn đề nào được phát hiện</p>
             </ion-col>
           </ion-row>

@@ -9,6 +9,7 @@ import { FormControl } from '@angular/forms';
 import { InvoicesProvider } from '../../providers/invoices/invoices';
 import { PigsProvider } from '../../providers/pigs/pigs';
 import { UserProvider } from '../../providers/user/user';
+import { Utils } from '../../common/utils';
 import { VARIABLE } from '../../common/const';
 
 @IonicPage()
@@ -24,13 +25,14 @@ export class BirthChildDetailPage {
   public breeds: any;
   public houses: any;
   public status: any;
+  public gender:any;
 
 
   public mainAttribute = "pigCode";
   public attributes = [
     { name: "breedName", label: 'Giống' },
-    { name: "gender", label: 'Giới tính' },
-    { name: "birthday", label: 'Ngày sinh' },
+    { name: "genderName", label: 'Giới tính' },
+    { name: "birthdayDisplay", label: 'Ngày sinh' },
     { name: "originWeight", label: 'Cân nặng' },
     { name: "statusName", label: 'Hiện trạng' },
     { name: "farmName", label: 'Trang trại' },
@@ -60,7 +62,8 @@ export class BirthChildDetailPage {
     public invoiceProvider: InvoicesProvider,
     public pigProvider: PigsProvider,
     public platform: Platform,
-    public userProvider: UserProvider
+    public userProvider: UserProvider,
+    public util:Utils
   ) {
     this.init();
 
@@ -83,11 +86,13 @@ export class BirthChildDetailPage {
 
   public filterItems(searchItem) {
     this.pigs.forEach((pig) => {
-      pig['breedName'] = this.breeds[pig.breedId].name;
+      pig['breedName'] = this.breeds[pig.breedId]?this.breeds[pig.breedId].name+' '+this.breeds[pig.breedId].symbol:'Không xác định';
       pig['farmName'] = this.houses[pig.houseId].section.farm.name;
       pig['sectionName'] = this.houses[pig.houseId].section.name;
       pig['houseName'] = this.houses[pig.houseId].name;
-      pig['statusName'] = this.status[pig.statusId].name;
+      pig['statusName'] = this.status[pig.statusId].description;
+      pig['genderName'] = this.gender[pig.gender].name;
+      pig['birthdayDisplay'] = this.util.convertDate(pig.birthday);
     })
       ;
     this.filterProvider.input = this.pigs;
@@ -117,6 +122,7 @@ export class BirthChildDetailPage {
     this.breeds = this.deployData.get_object_list_key_of_breeds();
     this.houses = this.deployData.get_object_list_key_of_house();
     this.status = this.deployData.get_object_list_key_of_status();
+    this.gender = VARIABLE.GENDER;
   }
 
   input_child() {

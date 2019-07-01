@@ -111,8 +111,8 @@ export class EmployeeInformationPage {
   }
 
   initSchedule() {
+    let today = new Date(new Date().getFullYear() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getDate());
     this.schedules.forEach((schedule) => {
-      let today = new Date(new Date().getFullYear() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getDate());
       if (schedule) {
         this.events.push({
           id: schedule.id,
@@ -129,34 +129,34 @@ export class EmployeeInformationPage {
               (schedule.status == VARIABLE.SCHEDULE_STATUS.COMPLETE.name ? VARIABLE.SCHEDULE_STATUS.COMPLETE.color : VARIABLE.SCHEDULE_STATUS.ASSIGNED.color) : VARIABLE.SCHEDULE_STATUS.NOT_ASSIGNED.color) : VARIABLE.SCHEDULE_STATUS.OVERDUE.color
         })
       }
-
-      this.options = {
-        schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-        selectable: true,
-        defaultView: this.platform.is('core') ? "dayGridMonth" : "listWeek",
-        header: {
-          left: 'today prev,next',
-          right: this.platform.is('core') ? 'dayGridMonth,listWeek' : 'dayGridWeek,listWeek'
-        },
-        height: 'parent',
-        fixedWeekCount: false,
-        editable: true,
-        contentHeight: this.platform.is('core') ? 400 : 400,
-        plugins: this.calendarPlugins,
-        weekends: true,
-        locale: 'vi',
-        timeZone: 'UTC',
-        // isRTL: false,
-        eventLimit: true,
-        displayEventTime: false,
-        views: {
-          timeGrid: {
-            eventLimit: 0,
-          }
-        },
-        events: this.events
-      }
     })
+
+    this.options = {
+      schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
+      selectable: true,
+      defaultView: this.platform.is('core') ? "dayGridMonth" : "listWeek",
+      header: {
+        left: 'today prev,next',
+        right: this.platform.is('core') ? 'dayGridMonth,listWeek' : 'dayGridWeek,listWeek'
+      },
+      height: 'parent',
+      fixedWeekCount: false,
+      editable: true,
+      contentHeight: this.platform.is('core') ? 400 : 400,
+      plugins: this.calendarPlugins,
+      weekends: true,
+      locale: 'vi',
+      timeZone: 'UTC',
+      // isRTL: false,
+      eventLimit: true,
+      displayEventTime: false,
+      views: {
+        timeGrid: {
+          eventLimit: 0,
+        }
+      },
+      events: this.events
+    }
   }
 
   GetFormattedDate(value) {

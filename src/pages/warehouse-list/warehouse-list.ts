@@ -38,7 +38,7 @@ export class WarehouseListPage {
   ];
 
   public placeholderSearch: string = 'Tìm kiếm thông tin kho'
-  public filter_default: Array<string> = ["name", "typeName", "managerName", "description", "houseName", "sectionName", "farmName"];
+  public filter_default: Array<string> = ["name", "typeName", "managerName", "description","farmName"];
 
   public page_Idx: number = 1;
   public page_Total: number = 0;
@@ -87,7 +87,6 @@ export class WarehouseListPage {
     this.data.forEach((warehouse: warehouse) => {
       warehouse['typeName'] = warehouse.type ? warehouse.type.name : '';
       warehouse['managerName'] = warehouse.manager.name;
-      // warehouse['houseName'] = warehouse.manager.farm.name;
       warehouse['farmName'] = warehouse.manager.farm.name;
     })
     this.filterProvider.input = this.data;

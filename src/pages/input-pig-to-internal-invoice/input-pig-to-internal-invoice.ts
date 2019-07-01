@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { VARIABLE } from '../../common/const';
+import { ValidateNumber } from '../../validators/number.validator';
 
 @IonicPage()
 @Component({
@@ -56,6 +57,7 @@ export class InputPigToInternalInvoicePage {
       filet: [this.pig.filet, Validators.compose([Validators.required])],
       longBack: [this.pig.longBack, Validators.compose([Validators.required])],
       longBody: [this.pig.longBody, Validators.compose([Validators.required])],
+      index:[this.pig.index,Validators.compose([Validators.required,ValidateNumber])],
       createdAt: this.pig.createdAt
 
       // roundId: [this.pig.roundId, Validators.compose([Validators.required])],

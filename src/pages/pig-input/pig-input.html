@@ -170,8 +170,15 @@
           </input-text>
           <input-text [(validControl)]="credentialsForm.controls.longBack"
             [errorMessage_ValidNumber]="'Vòng ngực là hạng mục nhập số.'"
-            [label]="'Dài thân'"
+            [label]="'Vòng ngực'"
             [placeholder]="'Nhập chiều cài thân'" 
+            [active]="submitAttempt">
+          </input-text>
+          <input-text [(validControl)]="credentialsForm.controls.index"
+            [errorMessage_ValidNumber]="'Chỉ số duy trì là hạng mục nhập số.'"
+            [errorMessage_Required]="'Chỉ số duy trì là hạng mục bắt buộc.'"
+            [label]="'Chỉ số duy trì'"
+            [placeholder]="'Nhập chỉ số duy trì'" 
             [active]="submitAttempt">
           </input-text>
           <input-select [(validControl)]="credentialsForm.controls.statusId"
