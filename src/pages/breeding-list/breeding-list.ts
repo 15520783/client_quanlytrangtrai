@@ -161,6 +161,7 @@ export class BreedingListPage {
       breeding['matingRealDisplay'] = breeding.matingReal ? this.util.convertDate(breeding.matingReal) : 'Chưa phối';
       breeding['statusName'] = breeding.pig.status.description;
       breeding['typeBreedingName'] = this.breedingTypes[breeding.typeId].name;
+      breeding['canMating'] = this.sectionType.id == VARIABLE.SECTION_TYPE[3].value ? true : false;
     })
   }
 

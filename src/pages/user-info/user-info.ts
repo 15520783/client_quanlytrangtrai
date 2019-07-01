@@ -45,8 +45,8 @@ export class UserInfoPage {
     public platform: Platform,
     public activitiesProvider: ActivitiesProvider,
     public modalCtrl: ModalController,
-    public employeeProvider:EmployeesProvider,
-    public alertCtrl:AlertController
+    public employeeProvider: EmployeesProvider,
+    public alertCtrl: AlertController
   ) {
     if (this.navParams.data.user) {
       this.userAccount = this.navParams.data.user;
@@ -102,37 +102,39 @@ export class UserInfoPage {
           this.schedules = schedules;
 
           this.initSchedule();
-          this.options = {
-            schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-            selectable: true,
-            defaultView: this.platform.is('core') ? "dayGridMonth" : "listWeek",
-            header: {
-              left: 'today prev,next',
-              // center: 'title',
-              right: this.platform.is('core') ? 'dayGridMonth,listWeek' : 'dayGridWeek,listWeek'
-            },
-            height: 'parent',
-            fixedWeekCount: false,
-            editable: true,
-            contentHeight: this.platform.is('core') ? 400 : 400,
-            plugins: this.calendarPlugins,
-            weekends: true,
-            locale: 'vi',
-            timeZone: 'UTC',
-            // isRTL: false,
-            eventLimit: true,
-            displayEventTime: false,
-            views: {
-              timeGrid: {
-                eventLimit: 0,
-              }
-            },
-            events: this.events
-          }
 
-          if(this.navParams.data.openScheduleSpecial){
-            this.scrollToView(1);
-          }
+
+
+        }
+        this.options = {
+          schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
+          selectable: true,
+          defaultView: this.platform.is('core') ? "dayGridMonth" : "listWeek",
+          header: {
+            left: 'today prev,next',
+            // center: 'title',
+            right: this.platform.is('core') ? 'dayGridMonth,listWeek' : 'dayGridWeek,listWeek'
+          },
+          height: 'parent',
+          fixedWeekCount: false,
+          editable: true,
+          contentHeight: this.platform.is('core') ? 400 : 400,
+          plugins: this.calendarPlugins,
+          weekends: true,
+          locale: 'vi',
+          timeZone: 'UTC',
+          // isRTL: false,
+          eventLimit: true,
+          displayEventTime: false,
+          views: {
+            timeGrid: {
+              eventLimit: 0,
+            }
+          },
+          events: this.events
+        }
+        if (this.navParams.data.openScheduleSpecial) {
+          this.scrollToView(1);
         }
       })
       .catch(err => {
@@ -209,26 +211,26 @@ export class UserInfoPage {
   }
 
   edit() {
-    let callback = (employee:employee) =>{
-      if(employee){
+    let callback = (employee: employee) => {
+      if (employee) {
         console.log(employee);
         this.employeeProvider.updateEmployee(employee)
-        .then((updated_employee:employee)=>{
-          if(updated_employee){
-            this.util.setKey(KEY.EMPLOYEE_USER,updated_employee);
-            this.userAccount.employee = updated_employee;
-            this.init();
-          }
-          this.navCtrl.pop();
-        })
-        .catch((err)=>{
-          console.log(err);
-          return err;
-        })
+          .then((updated_employee: employee) => {
+            if (updated_employee) {
+              this.util.setKey(KEY.EMPLOYEE_USER, updated_employee);
+              this.userAccount.employee = updated_employee;
+              this.init();
+            }
+            this.navCtrl.pop();
+          })
+          .catch((err) => {
+            console.log(err);
+            return err;
+          })
       }
     }
 
-    this.navCtrl.push(EmployeeInputPage, { employee: this.userAccount.employee, personalMode: true ,title:'Cập nhật thông tin',callback:callback});
+    this.navCtrl.push(EmployeeInputPage, { employee: this.userAccount.employee, personalMode: true, title: 'Cập nhật thông tin', callback: callback });
   }
 
   changePassword() {
