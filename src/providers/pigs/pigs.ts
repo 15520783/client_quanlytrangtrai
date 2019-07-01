@@ -238,7 +238,7 @@ export class PigsProvider {
         size: '60%'
       },
       xAxis: {
-        categories: ['Index', 'Trọng lượng', 'Chân', 'Số vú', 'BPSD', 'ADG'],
+        categories: ['Chỉ số duy trì', 'Trọng lượng', 'Chân', 'Số vú', 'BPSD', 'ADG'],
         tickmarkPlacement: 'on',
         lineWidth: 0
       },

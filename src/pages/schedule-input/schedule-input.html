@@ -23,10 +23,10 @@
                     [active]= "submitAttempt">
         </input-date>
         <input-select [(validControl)] = "credentialsForm.controls.farmId"
-                    [errorMessage_Required]  ="'Khu là hạng mục bắt buộc.'"
-                    [label] = "'Khu'"
+                    [errorMessage_Required]  ="'Trang trại là hạng mục bắt buộc.'"
+                    [label] = "'Trang trại'"
                     [active]= "submitAttempt"
-                    [placeholder]="'Chọn khu'"
+                    [placeholder]="'Chọn trang trại'"
                     [(data)]="farms"
                     (changeValue)="farmChange($event)">
         </input-select>

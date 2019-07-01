@@ -33,14 +33,17 @@ export class ScheduleInputPage {
     public events: Events,
     public util: Utils
   ) {
+    this.peopleForSchedule = [];
+
     this.farms = this.deployData.get_farm_list_for_select();
     if (this.navParams.data.schedule) {
       this.schedule = this.navParams.data.schedule;
-      if (this.schedule.employee) {
+      if (this.schedule.employee && this.schedule.employee.id) {
         this.schedule['employeeId'] = this.schedule.employee.id;
       } else {
         this.schedule.employee = new employee();
       }
+      this.peopleForSchedule = this.deployData.get_employees_of_farm(this.schedule.farmId);
     }
     if (this.navParams.data.dateInput) {
       this.dateInput = this.navParams.data.dateInput;
@@ -51,7 +54,6 @@ export class ScheduleInputPage {
       this.schedule.farmId = this.schedule.employee.farm.id;
     }
 
-    this.peopleForSchedule = [];
 
     this.credentialsForm = this.formBuilder.group({
       id: this.schedule.id,
