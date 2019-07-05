@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'input-date',
@@ -18,6 +18,8 @@ export class InputDateComponent {
   @Input() pickerFormat: string = 'DD-MM-YYYY';
   @Input() value: any = null;
   @Input() disabled:boolean = false;
+
+  @Output() valueChange = new EventEmitter(); 
   public limit: any;
 
   constructor() {
@@ -28,7 +30,8 @@ export class InputDateComponent {
   }
 
   datetimeChange(e) {
-    this.value = e;;
+    this.value = e;
+    this.valueChange.emit(e);
   }
 
   scrollTo() {

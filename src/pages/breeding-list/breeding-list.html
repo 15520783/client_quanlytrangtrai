@@ -36,7 +36,7 @@
                 (tap)="edit(item)">Sửa</button>
               <button *ngIf="userProvider.rolePermission.ROLE_xoa_thong_tin_len_giong!=null" showWhen="core" small ion-button item-end mode='ios' color="danger"
                 (tap)="remove(item)">Xóa</button>
-              <button  showWhen="core" small ion-button item-end mode='ios' color="secondary" *ngIf="!item.matingReal"
+              <button  showWhen="core" small ion-button item-end mode='ios' color="secondary" *ngIf="!item.matingReal && item.canMating"
                 (tap)="mating_input(item)">Phối giống</button>
             </ion-row>
           </ion-item>

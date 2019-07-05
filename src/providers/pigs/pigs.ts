@@ -14,6 +14,7 @@ HightchartMore(Highcharts);
 export class PigsProvider {
 
   public pigs: Array<pig> = [];
+  public sale_pigs: Array<pig> = [];
   public updated_flag = false;
 
 
@@ -25,6 +26,10 @@ export class PigsProvider {
     this.util.getKey(KEY.PIGS)
       .then((data) => {
         this.pigs = data;
+      })
+    this.util.getKey(KEY.SOLD_PIG)
+      .then((data) => {
+        this.sale_pigs = data;
       })
   }
 
@@ -76,20 +81,23 @@ export class PigsProvider {
       .get(API.GET_ALL_PIGS)
       .timeout(CONFIG.DEFAULT_TIMEOUT).toPromise()
       .then((data: Array<pig>) => {
-        console.log(data.length);
-        data = data.filter((pig:pig)=>{
-          return pig.statusId != '18' ? true:false;
+        this.sale_pigs = data.filter((pig: pig) => {
+          return pig.statusId == '18' ? true : false;
         })
-        console.log(data.length);
+
+        data = data.filter((pig: pig) => {
+          return pig.statusId != '18' ? true : false;
+        });
+
         this.pigs = data;
+        if (this.sale_pigs.length) {
+          this.util.setKey(KEY.SOLD_PIG, this.sale_pigs);
+        }
         if (data.length) {
-          this.util.setKey(KEY.PIGS, data)
+          this.util.setKey(KEY.PIGS, data);
         }
         return data;
       })
-    // .catch((err) => {
-    //   return err;
-    // })
   }
 
   /**

@@ -54,7 +54,10 @@ export class ExternalPigInvoiceDetailPage {
       this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
       this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.sourceId);
       this.invoice['importDateDisplay'] = this.util.convertDate(this.invoice.importDate);
+      this.invoice['createdAtDisplay'] = this.util.convertDate(this.invoice.createdAt);
       this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
+      this.invoice.sourceManagerName = this.invoice['source'].manager;
+      this.invoice.destinationManagerName = this.deployData.get_employee_by_id(this.invoice.destinationManager).name;
     }
 
     this.pigs = this.deployData.get_object_list_key_of_pig();
@@ -85,7 +88,10 @@ export class ExternalPigInvoiceDetailPage {
           this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
           this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.sourceId);
           this.invoice['importDateDisplay'] = this.util.convertDate(this.invoice.importDate);
+          this.invoice['createdAtDisplay'] = this.util.convertDate(this.invoice.createdAt);
           this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
+          this.invoice.sourceManagerName = this.invoice['source'].manager;
+          this.invoice.destinationManagerName = this.deployData.get_employee_by_id(this.invoice.destinationManager).name;
           this.navParams.data.callback(this.invoice);
         }
         this.util.closeBackDrop()
@@ -106,7 +112,10 @@ export class ExternalPigInvoiceDetailPage {
           this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
           this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.sourceId);
           this.invoice['importDateDisplay'] = this.util.convertDate(this.invoice.importDate);
+          this.invoice['createdAtDisplay'] = this.util.convertDate(this.invoice.createdAt);
           this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
+          this.invoice.sourceManagerName = this.invoice['source'].manager;
+          this.invoice.destinationManagerName = this.deployData.get_employee_by_id(this.invoice.destinationManager).name;
           this.navParams.data.callback(this.invoice);
         }
         this.util.closeBackDrop();
@@ -234,7 +243,10 @@ export class ExternalPigInvoiceDetailPage {
         this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
         this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.sourceId);
         this.invoice['importDateDisplay'] = this.util.convertDate(this.invoice.importDate);
+        this.invoice['createdAtDisplay'] = this.util.convertDate(this.invoice.createdAt);
         this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
+        this.invoice.sourceManagerName = this.invoice['source'].manager;
+        this.invoice.destinationManagerName = this.deployData.get_employee_by_id(this.invoice.destinationManager).name;
         this.navParams.get('callback')(this.invoice);
         this.navCtrl.pop();
       }
@@ -264,6 +276,10 @@ export class ExternalPigInvoiceDetailPage {
           this.invoice = updatedInvoice;
           this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
           this.invoice['source'] = this.deployData.get_partner_by_id(this.invoice.sourceId);
+          this.invoice['createdAtDisplay'] = this.util.convertDate(this.invoice.createdAt);
+          this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
+          this.invoice.sourceManagerName = this.invoice['source'].manager;
+          this.invoice.destinationManagerName = this.deployData.get_employee_by_id(this.invoice.destinationManager).name;
           this.canCheckComplete = false;
           this.canEditInvoice = false;
           this.navParams.get('callback')(this.invoice);

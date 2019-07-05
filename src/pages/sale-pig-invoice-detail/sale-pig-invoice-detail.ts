@@ -27,7 +27,7 @@ export class SalePigInvoiceDetailPage {
 
   public invoice: invoicesPig;
   public details: Array<invoicePigDetail> = [];
-  public pigs: any;
+  public pigs: any = {};
   public house: any;
   public healStatus: any;
   public breeds:any;
@@ -54,19 +54,26 @@ export class SalePigInvoiceDetailPage {
       this.invoice['source'] = this.deployData.get_farm_by_id(this.invoice.sourceId);
       this.invoice['destination'] = this.deployData.get_customer_by_id(this.invoice.destinationId);
       this.invoice['exportDateDisplay'] = this.util.convertDate(this.invoice.exportDate);
+      this.invoice['createdAtDisplay'] = this.util.convertDate(this.invoice.createdAt);
       this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
     }
 
-    this.pigs = this.deployData.get_object_list_key_of_pig();
+    
+
+    if (this.invoice.status != VARIABLE.INVOICE_STATUS.COMPLETE) {
+      this.pigs = this.deployData.get_object_list_key_of_pig();
+      this.canCheckComplete = true;
+      this.canEditInvoice = true;
+    }
+    else{
+      this.pigProvider.sale_pigs.forEach((pig:pig)=>{
+        this.pigs[pig.id] = pig;
+      })
+    }
     this.house = this.deployData.get_object_list_key_of_house();
     this.healStatus = this.deployData.get_object_list_key_of_healthStatus();
     this.breeds = this.deployData.get_object_list_key_of_breeds();
     this.gender = VARIABLE.GENDER;
-
-    if (this.invoice.status != VARIABLE.INVOICE_STATUS.COMPLETE) {
-      this.canCheckComplete = true;
-      this.canEditInvoice = true;
-    }
   }
 
   ionViewDidLoad() {
@@ -83,6 +90,7 @@ export class SalePigInvoiceDetailPage {
           this.invoice['source'] = this.deployData.get_farm_by_id(this.invoice.sourceId);
           this.invoice['destination'] = this.deployData.get_customer_by_id(this.invoice.destinationId);
           this.invoice['exportDateDisplay'] = this.util.convertDate(this.invoice.exportDate);
+          this.invoice['createdAtDisplay'] = this.util.convertDate(this.invoice.createdAt);
           this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
           this.navParams.data.callbackUpdate(this.invoice);
         }
@@ -104,6 +112,7 @@ export class SalePigInvoiceDetailPage {
           this.invoice['source'] = this.deployData.get_farm_by_id(this.invoice.sourceId);
           this.invoice['destination'] = this.deployData.get_customer_by_id(this.invoice.destinationId);
           this.invoice['exportDateDisplay'] = this.util.convertDate(this.invoice.exportDate);
+          this.invoice['createdAtDisplay'] = this.util.convertDate(this.invoice.createdAt);
           this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
           this.navParams.data.callbackUpdate(this.invoice);
         }
@@ -140,6 +149,7 @@ export class SalePigInvoiceDetailPage {
         this.invoice['source'] = this.deployData.get_farm_by_id(this.invoice.sourceId);
         this.invoice['destination'] = this.deployData.get_customer_by_id(this.invoice.destinationId);
         this.invoice['exportDateDisplay'] = this.util.convertDate(this.invoice.exportDate);
+        this.invoice['createdAtDisplay'] = this.util.convertDate(this.invoice.createdAt);
         this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
         this.navParams.get('callbackUpdate')(this.invoice);
         this.navCtrl.pop();
@@ -178,6 +188,9 @@ export class SalePigInvoiceDetailPage {
           this.invoice = updatedInvoice;
           this.invoice['source'] = this.deployData.get_farm_by_id(this.invoice.sourceId);
           this.invoice['destination'] = this.deployData.get_customer_by_id(this.invoice.destinationId);
+          this.invoice['exportDateDisplay'] = this.util.convertDate(this.invoice.exportDate);
+          this.invoice['createdAtDisplay'] = this.util.convertDate(this.invoice.createdAt);
+          this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
           this.canCheckComplete = false;
           this.canEditInvoice = false;
           this.navParams.get('callbackUpdate')(this.invoice);
@@ -190,7 +203,9 @@ export class SalePigInvoiceDetailPage {
                 updated_pigs.forEach(e => {
                   let idx = pigs.findIndex(_pig => _pig.id == e.id);
                   if (idx > -1) {
-                    pigs[idx] = e;
+                    // pigs[idx] = e;
+                    pigs.splice(idx,1);
+                    this.pigProvider.sale_pigs.push(e)
                   }
                 })
                 this.pigProvider.pigs = pigs;

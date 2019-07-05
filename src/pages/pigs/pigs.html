@@ -42,7 +42,7 @@
       <h2><b>{{item.pigCode}}</b></h2>
       <ion-row>
         <ion-col col-2 [attr.col-12]="!platform.is('core')?'':null">
-          <p><b>Ngày sinh:</b> {{item.birthday|date:'yyyy-MM-dd'}}</p>
+          <p><b>Ngày sinh:</b> {{item.birthdayDisplay}}</p>
         </ion-col>
         <ion-col col-2  [attr.col-6]="!platform.is('core')?'':null">
           <p ><b>Trang trại:</b> {{house[item.houseId].section.farm.name}}</p>
@@ -56,7 +56,7 @@
         <ion-col col-2 [attr.col-6]="!platform.is('core')?'':null" >
           <p><b>Giống</b>: {{item.breedName}}</p>
         </ion-col>
-        <ion-col col-2  [attr.col-6]="!platform.is('core')?'':null" *ngIf="status[item.statusId]">
+        <ion-col col-2  [attr.col-12]="!platform.is('core')?'':null" *ngIf="status[item.statusId]">
           <p ><b>Trạng thái:</b> {{status[item.statusId].description}}</p>
         </ion-col>
         <ion-col  [attr.col-6]="!platform.is('core')?'':null">

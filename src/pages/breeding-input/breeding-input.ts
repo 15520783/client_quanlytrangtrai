@@ -1,6 +1,7 @@
 import { Events, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { CONFIG } from '../../common/const';
 import { Component } from '@angular/core';
 import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
 import { Utils } from '../../common/utils';
@@ -30,7 +31,10 @@ export class BreedingInputPage {
     if (this.navParams.data.pig) {
       this.breeding.pig = this.navParams.data.pig;
     }
-
+    let today = new Date();
+    this.breeding.date = new Date(today.getFullYear(), today.getMonth(), today.getDay()).toISOString();
+    this.breeding.breedingNext = new Date(today.getFullYear(), today.getMonth(), today.getDay() + CONFIG.BREEDING_NEXT_DURAION).toISOString();
+    this.breeding.matingEstimate = new Date(today.getFullYear(), today.getMonth(), today.getDay() + CONFIG.MATING_ESTIMATE_AFTER_BREEDING).toISOString();
     this.init();
 
     this.credentialsForm = this.formBuilder.group({
@@ -70,8 +74,8 @@ export class BreedingInputPage {
       Object.keys(this.credentialsForm.value).forEach((attr) => {
         this.breeding[attr] = this.credentialsForm.value[attr];
       });
-      if(this.checkValidate()){
-          this.navParams.get('callback')(this.breeding);
+      if (this.checkValidate()) {
+        this.navParams.get('callback')(this.breeding);
       }
     }
   }
@@ -91,5 +95,10 @@ export class BreedingInputPage {
       this.util.showToastInform('Ngày phối giống dự kiến không thể trước hoặc trùng ngày lên giống hiện tại')
     } else
       return true;
+  }
+
+  dateChange(date) {
+    this.credentialsForm.controls.breedingNext.setValue(new Date(date.year, date.month - 1, date.day + CONFIG.BREEDING_NEXT_DURAION + 1).toISOString());
+    this.credentialsForm.controls.matingEstimate.setValue(new Date(date.year, date.month - 1, date.day + CONFIG.MATING_ESTIMATE_AFTER_BREEDING + 1).toISOString());
   }
 }

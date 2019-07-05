@@ -39,7 +39,9 @@ export class FoodInvoiceDetailPage {
   ) {
     if (this.navParams.data.invoice) {
       this.invoice = this.navParams.data.invoice;
+      this.invoice.destinationManagerName = this.deployData.get_employee_by_id(this.invoice.destination.manager).name;
       this.invoice['importDateDisplay'] = this.util.convertDate(this.invoice.importDate);
+      this.invoice['createdAtDisplay'] = this.util.convertDate(this.invoice.createdAt);
       this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
     }
 
@@ -75,6 +77,7 @@ export class FoodInvoiceDetailPage {
         if (details.length) {
           this.invoice = this.details[0].invoice;
           this.invoice['importDateDisplay'] = this.util.convertDate(this.invoice.importDate);
+          this.invoice['createdAtDisplay'] = this.util.convertDate(this.invoice.createdAt);
           this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
           this.navParams.data.callback(this.details[0].invoice);
         }
@@ -95,6 +98,7 @@ export class FoodInvoiceDetailPage {
         if (invoice) {
           this.invoice = invoice;
           this.invoice['importDateDisplay'] = this.util.convertDate(this.invoice.importDate);
+          this.invoice['createdAtDisplay'] = this.util.convertDate(this.invoice.createdAt);
           this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
           this.navParams.data.callback(this.details[0].invoice);
         }

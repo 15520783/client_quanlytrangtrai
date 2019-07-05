@@ -1,10 +1,12 @@
 import { CONFIG, MESSAGE, VARIABLE } from '../../common/const';
 import { Component, ViewChild } from '@angular/core';
 import { Events, IonicPage, ModalController, NavController, NavParams, Platform, PopoverController } from 'ionic-angular';
-import { breedings, mating, schedule } from '../../common/entity';
+import { ObjDataNotification, breedings, mating, schedule, user } from '../../common/entity';
 
 import { ActivitiesProvider } from '../../providers/activities/activities';
 import { CalendarComponent } from 'ng-fullcalendar';
+import { EmployeesProvider } from '../../providers/employees/employees';
+import { FcmProvider } from '../../providers/fcm/fcm';
 import { OptionsInput } from '@fullcalendar/core';
 import { ScheduleInputPage } from '../schedule-input/schedule-input';
 import { SchelduleDetailComponent } from '../../components/scheldule-detail/scheldule-detail';
@@ -49,6 +51,9 @@ export class DatePlanPage {
     public util: Utils,
     public modalCtrl: ModalController,
     public popoverCtrl: PopoverController,
+    public employeeProvider: EmployeesProvider,
+    public actitvitiesProvider: ActivitiesProvider,
+    public fcmProvider: FcmProvider,
     public eventEmitter: Events
   ) {
     this.month = new Date().getMonth() + 1;
@@ -201,7 +206,11 @@ export class DatePlanPage {
         this.activitiesProvider.updateSchedule(schedule)
           .then((updated_schedule: schedule) => {
             modal.dismiss();
-            this.eventEmitter.publish('home:reloadSchedule');
+            if(updated_schedule.employee){
+              this.pushNotification(updated_schedule);
+            }else{
+              this.eventEmitter.publish('home:reloadSchedule');
+            }
           })
           .catch((err) => {
             return err;
@@ -225,7 +234,11 @@ export class DatePlanPage {
         this.activitiesProvider.createSchedule(schedule)
           .then((newSchedule: schedule) => {
             if (newSchedule) {
-              this.eventEmitter.publish('home:reloadSchedule');
+              if (newSchedule.employee) {
+                this.pushNotification(newSchedule);
+              } else {
+                this.eventEmitter.publish('home:reloadSchedule');
+              }
             }
           })
           .catch((err) => {
@@ -248,5 +261,61 @@ export class DatePlanPage {
       this.month = button.data.getMonth() + 1;
       this.year = button.data.getFullYear();
     }
+  }
+
+  pushNotification(schedule: schedule): Promise<Object> {
+    let param = new ObjDataNotification();
+
+    param = {
+      notification: {
+        title: 'Phân công công việc ngày '.concat(this.util.convertDate(schedule.date)),
+        body: schedule.name,
+        sound: 'default',
+        icon: "fcm_push_icon"
+      },
+      data: schedule,
+      registration_ids: [],
+      priority: "high",
+      restricted_package_name: 'io.ionic.quanlitrangtrai'
+    }
+
+    if (schedule.employee.email && schedule.id) {
+      this.activitiesProvider.sendMailToEmployee(schedule.employee.email, schedule.id)
+        .then((isOk) => {
+          if (isOk) {
+            this.util.showToastSuccess('Gửi mail thành công đến nhân viên');
+          }
+        })
+        .catch(err => {
+          return err;
+        })
+    }
+
+    this.util.openBackDrop();
+    return this.employeeProvider.getUserAccountsOfEmployee(schedule.employee.id)
+      .then((users: Array<user>) => {
+        this.util.closeBackDrop();
+        if (users.length) {
+          let tokens: Array<string> = [];
+          users.forEach((user) => {
+            if (user.tokenNotification) {
+              tokens.push(user.tokenNotification);
+            }
+          })
+          if (tokens.length) {
+            param.registration_ids = tokens;
+            this.fcmProvider.pushNotification(param)
+              .then((res) => {
+                console.log(res);
+                this.eventEmitter.publish('home:reloadSchedule')
+              })
+          }
+        }
+      })
+      .catch((err) => {
+        this.util.closeBackDrop();
+        this.eventEmitter.publish('home:reloadSchedule')
+        return err;
+      })
   }
 }

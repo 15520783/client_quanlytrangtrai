@@ -31,6 +31,9 @@ export class SpermInputPage {
     if (this.navParams.data.pig) {
       this.sperm.pig = this.navParams.data.pig;
     }
+
+    this.sperm.date = new Date().toISOString();
+
     this.credentialsForm = this.formBuilder.group({
       id: this.sperm.id,
       pig: this.sperm.pig,

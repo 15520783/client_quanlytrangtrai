@@ -49,19 +49,19 @@
               </ion-list-header>
               <span *ngIf="userProvider.rolePermission.ROLE_xem_danh_sach_chuong!=null">
                 <button item-end ion-item *ngFor="let house of section.houses" (tap)="viewHouse(house)">
-                  <ion-avatar item-start>
+                  <!-- <ion-avatar item-start>
                     <ion-icon name="ios-home" style="vertical-align: bottom" font28></ion-icon>
-                  </ion-avatar>
-                  <h2>{{house.name}}</h2>
+                  </ion-avatar> -->
+                  <h2><b>{{house.name}}</b></h2>
                   <ion-row>
                     <ion-col>
-                      <p><b>Số chuồng:</b> {{house.houseCode}}</p>
+                      <p><b>Mã số chuồng:</b> {{house.houseCode}}</p>
                     </ion-col>
                     <ion-col>
-                      <p><b>Mô tả:</b> {{house.description}}</p>
+                      <p><b>Số heo tại chuồng:</b> {{house.totalPig}} con</p>
                     </ion-col>
                     <ion-col>
-                      <p><b>Ngày thành lập:</b> {{house.founding}}</p>
+                      <p><b>Ngày thành lập:</b> {{house.foundingDisplay}}</p>
                     </ion-col>
                   </ion-row>
                 </button>

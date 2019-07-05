@@ -169,15 +169,15 @@ export class MatingListPage {
   initialMatings() {
     this.matings.forEach((mating) => {
       mating['pigCodeMother'] = mating.mother.pigCode;
-      mating['breedMotherName'] = mating.mother.breed.name;
+      mating['breedMotherName'] = mating.mother.breed.name + ' ' + mating.mother.breed.symbol;
       if (mating.type == VARIABLE.MATING_TYPE.IMMEDIATE.codeName) {
         let pigFather = this.deployData.get_pig_by_id(mating.fatherId);
         mating['pigCodeFather'] = pigFather.pigCode;
-        mating['breedFatherName'] = this.breeds[pigFather.breedId].name;
+        mating['breedFatherName'] = this.breeds[pigFather.breedId].name + ' ' + this.breeds[pigFather.breedId].symbol;
       }
       else if (mating.type == VARIABLE.MATING_TYPE.SPERM.codeName) {
         mating['pigCodeFather'] = '';
-        mating['breedFatherName'] = this.breeds[mating.fatherId].name;
+        mating['breedFatherName'] = this.breeds[mating.fatherId].name + ' ' + this.breeds[mating.fatherId].symbol;
       }
 
       mating['farmName'] = mating.mother.house.section.farm.name;

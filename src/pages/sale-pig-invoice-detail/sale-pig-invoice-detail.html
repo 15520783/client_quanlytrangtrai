@@ -4,11 +4,11 @@
       <ion-title>Chứng từ : {{invoice.invoiceNo}}</ion-title>
     </ion-toolbar>
   </ion-navbar>
-  <ion-toolbar showWhen="core" class="pl-10">
+  <ion-toolbar showWhen="core" class="pl-10" *ngIf="canEditInvoice || canCheckComplete">
     <button *ngIf="userProvider.rolePermission.ROLE_them_chi_tiet_chung_tu_xuat_ban_heo!=null && canEditInvoice" ion-button mode='ios' color="secondary" (tap)="input_pig()">Nhập heo</button>
     <button *ngIf="userProvider.rolePermission.ROLE_cap_nhat_chung_tu_xuat_ban_heo!=null && canEditInvoice" ion-button mode='ios' color="secondary" (tap)="editInvoice()">Chỉnh sửa chứng từ</button>
     <button *ngIf="userProvider.rolePermission.ROLE_xac_nhan_hoan_tat_chung_tu_xuat_ban_heo!=null && details.length && canCheckComplete" ion-button mode='ios' color="secondary" (tap)="completeInvoice()">Xác nhận hoàn tất</button>
-    <button *ngIf="userProvider.rolePermission.ROLE_xoa_chung_tu_xuat_ban_heo!=null && (!details.length || !canCheckComplete)" ion-button mode='ios' color="danger" (tap)="removeInvoice()">Xóa chứng từ</button>
+    <button *ngIf="userProvider.rolePermission.ROLE_xoa_chung_tu_xuat_ban_heo!=null && (!details.length || canEditInvoice)" ion-button mode='ios' color="danger" (tap)="removeInvoice()">Xóa chứng từ</button>
   </ion-toolbar>
   <ion-toolbar showWhen='ios,android'>
     <ion-segment [(ngModel)]="tab" scrollable>
@@ -52,7 +52,11 @@
               <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.exportDateDisplay"></ion-input>
             </ion-item>
             <ion-item>
-              <ion-label stacked>Ngày cập nhật chứng từ:</ion-label>
+              <ion-label stacked>Ngày tạo:</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.createdAtDisplay"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Ngày cập nhật:</ion-label>
               <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.updatedAtDisplay"></ion-input>
             </ion-item>
             <ion-item>
@@ -164,7 +168,11 @@
           <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.exportDateDisplay"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label stacked>Ngày cập nhật chứng từ:</ion-label>
+          <ion-label stacked>Ngày tạo:</ion-label>
+          <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.createdDisplay"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Ngày cập nhật:</ion-label>
           <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.updatedDisplay"></ion-input>
         </ion-item>
         <ion-item>

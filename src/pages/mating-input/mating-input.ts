@@ -65,6 +65,10 @@ export class MatingInputPage {
       this.mating.employeeId = employeeId;
     })
 
+    let today = new Date();
+    this.mating.date = new Date(today.getFullYear(),today.getMonth(),today.getDay()).toISOString();
+    this.mating.birthEstimate = new Date(today.getFullYear(),today.getMonth(),today.getDay() + 120).toISOString();
+
     this.credentialsForm = this.formBuilder.group({
       id: this.mating.id,
       motherId: this.mating.mother.id,
@@ -272,8 +276,10 @@ export class MatingInputPage {
 
   typeChange(value) {
     this.credentialsForm.controls.fatherId.setValue('');
-    // if(value == VARIABLE.MATING_TYPE.IMMEDIATE){
+  }
 
-    // }
+  dateChange(date){
+    console.log(date);
+    this.credentialsForm.controls.birthEstimate.setValue(new Date(date.year, date.month - 1, date.day + 120).toISOString());
   }
 }

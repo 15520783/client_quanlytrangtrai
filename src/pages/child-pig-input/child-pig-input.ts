@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { pig, births } from '../../common/entity';
-import { Utils } from '../../common/utils';
-import { SettingsProvider } from '../../providers/settings/settings';
-import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
-import { ValidateNumber } from '../../validators/number.validator';
-import { VARIABLE } from '../../common/const';
+import { births, pig } from '../../common/entity';
 
+import { Component } from '@angular/core';
+import { DeployDataProvider } from '../../providers/deploy-data/deploy-data';
+import { SettingsProvider } from '../../providers/settings/settings';
+import { Utils } from '../../common/utils';
+import { VARIABLE } from '../../common/const';
+import { ValidateNumber } from '../../validators/number.validator';
 
 @IonicPage()
 @Component({
@@ -58,6 +58,8 @@ export class ChildPigInputPage {
       if (statusChildPig) {
         this.pig.statusId = statusChildPig.id;
       }
+
+      this.pig.birthday = new Date(this.birth.date).toISOString();
     }
 
     this.credentialsForm = this.formBuilder.group({

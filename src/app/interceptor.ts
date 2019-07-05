@@ -3,6 +3,7 @@ import 'rxjs/add/operator/catch';
 
 import { API, CONFIG, ERROR_NAME, KEY, MESSAGE } from '../common/const';
 import {
+  HttpClient,
   HttpEvent,
   HttpHandler,
   HttpHeaders,
@@ -18,7 +19,7 @@ import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-  constructor(public events: Events, public util: Utils) { }
+  constructor(public events: Events, public util: Utils, public http:HttpClient) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -72,6 +73,26 @@ export class TokenInterceptor implements HttpInterceptor {
         }
         else if(MESSAGE[CONFIG.LANGUAGE_DEFAULT].ERROR_CHECK_REMAIN_SPERM_CODE.test(error.error)){
           this.util.showToast('Liều tinh còn lại không đủ. Vui lòng kiểm tra lại.');
+        }
+        else if(MESSAGE[CONFIG.LANGUAGE_DEFAULT].ERROR_LEARNING_REQUIRED.test(error.error.message)){
+          let excute_training = () =>{
+            this.util.openBackDrop();
+            this.http.get(API.EXECUTE_TRAINING)
+            .timeout(CONFIG.DEFAULT_TIMEOUT)
+            .toPromise()
+            .then((res:{success:boolean,message:string})=>{
+              this.util.closeBackDrop();
+              if(res.success){
+                this.util.showToastSuccess('Đã thực hiện hoàn tất training. Đã có thể tiến hành phân loại heo.');
+              }
+            })
+            .catch((err)=>{
+              this.util.closeBackDrop();
+              this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].ERROR_OCCUR);
+            })
+          }
+          this.util.showToast('Vui lòng thực hiện training trước khi thực hiện phân loại.');
+          this.util.presentComfirm('Xác nhận thực hiện training ?',excute_training);
         }
         else {
           this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].ERROR_OCCUR);

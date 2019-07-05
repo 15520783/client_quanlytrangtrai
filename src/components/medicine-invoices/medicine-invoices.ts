@@ -150,11 +150,13 @@ export class MedicineInvoicesComponent {
         this.invoices.push(data);
         this.setFilteredItems();
         this.navCtrl.pop();
+        this.input_medicine(data);
       }
     }
 
     this.roleInput.clear();
     this.roleInput.object.invoiceNo = VARIABLE.GENERNAL_INVOICE_ID.MEDICINE_IMPORT + Date.now();
+    this.roleInput.object.importDate = new Date().toISOString();
 
     this.navCtrl.push(InvoiceInputUtilComponent,
       {

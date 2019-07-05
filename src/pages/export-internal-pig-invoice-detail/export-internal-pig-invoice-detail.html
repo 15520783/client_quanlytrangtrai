@@ -4,12 +4,12 @@
       <ion-title>Chứng từ : {{invoice.invoiceNo}}</ion-title>
     </ion-toolbar>
   </ion-navbar>
-  <ion-toolbar showWhen="core" class="pl-10">
+  <ion-toolbar showWhen="core" class="pl-10" *ngIf="canEditInvoice || canCheckComplete">
     <button *ngIf="userProvider.rolePermission.ROLE_them_chi_tiet_chung_tu_xuat_heo_trong_he_thong!=null && canEditInvoice" ion-button mode='ios' color="secondary" (tap)="input_pig()">Nhập heo</button>
     <button *ngIf="userProvider.rolePermission.ROLE_cap_nhat_chung_tu_xuat_heo_trong_he_thong!=null && canEditInvoice" ion-button mode='ios' color="secondary" (tap)="editInvoice()">Chỉnh sửa chứng
       từ</button>
     <button *ngIf="userProvider.rolePermission.ROLE_xac_nhan_xuat_heo_chung_tu_xuat_heo_trong_he_thong!=null && details.length && canCheckComplete" ion-button mode='ios' color="secondary" (tap)="forwardingModifyInvoice()">Xác nhận xuất heo</button>
-    <button  *ngIf="userProvider.rolePermission.ROLE_xoa_chung_tu_xuat_heo_trong_he_thong!=null && (!details.length || !canCheckComplete)" ion-button mode='ios' color="danger" (tap)="removeInvoice()">Xóa chứng từ</button>
+    <button  *ngIf="userProvider.rolePermission.ROLE_xoa_chung_tu_xuat_heo_trong_he_thong!=null && (!details.length || canEditInvoice)" ion-button mode='ios' color="danger" (tap)="removeInvoice()">Xóa chứng từ</button>
   </ion-toolbar>
   <ion-toolbar showWhen='ios,android'>
     <ion-segment [(ngModel)]="tab" scrollable>
@@ -50,11 +50,15 @@
             </ion-item>
             <ion-item>
               <ion-label stacked>Ngày xuất:</ion-label>
-              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.exportDate"></ion-input>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.exportDateDisplay"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Ngày tạo:</ion-label>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.createdAtDisplay"></ion-input>
             </ion-item>
             <ion-item>
               <ion-label stacked>Ngày cập nhật:</ion-label>
-              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.updatedAt"></ion-input>
+              <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.updatedAtDisplay"></ion-input>
             </ion-item>
             <ion-item>
               <ion-label stacked>Tổng số heo theo chứng từ:</ion-label>
@@ -136,7 +140,7 @@
           </ion-item>
           <ion-item>
             <ion-label stacked>Người đại diện:</ion-label>
-            <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.sourceManager.name"></ion-input>
+            <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.sourceManagerName"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label stacked>Nơi nhận:</ion-label>
@@ -148,11 +152,15 @@
           </ion-item>
           <ion-item>
             <ion-label stacked>Ngày xuất:</ion-label>
-            <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.exportDate"></ion-input>
+            <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.exportDateDisplay"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Ngày tạo:</ion-label>
+            <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.createdAtDisplay"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label stacked>Ngày cập nhật:</ion-label>
-            <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.updatedAt"></ion-input>
+            <ion-input text-wrap type="text" readonly [(ngModel)]="invoice.updatedAtDisplay"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label stacked>Tổng số heo theo chứng từ:</ion-label>
@@ -174,7 +182,7 @@
                 <ion-col>
                   <ion-row>
                     <ion-col col-lg-3 col-md-6 col-sm-12>
-                      <p><b>Giống:</b>{{breeds[pigs[item.objectId].breedId].name}}</p>
+                      <p><b>Giống:</b>{{breeds[pigs[item.objectId].breedId].name + ' ' + breeds[pigs[item.objectId].breedId].symbol}}</p>
                     </ion-col>
                     <ion-col col-lg-3 col-md-6 col-sm-12>
                       <p><b>Giới tính:</b>{{gender[pigs[item.objectId].gender].name}}</p>
@@ -215,7 +223,7 @@
         <ion-icon name="ios-arrow-up"></ion-icon>
       </button>
       <ion-fab-list side="top" style="right:0px">
-        <button *ngIf="userProvider.rolePermission.ROLE_xoa_chung_tu_xuat_heo_trong_he_thong!=null && (!details.length || !canCheckComplete)" data-balloon-visible data-balloon-length="medium" data-balloon="Xóa chứng từ" data-balloon-pos="left"
+        <button *ngIf="userProvider.rolePermission.ROLE_xoa_chung_tu_xuat_heo_trong_he_thong!=null && (!details.length || canEditInvoice)" data-balloon-visible data-balloon-length="medium" data-balloon="Xóa chứng từ" data-balloon-pos="left"
           ion-fab color="danger"  (tap)="removeInvoice()">
           <ion-icon name="md-trash"></ion-icon>
         </button>

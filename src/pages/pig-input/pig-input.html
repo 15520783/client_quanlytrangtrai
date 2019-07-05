@@ -87,12 +87,12 @@
             [attr.col-12]="!platform.is('core')?'':null">
 
           <input-text [(validControl)]="credentialsForm.controls.receiveWeight"
-            [label]="'Trọng lượng NCC'"
+            [label]="'Trọng lượng NCC ( kg )'"
             [placeholder]="'Nhập Trọng lượng NCC'" 
             [active]="submitAttempt">
           </input-text>
           <input-text [(validControl)]="credentialsForm.controls.originWeight"
-            [label]="'Trọng lượng tại trại'"
+            [label]="'Trọng lượng tại trại ( kg )'"
             [placeholder]="'Nhập Trọng lượng tại trại'" 
             [active]="submitAttempt">
           </input-text>

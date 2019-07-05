@@ -53,7 +53,8 @@
       <input-date [(validControl)]="credentialsForm.controls.date"
         [disabled] = "viewMode || updateMode"
         [errorMessage_Required]="'Ngày phối là hạng mục bắt buộc.'" [label]="'Ngày phối giống'"
-        [placeholder]="'dd/mm/yyyy'" [active]="submitAttempt">
+        [placeholder]="'dd/mm/yyyy'" [active]="submitAttempt"
+        (valueChange)="dateChange($event)">
       </input-date>
 
       <input-date [(validControl)]="credentialsForm.controls.birthEstimate"

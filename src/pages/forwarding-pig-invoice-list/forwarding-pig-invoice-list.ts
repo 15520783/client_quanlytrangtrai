@@ -31,7 +31,7 @@ export class ForwardingPigInvoiceListPage {
   public attributes = [
     { name: "sourceName", label: 'Nguồn cung cấp' },
     { name: "destinationName", label: 'Nơi nhận' },
-    { name: "importDateDisplay", label: 'Ngày nhập' },
+    { name: "exportDateDisplay", label: 'Ngày xuất' },
     { name: "quantity", label: 'Tổng số heo' },
     { name: "totalWeight", label: 'Tổng trọng lượng' },
     { name: "statusName", label: 'Trạng thái', usingBadge: true },
@@ -90,7 +90,7 @@ export class ForwardingPigInvoiceListPage {
     this.invoices.forEach((invoice) => {
       invoice['sourceName'] = this.farms_util[invoice.sourceId].name;
       invoice['destinationName'] = this.farms_util[invoice.destinationId].name;
-      invoice['importDateDisplay'] = this.util.convertDate(invoice.importDate);
+      invoice['exportDateDisplay'] = this.util.convertDate(invoice.exportDate);
       invoice['createBy'] = invoice.employee ? invoice.employee.name : '';
       switch (invoice.status) {
         case VARIABLE.INVOICE_STATUS.FORWARDING: {

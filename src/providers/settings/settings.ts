@@ -871,4 +871,14 @@ export class SettingsProvider {
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise();
   }
+
+  /**
+   * Thực training tập dữ liệu đánh giá phân loại heo
+   */
+  execute_training_data(){
+    return this.http
+    .get(API.EXECUTE_TRAINING)
+    .timeout(CONFIG.DEFAULT_TIMEOUT)
+    .toPromise();
+  }
 }

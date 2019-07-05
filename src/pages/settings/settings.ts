@@ -128,7 +128,6 @@ export class SettingsPage {
         filter_default: ["name", "code", "manager", "address", "agencyName", "agencyAddress", "distributionName", "distributionAddress", "distributionPhone", "description"],
         attributes: [
           { name: "description", label: 'Mô tả' },
-          // { name: "code", label: 'Mã đối tác' },
           { name: "manager", label: 'Tên người quản lý' },
           { name: "address", label: 'Địa chỉ' },
           { name: "agencyName", label: 'Tên chi nhánh' },
@@ -211,9 +210,6 @@ export class SettingsPage {
         mainAttribute: 'name',
         data: this.settingProvider.setting.diseases,
         roleInput: new DiseasesRole(this.settingProvider),
-        // extraButtons: [
-        //   { title: 'Thiết lập lâm sàng', color: 'main', component: null }
-        // ],
         permission: this.userProvider.rolePermission.ROLE_thiet_lap_danh_sach_benh
       },
       farmTypes: {

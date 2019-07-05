@@ -96,7 +96,6 @@ export class PigsPage {
   }
 
   public getAllPigs() {
-    // if (!this.pigProvider.pigs.length) {
     this.util.openBackDrop();
     this.pigProvider.getPigs()
       .then((data: Array<pig>) => {
@@ -124,12 +123,6 @@ export class PigsPage {
           })
         this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].ERROR_OCCUR);
       })
-    // } else {
-    //   this.rows = this.filterItems(this.searchTerm);
-    //   this.page_Total = this.rows.length % 50 === 0 ? parseInt(this.rows.length / 50 + '') : parseInt(this.rows.length / 50 + 1 + '');
-    //   this.page_Idx = 1;
-    //   this.visible_items = this.rows.slice(0, 50);
-    // }
   }
 
   public setFilteredItems() {
@@ -144,9 +137,7 @@ export class PigsPage {
   public filterItems(searchItem) {
     let pigs = this.util.deepClone(this.pigProvider.pigs);
     pigs.forEach(pig => {
-      if (!this.house[pig.houseId]) {
-        console.log(pig);
-      }
+      pig.birthdayDisplay = this.util.convertDate(pig.birthday);
       pig.farmId = this.house[pig.houseId] ? this.house[pig.houseId].section.farm.id : '';
       pig.sectionId = this.house[pig.houseId] ? this.house[pig.houseId].section.id : '';
       pig.breedName = this.breeds[pig.breedId] ? this.breeds[pig.breedId].name + ' ' + this.breeds[pig.breedId].symbol : '';
@@ -161,7 +152,9 @@ export class PigsPage {
     this.filterProvider.searchWithRange = {
       originWeight: { min: this.dualValue2.lower, max: this.dualValue2.upper }
     }
-    return this.filterProvider.filter();
+    return this.filterProvider.filter().sort((a: pig, b: pig) => {
+      return a.id > b.id ? -1 : 1;
+    });
   }
 
 

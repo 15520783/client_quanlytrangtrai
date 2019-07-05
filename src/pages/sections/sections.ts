@@ -49,6 +49,10 @@ export class SectionsPage {
     this.sections = this.deployData.get_sections_of_farm(this.farmSelected);
     this.sections.forEach((section: any) => {
       section.houses = this.deployData.get_houses_of_section(section.id);
+      section.houses.forEach((e:house)=>{
+        e['foundingDisplay'] = this.util.convertDate(e.founding);
+        e['totalPig'] = this.deployData.get_pigs_of_house(e.id).length;
+      });
     })
     this.employees = this.deployData.get_object_list_key_of_employees();
   }
@@ -56,12 +60,10 @@ export class SectionsPage {
 
 
   ionViewWillEnter() {
-    console.log('ionViewWillEnter SectionsPage');
     this.getAllSections();
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SectionsPage');
   }
 
   changeFarm(res) {
@@ -70,7 +72,11 @@ export class SectionsPage {
 
     this.sections.forEach((section: any) => {
       section.houses = this.deployData.get_houses_of_section(section.id);
-    })
+      section.houses.forEach((e:house)=>{
+        e['foundingDisplay'] = this.util.convertDate(e.founding);
+        e['totalPig'] = this.deployData.get_pigs_of_house(e.id).length;
+      });
+    });
   }
 
   activeItem(section) {

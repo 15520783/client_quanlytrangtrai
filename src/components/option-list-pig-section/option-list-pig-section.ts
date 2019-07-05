@@ -104,13 +104,7 @@ export class OptionListPigSectionComponent {
     this.weaning = [
       VARIABLE.SECTION_TYPE[5].id
     ]
-
-    // this.sectionTypeId = VARIABLE.SECTION_TYPE[this.sectionTypeId];
-
   }
-
-
-
 
   public review_offset = [
     VARIABLE.SECTION_TYPE[7].id
@@ -149,6 +143,11 @@ export class OptionListPigSectionComponent {
         } else if (this.statusTarget.code == VARIABLE.STATUS_PIG.GROWING) {
           this.move_local = [VARIABLE.SECTION_TYPE[1].id,VARIABLE.SECTION_TYPE[5].id,VARIABLE.SECTION_TYPE[6].id];
         }
+        else{
+          VARIABLE.SECTION_TYPE.forEach(e => {
+            this.move_local.push(e.id)
+          })
+        }
         break;
       }
       case VARIABLE.SECTION_TYPE[6].id: {
@@ -181,8 +180,6 @@ export class OptionListPigSectionComponent {
         this.activitiesProvider.createBreeding(data)
           .then((newBreeding: breedings) => {
             if (newBreeding) {
-              // let statusPig = this.deployData.get_status_matingWait_of_pig(this.statusObjectKey[this.pig.statusId]);
-              // this.pig.statusId = statusPig.id;
               this.pig.statusId = newBreeding.pig.status.id;
               this.pigProvider.updatedPig(this.pig);
               this.publishPigChangeEvent(this.pig);

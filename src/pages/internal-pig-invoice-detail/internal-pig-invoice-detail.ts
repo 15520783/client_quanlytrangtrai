@@ -51,7 +51,10 @@ export class InternalPigInvoiceDetailPage {
       this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
       this.invoice['source'] = this.deployData.get_farm_by_id(this.invoice.sourceId);
       this.invoice['importDateDisplay'] = this.util.convertDate(this.invoice.importDate);
+      this.invoice['createdAtDisplay'] = this.util.convertDate(this.invoice.createdAt);
       this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
+      this.invoice.sourceManagerName = this.deployData.get_employee_by_id(this.invoice['source'].manager).name;
+          this.invoice.destinationManagerName = this.deployData.get_employee_by_id(this.invoice['destination'].manager).name;
     }
     this.pigs = this.deployData.get_object_list_key_of_pig();
     this.house = this.deployData.get_object_list_key_of_house();
@@ -95,9 +98,12 @@ export class InternalPigInvoiceDetailPage {
           this.invoice['destination'] = this.deployData.get_farm_by_id(this.invoice.destinationId);
           this.invoice['source'] = this.deployData.get_farm_by_id(this.invoice.sourceId);
           this.invoice['importDateDisplay'] = this.util.convertDate(this.invoice.importDate);
+          this.invoice['createdAtDisplay'] = this.util.convertDate(this.invoice.createdAt);
           this.invoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
+          this.invoice.sourceManagerName = this.deployData.get_employee_by_id(this.invoice['source'].manager).name;
+          this.invoice.destinationManagerName = this.deployData.get_employee_by_id(this.invoice['destination'].manager).name;
           this.navParams.get('callback')(this.invoice);
-        } 
+        }
         this.util.closeBackDrop();
       })
       .catch((err: Error) => {
@@ -108,7 +114,7 @@ export class InternalPigInvoiceDetailPage {
       })
   }
 
-  
+
 
   removeInvoice() {
     this.invoiceProvider.removePigInvoice(this.invoice)
@@ -133,16 +139,12 @@ export class InternalPigInvoiceDetailPage {
             if (updatedInvoice) {
               let destination = this.deployData.get_farm_by_id(this.invoice.destinationId);
               let source = this.deployData.get_farm_by_id(this.invoice.sourceId);
-              let des_manager = this.deployData.get_employee_by_id(destination.manager);
-              let source_manager = this.deployData.get_employee_by_id(source.manager);
-
               updatedInvoice['destination'] = destination;
               updatedInvoice['source'] = source;
-              updatedInvoice.destinationAddress = destination.address;
-              updatedInvoice.destinationManager = destination.manager;
-              updatedInvoice.destinationManagerName = des_manager.name;
-              updatedInvoice.sourceManagerName = source_manager.name;
+              updatedInvoice.sourceManagerName = this.deployData.get_employee_by_id(updatedInvoice['source'].manager).name;
+              updatedInvoice.destinationManagerName = this.deployData.get_employee_by_id(updatedInvoice['destination'].manager).name;
               updatedInvoice['importDisplay'] = this.util.convertDate(this.invoice.importDate);
+              updatedInvoice['createdAtDisplay'] = this.util.convertDate(this.invoice.createdAt);
               updatedInvoice['updatedAtDisplay'] = this.util.convertDate(this.invoice.updatedAt);
               this.invoice = updatedInvoice;
               this.navParams.get('callback')(this.invoice);

@@ -46,24 +46,24 @@ export class ReviewOffsetPigPage {
   }
 
   confirm() {
-    this.pig.pigType = this.classification;
-    if (this.classification != this.classificationRecommand) {
-      this.util.openBackDrop();
-      this.pigProvider.updateDataMining(this.pig.id, this.classification)
-        .then((data: any) => {
-          this.util.closeBackDrop();
-          if (data) {
-            this.util.showToastSuccess('Đã cập nhật dữ liệu khai thác');
-            this.navParams.get('callback')(this.pig);
-          }
-        })
-        .catch(err => {
-          this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].ERROR_OCCUR);
-          this.util.closeBackDrop();
-          return err;
-        })
-    } else {
+    // this.pig.pigType = this.classification;
+    // if (this.classification != this.classificationRecommand) {
+    //   this.util.openBackDrop();
+    //   this.pigProvider.updateDataMining(this.pig.id, this.classification)
+    //     .then((data: any) => {
+    //       this.util.closeBackDrop();
+    //       if (data) {
+    //         this.util.showToastSuccess('Đã cập nhật dữ liệu khai thác');
+    //         this.navParams.get('callback')(this.pig);
+    //       }
+    //     })
+    //     .catch(err => {
+    //       this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].ERROR_OCCUR);
+    //       this.util.closeBackDrop();
+    //       return err;
+    //     })
+    // } else {
       this.navParams.get('callback')(this.pig);
-    }
+    // }
   }
 }

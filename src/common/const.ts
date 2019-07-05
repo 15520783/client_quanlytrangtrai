@@ -5,6 +5,7 @@ const KEY = {
     SECTIONS: 'sections',
     HOUSES: 'houses',
     PIGS: 'pigs',
+    SOLD_PIG:'sold_pigs',
     GROUPS: 'groups',
     EMPLOYEES: 'employees',
     WAREHOUSES: 'warehouses',
@@ -66,7 +67,9 @@ const CONFIG = {
     PAGE_SITE: 50,
     LOADING_MORE_TIME: 800,
     PACKAGE_NAME: 'io.ionic.quanlitrangtrai',
-    FCM_HEADER_KEY: 'AIzaSyBKbuqBrkMtN0Z7lukDQWomLMNO6uDcCZ8'
+    FCM_HEADER_KEY: 'AIzaSyBKbuqBrkMtN0Z7lukDQWomLMNO6uDcCZ8',
+    BREEDING_NEXT_DURAION:30,
+    MATING_ESTIMATE_AFTER_BREEDING:3
 }
 
 const VARIABLE = {
@@ -307,6 +310,7 @@ const API = {
     GET_ALL_PERMISSION: '/api/permission/list',
     GET_INVOICE_PIG_BY_ID:'/api/invoicespig/one/',//{id}
     GET_INVOICE_PRODUCT_BY_ID:'/api/invoicesproduct/one/', //{id}
+    EXECUTE_TRAINING:'/api/minings/training/',
 
     PUSH_NOTIFICATION: 'https://fcm.googleapis.com/fcm/send',
     SEND_EMAIL: '/api/mail/sendemailnotification/', //{email}/{scheduleid}
@@ -516,7 +520,8 @@ const MESSAGE = {
         MAIL_UNIQUE: 'Email đăng kí đã tồn tại',
         PERMISSIONS_ERROR: 'Lỗi truy cập không được cấp quyền',
         ERROR_CHECK_REMAIN_PRODUCT_CODE:/1432/,
-        ERROR_CHECK_REMAIN_SPERM_CODE:/1433/
+        ERROR_CHECK_REMAIN_SPERM_CODE:/1433/,
+        ERROR_LEARNING_REQUIRED:/1434/,
     }
 }
 

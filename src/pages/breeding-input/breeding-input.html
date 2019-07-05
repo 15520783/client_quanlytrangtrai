@@ -14,7 +14,8 @@
                     [errorMessage_Required]  ="'Ngày lên giống là hạng mục bắt buộc.'"
                     [label] = "'Ngày lên giống'"
                     [placeholder]="'dd/mm/yyyy'"
-                    [active]= "submitAttempt">
+                    [active]= "submitAttempt"
+                    (valueChange)="dateChange($event)">
         </input-date>
         <input-date [(validControl)] = "credentialsForm.controls.breedingNext"
                     [errorMessage_Required]  ="'Ngày lên giống tiếp theo là hạng mục bắt buộc.'"

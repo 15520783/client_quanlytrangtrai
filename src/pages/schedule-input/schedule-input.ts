@@ -88,6 +88,7 @@ export class ScheduleInputPage {
       Object.keys(this.credentialsForm.value).forEach((attr) => {
         this.schedule[attr] = this.credentialsForm.value[attr];
       });
+      
       if (this.credentialsForm.value.employeeId) {
         this.schedule.employee = this.deployData.get_employee_by_id(this.credentialsForm.value.employeeId);
         this.schedule.status = VARIABLE.SCHEDULE_STATUS.ASSIGNED.name;
@@ -95,7 +96,7 @@ export class ScheduleInputPage {
         this.schedule.employee = null;
         this.schedule.status = VARIABLE.SCHEDULE_STATUS.NOT_ASSIGNED.name;
       }
-
+      
       if (!this.updateMode) {
         this.navParams.get('callback')(this.schedule);
       }
@@ -108,4 +109,8 @@ export class ScheduleInputPage {
   farmChange(e) {
     this.peopleForSchedule = this.deployData.get_employees_of_farm(e.valueId);
   }
+
+
+
+  
 }

@@ -24,7 +24,7 @@
 </ion-header>
 
 <ion-content *ngIf="!platform.is('core')" class="mobile">
-  <ion-list no-lines>
+  <ion-list no-lines style="height: 100%!important">
     <ion-slides #slider1 paper="true" (ionSlideDidChange)="slideChange()">
       <ion-slide>
         <ion-infinite-scroll>

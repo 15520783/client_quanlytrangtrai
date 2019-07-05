@@ -45,6 +45,8 @@ export class ImportInternalPigInvoiceInputPage {
       this.invoice.vehicleNumber = this.navParams.data.vehicleNumber;
     }
 
+    this.invoice.importDate = new Date().toISOString();
+
     if (this.navParams.data.invoice) {
       this.invoice = this.navParams.data.invoice;
       this.invoice.importDate = new Date(this.invoice.importDate).toISOString();

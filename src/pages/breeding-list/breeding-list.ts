@@ -24,14 +24,13 @@ export class BreedingListPage {
   public breedingTypes: any = {};
   public sectionType: any;
 
-  public mainAttribute = "breedName";
+  public mainAttribute = "pigCode";
   public attributes = [
-    { name: "pigCode", label: 'Mã heo' },
+    { name: "breedName", label: 'Giống' },
     { name: "farmName", label: 'Trang trại' },
     { name: "sectionName", label: 'Khu' },
     { name: "houseName", label: 'Nhà' },
     { name: "dateDisplay", label: 'Ngày lên giống' },
-    { name: "birthdayDisplay", label: 'Ngày sinh' },
     { name: "statusName", label: 'Hiện trạng' },
     { name: "breedingCount", label: 'Lần lên giống' },
     { name: "typeBreedingName", label: 'Loại lên giống' },
@@ -149,13 +148,12 @@ export class BreedingListPage {
 
   initialBreedings() {
     this.breedings.forEach((breeding) => {
-      breeding['breedName'] = breeding.pig['breed'].name;
+      breeding['breedName'] = breeding.pig['breed'].name + ' ' + breeding.pig['breed'].symbol;
       breeding['pigCode'] = breeding.pig.pigCode;
       breeding['farmName'] = breeding.pig.house.section.farm.name;
       breeding['sectionName'] = breeding.pig.house.section.name;
       breeding['houseName'] = breeding.pig['house'].name;
       breeding['dateDisplay'] = this.util.convertDate(breeding.date);
-      breeding['birthdayDisplay'] = this.util.convertDate(breeding.pig.birthday);
       breeding['breedingNextDisplay'] = breeding.breedingNext ? this.util.convertDate(breeding.breedingNext) : 'Chưa xác định';
       breeding['matingEstimateDisplay'] = breeding.matingEstimate ? this.util.convertDate(breeding.matingEstimate) : 'Chưa xác định';
       breeding['matingRealDisplay'] = breeding.matingReal ? this.util.convertDate(breeding.matingReal) : 'Chưa phối';

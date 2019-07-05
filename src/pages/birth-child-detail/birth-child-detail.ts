@@ -175,6 +175,9 @@ export class BirthChildDetailPage {
       }
     }
     item.originMotherId = this.birth.mating.mother.id;
+    if(this.birth.mating.type == VARIABLE.MATING_TYPE.IMMEDIATE.codeName){
+      item.originFatherId = this.birth.mating.fatherId;
+    }
     item.houseId = this.birth.mating.mother.house.id;
     this.navCtrl.push(ChildPigInputPage, { pig: item, callback: callback });
   }

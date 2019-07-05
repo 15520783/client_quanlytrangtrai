@@ -154,11 +154,13 @@ export class InternalPigInvoicesComponent {
         this.invoices.push(data);
         this.setFilteredItems();
         this.navCtrl.pop();
+        this.input_pig(data);
       }
     }
 
     this.roleInput.clear();
     this.roleInput.object.invoiceNo = VARIABLE.GENERNAL_INVOICE_ID.INTERNAL_IMPORT + Date.now();
+    this.roleInput.object.importDate = new Date().toISOString();
     this.navCtrl.push(InvoiceInputUtilComponent,
       {
         insertMode: true,

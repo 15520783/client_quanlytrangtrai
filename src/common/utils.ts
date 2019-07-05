@@ -118,8 +118,14 @@ export class Utils {
       month: "2-digit",
       day: "2-digit"
     };
-
-    return new Date(date).toLocaleDateString("vn", options);
+    if(date){
+      let dateArr = date.split('-');
+      dateArr[2] = dateArr[2].substring(0,2);
+      return new Date(dateArr[0],dateArr[1]-1,dateArr[2]).toLocaleDateString("vn", options);
+    }else{
+      return 'Không xác định';
+    }
+    
   }
 
   getKey(key: string) {

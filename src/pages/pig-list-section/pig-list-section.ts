@@ -160,7 +160,9 @@ export class PigListSectionPage {
     this.filterProvider.searchText = searchItem;
     this.filterProvider.searchWithText = this.filter_default;
     this.filterProvider.searchWithRange = {}
-    return this.filterProvider.filter();
+    return this.filterProvider.filter().sort((a:pig,b:pig)=>{
+      return a.id > b.id ? -1 : 1;
+    });
   }
 
   loadData(infiniteScroll) {
@@ -217,19 +219,6 @@ export class PigListSectionPage {
       this.filterProvider.searchWithInclude.breedId = [];
     this.setFilteredItems();
   }
-
-  // filterFarm(farmId) {
-  //   if (farmId) {
-  //     this.filterProvider.searchWithInclude.farmId = [farmId];
-  //     this.sectionFilter = this.deployData.get_sections_by_sectionType_of_farm(farmId, this.sectionTypeId);
-  //     this.sectionFilter.forEach(section => {
-  //       section.value = section.id;
-  //     })
-  //   }
-  //   else
-  //     this.filterProvider.searchWithInclude.farmId = [];
-  //   this.setFilteredItems();
-  // }
 
   filterSection(sectionId) {
     if (sectionId) {

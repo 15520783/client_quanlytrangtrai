@@ -123,44 +123,6 @@ export class SalePigInvoiceRole {
                 value: this.object.unitPrice,
                 data: null
             },
-            // {
-            //     name: 'totalPrice',
-            //     label: 'Tổng giá',
-            //     placeholder: 'Nhập tổng giá',
-            //     isRequire: true,
-            //     isMaxlength: false,
-            //     isMailFormat: false,
-            //     isNumber: true,
-            //     maxlength: 1000,
-            //     message: {
-            //         isMailFormat: '',
-            //         isRequire: 'Tổng giá là hạng mục bắt buộc',
-            //         isNumber: 'Tổng giá là hạng mục số',
-            //         isMaxlength: 'Tổng giá không được vượt quá 1000 ký tự'
-            //     },
-            //     type: "input-text",
-            //     value: this.object.totalPrice,
-            //     data: null
-            // },
-            // {
-            //     name: 'quantity',
-            //     label: 'Tổng số heo',
-            //     placeholder: 'Nhập tổng số heo',
-            //     isRequire: true,
-            //     isMaxlength: false,
-            //     isMailFormat: false,
-            //     isNumber: true,
-            //     maxlength: 1000,
-            //     message: {
-            //         isMailFormat: '',
-            //         isRequire: 'Tổng số heo là hạng mục bắt buộc',
-            //         isNumber: 'Tổng số heo là hạng mục số',
-            //         isMaxlength: 'Tổng số heo không được vượt quá 1000 ký tự'
-            //     },
-            //     type: "input-text",
-            //     value: this.object.quantity,
-            //     data: null
-            // },
             {
                 name: 'destinationId',
                 label: 'Đơn vị mua',

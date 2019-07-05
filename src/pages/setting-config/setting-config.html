@@ -11,7 +11,18 @@
   <form style="padding-bottom: 10vH">
     <ion-list >
       <ion-item-group>
-        <ion-item-divider color="light" sticky="true" text-left>Thiết lập cấu hình</ion-item-divider>
+        <ion-item-divider color="light" sticky="true" text-left custom-item-divider>
+          <ion-row>
+            <ion-col align-self-center>
+              <p ion-text>Thiết lập cấu hình</p>
+            </ion-col>
+            <ion-col text-right align-self-center>
+                <button small *ngIf="!editMode"  ion-button mode='ios' color="secondary" (tap)="editMode=true">Chỉnh sửa</button>
+                <button small *ngIf="editMode"   ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu và đồng bộ</button>
+            </ion-col>
+          </ion-row>
+        </ion-item-divider>
+      
         <input-text [(validControl)] = "credentialsForm.controls.serverApi"
                     [errorMessage_Required]  = "'Địa chỉ máy chủ là hạng mục bắt buộc.'"
                     [errorMessage_Maxlength]  = "'Địa chỉ máy chủ không được vượt quá 1000 kí tự.'"
@@ -37,20 +48,31 @@
                     [(data)]="syncDelayList">
         </input-select>
       </ion-item-group>
+      <ion-item-group>
+        <ion-item-divider color="light" sticky="true" text-left custom-item-divider>
+            <ion-row>
+              <ion-col align-self-center col-5 text-left text-wrap>
+                <p ion-text>Thiết lập training đánh giá phân loại heo</p>
+              </ion-col>
+              <ion-col text-right align-self-center>
+                <button small ion-button color="main" mode='ios' (tap)="execute_training()">Thực hiện training dữ liệu</button>
+              </ion-col>
+            </ion-row>
+        </ion-item-divider>
+      </ion-item-group>
     </ion-list>
   </form>
 </ion-content>
 
-<ion-footer no-border showWhen="core">
+<!-- <ion-footer no-border showWhen="core">
   <ion-toolbar toolbar-transparent text-right showWhen="core">
     <button *ngIf="!editMode"  ion-button mode='ios' color="secondary" (tap)="editMode=true">Chỉnh sửa</button>
     <button *ngIf="editMode"   ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu và đồng bộ</button>
-    <!-- <button ion-button   mode='ios' color="danger">Hủy</button> -->
   </ion-toolbar>
 </ion-footer>
 
 <ion-footer no-border no-padding showWhen="ios,android">
   <button *ngIf="!editMode"  no-margin full block ion-button mode='ios' color="secondary" (tap)="editMode=true">Chỉnh sửa</button>
   <button *ngIf="editMode"  no-margin full block ion-button mode='ios' color="secondary" (tap)="onSubmit()">Lưu và đồng bộ</button>
-</ion-footer>
+</ion-footer> -->
 

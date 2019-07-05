@@ -293,8 +293,8 @@ export class ActivitiesProvider {
    * @param objBody 
    */
   updateSchedule(objBody: schedule) {
-    return this.http
-      .post<schedule>(API.UPDATE_SCHEDULE, objBody)
+    return this.http  
+      .put<schedule>(API.UPDATE_SCHEDULE, objBody)
       .timeout(CONFIG.DEFAULT_TIMEOUT)
       .toPromise();
   }

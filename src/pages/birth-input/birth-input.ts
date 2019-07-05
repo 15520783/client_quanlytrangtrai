@@ -32,7 +32,7 @@ export class BirthInputPage {
   ) {
     if (this.navParams.data.mating) {
       this.birth.mating = this.navParams.data.mating;
-      this.birth.date = new Date (this.birth.mating.birthEstimate).toISOString();
+      this.birth.date = new Date ().toISOString();
     }
 
     if (this.navParams.data.birth) {

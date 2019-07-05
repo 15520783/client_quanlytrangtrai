@@ -49,7 +49,7 @@ export class SchelduleDetailComponent {
 
     param = {
       notification: {
-        title: 'Phân công công việc ngày '.concat(new Date(this.schedule.date).toISOString()),
+        title: 'Phân công công việc ngày '.concat(this.util.convertDate(this.schedule.date)),
         body: this.schedule.name,
         sound: 'default',
         icon: "fcm_push_icon"

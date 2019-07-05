@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { Component } from '@angular/core';
+import { SettingsProvider } from '../../providers/settings/settings';
 import { Utils } from '../../common/utils';
 import { settingConfig } from '../../common/entity';
 
@@ -26,6 +27,7 @@ export class SettingConfigPage {
     public navCtrl: NavController,
     private formBuilder: FormBuilder,
     public navParams: NavParams,
+    public settingProvider: SettingsProvider,
     public util: Utils
   ) {
     this.defaultTimeoutList = VARIABLE.DEFAULT_TIMEOUT_LIST;
@@ -74,5 +76,20 @@ export class SettingConfigPage {
         })
       this.editMode = false;
     }
+  }
+
+  execute_training(){
+    this.util.openBackDrop();
+    this.settingProvider.execute_training_data()
+    .then((res:{success:boolean,message:string})=>{
+      if(res.success){
+        this.util.showToastSuccess('Đã thực hiện hoàn tất training. Đã có thể tiến hành phân loại heo.')
+      }
+      this.util.closeBackDrop();
+    })
+    .catch((err)=>{
+      this.util.closeBackDrop();
+      this.util.showToast(MESSAGE[CONFIG.LANGUAGE_DEFAULT].ERROR_OCCUR);
+    })
   }
 }

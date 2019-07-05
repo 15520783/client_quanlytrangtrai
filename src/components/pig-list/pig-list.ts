@@ -118,7 +118,9 @@ export class PigListComponent {
     this.filterProvider.searchWithRange = {
       originWeight: { min: this.dualValue2.lower, max: this.dualValue2.upper }
     }
-    return this.filterProvider.filter();
+    return this.filterProvider.filter().sort((a:pig,b:pig)=>{
+      return a.id > b.id ? -1 : 1;
+    });
   }
 
   loadData(infiniteScroll) {
