@@ -46,7 +46,7 @@ export class ReviewOffsetPigPage {
   }
 
   confirm() {
-    // this.pig.pigType = this.classification;
+    this.pig.pigType = this.classification;
     // if (this.classification != this.classificationRecommand) {
     //   this.util.openBackDrop();
     //   this.pigProvider.updateDataMining(this.pig.id, this.classification)
